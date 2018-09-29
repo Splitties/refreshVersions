@@ -1,3 +1,3 @@
 plugins {
-    id("my-plugin") version "1.0"
+    id("jmfayard.github.io.gradle-kotlin-dsl-libs") version "0.1"
 }
