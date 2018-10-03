@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "jmfayard.github.io"
-version = "0.2.0"
+version = "0.2.1"
 
 gradlePlugin {
     plugins {
@@ -40,11 +40,6 @@ dependencies {
     testImplementation("org.amshove.kluent:kluent:1.4")
     testImplementation("org.testng:testng:6.14.3")
 
-    compile("com.squareup.okio:okio:2.0.0") // io
-    compile("de.mpicbg.scicomp:krangl:0.6") // csv
-    compile("org.jdom:jdom:2.0.2") // xml
-    compile("com.twilio.sdk:twilio:7.25.0")
-    compile("com.google.guava:guava:22.0")
     compile( "com.squareup.moshi:moshi:1.7.0")
     compile("com.squareup:kotlinpoet:1.0.0-RC1")
 

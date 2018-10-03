@@ -1,6 +1,7 @@
 package jmfayard.github.io
 
 import com.squareup.kotlinpoet.*
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.InputFile
@@ -21,23 +22,59 @@ open class SyncLibs : DefaultTask() {
 
 
     @get:InputFile
-    val jsonInput get() = project.file(jsonInputPath)
+    val jsonInput
+        get() = project.file(jsonInputPath)
     @get:OutputFile
-    val outputFile get() = outputDir.resolve("$LibsClassName.kt")
-
+    val outputFile
+        get() = outputDir.resolve("$LibsClassName.kt")
 
 
     @TaskAction
     fun sync() {
+        val fileExisted = outputFile.canRead()
+
+        println(helpMessageBefore())
+
         createBasicStructureIfNeeded()
 
 
         val json = jsonInput.readText()
-        val moshi = Moshi.Builder().build()
-        val graph = moshi.adapter(DependencyGraph::class.java).fromJson(json)!!
-        val spec = kotlinpoet(parseGraph(graph), graph.gradle)
-//        spec.writeTo(System.out)
+        val moshiAdapter: JsonAdapter<DependencyGraph> = Moshi.Builder().build().adapter(DependencyGraph::class.java)
+        val dependencyGraph: DependencyGraph = moshiAdapter.fromJson(json)!!
+        val dependencies: List<Dependency> = parseGraph(dependencyGraph)
+
+        val spec: FileSpec = kotlinpoet(dependencies, dependencyGraph.gradle)
         spec.writeTo(outputDir)
+
+        println(helpMessageAfter(fileExisted, dependencies))
+    }
+
+    private fun helpMessageBefore(): String = """
+          Done running $ ./gradlew dependencyUpdates   # com.github.ben-manes:gradle-versions-plugin
+          Reading info about your dependencies from ${jsonInput.absolutePath}
+          """.trimIndent()
+
+    private fun helpMessageAfter(fileExisted: Boolean, dependencies: List<Dependency>): String {
+        val createdOrupdated = if (fileExisted) "Updated file" else "Created file"
+        val path = outputFile.absolutePath
+        val firstDep = dependencies.firstOrNull()?.escapedName ?: "xxx"
+
+        return """
+            $createdOrupdated $path
+
+            It contains meta-data about all your dependencies, including available updates and links to the website
+
+            Its content is available in all your build.gradle and build.gradle.kts
+
+            // build.gradle or build.gradle.kts
+            dependencies {
+               Libs.$firstDep
+            }
+
+            Run again the task any time you add a dependency or want to check for updates
+               $ ./gradlew syncLibs
+
+            """.trimIndent()
     }
 
     fun parseGraph(graph: DependencyGraph): List<Dependency> {
@@ -54,10 +91,9 @@ open class SyncLibs : DefaultTask() {
                 v.escapedName = key
             }
         }
-        println(versions.map { it.escapedName })
         return versions
-                .distinctBy { it.escapedName }
-                .sortedBy { it.escapedName }
+            .distinctBy { it.escapedName }
+            .sortedBy { it.escapedName }
 
     }
 
@@ -66,8 +102,8 @@ open class SyncLibs : DefaultTask() {
 
         val versionsProperties = versions.map { d: Dependency ->
             constStringProperty(
-                    name = d.escapedName,
-                    initializer = CodeBlock.of("%S %L", d.version, d.versionInformation())
+                name = d.escapedName,
+                initializer = CodeBlock.of("%S %L", d.version, d.versionInformation())
             )
         }
         val libsProperties = versions.map { d ->
@@ -78,31 +114,40 @@ open class SyncLibs : DefaultTask() {
                     CodeBlock.of("[%L website](%L)", d.name, url)
                 }
 
-        )}
+            )
+        }
 
         val gradleProperties = listOf(
-                constStringProperty("runningVersion", gradleConfig.running.version),
-                constStringProperty("currentVersion", gradleConfig.current.version),
-                constStringProperty("nightlyVersion", gradleConfig.nightly.version),
-                constStringProperty("releaseCandidate", gradleConfig.releaseCandidate.version)
+            constStringProperty("runningVersion", gradleConfig.running.version),
+            constStringProperty("currentVersion", gradleConfig.current.version),
+            constStringProperty("nightlyVersion", gradleConfig.nightly.version),
+            constStringProperty("releaseCandidate", gradleConfig.releaseCandidate.version)
         )
 
         val LibsBuilder = TypeSpec.objectBuilder("Libs")
-                .addType(
-                        TypeSpec.objectBuilder("Versions")
-                                .addProperties(versionsProperties)
-                                .build()
-                ).addType(
-                        TypeSpec.objectBuilder("Gradle")
-                                .addProperties(gradleProperties)
-                                .build()
-                ).addProperties(libsProperties)
+            .addKdoc(
+                """
+                  Generated by [gradle-kotlin-dsl-libs](https://github.com/jmfayard/gradle-kotlin-dsl-libs)
 
+                  Run again
+                    `$ ./gradlew syncLibs`
+                  to update this file
+                  """.trimIndent()
+            )
+            .addType(
+                TypeSpec.objectBuilder("Versions")
+                    .addProperties(versionsProperties)
+                    .build()
+            ).addType(
+                TypeSpec.objectBuilder("Gradle")
+                    .addProperties(gradleProperties)
+                    .build()
+            ).addProperties(libsProperties)
 
 
         val file = FileSpec.builder("", LibsClassName)
-                .addType(LibsBuilder.build())
-                .build()
+            .addType(LibsBuilder.build())
+            .build()
 
         return file
 
@@ -129,16 +174,17 @@ repositories {
     jcenter()
 }
         """
+
         fun constStringProperty(name: String, initializer: CodeBlock, kdoc: CodeBlock? = null) =
-                PropertySpec.builder(name, String::class)
-                        .addModifiers(KModifier.CONST)
-                        .initializer(initializer)
-                        .apply {
-                            if (kdoc != null) addKdoc(kdoc)
-                        }.build()
+            PropertySpec.builder(name, String::class)
+                .addModifiers(KModifier.CONST)
+                .initializer(initializer)
+                .apply {
+                    if (kdoc != null) addKdoc(kdoc)
+                }.build()
 
         fun constStringProperty(name: String, initializer: String, kdoc: CodeBlock? = null) =
-                constStringProperty(name, CodeBlock.of("%S", initializer))
+            constStringProperty(name, CodeBlock.of("%S", initializer))
 
         fun escapeName(name: String): String {
             val escapedChars = listOf('-', '.', ':')
