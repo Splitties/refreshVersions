@@ -78,12 +78,16 @@ open class SyncLibs : DefaultTask() {
     }
 
     fun parseGraph(graph: DependencyGraph): List<Dependency> {
-        val versions = graph.current + graph.exceeded + graph.unresolved + graph.outdated
+        val versions = graph.current + graph.exceeded + graph.outdated
+
         val map = mutableMapOf<String, Dependency>()
         for (v in versions) {
             val key = escapeName(v.name)
-            if (map.containsKey(key)) {
-                val fdqnName = escapeName("${v.group}_${v.name}")
+            val fdqnName = escapeName("${v.group}_${v.name}")
+
+            if (key in MEANING_LESS_NAMES) {
+                v.escapedName = fdqnName
+            } else if (map.containsKey(key)) {
                 v.escapedName = fdqnName
                 map[key]!!.escapedName = fdqnName
             } else {
@@ -166,6 +170,18 @@ open class SyncLibs : DefaultTask() {
 
 
     companion object {
+
+        /**
+         * We don't want to use meaningless generic names like Libs.core
+         *
+         * Found many examples of bad names here https://developer.android.com/jetpack/androidx/migrate
+         * **/
+        val MEANING_LESS_NAMES = listOf(
+            "common", "core", "core-testing", "testing", "runtime", "extensions",
+            "compiler", "migration", "db", "rules", "runner", "monitor", "loader",
+            "media", "print", "io", "media", "collection"
+        )
+
         const val INITIAL_BUILD_GRADLE_KTS = """
 plugins {
     `kotlin-dsl`
