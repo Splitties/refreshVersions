@@ -3,7 +3,6 @@
 
 - Change folder to `buildSrc/src/main/kotlin` see [separate language source files](https://docs.gradle.org/current/userguide/organizing_gradle_projects.html#sec:separate_language_source_files)  
 - Create empty `buildSrc/settings.gradle.kts` if none exists
-- Use tasks.register to optimize configuration time
 
 # 0.2.2
 
