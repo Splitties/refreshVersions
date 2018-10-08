@@ -17,7 +17,7 @@ open class GradleKotlinDslLibsPlugin : Plugin<Project> {
 
 
 
-        project.tasks.create("syncLibs", SyncLibs::class) {
+        project.tasks.create("syncLibs", SyncLibsTask::class) {
             dependsOn(":dependencyUpdates")
             jsonInputPath = benManesVersions.outputDir + "/" + benManesVersions.reportfileName + ".json"
         }
