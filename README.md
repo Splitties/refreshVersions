@@ -13,7 +13,7 @@ Step1: Edit build.gradle(.kts)
 ```groovy
 plugins {
   // https://plugins.gradle.org/plugin/jmfayard.github.io.gradle-kotlin-dsl-libs
-  id("jmfayard.github.io.gradle-kotlin-dsl-libs").version("0.2.0")
+  id("jmfayard.github.io.gradle-kotlin-dsl-libs") version "0.2.2"
 }
 ```
 
@@ -28,7 +28,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "jmfayard.github.io:gradle-kotlin-dsl-libs:0.2.1"
+    classpath "jmfayard.github.io:gradle-kotlin-dsl-libs:0.2.2"
   }
 }
 
@@ -41,10 +41,11 @@ apply plugin: "jmfayard.github.io.gradle-kotlin-dsl-libs"
 Step2
 ----
 
-```bash
-$ ./gradlew syncLibs
-$ cat buildSrc/src/main/java/Libs.kt
-```
+
+`$ ./gradlew syncLibs`
+
+`$ cat ` [buildSrc/src/main/java/Libs.kt](https://github.com/jmfayard/sample-synclibs/blob/0054d42685ca50638c2e05670426b30323d7f6a8/buildSrc/src/main/java/Libs.kt)
+
 
 Step3: 
 ----

@@ -1,5 +1,13 @@
 package jmfayard.github.io
 
+import com.squareup.kotlinpoet.FileSpec
+
+data class KotlinPoetry(
+    val Libs: FileSpec,
+    val Versions: FileSpec
+)
+
+
 
 data class DependencyGraph(
         val gradle: GradleConfig,

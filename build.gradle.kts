@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "jmfayard.github.io"
-version = "0.2.1"
+version = "0.2.2"
 
 gradlePlugin {
     plugins {
