@@ -2,20 +2,22 @@ package jmfayard.github.io
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import okio.buffer
+import okio.source
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
 open class SyncLibsTask : DefaultTask() {
 
     init {
-        description = "Update buildSrc/src/main/java/Libs.kt"
+        description = "Update buildSrc/src/main/kotlin/Libs.kt"
         group = "build"
     }
 
     var jsonInputPath = "build/dependencyUpdates/report.json"
 
 
-    val outputDir = project.file("buildSrc/src/main/java")
+    var outputDir = project.file("buildSrc/src/main/kotlin")
 
 
     @TaskAction
@@ -32,9 +34,9 @@ open class SyncLibsTask : DefaultTask() {
         createBasicStructureIfNeeded()
 
 
-        val json = jsonInput.readText()
         val moshiAdapter: JsonAdapter<DependencyGraph> = Moshi.Builder().build().adapter(DependencyGraph::class.java)
-        val dependencyGraph: DependencyGraph = moshiAdapter.fromJson(json)!!
+        val dependencyGraph: DependencyGraph = moshiAdapter.fromJson(jsonInput.source().buffer())!!
+
         val dependencies: List<Dependency> = parseGraph(dependencyGraph)
 
         val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle)
@@ -46,13 +48,19 @@ open class SyncLibsTask : DefaultTask() {
 
 
     fun createBasicStructureIfNeeded() {
-        val folder = project.file("buildSrc/main/java")
-        if (folder.isDirectory.not()) {
-            folder.mkdirs()
+        if (outputDir.isDirectory.not()) {
+            outputDir.mkdirs()
         }
-        val buildSrc = project.file("buildSrc/build.gradle.kts")
-        if (buildSrc.exists().not()) {
-            buildSrc.writeText(INITIAL_BUILD_GRADLE_KTS)
+        val buildGradleKts = project.file("buildSrc/build.gradle.kts")
+        if (buildGradleKts.exists().not()) {
+            println("Creating ${buildGradleKts.absolutePath}")
+            buildGradleKts.writeText(INITIAL_BUILD_GRADLE_KTS)
+        }
+
+        val settingsGradleKts = project.file("buildSrc/settings.gradle.kts")
+        if (settingsGradleKts.exists().not()) {
+            println("Creating empty ${settingsGradleKts.absolutePath}")
+            settingsGradleKts.writeText("")
         }
     }
 

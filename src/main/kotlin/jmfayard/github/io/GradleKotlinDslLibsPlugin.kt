@@ -1,9 +1,10 @@
 package jmfayard.github.io
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.register
 
 open class GradleKotlinDslLibsPlugin : Plugin<Project> {
 
@@ -17,9 +18,10 @@ open class GradleKotlinDslLibsPlugin : Plugin<Project> {
 
 
 
-        project.tasks.create("syncLibs", SyncLibsTask::class) {
+        project.tasks.register("syncLibs", SyncLibsTask::class) {
             dependsOn(":dependencyUpdates")
             jsonInputPath = benManesVersions.outputDir + "/" + benManesVersions.reportfileName + ".json"
         }
+
     }
 }

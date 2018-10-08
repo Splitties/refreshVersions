@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "jmfayard.github.io"
-version = "0.2.2"
+version = "0.2.3"
 
 gradlePlugin {
     plugins {
@@ -40,6 +40,7 @@ dependencies {
     testImplementation("org.amshove.kluent:kluent:1.4")
     testImplementation("org.testng:testng:6.14.3")
 
+    compile("com.squareup.okio:okio:2.1.0")
     compile( "com.squareup.moshi:moshi:1.7.0")
     compile("com.squareup:kotlinpoet:1.0.0-RC1")
 
