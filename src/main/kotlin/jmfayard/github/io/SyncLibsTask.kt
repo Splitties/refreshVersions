@@ -6,6 +6,7 @@ import okio.buffer
 import okio.source
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
+import java.io.File
 
 open class SyncLibsTask : DefaultTask() {
 
@@ -13,6 +14,18 @@ open class SyncLibsTask : DefaultTask() {
         description = "Update buildSrc/src/main/kotlin/Libs.kt"
         group = "build"
     }
+
+    companion object {
+        val moshiAdapter: JsonAdapter<DependencyGraph> by lazy {
+            Moshi.Builder().build().adapter(DependencyGraph::class.java)
+        }
+
+        fun readGraphFromJsonFile(jsonInput: File): DependencyGraph {
+            return moshiAdapter.fromJson(jsonInput.source().buffer())!!
+        }
+
+    }
+
 
     var jsonInputPath = "build/dependencyUpdates/report.json"
 
@@ -33,9 +46,7 @@ open class SyncLibsTask : DefaultTask() {
 
         createBasicStructureIfNeeded()
 
-
-        val moshiAdapter: JsonAdapter<DependencyGraph> = Moshi.Builder().build().adapter(DependencyGraph::class.java)
-        val dependencyGraph: DependencyGraph = moshiAdapter.fromJson(jsonInput.source().buffer())!!
+        val dependencyGraph = readGraphFromJsonFile(jsonInput)
 
         val dependencies: List<Dependency> = parseGraph(dependencyGraph)
 
@@ -64,7 +75,5 @@ open class SyncLibsTask : DefaultTask() {
         }
     }
 
-
 }
-
 

@@ -13,7 +13,7 @@ internal val VersionsClassName = "Versions"
  *
  * Found many inspiration for bad names here https://developer.android.com/jetpack/androidx/migrate
  * **/
-val MEANING_LESS_NAMES = listOf(
+val MEANING_LESS_NAMES: List<String> = listOf(
     "common", "core", "core-testing", "testing", "runtime", "extensions",
     "compiler", "migration", "db", "rules", "runner", "monitor", "loader",
     "media", "print", "io", "media", "collection"
@@ -126,7 +126,7 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
 }
 
 
-fun parseGraph(graph: DependencyGraph): List<Dependency> {
+fun SyncLibsTask.Companion.parseGraph(graph: DependencyGraph): List<Dependency> {
     val versions = graph.current + graph.exceeded + graph.outdated
 
     val map = mutableMapOf<String, Dependency>()

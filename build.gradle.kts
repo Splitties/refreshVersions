@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
@@ -36,12 +38,26 @@ pluginBundle {
     tags = listOf("kotlin", "kotlin-dsl", "versioning")
 }
 dependencies {
-    compile("com.github.ben-manes:gradle-versions-plugin:0.20.0")
-    testImplementation("org.amshove.kluent:kluent:1.4")
-    testImplementation("org.testng:testng:6.14.3")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
 
-    compile("com.squareup.okio:okio:2.1.0")
-    compile( "com.squareup.moshi:moshi:1.7.0")
-    compile("com.squareup:kotlinpoet:1.0.0-RC1")
+    implementation("com.github.ben-manes:gradle-versions-plugin:0.20.0")
 
+    implementation("com.squareup.okio:okio:2.1.0")
+    implementation( "com.squareup.moshi:moshi:1.7.0")
+    implementation("com.squareup:kotlinpoet:1.0.0-RC1")
+
+}
+
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
