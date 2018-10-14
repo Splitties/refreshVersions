@@ -1,0 +1,104 @@
+{
+    "current": {
+        "dependencies": [
+            {
+                "group": "com.github.bumptech.glide",
+                "version": "4.8.0",
+                "projectUrl": "https://github.com/bumptech/glide",
+                "name": "compiler"
+            },
+            {
+                "group": "de.mpicbg.scicomp",
+                "version": "0.10.3",
+                "projectUrl": null,
+                "name": "krangl"
+            },
+            {
+                "group": "jmfayard.github.io.gradle-kotlin-dsl-libs",
+                "version": "0.2.3",
+                "projectUrl": null,
+                "name": "jmfayard.github.io.gradle-kotlin-dsl-libs.gradle.plugin"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "version": "1.2.71",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-scripting-compiler-embeddable"
+            },
+            {
+                "group": "org.jetbrains.kotlin.jvm",
+                "version": "1.2.71",
+                "projectUrl": null,
+                "name": "org.jetbrains.kotlin.jvm.gradle.plugin"
+            }
+        ],
+        "count": 5
+    },
+    "gradle": {
+        "current": {
+            "version": "4.10.2",
+            "reason": "",
+            "isUpdateAvailable": false,
+            "isFailure": false
+        },
+        "nightly": {
+            "version": "5.1-20181014000007+0000",
+            "reason": "",
+            "isUpdateAvailable": true,
+            "isFailure": false
+        },
+        "enabled": true,
+        "releaseCandidate": {
+            "version": "",
+            "reason": "update check succeeded: no release available",
+            "isUpdateAvailable": false,
+            "isFailure": false
+        },
+        "running": {
+            "version": "4.10.2",
+            "reason": "",
+            "isUpdateAvailable": false,
+            "isFailure": false
+        }
+    },
+    "exceeded": {
+        "dependencies": [
+            
+        ],
+        "count": 0
+    },
+    "outdated": {
+        "dependencies": [
+            {
+                "group": "com.squareup.okio",
+                "available": {
+                    "release": null,
+                    "milestone": "2.1.0",
+                    "integration": null
+                },
+                "version": "2.0.0",
+                "projectUrl": "https://github.com/square/okio/",
+                "name": "okio"
+            },
+            {
+                "group": "io.reactivex.rxjava2",
+                "available": {
+                    "release": null,
+                    "milestone": "2.2.2",
+                    "integration": null
+                },
+                "version": "2.2.0",
+                "projectUrl": "https://github.com/ReactiveX/RxJava",
+                "name": "rxjava"
+            }
+        ],
+        "count": 2
+    },
+    "unresolved": {
+        "dependencies": [
+            
+        ],
+        "count": 0
+    },
+    "count": 7
+}

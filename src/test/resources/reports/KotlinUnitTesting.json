@@ -1,0 +1,161 @@
+{
+    "current": {
+        "dependencies": [
+            {
+                "group": "jmfayard.github.io.gradle-kotlin-dsl-libs",
+                "version": "0.2.3",
+                "projectUrl": null,
+                "name": "jmfayard.github.io.gradle-kotlin-dsl-libs.gradle.plugin"
+            },
+            {
+                "group": "junit",
+                "version": "4.12",
+                "projectUrl": "http://junit.org",
+                "name": "junit"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "version": "1.2.71",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-gradle-plugin"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "version": "1.2.71",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-reflect"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "version": "1.2.71",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-scripting-compiler-embeddable"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "version": "1.2.71",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-stdlib-jdk8"
+            },
+            {
+                "group": "org.junit.jupiter",
+                "version": "5.3.1",
+                "projectUrl": "http://junit.org/junit5/",
+                "name": "junit-jupiter-api"
+            },
+            {
+                "group": "org.junit.jupiter",
+                "version": "5.3.1",
+                "projectUrl": "http://junit.org/junit5/",
+                "name": "junit-jupiter-engine"
+            },
+            {
+                "group": "org.junit.jupiter",
+                "version": "5.3.1",
+                "projectUrl": "http://junit.org/junit5/",
+                "name": "junit-jupiter-params"
+            }
+        ],
+        "count": 9
+    },
+    "gradle": {
+        "current": {
+            "version": "4.10.2",
+            "reason": "",
+            "isUpdateAvailable": false,
+            "isFailure": false
+        },
+        "nightly": {
+            "version": "5.0-20181010235832+0000",
+            "reason": "",
+            "isUpdateAvailable": true,
+            "isFailure": false
+        },
+        "enabled": true,
+        "releaseCandidate": {
+            "version": "",
+            "reason": "update check succeeded: no release available",
+            "isUpdateAvailable": false,
+            "isFailure": false
+        },
+        "running": {
+            "version": "4.10.2",
+            "reason": "",
+            "isUpdateAvailable": false,
+            "isFailure": false
+        }
+    },
+    "exceeded": {
+        "dependencies": [
+            
+        ],
+        "count": 0
+    },
+    "outdated": {
+        "dependencies": [
+            {
+                "group": "io.kotlintest",
+                "available": {
+                    "release": null,
+                    "milestone": "3.1.10",
+                    "integration": null
+                },
+                "version": "3.1.7",
+                "projectUrl": "http://www.github.com/kotlintest/kotlintest",
+                "name": "kotlintest-runner-junit5"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.61",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-gradle-plugin"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.61",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-stdlib-jdk8"
+            },
+            {
+                "group": "org.spekframework.spek2",
+                "available": {
+                    "release": null,
+                    "milestone": "2.0.0-alpha.2",
+                    "integration": null
+                },
+                "version": "2.0.0-alpha.1",
+                "projectUrl": "https://spekframework.github.io/spek",
+                "name": "spek-dsl-jvm"
+            },
+            {
+                "group": "org.spekframework.spek2",
+                "available": {
+                    "release": null,
+                    "milestone": "2.0.0-alpha.2",
+                    "integration": null
+                },
+                "version": "2.0.0-alpha.1",
+                "projectUrl": "https://spekframework.github.io/spek",
+                "name": "spek-runner-junit5"
+            }
+        ],
+        "count": 5
+    },
+    "unresolved": {
+        "dependencies": [
+            
+        ],
+        "count": 0
+    },
+    "count": 14
+}

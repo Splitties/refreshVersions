@@ -1,0 +1,507 @@
+{
+    "current": {
+        "dependencies": [
+            {
+                "group": "com.google.code.gson",
+                "version": "2.8.5",
+                "projectUrl": "https://github.com/google/gson",
+                "name": "gson"
+            },
+            {
+                "group": "com.natpryce",
+                "version": "1.6.0.0",
+                "projectUrl": "https://github.com/npryce/hamkrest",
+                "name": "hamkrest"
+            },
+            {
+                "group": "com.squareup.okhttp3",
+                "version": "3.11.0",
+                "projectUrl": "https://github.com/square/okhttp",
+                "name": "okhttp"
+            },
+            {
+                "group": "io.github.resilience4j",
+                "version": "0.13.1",
+                "projectUrl": "https://github.com/resilience4j/resilience4j",
+                "name": "resilience4j-bulkhead"
+            },
+            {
+                "group": "io.github.resilience4j",
+                "version": "0.13.1",
+                "projectUrl": "https://github.com/resilience4j/resilience4j",
+                "name": "resilience4j-circuitbreaker"
+            },
+            {
+                "group": "io.github.resilience4j",
+                "version": "0.13.1",
+                "projectUrl": "https://github.com/resilience4j/resilience4j",
+                "name": "resilience4j-ratelimiter"
+            },
+            {
+                "group": "io.github.resilience4j",
+                "version": "0.13.1",
+                "projectUrl": "https://github.com/resilience4j/resilience4j",
+                "name": "resilience4j-retry"
+            },
+            {
+                "group": "io.micrometer",
+                "version": "1.0.6",
+                "projectUrl": "https://github.com/micrometer-metrics/micrometer",
+                "name": "micrometer-core"
+            },
+            {
+                "group": "io.undertow",
+                "version": "2.0.13.Final",
+                "projectUrl": "http://www.jboss.org",
+                "name": "undertow-core"
+            },
+            {
+                "group": "io.undertow",
+                "version": "2.0.13.Final",
+                "projectUrl": "http://www.jboss.org",
+                "name": "undertow-servlet"
+            },
+            {
+                "group": "jmfayard.github.io.gradle-kotlin-dsl-libs",
+                "version": "0.2.2",
+                "projectUrl": null,
+                "name": "jmfayard.github.io.gradle-kotlin-dsl-libs.gradle.plugin"
+            },
+            {
+                "group": "net.sourceforge.cobertura",
+                "version": "2.1.1",
+                "projectUrl": "http://cobertura.sourceforge.net",
+                "name": "cobertura"
+            },
+            {
+                "group": "org.apache.httpcomponents",
+                "version": "4.5.6",
+                "projectUrl": "http://hc.apache.org/httpcomponents-client",
+                "name": "httpclient"
+            },
+            {
+                "group": "org.apache.httpcomponents",
+                "version": "4.4.10",
+                "projectUrl": "http://hc.apache.org/httpcomponents-core-ga",
+                "name": "httpcore"
+            },
+            {
+                "group": "org.jetbrains.dokka",
+                "version": "0.9.17",
+                "projectUrl": null,
+                "name": "dokka-gradle-plugin"
+            },
+            {
+                "group": "org.json",
+                "version": "20180813",
+                "projectUrl": "https://github.com/douglascrockford/JSON-java",
+                "name": "json"
+            },
+            {
+                "group": "org.junit.jupiter",
+                "version": "5.3.1",
+                "projectUrl": "http://junit.org/junit5/",
+                "name": "junit-jupiter-api"
+            },
+            {
+                "group": "org.junit.jupiter",
+                "version": "5.3.1",
+                "projectUrl": "http://junit.org/junit5/",
+                "name": "junit-jupiter-engine"
+            },
+            {
+                "group": "org.mortbay.jetty.alpn",
+                "version": "8.1.12.v20180117",
+                "projectUrl": "http://www.eclipse.org/jetty",
+                "name": "alpn-boot"
+            }
+        ],
+        "count": 19
+    },
+    "gradle": {
+        "current": {
+            "version": "4.10.2",
+            "reason": "",
+            "isUpdateAvailable": true,
+            "isFailure": false
+        },
+        "nightly": {
+            "version": "5.0-20181007235844+0000",
+            "reason": "",
+            "isUpdateAvailable": true,
+            "isFailure": false
+        },
+        "enabled": true,
+        "releaseCandidate": {
+            "version": "",
+            "reason": "update check succeeded: no release available",
+            "isUpdateAvailable": false,
+            "isFailure": false
+        },
+        "running": {
+            "version": "4.6",
+            "reason": "",
+            "isUpdateAvailable": false,
+            "isFailure": false
+        }
+    },
+    "exceeded": {
+        "dependencies": [
+            
+        ],
+        "count": 0
+    },
+    "outdated": {
+        "dependencies": [
+            {
+                "group": "com.fasterxml.jackson.module",
+                "available": {
+                    "release": null,
+                    "milestone": "2.9.7",
+                    "integration": null
+                },
+                "version": "2.9.6",
+                "projectUrl": "https://github.com/FasterXML/jackson-module-kotlin",
+                "name": "jackson-module-kotlin"
+            },
+            {
+                "group": "com.github.jknack",
+                "available": {
+                    "release": null,
+                    "milestone": "4.1.0",
+                    "integration": null
+                },
+                "version": "4.0.6",
+                "projectUrl": "https://github.com/jknack/handlebars.java",
+                "name": "handlebars"
+            },
+            {
+                "group": "com.github.kt3k.coveralls",
+                "available": {
+                    "release": null,
+                    "milestone": "2.8.2",
+                    "integration": null
+                },
+                "version": "2.8.1",
+                "projectUrl": null,
+                "name": "com.github.kt3k.coveralls.gradle.plugin"
+            },
+            {
+                "group": "com.jfrog.bintray",
+                "available": {
+                    "release": null,
+                    "milestone": "1.8.4",
+                    "integration": null
+                },
+                "version": "1.7.3",
+                "projectUrl": null,
+                "name": "com.jfrog.bintray.gradle.plugin"
+            },
+            {
+                "group": "com.netflix.nebula",
+                "available": {
+                    "release": null,
+                    "milestone": "4.0.1",
+                    "integration": null
+                },
+                "version": "2.2.2",
+                "projectUrl": "https://github.com/nebula-plugins/gradle-extra-configurations-plugin",
+                "name": "gradle-extra-configurations-plugin"
+            },
+            {
+                "group": "com.squareup.moshi",
+                "available": {
+                    "release": null,
+                    "milestone": "1.7.0",
+                    "integration": null
+                },
+                "version": "1.6.0",
+                "projectUrl": "https://github.com/square/moshi",
+                "name": "moshi"
+            },
+            {
+                "group": "com.squareup.moshi",
+                "available": {
+                    "release": null,
+                    "milestone": "1.7.0",
+                    "integration": null
+                },
+                "version": "1.6.0",
+                "projectUrl": "https://github.com/square/moshi",
+                "name": "moshi-kotlin"
+            },
+            {
+                "group": "io.github.artsok",
+                "available": {
+                    "release": null,
+                    "milestone": "1.1.1",
+                    "integration": null
+                },
+                "version": "1.1.0",
+                "projectUrl": "https://github.com/artsok/rerunner-jupiter",
+                "name": "rerunner-jupiter"
+            },
+            {
+                "group": "io.netty",
+                "available": {
+                    "release": null,
+                    "milestone": "5.0.0.Alpha2",
+                    "integration": null
+                },
+                "version": "4.1.23.Final",
+                "projectUrl": "http://netty.io/",
+                "name": "netty-codec-http2"
+            },
+            {
+                "group": "io.pebbletemplates",
+                "available": {
+                    "release": null,
+                    "milestone": "3.0.5",
+                    "integration": null
+                },
+                "version": "2.6.1",
+                "projectUrl": "http://pebbletemplates.io",
+                "name": "pebble"
+            },
+            {
+                "group": "javax.servlet",
+                "available": {
+                    "release": null,
+                    "milestone": "4.0.1",
+                    "integration": null
+                },
+                "version": "4.0.0",
+                "projectUrl": "https://javaee.github.io/servlet-spec/",
+                "name": "javax.servlet-api"
+            },
+            {
+                "group": "net.saliman",
+                "available": {
+                    "release": null,
+                    "milestone": "2.5.4",
+                    "integration": null
+                },
+                "version": "2.0.0",
+                "projectUrl": "https://github.com/stevesaliman/gradle-cobertura-plugin",
+                "name": "gradle-cobertura-plugin"
+            },
+            {
+                "group": "net.saliman.cobertura",
+                "available": {
+                    "release": null,
+                    "milestone": "2.5.4",
+                    "integration": null
+                },
+                "version": "2.4.0",
+                "projectUrl": null,
+                "name": "net.saliman.cobertura.gradle.plugin"
+            },
+            {
+                "group": "net.sourceforge.argo",
+                "available": {
+                    "release": null,
+                    "milestone": "5.4",
+                    "integration": null
+                },
+                "version": "3.40",
+                "projectUrl": "http://argo.sourceforge.net",
+                "name": "argo"
+            },
+            {
+                "group": "org.apache.commons",
+                "available": {
+                    "release": null,
+                    "milestone": "2.6.0",
+                    "integration": null
+                },
+                "version": "2.4.2",
+                "projectUrl": "http://commons.apache.org/proper/commons-pool/",
+                "name": "commons-pool2"
+            },
+            {
+                "group": "org.apache.httpcomponents",
+                "available": {
+                    "release": null,
+                    "milestone": "4.1.4",
+                    "integration": null
+                },
+                "version": "4.1.3",
+                "projectUrl": "http://hc.apache.org/httpcomponents-asyncclient",
+                "name": "httpasyncclient"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "available": {
+                    "release": null,
+                    "milestone": "9.4.12.RC2",
+                    "integration": null
+                },
+                "version": "9.4.12.v20180830",
+                "projectUrl": "https://eclipse.org/jetty",
+                "name": "jetty-alpn-conscrypt-server"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "available": {
+                    "release": null,
+                    "milestone": "9.4.12.RC2",
+                    "integration": null
+                },
+                "version": "9.4.12.v20180830",
+                "projectUrl": "http://www.eclipse.org/jetty",
+                "name": "jetty-client"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "available": {
+                    "release": null,
+                    "milestone": "9.4.12.RC2",
+                    "integration": null
+                },
+                "version": "9.4.12.v20180830",
+                "projectUrl": "http://www.eclipse.org/jetty",
+                "name": "jetty-server"
+            },
+            {
+                "group": "org.eclipse.jetty",
+                "available": {
+                    "release": null,
+                    "milestone": "9.4.12.RC2",
+                    "integration": null
+                },
+                "version": "9.4.12.v20180830",
+                "projectUrl": "http://www.eclipse.org/jetty",
+                "name": "jetty-servlet"
+            },
+            {
+                "group": "org.eclipse.jetty.http2",
+                "available": {
+                    "release": null,
+                    "milestone": "9.4.12.RC2",
+                    "integration": null
+                },
+                "version": "9.4.12.v20180830",
+                "projectUrl": "https://eclipse.org/jetty",
+                "name": "http2-server"
+            },
+            {
+                "group": "org.eclipse.jetty.websocket",
+                "available": {
+                    "release": null,
+                    "milestone": "9.4.12.RC2",
+                    "integration": null
+                },
+                "version": "9.4.12.v20180830",
+                "projectUrl": "http://www.eclipse.org/jetty",
+                "name": "javax-websocket-server-impl"
+            },
+            {
+                "group": "org.java-websocket",
+                "available": {
+                    "release": null,
+                    "milestone": "1.3.9",
+                    "integration": null
+                },
+                "version": "1.3.8",
+                "projectUrl": "https://github.com/TooTallNate/Java-WebSocket",
+                "name": "Java-WebSocket"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-gradle-plugin"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-reflect"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-scripting-compiler-embeddable"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-stdlib-jdk8"
+            },
+            {
+                "group": "org.jsoup",
+                "available": {
+                    "release": null,
+                    "milestone": "1.11.3",
+                    "integration": null
+                },
+                "version": "1.10.3",
+                "projectUrl": "https://jsoup.org/",
+                "name": "jsoup"
+            },
+            {
+                "group": "org.kt3k.gradle.plugin",
+                "available": {
+                    "release": null,
+                    "milestone": "2.8.2",
+                    "integration": null
+                },
+                "version": "2.3.1",
+                "projectUrl": "https://github.com/kt3k/coveralls-gradle-plugin",
+                "name": "coveralls-gradle-plugin"
+            },
+            {
+                "group": "org.seleniumhq.selenium",
+                "available": {
+                    "release": null,
+                    "milestone": "3.14.0",
+                    "integration": null
+                },
+                "version": "3.5.1",
+                "projectUrl": "http://www.seleniumhq.org/",
+                "name": "selenium-api"
+            },
+            {
+                "group": "org.thymeleaf",
+                "available": {
+                    "release": null,
+                    "milestone": "3.0.9.RELEASE",
+                    "integration": null
+                },
+                "version": "3.0.7.RELEASE",
+                "projectUrl": "http://www.thymeleaf.org",
+                "name": "thymeleaf"
+            }
+        ],
+        "count": 31
+    },
+    "unresolved": {
+        "dependencies": [
+            
+        ],
+        "count": 0
+    },
+    "count": 50
+}

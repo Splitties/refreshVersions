@@ -1,0 +1,12 @@
+jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin
+junit
+junit_jupiter_api
+junit_jupiter_engine
+junit_jupiter_params
+kotlin_reflect
+kotlin_scripting_compiler_embeddable
+kotlintest_runner_junit5
+org_jetbrains_kotlin_kotlin_gradle_plugin
+org_jetbrains_kotlin_kotlin_stdlib_jdk8
+spek_dsl_jvm
+spek_runner_junit5
