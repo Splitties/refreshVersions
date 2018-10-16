@@ -12,12 +12,12 @@ appcompat_v7
 asciidoctor_gradle_plugin
 asciidoctorj_pdf
 com_android_support_test_runner
+com_android_tools_build_gradle
 constraint_layout
 converter_gson
 core_testing
 design
 dokka_android_gradle_plugin
-gradle
 gradle_bintray_plugin
 gson
 httpclient

@@ -1,4 +1,12 @@
 
+# 0.2.4
+
+- #4 SyncLibs generate wrong output file
+- #1 Make it slightly easier to manually update the version 
+- #3 Add buildSrc/.gitignore
+
+ 
+
 # 0.2.3
 
 - Change folder to `buildSrc/src/main/kotlin` see [separate language source files](https://docs.gradle.org/current/userguide/organizing_gradle_projects.html#sec:separate_language_source_files)  

@@ -1,5 +1,6 @@
 aapt2
 appcompat
+com_android_tools_build_gradle
 com_diffplug_gradle_spotless_gradle_plugin
 com_github_bumptech_glide_compiler
 constraintlayout
@@ -13,7 +14,6 @@ espresso_contrib
 espresso_core
 espresso_intents
 glide
-gradle
 gson
 jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin
 junit

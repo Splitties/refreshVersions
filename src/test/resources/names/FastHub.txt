@@ -15,6 +15,8 @@ cardview_v7
 colorpicker_library
 com_android_support_test_rules
 com_android_support_test_runner
+com_android_tools_build_gradle
+com_github_b3er_rxfirebase_firebase_database
 com_google_firebase_firebase_database
 commonmark
 commonmark_ext_autolink
