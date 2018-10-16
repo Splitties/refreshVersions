@@ -87,16 +87,15 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
     val versionsProperties: List<PropertySpec> = versions.map { d: Dependency ->
         constStringProperty(
             name = d.escapedName,
-            initializer = CodeBlock.of("%S %L", d.version, d.versionInformation())
+            initializer = CodeBlock.of("%S %L", d.version, d.versionInformation()),
+            kdoc = dependencyKdoc(d)
         )
     }
     val libsProperties: List<PropertySpec> = versions.map { d ->
         constStringProperty(
             name = d.escapedName,
             initializer = CodeBlock.of("%S + Versions.%L", "${d.group}:${d.name}:", d.escapedName),
-            kdoc = d.projectUrl?.let { url ->
-                CodeBlock.of("[%L website](%L)", d.name, url)
-            }
+            kdoc = dependencyKdoc(d)
         )
     }
 
@@ -134,6 +133,11 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
 
     return KotlinPoetry(Libs = LibsFile, Versions = VersionsFile)
 
+}
+
+private fun dependencyKdoc(d: Dependency): CodeBlock? {
+    return if (d.projectUrl == null) null
+    else CodeBlock.of("[%L website](%L)", d.name, d.projectUrl)
 }
 
 
