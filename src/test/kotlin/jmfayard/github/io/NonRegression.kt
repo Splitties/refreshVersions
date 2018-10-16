@@ -39,6 +39,7 @@ fun nonRegressionForFile(json: File, nonregFile: File) {
               $missingNames""".trimIndent()
         ) else {
             println("Non-regression ok")
+            nonregFile.writeText(escapedNames.joinToStringWithNewLines())
         }
     } else {
         nonregFile.writeText(escapedNames.joinToStringWithNewLines())

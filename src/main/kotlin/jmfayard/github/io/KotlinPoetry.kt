@@ -16,7 +16,7 @@ internal val VersionsClassName = "Versions"
 val MEANING_LESS_NAMES: List<String> = listOf(
     "common", "core", "core-testing", "testing", "runtime", "extensions",
     "compiler", "migration", "db", "rules", "runner", "monitor", "loader",
-    "media", "print", "io", "media", "collection"
+    "media", "print", "io", "media", "collection", "gradle"
 )
 
 val GITIGNORE = """
@@ -138,24 +138,29 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
 
 
 fun SyncLibsTask.Companion.parseGraph(graph: DependencyGraph): List<Dependency> {
-    val versions = graph.current + graph.exceeded + graph.outdated
+    val dependencies: List<Dependency> = graph.current + graph.exceeded + graph.outdated + graph.unresolved
 
     val map = mutableMapOf<String, Dependency>()
-    for (v in versions) {
-        val key = escapeName(v.name)
-        val fdqnName = escapeName("${v.group}_${v.name}")
+    for (d: Dependency in dependencies) {
+        val key = escapeName(d.name)
+        val fdqnName = escapeName("${d.group}_${d.name}")
+
 
         if (key in MEANING_LESS_NAMES) {
-            v.escapedName = fdqnName
+            d.escapedName = fdqnName
         } else if (map.containsKey(key)) {
-            v.escapedName = fdqnName
-            map[key]!!.escapedName = fdqnName
+            d.escapedName = fdqnName
+
+            // also use FDQN for the dependency that conflicts with this one
+            val other = map[key]!!
+            other.escapedName = escapeName("${other.group}_${other.name}")
+            println("Will use FDQN for ${other.escapedName}")
         } else {
-            map[key] = v
-            v.escapedName = key
+            map[key] = d
+            d.escapedName = key
         }
     }
-    return versions
+    return dependencies
         .distinctBy { it.escapedName }
         .sortedBy { it.escapedName }
 
@@ -184,16 +189,24 @@ fun escapeName(name: String): String {
     }
 }
 
-fun Dependency.versionInformation(): String = when {
-    latest.isNullOrBlank().not() -> "// exceed the version found: $latest"
-    reason != null && reason.isNotBlank() -> {
-        val shorterReason = reason.lines().take(4).joinToString(separator = "\n")
-        "\n/* error: $shorterReason \n.... */"
+fun Dependency.versionInformation(): String {
+    return when {
+        latest.isNullOrBlank().not() -> "// exceed the version found: $latest"
+        reason.isNullOrBlank().not() -> this.unresolvedReason()!!
+        available != null -> available.displayComment()
+        else -> "// up-to-date"
     }
-    available != null -> available.displayComment()
-    else -> "// up-to-date"
 }
 
+
+fun Dependency.unresolvedReason() : String? {
+    val shorterReason = reason?.lines()?.take(4)?.joinToString(separator = "\n") ?: ""
+    return when {
+        shorterReason.isBlank() -> ""
+        shorterReason.contains("Could not find any matches") -> "// No update information. Is this dependency available on jcenter or mavenCentral?"
+        else -> "\n/* $shorterReason \n.... */"
+    }
+}
 
 fun AvailableDependency.displayComment(): String = when {
     release.isNullOrBlank().not() -> "// available: release=$release"
