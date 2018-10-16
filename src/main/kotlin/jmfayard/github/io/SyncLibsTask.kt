@@ -73,6 +73,11 @@ open class SyncLibsTask : DefaultTask() {
             println("Creating empty ${settingsGradleKts.absolutePath}")
             settingsGradleKts.writeText("")
         }
+
+        val gitIgnore = project.file("buildSrc/.gitignore")
+        if (gitIgnore.exists().not()) {
+            gitIgnore.writeText(GITIGNORE)
+        }
     }
 
 }
