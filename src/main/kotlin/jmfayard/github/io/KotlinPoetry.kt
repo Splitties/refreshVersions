@@ -209,9 +209,9 @@ fun Dependency.unresolvedReason() : String? {
 }
 
 fun AvailableDependency.displayComment(): String = when {
-    release.isNullOrBlank().not() -> "// available: release=$release"
-    milestone.isNullOrBlank().not() -> "// available: milestone=$milestone"
-    integration.isNullOrBlank().not() -> "// available: integration=$integration"
+    release.isNullOrBlank().not()     -> """// available release: "$release" """
+    milestone.isNullOrBlank().not()   -> """// available milestone: "$milestone" """
+    integration.isNullOrBlank().not() -> """// available integration: "$integration" """
     else -> "// " + this.toString()
 }
 
