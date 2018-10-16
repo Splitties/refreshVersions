@@ -29,7 +29,7 @@ Step1: Edit build.gradle(.kts)
 ```groovy
 plugins {
   // https://plugins.gradle.org/plugin/jmfayard.github.io.gradle-kotlin-dsl-libs
-  id("jmfayard.github.io.gradle-kotlin-dsl-libs") version "0.2.3"
+  id("jmfayard.github.io.gradle-kotlin-dsl-libs") version "0.2.4"
 }
 ```
 
