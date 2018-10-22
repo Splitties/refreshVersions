@@ -1,4 +1,10 @@
 
+# 0.2.5
+
+- #10 Detect when multiple dependencies from the same group use the same version 
+- #8 Order dependencies by group
+
+
 # 0.2.4
 
 - #4 SyncLibs generate wrong output file
