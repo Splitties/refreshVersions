@@ -9,14 +9,14 @@ internal val VersionsClassName = "Versions"
 
 
 /**
- * We don't want to use meaningless generic names like Libs.core
+ * We don't want to use meaningless generic libs like Libs.core
  *
- * Found many inspiration for bad names here https://developer.android.com/jetpack/androidx/migrate
+ * Found many inspiration for bad libs here https://developer.android.com/jetpack/androidx/migrate
  * **/
 val MEANING_LESS_NAMES: List<String> = listOf(
     "common", "core", "core-testing", "testing", "runtime", "extensions",
     "compiler", "migration", "db", "rules", "runner", "monitor", "loader",
-    "media", "print", "io", "media", "collection", "gradle"
+    "media", "print", "io", "media", "collection", "gradle", "android"
 )
 
 val GITIGNORE = """
@@ -84,20 +84,24 @@ fun helpMessageAfter(
 @Suppress("LocalVariableName")
 fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPoetry {
 
-    val versionsProperties: List<PropertySpec> = versions.map { d: Dependency ->
-        constStringProperty(
-            name = d.escapedName,
-            initializer = CodeBlock.of("%S %L", d.version, d.versionInformation()),
-            kdoc = dependencyKdoc(d)
-        )
-    }
-    val libsProperties: List<PropertySpec> = versions.map { d ->
-        constStringProperty(
-            name = d.escapedName,
-            initializer = CodeBlock.of("%S + Versions.%L", "${d.group}:${d.name}:", d.escapedName),
-            kdoc = dependencyKdoc(d)
-        )
-    }
+    val versionsProperties: List<PropertySpec> = versions
+        .distinctBy { it.versionName }
+        .map { d: Dependency ->
+            constStringProperty(
+                name = d.versionName,
+                initializer = CodeBlock.of("%S %L", d.version, d.versionInformation()),
+                kdoc = dependencyKdoc(d)
+            )
+        }
+    val libsProperties: List<PropertySpec> = versions
+        .distinctBy { it.escapedName }
+        .map { d ->
+            constStringProperty(
+                name = d.escapedName,
+                initializer = CodeBlock.of("%S + Versions.%L", "${d.group}:${d.name}:", d.versionName),
+                kdoc = dependencyKdoc(d)
+            )
+        }
 
     val gradleProperties: List<PropertySpec> = listOf(
         constStringProperty("runningVersion", gradleConfig.running.version),
@@ -147,7 +151,7 @@ fun SyncLibsTask.Companion.parseGraph(graph: DependencyGraph): List<Dependency> 
     val map = mutableMapOf<String, Dependency>()
     for (d: Dependency in dependencies) {
         val key = escapeName(d.name)
-        val fdqnName = escapeName("${d.group}_${d.name}")
+        val fdqnName = d.fdqnName()
 
 
         if (key in MEANING_LESS_NAMES) {
@@ -157,19 +161,34 @@ fun SyncLibsTask.Companion.parseGraph(graph: DependencyGraph): List<Dependency> 
 
             // also use FDQN for the dependency that conflicts with this one
             val other = map[key]!!
-            other.escapedName = escapeName("${other.group}_${other.name}")
+            other.escapedName = other.fdqnName()
             println("Will use FDQN for ${other.escapedName}")
         } else {
             map[key] = d
             d.escapedName = key
         }
     }
-    return dependencies
-        .distinctBy { it.escapedName }
-        .sortedBy { it.escapedName }
-
+    return dependencies.orderDependencies().findCommonVersions()
 }
 
+fun Dependency.fdqnName(): String = escapeName("${group}_${name}")
+
+
+fun List<Dependency>.orderDependencies(): List<Dependency> {
+    return this.sortedBy { it.gradleNotation() }
+}
+
+fun List<Dependency>.findCommonVersions(): List<Dependency> {
+    val map = groupBy { d -> d.group }
+    for (deps in map.values) {
+        val groupTogether = deps.size > 1  && deps.map { it.version }.distinct().size == 1
+
+        for (d in deps) {
+            d.versionName = if (groupTogether) escapeName(d.group) else d.escapedName
+        }
+    }
+    return this
+}
 
 fun constStringProperty(name: String, initializer: CodeBlock, kdoc: CodeBlock? = null) =
     PropertySpec.builder(name, String::class)
