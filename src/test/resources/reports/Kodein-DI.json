@@ -1,0 +1,241 @@
+{
+    "current": {
+        "dependencies": [
+            {
+                "group": "jmfayard.github.io.gradle-kotlin-dsl-libs",
+                "version": "0.2.4",
+                "projectUrl": null,
+                "name": "jmfayard.github.io.gradle-kotlin-dsl-libs.gradle.plugin"
+            },
+            {
+                "group": "junit",
+                "version": "4.12",
+                "projectUrl": "http://junit.org",
+                "name": "junit"
+            },
+            {
+                "group": "org.kodein.internal.gradle",
+                "version": "1.3.0",
+                "projectUrl": null,
+                "name": "kodein-internal-gradle-plugin"
+            }
+        ],
+        "count": 3
+    },
+    "gradle": {
+        "current": {
+            "version": "4.10.2",
+            "reason": "",
+            "isUpdateAvailable": true,
+            "isFailure": false
+        },
+        "nightly": {
+            "version": "5.1-20181019000043+0000",
+            "reason": "",
+            "isUpdateAvailable": true,
+            "isFailure": false
+        },
+        "enabled": true,
+        "releaseCandidate": {
+            "version": "",
+            "reason": "update check succeeded: no release available",
+            "isUpdateAvailable": false,
+            "isFailure": false
+        },
+        "running": {
+            "version": "4.7",
+            "reason": "",
+            "isUpdateAvailable": false,
+            "isFailure": false
+        }
+    },
+    "exceeded": {
+        "dependencies": [
+            
+        ],
+        "count": 0
+    },
+    "outdated": {
+        "dependencies": [
+            {
+                "group": "androidx.appcompat",
+                "available": {
+                    "release": null,
+                    "milestone": "1.0.0",
+                    "integration": null
+                },
+                "version": "1.0.0-alpha1",
+                "projectUrl": "http://developer.android.com/tools/extras/support-library.html",
+                "name": "appcompat"
+            },
+            {
+                "group": "com.android.support",
+                "available": {
+                    "release": null,
+                    "milestone": "28.0.0",
+                    "integration": null
+                },
+                "version": "27.1.0",
+                "projectUrl": "http://developer.android.com/tools/extras/support-library.html",
+                "name": "appcompat-v7"
+            },
+            {
+                "group": "com.android.tools.lint",
+                "available": {
+                    "release": null,
+                    "milestone": "26.3.0-alpha13",
+                    "integration": null
+                },
+                "version": "26.1.4",
+                "projectUrl": "https://developer.android.com/studio",
+                "name": "lint-gradle"
+            },
+            {
+                "group": "com.google.inject",
+                "available": {
+                    "release": null,
+                    "milestone": "4.2.1",
+                    "integration": null
+                },
+                "version": "4.1.0",
+                "projectUrl": "https://github.com/google/guice",
+                "name": "guice"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-reflect"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-scripting-compiler-embeddable"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-stdlib"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-stdlib-common"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-stdlib-jdk7"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-stdlib-js"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-test"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-test-annotations-common"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-test-common"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-test-js"
+            },
+            {
+                "group": "org.jetbrains.kotlin",
+                "available": {
+                    "release": null,
+                    "milestone": "1.2.71",
+                    "integration": null
+                },
+                "version": "1.2.70",
+                "projectUrl": "https://kotlinlang.org/",
+                "name": "kotlin-test-junit"
+            }
+        ],
+        "count": 15
+    },
+    "unresolved": {
+        "dependencies": [
+            {
+                "group": "javax.inject",
+                "version": "1",
+                "reason": "Could not find any matches for javax.inject:javax.inject:+ as no versions of javax.inject:javax.inject are available.\nSearched in the following locations:\n    https://jcenter.bintray.com/javax/inject/javax.inject/maven-metadata.xml\n    https://dl.google.com/dl/android/maven2/javax/inject/javax.inject/maven-metadata.xml",
+                "projectUrl": null,
+                "name": "javax.inject"
+            }
+        ],
+        "count": 1
+    },
+    "count": 19
+}

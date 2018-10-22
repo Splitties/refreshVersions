@@ -1,0 +1,9 @@
+appcompat
+appcompat_v7
+guice
+javax_inject
+jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin
+junit
+kodein_internal_gradle_plugin
+lint_gradle
+org_jetbrains_kotlin
