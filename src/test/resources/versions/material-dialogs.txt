@@ -1,0 +1,13 @@
+annotation
+appcompat
+assent
+bintray_release
+com_android_tools_build_gradle
+gradle_versions_plugin
+gridlayout
+jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin
+lint_gradle
+material
+org_jetbrains_kotlin
+recyclerview
+spotless_plugin_gradle

@@ -18,20 +18,23 @@ data class DependencyGraph(
         val count: Int = 0
 )
 
+fun Dependency.gradleNotation() = "$group:$name:$version"
+
 data class Dependencies(
         val dependencies: List<Dependency> = emptyList(),
         val count: Int = 0
 ) : List<Dependency> by dependencies
 
 data class Dependency(
-        val group: String = "",
-        val version: String = "",
-        val reason: String? = "",
-        var latest: String? = "",
-        val projectUrl: String? = "",
-        val name: String = "",
-        var escapedName: String = "",
-        val available: AvailableDependency? = null
+    val group: String = "",
+    val version: String = "",
+    val reason: String? = "",
+    var latest: String? = "",
+    val projectUrl: String? = "",
+    val name: String = "",
+    var escapedName: String = "",
+    var versionName: String = "",
+    val available: AvailableDependency? = null
 )
 
 data class GradleConfig(

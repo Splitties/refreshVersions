@@ -1,50 +1,79 @@
 package jmfayard.github.io
 
 import io.kotlintest.fail
-import io.kotlintest.specs.FunSpec
+import io.kotlintest.specs.FreeSpec
 import java.io.File
 
-class NonRegression : FunSpec({
+class NonRegression : FreeSpec({
 
     val reportsFolder = testResourceFile("reports")
-    val namesFolder = testResourceFile("names")
+    val libsFolder = testResourceFile("libs")
+    val versionsFolder = testResourceFile("versions")
     val jsonReports = reportsFolder.walk().filter { it.extension == "json" }.toList()
 
-    // Run test for each file in src/test/resources/reports
-    for (jsonFile in jsonReports) {
 
-        test(name = "For file ${jsonFile.name}") {
-            val nonregFile = namesFolder.resolve(jsonFile.nameWithoutExtension + ".txt")
-            nonRegressionForFile(jsonFile, nonregFile)
+    "Files from resources folder" - {
+
+        // Run test for each file in src/test/resources/reports
+        for (jsonFile in jsonReports) {
+
+            "For file ${jsonFile.name}" {
+                val name = jsonFile.nameWithoutExtension + ".txt"
+                nonRegressionForFile(jsonFile, libsFolder.resolve(name), versionsFolder.resolve(name))
+            }
+
         }
-
     }
+
 
 
 })
 
 
-fun nonRegressionForFile(json: File, nonregFile: File) {
+
+
+
+fun nonRegressionForFile(json: File, libsFile: File, versionsFile: File) {
     println("Parsing ${json.absolutePath}")
-    val dependencyGraph: DependencyGraph = SyncLibsTask.readGraphFromJsonFile(json)
-    val escapedNames: List<String> = SyncLibsTask.parseGraph(dependencyGraph).map { it.escapedName }
+    val dependencyGraph: List<Dependency> = SyncLibsTask.parseGraph(SyncLibsTask.readGraphFromJsonFile(json))
+    val libsIdentifiers: List<String> = dependencyGraph.map { it.escapedName }.sorted().distinct()
+    val versionsIdentifiers = dependencyGraph.map { it.versionName }.sorted().distinct()
 
 
-    if (nonregFile.exists()) {
-        println("Comparing identifiers with ${nonregFile.absolutePath}")
-        val missingNames = nonregFile.readLines() - escapedNames
-        if (missingNames.isNotEmpty()) fail(
-            """
-              Missing identifiers for ${json.name} compared to ${nonregFile.name}:
-              $missingNames""".trimIndent()
-        ) else {
-            println("Non-regression ok")
-            nonregFile.writeText(escapedNames.joinToStringWithNewLines())
-        }
+    val missingLibs = if (libsFile.exists()) {
+        libsFile.readLines() - libsIdentifiers
     } else {
-        nonregFile.writeText(escapedNames.joinToStringWithNewLines())
-        println("Added to non-regression file ${nonregFile.absolutePath}")
+        emptyList()
     }
+    val missingVersions = if (versionsFile.exists()) {
+        versionsFile.readLines() - versionsIdentifiers
+    } else {
+        emptyList()
+    }
+
+    println("Comparing identifiers with ${libsFile.absolutePath}")
+    if (missingLibs.isNotEmpty()) {
+        fail(
+            """
+              Missing identifiers for ${json.name} compared to ${libsFile.name}:
+              $missingLibs""".trimIndent()
+        )
+    } else {
+        libsFile.writeText(libsIdentifiers.joinToStringWithNewLines())
+        println("Added to non-regression file ${libsFile.absolutePath}")
+    }
+
+    if (missingVersions.isNotEmpty()) {
+        fail(
+            """
+              Missing identifiers for ${json.name} compared to ${libsFile.name}:
+              $missingVersions""".trimIndent()
+        )
+    } else {
+        versionsFile.writeText(versionsIdentifiers.joinToStringWithNewLines())
+        println("Added to non-regression file ${versionsFile.absolutePath}")
+    }
+
     println()
 
 }
