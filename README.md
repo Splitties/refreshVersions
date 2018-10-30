@@ -37,7 +37,14 @@ Screencast: https://www.useloom.com/share/7edceb83fd594f319356240fcce304d5
 
  
 Blog article: [How Kotlin makes editing your Gradle build less frustrating](https://blog.kotlin-academy.com/gradle-kotlin-the-missing-piece-of-the-puzzle-7528a85f0d2c)
- 
+
+# Works with your existing project
+
+Note that you do NOT need to rewrite your build benefit from this plugin. 
+
+It's a Gradle best practice to move the build logic to that special `buildSrc` module. 
+Any kotlin code present there can be used in your existing `build.gradle` (Groovy) files
+and the IDE integration (auto-completion, ...) works there as well. 
 
 # How?
 

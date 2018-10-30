@@ -56,8 +56,5 @@ class UnitTests: FreeSpec({
         }
     }
 
-    "2+2 == 5" {
-        2+2 shouldBe 5
-    }
 
 })
