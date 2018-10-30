@@ -4,12 +4,12 @@ plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
     `maven-publish`
+    `build-scan`
     id("com.gradle.plugin-publish") version "0.10.0"
-
 }
 
 group = "jmfayard.github.io"
-version = "0.2.5"
+version = "0.2.6"
 
 gradlePlugin {
     plugins {
@@ -60,4 +60,10 @@ tasks.withType<Test>().configureEach {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+buildScan {
+    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
+    setTermsOfServiceAgree("yes")
+    publishAlways()
 }
