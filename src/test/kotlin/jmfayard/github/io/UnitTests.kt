@@ -1,9 +1,11 @@
 package jmfayard.github.io
 
+import io.kotlintest.matchers.string.contain
+import io.kotlintest.should
 import io.kotlintest.shouldBe
-import io.kotlintest.specs.StringSpec
+import io.kotlintest.specs.FreeSpec
 
-class UnitTests: StringSpec({
+class UnitTests: FreeSpec({
     val DEPS = listOf(
         "android.arch.persistence.room:compiler:1.1.1",
         "android.arch.persistence.room:runtime:1.1.1",
@@ -36,6 +38,22 @@ class UnitTests: StringSpec({
         val versions = dependencies.findCommonVersions().map { it.versionName }.distinct().sorted()
         val expected = listOf("android_arch_persistence_room", "compiler", "gradle", "okio", "krangl", "rxjava", "konan-utils", "kotlin-test").sorted()
         versions shouldBe expected
+    }
+
+    "Version information" - {
+        "Available" {
+            Dependency(available = AvailableDependency(release = "1.0.0")).versionInformation() should contain("1.0.0")
+        }
+        "Up-to-date" {
+            Dependency(latest = "", reason = "", available = null).versionInformation() shouldBe ""
+        }
+        "Exceeded" {
+            Dependency(latest = "2.0.0").versionInformation() should contain("exceed the version found")
+        }
+
+        "Reason" {
+            Dependency(reason = "Could not find any matches").versionInformation() should contain("No update information")
+        }
     }
 
 })

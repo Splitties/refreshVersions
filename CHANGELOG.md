@@ -1,4 +1,13 @@
 
+# 0.2.6 Polish Versions.kt (see issue #14)
+
+- remove misleading "up-to-date" comment 
+- avoid pulling in RC and alpha versions to the available tag
+- remove the website info, we'd like absolutely nothing in the versions file apart from the name, the version number
+- edit KDOC to document that the plugin update the comment but YOU edit the version
+
+
+
 # 0.2.5
 
 - #10 Detect when multiple dependencies from the same group use the same version 
