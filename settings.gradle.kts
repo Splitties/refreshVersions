@@ -1,2 +1,2 @@
-rootProject.name = "gradle-kotlin-dsl-libs"
+rootProject.name = "buildSrcVersions"
 

@@ -8,15 +8,15 @@ plugins {
     id("com.gradle.plugin-publish") version "0.10.0"
 }
 
-group = "jmfayard.github.io"
+group = "de.fayard"
 version = "0.2.6"
 
 gradlePlugin {
     plugins {
-        register("gradle-kotlin-dsl-libs") {
-            id = "jmfayard.github.io.gradle-kotlin-dsl-libs"
-            displayName = "gradle-kotlin-dsl-libs"
-            description = "Painless dependencies management with the gradle kotlin-dsl"
+        create("buildSrcVersions") {
+            id = "de.fayard.buildSrcVersions"
+            displayName = "buildSrcVersions"
+            description = "Painless dependencies management"
             implementationClass = "jmfayard.github.io.GradleKotlinDslLibsPlugin"
         }
     }
@@ -33,9 +33,9 @@ repositories {
 }
 
 pluginBundle {
-    website = "https://github.com/jmfayard/gradle-kotlin-dsl-libs"
-    vcsUrl = "https://github.com/jmfayard/gradle-kotlin-dsl-libs"
-    tags = listOf("kotlin", "kotlin-dsl", "versioning")
+    website = "https://github.com/jmfayard/buildSrcVersions"
+    vcsUrl = "https://github.com/jmfayard/buildSrcVersions"
+    tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
 }
 dependencies {
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
