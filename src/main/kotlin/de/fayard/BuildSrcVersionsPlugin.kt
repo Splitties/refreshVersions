@@ -5,7 +5,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
 
-open class GradleKotlinDslLibsPlugin : Plugin<Project> {
+open class BuildSrcVersionsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
 
@@ -29,7 +29,7 @@ open class GradleKotlinDslLibsPlugin : Plugin<Project> {
         }
 
 
-        project.tasks.create("syncLibs", SyncLibsTask::class) {
+        project.tasks.create("buildSrcVersions", BuildSrcVersionsTask::class) {
             dependsOn(":dependencyUpdates")
             jsonInputPath = benManesVersions.outputDir + "/" + benManesVersions.reportfileName + ".json"
         }

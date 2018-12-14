@@ -35,8 +35,8 @@ class NonRegression : FreeSpec({
 
 fun nonRegressionForFile(json: File, libsFile: File, versionsFile: File) {
     println("Parsing ${json.absolutePath}")
-    val dependencyGraph: List<Dependency> = SyncLibsTask.parseGraph(
-        SyncLibsTask.readGraphFromJsonFile(
+    val dependencyGraph: List<Dependency> = BuildSrcVersionsTask.parseGraph(
+        BuildSrcVersionsTask.readGraphFromJsonFile(
             json
         )
     )
