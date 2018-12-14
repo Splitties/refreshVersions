@@ -1,4 +1,4 @@
-package jmfayard.github.io
+package de.fayard
 
 import org.intellij.lang.annotations.Language
 import java.io.File

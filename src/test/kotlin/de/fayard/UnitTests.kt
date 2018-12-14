@@ -1,4 +1,4 @@
-package jmfayard.github.io
+package de.fayard
 
 import io.kotlintest.matchers.string.contain
 import io.kotlintest.should

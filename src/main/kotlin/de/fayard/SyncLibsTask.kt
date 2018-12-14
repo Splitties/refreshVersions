@@ -1,4 +1,4 @@
-package jmfayard.github.io
+package de.fayard
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi

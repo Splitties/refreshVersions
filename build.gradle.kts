@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "de.fayard"
-version = "0.2.6"
+version = "0.3.0"
 
 gradlePlugin {
     plugins {
@@ -17,7 +17,7 @@ gradlePlugin {
             id = "de.fayard.buildSrcVersions"
             displayName = "buildSrcVersions"
             description = "Painless dependencies management"
-            implementationClass = "jmfayard.github.io.GradleKotlinDslLibsPlugin"
+            implementationClass = "de.fayard.GradleKotlinDslLibsPlugin"
         }
     }
 }
