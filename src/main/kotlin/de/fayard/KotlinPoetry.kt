@@ -116,7 +116,7 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
 
 private fun dependencyKdoc(d: Dependency): CodeBlock? {
     return if (d.projectUrl == null) null
-    else CodeBlock.of("[%L website](%L)", d.name, d.projectUrl)
+    else CodeBlock.of("%L", d.projectUrl)
 }
 
 
@@ -213,7 +213,7 @@ fun AvailableDependency.displayComment(): String {
         integration.isNullOrBlank().not() -> integration
         else -> null
     }
-    return  if (newerVersion == null) "//$this" else """//available: "$newerVersion" """
+    return  if (newerVersion == null) "//$this" else """// available: "$newerVersion""""
 }
 
 
