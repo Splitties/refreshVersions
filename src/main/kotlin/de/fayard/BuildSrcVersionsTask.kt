@@ -12,7 +12,7 @@ import java.io.File
 open class BuildSrcVersionsTask : DefaultTask() {
 
     init {
-        description = "Update buildSrc/src/main/kotlin/Libs.kt"
+        description = "Update buildSrc/src/main/kotlin/{Versions.kt,Libs.kt}"
         group = "build"
     }
 

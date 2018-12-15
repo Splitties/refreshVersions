@@ -30,6 +30,7 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
 
 
         project.tasks.create("buildSrcVersions", BuildSrcVersionsTask::class) {
+            group = "Help"
             dependsOn(":dependencyUpdates")
             jsonInputPath = benManesVersions.outputDir + "/" + benManesVersions.reportfileName + ".json"
         }
