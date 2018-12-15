@@ -7,87 +7,46 @@ import kotlin.String
  *
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
-    const val kscript_support: String = "1.2.5"
+    const val constraint_layout: String = "1.1.3"
 
-    const val ktlint: String = "0.29.0"
+    const val espresso_core: String = "3.0.2"
 
-    const val jsr305: String = "3.0.2"
+    const val com_android_support_test_runner: String = "1.0.2"
 
-    const val com_gradle_build_scan_gradle_plugin: String = "2.0.2" // available: "2.1"
+    const val appcompat_v7: String = "28.0.0"
 
-    const val timber: String = "4.7.1"
+    const val aapt2: String = "3.2.1-4818971"
 
-    const val mockito_kotlin: String = "1.6.0" // exceed the version found: 1.5.0
+    const val com_android_tools_build_gradle: String = "3.2.1"
 
-    const val docopt: String = "0.6.0.20150202"
+    const val lint_gradle: String = "26.2.1"
 
-    const val moshi_lazy_adapters: String = "2.2"
+    const val dexcount_gradle_plugin: String = "0.8.3" // available: "0.8.4"
+
+    const val play_publisher: String = "1.2.2" // available: "2.0.0"
+
+    const val com_gradle_build_scan_gradle_plugin: String = "1.15.1" // available: "2.1"
+
+    const val com_jfrog_artifactory_gradle_plugin: String = "4.7.5" // available: "4.8.1"
 
     const val moshi: String = "1.8.0"
 
-    const val com_squareup_okhttp3: String = "3.12.0"
+    const val com_squareup_okhttp3: String = "3.11.0" // available: "3.12.0"
 
-    const val okio: String = "2.1.0"
+    const val de_fayard_buildsrcversions_gradle_plugin: String = "0.3.0"
+    // exceed the version found: 0.3
 
-    const val com_squareup_retrofit2: String = "2.5.0"
+    const val io_fabric_tools_gradle: String = "1.25.4" // available: "1.27.0"
 
-    const val kotlinpoet: String = "0.7.0"
-
-    const val config: String = "1.3.3"
-
-    const val de_fayard_buildsrcversions_gradle_plugin: String = "0.3" // available: "0.3.0"
-
-    const val fontawesomefx: String = "8.9" // exceed the version found: 8.0.6
-
-    const val krangl: String = "0.6" // available: "0.10.3"
-
-    const val config4k: String = "0.4.1"
-
-    const val kotlintest: String = "2.0.7"
-
-    const val rxjava: String = "2.2.4"
-
-    const val rxkotlin: String = "2.3.0"
-
-    const val joda_time: String = "2.10.1"
+    const val rxjava: String = "2.2.0" // available: "2.2.4"
 
     const val junit: String = "4.12"
 
-    const val tornadofx: String = "1.7.17"
+    const val gradle_git: String = "0.2.3" // available: "1.7.2"
 
-    const val controlsfx: String = "9.0.0"
+    const val org_gradle_kotlin_kotlin_dsl_gradle_plugin: String = "1.0-rc-5" // available: "1.1.0"
 
-    const val jdom: String = "2.0.2"
-
-    const val exposed: String = "0.11.2"
-
-    const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.10" // available: "1.3.11"
-
-    const val org_jetbrains_kotlin: String = "1.3.10"
-
-    const val kotlinx_coroutines_core: String = "1.0.1"
-
-    const val kotlinx_coroutines_rx2: String = "1.0.1"
-
-    const val kotlinx_html_jvm: String = "0.6.11"
-
-    const val org_jlleitschuh_gradle_ktlint_gradle_plugin: String = "6.3.1"
-
-    const val jtwig_core: String = "5.87.0.RELEASE"
-
-    const val kodein_di_generic_jvm: String = "5.3.0" // available: "6.0.1"
-
-    const val mockito_core: String = "2.23.4"
-
-    const val postgresql: String = "42.2.5"
-
-    const val selenium_java: String = "3.141.59"
-
-    const val slf4j_simple: String = "1.7.25"
-
-    const val zt_exec: String = "1.10"
-
-    const val kotlin_coroutines_retrofit: String = "0.13.0-eap13" // available: "0.13.0"
+    const val org_jetbrains_kotlin: String = "1.2.61" // available: "1.3.11"
 
     /**
      *
@@ -95,11 +54,11 @@ object Versions {
      *      ./gradle/wrapper/gradle-wrapper.properties
      */
     object Gradle {
-        const val runningVersion: String = "5.0"
+        const val runningVersion: String = "4.10.2"
 
         const val currentVersion: String = "5.0"
 
-        const val nightlyVersion: String = "5.2-20181214000035+0000"
+        const val nightlyVersion: String = "5.2-20181215000041+0000"
 
         const val releaseCandidate: String = "5.1-rc-1"
     }

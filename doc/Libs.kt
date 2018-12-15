@@ -6,37 +6,53 @@ import kotlin.String
  * Update this file with
  *   `$ ./gradlew buildSrcVersions` */
 object Libs {
-    const val kscript_support: String = "com.github.holgerbrandl:kscript-support:" +
-        Versions.kscript_support
+    /**
+     * http://tools.android.com */
+    const val constraint_layout: String = "com.android.support.constraint:constraint-layout:" +
+        Versions.constraint_layout
 
     /**
-     * https://github.com/shyiko/ktlint */
-    const val ktlint: String = "com.github.shyiko:ktlint:" + Versions.ktlint
+     * https://developer.android.com/testing */
+    const val espresso_core: String = "com.android.support.test.espresso:espresso-core:" +
+        Versions.espresso_core
 
     /**
-     * http://findbugs.sourceforge.net/ */
-    const val jsr305: String = "com.google.code.findbugs:jsr305:" + Versions.jsr305
+     * https://developer.android.com/testing */
+    const val com_android_support_test_runner: String = "com.android.support.test:runner:" +
+        Versions.com_android_support_test_runner
+
+    /**
+     * http://developer.android.com/tools/extras/support-library.html */
+    const val appcompat_v7: String = "com.android.support:appcompat-v7:" + Versions.appcompat_v7
+
+    /**
+     * https://developer.android.com/studio */
+    const val aapt2: String = "com.android.tools.build:aapt2:" + Versions.aapt2
+
+    /**
+     * https://developer.android.com/studio */
+    const val com_android_tools_build_gradle: String = "com.android.tools.build:gradle:" +
+        Versions.com_android_tools_build_gradle
+
+    /**
+     * https://developer.android.com/studio */
+    const val lint_gradle: String = "com.android.tools.lint:lint-gradle:" + Versions.lint_gradle
+
+    /**
+     * http://github.com/KeepSafe/dexcount-gradle-plugin/ */
+    const val dexcount_gradle_plugin: String = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:" +
+        Versions.dexcount_gradle_plugin
+
+    const val play_publisher: String = "com.github.triplet.gradle:play-publisher:" +
+        Versions.play_publisher
 
     const val com_gradle_build_scan_gradle_plugin: String =
         "com.gradle.build-scan:com.gradle.build-scan.gradle.plugin:" +
             Versions.com_gradle_build_scan_gradle_plugin
 
-    /**
-     * https://github.com/JakeWharton/timber */
-    const val timber: String = "com.jakewharton.timber:timber:" + Versions.timber
-
-    /**
-     * https://github.com/nhaarman/mockito-kotlin */
-    const val mockito_kotlin: String = "com.nhaarman:mockito-kotlin:" + Versions.mockito_kotlin
-
-    /**
-     * https://github.com/docopt/docopt.java */
-    const val docopt: String = "com.offbytwo:docopt:" + Versions.docopt
-
-    /**
-     * https://github.com/serj-lotutovici/moshi-lazy-adapters/ */
-    const val moshi_lazy_adapters: String = "com.serjltt.moshi:moshi-lazy-adapters:" +
-        Versions.moshi_lazy_adapters
+    const val com_jfrog_artifactory_gradle_plugin: String =
+        "com.jfrog.artifactory:com.jfrog.artifactory.gradle.plugin:" +
+            Versions.com_jfrog_artifactory_gradle_plugin
 
     /**
      * https://github.com/square/moshi */
@@ -49,98 +65,44 @@ object Libs {
 
     /**
      * https://github.com/square/okhttp */
-    const val mockwebserver: String = "com.squareup.okhttp3:mockwebserver:" +
-        Versions.com_squareup_okhttp3
-
-    /**
-     * https://github.com/square/okhttp */
     const val okhttp: String = "com.squareup.okhttp3:okhttp:" + Versions.com_squareup_okhttp3
-
-    /**
-     * https://github.com/square/okio/ */
-    const val okio: String = "com.squareup.okio:okio:" + Versions.okio
-
-    /**
-     * https://github.com/square/retrofit/ */
-    const val adapter_rxjava2: String = "com.squareup.retrofit2:adapter-rxjava2:" +
-        Versions.com_squareup_retrofit2
-
-    /**
-     * https://github.com/square/retrofit/ */
-    const val converter_moshi: String = "com.squareup.retrofit2:converter-moshi:" +
-        Versions.com_squareup_retrofit2
-
-    /**
-     * https://github.com/square/retrofit/ */
-    const val retrofit_mock: String = "com.squareup.retrofit2:retrofit-mock:" +
-        Versions.com_squareup_retrofit2
-
-    /**
-     * https://github.com/square/retrofit/ */
-    const val retrofit: String = "com.squareup.retrofit2:retrofit:" +
-        Versions.com_squareup_retrofit2
-
-    /**
-     * http://github.com/square/kotlinpoet/ */
-    const val kotlinpoet: String = "com.squareup:kotlinpoet:" + Versions.kotlinpoet
-
-    /**
-     * https://github.com/lightbend/config */
-    const val config: String = "com.typesafe:config:" + Versions.config
 
     const val de_fayard_buildsrcversions_gradle_plugin: String =
         "de.fayard.buildSrcVersions:de.fayard.buildSrcVersions.gradle.plugin:" +
             Versions.de_fayard_buildsrcversions_gradle_plugin
 
-    /**
-     * http://www.jensd.de */
-    const val fontawesomefx: String = "de.jensd:fontawesomefx:" + Versions.fontawesomefx
-
-    const val krangl: String = "de.mpicbg.scicomp:krangl:" + Versions.krangl
-
-    const val config4k: String = "io.github.config4k:config4k:" + Versions.config4k
-
-    /**
-     * http://www.github.com/kotlintest/kotlintest */
-    const val kotlintest: String = "io.kotlintest:kotlintest:" + Versions.kotlintest
+    const val io_fabric_tools_gradle: String = "io.fabric.tools:gradle:" +
+        Versions.io_fabric_tools_gradle
 
     /**
      * https://github.com/ReactiveX/RxJava */
     const val rxjava: String = "io.reactivex.rxjava2:rxjava:" + Versions.rxjava
 
     /**
-     * https://github.com/ReactiveX/RxKotlin */
-    const val rxkotlin: String = "io.reactivex.rxjava2:rxkotlin:" + Versions.rxkotlin
-
-    /**
-     * https://www.joda.org/joda-time/ */
-    const val joda_time: String = "joda-time:joda-time:" + Versions.joda_time
-
-    /**
      * http://junit.org */
     const val junit: String = "junit:junit:" + Versions.junit
 
     /**
-     * https://github.com/edvin/tornadofx */
-    const val tornadofx: String = "no.tornado:tornadofx:" + Versions.tornadofx
+     * https://github.com/ajoberstar/gradle-git */
+    const val gradle_git: String = "org.ajoberstar:gradle-git:" + Versions.gradle_git
+
+    const val org_gradle_kotlin_kotlin_dsl_gradle_plugin: String =
+        "org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:" +
+            Versions.org_gradle_kotlin_kotlin_dsl_gradle_plugin
 
     /**
-     * http://www.controlsfx.org/ */
-    const val controlsfx: String = "org.controlsfx:controlsfx:" + Versions.controlsfx
-
-    /**
-     * http://www.jdom.org */
-    const val jdom: String = "org.jdom:jdom:" + Versions.jdom
-
-    const val exposed: String = "org.jetbrains.exposed:exposed:" + Versions.exposed
-
-    const val org_jetbrains_kotlin_jvm_gradle_plugin: String =
-        "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:" +
-            Versions.org_jetbrains_kotlin_jvm_gradle_plugin
+     * https://kotlinlang.org/ */
+    const val kotlin_android_extensions: String =
+        "org.jetbrains.kotlin:kotlin-android-extensions:" + Versions.org_jetbrains_kotlin
 
     /**
      * https://kotlinlang.org/ */
     const val kotlin_reflect: String = "org.jetbrains.kotlin:kotlin-reflect:" +
+        Versions.org_jetbrains_kotlin
+
+    /**
+     * https://kotlinlang.org/ */
+    const val kotlin_sam_with_receiver: String = "org.jetbrains.kotlin:kotlin-sam-with-receiver:" +
         Versions.org_jetbrains_kotlin
 
     /**
@@ -151,68 +113,11 @@ object Libs {
 
     /**
      * https://kotlinlang.org/ */
+    const val kotlin_stdlib_jdk7: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:" +
+        Versions.org_jetbrains_kotlin
+
+    /**
+     * https://kotlinlang.org/ */
     const val kotlin_stdlib_jdk8: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" +
         Versions.org_jetbrains_kotlin
-
-    /**
-     * https://kotlinlang.org/ */
-    const val kotlin_test_junit: String = "org.jetbrains.kotlin:kotlin-test-junit:" +
-        Versions.org_jetbrains_kotlin
-
-    /**
-     * https://kotlinlang.org/ */
-    const val kotlin_test: String = "org.jetbrains.kotlin:kotlin-test:" +
-        Versions.org_jetbrains_kotlin
-
-    /**
-     * https://github.com/Kotlin/kotlinx.coroutines */
-    const val kotlinx_coroutines_core: String = "org.jetbrains.kotlinx:kotlinx-coroutines-core:" +
-        Versions.kotlinx_coroutines_core
-
-    /**
-     * https://github.com/Kotlin/kotlinx.coroutines */
-    const val kotlinx_coroutines_rx2: String = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:" +
-        Versions.kotlinx_coroutines_rx2
-
-    /**
-     * https://github.com/Kotlin/kotlinx.html */
-    const val kotlinx_html_jvm: String = "org.jetbrains.kotlinx:kotlinx-html-jvm:" +
-        Versions.kotlinx_html_jvm
-
-    const val org_jlleitschuh_gradle_ktlint_gradle_plugin: String =
-        "org.jlleitschuh.gradle.ktlint:org.jlleitschuh.gradle.ktlint.gradle.plugin:" +
-            Versions.org_jlleitschuh_gradle_ktlint_gradle_plugin
-
-    /**
-     * http://jtwig.org */
-    const val jtwig_core: String = "org.jtwig:jtwig-core:" + Versions.jtwig_core
-
-    const val kodein_di_generic_jvm: String = "org.kodein.di:kodein-di-generic-jvm:" +
-        Versions.kodein_di_generic_jvm
-
-    /**
-     * https://github.com/mockito/mockito */
-    const val mockito_core: String = "org.mockito:mockito-core:" + Versions.mockito_core
-
-    /**
-     * https://github.com/pgjdbc/pgjdbc */
-    const val postgresql: String = "org.postgresql:postgresql:" + Versions.postgresql
-
-    /**
-     * http://www.seleniumhq.org/ */
-    const val selenium_java: String = "org.seleniumhq.selenium:selenium-java:" +
-        Versions.selenium_java
-
-    /**
-     * http://www.slf4j.org */
-    const val slf4j_simple: String = "org.slf4j:slf4j-simple:" + Versions.slf4j_simple
-
-    /**
-     * https://github.com/zeroturnaround/zt-exec */
-    const val zt_exec: String = "org.zeroturnaround:zt-exec:" + Versions.zt_exec
-
-    /**
-     * https://github.com/gildor/kotlin-coroutines-retrofit */
-    const val kotlin_coroutines_retrofit: String =
-        "ru.gildor.coroutines:kotlin-coroutines-retrofit:" + Versions.kotlin_coroutines_retrofit
 }

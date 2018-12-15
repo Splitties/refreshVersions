@@ -11,11 +11,6 @@ import java.io.File
 
 open class BuildSrcVersionsTask : DefaultTask() {
 
-    init {
-        description = "Update buildSrc/src/main/kotlin/{Versions.kt,Libs.kt}"
-        group = "build"
-    }
-
     companion object {
         val moshiAdapter: JsonAdapter<DependencyGraph> by lazy {
             Moshi.Builder().build().adapter(DependencyGraph::class.java)
