@@ -33,7 +33,7 @@
 
 
 [[img-libs]]
-image::Libs.gif[title="_IDE integration when you put your dependencies information in the buildSrc_",alt="IDE Integration", width="600", link="{master}/doc/Libs.gif"]
+image::Libs.gif[title="_IDE integration when you put your dependencies information in the buildSrc_",alt="IDE Integration", link="{master}/doc/Libs.gif"]
 
 
 Gradle has a special module called **buildSrc** where you can put Kotlin code and make it directly available to all your Gradle build files.
@@ -97,13 +97,10 @@ dependencies {
 
 == Search for dependencies updates
 
-Upgrade dependencies tend to be tedious but it is critically important.
+Upgrade dependencies tend to be tedious but it is critically important:
 
-Let say you stumble on a problem.
-If you open an issue, you are likely to hear: "_Are you using the latest version_?".
-If you look at the documentation, you may find often that it is contained in the README.
-Often that means that only the latest version is correctly documented, not the one you are using!
-
+- Few projects have versioned documentation: `master/README.md` is their documentation.  This means you can waste time trying out snippets that do not work in the version you are using.
+- When you open an issue, you will often be asked: _Can you reproduce this problem in the latest version?_
 
 This plugin inherits from https://github.com/ben-manes/gradle-versions-plugin[Ben Manes's Versions plugin]
 the feature to automatically determine which dependencies have updates.
@@ -130,7 +127,7 @@ object Versions {
 
 
 [[img-versions]]
-image::Versions.gif[title="_buildSrcVersions search for dependencies updates and let you decide which you want to apply_",alt="IDE Integration", width="600", link="{master}/doc/Libs.gif"]
+image::Versions.gif[title="_buildSrcVersions search for dependencies updates and let you decide which you want to apply_",alt="IDE Integration", link="{master}/doc/Libs.gif"]
 
 As shown in this screencast:
 
@@ -140,7 +137,13 @@ As shown in this screencast:
 
 == FAQ
 
-TODO.
+Questions? {issues}[Look at the existing issues], then ask your own.
+
+
+[[FAQ]]
+image::FAQ.png[title="FAQ",alt="IDE Integration", width="600", link="{issues}"]
+
+
 
 
 == Changelog
@@ -151,7 +154,7 @@ The project was called `gradle-kotlin-dsl-libs` before, which was a bad name for
 
 == Contributing
 
-- This project is licensed under the MIT License. See {master}/LICENSE.md[LICENSE.md]
+- This project is licensed under the MIT License. See {master}/LICENSE.txt[LICENSE.txt]
 - Explain your use case and start the discussion before your submit a pull-request
 - Please read {master}/CONTRIBUTING.md[CONTRIBUTING.md] the process for submitting pull requests to us.
 
