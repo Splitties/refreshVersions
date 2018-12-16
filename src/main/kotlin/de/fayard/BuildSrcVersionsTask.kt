@@ -6,7 +6,9 @@ import okio.buffer
 import okio.source
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.api.provider.Property
 import org.gradle.api.tasks.TaskAction
+import org.gradle.kotlin.dsl.property
 import java.io.File
 
 open class BuildSrcVersionsTask : DefaultTask() {
@@ -22,6 +24,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
     }
 
+    var useFdqnFor: Property<Iterable<String>> = project.objects.property()
 
     var jsonInputPath = "build/dependencyUpdates/report.json"
 
@@ -49,7 +52,10 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
         val dependencyGraph = readGraphFromJsonFile(jsonInput)
 
-        val dependencies: List<Dependency> = parseGraph(dependencyGraph)
+        val useFdqnByDefault = useFdqnFor.get().map(::escapeName)
+        println("useFdqnByDefault: $useFdqnByDefault")
+
+        val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + MEANING_LESS_NAMES)
 
         val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle)
 

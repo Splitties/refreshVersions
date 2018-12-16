@@ -120,7 +120,11 @@ private fun dependencyKdoc(d: Dependency): CodeBlock? {
 }
 
 
-fun BuildSrcVersionsTask.Companion.parseGraph(graph: DependencyGraph): List<Dependency> {
+fun BuildSrcVersionsTask.Companion.parseGraph(
+    graph: DependencyGraph,
+    useFdqnByDefault: List<String>
+): List<Dependency> {
+
     val dependencies: List<Dependency> = graph.current + graph.exceeded + graph.outdated + graph.unresolved
 
     val map = mutableMapOf<String, Dependency>()
@@ -129,7 +133,7 @@ fun BuildSrcVersionsTask.Companion.parseGraph(graph: DependencyGraph): List<Depe
         val fdqnName = d.fdqnName()
 
 
-        if (key in MEANING_LESS_NAMES) {
+        if (key in useFdqnByDefault) {
             d.escapedName = fdqnName
         } else if (map.containsKey(key)) {
             d.escapedName = fdqnName

@@ -1,3 +1,13 @@
+# 0.3.1
+
+- #25 Allows to configure a set of dependencies for which to use the FDQN
+
+```kotlin
+buildSrcVersions {
+    useFdqnFor.set(listOf("core-kt", "core-ktx"))
+}
+```
+
 # 0.3.0
 
 **Rebranding**: the repository, the plugin and the task are now called buildSrcVersions!!

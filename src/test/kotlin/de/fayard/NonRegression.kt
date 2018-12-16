@@ -38,7 +38,8 @@ fun nonRegressionForFile(json: File, libsFile: File, versionsFile: File) {
     val dependencyGraph: List<Dependency> = BuildSrcVersionsTask.parseGraph(
         BuildSrcVersionsTask.readGraphFromJsonFile(
             json
-        )
+        ),
+        MEANING_LESS_NAMES
     )
     val libsIdentifiers: List<String> = dependencyGraph.map { it.escapedName }.sorted().distinct()
     val versionsIdentifiers = dependencyGraph.map { it.versionName }.sorted().distinct()
