@@ -188,13 +188,17 @@ fun escapeName(name: String): String {
 }
 
 fun Dependency.versionInformation(): String {
-    val nonBreakingSpace = '\u00A0'
-    return when {
+    val comment = when {
         latest.isNullOrBlank().not() -> "// exceed the version found: $latest"
         reason.isNullOrBlank().not() -> this.unresolvedReason()!!
         available != null -> available.displayComment()
         else -> ""
-    }.replace(' ', nonBreakingSpace)
+    }
+    return if (comment.length + versionName.length > 65) {
+        '\n' + comment
+    } else {
+        comment
+    }
 }
 
 

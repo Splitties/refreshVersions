@@ -48,11 +48,11 @@ class UnitTests: FreeSpec({
             Dependency(latest = "", reason = "", available = null).versionInformation() shouldBe ""
         }
         "Exceeded" {
-            Dependency(latest = "2.0.0").versionInformation() should contain("exceed the version found")
+            Dependency(latest = "2.0.0").versionInformation() should contain("exceed the version found")
         }
 
         "Reason" {
-            Dependency(reason = "Could not find any matches").versionInformation() should contain("No update information")
+            Dependency(reason = "Could not find any matches").versionInformation() should contain("No update information")
         }
     }
 
