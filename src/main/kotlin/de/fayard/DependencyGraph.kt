@@ -1,4 +1,4 @@
-package jmfayard.github.io
+package de.fayard
 
 import com.squareup.kotlinpoet.FileSpec
 
@@ -10,19 +10,19 @@ data class KotlinPoetry(
 
 
 data class DependencyGraph(
-        val gradle: GradleConfig,
-        val current: Dependencies,
-        val exceeded: Dependencies,
-        val outdated: Dependencies,
-        val unresolved: Dependencies,
-        val count: Int = 0
+    val gradle: GradleConfig,
+    val current: Dependencies,
+    val exceeded: Dependencies,
+    val outdated: Dependencies,
+    val unresolved: Dependencies,
+    val count: Int = 0
 )
 
 fun Dependency.gradleNotation() = "$group:$name:$version"
 
 data class Dependencies(
-        val dependencies: List<Dependency> = emptyList(),
-        val count: Int = 0
+    val dependencies: List<Dependency> = emptyList(),
+    val count: Int = 0
 ) : List<Dependency> by dependencies
 
 data class Dependency(
@@ -38,11 +38,11 @@ data class Dependency(
 )
 
 data class GradleConfig(
-        val current: GradleVersion,
-        val nightly: GradleVersion,
-        val enabled: Boolean = false,
-        val releaseCandidate: GradleVersion,
-        val running: GradleVersion
+    val current: GradleVersion,
+    val nightly: GradleVersion,
+    val enabled: Boolean = false,
+    val releaseCandidate: GradleVersion,
+    val running: GradleVersion
 )
 
 data class GradleVersion(

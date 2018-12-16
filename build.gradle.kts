@@ -8,16 +8,16 @@ plugins {
     id("com.gradle.plugin-publish") version "0.10.0"
 }
 
-group = "jmfayard.github.io"
-version = "0.2.6"
+group = "de.fayard"
+version = "0.3.1"
 
 gradlePlugin {
     plugins {
-        register("gradle-kotlin-dsl-libs") {
-            id = "jmfayard.github.io.gradle-kotlin-dsl-libs"
-            displayName = "gradle-kotlin-dsl-libs"
-            description = "Painless dependencies management with the gradle kotlin-dsl"
-            implementationClass = "jmfayard.github.io.GradleKotlinDslLibsPlugin"
+        create("buildSrcVersions") {
+            id = "de.fayard.buildSrcVersions"
+            displayName = "buildSrcVersions"
+            description = "Painless dependencies management"
+            implementationClass = "de.fayard.BuildSrcVersionsPlugin"
         }
     }
 }
@@ -33,9 +33,9 @@ repositories {
 }
 
 pluginBundle {
-    website = "https://github.com/jmfayard/gradle-kotlin-dsl-libs"
-    vcsUrl = "https://github.com/jmfayard/gradle-kotlin-dsl-libs"
-    tags = listOf("kotlin", "kotlin-dsl", "versioning")
+    website = "https://github.com/jmfayard/buildSrcVersions"
+    vcsUrl = "https://github.com/jmfayard/buildSrcVersions"
+    tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
 }
 dependencies {
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
@@ -44,7 +44,7 @@ dependencies {
 
     implementation("com.squareup.okio:okio:2.1.0")
     implementation( "com.squareup.moshi:moshi:1.7.0")
-    implementation("com.squareup:kotlinpoet:1.0.0-RC1")
+    implementation("com.squareup:kotlinpoet:1.0.0")
 
 }
 

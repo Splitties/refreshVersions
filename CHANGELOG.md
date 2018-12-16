@@ -1,3 +1,26 @@
+# 0.3.1
+
+- #25 Allows to configure a set of dependencies for which to use the FDQN
+
+```kotlin
+buildSrcVersions {
+    useFdqnFor.set(listOf("core-kt", "core-ktx"))
+}
+```
+
+# 0.3.0
+
+**Rebranding**: the repository, the plugin and the task are now called buildSrcVersions!!
+
+Why? and What? is described in details here https://github.com/jmfayard/buildSrcVersions/issues/26
+
+
+- Clean-up task group/description/output
+- [Fix #561 use non-breaking spaces in line comments](https://github.com/square/kotlinpoet/issues/561) 
+- Extrace-space at the end of Versions.kt properties #24
+ 
+
+
 
 # 0.2.6 Polish Versions.kt (see issue #14)
 

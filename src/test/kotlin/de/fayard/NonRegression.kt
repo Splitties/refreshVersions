@@ -1,4 +1,4 @@
-package jmfayard.github.io
+package de.fayard
 
 import io.kotlintest.fail
 import io.kotlintest.specs.FreeSpec
@@ -35,7 +35,12 @@ class NonRegression : FreeSpec({
 
 fun nonRegressionForFile(json: File, libsFile: File, versionsFile: File) {
     println("Parsing ${json.absolutePath}")
-    val dependencyGraph: List<Dependency> = SyncLibsTask.parseGraph(SyncLibsTask.readGraphFromJsonFile(json))
+    val dependencyGraph: List<Dependency> = BuildSrcVersionsTask.parseGraph(
+        BuildSrcVersionsTask.readGraphFromJsonFile(
+            json
+        ),
+        MEANING_LESS_NAMES
+    )
     val libsIdentifiers: List<String> = dependencyGraph.map { it.escapedName }.sorted().distinct()
     val versionsIdentifiers = dependencyGraph.map { it.versionName }.sorted().distinct()
 

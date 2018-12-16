@@ -1,0 +1,172 @@
+//include::includes.adoc[]
+:plugin_version: 0.3.1
+:repo: jmfayard/buildSrcVersions
+:branch: 26-buildSrcVersions
+:github: https://github.com/{repo}
+:plugin_issues: https://github.com/gradle/kotlin-dsl/issues?utf8=%E2%9C%93&q=author%3Ajmfayard+
+:plugin_gradle_portal: https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions
+:gradle_kotlin_dsl:	https://github.com/gradle/kotlin-dsl
+:gradle_guide_new:	https://guides.gradle.org/creating-new-gradle-builds
+:gradle_guide_buidllogic:	https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
+:medium_puzzle: https://blog.kotlin-academy.com/gradle-kotlin-the-missing-piece-of-the-puzzle-7528a85f0d2c
+:medium_protips: https://proandroiddev.com/android-studio-pro-tips-for-working-with-gradle-8a7aa61a8cc4
+:medium_mvp: https://dev.to/jmfayard/the-minimum-viable-pull-request-5e7p
+:devto_readme: https://dev.to/jmfayard/how-to-write-a-good-readme-discuss-4hkl
+:root: file:///Users/jmfayard/Dev/mautinoa/buildSrcVersions
+:issues: https://github.com/jmfayard/buildSrcVersions/issues
+:master: https://github.com/jmfayard/buildSrcVersions/blob/master
+:badge_mit: image:https://img.shields.io/github/license/mashape/apistatus.svg["GitHub",link="{github}/blob/master/LICENSE.txt"]
+:badge_version: image:https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/buildSrcVersions/maven-metadata.xml.svg?label=gradlePluginPortal["Maven Central",link="https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions"]
+:badge_issues: image:https://img.shields.io/github/issues/{repo}.svg["GitHub issues",link="{github}/issues"]
+:badge_pr:  image:https://img.shields.io/github/issues-pr/{repo}.svg["GitHub pull requests",link="{github}/pulls?utf8=%E2%9C%93&q=is%3Apr+"]
+:badge_build: image:https://img.shields.io/travis/com/{repo}/{branch}.svg["Travis (.org)",link="https://travis-ci.com/{repo}"]
+
+
+
+//:imagesdir: /Users/jmfayard/Dev/mautinoa/buildSrcVersions/doc
+:imagesdir: doc
+
+
+= buildSrcVersions
+
+{badge_version} {badge_build} {badge_mit} {badge_issues} {badge_pr}
+
+
+[[img-libs]]
+image::Libs.gif[title="_IDE integration when you put your dependencies information in the buildSrc_",alt="IDE Integration", link="{master}/doc/Libs.gif"]
+
+
+Gradle has a special module called **buildSrc** where you can put Kotlin code and make it directly available to all your Gradle build files.
+
+This is better than the traditional solution of putting your global variables in a Gradle `ext` property or in a Groovy `HashMap`,
+because in that case, the IDE support is exactly what you would expect when you work with an `HashMap`.
+
+image::try-again.png[]
+
+Now, what is better than writing manually those files link:doc/Versions.kt[`Versions.kt`] and link:doc/Libs.kt[`Libs.kt`]?
+
+Having a Gradle plugin write them for you maybe?
+
+== Prerequisites
+
+- Kotlin, JVM and Android projects.
+- Gradle 4.3+ and Gradle 5.0+
+- The IDE integration works in IntelliJ >= 2008.03+ and Android Studio 3.2+.
+- The IDE integration works for both `build.gradle` (Groovy) and `build.gradle.kts` (Kotlin) files.
+
+
+== Installation
+
+Edit your root `build.gradle(.kts)` file
+
+[source,kotlin,subs=attributes]
+----
+buildscript {
+    //...
+}
+plugins {
+  id("de.fayard.buildSrcVersions") version "{plugin_version}"
+}
+// Don't put any code before the buildscripts {} and plugins {} block
+----
+
+== Extract your dependencies
+
+The plugin adds a task to your build, also called `:buildSrcVersions`. Run it like this:
+
+```bash
+$ ./gradlew buildSrcVersions
+> Task :dependencyUpdates
+> Task :buildSrcVersions
+        new file:   buildSrc/build.gradle.kts
+        new file:   buildSrc/.gitignore
+        new file:   buildSrc/settings.gradle.kts
+        new file:   buildSrc/src/main/kotlin/Libs.kt
+        new file:   buildSrc/src/main/kotlin/Versions.kt
+```
+
+Synchronize your Gradle build and you can start to replace your magic strings:
+
+```kotlin
+dependencies {
+    implementation(Libs.okio)
+    implementation(Libs.com_squareup_moshi_moshi)
+}
+```
+
+
+== Search for dependencies updates
+
+Upgrade dependencies tend to be tedious but it is critically important:
+
+- Few projects have versioned documentation: `master/README.md` is their documentation.  This means you can waste time trying out snippets that do not work in the version you are using.
+- When you open an issue, you will often be asked: _Can you reproduce this problem in the latest version?_
+
+This plugin inherits from https://github.com/ben-manes/gradle-versions-plugin[Ben Manes's Versions plugin]
+the feature to automatically determine which dependencies have updates.
+
+When you decide you want to update some dependencies, run again the plugin:
+
+```bash
+$ ./gradlew buildSrcVersions
+> Task :dependencyUpdates
+> Task :buildSrcVersions
+        modified:   buildSrc/src/main/kotlin/Libs.kt
+        modified:   buildSrc/src/main/kotlin/Versions.kt
+
+```
+
+The file `Versions.kt` is regenerated with a comment indicating which new version is available.
+
+```kotlin
+object Versions {
+    val moshi = "1.8.0"
+    val com_squareup_okhttp3 = "3.11.0" // available: "3.12.0"
+}
+```
+
+
+[[img-versions]]
+image::Versions.gif[title="_buildSrcVersions search for dependencies updates and let you decide which you want to apply_",alt="IDE Integration", link="{master}/doc/Libs.gif"]
+
+As shown in this screencast:
+
+- To update, just delete the part `"3.11.0" // available` .
+- Remove the comment if you don't want to update.
+
+
+== FAQ
+
+Questions? {issues}[Look at the existing issues], then ask your own.
+
+
+[[FAQ]]
+image::FAQ.png[title="FAQ",alt="IDE Integration", width="600", link="{issues}"]
+
+
+
+
+== Changelog
+
+See {master}/CHANGELOG.md[CHANGELOG.md]
+
+The project was called `gradle-kotlin-dsl-libs` before, which was a bad name for reasons explained in {issues}/26[#26]
+
+== Contributing
+
+- This project is licensed under the MIT License. See {master}/LICENSE.txt[LICENSE.txt]
+- Explain your use case and start the discussion before your submit a pull-request
+- Please read {master}/CONTRIBUTING.md[CONTRIBUTING.md] the process for submitting pull requests to us.
+
+
+== Acknowledgments
+
+https://gradle.org[Gradle] and https://jetbrains.com[JetBrains] have made this plugin possible
+by working on improving the IDE support for Kotlin code from the `buildSrc` module.
+
+This plugin embraces and extends https://github.com/ben-manes/gradle-versions-plugin[Ben Manes's wonderful "Versions" plugin].
+
+The Kotlin code generation is powered by https://github.com/square/kotlinpoet[Square's Kotlinpoet]
+
+
+
