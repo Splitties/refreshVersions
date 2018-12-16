@@ -192,12 +192,7 @@ fun escapeName(name: String): String {
 }
 
 fun Dependency.versionInformation(): String {
-    val comment = when {
-        latest.isNullOrBlank().not() -> "// exceed the version found: $latest"
-        reason.isNullOrBlank().not() -> this.unresolvedReason()!!
-        available != null -> available.displayComment()
-        else -> ""
-    }
+    val comment = available?.displayComment() ?: ""
     return if (comment.length + versionName.length > 65) {
         '\n' + comment
     } else {
@@ -206,14 +201,6 @@ fun Dependency.versionInformation(): String {
 }
 
 
-fun Dependency.unresolvedReason() : String? {
-    val shorterReason = reason?.lines()?.take(4)?.joinToString(separator = "\n") ?: ""
-    return when {
-        shorterReason.isBlank() -> ""
-        shorterReason.contains("Could not find any matches") -> "// No update information. Is this dependency available on jcenter or mavenCentral?"
-        else -> "\n/* $shorterReason \n.... */"
-    }
-}
 
 fun AvailableDependency.displayComment(): String {
     val newerVersion: String? = when {
@@ -228,8 +215,4 @@ fun AvailableDependency.displayComment(): String {
 
 private val random = Random()
 
-private fun random(deps: List<Dependency>): Dependency? {
-    val index = random.nextInt(deps.size)
-    return if (deps.isEmpty()) null else deps[index]
-}
 

@@ -1,3 +1,8 @@
+# 0.3.2
+
+- Invalid Comment linebreak #32
+- Don't inform about exceeded version number #29 
+
 # 0.3.1
 
 - #25 Allows to configure a set of dependencies for which to use the FDQN

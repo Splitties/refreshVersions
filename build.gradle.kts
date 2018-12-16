@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "de.fayard"
-version = "0.3.1"
+version = "0.3.2"
 
 gradlePlugin {
     plugins {

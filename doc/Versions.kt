@@ -34,7 +34,6 @@ object Versions {
     const val com_squareup_okhttp3: String = "3.11.0" // available: "3.12.0"
 
     const val de_fayard_buildsrcversions_gradle_plugin: String = "0.3.0"
-    // exceed the version found: 0.3
 
     const val io_fabric_tools_gradle: String = "1.25.4" // available: "1.27.0"
 

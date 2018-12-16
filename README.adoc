@@ -1,5 +1,5 @@
 //include::includes.adoc[]
-:plugin_version: 0.3.1
+:plugin_version: 0.3.2
 :repo: jmfayard/buildSrcVersions
 :branch: 26-buildSrcVersions
 :github: https://github.com/{repo}
