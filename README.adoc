@@ -33,7 +33,8 @@
 
 
 [[img-libs]]
-image::Libs.gif[title="IDE integration when you put your dependencies information in the buildSrc",alt="IDE Integration", width="600", link="{master}/doc/Libs.gif"]
+image::Libs.gif[title="_IDE integration when you put your dependencies information in the buildSrc_",alt="IDE Integration", width="600", link="{master}/doc/Libs.gif"]
+
 
 Gradle has a special module called **buildSrc** where you can put Kotlin code and make it directly available to all your Gradle build files.
 
@@ -51,7 +52,7 @@ Having a Gradle plugin write them for you maybe?
 - Kotlin, JVM and Android projects.
 - Gradle 4.3+ and Gradle 5.0+
 - The IDE integration works in IntelliJ >= 2008.03+ and Android Studio 3.2+.
-- The IDE integration  for both `build.gradle` (Groovy) and `build.gradle.kts` (Kotlin) files.
+- The IDE integration works for both `build.gradle` (Groovy) and `build.gradle.kts` (Kotlin) files.
 
 
 == Installation
@@ -96,12 +97,13 @@ dependencies {
 
 == Search for dependencies updates
 
-[[img-versions]]
-image::Versions.gif[title="buildSrcVersions search for dependencies updates and let you decide which you want to apply",alt="IDE Integration", width="600", link="{master}/doc/Libs.gif"]
+Upgrade dependencies tend to be tedious but it is critically important.
 
-"Are you using the latest version?" is one of the most frequent questions when you open an issue.
-Also most projects only document their latest release, for example because they mistake their README for their documentation.
-Being able to stay up-to-date is also critically important, but it is also tedious.
+Let say you stumble on a problem.
+If you open an issue, you are likely to hear: "_Are you using the latest version_?".
+If you look at the documentation, you may find often that it is contained in the README.
+Often that means that only the latest version is correctly documented, not the one you are using!
+
 
 This plugin inherits from https://github.com/ben-manes/gradle-versions-plugin[Ben Manes's Versions plugin]
 the feature to automatically determine which dependencies have updates.
@@ -126,9 +128,14 @@ object Versions {
 }
 ```
 
-To update, just delete the part `"3.11.0" // available` .
 
-Remove the comment if you don't want to update.
+[[img-versions]]
+image::Versions.gif[title="_buildSrcVersions search for dependencies updates and let you decide which you want to apply_",alt="IDE Integration", width="600", link="{master}/doc/Libs.gif"]
+
+As shown in this screencast:
+
+- To update, just delete the part `"3.11.0" // available` .
+- Remove the comment if you don't want to update.
 
 
 == FAQ
@@ -146,9 +153,7 @@ The project was called `gradle-kotlin-dsl-libs` before, which was a bad name for
 
 - This project is licensed under the MIT License. See {master}/LICENSE.md[LICENSE.md]
 - Explain your use case and start the discussion before your submit a pull-request
-- Run the automated tests with `$ gw check`
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+- Please read {master}/CONTRIBUTING.md[CONTRIBUTING.md] the process for submitting pull requests to us.
 
 
 == Acknowledgments
