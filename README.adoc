@@ -1,4 +1,27 @@
-include::includes.adoc[]
+//include::includes.adoc[]
+:plugin_version: 0.3.1
+:repo: jmfayard/buildSrcVersions
+:branch: 26-buildSrcVersions
+:github: https://github.com/{repo}
+:plugin_issues: https://github.com/gradle/kotlin-dsl/issues?utf8=%E2%9C%93&q=author%3Ajmfayard+
+:plugin_gradle_portal: https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions
+:gradle_kotlin_dsl:	https://github.com/gradle/kotlin-dsl
+:gradle_guide_new:	https://guides.gradle.org/creating-new-gradle-builds
+:gradle_guide_buidllogic:	https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
+:medium_puzzle: https://blog.kotlin-academy.com/gradle-kotlin-the-missing-piece-of-the-puzzle-7528a85f0d2c
+:medium_protips: https://proandroiddev.com/android-studio-pro-tips-for-working-with-gradle-8a7aa61a8cc4
+:medium_mvp: https://dev.to/jmfayard/the-minimum-viable-pull-request-5e7p
+:devto_readme: https://dev.to/jmfayard/how-to-write-a-good-readme-discuss-4hkl
+:root: file:///Users/jmfayard/Dev/mautinoa/buildSrcVersions
+:issues: https://github.com/jmfayard/buildSrcVersions/issues
+:master: https://github.com/jmfayard/buildSrcVersions/blob/master
+:badge_mit: image:https://img.shields.io/github/license/mashape/apistatus.svg["GitHub",link="{github}/blob/master/LICENSE.txt"]
+:badge_version: image:https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/buildSrcVersions/maven-metadata.xml.svg?label=gradlePluginPortal["Maven Central",link="https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions"]
+:badge_issues: image:https://img.shields.io/github/issues/{repo}.svg["GitHub issues",link="{github}/issues"]
+:badge_pr:  image:https://img.shields.io/github/issues-pr/{repo}.svg["GitHub pull requests",link="{github}/pulls?utf8=%E2%9C%93&q=is%3Apr+"]
+:badge_build: image:https://img.shields.io/travis/com/{repo}/{branch}.svg["Travis (.org)",link="https://travis-ci.com/{repo}"]
+
+
 
 //:imagesdir: /Users/jmfayard/Dev/mautinoa/buildSrcVersions/doc
 :imagesdir: doc
@@ -19,7 +42,7 @@ because in that case, the IDE support is exactly what you would expect when you 
 
 image::try-again.png[]
 
-Now, what is better than writing manually those files link:Versions.kt[`Versions.kt`] and link:Libs.kt[`Libs.kt`]?
+Now, what is better than writing manually those files link:doc/Versions.kt[`Versions.kt`] and link:doc/Libs.kt[`Libs.kt`]?
 
 Having a Gradle plugin write them for you maybe?
 
@@ -98,12 +121,12 @@ The file `Versions.kt` is regenerated with a comment indicating which new versio
 
 ```kotlin
 object Versions {
-    const val moshi: String = "1.8.0"
-    const val com_squareup_okhttp3: String = "3.11.0" // available: "3.12.0"
+    val moshi = "1.8.0"
+    val com_squareup_okhttp3 = "3.11.0" // available: "3.12.0"
 }
 ```
 
-To update, Delete the part `"3.11.0" // available:&nbsp;` (including the non-breaking space!).
+To update, just delete the part `"3.11.0" // available` .
 
 Remove the comment if you don't want to update.
 
