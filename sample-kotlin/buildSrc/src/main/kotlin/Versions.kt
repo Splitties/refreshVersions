@@ -7,6 +7,10 @@ import kotlin.String
  *
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
+    const val okhttp: String = "3.12.1" 
+
+    const val okio: String = "2.0.0" // available: "2.1.0"
+
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.11" 
 
     const val org_jetbrains_kotlin: String = "1.3.11" 

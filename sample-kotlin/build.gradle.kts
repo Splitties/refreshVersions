@@ -13,7 +13,10 @@ repositories {
 }
 
 dependencies {
-    compile(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib-jdk8"))
+
+    implementation("com.squareup.okhttp3:okhttp:3.12.1")
+    implementation("com.squareup.okio:okio:2.0.0")
 }
 
 tasks.withType<KotlinCompile> {
