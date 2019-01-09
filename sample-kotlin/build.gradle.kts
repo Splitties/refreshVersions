@@ -2,11 +2,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.11"
-    id("de.fayard.buildSrcVersions") version "0.3.2"
+    id("de.fayard.buildSrcVersions") version "0.4.0"
 }
 
 group = "de.fayard"
-version = "0.3.2"
 
 repositories {
     mavenCentral()
