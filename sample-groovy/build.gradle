@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'idea'
+    id 'de.fayard.buildSrcVersions' version '0.3.2'
+}
+
+group = "de.fayard"
+version = "0.3.2"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.squareup.okio:okio:2.0.0'
+}
+

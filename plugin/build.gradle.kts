@@ -29,6 +29,7 @@ publishing {
 }
 
 repositories {
+    mavenCentral()
     jcenter()
 }
 

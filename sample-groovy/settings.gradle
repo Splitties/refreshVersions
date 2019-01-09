@@ -1,0 +1,3 @@
+rootProject.name = 'sample-groovy'
+includeBuild '../plugin'
+
