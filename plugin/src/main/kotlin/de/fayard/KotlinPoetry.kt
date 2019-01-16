@@ -51,7 +51,7 @@ plugins {
     `kotlin-dsl`
 }
 repositories {
-    jcenter()
+    mavenCentral()
 }
         """
 
@@ -170,7 +170,6 @@ fun BuildSrcVersionsTask.Companion.parseGraph(
             // also use FDQN for the dependency that conflicts with this one
             val other = map[key]!!
             other.escapedName = other.fdqnName()
-            println("Will use FDQN for ${other.escapedName}")
         } else {
             map[key] = d
             d.escapedName = key
