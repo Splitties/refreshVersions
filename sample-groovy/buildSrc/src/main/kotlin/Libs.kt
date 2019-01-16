@@ -24,4 +24,9 @@ object Libs {
             Versions.vertx_stack_depchain
 
     const val vertx_web: String = "io.vertx:vertx-web"
+
+    /**
+     * https://github.com/zTrap/Android-Iconics-Kt */
+    const val ru_ztrap_iconics_core_ktx: String = "ru.ztrap.iconics:core-ktx:" +
+            Versions.ru_ztrap_iconics_core_ktx
 }

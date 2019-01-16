@@ -15,7 +15,11 @@ object Versions {
 
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.11" 
 
-    const val org_jetbrains_kotlin: String = "1.3.11" 
+    const val kotlin_scripting_compiler_embeddable: String = "1.3.11" 
+
+    const val kotlin_stdlib_jdk8: String = "1.2.71" // available: "1.3.11"
+
+    const val ru_ztrap_iconics_core_ktx: String = "1.0.3" 
 
     /**
      *

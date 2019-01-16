@@ -19,6 +19,8 @@ object Versions {
 
     const val vertx_web: String = "none" // No version. See buildSrcVersions#23
 
+    const val ru_ztrap_iconics_core_ktx: String = "1.0.3" 
+
     /**
      *
      * See issue 19: How to update Gradle itself?

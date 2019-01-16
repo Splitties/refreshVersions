@@ -18,8 +18,15 @@ dependencies {
     implementation("com.squareup.okio:okio:2.0.0")
 
     implementation("io.fabric8:kubernetes-client:3.1.12.fuse-730005")
+    implementation("ru.ztrap.iconics:core-ktx:1.0.3")
+
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+
+buildSrcVersions {
+    useFdqnFor.set(listOf("core-ktx"))
 }

@@ -27,10 +27,15 @@ object Libs {
      * https://kotlinlang.org/ */
     const val kotlin_scripting_compiler_embeddable: String =
             "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" +
-            Versions.org_jetbrains_kotlin
+            Versions.kotlin_scripting_compiler_embeddable
 
     /**
      * https://kotlinlang.org/ */
     const val kotlin_stdlib_jdk8: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" +
-            Versions.org_jetbrains_kotlin
+            Versions.kotlin_stdlib_jdk8
+
+    /**
+     * https://github.com/zTrap/Android-Iconics-Kt */
+    const val ru_ztrap_iconics_core_ktx: String = "ru.ztrap.iconics:core-ktx:" +
+            Versions.ru_ztrap_iconics_core_ktx
 }
