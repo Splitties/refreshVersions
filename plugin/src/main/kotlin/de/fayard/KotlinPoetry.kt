@@ -116,7 +116,7 @@ fun Dependency.versionInformation(): String {
         available == null -> ""
         else -> available.displayComment()
     }
-    return if (comment.length + versionName.length > 65) {
+    return if (comment.length + versionName.length + version.length > 70) {
             '\n' + comment
         } else {
             comment
