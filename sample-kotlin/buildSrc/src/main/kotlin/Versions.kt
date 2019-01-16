@@ -11,6 +11,8 @@ object Versions {
 
     const val okio: String = "2.0.0" // available: "2.1.0"
 
+    const val kubernetes_client: String = "3.1.12.fuse-730005" // available: "4.1.1"
+
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.11" 
 
     const val org_jetbrains_kotlin: String = "1.3.11" 
@@ -23,9 +25,9 @@ object Versions {
     object Gradle {
         const val runningVersion: String = "5.1"
 
-        const val currentVersion: String = "5.1"
+        const val currentVersion: String = "5.1.1"
 
-        const val nightlyVersion: String = "5.2-20190109000041+0000"
+        const val nightlyVersion: String = "5.2-20190116011919+0000"
 
         const val releaseCandidate: String = ""
     }

@@ -56,27 +56,16 @@ repositories {
         """
 
 
-
 @Suppress("LocalVariableName")
 fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPoetry {
 
     val versionsProperties: List<PropertySpec> = versions
         .distinctBy { it.versionName }
-        .map { d: Dependency ->
-            constStringProperty(
-                name = d.versionName,
-                initializer = CodeBlock.of("%S %L", d.version, d.versionInformation())
-            )
-        }
+        .map(Dependency::generateVersionProperty)
+
     val libsProperties: List<PropertySpec> = versions
         .distinctBy { it.escapedName }
-        .map { d ->
-            constStringProperty(
-                name = d.escapedName,
-                initializer = CodeBlock.of("%S + Versions.%L", "${d.group}:${d.name}:", d.versionName),
-                kdoc = dependencyKdoc(d)
-            )
-        }
+        .map(Dependency::generateLibsProperty)
 
     val gradleProperties: List<PropertySpec> = listOf(
         constStringProperty("runningVersion", gradleConfig.running.version),
@@ -114,9 +103,56 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
 
 }
 
-private fun dependencyKdoc(d: Dependency): CodeBlock? {
-    return if (d.projectUrl == null) null
-    else CodeBlock.of("%L", d.projectUrl)
+fun Dependency.generateVersionProperty(): PropertySpec {
+    return constStringProperty(
+        name = versionName,
+        initializer = CodeBlock.of("%S %L", version, versionInformation())
+    )
+}
+
+fun Dependency.versionInformation(): String {
+    val comment = when {
+        version == "none" -> "// No version. See buildSrcVersions#23"
+        available == null -> ""
+        else -> available.displayComment()
+    }
+    return if (comment.length + versionName.length > 65) {
+            '\n' + comment
+        } else {
+            comment
+        }
+}
+
+fun AvailableDependency.displayComment(): String {
+    val newerVersion: String? = when {
+        release.isNullOrBlank().not() -> release
+        milestone.isNullOrBlank().not() -> milestone
+        integration.isNullOrBlank().not() -> integration
+        else -> null
+    }
+    return  if (newerVersion == null) "// $this" else """// available: "$newerVersion""""
+}
+
+
+
+fun Dependency.generateLibsProperty(): PropertySpec {
+    // https://github.com/jmfayard/buildSrcVersions/issues/23
+    val libValue = when(version) {
+        "none" -> CodeBlock.of("%S", "$group:$name")
+        else -> CodeBlock.of("%S + Versions.%L", "$group:$name:", versionName)
+    }
+
+    val libComment = when {
+        projectUrl == null -> null
+         else -> CodeBlock.of("%L", this.projectUrl)
+    }
+
+    return constStringProperty(
+        name = escapedName,
+        initializer = libValue,
+        kdoc = libComment
+    )
+
 }
 
 
@@ -190,29 +226,3 @@ fun escapeName(name: String): String {
         }
     }
 }
-
-fun Dependency.versionInformation(): String {
-    val comment = available?.displayComment() ?: ""
-    return if (comment.length + versionName.length > 65) {
-        '\n' + comment
-    } else {
-        comment
-    }
-}
-
-
-
-fun AvailableDependency.displayComment(): String {
-    val newerVersion: String? = when {
-        release.isNullOrBlank().not() -> release
-        milestone.isNullOrBlank().not() -> milestone
-        integration.isNullOrBlank().not() -> integration
-        else -> null
-    }
-    return  if (newerVersion == null) "//$this" else """// available: "$newerVersion""""
-}
-
-
-private val random = Random()
-
-

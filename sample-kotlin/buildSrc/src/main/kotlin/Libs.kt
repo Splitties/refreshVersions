@@ -14,6 +14,11 @@ object Libs {
      * https://github.com/square/okio/ */
     const val okio: String = "com.squareup.okio:okio:" + Versions.okio
 
+    /**
+     * http://fabric8.io/ */
+    const val kubernetes_client: String = "io.fabric8:kubernetes-client:" +
+            Versions.kubernetes_client
+
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String =
             "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:" +
             Versions.org_jetbrains_kotlin_jvm_gradle_plugin

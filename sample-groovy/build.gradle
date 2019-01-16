@@ -2,7 +2,8 @@ plugins {
     id 'java'
     id 'application'
     id 'idea'
-    id 'de.fayard.buildSrcVersions' version '0.4.0'
+    id "io.vertx.vertx-plugin" version "0.3.1"
+    id 'de.fayard.buildSrcVersions' version '0.3.2'
 }
 
 group = "de.fayard"
@@ -14,5 +15,10 @@ repositories {
 dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
     implementation 'com.squareup.okio:okio:2.0.0'
+    implementation "io.vertx:vertx-web"
+
 }
 
+vertx {
+    mainVerticle = 'sample.App'
+}
