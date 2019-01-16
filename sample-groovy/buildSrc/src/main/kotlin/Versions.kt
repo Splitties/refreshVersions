@@ -21,16 +21,10 @@ object Versions {
 
     /**
      *
-     *   To update Gradle, edit the wrapper file at path:
-     *      ./gradle/wrapper/gradle-wrapper.properties
+     * See issue 19: How to update Gradle itself?
+     * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    object Gradle {
-        const val runningVersion: String = "5.1"
+    const val gradleLatestVersion: String = "5.1.1"
 
-        const val currentVersion: String = "5.1.1"
-
-        const val nightlyVersion: String = "5.2-20190116011919+0000"
-
-        const val releaseCandidate: String = ""
-    }
+    const val gradleCurrentVersion: String = "5.1"
 }

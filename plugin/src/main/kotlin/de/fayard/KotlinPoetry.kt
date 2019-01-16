@@ -26,8 +26,8 @@ build/
 val INITIAL_SETTINGS = ""
 
 val GRADLE_KDOC = """
-  To update Gradle, edit the wrapper file at path:
-     ./gradle/wrapper/gradle-wrapper.properties
+See issue 19: How to update Gradle itself?
+https://github.com/jmfayard/buildSrcVersions/issues/19
 """
 
 val KDOC_LIBS = """
@@ -68,20 +68,13 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
         .map(Dependency::generateLibsProperty)
 
     val gradleProperties: List<PropertySpec> = listOf(
-        constStringProperty("runningVersion", gradleConfig.running.version),
-        constStringProperty("currentVersion", gradleConfig.current.version),
-        constStringProperty("nightlyVersion", gradleConfig.nightly.version),
-        constStringProperty("releaseCandidate", gradleConfig.releaseCandidate.version)
+        constStringProperty("gradleLatestVersion", gradleConfig.current.version, CodeBlock.of(GRADLE_KDOC)),
+        constStringProperty("gradleCurrentVersion", gradleConfig.running.version)
     )
-
-    val Gradle: TypeSpec = TypeSpec.objectBuilder("Gradle")
-        .addProperties(gradleProperties)
-        .addKdoc(GRADLE_KDOC)
-        .build()
 
     val Versions: TypeSpec = TypeSpec.objectBuilder("Versions")
         .addKdoc(KDOC_VERSIONS)
-        .addType(Gradle).addProperties(versionsProperties)
+        .addProperties(versionsProperties + gradleProperties)
         .build()
 
 
@@ -215,7 +208,7 @@ fun constStringProperty(name: String, initializer: CodeBlock, kdoc: CodeBlock? =
 
 
 fun constStringProperty(name: String, initializer: String, kdoc: CodeBlock? = null) =
-    constStringProperty(name, CodeBlock.of("%S", initializer))
+    constStringProperty(name, CodeBlock.of("%S", initializer), kdoc)
 
 
 fun escapeName(name: String): String {
