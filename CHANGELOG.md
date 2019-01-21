@@ -1,3 +1,20 @@
+
+## Unreleased
+
+- TODO: verify bug  #36
+- TODO: update CONTRIBUTING.md
+- TODO: create an issue for allowing to rename `Libs` and `Versions`
+
+- Upgraded plugin to Gradle 5.1 with a composite project allowing for a better developer workflow #31
+- Introduced samples `sample-groovy` and `sample-kotlin` inside the project
+- Handle case where a dependency has no version #23
+- Allows to update Gradle itself #19
+- Use `mavenCentral()` by default in `buildSrc/build.gradle.kts`
+- Fix `Versions.kt` not compiling when the version name is very large #36
+- Do not recreate buildSrc/.gitignore if the user removes it #37
+
+ 
+
 # 0.3.2
 
 - Invalid Comment linebreak #32

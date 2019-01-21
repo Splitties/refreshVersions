@@ -48,7 +48,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             OutputFile.SETTINGS to INITIAL_SETTINGS)
 
         for ((outputFile, initialContent) in initializationMap) {
-            if (outputFile.existed.not()) {
+            if (OutputFile.BUILD.existed.not()) {
                 project.file(outputFile.path).writeText(initialContent)
                 outputFile.logFileWasModified()
             }
