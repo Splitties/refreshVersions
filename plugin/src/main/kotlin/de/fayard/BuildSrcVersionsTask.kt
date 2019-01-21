@@ -6,8 +6,11 @@ import okio.buffer
 import okio.source
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.options.Option
 import org.gradle.kotlin.dsl.property
 import java.io.File
 
@@ -24,7 +27,8 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
     }
 
-    var useFdqnFor: Property<Iterable<String>> = project.objects.property()
+    @Option(description = "Generate a FDQN for this list of properties")
+    var useFdqnFor: ListProperty<String> = project.objects.listProperty(String::class.java)
 
     var jsonInputPath = "build/dependencyUpdates/report.json"
 
@@ -44,7 +48,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             OutputFile.SETTINGS to INITIAL_SETTINGS)
 
         for ((outputFile, initialContent) in initializationMap) {
-            if (outputFile.existed.not()) {
+            if (OutputFile.BUILD.existed.not()) {
                 project.file(outputFile.path).writeText(initialContent)
                 outputFile.logFileWasModified()
             }
@@ -53,7 +57,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
         val dependencyGraph = readGraphFromJsonFile(jsonInput)
 
         val useFdqnByDefault = useFdqnFor.get().map(::escapeName)
-        println("useFdqnByDefault: $useFdqnByDefault")
 
         val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + MEANING_LESS_NAMES)
 

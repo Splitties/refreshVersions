@@ -2,10 +2,5 @@ language: java
 cache:
     directories:
     - $HOME/.gradle
-#deploy:
-#    provider: script
-#    script: ./gradlew publishPlugins
-#    skip_cleanup: true
-#    on:
-#        branch: master
-#        tags: true
+script:
+  - cd composite && ./gradlew checkAll

@@ -1,3 +1,17 @@
+
+## Unreleased
+
+- Upgraded plugin to Gradle 5.1 with a composite project allowing for a better developer workflow #31
+- Updated CONTRIBUTING.md accordingly
+- Introduced samples `sample-groovy` and `sample-kotlin` inside the project
+- Handle case where a dependency has no version #23
+- To update Gradle itself, see issue #19
+- Use `mavenCentral()` by default in `buildSrc/build.gradle.kts`
+- Fix `Versions.kt` not compiling when the version name is very large #36
+- Do not recreate `buildSrc/.gitignore` if the user removes it #37
+
+ 
+
 # 0.3.2
 
 - Invalid Comment linebreak #32
@@ -5,7 +19,7 @@
 
 # 0.3.1
 
-- #25 Allows to configure a set of dependencies for which to use the FDQN
+- Allows to configure a set of dependencies for which to use the FDQN #25 
 
 ```kotlin
 buildSrcVersions {

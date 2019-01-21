@@ -20,17 +20,19 @@
 :badge_issues: image:https://img.shields.io/github/issues/{repo}.svg["GitHub issues",link="{github}/issues"]
 :badge_pr:  image:https://img.shields.io/github/issues-pr/{repo}.svg["GitHub pull requests",link="{github}/pulls?utf8=%E2%9C%93&q=is%3Apr+"]
 :badge_build: image:https://img.shields.io/travis/com/{repo}/{branch}.svg["Travis (.org)",link="https://travis-ci.com/{repo}"]
-
-
+:versions_kt: {master}/sample-groovy/buildSrc/src/main/kotlin/Versions.kt
+:libs_kt: {master}/sample-groovy/buildSrc/src/main/kotlin/Libs.kt
+:benmanes: https://github.com/ben-manes/gradle-versions-plugin
 
 //:imagesdir: /Users/jmfayard/Dev/mautinoa/buildSrcVersions/doc
 :imagesdir: doc
 
 
 = buildSrcVersions
-
 {badge_version} {badge_build} {badge_mit} {badge_issues} {badge_pr}
 
+`buildSrcVersions` is a Gradle plugin that makes it easier to manage your dependencies inside your IDE.
+It extracts all your dependencies and search for available dependencies updates.
 
 [[img-libs]]
 image::Libs.gif[title="_IDE integration when you put your dependencies information in the buildSrc_",alt="IDE Integration", link="{master}/doc/Libs.gif"]
@@ -43,7 +45,7 @@ because in that case, the IDE support is exactly what you would expect when you 
 
 image::try-again.png[]
 
-Now, what is better than writing manually those files link:doc/Versions.kt[`Versions.kt`] and link:doc/Libs.kt[`Libs.kt`]?
+Now, what is better than writing manually those files link:{versions_kt}[`Versions.kt`^] and link:{libs_kt}[`Libs.kt`^]?
 
 Having a Gradle plugin write them for you maybe?
 
@@ -51,8 +53,9 @@ Having a Gradle plugin write them for you maybe?
 
 - Kotlin, JVM and Android projects.
 - Gradle 4.3+ and Gradle 5.0+
-- The IDE integration works in IntelliJ >= 2008.03+ and Android Studio 3.2+.
 - The IDE integration works for both `build.gradle` (Groovy) and `build.gradle.kts` (Kotlin) files.
+- The IDE integration works in IntelliJ >= 2008.03+ and Android Studio 3.2.
+- Using Android Studio 3.3? Please star https://issuetracker.google.com/issues/123032843[bug #123032843:  IDE integration with the buildSrc^]
 
 
 == Installation
@@ -85,7 +88,11 @@ $ ./gradlew buildSrcVersions
         new file:   buildSrc/src/main/kotlin/Versions.kt
 ```
 
-Synchronize your Gradle build and you can start to replace your magic strings:
+== Replace your dependencies
+
+Synchronize your Gradle build.
+
+You can now start to replace your magic strings with the properties available in link:{libs_kt}[`Libs.kt`^]
 
 ```kotlin
 dependencies {
@@ -94,6 +101,7 @@ dependencies {
 }
 ```
 
+Once you have replaced your magic strings by `Libs.xxx`, the main feature provided by this plugin is to search for dependencies updates.
 
 == Search for dependencies updates
 
@@ -102,7 +110,7 @@ Upgrade dependencies tend to be tedious but it is critically important:
 - Few projects have versioned documentation: `master/README.md` is their documentation.  This means you can waste time trying out snippets that do not work in the version you are using.
 - When you open an issue, you will often be asked: _Can you reproduce this problem in the latest version?_
 
-This plugin inherits from https://github.com/ben-manes/gradle-versions-plugin[Ben Manes's Versions plugin]
+This plugin inherits from the {benmanes}[Gradle Versions plugin^]
 the feature to automatically determine which dependencies have updates.
 
 When you decide you want to update some dependencies, run again the plugin:
@@ -116,7 +124,7 @@ $ ./gradlew buildSrcVersions
 
 ```
 
-The file `Versions.kt` is regenerated with a comment indicating which new version is available.
+The file link:{versions_kt}[`Versions.kt`^]  is regenerated with a comment indicating which new version is available.
 
 ```kotlin
 object Versions {
@@ -145,18 +153,17 @@ image::FAQ.png[title="FAQ",alt="IDE Integration", width="600", link="{issues}"]
 
 
 
-
 == Changelog
 
 See {master}/CHANGELOG.md[CHANGELOG.md]
 
-The project was called `gradle-kotlin-dsl-libs` before, which was a bad name for reasons explained in {issues}/26[#26]
 
 == Contributing
 
 - This project is licensed under the MIT License. See {master}/LICENSE.txt[LICENSE.txt]
 - Explain your use case and start the discussion before your submit a pull-request
-- Please read {master}/CONTRIBUTING.md[CONTRIBUTING.md] the process for submitting pull requests to us.
+- Your feature request or bug report may be better adressed by the parent plugin. Check out {benmanes}[ben-manes/gradle-versions-plugin].
+- {master}/CONTRIBUTING.md[*CONTRIBUTING.md*] describes the process for submitting pull requests.
 
 
 == Acknowledgments
@@ -164,7 +171,7 @@ The project was called `gradle-kotlin-dsl-libs` before, which was a bad name for
 https://gradle.org[Gradle] and https://jetbrains.com[JetBrains] have made this plugin possible
 by working on improving the IDE support for Kotlin code from the `buildSrc` module.
 
-This plugin embraces and extends https://github.com/ben-manes/gradle-versions-plugin[Ben Manes's wonderful "Versions" plugin].
+This plugin embraces and extends {benmanes}[Ben Manes's wonderful "Versions" plugin^].
 
 The Kotlin code generation is powered by https://github.com/square/kotlinpoet[Square's Kotlinpoet]
 

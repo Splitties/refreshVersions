@@ -1,6 +1,7 @@
 package de.fayard
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
