@@ -20,8 +20,8 @@
 :badge_issues: image:https://img.shields.io/github/issues/{repo}.svg["GitHub issues",link="{github}/issues"]
 :badge_pr:  image:https://img.shields.io/github/issues-pr/{repo}.svg["GitHub pull requests",link="{github}/pulls?utf8=%E2%9C%93&q=is%3Apr+"]
 :badge_build: image:https://img.shields.io/travis/com/{repo}/{branch}.svg["Travis (.org)",link="https://travis-ci.com/{repo}"]
-:versions_kt: https://github.com/jmfayard/buildSrcVersions/blob/master/sample-groovy/buildSrc/src/main/kotlin/Versions.kt
-:libs_kt: https://github.com/jmfayard/buildSrcVersions/blob/master/sample-groovy/buildSrc/src/main/kotlin/Libs.kt
+:versions_kt: {master}/sample-groovy/buildSrc/src/main/kotlin/Versions.kt
+:libs_kt: {master}/sample-groovy/buildSrc/src/main/kotlin/Libs.kt
 :benmanes: https://github.com/ben-manes/gradle-versions-plugin
 
 //:imagesdir: /Users/jmfayard/Dev/mautinoa/buildSrcVersions/doc
@@ -157,7 +157,6 @@ image::FAQ.png[title="FAQ",alt="IDE Integration", width="600", link="{issues}"]
 
 See {master}/CHANGELOG.md[CHANGELOG.md]
 
-The project was called `gradle-kotlin-dsl-libs` before, which was a bad name for reasons explained in {issues}/26[#26^]
 
 == Contributing
 
