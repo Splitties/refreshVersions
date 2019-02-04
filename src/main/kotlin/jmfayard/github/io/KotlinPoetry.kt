@@ -16,7 +16,8 @@ internal val VersionsClassName = "Versions"
 val MEANING_LESS_NAMES: List<String> = listOf(
     "common", "core", "core-testing", "testing", "runtime", "extensions",
     "compiler", "migration", "db", "rules", "runner", "monitor", "loader",
-    "media", "print", "io", "media", "collection", "gradle", "android"
+    "media", "print", "io", "media", "collection", "gradle", "android",
+    "library", "generator", "annotations"
 )
 
 val GITIGNORE = """
