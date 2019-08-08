@@ -29,6 +29,7 @@
 
 
 = buildSrcVersions
+
 {badge_version} {badge_build} {badge_mit} {badge_issues} {badge_pr}
 
 `buildSrcVersions` is a Gradle plugin that makes it easier to manage your dependencies inside your IDE.
