@@ -44,8 +44,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
         val initializationMap = mapOf(
             OutputFile.BUILD to INITIAL_BUILD_GRADLE_KTS,
-            OutputFile.GIT_IGNORE to INITIAL_GITIGNORE,
-            OutputFile.SETTINGS to INITIAL_SETTINGS)
+            OutputFile.GIT_IGNORE to INITIAL_GITIGNORE)
 
         for ((outputFile, initialContent) in initializationMap) {
             if (OutputFile.BUILD.existed.not()) {
@@ -71,7 +70,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
     fun checkIfFilesExistInitially(project: Project) {
         for (output in OutputFile.values()) {
-            output.existed = project.file(output.path).exists()
+            output.existed = output.fileExists(project)
         }
     }
 
@@ -79,13 +78,18 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
 }
 
-internal enum class OutputFile(val path: String, var existed: Boolean = false) {
+internal enum class OutputFile(val path: String, var existed: Boolean = false, val alternativePath: String? = null) {
     OUTPUTDIR("buildSrc/src/main/kotlin"),
-    BUILD("buildSrc/build.gradle.kts"),
-    SETTINGS("buildSrc/settings.gradle.kts"),
+    BUILD("buildSrc/build.gradle.kts", alternativePath = "buildSrc/build.gradle"),
     GIT_IGNORE("buildSrc/.gitignore"),
     LIBS("buildSrc/src/main/kotlin/Libs.kt"),
     VERSIONS("buildSrc/src/main/kotlin/Versions.kt");
+
+    fun fileExists(project: Project) = when {
+        project.file(path).exists() -> true
+        alternativePath != null -> project.file(alternativePath).exists()
+        else -> false
+    }
 
     fun logFileWasModified() {
         val ANSI_RESET = "\u001B[0m"
