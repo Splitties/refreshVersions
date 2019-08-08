@@ -47,7 +47,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             OutputFile.GIT_IGNORE to INITIAL_GITIGNORE)
 
         for ((outputFile, initialContent) in initializationMap) {
-            if (OutputFile.BUILD.existed.not()) {
+            if (outputFile.existed.not()) {
                 project.file(outputFile.path).writeText(initialContent)
                 outputFile.logFileWasModified()
             }

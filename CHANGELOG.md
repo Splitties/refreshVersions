@@ -1,7 +1,17 @@
 
 ## Unreleased
 
-- Upgraded plugin to Gradle 5.1 with a composite project allowing for a better developer workflow #31
+
+# 0.4.0
+
+- IDE integration works again in Android 3.5 (bug #123032843)
+- Update to gradle-versions-plugin 0.22
+- Upgradle to Gradle 5.5.1
+- #43 by runningcode: Remove whitespace at the end of lines which do not include a comment. 
+- #41 by lebeshev: use fully qualified name for: "library", "generator", "annotations" (breaking change)
+- #42 do not create buildSrc/settings.gradle.kts, check if buildSrc/build.gradle exists before creating buildSrc/build.gradle.kts
+- Don't include version which include "-eap-"
+- Upgraded plugin to a Gradle composite project allowing for a better developer workflow #31
 - Updated CONTRIBUTING.md accordingly
 - Introduced samples `sample-groovy` and `sample-kotlin` inside the project
 - Handle case where a dependency has no version #23
