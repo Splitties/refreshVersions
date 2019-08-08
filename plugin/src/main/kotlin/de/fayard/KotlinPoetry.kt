@@ -101,7 +101,7 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
 fun Dependency.generateVersionProperty(): PropertySpec {
     return constStringProperty(
         name = versionName,
-        initializer = CodeBlock.of("%S %L", version, versionInformation())
+        initializer = CodeBlock.of("%S%L", version, versionInformation())
     )
 }
 
@@ -109,7 +109,7 @@ fun Dependency.versionInformation(): String {
     val comment = when {
         version == "none" -> "// No version. See buildSrcVersions#23"
         available == null -> ""
-        else -> available.displayComment()
+        else -> " ${available.displayComment()}"
     }
     return if (comment.length + versionName.length + version.length > 70) {
             '\n' + comment
