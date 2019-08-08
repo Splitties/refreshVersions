@@ -19,10 +19,6 @@ object Versions {
 
     const val vertx_stack_depchain: String = "3.6.2" // available: "4.0.0-milestone1"
 
-    const val vertx_web: String = "none"// No version. See buildSrcVersions#23
-
-    const val ru_ztrap_iconics_core_ktx: String = "1.0.3"
-
     /**
      *
      * See issue 19: How to update Gradle itself?
@@ -30,5 +26,5 @@ object Versions {
      */
     const val gradleLatestVersion: String = "5.5.1"
 
-    const val gradleCurrentVersion: String = "5.1"
+    const val gradleCurrentVersion: String = "5.5.1"
 }

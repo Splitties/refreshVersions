@@ -11,17 +11,11 @@ import kotlin.String
 object Versions {
     const val okhttp: String = "3.12.1" // available: "4.0.1"
 
-    const val okio: String = "2.0.0" // available: "2.3.0"
-
-    const val kubernetes_client: String = "3.1.12.fuse-730005" // available: "4.4.0"
+    const val okio: String = "2.0.0"
 
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.11" // available: "1.3.41"
 
-    const val kotlin_scripting_compiler_embeddable: String = "1.3.11" // available: "1.3.41"
-
-    const val kotlin_stdlib_jdk8: String = "1.2.71" // available: "1.3.41"
-
-    const val ru_ztrap_iconics_core_ktx: String = "1.0.3"
+    const val org_jetbrains_kotlin: String = "1.3.11" // available: "1.3.41"
 
     /**
      *
@@ -30,5 +24,5 @@ object Versions {
      */
     const val gradleLatestVersion: String = "5.5.1"
 
-    const val gradleCurrentVersion: String = "5.1"
+    const val gradleCurrentVersion: String = "5.5.1"
 }

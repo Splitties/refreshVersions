@@ -10,14 +10,7 @@ object Libs {
      * https://github.com/square/okhttp */
     const val okhttp: String = "com.squareup.okhttp3:okhttp:" + Versions.okhttp
 
-    /**
-     * https://github.com/square/okio/ */
     const val okio: String = "com.squareup.okio:okio:" + Versions.okio
-
-    /**
-     * http://fabric8.io/ */
-    const val kubernetes_client: String = "io.fabric8:kubernetes-client:" +
-            Versions.kubernetes_client
 
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String =
             "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:" +
@@ -27,15 +20,10 @@ object Libs {
      * https://kotlinlang.org/ */
     const val kotlin_scripting_compiler_embeddable: String =
             "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" +
-            Versions.kotlin_scripting_compiler_embeddable
+            Versions.org_jetbrains_kotlin
 
     /**
      * https://kotlinlang.org/ */
     const val kotlin_stdlib_jdk8: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" +
-            Versions.kotlin_stdlib_jdk8
-
-    /**
-     * https://github.com/zTrap/Android-Iconics-Kt */
-    const val ru_ztrap_iconics_core_ktx: String = "ru.ztrap.iconics:core-ktx:" +
-            Versions.ru_ztrap_iconics_core_ktx
+            Versions.org_jetbrains_kotlin
 }
