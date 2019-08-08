@@ -1,5 +1,5 @@
 //include::includes.adoc[]
-:plugin_version: 0.3.2
+:plugin_version: 0.4.0
 :repo: jmfayard/buildSrcVersions
 :branch: 26-buildSrcVersions
 :github: https://github.com/{repo}
@@ -55,8 +55,8 @@ Having a Gradle plugin write them for you maybe?
 - Kotlin, JVM and Android projects.
 - Gradle 4.3+ and Gradle 5.0+
 - The IDE integration works for both `build.gradle` (Groovy) and `build.gradle.kts` (Kotlin) files.
-- The IDE integration works in IntelliJ >= 2008.03+ and Android Studio 3.2.
-- Using Android Studio 3.3? Please star https://issuetracker.google.com/issues/123032843[bug #123032843:  IDE integration with the buildSrc^]
+- The IDE integration works in IntelliJ >= 2008.03+
+- Android Studio: the IDE integration works in 3.3 and 3.5+. It was broken in 3.3 and 3.4 due https://issuetracker.google.com/issues/123032843[bug #123032843:  IDE integration with the buildSrc^]
 
 
 == Installation
