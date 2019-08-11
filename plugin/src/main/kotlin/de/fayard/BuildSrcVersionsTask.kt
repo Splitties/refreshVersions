@@ -7,11 +7,8 @@ import okio.source
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.provider.ListProperty
-import org.gradle.api.provider.Property
-import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
-import org.gradle.kotlin.dsl.property
 import java.io.File
 
 open class BuildSrcVersionsTask : DefaultTask() {
@@ -43,8 +40,8 @@ open class BuildSrcVersionsTask : DefaultTask() {
         checkIfFilesExistInitially(project)
 
         val initializationMap = mapOf(
-            OutputFile.BUILD to INITIAL_BUILD_GRADLE_KTS,
-            OutputFile.GIT_IGNORE to INITIAL_GITIGNORE)
+                OutputFile.BUILD to INITIAL_BUILD_GRADLE_KTS,
+                OutputFile.GIT_IGNORE to INITIAL_GITIGNORE)
 
         for ((outputFile, initialContent) in initializationMap) {
             if (outputFile.existed.not()) {
@@ -55,7 +52,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
         val dependencyGraph = readGraphFromJsonFile(jsonInput)
 
-        val useFdqnByDefault = useFdqnFor.get().map(::escapeName)
+        val useFdqnByDefault = useFdqnFor.get().map { it.lowerSnakeCase() }
 
         val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + MEANING_LESS_NAMES)
 
@@ -73,9 +70,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
             output.existed = output.fileExists(project)
         }
     }
-
-
-
 }
 
 internal enum class OutputFile(val path: String, var existed: Boolean = false, val alternativePath: String? = null) {

@@ -61,7 +61,9 @@ fun nonRegressionForFile(json: File, libsFile: File, versionsFile: File) {
         fail(
             """
               Missing identifiers for ${json.name} compared to ${libsFile.name}:
-              $missingLibs""".trimIndent()
+              missingLibs:$missingLibs
+              libsFile:${libsFile.readLines()}
+              libsIdentifiers:$libsIdentifiers""".trimIndent()
         )
     } else {
         libsFile.writeText(libsIdentifiers.joinToStringWithNewLines())
@@ -72,7 +74,9 @@ fun nonRegressionForFile(json: File, libsFile: File, versionsFile: File) {
         fail(
             """
               Missing identifiers for ${json.name} compared to ${libsFile.name}:
-              $missingVersions""".trimIndent()
+              missingVersions:$missingVersions
+              libsFile:${versionsFile.readLines()}
+              versionsIdentifiers:$versionsIdentifiers""".trimIndent()
         )
     } else {
         versionsFile.writeText(versionsIdentifiers.joinToStringWithNewLines())

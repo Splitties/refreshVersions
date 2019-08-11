@@ -6,12 +6,6 @@ import kotlin.String
  * Update this file with
  *   `$ ./gradlew buildSrcVersions` */
 object Libs {
-    const val room_compiler: String = "androidx.room:room-compiler:" + Versions.androidx_room
-
-    const val room_ktx: String = "androidx.room:room-ktx:" + Versions.androidx_room
-
-    const val room_runtime: String = "androidx.room:room-runtime:" + Versions.androidx_room
-
     /**
      * https://github.com/square/okhttp */
     const val okhttp: String = "com.squareup.okhttp3:okhttp:" + Versions.okhttp
@@ -28,4 +22,18 @@ object Libs {
 
     const val vertx_stack_depchain: String = "io.vertx:vertx-stack-depchain:" +
             Versions.vertx_stack_depchain
+
+    object androidx_room {
+        /**
+         * https://developer.android.com/topic/libraries/architecture/index.html */
+        const val room_compiler: String = "androidx.room:room-compiler:" + Versions.androidx_room
+
+        /**
+         * https://developer.android.com/topic/libraries/architecture/index.html */
+        const val room_ktx: String = "androidx.room:room-ktx:" + Versions.androidx_room
+
+        /**
+         * https://developer.android.com/topic/libraries/architecture/index.html */
+        const val room_runtime: String = "androidx.room:room-runtime:" + Versions.androidx_room
+    }
 }

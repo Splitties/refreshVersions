@@ -9,7 +9,7 @@ import kotlin.String
  *
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
-    const val androidx_room: String = "2.0.0"
+    const val androidx_room: String = "2.0.0" // available: "2.1.0"
 
     const val okhttp: String = "3.12.1" // available: "4.0.1"
 

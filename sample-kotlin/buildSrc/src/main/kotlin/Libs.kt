@@ -16,14 +16,16 @@ object Libs {
             "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:" +
             Versions.org_jetbrains_kotlin_jvm_gradle_plugin
 
-    /**
-     * https://kotlinlang.org/ */
-    const val kotlin_scripting_compiler_embeddable: String =
-            "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" +
-            Versions.org_jetbrains_kotlin
+    object org_jetbrains_kotlin {
+        /**
+         * https://kotlinlang.org/ */
+        const val kotlin_scripting_compiler_embeddable: String =
+                "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" +
+                Versions.org_jetbrains_kotlin
 
-    /**
-     * https://kotlinlang.org/ */
-    const val kotlin_stdlib_jdk8: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" +
-            Versions.org_jetbrains_kotlin
+        /**
+         * https://kotlinlang.org/ */
+        const val kotlin_stdlib_jdk8: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" +
+                Versions.org_jetbrains_kotlin
+    }
 }

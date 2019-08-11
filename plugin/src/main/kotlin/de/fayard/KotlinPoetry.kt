@@ -1,7 +1,6 @@
 package de.fayard
 
 import com.squareup.kotlinpoet.*
-import java.util.*
 
 internal val LibsClassName = "Libs"
 internal val VersionsClassName = "Versions"
@@ -65,9 +64,18 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
         .distinctBy { it.versionName }
         .map(Dependency::generateVersionProperty)
 
-    val libsProperties: List<PropertySpec> = versions
+    val versionGroups = versions
         .distinctBy { it.escapedName }
-        .map(Dependency::generateLibsProperty)
+        .groupBy { it.versionName }
+        .values
+    val libsProperties: List<PropertySpec> = versionGroups
+        .filter { it.size == 1 }
+        .map { it.first() }
+        .map { it.generateLibsProperty() }
+    val libsObjects: List<TypeSpec> = versionGroups
+        .filter { it.size > 1 }
+        .map { it.generateLibsProperty() }
+
 
     val gradleProperties: List<PropertySpec> = listOf(
         constStringProperty("gradleLatestVersion", gradleConfig.current.version, CodeBlock.of(GRADLE_KDOC)),
@@ -83,6 +91,7 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
     val Libs = TypeSpec.objectBuilder("Libs")
         .addKdoc(KDOC_LIBS)
         .addProperties(libsProperties)
+        .addTypes(libsObjects)
         .build()
 
 
@@ -112,10 +121,10 @@ fun Dependency.versionInformation(): String {
         else -> " ${available.displayComment()}"
     }
     return if (comment.length + versionName.length + version.length > 70) {
-            '\n' + comment
-        } else {
-            comment
-        }
+        '\n' + comment
+    } else {
+        comment
+    }
 }
 
 fun AvailableDependency.displayComment(): String {
@@ -125,21 +134,28 @@ fun AvailableDependency.displayComment(): String {
         integration.isNullOrBlank().not() -> integration
         else -> null
     }
-    return  if (newerVersion == null) "// $this" else """// available: "$newerVersion""""
+    return if (newerVersion == null) "// $this" else """// available: "$newerVersion""""
 }
 
-
+fun List<Dependency>.generateLibsProperty(): TypeSpec {
+    return TypeSpec.objectBuilder(first().versionName)
+        .addProperties(
+            map { dependency ->
+                dependency.generateLibsProperty()
+            })
+        .build()
+}
 
 fun Dependency.generateLibsProperty(): PropertySpec {
     // https://github.com/jmfayard/buildSrcVersions/issues/23
-    val libValue = when(version) {
+    val libValue = when (version) {
         "none" -> CodeBlock.of("%S", "$group:$name")
         else -> CodeBlock.of("%S + Versions.%L", "$group:$name:", versionName)
     }
 
     val libComment = when {
         projectUrl == null -> null
-         else -> CodeBlock.of("%L", this.projectUrl)
+        else -> CodeBlock.of("%L", this.projectUrl)
     }
 
     return constStringProperty(
@@ -160,7 +176,7 @@ fun BuildSrcVersionsTask.Companion.parseGraph(
 
     val map = mutableMapOf<String, Dependency>()
     for (d: Dependency in dependencies) {
-        val key = escapeName(d.name)
+        val key = d.name.lowerSnakeCase()
         val fdqnName = d.fdqnName()
 
 
@@ -180,7 +196,7 @@ fun BuildSrcVersionsTask.Companion.parseGraph(
     return dependencies.orderDependencies().findCommonVersions()
 }
 
-fun Dependency.fdqnName(): String = escapeName("${group}_${name}")
+fun Dependency.fdqnName(): String = "${group}_${name}".lowerSnakeCase()
 
 
 fun List<Dependency>.orderDependencies(): List<Dependency> {
@@ -190,10 +206,10 @@ fun List<Dependency>.orderDependencies(): List<Dependency> {
 fun List<Dependency>.findCommonVersions(): List<Dependency> {
     val map = groupBy { d -> d.group }
     for (deps in map.values) {
-        val groupTogether = deps.size > 1  && deps.map { it.version }.distinct().size == 1
+        val groupTogether = deps.size > 1 && deps.map { it.version }.distinct().size == 1
 
         for (d in deps) {
-            d.versionName = if (groupTogether) escapeName(d.group) else d.escapedName
+            d.versionName = if (groupTogether) d.group.lowerSnakeCase() else d.escapedName
         }
     }
     return this
@@ -212,10 +228,10 @@ fun constStringProperty(name: String, initializer: String, kdoc: CodeBlock? = nu
     constStringProperty(name, CodeBlock.of("%S", initializer), kdoc)
 
 
-fun escapeName(name: String): String {
+fun String.lowerSnakeCase(): String {
     val escapedChars = listOf('-', '.', ':')
     return buildString {
-        for (c in name) {
+        for (c in this@lowerSnakeCase) {
             append(if (c in escapedChars) '_' else c.toLowerCase())
         }
     }
