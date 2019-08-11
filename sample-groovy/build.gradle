@@ -15,6 +15,10 @@ repositories {
 dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
     implementation 'com.squareup.okio:okio:2.0.0'
+    def version = "2.0.0"
+    implementation "androidx.room:room-compiler:$version"
+    implementation "androidx.room:room-runtime:$version"
+    implementation "androidx.room:room-ktx:$version"
     //implementation "io.vertx:vertx-web"
     //implementation "ru.ztrap.iconics:core-ktx:1.0.3"
 
