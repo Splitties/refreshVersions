@@ -52,7 +52,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
         val dependencyGraph = readGraphFromJsonFile(jsonInput)
 
-        val useFdqnByDefault = useFdqnFor.get().map { it.lowerSnakeCase() }
+        val useFdqnByDefault = useFdqnFor.get().map(::escapeName)
 
         val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + MEANING_LESS_NAMES)
 

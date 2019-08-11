@@ -176,7 +176,7 @@ fun BuildSrcVersionsTask.Companion.parseGraph(
 
     val map = mutableMapOf<String, Dependency>()
     for (d: Dependency in dependencies) {
-        val key = d.name.lowerSnakeCase()
+        val key = escapeName(d.name)
         val fdqnName = d.fdqnName()
 
 
@@ -196,7 +196,7 @@ fun BuildSrcVersionsTask.Companion.parseGraph(
     return dependencies.orderDependencies().findCommonVersions()
 }
 
-fun Dependency.fdqnName(): String = "${group}_${name}".lowerSnakeCase()
+fun Dependency.fdqnName(): String = escapeName("${group}_${name}")
 
 
 fun List<Dependency>.orderDependencies(): List<Dependency> {
@@ -209,7 +209,7 @@ fun List<Dependency>.findCommonVersions(): List<Dependency> {
         val groupTogether = deps.size > 1 && deps.map { it.version }.distinct().size == 1
 
         for (d in deps) {
-            d.versionName = if (groupTogether) d.group.lowerSnakeCase() else d.escapedName
+            d.versionName = if (groupTogether) escapeName(d.group) else d.escapedName
         }
     }
     return this
@@ -228,10 +228,10 @@ fun constStringProperty(name: String, initializer: String, kdoc: CodeBlock? = nu
     constStringProperty(name, CodeBlock.of("%S", initializer), kdoc)
 
 
-fun String.lowerSnakeCase(): String {
+fun escapeName(name: String): String {
     val escapedChars = listOf('-', '.', ':')
     return buildString {
-        for (c in this@lowerSnakeCase) {
+        for (c in name) {
             append(if (c in escapedChars) '_' else c.toLowerCase())
         }
     }
