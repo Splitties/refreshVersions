@@ -8,7 +8,7 @@ version = "0.4.0"
 defaultTasks("run")
 
 
-tasks.register("publish") {
+tasks.register("publishLocally") {
     group = "Custom"
     description = "Publish the plugin locally"
     dependsOn(gradle.includedBuild("buildSrcVersions").task(":publish"))

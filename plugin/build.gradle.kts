@@ -45,7 +45,7 @@ dependencies {
 
     implementation("com.squareup.okio:okio:2.1.0")
     implementation( "com.squareup.moshi:moshi:1.7.0")
-    implementation("com.squareup:kotlinpoet:1.0.0")
+    implementation("com.squareup:kotlinpoet:1.3.0")
 
 }
 

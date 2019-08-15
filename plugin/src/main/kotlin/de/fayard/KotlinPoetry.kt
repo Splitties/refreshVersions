@@ -1,7 +1,8 @@
 package de.fayard
 
 import com.squareup.kotlinpoet.*
-import java.util.*
+import org.gradle.plugin.use.PluginDependenciesSpec
+import org.gradle.plugin.use.PluginDependencySpec
 
 internal val LibsClassName = "Libs"
 internal val VersionsClassName = "Versions"
@@ -22,8 +23,6 @@ val INITIAL_GITIGNORE = """
 .gradle/
 build/
 """
-
-val INITIAL_SETTINGS = ""
 
 val GRADLE_KDOC = """
 See issue 19: How to update Gradle itself?
@@ -90,8 +89,16 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
         .addType(Libs)
         .build()
 
+    val pluginAccessorForBuildSrcVersions = pluginProperty(
+        id = "de.fayard.buildSrcVersions",
+        property = "buildSrcVersions",
+        dependency = versions.first { it.name == "de.fayard.buildSrcVersions.gradle.plugin" },
+        kdoc = CodeBlock.of("See issue #47: how to update buildSrcVersions itself https://github.com/jmfayard/buildSrcVersions/issues/47")
+    )
+
     val VersionsFile = FileSpec.builder("", VersionsClassName)
         .addType(Versions)
+        .addProperty(pluginAccessorForBuildSrcVersions)
         .build()
 
     return KotlinPoetry(Libs = LibsFile, Versions = VersionsFile)
@@ -207,6 +214,19 @@ fun constStringProperty(name: String, initializer: CodeBlock, kdoc: CodeBlock? =
             if (kdoc != null) addKdoc(kdoc)
         }.build()
 
+fun pluginProperty(id: String, property : String, dependency: Dependency, kdoc: CodeBlock? = null): PropertySpec {
+    val type = PluginDependencySpec::class.asClassName()
+    return PropertySpec.builder(property, type)
+        .apply { if (kdoc!= null) addKdoc(kdoc) }
+        .receiver(PluginDependenciesSpec::class.asClassName())
+        .getter(
+            FunSpec.getterBuilder()
+            .addModifiers(KModifier.INLINE)
+            .addStatement("return id(%S).version(Versions.%L)", id, dependency.versionName)
+            .build()
+        )
+        .build()
+}
 
 fun constStringProperty(name: String, initializer: String, kdoc: CodeBlock? = null) =
     constStringProperty(name, CodeBlock.of("%S", initializer), kdoc)
