@@ -2,6 +2,11 @@
 ## Unreleased
 
 
+# 0.4.1
+
+- #47 plugins { buildSrcVersions } allows to update the plugin itself
+- Update to Kotlinpoet 1.3.0
+
 # 0.4.0
 
 - IDE integration works again in Android 3.5 (bug #123032843)
