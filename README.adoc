@@ -63,7 +63,19 @@ Having a Gradle plugin write them for you maybe?
 
 Edit your root `build.gradle(.kts)` file
 
-==== Using legacy plugin application
+==== Using Plugins DSL
+[source,kotlin,subs=attributes]
+----
+buildscript {
+    //...
+}
+plugins {
+  id("de.fayard.buildSrcVersions") version "{plugin_version}"
+}
+// Don't put any code before the buildscripts {} and plugins {} block
+----
+
+==== Or using legacy plugin application
 [source,kotlin,subs=attributes]
 ----
 buildscript {
@@ -78,17 +90,6 @@ buildscript {
 }
 
 apply plugin: "de.fayard.buildSrcVersions"
-----
-==== Or using Plugins DSL
-[source,kotlin,subs=attributes]
-----
-buildscript {
-    //...
-}
-plugins {
-  id("de.fayard.buildSrcVersions") version "{plugin_version}"
-}
-// Don't put any code before the buildscripts {} and plugins {} block
 ----
 
 == Extract your dependencies
