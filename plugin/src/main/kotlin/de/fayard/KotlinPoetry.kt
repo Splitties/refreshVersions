@@ -89,16 +89,21 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
         .addType(Libs)
         .build()
 
-    val pluginAccessorForBuildSrcVersions = pluginProperty(
-        id = "de.fayard.buildSrcVersions",
-        property = "buildSrcVersions",
-        dependency = versions.first { it.name == "de.fayard.buildSrcVersions.gradle.plugin" },
-        kdoc = CodeBlock.of("See issue #47: how to update buildSrcVersions itself https://github.com/jmfayard/buildSrcVersions/issues/47")
-    )
-
     val VersionsFile = FileSpec.builder("", VersionsClassName)
         .addType(Versions)
-        .addProperty(pluginAccessorForBuildSrcVersions)
+        .apply {
+            versions.firstOrNull {
+                it.name in listOf("de.fayard.buildSrcVersions.gradle.plugin", "buildSrcVersions-plugin")
+            }?.let { buildSrcVersionsDependency ->
+                val pluginAccessorForBuildSrcVersions = pluginProperty(
+                    id = "de.fayard.buildSrcVersions",
+                    property = "buildSrcVersions",
+                    dependency = buildSrcVersionsDependency,
+                    kdoc = CodeBlock.of("See issue #47: how to update buildSrcVersions itself https://github.com/jmfayard/buildSrcVersions/issues/47")
+                )
+                addProperty(pluginAccessorForBuildSrcVersions)
+            }
+        }
         .build()
 
     return KotlinPoetry(Libs = LibsFile, Versions = VersionsFile)

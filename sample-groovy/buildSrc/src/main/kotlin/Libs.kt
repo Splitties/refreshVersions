@@ -17,10 +17,6 @@ object Libs {
    */
   const val okio: String = "com.squareup.okio:okio:" + Versions.okio
 
-  const val de_fayard_buildsrcversions_gradle_plugin: String =
-      "de.fayard.buildSrcVersions:de.fayard.buildSrcVersions.gradle.plugin:" +
-      Versions.de_fayard_buildsrcversions_gradle_plugin
-
   const val io_vertx_vertx_plugin_gradle_plugin: String =
       "io.vertx.vertx-plugin:io.vertx.vertx-plugin.gradle.plugin:" +
       Versions.io_vertx_vertx_plugin_gradle_plugin

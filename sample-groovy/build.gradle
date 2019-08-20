@@ -3,7 +3,7 @@ plugins {
     id 'application'
     id 'idea'
     id "io.vertx.vertx-plugin" version "0.3.1"
-    id 'de.fayard.buildSrcVersions' version '0.4.1'
+    id 'de.fayard.buildSrcVersions' version '0.4.2'
 }
 
 group = "de.fayard"
@@ -17,9 +17,6 @@ dependencies {
     implementation 'com.squareup.okio:okio:2.0.0'
     //implementation "io.vertx:vertx-web"
     //implementation "ru.ztrap.iconics:core-ktx:1.0.3"
-
-    implementation 'de.fayard.buildSrcVersions:de.fayard.buildSrcVersions.gradle.plugin:0.4.0'
-
 
 }
 
