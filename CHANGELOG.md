@@ -1,6 +1,7 @@
 
 ## Unreleased
 
+- #50 fix crash "Collection contains no element matching the predicate."
 
 # 0.4.1
 

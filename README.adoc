@@ -63,7 +63,8 @@ Having a Gradle plugin write them for you maybe?
 
 Edit your root `build.gradle(.kts)` file
 
-==== Using Plugins DSL
+We recommend to use the `plugins` block:
+
 [source,kotlin,subs=attributes]
 ----
 buildscript {
@@ -75,7 +76,8 @@ plugins {
 // Don't put any code before the buildscripts {} and plugins {} block
 ----
 
-==== Or using legacy plugin application
+If you have to, use instead the legacy `buildscript { ... }` syntax:
+
 [source,kotlin,subs=attributes]
 ----
 buildscript {
@@ -85,7 +87,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "de.fayard:buildSrcVersions-plugin:{plugin_version}"
+    classpath "de.fayard.buildSrcVersions:de.fayard.buildSrcVersions.gradle.plugin:{plugin_version}"
   }
 }
 
