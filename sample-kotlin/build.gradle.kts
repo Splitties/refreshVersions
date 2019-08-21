@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.3.11"
-    id("de.fayard.buildSrcVersions") version "0.4.2"
+    id("de.fayard.buildSrcVersions") version "0.4.3"
 }
 
 group = "de.fayard"
@@ -17,7 +17,7 @@ dependencies {
     implementation("com.squareup.okio:okio:2.0.0")
 
     //implementation("io.fabric8:kubernetes-client:3.1.12.fuse-730005")
-    //implementation("ru.ztrap.iconics:core-ktx:1.0.3")
+    implementation("ru.ztrap.iconics:core-ktx:1.0.3")
 
 }
 
@@ -27,5 +27,10 @@ tasks.withType<KotlinCompile> {
 
 
 buildSrcVersions {
-    useFdqnFor.set(listOf("core-ktx"))
+    useFdqnFor = mutableListOf()
+    renameLibs = "Libs"
+    renameVersions = "Versions"
+    indent = "  "
+    singleFileMode = false
+    rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap")
 }

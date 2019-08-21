@@ -1,5 +1,5 @@
 //include::includes.adoc[]
-:plugin_version: 0.4.1
+:plugin_version: 0.4.2
 :repo: jmfayard/buildSrcVersions
 :branch: 26-buildSrcVersions
 :github: https://github.com/{repo}
@@ -163,6 +163,24 @@ As shown in this screencast:
 - To update, just delete the part `"3.11.0" // available` .
 - Remove the comment if you don't want to update.
 
+
+== Configuration
+
+No configuration is required, but some things are configurable.
+
+The default configuration is:
+
+```
+buildSrcVersions {
+    indent = "  "
+    renameLibs = "Libs"
+    renameVersions = "Versions"
+    rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap")
+}
+```
+
+
+See https://github.com/jmfayard/buildSrcVersions/issues/53:[Issue #53: Plugin Configuration]
 
 == FAQ
 

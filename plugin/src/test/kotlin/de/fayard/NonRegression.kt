@@ -21,25 +21,18 @@ class NonRegression : FreeSpec({
                 val name = jsonFile.nameWithoutExtension + ".txt"
                 nonRegressionForFile(jsonFile, libsFolder.resolve(name), versionsFolder.resolve(name))
             }
-
         }
     }
-
-
-
 })
-
-
-
 
 
 fun nonRegressionForFile(json: File, libsFile: File, versionsFile: File) {
     println("Parsing ${json.absolutePath}")
-    val dependencyGraph: List<Dependency> = BuildSrcVersionsTask.parseGraph(
-        BuildSrcVersionsTask.readGraphFromJsonFile(
+    val dependencyGraph: List<Dependency> = parseGraph(
+        PluginConfig.readGraphFromJsonFile(
             json
         ),
-        MEANING_LESS_NAMES
+        PluginConfig.MEANING_LESS_NAMES
     )
     val libsIdentifiers: List<String> = dependencyGraph.map { it.escapedName }.sorted().distinct()
     val versionsIdentifiers = dependencyGraph.map { it.versionName }.sorted().distinct()
