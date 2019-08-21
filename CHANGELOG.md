@@ -1,7 +1,14 @@
+# Unreleased
 
-## Unreleased
+# 0.4.2
 
+- Introduce plugibn configuration via the `buildSrcVersions { ... } ` block
+- Customize the names "Versions" and "Libs"? #39
+- We can now chose the indent #45
+- We can customize the list of rejected version keywords
+- See https://github.com/jmfayard/buildSrcVersions/issues/53
 - #50 fix crash "Collection contains no element matching the predicate."
+
 
 # 0.4.1
 

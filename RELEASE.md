@@ -1,0 +1,10 @@
+- Run task `:checkAll` and verify output
+- Check version in `plugin/build.gradle.kts`
+- Run task `:publishPlugins` 
+- Check plugin portal https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions
+- Update CHANGELOG
+- Try the plugin in sample projects
+- Update `:plugin_version:` in `README.adoc`
+- Otherwise update the README
+- Increment `version` in `{plugin,sample-kotlin,sample-groovy}/build.kts`
+- Increment the version in recent articles that talk about the plugin

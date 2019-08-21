@@ -3,3 +3,4 @@
 build/
 .idea/
 !gradle-wrapper.jar
+_DS_Store
