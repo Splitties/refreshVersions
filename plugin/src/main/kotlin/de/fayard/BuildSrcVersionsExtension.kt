@@ -20,11 +20,11 @@ interface BuildSrcVersionsExtension {
 
 internal open class BuildSrcVersionsExtensionImpl(
     override var useFdqnFor: MutableList<String> = mutableListOf(),
-    override var renameLibs: String = "Libs",
-    override var renameVersions: String = "Versions",
+    override var renameLibs: String = PluginConfig.DEFAULT_LIBS,
+    override var renameVersions: String = PluginConfig.DEFAULT_VERSIONS,
     override var indent: String = "",
     override var singleFileMode: Boolean = false,
-    override var rejectedVersionKeywords: MutableList<String> = mutableListOf("alpha", "beta", "rc", "cr", "m", "preview", "eap")
+    override var rejectedVersionKeywords: MutableList<String> = PluginConfig.DEFAULT_REJECTED_KEYWORDS
 ) : BuildSrcVersionsExtension {
 
     override fun rejectedVersionKeywords(vararg keyword: String) {
