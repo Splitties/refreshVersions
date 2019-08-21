@@ -2,7 +2,7 @@ package de.fayard
 
 import org.gradle.api.Project
 
-internal enum class OutputFile(val path: String, var existed: Boolean = false, val alternativePath: String? = null) {
+internal enum class OutputFile(var path: String, var existed: Boolean = false, val alternativePath: String? = null) {
     OUTPUTDIR("buildSrc/src/main/kotlin"),
     BUILD("buildSrc/build.gradle.kts", alternativePath = "buildSrc/build.gradle"),
     GIT_IGNORE("buildSrc/.gitignore"),
@@ -25,5 +25,12 @@ internal enum class OutputFile(val path: String, var existed: Boolean = false, v
             "        new file:   "
         }
         println("$ANSI_GREEN$status$path$ANSI_RESET")
+    }
+
+    companion object {
+        fun configure(extension: BuildSrcVersionsExtension) {
+            LIBS.path = "buildSrc/src/main/kotlin/${extension.renameLibs}.kt"
+            VERSIONS.path = "buildSrc/src/main/kotlin/${extension.renameVersions}.kt"
+        }
     }
 }

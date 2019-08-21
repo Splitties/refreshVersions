@@ -16,6 +16,12 @@ interface BuildSrcVersionsExtension {
     var indent: String
 
     var singleFileMode : Boolean
+
+    fun isValid() : Boolean {
+        val regexp = "[a-zA-Z][a-zA-Z]+".toRegex()
+        return regexp.matchEntire(renameLibs) != null && regexp.matchEntire(renameVersions) != null
+    }
+
 }
 
 internal open class BuildSrcVersionsExtensionImpl(

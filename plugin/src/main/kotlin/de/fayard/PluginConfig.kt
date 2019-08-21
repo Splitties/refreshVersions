@@ -1,5 +1,6 @@
 package de.fayard
 
+import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import okio.buffer
@@ -71,6 +72,8 @@ repositories {
     mavenCentral()
 }
         """
+
+    val issue47 = CodeBlock.of("See issue #47: how to update buildSrcVersions itself https://github.com/jmfayard/buildSrcVersions/issues/47")
 
 
     val moshiAdapter: JsonAdapter<DependencyGraph> by lazy {

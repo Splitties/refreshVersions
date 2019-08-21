@@ -4,13 +4,8 @@ import com.squareup.kotlinpoet.*
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
-internal val LibsClassName = "Libs"
-internal val VersionsClassName = "Versions"
 
-
-
-@Suppress("LocalVariableName")
-fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPoetry {
+fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension: BuildSrcVersionsExtension): KotlinPoetry {
 
     val versionsProperties: List<PropertySpec> = versions
         .distinctBy { it.versionName }
@@ -18,48 +13,53 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig): KotlinPo
 
     val libsProperties: List<PropertySpec> = versions
         .distinctBy { it.escapedName }
-        .map(Dependency::generateLibsProperty)
+        .map { it.generateLibsProperty(extension) }
 
     val gradleProperties: List<PropertySpec> = listOf(
         constStringProperty("gradleLatestVersion", gradleConfig.current.version, CodeBlock.of(PluginConfig.GRADLE_KDOC)),
         constStringProperty("gradleCurrentVersion", gradleConfig.running.version)
     )
 
-    val Versions: TypeSpec = TypeSpec.objectBuilder("Versions")
+    val Versions: TypeSpec = TypeSpec.objectBuilder(extension.renameVersions)
         .addKdoc(PluginConfig.KDOC_VERSIONS)
         .addProperties(versionsProperties + gradleProperties)
         .build()
 
 
-    val Libs = TypeSpec.objectBuilder("Libs")
+    val Libs = TypeSpec.objectBuilder(extension.renameLibs)
         .addKdoc(PluginConfig.KDOC_LIBS)
         .addProperties(libsProperties)
         .build()
 
 
-    val LibsFile = FileSpec.builder("", LibsClassName)
+    val LibsFile = FileSpec.builder("", extension.renameLibs)
+        .indent(extension.indent)
         .addType(Libs)
         .build()
 
-    val VersionsFile = FileSpec.builder("", VersionsClassName)
+    val VersionsFile = FileSpec.builder("", extension.renameVersions)
+        .indent(extension.indent)
         .addType(Versions)
-        .apply {
-            versions.firstOrNull {
-                it.name in listOf("de.fayard.buildSrcVersions.gradle.plugin", "buildSrcVersions-plugin")
-            }?.let { buildSrcVersionsDependency ->
-                val pluginAccessorForBuildSrcVersions = pluginProperty(
-                    id = "de.fayard.buildSrcVersions",
-                    property = "buildSrcVersions",
-                    dependency = buildSrcVersionsDependency,
-                    kdoc = CodeBlock.of("See issue #47: how to update buildSrcVersions itself https://github.com/jmfayard/buildSrcVersions/issues/47")
-                )
-                addProperty(pluginAccessorForBuildSrcVersions)
-            }
-        }
+        .apply { addMaybeBuildSrcVersions(versions, extension) }
         .build()
 
     return KotlinPoetry(Libs = LibsFile, Versions = VersionsFile)
 
+}
+
+fun FileSpec.Builder.addMaybeBuildSrcVersions(versions: List<Dependency>, extension: BuildSrcVersionsExtension) {
+    versions.firstOrNull {
+        it.name in listOf("de.fayard.buildSrcVersions.gradle.plugin", "buildSrcVersions-plugin")
+    }?.let { buildSrcVersionsDependency ->
+        val pluginAccessorForBuildSrcVersions = pluginProperty(
+            id = "de.fayard.buildSrcVersions",
+            property = "buildSrcVersions",
+            dependency = buildSrcVersionsDependency,
+            kdoc = PluginConfig.issue47,
+            extension = extension
+        )
+        addProperty(pluginAccessorForBuildSrcVersions)
+    }
 }
 
 fun Dependency.generateVersionProperty(): PropertySpec {
@@ -94,11 +94,11 @@ fun AvailableDependency.displayComment(): String {
 
 
 
-fun Dependency.generateLibsProperty(): PropertySpec {
+fun Dependency.generateLibsProperty(extension: BuildSrcVersionsExtension): PropertySpec {
     // https://github.com/jmfayard/buildSrcVersions/issues/23
     val libValue = when(version) {
         "none" -> CodeBlock.of("%S", "$group:$name")
-        else -> CodeBlock.of("%S + Versions.%L", "$group:$name:", versionName)
+        else -> CodeBlock.of("%S + ${extension.renameVersions}.%L", "$group:$name:", versionName)
     }
 
     val libComment = when {
@@ -171,7 +171,13 @@ fun constStringProperty(name: String, initializer: CodeBlock, kdoc: CodeBlock? =
             if (kdoc != null) addKdoc(kdoc)
         }.build()
 
-fun pluginProperty(id: String, property : String, dependency: Dependency, kdoc: CodeBlock? = null): PropertySpec {
+fun pluginProperty(
+    id: String,
+    property: String,
+    dependency: Dependency,
+    kdoc: CodeBlock? = null,
+    extension: BuildSrcVersionsExtension
+): PropertySpec {
     val type = PluginDependencySpec::class.asClassName()
     return PropertySpec.builder(property, type)
         .apply { if (kdoc!= null) addKdoc(kdoc) }
@@ -179,7 +185,7 @@ fun pluginProperty(id: String, property : String, dependency: Dependency, kdoc: 
         .getter(
             FunSpec.getterBuilder()
             .addModifiers(KModifier.INLINE)
-            .addStatement("return id(%S).version(Versions.%L)", id, dependency.versionName)
+            .addStatement("return id(%S).version(${extension.renameVersions}.%L)", id, dependency.versionName)
             .build()
         )
         .build()

@@ -16,6 +16,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
     fun taskAction() {
         val extension : BuildSrcVersionsExtension = project.extensions.getByType()
         println("Configuration: $extension")
+        OutputFile.configure(extension)
 
         val jsonInput = project.file(jsonInputPath)
         val outputDir = project.file(OutputFile.OUTPUTDIR.path).also {
@@ -42,7 +43,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
         val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
 
-        val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle)
+        val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle, extension)
 
         kotlinPoetry.Libs.writeTo(outputDir)
         OutputFile.LIBS.logFileWasModified()
