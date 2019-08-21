@@ -18,17 +18,14 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
     override fun apply(project: Project) = project.run {
 
         val benManesVersions: DependencyUpdatesTask = configureBenManesVersions()
-        val pluginExtension = extensions.create(EXTENSION_NAME, BuildSrcVersionsExtension::class.java, project)
-        pluginExtension.useFdqnFor.set(emptyList())
+        extensions.create(BuildSrcVersionsExtension::class, EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
 
         tasks.create("buildSrcVersions", BuildSrcVersionsTask::class) {
             group = "Help"
             description = "Update buildSrc/src/main/kotlin/{Versions.kt,Libs.kt}"
             dependsOn(":dependencyUpdates")
             jsonInputPath = benManesVersions.outputDir + "/" + benManesVersions.reportfileName + ".json"
-            useFdqnFor.set(pluginExtension.useFdqnFor)
         }
-
 
         Unit
     }

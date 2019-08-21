@@ -6,14 +6,11 @@ import okio.buffer
 import okio.source
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
-import org.gradle.api.provider.ListProperty
-import org.gradle.api.provider.Property
-import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
-import org.gradle.api.tasks.options.Option
-import org.gradle.kotlin.dsl.property
+import org.gradle.kotlin.dsl.getByType
 import java.io.File
 
+@Suppress("UnstableApiUsage")
 open class BuildSrcVersionsTask : DefaultTask() {
 
     companion object {
@@ -27,14 +24,13 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
     }
 
-    @Option(description = "Generate a FDQN for this list of properties")
-    var useFdqnFor: ListProperty<String> = project.objects.listProperty(String::class.java)
-
     var jsonInputPath = "build/dependencyUpdates/report.json"
-
 
     @TaskAction
     fun taskAction() {
+        val extension = project.extensions.getByType<BuildSrcVersionsExtension>()
+        println("Configuration: $extension")
+
         val jsonInput = project.file(jsonInputPath)
         val outputDir = project.file(OutputFile.OUTPUTDIR.path).also {
             if (!it.isDirectory) it.mkdirs()
@@ -44,7 +40,8 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
         val initializationMap = mapOf(
             OutputFile.BUILD to INITIAL_BUILD_GRADLE_KTS,
-            OutputFile.GIT_IGNORE to INITIAL_GITIGNORE)
+            OutputFile.GIT_IGNORE to INITIAL_GITIGNORE
+        )
 
         for ((outputFile, initialContent) in initializationMap) {
             if (outputFile.existed.not()) {
@@ -55,7 +52,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
         val dependencyGraph = readGraphFromJsonFile(jsonInput)
 
-        val useFdqnByDefault = useFdqnFor.get().map(::escapeName)
+        val useFdqnByDefault = extension.useFdqnFor.map(::escapeName)
 
         val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + MEANING_LESS_NAMES)
 
@@ -73,7 +70,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
             output.existed = output.fileExists(project)
         }
     }
-
 
 
 }

@@ -19,21 +19,15 @@ dependencies {
     //implementation "ru.ztrap.iconics:core-ktx:1.0.3"
 
 }
-
-
-buildSrcVersions {
-    useFdqnFor.set(["core-ktx"])
-}
-
-
-
-
-
-
-
-
-
-
 vertx {
     mainVerticle = 'sample.App'
+}
+
+buildSrcVersions {
+    useFdqnFor()
+    renameLibs = "Libs"
+    renameVersions = "Versions"
+    indent = "  "
+    singleFileMode = false
+    rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap")
 }
