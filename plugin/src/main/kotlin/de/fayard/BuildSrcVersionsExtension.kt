@@ -28,7 +28,7 @@ internal open class BuildSrcVersionsExtensionImpl(
     override var useFdqnFor: MutableList<String> = mutableListOf(),
     override var renameLibs: String = PluginConfig.DEFAULT_LIBS,
     override var renameVersions: String = PluginConfig.DEFAULT_VERSIONS,
-    override var indent: String = "",
+    override var indent: String = PluginConfig.DEFAULT_INDENT,
     override var singleFileMode: Boolean = false,
     override var rejectedVersionKeywords: MutableList<String> = PluginConfig.DEFAULT_REJECTED_KEYWORDS
 ) : BuildSrcVersionsExtension {
