@@ -28,6 +28,5 @@ buildSrcVersions {
     renameLibs = "Libs"
     renameVersions = "Versions"
     indent = "  "
-    singleFileMode = false
     rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap")
 }

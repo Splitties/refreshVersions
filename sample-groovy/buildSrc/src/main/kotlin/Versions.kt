@@ -12,13 +12,13 @@ import kotlin.String
 object Versions {
   const val okhttp: String = "3.12.1" // available: "4.1.0"
 
-  const val okio: String = "2.0.0" // available: "2.3.0"
+  const val okio: String = "2.0.0" // available: "2.4.0"
 
   const val io_vertx_vertx_plugin_gradle_plugin: String = "0.3.1" // available: "0.8.0"
 
   const val vertx_core: String = "none"// No version. See buildSrcVersions#23
 
-  const val vertx_stack_depchain: String = "3.6.2" // available: "4.0.0-milestone1"
+  const val vertx_stack_depchain: String = "3.6.2" // available: "4.0.0-milestone2"
 
   /**
    *

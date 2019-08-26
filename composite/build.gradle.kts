@@ -26,6 +26,7 @@ tasks.register("checkAll") {
     dependsOn(gradle.includedBuild("buildSrcVersions").task(":check"))
     dependsOn(gradle.includedBuild("sample-kotlin").task(":buildSrcVersions"))
     dependsOn(gradle.includedBuild("sample-groovy").task(":buildSrcVersions"))
+    dependsOn(gradle.includedBuild("sample-versionsOnlyMode").task(":buildSrcVersions"))
 }
 
 

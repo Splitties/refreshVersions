@@ -15,13 +15,31 @@ interface BuildSrcVersionsExtension {
 
     var indent: String
 
-    var singleFileMode : Boolean
+    var versionsOnlyMode : VersionsOnlyMode?
 
-    fun isValid() : Boolean {
-        val regexp = "[a-zA-Z][a-zA-Z]+".toRegex()
-        return regexp.matchEntire(renameLibs) != null && regexp.matchEntire(renameVersions) != null
-    }
+    var versionsOnlyFile : String?
 
+}
+
+fun BuildSrcVersionsExtension.useBuildSrc() = versionsOnlyMode != null
+
+enum class VersionsOnlyMode(val example: String) {
+    KOTLIN_VAL("""
+        val okhttp = "3.2.0" // available: "3.3.1"
+        val com_squareup_moshi = "1.8.0"
+    """.trimIndent()),
+    GROOVY_DEF("""
+        def okhttp = '3.2.0' // available: '3.3.1'
+        def com_squareup_moshi = '1.8.0'
+    """.trimIndent()),
+    GROOVY_EXT("""
+        ext {
+            okhttp = '3.2.0' // available: '3.3.1'
+            com_squareup_moshi = '1.8.0'
+        }
+    """.trimIndent())
+    ;
+    companion object
 }
 
 internal open class BuildSrcVersionsExtensionImpl(
@@ -29,9 +47,11 @@ internal open class BuildSrcVersionsExtensionImpl(
     override var renameLibs: String = PluginConfig.DEFAULT_LIBS,
     override var renameVersions: String = PluginConfig.DEFAULT_VERSIONS,
     override var indent: String = PluginConfig.DEFAULT_INDENT,
-    override var singleFileMode: Boolean = false,
+    override var versionsOnlyMode: VersionsOnlyMode? = null,
+    override var versionsOnlyFile: String? = null,
     override var rejectedVersionKeywords: MutableList<String> = PluginConfig.DEFAULT_REJECTED_KEYWORDS
 ) : BuildSrcVersionsExtension {
+
 
     override fun rejectedVersionKeywords(vararg keyword: String) {
         rejectedVersionKeywords = keyword.toMutableList()
@@ -42,6 +62,8 @@ internal open class BuildSrcVersionsExtensionImpl(
     }
 
     override fun toString(): String {
-        return "BuildSrcVersionsExtension(useFdqnFor=$useFdqnFor, renameLibs='$renameLibs', renameVersions='$renameVersions', indent='$indent', singleFileMode=$singleFileMode, rejectedVersionKeywords=$rejectedVersionKeywords)"
+        return "BuildSrcVersionsExtensionImpl(useFdqnFor=$useFdqnFor, renameLibs='$renameLibs', renameVersions='$renameVersions', indent='$indent', versionsOnlyMode=$versionsOnlyMode, versionsOnlyFile=$versionsOnlyFile, rejectedVersionKeywords=$rejectedVersionKeywords)"
     }
+
+
 }

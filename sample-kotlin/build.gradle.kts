@@ -17,7 +17,7 @@ dependencies {
     implementation("com.squareup.okio:okio:2.0.0")
 
     //implementation("io.fabric8:kubernetes-client:3.1.12.fuse-730005")
-    implementation("ru.ztrap.iconics:core-ktx:1.0.3")
+    //implementation("ru.ztrap.iconics:core-ktx:1.0.3")
 
 }
 
@@ -31,6 +31,5 @@ buildSrcVersions {
     renameLibs = "Libs"
     renameVersions = "Versions"
     indent = "  "
-    singleFileMode = false
     rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap")
 }

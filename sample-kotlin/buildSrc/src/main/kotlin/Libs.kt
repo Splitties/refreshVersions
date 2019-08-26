@@ -22,17 +22,11 @@ object Libs {
    * https://kotlinlang.org/
    */
   const val kotlin_scripting_compiler_embeddable: String =
-      "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" +
-      Versions.kotlin_scripting_compiler_embeddable
+      "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" + Versions.org_jetbrains_kotlin
 
   /**
    * https://kotlinlang.org/
    */
   const val kotlin_stdlib_jdk8: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" +
-      Versions.kotlin_stdlib_jdk8
-
-  /**
-   * https://github.com/zTrap/Android-Iconics-Kt
-   */
-  const val core_ktx: String = "ru.ztrap.iconics:core-ktx:" + Versions.core_ktx
+      Versions.org_jetbrains_kotlin
 }

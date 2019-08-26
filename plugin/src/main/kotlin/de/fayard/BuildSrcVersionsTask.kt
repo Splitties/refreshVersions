@@ -19,6 +19,19 @@ open class BuildSrcVersionsTask : DefaultTask() {
         OutputFile.configure(extension)
 
         val jsonInput = project.file(jsonInputPath)
+
+        val dependencyGraph = PluginConfig.readGraphFromJsonFile(jsonInput)
+
+        val useFdqnByDefault = extension.useFdqnFor.map(::escapeName)
+
+        val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
+
+        if (extension.versionsOnlyMode != null) {
+            onSingleActionMode(dependencies.distinctBy { it.versionName }, extension)
+            return
+        }
+
+
         val outputDir = project.file(OutputFile.OUTPUTDIR.path).also {
             if (!it.isDirectory) it.mkdirs()
         }
@@ -37,11 +50,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
             }
         }
 
-        val dependencyGraph = PluginConfig.readGraphFromJsonFile(jsonInput)
-
-        val useFdqnByDefault = extension.useFdqnFor.map(::escapeName)
-
-        val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
 
         val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle, extension)
 
@@ -50,6 +58,21 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
         kotlinPoetry.Versions.writeTo(outputDir)
         OutputFile.VERSIONS.logFileWasModified()
+    }
+
+    fun onSingleActionMode(dependencies: List<Dependency>, extension: BuildSrcVersionsExtension) {
+        println("\n== copy-paste this to ${extension.versionsOnlyFile} ==\n\n")
+        println("// " + PluginConfig.VERSIONS_ONLY_START)
+        println(PluginConfig.VERSIONS_ONLY_INTRO.trim())
+        dependencies.forEach {
+            println(versionOnly(it, extension))
+        }
+        println("// " + PluginConfig.VERSIONS_ONLY_END)
+        println("\n\n")
+    }
+
+    fun versionOnly(d: Dependency, extension: BuildSrcVersionsExtension): String {
+        return """val ${d.versionName} = "${d.version}" ${d.versionInformation()}""".trim()
     }
 
     fun checkIfFilesExistInitially(project: Project) {
