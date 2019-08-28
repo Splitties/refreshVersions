@@ -32,23 +32,17 @@
 
 {badge_version} {badge_build} {badge_mit} {badge_issues} {badge_pr}
 
-`buildSrcVersions` is a Gradle plugin that makes it easier to manage your dependencies inside your IDE.
+Gradle `buildSrcVersions` is a plugin that makes it painless to manage your dependencies inside your IDE.
 It extracts all your dependencies and search for available dependencies updates.
 
-[[img-libs]]
-image::Libs.gif[title="_IDE integration when you put your dependencies information in the buildSrc_",alt="IDE Integration", link="{master}/doc/Libs.gif"]
+[[img-carbon-Libs-Version]]
+image::carbon-Libs-Versions.png[title = "Gradle buildSrcVersions extracts all your dependencies and search for available dependencies updates. See link:{versions_kt}[`Versions.kt`^] and link:{libs_kt}[`Libs.kt`^]"]
 
+== Design goals
 
-Gradle has a special module called **buildSrc** where you can put Kotlin code and make it directly available to all your Gradle build files.
-
-This is better than the traditional solution of putting your global variables in a Gradle `ext` property or in a Groovy `HashMap`,
-because in that case, the IDE support is exactly what you would expect when you work with an `HashMap`.
-
-image::try-again.png[]
-
-Now, what is better than writing manually those files link:{versions_kt}[`Versions.kt`^] and link:{libs_kt}[`Libs.kt`^]?
-
-Having a Gradle plugin write them for you maybe?
+- **First, to do no harm:** The plugin should never update itself or otherwise break an existing build. The plugin should do nothing unless it's explicitely called. 
+- **Be Lazy:** Use code generation to avoid writing tedious code manually. Find available updates automatically instead of googling them. The plugin should do the right thing by default, no configuration should be mandatory. Leverage IDE tooling support (auto-completion, ...).
+- **Be Humble:** Render to the programmer the things that are the programmer's. This include using the generated code and updating the dependencies.
 
 == Prerequisites
 
@@ -111,6 +105,9 @@ $ ./gradlew buildSrcVersions
 
 == Replace your dependencies
 
+[[img-libs]]
+image::Libs.gif[title="_IDE integration when you put your dependencies information in the buildSrc_",alt="IDE Integration", link="{master}/doc/Libs.gif"]
+
 Synchronize your Gradle build.
 
 You can now start to replace your magic strings with the properties available in link:{libs_kt}[`Libs.kt`^]
@@ -128,8 +125,9 @@ Once you have replaced your magic strings by `Libs.xxx`, the main feature provid
 
 Upgrade dependencies tend to be tedious but it is critically important:
 
-- Few projects have versioned documentation: `master/README.md` is their documentation.  This means you can waste time trying out snippets that do not work in the version you are using.
-- When you open an issue, you will often be asked: _Can you reproduce this problem in the latest version?_
+- Few projects have versioned documentation: master/README.md is their documentation. This means you can waste time trying out snippets that do not work in the version you are using.
+- When you open an issue, you will often be asked: Can you reproduce this problem in the latest version?
+- On the other hand, you don’t want to break your app because there was a breaking change and you didn’t bother to read the CHANGELOG documenting it.
 
 This plugin inherits from the {benmanes}[Gradle Versions plugin^]
 the feature to automatically determine which dependencies have updates.
@@ -147,22 +145,21 @@ $ ./gradlew buildSrcVersions
 
 The file link:{versions_kt}[`Versions.kt`^]  is regenerated with a comment indicating which new version is available.
 
-```kotlin
-object Versions {
-    val moshi = "1.8.0"
-    val com_squareup_okhttp3 = "3.11.0" // available: "3.12.0"
-}
-```
+At that point, your build is exactly the same. Commit.
 
 
 [[img-versions]]
 image::Versions.gif[title="_buildSrcVersions search for dependencies updates and let you decide which you want to apply_",alt="IDE Integration", link="{master}/doc/Libs.gif"]
 
-As shown in this screencast:
+Don’t waste your time finding out manually what is the exact latest stable version available. Instead, spend it deciding whether you want or not to update the version. The format is optimized to update with one DELETE key:
 
-- To update, just delete the part `"3.11.0" // available` .
-- Remove the comment if you don't want to update.
+image::press-to-delete.png[title="Press DELETE to update",alt="Press DELETE to update"]
 
+Once you are done:
+
+- Sync your Gradle build
+- Run your unit tests and otherwise verify that it works.
+- Commit.
 
 == Configuration
 
@@ -176,11 +173,12 @@ buildSrcVersions {
     renameLibs = "Libs"
     renameVersions = "Versions"
     rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap")
+    useFdqnFor() // nothing
 }
 ```
 
 
-See https://github.com/jmfayard/buildSrcVersions/issues/53:[Issue #53: Plugin Configuration]
+See https://github.com/jmfayard/buildSrcVersions/issues/53[Issue #53: Plugin Configuration]
 
 == FAQ
 
