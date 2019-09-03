@@ -28,7 +28,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
 
         if (extension.versionsOnlyMode != null) {
-            onSingleActionMode(dependencies.distinctBy { it.versionName }, extension)
+            onSingleActionMode(dependencies, extension)
             return
         }
 
@@ -62,8 +62,10 @@ open class BuildSrcVersionsTask : DefaultTask() {
     }
 
 
-    fun onSingleActionMode(dependencies: List<Dependency>, extension: BuildSrcVersionsExtension) {
-
+    fun onSingleActionMode(dependenciesWithDupes: List<Dependency>, extension: BuildSrcVersionsExtension) {
+        val dependencies = dependenciesWithDupes.distinctBy { it.versionName }
+        val file = extension.versionsOnlyFile?.let { project.file(it) }
+        regenerateBuildFile(file, extension, dependencies)
     }
 
     fun checkIfFilesExistInitially(project: Project) {

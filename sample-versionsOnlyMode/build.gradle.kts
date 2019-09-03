@@ -21,11 +21,11 @@ dependencies {
     // See https://github.com/jmfayard/buildSrcVersions/issues/54
     val okhttp = "4.1.0"
     val okio = "2.0.0"
-    val org_jetbrains_kotlin_jvm_gradle_plugin = "1.3.11"  // available: "1.3.50"
-    val kotlin_stdlib_jdk8 = "1.3.50"
+    val org_jetbrains_kotlin_jvm_gradle_plugin = "1.3.50"
+    val org_jetbrains_kotlin = "1.3.50"
     // </buildSrcVersions>
 
-    implementation(kotlin("stdlib-jdk8", kotlin_stdlib_jdk8))
+    implementation(kotlin("stdlib-jdk8", org_jetbrains_kotlin))
 
     implementation("com.squareup.okhttp3:okhttp:$okhttp")
     implementation("com.squareup.okio:okio:$okio")
