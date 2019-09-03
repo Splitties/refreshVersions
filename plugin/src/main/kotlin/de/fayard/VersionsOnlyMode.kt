@@ -10,6 +10,7 @@ enum class VersionsOnlyMode {
     GROOVY_DEF,
     GROOVY_EXT;
 
+    fun useSingleQuote() = this == GROOVY_DEF || this == GROOVY_EXT
 }
 
 
@@ -57,9 +58,13 @@ fun regenerateBlock(mode: VersionsOnlyMode, dependencies: List<Dependency>, inde
     return result
 }
 
-fun versionOnly(d: Dependency, versionsOnlyMode: VersionsOnlyMode, indent: String): String = when(versionsOnlyMode) {
-    VersionsOnlyMode.KOTLIN_VAL -> """${indent}val ${d.versionName} = "${d.version}"${d.versionInformation()}"""
-    VersionsOnlyMode.GROOVY_DEF -> """${indent}def ${d.versionName} = "${d.version}"${d.versionInformation()}"""
-    VersionsOnlyMode.GROOVY_EXT -> """${indent}${indent}${d.versionName} = "${d.version}"${d.versionInformation()}"""
-    else -> TODO("Not implemented $versionsOnlyMode")
+fun versionOnly(d: Dependency, versionsOnlyMode: VersionsOnlyMode, indent: String): String {
+    var available = d.versionInformation()
+    if (versionsOnlyMode.useSingleQuote()) available = available.replace('"', '\'')
+    return when(versionsOnlyMode) {
+        VersionsOnlyMode.KOTLIN_VAL -> """${indent}val ${d.versionName} = "${d.version}"$available"""
+        VersionsOnlyMode.GROOVY_DEF -> """${indent}def ${d.versionName} = '${d.version}'$available"""
+        VersionsOnlyMode.GROOVY_EXT -> """${indent}${indent}${d.versionName} = '${d.version}'$available"""
+        else -> TODO("Not implemented $versionsOnlyMode")
+    }
 }
