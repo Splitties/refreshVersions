@@ -21,27 +21,6 @@ interface BuildSrcVersionsExtension {
 
 }
 
-fun BuildSrcVersionsExtension.useBuildSrc() = versionsOnlyMode != null
-
-enum class VersionsOnlyMode(val example: String) {
-    KOTLIN_VAL("""
-        val okhttp = "3.2.0" // available: "3.3.1"
-        val com_squareup_moshi = "1.8.0"
-    """.trimIndent()),
-    GROOVY_DEF("""
-        def okhttp = '3.2.0' // available: '3.3.1'
-        def com_squareup_moshi = '1.8.0'
-    """.trimIndent()),
-    GROOVY_EXT("""
-        ext {
-            okhttp = '3.2.0' // available: '3.3.1'
-            com_squareup_moshi = '1.8.0'
-        }
-    """.trimIndent())
-    ;
-    companion object
-}
-
 internal open class BuildSrcVersionsExtensionImpl(
     override var useFdqnFor: MutableList<String> = mutableListOf(),
     override var renameLibs: String = PluginConfig.DEFAULT_LIBS,

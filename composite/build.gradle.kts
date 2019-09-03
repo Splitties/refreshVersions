@@ -18,7 +18,11 @@ tasks.register("publishPlugins") {
     description = "Publishes this plugin to the Gradle Plugin portal."
     dependsOn(gradle.includedBuild("buildSrcVersions").task(":publishPlugins"))
 }
-
+tasks.register("pluginTests") {
+    group = "Custom"
+    description = "Run plugin unit tests"
+    dependsOn(gradle.includedBuild("buildSrcVersions").task(":check"))
+}
 tasks.register("checkAll") {
     group = "Custom"
     description = "Run all checks"

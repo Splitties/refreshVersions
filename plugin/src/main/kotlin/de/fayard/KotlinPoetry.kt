@@ -3,6 +3,7 @@ package de.fayard
 import com.squareup.kotlinpoet.*
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
+import java.io.File
 
 
 fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension: BuildSrcVersionsExtension): KotlinPoetry {

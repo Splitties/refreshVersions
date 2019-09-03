@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.getByType
+import java.io.File
 
 @Suppress("UnstableApiUsage")
 open class BuildSrcVersionsTask : DefaultTask() {
@@ -60,19 +61,9 @@ open class BuildSrcVersionsTask : DefaultTask() {
         OutputFile.VERSIONS.logFileWasModified()
     }
 
-    fun onSingleActionMode(dependencies: List<Dependency>, extension: BuildSrcVersionsExtension) {
-        println("\n== copy-paste this to ${extension.versionsOnlyFile} ==\n\n")
-        println("// " + PluginConfig.VERSIONS_ONLY_START)
-        println(PluginConfig.VERSIONS_ONLY_INTRO.trim())
-        dependencies.forEach {
-            println(versionOnly(it, extension))
-        }
-        println("// " + PluginConfig.VERSIONS_ONLY_END)
-        println("\n\n")
-    }
 
-    fun versionOnly(d: Dependency, extension: BuildSrcVersionsExtension): String {
-        return """val ${d.versionName} = "${d.version}" ${d.versionInformation()}""".trim()
+    fun onSingleActionMode(dependencies: List<Dependency>, extension: BuildSrcVersionsExtension) {
+
     }
 
     fun checkIfFilesExistInitially(project: Project) {
@@ -83,4 +74,3 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
 
 }
-
