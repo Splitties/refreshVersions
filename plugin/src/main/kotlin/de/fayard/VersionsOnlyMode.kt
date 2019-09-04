@@ -39,13 +39,37 @@ fun parseBuildFile(versionsOnlyFile : File?): SingleModeResult? {
 
 fun regenerateBuildFile(versionsOnlyFile: File?, extension: BuildSrcVersionsExtension, dependencies: List<Dependency>) {
     val versionsOnlyMode = extension.versionsOnlyMode ?: return
-    val (startOfBlock, endOfBlock, indent) = parseBuildFile(versionsOnlyFile) ?: return
-    checkNotNull(versionsOnlyFile)
-    val lines = versionsOnlyFile.readLines()
+    val parseResult = parseBuildFile(versionsOnlyFile) ?: SingleModeResult.DEFAULT
+    val (startOfBlock, endOfBlock, indent) = parseResult
 
     val newBlock = regenerateBlock(versionsOnlyMode, dependencies, indent)
-    val newLines = lines.subList(0, startOfBlock) + newBlock + lines.subList(endOfBlock + 1, lines.size)
-    versionsOnlyFile.writeText(newLines.joinToString(separator = "\n", postfix = "\n"))
+
+    if (versionsOnlyFile != null && parseResult != SingleModeResult.DEFAULT) {
+        val lines = versionsOnlyFile.readLines()
+        val newLines = lines.subList(0, startOfBlock) + newBlock + lines.subList(endOfBlock + 1, lines.size)
+        versionsOnlyFile.writeText(newLines.joinToString(separator = "\n", postfix = "\n"))
+    } else {
+        println("""
+            
+== 📋 copy-paste needed! 📋 ==
+
+Copy-paste the snippet below:
+
+${newBlock.joinToString(separator = "\n")}
+
+in the file you configure with something like:
+ 
+// build.gradle(.kts) 
+buildSrcVersions {
+   versionsOnlyFile = "build.gradle.kts"            
+    versionsOnlyMode = VersionsOnlyMode.KOTLIN_VAL
+}
+
+See https://github.com/jmfayard/buildSrcVersions/issues/54
+        """
+        )
+        println()
+    }
 }
 
 fun regenerateBlock(mode: VersionsOnlyMode, dependencies: List<Dependency>, indent: String): List<String> {

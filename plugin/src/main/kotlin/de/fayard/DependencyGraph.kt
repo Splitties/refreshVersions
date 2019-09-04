@@ -64,5 +64,9 @@ data class SingleModeResult(
     val startOfBlock: Int,
     val endOfBlock: Int,
     val indentation: String
-)
+) {
+    companion object {
+        val DEFAULT = SingleModeResult(-1, -1, PluginConfig.DEFAULT_INDENT)
+    }
+}
 
