@@ -1,2 +1,2 @@
-rootProject.name = "buildSrcVersions"
+rootProject.name = "plugin"
 

@@ -1,36 +1,34 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.3.11"
-    id("de.fayard.buildSrcVersions") version "0.4.3"
+    id("de.fayard.buildSrcVersions") version "0.5.0"
 }
 
 group = "de.fayard"
 
 repositories {
-    mavenCentral()
+    maven {
+        setUrl("../plugin/src/test/resources/maven")
+    }
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-
-    implementation("com.squareup.okhttp3:okhttp:3.12.1")
-    implementation("com.squareup.okio:okio:2.0.0")
-
-    //implementation("io.fabric8:kubernetes-client:3.1.12.fuse-730005")
-    implementation("ru.ztrap.iconics:core-ktx:1.0.3")
-
+    implementation("com.google.guava:guava:15.0")
+    implementation("com.google.inject:guice:2.0")
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
-
+tasks.withType<Wrapper> {
+    gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"
+    distributionType = Wrapper.DistributionType.ALL
+}
 
 buildSrcVersions {
     useFdqnFor = mutableListOf()
     renameLibs = "Libs"
     renameVersions = "Versions"
     indent = "  "
-    singleFileMode = false
     rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap")
 }

@@ -10,24 +10,20 @@ import kotlin.String
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
-  const val okhttp: String = "3.12.1" // available: "4.1.0"
+  const val guava: String = "15.0"
 
-  const val okio: String = "2.0.0"
+  const val guice: String = "2.0" // available: "3.0"
 
-  const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.11" // available: "1.3.41"
+  const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.11" // available: "1.3.50"
 
-  const val kotlin_scripting_compiler_embeddable: String = "1.3.11" // available: "1.3.41"
-
-  const val kotlin_stdlib_jdk8: String = "1.2.71" // available: "1.3.41"
-
-  const val core_ktx: String = "1.0.3"
+  const val org_jetbrains_kotlin: String = "1.3.11"
 
   /**
    *
    * See issue 19: How to update Gradle itself?
    * https://github.com/jmfayard/buildSrcVersions/issues/19
    */
-  const val gradleLatestVersion: String = "5.6"
+  const val gradleLatestVersion: String = "5.6.1"
 
-  const val gradleCurrentVersion: String = "5.5.1"
+  const val gradleCurrentVersion: String = "5.6.1"
 }

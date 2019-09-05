@@ -10,24 +10,25 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) = project.run {
 
-        val benManesVersions: DependencyUpdatesTask = configureBenManesVersions()
+        configureBenManesVersions()
+
         extensions.create(BuildSrcVersionsExtension::class, PluginConfig.EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
 
         tasks.create("buildSrcVersions", BuildSrcVersionsTask::class) {
             group = "Help"
             description = "Update buildSrc/src/main/kotlin/{Versions.kt,Libs.kt}"
             dependsOn(":dependencyUpdates")
-            jsonInputPath = benManesVersions.outputDir + "/" + benManesVersions.reportfileName + ".json"
+            outputs.upToDateWhen { false }
         }
 
         Unit
     }
 
-
-
     fun Project.configureBenManesVersions(): DependencyUpdatesTask {
-        val rejectedKeywords: List<String> by lazy {
+        System.setProperty("buildSrcVersionsRunning", "true")
+        val rejectedKeywordsRegexps: List<Regex> by lazy {
             project.extensions.getByType<BuildSrcVersionsExtension>().rejectedVersionKeywords
+                .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
         }
 
         val benManesVersions: DependencyUpdatesTask =
@@ -39,10 +40,7 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
 
             componentSelection {
                 all {
-                    val rejected = rejectedKeywords
-                        .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
-                        .any { it.matches(candidate.version) }
-                    if (rejected) {
+                    if (rejectedKeywordsRegexps.any { it.matches(candidate.version) }) {
                         reject("Release candidate")
                     }
                 }

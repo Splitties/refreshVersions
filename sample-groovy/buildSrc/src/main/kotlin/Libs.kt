@@ -7,15 +7,12 @@ import kotlin.String
  *   `$ ./gradlew buildSrcVersions`
  */
 object Libs {
-  /**
-   * https://github.com/square/okhttp
-   */
-  const val okhttp: String = "com.squareup.okhttp3:okhttp:" + Versions.okhttp
+  const val guava: String = "com.google.guava:guava:" + Versions.guava
 
   /**
-   * https://github.com/square/okio/
+   * http://code.google.com/p/google-guice/
    */
-  const val okio: String = "com.squareup.okio:okio:" + Versions.okio
+  const val guice: String = "com.google.inject:guice:" + Versions.guice
 
   const val io_vertx_vertx_plugin_gradle_plugin: String =
       "io.vertx.vertx-plugin:io.vertx.vertx-plugin.gradle.plugin:" +

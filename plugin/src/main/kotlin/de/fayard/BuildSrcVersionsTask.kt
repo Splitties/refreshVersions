@@ -1,29 +1,86 @@
 package de.fayard
 
+import com.squareup.kotlinpoet.CodeBlock
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.getByType
 
 @Suppress("UnstableApiUsage")
 open class BuildSrcVersionsTask : DefaultTask() {
 
-    @Input
-    var jsonInputPath = PluginConfig.BENMANES_REPORT_PATH
+    @Input @Optional
+    var extension: BuildSrcVersionsExtension? = null
 
     @TaskAction
     fun taskAction() {
-        val extension : BuildSrcVersionsExtension = project.extensions.getByType()
-        println("Configuration: $extension")
+        val extension : BuildSrcVersionsExtension = extension ?: project.extensions.getByType()
+        println("""
+            |Plugin configuration: $extension
+            |See documentation at ${PluginConfig.issue53PluginConfiguration}
+            |
+        """.trimMargin())
         OutputFile.configure(extension)
 
-        val jsonInput = project.file(jsonInputPath)
-        val outputDir = project.file(OutputFile.OUTPUTDIR.path).also {
-            if (!it.isDirectory) it.mkdirs()
+        val jsonInput = project.file(PluginConfig.BENMANES_REPORT_PATH)
+
+        val dependencyGraph = PluginConfig.readGraphFromJsonFile(jsonInput)
+
+        val useFdqnByDefault = extension.useFdqnFor.map(::escapeName)
+
+        val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
+
+        val generatesAll = extension.versionsOnlyMode != VersionsOnlyMode.KOTLIN_OBJECT
+
+        if (generatesAll && extension.versionsOnlyMode != null) {
+            val gradleDeps = listOf(
+                Dependency(version = dependencyGraph.gradle.running.version, group = PluginConfig.GRADLE_CURRENT_VERSION, versionName = PluginConfig.GRADLE_CURRENT_VERSION),
+                Dependency(version = dependencyGraph.gradle.current.version, group = PluginConfig.GRADLE_LATEST_VERSION, versionName = PluginConfig.GRADLE_LATEST_VERSION)
+            )
+            onSingleActionMode(dependencies + gradleDeps, extension)
+            return
         }
 
-        checkIfFilesExistInitially(project)
+        val outputDir = project.file(OutputFile.OUTPUTDIR.path)
+
+        if (generatesAll) {
+            checkIfFilesExistInitiallyAndCreateThem(project)
+        }
+
+        val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle, extension)
+
+        if (generatesAll) {
+            kotlinPoetry.Libs.writeTo(outputDir)
+            OutputFile.LIBS.logFileWasModified()
+        }
+
+        kotlinPoetry.Versions.writeTo(outputDir)
+        OutputFile.VERSIONS.logFileWasModified()
+
+        val file = extension.versionsOnlyFile?.let { project.file(it) }
+        if (file != null && generatesAll.not()) {
+            project.file(OutputFile.VERSIONS.path).renameTo(file)
+            println("File $file updated")
+        }
+    }
+
+
+    fun onSingleActionMode(dependencies: List<Dependency>, extension: BuildSrcVersionsExtension) {
+        val file = extension.versionsOnlyFile?.let { project.file(it) }
+        val projectUseKotlin = project.file("build.gradle.kts").exists()
+        regenerateBuildFile(file, extension, dependencies, projectUseKotlin)
+    }
+
+    fun checkIfFilesExistInitiallyAndCreateThem(project: Project) {
+        project.file(OutputFile.OUTPUTDIR.path).also {
+            if (it.isDirectory.not()) it.mkdirs()
+        }
+
+        for (output in OutputFile.values()) {
+            output.existed = output.fileExists(project)
+        }
 
         val initializationMap = mapOf(
             OutputFile.BUILD to PluginConfig.INITIAL_BUILD_GRADLE_KTS,
@@ -36,28 +93,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
                 outputFile.logFileWasModified()
             }
         }
-
-        val dependencyGraph = PluginConfig.readGraphFromJsonFile(jsonInput)
-
-        val useFdqnByDefault = extension.useFdqnFor.map(::escapeName)
-
-        val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
-
-        val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle, extension)
-
-        kotlinPoetry.Libs.writeTo(outputDir)
-        OutputFile.LIBS.logFileWasModified()
-
-        kotlinPoetry.Versions.writeTo(outputDir)
-        OutputFile.VERSIONS.logFileWasModified()
-    }
-
-    fun checkIfFilesExistInitially(project: Project) {
-        for (output in OutputFile.values()) {
-            output.existed = output.fileExists(project)
-        }
     }
 
 
 }
-

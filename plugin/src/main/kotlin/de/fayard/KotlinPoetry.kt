@@ -16,8 +16,8 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension
         .map { it.generateLibsProperty(extension) }
 
     val gradleProperties: List<PropertySpec> = listOf(
-        constStringProperty("gradleLatestVersion", gradleConfig.current.version, CodeBlock.of(PluginConfig.GRADLE_KDOC)),
-        constStringProperty("gradleCurrentVersion", gradleConfig.running.version)
+        constStringProperty(PluginConfig.GRADLE_LATEST_VERSION, gradleConfig.current.version, CodeBlock.of(PluginConfig.GRADLE_KDOC)),
+        constStringProperty(PluginConfig.GRADLE_CURRENT_VERSION, gradleConfig.running.version)
     )
 
     val Versions: TypeSpec = TypeSpec.objectBuilder(extension.renameVersions)
@@ -55,7 +55,7 @@ fun FileSpec.Builder.addMaybeBuildSrcVersions(versions: List<Dependency>, extens
             id = "de.fayard.buildSrcVersions",
             property = "buildSrcVersions",
             dependency = buildSrcVersionsDependency,
-            kdoc = PluginConfig.issue47,
+            kdoc = CodeBlock.of(PluginConfig.issue47UpdatePlugin),
             extension = extension
         )
         addProperty(pluginAccessorForBuildSrcVersions)
@@ -70,10 +70,11 @@ fun Dependency.generateVersionProperty(): PropertySpec {
 }
 
 fun Dependency.versionInformation(): String {
+    val newerVersion = newerVersion()
     val comment = when {
         version == "none" -> "// No version. See buildSrcVersions#23"
-        available == null -> ""
-        else -> " ${available.displayComment()}"
+        newerVersion == null -> ""
+        else -> """ // available: "$newerVersion""""
     }
     return if (comment.length + versionName.length + version.length > 70) {
             '\n' + comment
@@ -82,20 +83,16 @@ fun Dependency.versionInformation(): String {
         }
 }
 
-fun AvailableDependency.displayComment(): String {
-    val newerVersion: String? = when {
-        release.isNullOrBlank().not() -> release
-        milestone.isNullOrBlank().not() -> milestone
-        integration.isNullOrBlank().not() -> integration
+fun Dependency.newerVersion(): String?  =
+    when {
+        available == null -> null
+        available.release.isNullOrBlank().not() -> available.release
+        available.milestone.isNullOrBlank().not() -> available.milestone
+        available.integration.isNullOrBlank().not() -> available.integration
         else -> null
     }
-    return  if (newerVersion == null) "// $this" else """// available: "$newerVersion""""
-}
-
-
 
 fun Dependency.generateLibsProperty(extension: BuildSrcVersionsExtension): PropertySpec {
-    // https://github.com/jmfayard/buildSrcVersions/issues/23
     val libValue = when(version) {
         "none" -> CodeBlock.of("%S", "$group:$name")
         else -> CodeBlock.of("%S + ${extension.renameVersions}.%L", "$group:$name:", versionName)

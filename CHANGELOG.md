@@ -1,5 +1,21 @@
 # Unreleased
 
+Major new feature! 
+versionsOnlyMode for simple Gradle projects who just need the versions
+5 modes supported: KOTLIN_VAL, KOTLIN_OBJECT, GROOVY_DEF, GROOVY_EXT, GRADLE_PROPERTIES
+See https://github.com/jmfayard/buildSrcVersions/issues/55
+
+
+- Update to Gradle 5.6.1
+- Improve code quality
+- Write more and better tests
+- Use a local maven repo in the samples in order to have a stable output
+- We can now create multiple BuildSrcVersionsTask configured with an extension (used in `sample-versionsOnlyMode`)
+- We can test that the plugin is running by using this condition
+	System.getProperty("buildSrcVersionsRunning") == "true"
+This allows to bypass maven repositories that timeout.
+
+
 # 0.4.2
 
 - Introduce plugibn configuration via the `buildSrcVersions { ... } ` block
