@@ -40,9 +40,7 @@ internal open class BuildSrcVersionsExtensionImpl(
         useFdqnFor = dependencyName.toMutableList()
     }
 
-    override fun toString(): String {
-        return "BuildSrcVersionsExtensionImpl(useFdqnFor=$useFdqnFor, renameLibs='$renameLibs', renameVersions='$renameVersions', indent='$indent', versionsOnlyMode=$versionsOnlyMode, versionsOnlyFile=$versionsOnlyFile, rejectedVersionKeywords=$rejectedVersionKeywords)"
-    }
-
+    override fun toString() : String =
+        PluginConfig.extensionAdapter.toJson(this)
 
 }

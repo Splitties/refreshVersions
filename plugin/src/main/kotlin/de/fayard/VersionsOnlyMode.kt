@@ -65,7 +65,7 @@ buildSrcVersions {
     versionsOnlyMode = VersionsOnlyMode.KOTLIN_VAL
 }
 
-See https://github.com/jmfayard/buildSrcVersions/issues/54
+See ${PluginConfig.issue54VersionOnlyMode}
         """
         )
         println()

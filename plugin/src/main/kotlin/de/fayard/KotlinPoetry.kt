@@ -3,7 +3,6 @@ package de.fayard
 import com.squareup.kotlinpoet.*
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
-import java.io.File
 
 
 fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension: BuildSrcVersionsExtension): KotlinPoetry {
@@ -56,7 +55,7 @@ fun FileSpec.Builder.addMaybeBuildSrcVersions(versions: List<Dependency>, extens
             id = "de.fayard.buildSrcVersions",
             property = "buildSrcVersions",
             dependency = buildSrcVersionsDependency,
-            kdoc = PluginConfig.issue47,
+            kdoc = CodeBlock.of(PluginConfig.issue47UpdatePlugin),
             extension = extension
         )
         addProperty(pluginAccessorForBuildSrcVersions)
@@ -96,7 +95,6 @@ fun AvailableDependency.displayComment(): String {
 
 
 fun Dependency.generateLibsProperty(extension: BuildSrcVersionsExtension): PropertySpec {
-    // https://github.com/jmfayard/buildSrcVersions/issues/23
     val libValue = when(version) {
         "none" -> CodeBlock.of("%S", "$group:$name")
         else -> CodeBlock.of("%S + ${extension.renameVersions}.%L", "$group:$name:", versionName)

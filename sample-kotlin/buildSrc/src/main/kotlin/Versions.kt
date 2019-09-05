@@ -10,7 +10,7 @@ import kotlin.String
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
-  const val okhttp: String = "3.12.1" // available: "4.1.0"
+  const val okhttp: String = "3.12.1" // available: "4.1.1"
 
   const val okio: String = "2.0.0"
 

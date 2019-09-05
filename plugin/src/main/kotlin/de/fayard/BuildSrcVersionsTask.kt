@@ -15,7 +15,10 @@ open class BuildSrcVersionsTask : DefaultTask() {
     @TaskAction
     fun taskAction() {
         val extension : BuildSrcVersionsExtension = project.extensions.getByType()
-        println("Configuration: $extension")
+        println("""
+            |Plugin configuration: $extension
+            |See documentation at ${PluginConfig.issue53PluginConfiguration}
+        """.trimMargin())
         OutputFile.configure(extension)
 
         val jsonInput = project.file(jsonInputPath)
