@@ -10,13 +10,14 @@ plugins {
 group = "de.fayard"
 
 repositories {
-    mavenCentral()
+    maven {
+        setUrl("../plugin/src/test/resources/maven")
+    }
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8", "1.3.50"))
-    implementation("com.squareup.okhttp3:okhttp:4.1.0")
-    implementation("com.squareup.okio:okio:2.0.0")
+    implementation("com.google.guava:guava:15.0")
+    implementation("com.google.inject:guice:2.0")
 }
 
 tasks.withType<KotlinCompile> {
