@@ -10,7 +10,8 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) = project.run {
 
-        val benManesVersions: DependencyUpdatesTask = configureBenManesVersions()
+        configureBenManesVersions()
+
         extensions.create(BuildSrcVersionsExtension::class, PluginConfig.EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
 
         tasks.create("buildSrcVersions", BuildSrcVersionsTask::class) {
@@ -24,6 +25,7 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
     }
 
     fun Project.configureBenManesVersions(): DependencyUpdatesTask {
+        System.setProperty("buildSrcVersionsRunning", "true")
         val rejectedKeywordsRegexps: List<Regex> by lazy {
             project.extensions.getByType<BuildSrcVersionsExtension>().rejectedVersionKeywords
                 .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }

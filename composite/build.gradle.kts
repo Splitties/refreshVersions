@@ -15,12 +15,14 @@ val SAMPLE_VERSIONS_ONLY: IncludedBuild = gradle.includedBuild("sample-versionsO
 tasks.register("publishLocally") {
     group = "Custom"
     description = "Publish the plugin locally"
+    dependsOn(":checkAll")
     dependsOn(PLUGIN.task(":publish"))
 }
 
 tasks.register("publishPlugins") {
     group = "Custom"
     description = "Publishes this plugin to the Gradle Plugin portal."
+    dependsOn(":publishLocally")
     dependsOn(":checkAll")
     dependsOn(PLUGIN.task(":publishPlugins"))
 }

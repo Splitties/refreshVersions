@@ -16,8 +16,8 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension
         .map { it.generateLibsProperty(extension) }
 
     val gradleProperties: List<PropertySpec> = listOf(
-        constStringProperty("gradleLatestVersion", gradleConfig.current.version, CodeBlock.of(PluginConfig.GRADLE_KDOC)),
-        constStringProperty("gradleCurrentVersion", gradleConfig.running.version)
+        constStringProperty(PluginConfig.GRADLE_LATEST_VERSION, gradleConfig.current.version, CodeBlock.of(PluginConfig.GRADLE_KDOC)),
+        constStringProperty(PluginConfig.GRADLE_CURRENT_VERSION, gradleConfig.running.version)
     )
 
     val Versions: TypeSpec = TypeSpec.objectBuilder(extension.renameVersions)
