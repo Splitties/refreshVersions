@@ -34,7 +34,10 @@ enum class VersionsOnlyMode {
 
     val comment: String get() = when(this) {
         GRADLE_PROPERTIES -> "#"
-        else -> "//"
+        KOTLIN_VAL,
+        GROOVY_DEF,
+        KOTLIN_OBJECT,
+        GROOVY_EXT -> slashslash
     }
 
     fun beforeAfter(): Pair<String?, String?> = when(this) {
@@ -48,25 +51,24 @@ enum class VersionsOnlyMode {
 
 
 fun parseBuildFile(versionsOnlyFile: File?, versionsOnlyMode: VersionsOnlyMode): SingleModeResult? {
-    return when {
-        versionsOnlyFile == null -> null
-        versionsOnlyFile.canRead().not() -> null
-        else -> {
-            val lines = versionsOnlyFile.readLines()
-            val startOfBlock = lines.indexOfFirst {
-                it.trim().endsWith(PluginConfig.VERSIONS_ONLY_START)
-            }
-            val endOfBlock = lines.indexOfFirst {
-                it.trim().endsWith(PluginConfig.VERSIONS_ONLY_END)
-            }
-            if (startOfBlock == -1 || endOfBlock == -1) {
-                null
-            } else {
-                var indent = lines[endOfBlock].substringBefore(versionsOnlyMode.comment, missingDelimiterValue = "    ")
-                if (versionsOnlyMode == GRADLE_PROPERTIES) indent = ""
-                SingleModeResult(startOfBlock, endOfBlock, indent)
+    if (versionsOnlyFile == null || versionsOnlyFile.canRead().not()) {
+        return null
+    }
 
-            }
+    val lines = versionsOnlyFile.readLines()
+    val startOfBlock = lines.indexOfFirst {
+        it.trim().endsWith(PluginConfig.VERSIONS_ONLY_START)
+    }
+    val endOfBlock = lines.indexOfFirst {
+        it.trim().endsWith(PluginConfig.VERSIONS_ONLY_END)
+    }
+    return when {
+        startOfBlock == -1 -> null
+        endOfBlock == -1 -> null
+        else -> {
+            var indent = lines[endOfBlock].substringBefore(versionsOnlyMode.comment, missingDelimiterValue = "    ")
+            if (versionsOnlyMode == GRADLE_PROPERTIES) indent = ""
+            SingleModeResult(startOfBlock, endOfBlock, indent)
         }
     }
 }
@@ -84,24 +86,23 @@ fun regenerateBuildFile(versionsOnlyFile: File?, extension: BuildSrcVersionsExte
         versionsOnlyFile.writeText(newLines.joinWithNewlines() + "\n")
     } else {
         println("""
-            
-== 📋 copy-paste needed! 📋 ==
-
-Copy-paste the snippet below:
-
-${newBlock.joinWithNewlines()}
-
-in the file you configure with something like:
- 
-// build.gradle(.kts) 
-buildSrcVersions {
-    versionsOnlyMode = VersionsOnlyMode.${versionsOnlyMode}
-    versionsOnlyFile = "${versionsOnlyMode.suggestedFilename()}"            
-}
-
-See ${PluginConfig.issue54VersionOnlyMode}
-        """
-        )
+        |            
+        |== 📋 copy-paste needed! 📋 ==
+        |
+        |Copy-paste the snippet below:
+        |
+        |${newBlock.joinWithNewlines()}
+        |
+        |in the file you configure with something like:
+        | 
+        |// build.gradle(.kts) 
+        |buildSrcVersions {
+        |    versionsOnlyMode = VersionsOnlyMode.${versionsOnlyMode}
+        |    versionsOnlyFile = "${versionsOnlyMode.suggestedFilename()}"            
+        |}
+        |
+        |See ${PluginConfig.issue54VersionOnlyMode}
+        |        """.trimMargin())
         println()
     }
 }
