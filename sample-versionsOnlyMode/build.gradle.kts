@@ -28,10 +28,17 @@ tasks.withType<Wrapper> {
     distributionType = Wrapper.DistributionType.ALL
 }
 
+tasks.register<Copy>("copyReport") {
+    from(".")
+    include("report.json")
+    into("build/dependencyUpdates")
+}
+
 VersionsOnlyMode.values().forEach { mode ->
     tasks.register<BuildSrcVersionsTask>(mode.name) {
         description = "buildSrcVersion - $mode"
         group = "Custom"
+        dependsOn(":copyReport")
         val filename = mode.name + "." + mode.suggestedFilename().substringAfter(".")
         extension = BuildSrcVersionsExtensionImpl(
             versionsOnlyMode = mode,
