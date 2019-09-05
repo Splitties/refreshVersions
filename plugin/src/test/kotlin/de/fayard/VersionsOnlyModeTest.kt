@@ -11,7 +11,7 @@ class VersionsOnlyModeTest: FreeSpec({
 
 
     "Parse file" {
-        val singleModeResult = parseBuildFile(kotlinValInput)
+        val singleModeResult = parseBuildFile(kotlinValInput, VersionsOnlyMode.KOTLIN_VAL)
         singleModeResult shouldBe SingleModeResult(6, 11, "    ")
     }
 
