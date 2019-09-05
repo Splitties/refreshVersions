@@ -1,6 +1,10 @@
 package de.fayard
 
-import de.fayard.VersionsOnlyMode.*
+import de.fayard.VersionsOnlyMode.GRADLE_PROPERTIES
+import de.fayard.VersionsOnlyMode.GROOVY_DEF
+import de.fayard.VersionsOnlyMode.GROOVY_EXT
+import de.fayard.VersionsOnlyMode.KOTLIN_OBJECT
+import de.fayard.VersionsOnlyMode.KOTLIN_VAL
 import java.io.File
 
 fun BuildSrcVersionsExtension.useBuildSrc() = versionsOnlyMode != null
@@ -31,6 +35,14 @@ enum class VersionsOnlyMode {
     val comment: String get() = when(this) {
         GRADLE_PROPERTIES -> "#"
         else -> "//"
+    }
+
+    fun beforeAfter(): Pair<String?, String?> = when(this) {
+        GROOVY_EXT -> Pair("ext {", "}")
+        KOTLIN_VAL,
+        KOTLIN_OBJECT,
+        GROOVY_DEF,
+        GRADLE_PROPERTIES -> Pair(null, null)
     }
 }
 
@@ -69,7 +81,7 @@ fun regenerateBuildFile(versionsOnlyFile: File?, extension: BuildSrcVersionsExte
     if (versionsOnlyFile != null && parseResult != SingleModeResult.DEFAULT) {
         val lines = versionsOnlyFile.readLines()
         val newLines = lines.subList(0, startOfBlock) + newBlock + lines.subList(endOfBlock + 1, lines.size)
-        versionsOnlyFile.writeText(newLines.joinToString(separator = "\n", postfix = "\n"))
+        versionsOnlyFile.writeText(newLines.joinWithNewlines() + "\n")
     } else {
         println("""
             
@@ -77,7 +89,7 @@ fun regenerateBuildFile(versionsOnlyFile: File?, extension: BuildSrcVersionsExte
 
 Copy-paste the snippet below:
 
-${newBlock.joinToString(separator = "\n")}
+${newBlock.joinWithNewlines()}
 
 in the file you configure with something like:
  
@@ -97,29 +109,58 @@ See ${PluginConfig.issue54VersionOnlyMode}
 fun regenerateBlock(mode: VersionsOnlyMode, dependencies: List<Dependency>, indent: String): List<String> {
     val comment = mode.comment
     val result = mutableListOf<String>()
+    var (before, after) = mode.beforeAfter()
+    if (mode == GRADLE_PROPERTIES) {
+        after = dependencies.availableGradleProperties()
+    }
+
     result += PluginConfig.VERSIONS_ONLY_INTRO.map { "$indent$comment $it" }
-    if (mode == GROOVY_EXT) result += "${indent}ext {"
-    if (mode == GRADLE_PROPERTIES) result += "\n"
+
+    before?.run {
+        result += "$indent$before"
+    }
+
     result += dependencies.map { versionOnly(it, mode, indent) }
-    if (mode == GROOVY_EXT) result += "${indent}}"
+
+    after?.run {
+        result += "$indent$after"
+    }
+
     result += "$indent$comment ${PluginConfig.VERSIONS_ONLY_END}"
+
     return result
 }
 
-fun versionOnly(d: Dependency, versionsOnlyMode: VersionsOnlyMode, indent: String): String {
-    val available = d.versionInformation()
-        .replace(doubleQuote, versionsOnlyMode.quote)
-        .replace(slashslash, versionsOnlyMode.comment)
+fun List<Dependency>.availableGradleProperties(): String? {
+    val availables = this.mapNotNull { d: Dependency ->
+        d.newerVersion()?.run {
+            "#${d.versionName}=$this"
+        }
+    }
+    return when {
+        availables.isEmpty() -> null
+        else -> "\n## Available updates ##\n" + availables.joinWithNewlines()
+    }
 
-    return when(versionsOnlyMode) {
+}
+
+fun versionOnly(d: Dependency, mode: VersionsOnlyMode, indent: String): String {
+    val available = d.versionInformation()
+        .replace(doubleQuote, mode.quote)
+        .replace(slashslash, mode.comment)
+
+    return when(mode) {
         KOTLIN_OBJECT -> throw IllegalStateException("KOTLIN_OBJECT should not be handled here")
         KOTLIN_VAL -> """${indent}val ${d.versionName} = "${d.version}"$available"""
         GROOVY_DEF -> """${indent}def ${d.versionName} = '${d.version}'$available"""
         GROOVY_EXT -> """${indent}${indent}${d.versionName} = '${d.version}'$available"""
-        GRADLE_PROPERTIES -> "${available.trim()}\n${d.versionName}=${d.version}"
+        GRADLE_PROPERTIES -> "${d.versionName}=${d.version}"
     }
 }
 
 private val singleQuote = "'"
 private val doubleQuote = "\""
 private val slashslash = "//"
+
+fun List<String>.joinWithNewlines() : String =
+    this.joinToString(separator = "\n")

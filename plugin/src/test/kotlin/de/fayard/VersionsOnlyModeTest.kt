@@ -19,7 +19,8 @@ class VersionsOnlyModeTest: FreeSpec({
         val testCases = listOf(
             VersionsOnlyMode.KOTLIN_VAL,
             VersionsOnlyMode.GROOVY_DEF,
-            VersionsOnlyMode.GROOVY_EXT
+            VersionsOnlyMode.GROOVY_EXT,
+            VersionsOnlyMode.GRADLE_PROPERTIES
         )
         for (mode in testCases) {
             "For mode = $mode" {
