@@ -73,18 +73,24 @@ fun parseBuildFile(versionsOnlyFile: File?, versionsOnlyMode: VersionsOnlyMode):
     }
 }
 
-fun regenerateBuildFile(versionsOnlyFile: File?, extension: BuildSrcVersionsExtension, dependencies: List<Dependency>) {
+fun regenerateBuildFile(versionsOnlyFile: File?, extension: BuildSrcVersionsExtension, dependencies: List<Dependency>, projectUseKotlin: Boolean = true) {
     val versionsOnlyMode = extension.versionsOnlyMode ?: return
     val parseResult = parseBuildFile(versionsOnlyFile, versionsOnlyMode) ?: SingleModeResult.DEFAULT
     val (startOfBlock, endOfBlock, indent) = parseResult
 
-    val newBlock = regenerateBlock(versionsOnlyMode, dependencies, indent)
+    val sortedDependencies = dependencies
+        .distinctBy { d -> d.versionName }
+        .sortedBy { d -> d.versionName }
+        .sortedBy { d -> d.versionName.length }
+
+    val newBlock = regenerateBlock(versionsOnlyMode, sortedDependencies, indent)
 
     if (versionsOnlyFile != null && parseResult != SingleModeResult.DEFAULT) {
         val lines = versionsOnlyFile.readLines()
         val newLines = lines.subList(0, startOfBlock) + newBlock + lines.subList(endOfBlock + 1, lines.size)
         versionsOnlyFile.writeText(newLines.joinWithNewlines() + "\n")
     } else {
+        val groovyOrKotlin = if (projectUseKotlin) "VersionsOnlyMode.${versionsOnlyMode}" else "\"${versionsOnlyMode}\""
         println("""
         |            
         |== 📋 copy-paste needed! 📋 ==
@@ -97,7 +103,7 @@ fun regenerateBuildFile(versionsOnlyFile: File?, extension: BuildSrcVersionsExte
         | 
         |// build.gradle(.kts) 
         |buildSrcVersions {
-        |    versionsOnlyMode = VersionsOnlyMode.${versionsOnlyMode}
+        |    versionsOnlyMode = $groovyOrKotlin
         |    versionsOnlyFile = "${versionsOnlyMode.suggestedFilename()}"            
         |}
         |
@@ -149,6 +155,7 @@ fun versionOnly(d: Dependency, mode: VersionsOnlyMode, indent: String): String {
     val available = d.versionInformation()
         .replace(doubleQuote, mode.quote)
         .replace(slashslash, mode.comment)
+        .replace(newline, "")
 
     return when(mode) {
         KOTLIN_OBJECT -> throw IllegalStateException("KOTLIN_OBJECT should not be handled here")
@@ -162,6 +169,7 @@ fun versionOnly(d: Dependency, mode: VersionsOnlyMode, indent: String): String {
 private val singleQuote = "'"
 private val doubleQuote = "\""
 private val slashslash = "//"
+private val newline = "\n"
 
 fun List<String>.joinWithNewlines() : String =
     this.joinToString(separator = "\n")

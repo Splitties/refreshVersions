@@ -62,10 +62,10 @@ open class BuildSrcVersionsTask : DefaultTask() {
     }
 
 
-    fun onSingleActionMode(dependenciesWithDupes: List<Dependency>, extension: BuildSrcVersionsExtension) {
-        val dependencies = dependenciesWithDupes.distinctBy { it.versionName }
+    fun onSingleActionMode(dependencies: List<Dependency>, extension: BuildSrcVersionsExtension) {
         val file = extension.versionsOnlyFile?.let { project.file(it) }
-        regenerateBuildFile(file, extension, dependencies)
+        val projectUseKotlin = project.file("build.gradle.kts").exists()
+        regenerateBuildFile(file, extension, dependencies, projectUseKotlin)
     }
 
     fun checkIfFilesExistInitiallyAndCreateThem(project: Project) {
