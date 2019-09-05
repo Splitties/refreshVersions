@@ -5,7 +5,7 @@ import de.fayard.VersionsOnlyMode
 
 plugins {
     kotlin("jvm") version "1.3.50"
-    id("de.fayard.buildSrcVersions") version "0.4.3"
+    id("de.fayard.buildSrcVersions") version "0.5.0"
 }
 group = "de.fayard"
 

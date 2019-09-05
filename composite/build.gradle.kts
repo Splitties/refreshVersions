@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "de.fayard"
-version = "0.4.3"
+version = "0.5.0"
 defaultTasks("run")
 
 val PLUGIN: IncludedBuild = gradle.includedBuild("buildSrcVersions-plugin")

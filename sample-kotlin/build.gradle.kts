@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.3.11"
-    id("de.fayard.buildSrcVersions") version "0.4.3"
+    id("de.fayard.buildSrcVersions") version "0.5.0"
 }
 
 group = "de.fayard"

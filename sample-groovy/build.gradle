@@ -3,7 +3,7 @@ plugins {
     id 'application'
     id 'idea'
     id "io.vertx.vertx-plugin" version "0.3.1"
-    id 'de.fayard.buildSrcVersions' version '0.4.3'
+    id 'de.fayard.buildSrcVersions' version '0.5.0'
 }
 
 group = "de.fayard"
