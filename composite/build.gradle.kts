@@ -40,6 +40,17 @@ tasks.register("checkAll") {
     dependsOn(SAMPLE_VERSIONS_ONLY.task(":checkAll"))
 }
 
+
+tasks.register("updateGradle") {
+    group = "Custom"
+    description = "Run all checks"
+    dependsOn(":wrapper")
+    dependsOn(PLUGIN.task(":wrapper"))
+    dependsOn(SAMPLE_KOTLIN.task(":wrapper"))
+    dependsOn(SAMPLE_GROOVY.task(":wrapper"))
+    dependsOn(SAMPLE_VERSIONS_ONLY.task(":wrapper"))
+}
+
 buildScan {
     termsOfServiceUrl = "https://gradle.com/terms-of-service"
     termsOfServiceAgree = "yes"

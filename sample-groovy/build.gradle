@@ -30,3 +30,7 @@ buildSrcVersions {
     indent = "  "
     rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap", "milestone2")
 }
+wrapper {
+    gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"
+    distributionType = Wrapper.DistributionType.ALL
+}

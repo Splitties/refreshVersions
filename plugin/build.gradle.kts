@@ -50,12 +50,17 @@ dependencies {
 }
 
 
-tasks.withType<KotlinCompile>().configureEach {
+tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-tasks.withType<Test>().configureEach {
+tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<Wrapper> {
+    gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 java {

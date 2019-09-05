@@ -23,6 +23,10 @@ dependencies {
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
+tasks.withType<Wrapper> {
+    gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"
+    distributionType = Wrapper.DistributionType.ALL
+}
 
 VersionsOnlyMode.values().forEach { mode ->
     tasks.register<BuildSrcVersionsTask>(mode.name) {
