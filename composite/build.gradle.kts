@@ -7,7 +7,7 @@ group = "de.fayard"
 version = "0.5.0"
 defaultTasks("run")
 
-val PLUGIN: IncludedBuild = gradle.includedBuild("buildSrcVersions-plugin")
+val PLUGIN: IncludedBuild = gradle.includedBuild("plugin")
 val SAMPLE_KOTLIN: IncludedBuild = gradle.includedBuild("sample-kotlin")
 val SAMPLE_GROOVY: IncludedBuild = gradle.includedBuild("sample-groovy")
 val SAMPLE_VERSIONS_ONLY: IncludedBuild = gradle.includedBuild("sample-versionsOnlyMode")
