@@ -50,6 +50,10 @@ tasks.register("updateGradle") {
     dependsOn(SAMPLE_GROOVY.task(":wrapper"))
     dependsOn(SAMPLE_VERSIONS_ONLY.task(":wrapper"))
 }
+tasks.withType<Wrapper> {
+    gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"
+    distributionType = Wrapper.DistributionType.ALL
+}
 
 buildScan {
     termsOfServiceUrl = "https://gradle.com/terms-of-service"
