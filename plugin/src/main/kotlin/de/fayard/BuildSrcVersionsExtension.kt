@@ -21,7 +21,7 @@ interface BuildSrcVersionsExtension {
 
 }
 
-internal open class BuildSrcVersionsExtensionImpl(
+open class BuildSrcVersionsExtensionImpl(
     override var useFdqnFor: MutableList<String> = mutableListOf(),
     override var renameLibs: String = PluginConfig.DEFAULT_LIBS,
     override var renameVersions: String = PluginConfig.DEFAULT_VERSIONS,

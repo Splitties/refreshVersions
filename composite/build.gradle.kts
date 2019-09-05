@@ -37,7 +37,7 @@ tasks.register("checkAll") {
     dependsOn(PLUGIN.task(":check"))
     dependsOn(SAMPLE_KOTLIN.task(":buildSrcVersions"))
     dependsOn(SAMPLE_GROOVY.task(":buildSrcVersions"))
-    dependsOn(SAMPLE_VERSIONS_ONLY.task(":buildSrcVersions"))
+    dependsOn(SAMPLE_VERSIONS_ONLY.task(":checkAll"))
 }
 
 buildScan {

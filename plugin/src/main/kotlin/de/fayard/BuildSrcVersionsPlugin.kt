@@ -17,7 +17,7 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
             group = "Help"
             description = "Update buildSrc/src/main/kotlin/{Versions.kt,Libs.kt}"
             dependsOn(":dependencyUpdates")
-            jsonInputPath = benManesVersions.outputDir + "/" + benManesVersions.reportfileName + ".json"
+            outputs.upToDateWhen { false }
         }
 
         Unit

@@ -3,25 +3,27 @@ package de.fayard
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.getByType
 
 @Suppress("UnstableApiUsage")
 open class BuildSrcVersionsTask : DefaultTask() {
 
-    @Input
-    var jsonInputPath = PluginConfig.BENMANES_REPORT_PATH
+    @Input @Optional
+    var extension: BuildSrcVersionsExtension? = null
 
     @TaskAction
     fun taskAction() {
-        val extension : BuildSrcVersionsExtension = project.extensions.getByType()
+        val extension : BuildSrcVersionsExtension = extension ?: project.extensions.getByType()
         println("""
             |Plugin configuration: $extension
             |See documentation at ${PluginConfig.issue53PluginConfiguration}
+            |
         """.trimMargin())
         OutputFile.configure(extension)
 
-        val jsonInput = project.file(jsonInputPath)
+        val jsonInput = project.file(PluginConfig.BENMANES_REPORT_PATH)
 
         val dependencyGraph = PluginConfig.readGraphFromJsonFile(jsonInput)
 

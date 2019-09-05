@@ -10,7 +10,15 @@ enum class VersionsOnlyMode {
     GROOVY_DEF,
     GROOVY_EXT;
 
-    fun useSingleQuote() = this == GROOVY_DEF || this == GROOVY_EXT
+    fun useSingleQuote(): Boolean =
+        this == GROOVY_DEF || this == GROOVY_EXT
+
+    fun suggestedFilename(): String = when(this) {
+        KOTLIN_VAL -> "build.gradle.kts"
+        KOTLIN_OBJECT -> "Versions.kt"
+        GROOVY_DEF -> "build.gradle"
+        GROOVY_EXT -> "build.gradle"
+    }
 }
 
 
@@ -61,8 +69,8 @@ in the file you configure with something like:
  
 // build.gradle(.kts) 
 buildSrcVersions {
-   versionsOnlyFile = "build.gradle.kts"            
-    versionsOnlyMode = VersionsOnlyMode.KOTLIN_VAL
+    versionsOnlyMode = VersionsOnlyMode.${versionsOnlyMode}
+    versionsOnlyFile = "${versionsOnlyMode.suggestedFilename()}"            
 }
 
 See ${PluginConfig.issue54VersionOnlyMode}
