@@ -11,9 +11,6 @@ See https://github.com/jmfayard/buildSrcVersions/issues/55
 - Write more and better tests
 - Use a local maven repo in the samples in order to have a stable output
 - We can now create multiple BuildSrcVersionsTask configured with an extension (used in `sample-versionsOnlyMode`)
-- We can test that the plugin is running by using this condition
-	System.getProperty("buildSrcVersionsRunning") == "true"
-This allows to bypass maven repositories that timeout.
 
 
 # 0.4.2

@@ -25,7 +25,6 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
     }
 
     fun Project.configureBenManesVersions(): DependencyUpdatesTask {
-        System.setProperty("buildSrcVersionsRunning", "true")
         val rejectedKeywordsRegexps: List<Regex> by lazy {
             project.extensions.getByType<BuildSrcVersionsExtension>().rejectedVersionKeywords
                 .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
