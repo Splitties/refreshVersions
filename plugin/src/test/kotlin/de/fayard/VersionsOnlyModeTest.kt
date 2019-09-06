@@ -5,9 +5,9 @@ import io.kotlintest.specs.FreeSpec
 
 class VersionsOnlyModeTest: FreeSpec({
 
-    val samFolder = testResourceFile("sam")
+    val versionOnlyFolder = testResourceFile("versionOnly")
 
-    val kotlinValInput = samFolder.resolve("singleBuildFile.txt")
+    val kotlinValInput = versionOnlyFolder.resolve("singleBuildFile.txt")
 
 
     "Parse file" {
@@ -24,8 +24,8 @@ class VersionsOnlyModeTest: FreeSpec({
         )
         for (mode in testCases) {
             "For mode = $mode" {
-                val received = samFolder.resolve("${mode}_received.txt")
-                val validated = samFolder.resolve("${mode}_validated.txt")
+                val received = versionOnlyFolder.resolve("${mode}_received.txt")
+                val validated = versionOnlyFolder.resolve("${mode}_validated.txt")
                 kotlinValInput.copyTo(received, overwrite = true)
                 val config = BuildSrcVersionsExtensionImpl(versionsOnlyMode = mode, versionsOnlyFile = "KOTLIN_VAL_expected.txt")
                 val deps = listOf(

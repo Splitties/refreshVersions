@@ -81,7 +81,7 @@ fun regenerateBuildFile(versionsOnlyFile: File?, extension: BuildSrcVersionsExte
     val sortedDependencies = dependencies
         .distinctBy { d -> d.versionName }
         .sortedBy { d -> d.versionName }
-        .sortedBy { d -> d.versionName.length }
+        .sortedByDescending { d -> d.versionName.length }
 
     val newBlock = regenerateBlock(versionsOnlyMode, sortedDependencies, indent)
 
