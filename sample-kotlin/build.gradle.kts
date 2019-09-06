@@ -1,3 +1,5 @@
+import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
+import de.fayard.PluginConfig
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.3.11"
@@ -30,5 +32,8 @@ buildSrcVersions {
     renameLibs = "Libs"
     renameVersions = "Versions"
     indent = "  "
-    rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap")
+
+    rejectVersionIf { current: ComponentSelectionWithCurrent ->
+        PluginConfig.isNonStable(current.candidate.version) || PluginConfig.isNonStable(current.currentVersion)
+    }
 }

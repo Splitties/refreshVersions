@@ -1,12 +1,21 @@
 package de.fayard
 
+import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
+import org.gradle.api.Transformer
+
 interface BuildSrcVersionsExtension {
     var useFdqnFor: MutableList<String>
 
     fun useFdqnFor(vararg dependencyName: String)
 
+    fun rejectVersionIf(filter: Transformer<Boolean, ComponentSelectionWithCurrent>)
+
+    var filter: Transformer<Boolean, ComponentSelectionWithCurrent>
+
+    //@Deprecated("use rejectVersionIf")
     var rejectedVersionKeywords: MutableList<String>
 
+    //@Deprecated("use rejectVersionIf")
     fun rejectedVersionKeywords(vararg keyword: String)
 
     var renameLibs : String
@@ -18,6 +27,7 @@ interface BuildSrcVersionsExtension {
     var versionsOnlyMode : VersionsOnlyMode?
 
     var versionsOnlyFile : String?
+
 
 }
 
@@ -31,6 +41,12 @@ open class BuildSrcVersionsExtensionImpl(
     override var rejectedVersionKeywords: MutableList<String> = PluginConfig.DEFAULT_REJECTED_KEYWORDS
 ) : BuildSrcVersionsExtension {
 
+    @Transient
+    override var filter: Transformer<Boolean, ComponentSelectionWithCurrent> = PluginConfig.defaultFilter
+
+    override fun rejectVersionIf(filter: Transformer<Boolean, ComponentSelectionWithCurrent>) {
+        this.filter = filter
+    }
 
     override fun rejectedVersionKeywords(vararg keyword: String) {
         rejectedVersionKeywords = keyword.toMutableList()

@@ -1,9 +1,11 @@
 package de.fayard
 
+import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import okio.buffer
 import okio.source
+import org.gradle.api.Transformer
 import java.io.File
 
 object PluginConfig {
@@ -14,6 +16,17 @@ object PluginConfig {
      * @see org.gradle.plugins.site.SitePluginExtension
      */
     const val EXTENSION_NAME = "buildSrcVersions"
+
+    fun isNonStable(version: String): Boolean {
+        val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+        val regex = "^[0-9,.v-]+$".toRegex()
+        val isStable = stableKeyword || regex.matches(version)
+        return isStable.not()
+    }
+
+    val defaultFilter = Transformer { current: ComponentSelectionWithCurrent ->
+        isNonStable(current.candidate.version)
+    }
 
     const val DEFAULT_LIBS = "Libs"
     const val DEFAULT_VERSIONS = "Versions"

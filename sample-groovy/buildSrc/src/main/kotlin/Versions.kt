@@ -27,5 +27,5 @@ object Versions {
    */
   const val gradleLatestVersion: String = "5.6.2"
 
-  const val gradleCurrentVersion: String = "5.6.1"
+  const val gradleCurrentVersion: String = "5.6.2"
 }

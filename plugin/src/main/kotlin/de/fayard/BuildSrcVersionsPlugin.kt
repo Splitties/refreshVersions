@@ -10,9 +10,9 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) = project.run {
 
-        configureBenManesVersions()
-
         extensions.create(BuildSrcVersionsExtension::class, PluginConfig.EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
+
+        configureBenManesVersions()
 
         tasks.create("buildSrcVersions", BuildSrcVersionsTask::class) {
             group = "Help"
@@ -24,28 +24,10 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
         Unit
     }
 
-    fun Project.configureBenManesVersions(): DependencyUpdatesTask {
-        val rejectedKeywordsRegexps: List<Regex> by lazy {
-            project.extensions.getByType<BuildSrcVersionsExtension>().rejectedVersionKeywords
-                .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
+    fun Project.configureBenManesVersions(): DependencyUpdatesTask =
+        tasks.maybeCreate("dependencyUpdates", DependencyUpdatesTask::class.java).also { task: DependencyUpdatesTask ->
+            task.checkForGradleUpdate = true
+            task.outputFormatter = "json"
+            task.rejectVersionIf(project.extensions.getByType<BuildSrcVersionsExtension>().filter)
         }
-
-        val benManesVersions: DependencyUpdatesTask =
-            tasks.maybeCreate("dependencyUpdates", DependencyUpdatesTask::class.java)
-
-        benManesVersions.outputFormatter = "json"
-        benManesVersions.checkForGradleUpdate = true
-        benManesVersions.resolutionStrategy {
-
-            componentSelection {
-                all {
-                    if (rejectedKeywordsRegexps.any { it.matches(candidate.version) }) {
-                        reject("Release candidate")
-                    }
-                }
-            }
-
-        }
-        return benManesVersions
-    }
 }

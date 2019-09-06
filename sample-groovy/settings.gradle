@@ -1,3 +1,10 @@
+pluginManagement {
+    repositories {
+        def localGradleRepo = "/Users/jmfayard/try/gradle-versions-plugin/build/repository"
+        if (new File(localGradleRepo).exists()) maven { setUrl(localGradleRepo) }
+        gradlePluginPortal()
+    }
+}
 rootProject.name = 'sample-groovy'
 includeBuild '../plugin'
 
