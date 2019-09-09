@@ -1,18 +1,21 @@
 package de.fayard
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
+import de.fayard.PluginConfig.isNonStable
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.getByType
 
 open class BuildSrcVersionsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) = project.run {
 
-        extensions.create(BuildSrcVersionsExtension::class, PluginConfig.EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
-
-        configureBenManesVersions()
+        val extension = extensions.create(BuildSrcVersionsExtension::class, PluginConfig.EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
+        (extension as BuildSrcVersionsExtensionImpl).upstream = configureBenManesVersions()
+        extension.rejectVersionIf { current: ComponentSelectionWithCurrent ->
+            isNonStable(current.candidate.version)
+        }
 
         tasks.create("buildSrcVersions", BuildSrcVersionsTask::class) {
             group = "Help"
@@ -20,7 +23,6 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
             dependsOn(":dependencyUpdates")
             outputs.upToDateWhen { false }
         }
-
         Unit
     }
 
@@ -28,6 +30,5 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
         tasks.maybeCreate("dependencyUpdates", DependencyUpdatesTask::class.java).also { task: DependencyUpdatesTask ->
             task.checkForGradleUpdate = true
             task.outputFormatter = "json"
-            task.rejectVersionIf(project.extensions.getByType<BuildSrcVersionsExtension>().filter)
         }
 }

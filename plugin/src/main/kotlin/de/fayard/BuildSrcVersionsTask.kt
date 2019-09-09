@@ -1,6 +1,5 @@
 package de.fayard
 
-import com.squareup.kotlinpoet.CodeBlock
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input

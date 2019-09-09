@@ -16,7 +16,7 @@ tasks.register("publishLocally") {
     group = "Custom"
     description = "Publish the plugin locally"
     dependsOn(":checkAll")
-    dependsOn(PLUGIN.task(":publish"))
+    dependsOn(PLUGIN.task(":publishToMavenLocal"))
 }
 
 tasks.register("publishPlugins") {

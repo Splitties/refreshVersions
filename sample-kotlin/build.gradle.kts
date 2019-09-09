@@ -1,5 +1,6 @@
 import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
 import de.fayard.PluginConfig
+import de.fayard.PluginConfig.isNonStable
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.3.11"
@@ -32,8 +33,7 @@ buildSrcVersions {
     renameLibs = "Libs"
     renameVersions = "Versions"
     indent = "  "
-
-    rejectVersionIf { current: ComponentSelectionWithCurrent ->
-        PluginConfig.isNonStable(current.candidate.version) || PluginConfig.isNonStable(current.currentVersion)
+    rejectVersionIf { selection: ComponentSelectionWithCurrent ->
+        isNonStable(selection.candidate.version) && isNonStable(selection.currentVersion).not()
     }
 }

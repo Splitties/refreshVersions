@@ -1,21 +1,20 @@
 package de.fayard
 
-import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
-import org.gradle.api.Transformer
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentFilter
+
 
 interface BuildSrcVersionsExtension {
     var useFdqnFor: MutableList<String>
 
     fun useFdqnFor(vararg dependencyName: String)
 
-    fun rejectVersionIf(filter: Transformer<Boolean, ComponentSelectionWithCurrent>)
+    fun rejectVersionIf(filter: ComponentFilter)
 
-    var filter: Transformer<Boolean, ComponentSelectionWithCurrent>
-
-    //@Deprecated("use rejectVersionIf")
+    @Deprecated("Remove or use rejectVersionIf { ... }", replaceWith = ReplaceWith(""))
     var rejectedVersionKeywords: MutableList<String>
 
-    //@Deprecated("use rejectVersionIf")
+    @Deprecated("Remove or use rejectVersionIf { selection -> ... }", replaceWith = ReplaceWith(""))
     fun rejectedVersionKeywords(vararg keyword: String)
 
     var renameLibs : String
@@ -37,15 +36,14 @@ open class BuildSrcVersionsExtensionImpl(
     override var renameVersions: String = PluginConfig.DEFAULT_VERSIONS,
     override var indent: String = PluginConfig.DEFAULT_INDENT,
     override var versionsOnlyMode: VersionsOnlyMode? = null,
-    override var versionsOnlyFile: String? = null,
-    override var rejectedVersionKeywords: MutableList<String> = PluginConfig.DEFAULT_REJECTED_KEYWORDS
+    override var versionsOnlyFile: String? = null
 ) : BuildSrcVersionsExtension {
+    @Transient lateinit var upstream: DependencyUpdatesTask
 
-    @Transient
-    override var filter: Transformer<Boolean, ComponentSelectionWithCurrent> = PluginConfig.defaultFilter
+    override var rejectedVersionKeywords: MutableList<String> = mutableListOf()
 
-    override fun rejectVersionIf(filter: Transformer<Boolean, ComponentSelectionWithCurrent>) {
-        this.filter = filter
+    override fun rejectVersionIf(filter: ComponentFilter) {
+        upstream.rejectVersionIf(filter)
     }
 
     override fun rejectedVersionKeywords(vararg keyword: String) {

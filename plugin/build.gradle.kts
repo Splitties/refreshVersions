@@ -29,9 +29,8 @@ publishing {
 }
 
 repositories {
-    maven("/Users/jmfayard/try/gradle-versions-plugin/build/repository")
+    mavenLocal()
     mavenCentral()
-    jcenter()
 }
 
 pluginBundle {
@@ -39,6 +38,7 @@ pluginBundle {
     vcsUrl = "https://github.com/jmfayard/buildSrcVersions"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
 }
+
 dependencies {
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
 

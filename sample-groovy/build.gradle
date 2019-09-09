@@ -23,12 +23,20 @@ vertx {
     mainVerticle = 'sample.App'
 }
 
+def isNonStable = { String version ->
+    ['alpha', 'beta', 'rc', 'cr', 'm', 'preview', 'b', 'ea'].any { qualifier ->
+        version ==~ /(?i).*[.-]$qualifier[.\d-+]*/
+    }
+}
+
 buildSrcVersions {
     useFdqnFor()
     renameLibs = "Libs"
     renameVersions = "Versions"
     indent = "  "
-    rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap", "milestone2")
+    rejectVersionIf { selection ->
+        isNonStable(selection.candidate.version) && !isNonStable(selection.currentVersion)
+    }
 }
 wrapper {
     gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"

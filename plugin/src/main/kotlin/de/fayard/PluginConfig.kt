@@ -1,5 +1,6 @@
 package de.fayard
 
+import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentFilter
 import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -24,7 +25,7 @@ object PluginConfig {
         return isStable.not()
     }
 
-    val defaultFilter = Transformer { current: ComponentSelectionWithCurrent ->
+    val defaultFilter = ComponentFilter { current: ComponentSelectionWithCurrent ->
         isNonStable(current.candidate.version)
     }
 
