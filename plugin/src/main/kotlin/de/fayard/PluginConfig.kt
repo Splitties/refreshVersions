@@ -25,15 +25,10 @@ object PluginConfig {
         return isStable.not()
     }
 
-    val defaultFilter = ComponentFilter { current: ComponentSelectionWithCurrent ->
-        isNonStable(current.candidate.version)
-    }
-
     const val DEFAULT_LIBS = "Libs"
     const val DEFAULT_VERSIONS = "Versions"
     const val DEFAULT_INDENT = "  "
     const val BENMANES_REPORT_PATH = "build/dependencyUpdates/report.json"
-    val DEFAULT_REJECTED_KEYWORDS = mutableListOf("alpha", "beta", "rc", "cr", "m", "preview", "eap")
 
     /** Documentation **/
     fun issue(number: Int) : String = "$buildSrcVersionsUrl/issues/$number"

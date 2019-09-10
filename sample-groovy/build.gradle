@@ -25,9 +25,9 @@ vertx {
 }
 
 def isNonStable = { String version ->
-    ['alpha', 'beta', 'rc', 'cr', 'm', 'preview', 'b', 'ea'].any { qualifier ->
-        version ==~ /(?i).*[.-]$qualifier[.\d-+]*/
-    }
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+$/
+    return !stableKeyword && !(version ==~ regex)
 }
 
 buildSrcVersions {
@@ -35,8 +35,8 @@ buildSrcVersions {
     renameLibs = "Libs"
     renameVersions = "Versions"
     indent = "  "
-    rejectVersionIf { selection ->
-        isNonStable(selection.candidate.version) && !isNonStable(selection.currentVersion)
+    rejectVersionIf {
+        isNonStable(candidate.version) && !isNonStable(currentVersion)
     }
 }
 wrapper {

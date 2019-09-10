@@ -34,7 +34,7 @@ buildSrcVersions {
     renameLibs = "Libs"
     renameVersions = "Versions"
     indent = "  "
-    rejectVersionIf { selection: ComponentSelectionWithCurrent ->
-        isNonStable(selection.candidate.version) && isNonStable(selection.currentVersion).not()
+    rejectVersionIf {
+        isNonStable(candidate.version) && isNonStable(currentVersion).not()
     }
 }

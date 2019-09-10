@@ -13,8 +13,8 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
 
         val extension = extensions.create(BuildSrcVersionsExtension::class, PluginConfig.EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
         (extension as BuildSrcVersionsExtensionImpl).upstream = configureBenManesVersions()
-        extension.rejectVersionIf { current: ComponentSelectionWithCurrent ->
-            isNonStable(current.candidate.version)
+        extension.rejectVersionIf {
+            isNonStable(candidate.version)
         }
 
         tasks.create("buildSrcVersions", BuildSrcVersionsTask::class) {

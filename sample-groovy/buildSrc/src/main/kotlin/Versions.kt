@@ -10,15 +10,15 @@ import kotlin.String
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
-  const val guava: String = "15.0" // available: "28.1-jre"
+  const val guava: String = "15.0"
 
-  const val guice: String = "2.0" // available: "4.2.2"
+  const val guice: String = "2.0"
 
-  const val io_vertx_vertx_plugin_gradle_plugin: String = "0.3.1" // available: "0.8.0"
+  const val io_vertx_vertx_plugin_gradle_plugin: String = "0.3.1"
 
   const val vertx_core: String = "none"// No version. See buildSrcVersions#23
 
-  const val vertx_stack_depchain: String = "3.6.2" // available: "4.0.0-milestone2"
+  const val vertx_stack_depchain: String = "3.6.2"
 
   /**
    *

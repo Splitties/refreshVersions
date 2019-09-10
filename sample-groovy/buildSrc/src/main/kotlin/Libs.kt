@@ -7,14 +7,8 @@ import kotlin.String
  *   `$ ./gradlew buildSrcVersions`
  */
 object Libs {
-  /**
-   * https://github.com/google/guava
-   */
   const val guava: String = "com.google.guava:guava:" + Versions.guava
 
-  /**
-   * https://github.com/google/guice
-   */
   const val guice: String = "com.google.inject:guice:" + Versions.guice
 
   const val io_vertx_vertx_plugin_gradle_plugin: String =
