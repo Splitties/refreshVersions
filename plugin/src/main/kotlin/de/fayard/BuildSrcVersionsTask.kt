@@ -1,5 +1,6 @@
 package de.fayard
 
+import org.gradle.api.Action
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
@@ -9,6 +10,11 @@ import org.gradle.kotlin.dsl.getByType
 
 @Suppress("UnstableApiUsage")
 open class BuildSrcVersionsTask : DefaultTask() {
+
+    fun configure(action: Action<BuildSrcVersionsExtension>) {
+        this.extension = BuildSrcVersionsExtensionImpl()
+        action.execute(this.extension!!)
+    }
 
     @Input @Optional
     var extension: BuildSrcVersionsExtension? = null

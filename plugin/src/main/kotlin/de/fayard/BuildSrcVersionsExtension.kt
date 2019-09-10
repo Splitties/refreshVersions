@@ -34,7 +34,7 @@ interface BuildSrcVersionsExtension {
     fun rejectedVersionKeywords(vararg keyword: String)
 }
 
-open class BuildSrcVersionsExtensionImpl(
+internal open class BuildSrcVersionsExtensionImpl(
     override var renameLibs: String = PluginConfig.DEFAULT_LIBS,
     override var renameVersions: String = PluginConfig.DEFAULT_VERSIONS,
     override var indent: String = PluginConfig.DEFAULT_INDENT,
