@@ -27,7 +27,7 @@ object PluginConfig {
 
     const val DEFAULT_LIBS = "Libs"
     const val DEFAULT_VERSIONS = "Versions"
-    const val DEFAULT_INDENT = "  "
+    const val DEFAULT_INDENT = "from-editorconfig-file"
     const val BENMANES_REPORT_PATH = "build/dependencyUpdates/report.json"
 
     /** Documentation **/

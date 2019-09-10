@@ -22,6 +22,9 @@ open class BuildSrcVersionsTask : DefaultTask() {
     @TaskAction
     fun taskAction() {
         val extension : BuildSrcVersionsExtension = extension ?: project.extensions.getByType()
+        if (extension.indent == PluginConfig.DEFAULT_INDENT) {
+            extension.indent = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin")) ?: "  "
+        }
         println("""
             |Plugin configuration: $extension
             |See documentation at ${PluginConfig.issue53PluginConfiguration}

@@ -32,7 +32,7 @@ buildSrcVersions {
     useFqdnFor("dependency")
     renameLibs = "Libs"
     renameVersions = "Versions"
-    indent = "  "
+//    indent = "  "
     rejectVersionIf {
         isNonStable(candidate.version) && isNonStable(currentVersion).not()
     }

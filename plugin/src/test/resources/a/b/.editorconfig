@@ -1,0 +1,11 @@
+[*.kt]
+indent_style = space
+indent_size = 4 # 2 is better
+
+# 4 space indentation
+[*.py]
+indent_style = tab
+insert_final_newline = true
+
+
+
