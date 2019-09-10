@@ -1,3 +1,9 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+    }
+}
 rootProject.name = 'sample-groovy'
 includeBuild '../plugin'
 

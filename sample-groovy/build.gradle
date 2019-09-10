@@ -12,6 +12,7 @@ repositories {
     maven {
         setUrl("../plugin/src/test/resources/maven")
     }
+    mavenCentral()
 }
 
 dependencies {
@@ -23,12 +24,20 @@ vertx {
     mainVerticle = 'sample.App'
 }
 
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+$/
+    return !stableKeyword && !(version ==~ regex)
+}
+
 buildSrcVersions {
-    useFdqnFor()
+    useFqdnFor('module')
     renameLibs = "Libs"
     renameVersions = "Versions"
     indent = "  "
-    rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap", "milestone2")
+    rejectVersionIf {
+        isNonStable(candidate.version) && !isNonStable(currentVersion)
+    }
 }
 wrapper {
     gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"

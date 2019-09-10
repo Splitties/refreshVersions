@@ -1,4 +1,3 @@
-import de.fayard.BuildSrcVersionsExtensionImpl
 import de.fayard.BuildSrcVersionsTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import de.fayard.VersionsOnlyMode
@@ -13,6 +12,7 @@ repositories {
     maven {
         setUrl("../plugin/src/test/resources/maven")
     }
+    mavenCentral()
 }
 
 dependencies {
@@ -40,10 +40,10 @@ VersionsOnlyMode.values().forEach { mode ->
         group = "Custom"
         dependsOn(":copyReport")
         val filename = mode.name + "." + mode.suggestedFilename().substringAfter(".")
-        extension = BuildSrcVersionsExtensionImpl(
-            versionsOnlyMode = mode,
+        configure {
             versionsOnlyFile = filename
-        )
+            versionsOnlyMode = mode
+        }
     }
 }
 

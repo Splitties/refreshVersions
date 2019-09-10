@@ -1,5 +1,6 @@
 package de.fayard
 
+import io.kotlintest.inspectors.forAll
 import io.kotlintest.matchers.string.contain
 import io.kotlintest.should
 import io.kotlintest.shouldBe
@@ -53,6 +54,19 @@ class UnitTests: FreeSpec({
 
         "Reason" {
             Dependency(reason = "Could not find any matches").versionInformation() shouldBe ""
+        }
+    }
+
+
+    "Stable versions" {
+        listOf("0.1.2", "v1.2", "1.0.0-RELEASE", "0.1-GA", "1-1").forAll {
+            PluginConfig.isNonStable(it) shouldBe false
+        }
+    }
+
+    "Unstable versions" {
+        listOf("0.1-SNAPSHOT", "2.0.9pr1", "0.1.beta").forEach {
+            PluginConfig.isNonStable(it) shouldBe true
         }
     }
 

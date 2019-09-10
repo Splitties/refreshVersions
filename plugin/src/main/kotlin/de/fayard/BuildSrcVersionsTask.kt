@@ -1,6 +1,6 @@
 package de.fayard
 
-import com.squareup.kotlinpoet.CodeBlock
+import org.gradle.api.Action
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
@@ -11,12 +11,20 @@ import org.gradle.kotlin.dsl.getByType
 @Suppress("UnstableApiUsage")
 open class BuildSrcVersionsTask : DefaultTask() {
 
+    fun configure(action: Action<BuildSrcVersionsExtension>) {
+        this.extension = BuildSrcVersionsExtensionImpl()
+        action.execute(this.extension!!)
+    }
+
     @Input @Optional
     var extension: BuildSrcVersionsExtension? = null
 
     @TaskAction
     fun taskAction() {
         val extension : BuildSrcVersionsExtension = extension ?: project.extensions.getByType()
+        if (extension.indent == PluginConfig.DEFAULT_INDENT) {
+            extension.indent = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin")) ?: "  "
+        }
         println("""
             |Plugin configuration: $extension
             |See documentation at ${PluginConfig.issue53PluginConfiguration}
@@ -49,20 +57,25 @@ open class BuildSrcVersionsTask : DefaultTask() {
             checkIfFilesExistInitiallyAndCreateThem(project)
         }
 
-        val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle, extension)
+        val sortedDependencies = when {
+            OutputFile.VERSIONS.existed -> dependencies
+            else -> dependencies.sortedByDescending { it.versionName.length }
+        }
+
+        val kotlinPoetry: KotlinPoetry = kotlinpoet(sortedDependencies, dependencyGraph.gradle, extension)
 
         if (generatesAll) {
             kotlinPoetry.Libs.writeTo(outputDir)
-            OutputFile.LIBS.logFileWasModified()
+            OutputFile.logFileWasModified(OutputFile.LIBS.path, OutputFile.LIBS.existed)
         }
 
         kotlinPoetry.Versions.writeTo(outputDir)
-        OutputFile.VERSIONS.logFileWasModified()
+        OutputFile.logFileWasModified(OutputFile.VERSIONS.path, OutputFile.VERSIONS.existed)
 
         val file = extension.versionsOnlyFile?.let { project.file(it) }
         if (file != null && generatesAll.not()) {
             project.file(OutputFile.VERSIONS.path).renameTo(file)
-            println("File $file updated")
+            OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
         }
     }
 
@@ -71,6 +84,8 @@ open class BuildSrcVersionsTask : DefaultTask() {
         val file = extension.versionsOnlyFile?.let { project.file(it) }
         val projectUseKotlin = project.file("build.gradle.kts").exists()
         regenerateBuildFile(file, extension, dependencies, projectUseKotlin)
+        if (file != null)  OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
+
     }
 
     fun checkIfFilesExistInitiallyAndCreateThem(project: Project) {
@@ -90,7 +105,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         for ((outputFile, initialContent) in initializationMap) {
             if (outputFile.existed.not()) {
                 project.file(outputFile.path).writeText(initialContent)
-                outputFile.logFileWasModified()
+                OutputFile.logFileWasModified(outputFile.path, outputFile.existed)
             }
         }
     }

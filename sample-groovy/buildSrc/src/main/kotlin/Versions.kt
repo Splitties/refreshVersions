@@ -12,9 +12,9 @@ import kotlin.String
 object Versions {
   const val guava: String = "15.0"
 
-  const val guice: String = "2.0" // available: "3.0"
+  const val guice: String = "2.0"
 
-  const val io_vertx_vertx_plugin_gradle_plugin: String = "0.3.1" // available: "0.8.0"
+  const val io_vertx_vertx_plugin_gradle_plugin: String = "0.3.1"
 
   const val vertx_core: String = "none"// No version. See buildSrcVersions#23
 
@@ -27,5 +27,5 @@ object Versions {
    */
   const val gradleLatestVersion: String = "5.6.2"
 
-  const val gradleCurrentVersion: String = "5.6.1"
+  const val gradleCurrentVersion: String = "5.6.2"
 }

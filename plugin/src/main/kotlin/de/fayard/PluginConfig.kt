@@ -1,9 +1,12 @@
 package de.fayard
 
+import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentFilter
+import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import okio.buffer
 import okio.source
+import org.gradle.api.Transformer
 import java.io.File
 
 object PluginConfig {
@@ -15,11 +18,17 @@ object PluginConfig {
      */
     const val EXTENSION_NAME = "buildSrcVersions"
 
+    fun isNonStable(version: String): Boolean {
+        val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+        val regex = "^[0-9,.v-]+$".toRegex()
+        val isStable = stableKeyword || regex.matches(version)
+        return isStable.not()
+    }
+
     const val DEFAULT_LIBS = "Libs"
     const val DEFAULT_VERSIONS = "Versions"
-    const val DEFAULT_INDENT = "  "
+    const val DEFAULT_INDENT = "from-editorconfig-file"
     const val BENMANES_REPORT_PATH = "build/dependencyUpdates/report.json"
-    val DEFAULT_REJECTED_KEYWORDS = mutableListOf("alpha", "beta", "rc", "cr", "m", "preview", "eap")
 
     /** Documentation **/
     fun issue(number: Int) : String = "$buildSrcVersionsUrl/issues/$number"

@@ -5,8 +5,13 @@ versionsOnlyMode for simple Gradle projects who just need the versions
 5 modes supported: KOTLIN_VAL, KOTLIN_OBJECT, GROOVY_DEF, GROOVY_EXT, GRADLE_PROPERTIES
 See https://github.com/jmfayard/buildSrcVersions/issues/55
 
-
 - Upgrade to Gradle 5.6.2
+- Upgrade to gradle-versions-plugins 0.25.0
+- Typo useFqdnFor() #64
+- Order dependencies by length #65
+- Detect ident from EditorConfig file 58
+- rejectVersionsIf { ... } from https://github.com/ben-manes/gradle-versions-plugin/issues/325
+- Order dependencies by length #65
 - Improve code quality
 - Write more and better tests
 - Use a local maven repo in the samples in order to have a stable output

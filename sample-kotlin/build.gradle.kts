@@ -1,4 +1,6 @@
+import de.fayard.PluginConfig.isNonStable
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("jvm") version "1.3.11"
     id("de.fayard.buildSrcVersions") version "0.5.0"
@@ -10,6 +12,7 @@ repositories {
     maven {
         setUrl("../plugin/src/test/resources/maven")
     }
+    mavenCentral()
 }
 
 dependencies {
@@ -26,9 +29,11 @@ tasks.withType<Wrapper> {
 }
 
 buildSrcVersions {
-    useFdqnFor = mutableListOf()
+    useFqdnFor("dependency")
     renameLibs = "Libs"
     renameVersions = "Versions"
-    indent = "  "
-    rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap")
+//    indent = "  "
+    rejectVersionIf {
+        isNonStable(candidate.version) && isNonStable(currentVersion).not()
+    }
 }

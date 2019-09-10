@@ -9,9 +9,6 @@ import kotlin.String
 object Libs {
   const val guava: String = "com.google.guava:guava:" + Versions.guava
 
-  /**
-   * http://code.google.com/p/google-guice/
-   */
   const val guice: String = "com.google.inject:guice:" + Versions.guice
 
   const val io_vertx_vertx_plugin_gradle_plugin: String =
