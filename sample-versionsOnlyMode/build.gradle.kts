@@ -13,6 +13,7 @@ repositories {
     maven {
         setUrl("../plugin/src/test/resources/maven")
     }
+    mavenCentral()
 }
 
 dependencies {

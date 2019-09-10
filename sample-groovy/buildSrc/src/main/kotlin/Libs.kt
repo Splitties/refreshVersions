@@ -7,10 +7,13 @@ import kotlin.String
  *   `$ ./gradlew buildSrcVersions`
  */
 object Libs {
+  /**
+   * https://github.com/google/guava
+   */
   const val guava: String = "com.google.guava:guava:" + Versions.guava
 
   /**
-   * http://code.google.com/p/google-guice/
+   * https://github.com/google/guice
    */
   const val guice: String = "com.google.inject:guice:" + Versions.guice
 

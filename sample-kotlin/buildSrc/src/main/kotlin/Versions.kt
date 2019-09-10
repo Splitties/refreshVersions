@@ -10,13 +10,13 @@ import kotlin.String
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
-  const val guava: String = "15.0"
+  const val guava: String = "15.0" // available: "23.0"
 
-  const val guice: String = "2.0" // available: "3.0"
+  const val guice: String = "2.0" // available: "4.2.2"
 
   const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.11" // available: "1.3.50"
 
-  const val org_jetbrains_kotlin: String = "1.3.11"
+  const val kotlin_scripting_compiler_embeddable: String = "1.3.11" // available: "1.3.50"
 
   /**
    *

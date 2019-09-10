@@ -5,17 +5,9 @@ import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentF
 
 
 interface BuildSrcVersionsExtension {
-    var useFdqnFor: MutableList<String>
-
-    fun useFdqnFor(vararg dependencyName: String)
+    fun useFqdnFor(vararg dependencyName: String)
 
     fun rejectVersionIf(filter: ComponentFilter)
-
-    @Deprecated("Remove or use rejectVersionIf { ... }", replaceWith = ReplaceWith(""))
-    var rejectedVersionKeywords: MutableList<String>
-
-    @Deprecated("Remove or use rejectVersionIf { selection -> ... }", replaceWith = ReplaceWith(""))
-    fun rejectedVersionKeywords(vararg keyword: String)
 
     var renameLibs : String
 
@@ -28,33 +20,52 @@ interface BuildSrcVersionsExtension {
     var versionsOnlyFile : String?
 
 
+    @Deprecated("Deprecated, see #64", ReplaceWith("useFqdnFor()"))
+    var useFdqnFor: MutableList<String>
+
+    @Deprecated("Deprecated, see #64", ReplaceWith("useFqdnFor(dependencyName)"))
+    fun useFdqnFor(vararg dependencyName: String)
+
+
+    @Deprecated("Remove or use rejectVersionIf { ... }", replaceWith = ReplaceWith(""))
+    var rejectedVersionKeywords: MutableList<String>
+
+    @Deprecated("Remove or use rejectVersionIf { selection -> ... }", replaceWith = ReplaceWith(""))
+    fun rejectedVersionKeywords(vararg keyword: String)
 }
 
 open class BuildSrcVersionsExtensionImpl(
-    override var useFdqnFor: MutableList<String> = mutableListOf(),
     override var renameLibs: String = PluginConfig.DEFAULT_LIBS,
     override var renameVersions: String = PluginConfig.DEFAULT_VERSIONS,
     override var indent: String = PluginConfig.DEFAULT_INDENT,
     override var versionsOnlyMode: VersionsOnlyMode? = null,
     override var versionsOnlyFile: String? = null
 ) : BuildSrcVersionsExtension {
-    @Transient lateinit var upstream: DependencyUpdatesTask
+    var useFqqnFor: List<String> = emptyList()
 
-    override var rejectedVersionKeywords: MutableList<String> = mutableListOf()
+    // Use @Transient for fields that should not be present in toString()
+    override fun toString() : String = PluginConfig.extensionAdapter.toJson(this)
+
+    @Transient lateinit var upstream: DependencyUpdatesTask
 
     override fun rejectVersionIf(filter: ComponentFilter) {
         upstream.rejectVersionIf(filter)
     }
 
+    override fun useFqdnFor(vararg dependencyName: String) {
+        useFqqnFor = dependencyName.toList()
+    }
+
     override fun rejectedVersionKeywords(vararg keyword: String) {
-        rejectedVersionKeywords = keyword.toMutableList()
+        println("Warning: rejectedVersionKeywords is deprecated, see ${PluginConfig.issue53PluginConfiguration}")
     }
 
     override fun useFdqnFor(vararg dependencyName: String) {
-        useFdqnFor = dependencyName.toMutableList()
+        println("Warning: useFdqnFor is deprecated, use useFqqnFor() instead. ${PluginConfig.issue53PluginConfiguration}")
+        useFqdnFor(*dependencyName)
     }
 
-    override fun toString() : String =
-        PluginConfig.extensionAdapter.toJson(this)
+    @Transient override var useFdqnFor: MutableList<String> = mutableListOf()
+    @Transient override var rejectedVersionKeywords: MutableList<String> = mutableListOf()
 
 }
