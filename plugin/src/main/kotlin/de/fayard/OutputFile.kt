@@ -15,22 +15,23 @@ internal enum class OutputFile(var path: String, var existed: Boolean = false, v
         else -> false
     }
 
-    fun logFileWasModified() {
-        val ANSI_RESET = "\u001B[0m"
-        val ANSI_GREEN = "\u001B[32m"
-
-        val status = if (existed) {
-            "        modified:   "
-        } else {
-            "        new file:   "
-        }
-        println("$ANSI_GREEN$status$path$ANSI_RESET")
-    }
-
     companion object {
         fun configure(extension: BuildSrcVersionsExtension) {
             LIBS.path = "buildSrc/src/main/kotlin/${extension.renameLibs}.kt"
             VERSIONS.path = "buildSrc/src/main/kotlin/${extension.renameVersions}.kt"
         }
+
+        fun logFileWasModified(path: String, existed: Boolean) {
+            val ANSI_RESET = "\u001B[0m"
+            val ANSI_GREEN = "\u001B[32m"
+
+            val status = if (existed) {
+                "        modified:   "
+            } else {
+                "        new file:   "
+            }
+            println("$ANSI_GREEN$status$path$ANSI_RESET")
+        }
+
     }
 }

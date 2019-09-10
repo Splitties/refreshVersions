@@ -6,7 +6,9 @@ versionsOnlyMode for simple Gradle projects who just need the versions
 See https://github.com/jmfayard/buildSrcVersions/issues/55
 
 
+
 - Upgrade to Gradle 5.6.2
+- Order dependencies by length #65
 - Improve code quality
 - Write more and better tests
 - Use a local maven repo in the samples in order to have a stable output

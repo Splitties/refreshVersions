@@ -54,20 +54,25 @@ open class BuildSrcVersionsTask : DefaultTask() {
             checkIfFilesExistInitiallyAndCreateThem(project)
         }
 
-        val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle, extension)
+        val sortedDependencies = when {
+            OutputFile.VERSIONS.existed -> dependencies
+            else -> dependencies.sortedByDescending { it.versionName.length }
+        }
+
+        val kotlinPoetry: KotlinPoetry = kotlinpoet(sortedDependencies, dependencyGraph.gradle, extension)
 
         if (generatesAll) {
             kotlinPoetry.Libs.writeTo(outputDir)
-            OutputFile.LIBS.logFileWasModified()
+            OutputFile.logFileWasModified(OutputFile.LIBS.path, OutputFile.LIBS.existed)
         }
 
         kotlinPoetry.Versions.writeTo(outputDir)
-        OutputFile.VERSIONS.logFileWasModified()
+        OutputFile.logFileWasModified(OutputFile.VERSIONS.path, OutputFile.VERSIONS.existed)
 
         val file = extension.versionsOnlyFile?.let { project.file(it) }
         if (file != null && generatesAll.not()) {
             project.file(OutputFile.VERSIONS.path).renameTo(file)
-            println("File $file updated")
+            OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
         }
     }
 
@@ -76,6 +81,8 @@ open class BuildSrcVersionsTask : DefaultTask() {
         val file = extension.versionsOnlyFile?.let { project.file(it) }
         val projectUseKotlin = project.file("build.gradle.kts").exists()
         regenerateBuildFile(file, extension, dependencies, projectUseKotlin)
+        if (file != null)  OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
+
     }
 
     fun checkIfFilesExistInitiallyAndCreateThem(project: Project) {
@@ -95,7 +102,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         for ((outputFile, initialContent) in initializationMap) {
             if (outputFile.existed.not()) {
                 project.file(outputFile.path).writeText(initialContent)
-                outputFile.logFileWasModified()
+                OutputFile.logFileWasModified(outputFile.path, outputFile.existed)
             }
         }
     }

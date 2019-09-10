@@ -1,4 +1,3 @@
-import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
 import de.fayard.PluginConfig.isNonStable
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
