@@ -42,7 +42,7 @@ pluginBundle {
 dependencies {
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
 
-    implementation("com.github.ben-manes:gradle-versions-plugin:0.24.0")
+    implementation("com.github.ben-manes:gradle-versions-plugin:0.25.0")
 
     implementation("com.squareup.okio:okio:2.1.0")
     implementation( "com.squareup.moshi:moshi:1.7.0")
