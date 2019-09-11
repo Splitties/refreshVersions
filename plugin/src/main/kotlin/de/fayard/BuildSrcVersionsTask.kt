@@ -3,10 +3,13 @@ package de.fayard
 import org.gradle.api.Action
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Configuration
+import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.withType
 
 @Suppress("UnstableApiUsage")
 open class BuildSrcVersionsTask : DefaultTask() {
@@ -28,6 +31,8 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
     @TaskAction
     fun taskAction() {
+        generateProjectProperties()
+
         val extension : BuildSrcVersionsExtension = extension ?: project.extensions.getByType()
         if (extension.indent == PluginConfig.DEFAULT_INDENT) {
             extension.indent = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin")) ?: "  "
@@ -84,6 +89,25 @@ open class BuildSrcVersionsTask : DefaultTask() {
             project.file(OutputFile.VERSIONS.path).renameTo(file)
             OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
         }
+    }
+
+    private fun generateProjectProperties() {
+        if (PluginConfig.supportSettingPluginVersions().not()) return
+        val dependencies: List<DefaultExternalModuleDependency> = project.allprojects.flatMap {
+            val classpath: Configuration = it.buildscript.configurations.named("classpath").get()
+            classpath.allDependencies.withType()
+        }
+        val file = project.file("gradle.properties")
+        if (!file.exists()) file.createNewFile()
+
+        val existingLines = file.readLines().filterNot {
+            it.startsWith("plugin.") || it in  PluginConfig.PLUGIN_NFORMATION_START + PluginConfig.PLUGIN_INFORMATION_END
+        }
+        val newLines = dependencies.map { it ->
+            "plugin.${it.group}=${it.version}"
+        }
+        val newFileContent = PluginConfig.PLUGIN_NFORMATION_START + newLines + existingLines + PluginConfig.PLUGIN_INFORMATION_END
+        file.writeText(newFileContent.joinToString(separator = "\n", postfix = "\n"))
     }
 
 

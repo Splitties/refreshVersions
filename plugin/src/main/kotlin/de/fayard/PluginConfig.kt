@@ -108,12 +108,22 @@ repositories {
         "See $issue54VersionOnlyMode"
     )
 
+    val PLUGIN_NFORMATION_START = listOf(
+        "# Plugin versions",
+        "# See https://github.com/jmfayard/buildSrcVersions/issues/60"
+    )
+    val PLUGIN_INFORMATION_END = listOf(
+        "# You can edit the rest of the file")
+
     const val GRADLE_CURRENT_VERSION = "gradleCurrentVersion"
     const val GRADLE_LATEST_VERSION = "gradleLatestVersion"
 
 
     fun supportsTaskAvoidance(): Boolean =
         GradleVersion.current() >= GradleVersion.version("4.9")
+
+    fun supportSettingPluginVersions() : Boolean =
+        GradleVersion.current() >= GradleVersion.version("5.6")
 
     lateinit var configureGradleVersions: (DependencyUpdatesTask.() -> Unit) -> Unit
 

@@ -1,5 +1,6 @@
 package de.fayard
 
+import com.github.benmanes.gradle.versions.VersionsPlugin
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import de.fayard.PluginConfig.isNonStable
 import org.gradle.api.Plugin
@@ -11,10 +12,11 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
     override fun apply(project: Project) = project.configure()
 
     fun Project.configure() {
+        VersionsPlugin().apply(project)
         extensions.create(BuildSrcVersionsExtension::class, PluginConfig.EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
 
         if (PluginConfig.supportsTaskAvoidance()) {
-            val provider = tasks.register("dependencyUpdates", DependencyUpdatesTask::class.java)
+            val provider = tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java)
             PluginConfig.configureGradleVersions = { operation -> provider.configure(operation) }
             tasks.register("buildSrcVersions", BuildSrcVersionsTask::class.java)
 
