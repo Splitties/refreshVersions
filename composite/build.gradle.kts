@@ -12,6 +12,11 @@ val SAMPLE_KOTLIN: IncludedBuild = gradle.includedBuild("sample-kotlin")
 val SAMPLE_GROOVY: IncludedBuild = gradle.includedBuild("sample-groovy")
 val SAMPLE_VERSIONS_ONLY: IncludedBuild = gradle.includedBuild("sample-versionsOnlyMode")
 
+tasks.register("helloPlugin") {
+    group = "Custom"
+    dependsOn(PLUGIN.task(":hello"))
+}
+
 tasks.register("publishLocally") {
     group = "Custom"
     description = "Publish the plugin locally"

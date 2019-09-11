@@ -11,6 +11,14 @@ plugins {
 group = "de.fayard"
 version = "0.5.0"
 
+tasks.register("hello") {
+    group = "Custom"
+    doLast {
+        println("Hello!")
+    }
+}
+
+
 gradlePlugin {
     plugins {
         create("buildSrcVersions") {

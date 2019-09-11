@@ -4,6 +4,6 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = "sample-kotlin"
-includeBuild("../plugin")
+rootProject.name = "sample-kotlin" //
+includeBuild("../plugin")  //
 
