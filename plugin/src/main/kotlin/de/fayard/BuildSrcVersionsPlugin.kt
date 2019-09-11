@@ -11,20 +11,20 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
     override fun apply(project: Project) = project.configure()
 
     fun Project.configure() {
-        BuildSrcVersionsTask.theProject = project
         extensions.create(BuildSrcVersionsExtension::class, PluginConfig.EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
 
         if (PluginConfig.supportsTaskAvoidance()) {
-            tasks.register("dependencyUpdates", DependencyUpdatesTask::class.java) {
-                configureBenManesVersions()
-            }
+            val provider = tasks.register("dependencyUpdates", DependencyUpdatesTask::class.java)
+            PluginConfig.configureGradleVersions = { operation -> provider.configure(operation) }
             tasks.register("buildSrcVersions", BuildSrcVersionsTask::class.java)
 
         } else {
             val dependencyUpdatesTask = tasks.maybeCreate("dependencyUpdates", DependencyUpdatesTask::class.java)
-            dependencyUpdatesTask.configureBenManesVersions()
+            PluginConfig.configureGradleVersions = { operation -> dependencyUpdatesTask.operation() }
             tasks.create("buildSrcVersions", BuildSrcVersionsTask::class)
         }
+
+        (PluginConfig.configureGradleVersions)(DependencyUpdatesTask::configureBenManesVersions)
     }
 }
 

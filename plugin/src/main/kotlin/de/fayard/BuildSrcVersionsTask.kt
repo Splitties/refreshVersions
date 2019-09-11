@@ -11,10 +11,6 @@ import org.gradle.kotlin.dsl.getByType
 @Suppress("UnstableApiUsage")
 open class BuildSrcVersionsTask : DefaultTask() {
 
-    companion object {
-        lateinit var theProject: Project
-    }
-
     init {
         group = "Help"
         description = "Update buildSrc/src/main/kotlin/{Versions.kt,Libs.kt}"

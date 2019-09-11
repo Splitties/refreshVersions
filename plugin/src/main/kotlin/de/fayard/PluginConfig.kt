@@ -1,5 +1,6 @@
 package de.fayard
 
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import okio.buffer
@@ -113,4 +114,7 @@ repositories {
 
     fun supportsTaskAvoidance(): Boolean =
         GradleVersion.current() >= GradleVersion.version("4.9")
+
+    lateinit var configureGradleVersions: (DependencyUpdatesTask.() -> Unit) -> Unit
+
 }

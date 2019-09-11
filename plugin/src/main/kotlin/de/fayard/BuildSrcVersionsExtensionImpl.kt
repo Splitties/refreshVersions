@@ -17,7 +17,7 @@ internal open class BuildSrcVersionsExtensionImpl(
     override fun toString(): String = PluginConfig.extensionAdapter.toJson(this)
 
     override fun rejectVersionIf(filter: ComponentFilter) {
-        BuildSrcVersionsTask.theProject.tasks.withType<DependencyUpdatesTask> {
+        (PluginConfig.configureGradleVersions) {
             this.rejectVersionIf(filter)
         }
     }
