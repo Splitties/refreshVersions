@@ -156,12 +156,13 @@ fun versionOnly(d: Dependency, mode: VersionsOnlyMode, indent: String): String {
         .replace(doubleQuote, mode.quote)
         .replace(slashslash, mode.comment)
         .replace(newline, "")
+    val postIndent = if (indent.isNotBlank()) indent else "    "
 
     return when(mode) {
         KOTLIN_OBJECT -> throw IllegalStateException("KOTLIN_OBJECT should not be handled here")
         KOTLIN_VAL -> """${indent}val ${d.versionName} = "${d.version}"$available"""
         GROOVY_DEF -> """${indent}def ${d.versionName} = '${d.version}'$available"""
-        GROOVY_EXT -> """${indent}${indent}${d.versionName} = '${d.version}'$available"""
+        GROOVY_EXT -> """${indent}${postIndent}${d.versionName} = '${d.version}'$available"""
         GRADLE_PROPERTIES -> "${d.versionName}=${d.version}"
     }
 }

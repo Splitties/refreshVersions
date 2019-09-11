@@ -1,7 +1,6 @@
 package de.fayard
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
 import de.fayard.PluginConfig.isNonStable
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -9,26 +8,29 @@ import org.gradle.kotlin.dsl.create
 
 open class BuildSrcVersionsPlugin : Plugin<Project> {
 
-    override fun apply(project: Project) = project.run {
+    override fun apply(project: Project) = project.configure()
 
-        val extension = extensions.create(BuildSrcVersionsExtension::class, PluginConfig.EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
-        (extension as BuildSrcVersionsExtensionImpl).upstream = configureBenManesVersions()
-        extension.rejectVersionIf {
-            isNonStable(candidate.version)
-        }
+    fun Project.configure() {
+        BuildSrcVersionsTask.theProject = project
+        extensions.create(BuildSrcVersionsExtension::class, PluginConfig.EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
 
-        tasks.create("buildSrcVersions", BuildSrcVersionsTask::class) {
-            group = "Help"
-            description = "Update buildSrc/src/main/kotlin/{Versions.kt,Libs.kt}"
-            dependsOn(":dependencyUpdates")
-            outputs.upToDateWhen { false }
+        if (PluginConfig.supportsTaskAvoidance()) {
+            tasks.register("dependencyUpdates", DependencyUpdatesTask::class.java) {
+                configureBenManesVersions()
+            }
+            tasks.register("buildSrcVersions", BuildSrcVersionsTask::class.java)
+
+        } else {
+            val dependencyUpdatesTask = tasks.maybeCreate("dependencyUpdates", DependencyUpdatesTask::class.java)
+            dependencyUpdatesTask.configureBenManesVersions()
+            tasks.create("buildSrcVersions", BuildSrcVersionsTask::class)
         }
-        Unit
     }
+}
 
-    fun Project.configureBenManesVersions(): DependencyUpdatesTask =
-        tasks.maybeCreate("dependencyUpdates", DependencyUpdatesTask::class.java).also { task: DependencyUpdatesTask ->
-            task.checkForGradleUpdate = true
-            task.outputFormatter = "json"
-        }
+
+fun DependencyUpdatesTask.configureBenManesVersions() {
+    rejectVersionIf { isNonStable(candidate.version) }
+    checkForGradleUpdate = true
+    outputFormatter = "json"
 }

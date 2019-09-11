@@ -12,18 +12,18 @@ import kotlin.String
 object Versions {
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.50"
 
-    const val org_jetbrains_kotlin: String = "1.3.50"
+    const val kotlin_scripting_compiler_embeddable: String = "1.3.50"
 
-    const val okhttp: String = "4.1.0" // available: "4.1.1"
+    const val guava: String = "15.0" // available: "23.0"
 
-    const val okio: String = "2.0.0"
+    const val guice: String = "2.0" // available: "4.2.2"
 
     /**
      *
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */
-    const val gradleLatestVersion: String = "5.6.1"
+    const val gradleLatestVersion: String = "5.6.2"
 
-    const val gradleCurrentVersion: String = "5.5.1"
+    const val gradleCurrentVersion: String = "5.6.2"
 }

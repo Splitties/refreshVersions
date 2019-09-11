@@ -1,12 +1,10 @@
 package de.fayard
 
-import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentFilter
-import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentSelectionWithCurrent
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import okio.buffer
 import okio.source
-import org.gradle.api.Transformer
+import org.gradle.util.GradleVersion
 import java.io.File
 
 object PluginConfig {
@@ -31,7 +29,8 @@ object PluginConfig {
     const val BENMANES_REPORT_PATH = "build/dependencyUpdates/report.json"
 
     /** Documentation **/
-    fun issue(number: Int) : String = "$buildSrcVersionsUrl/issues/$number"
+    fun issue(number: Int): String = "$buildSrcVersionsUrl/issues/$number"
+
     val buildSrcVersionsUrl = "https://github.com/jmfayard/buildSrcVersions"
     val issue47UpdatePlugin = "See issue #47: how to update buildSrcVersions itself ${issue(47)}"
     val issue53PluginConfiguration = issue(53)
@@ -88,10 +87,9 @@ repositories {
         """
 
 
-
     val moshi = Moshi.Builder().build()
 
-    inline fun <reified T: Any> moshiAdapter(clazz: Class<T> = T::class.java): Lazy<JsonAdapter<T>> = lazy { moshi.adapter(clazz) }
+    inline fun <reified T : Any> moshiAdapter(clazz: Class<T> = T::class.java): Lazy<JsonAdapter<T>> = lazy { moshi.adapter(clazz) }
 
     val dependencyGraphAdapter: JsonAdapter<DependencyGraph> by moshiAdapter()
 
@@ -111,4 +109,8 @@ repositories {
 
     const val GRADLE_CURRENT_VERSION = "gradleCurrentVersion"
     const val GRADLE_LATEST_VERSION = "gradleLatestVersion"
+
+
+    fun supportsTaskAvoidance(): Boolean =
+        GradleVersion.current() >= GradleVersion.version("4.9")
 }
