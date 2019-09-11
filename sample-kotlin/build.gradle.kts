@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.3.11"
     id("de.fayard.buildSrcVersions") version "0.5.0"
+    `build-scan`
 }
 
 group = "de.fayard"
@@ -36,4 +37,10 @@ buildSrcVersions {
     rejectVersionIf {
         isNonStable(candidate.version) && isNonStable(currentVersion).not()
     }
+}
+
+
+buildScan {
+    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
+    setTermsOfServiceAgree("yes")
 }

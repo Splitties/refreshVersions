@@ -4,6 +4,7 @@ import de.fayard.VersionsOnlyMode
 
 plugins {
     kotlin("jvm") version "1.3.50"
+    `build-scan`
     id("de.fayard.buildSrcVersions") version "0.5.0"
 }
 group = "de.fayard"
@@ -51,4 +52,9 @@ tasks.register<DefaultTask>("checkAll") {
     description = "versionsOnlyMode - check all modes"
     group = "Custom"
     dependsOn(VersionsOnlyMode.values().map { it.name })
+}
+
+buildScan {
+    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
+    setTermsOfServiceAgree("yes")
 }

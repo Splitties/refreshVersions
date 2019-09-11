@@ -4,6 +4,7 @@ plugins {
     id 'idea'
     id "io.vertx.vertx-plugin" version "0.3.1"
     id 'de.fayard.buildSrcVersions' version '0.5.0'
+    id 'com.gradle.build-scan' version '2.4.2'
 }
 
 group = "de.fayard"
@@ -42,4 +43,9 @@ buildSrcVersions {
 wrapper {
     gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"
     distributionType = Wrapper.DistributionType.ALL
+}
+
+buildScan {
+    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
+    setTermsOfServiceAgree("yes")
 }

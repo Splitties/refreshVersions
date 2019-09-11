@@ -14,6 +14,8 @@ object Versions {
 
   const val guice: String = "2.0"
 
+  const val com_gradle_build_scan_gradle_plugin: String = "2.1"
+
   const val io_vertx_vertx_plugin_gradle_plugin: String = "0.3.1"
 
   const val vertx_core: String = "none"// No version. See buildSrcVersions#23

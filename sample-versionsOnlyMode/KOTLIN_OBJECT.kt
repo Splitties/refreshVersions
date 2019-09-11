@@ -14,6 +14,8 @@ object Versions {
 
     const val kotlin_scripting_compiler_embeddable: String = "1.3.50"
 
+    const val com_gradle_build_scan_gradle_plugin: String = "2.4.1" // available: "2.4.2"
+
     const val guava: String = "15.0" // available: "23.0"
 
     const val guice: String = "2.0" // available: "4.2.2"
