@@ -1,15 +1,22 @@
+import de.fayard.VersionsOnlyMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    `java-gradle-plugin`
-    `kotlin-dsl`
-    `maven-publish`
-    `build-scan`
+    id("de.fayard.buildSrcVersions") version "0.5.0"
     id("com.gradle.plugin-publish") version "0.10.0"
+    `java-gradle-plugin`
+    `maven-publish`
+    `kotlin-dsl`
+    `build-scan`
 }
 
 group = "de.fayard"
 version = "0.5.0"
+
+buildSrcVersions {
+    versionsOnlyMode = VersionsOnlyMode.GRADLE_PROPERTIES
+    versionsOnlyFile = "gradle.properties"
+}
 
 gradlePlugin {
     plugins {
