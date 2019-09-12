@@ -78,10 +78,8 @@ fun regenerateBuildFile(versionsOnlyFile: File?, extension: BuildSrcVersionsExte
     val parseResult = parseBuildFile(versionsOnlyFile, versionsOnlyMode) ?: SingleModeResult.DEFAULT
     val (startOfBlock, endOfBlock, indent) = parseResult
 
-    val sortedDependencies = dependencies
-        .distinctBy { d -> d.versionName }
-        .sortedBy { d -> d.versionName }
-        .sortedByDescending { d -> d.versionName.length }
+    val sortedDependencies = dependencies.sortedBeautifullyBy { it.versionName }
+        .distinctBy { it.versionName }
 
     val newBlock = regenerateBlock(versionsOnlyMode, sortedDependencies, indent)
 

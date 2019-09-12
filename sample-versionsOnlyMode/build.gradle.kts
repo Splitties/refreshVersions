@@ -3,9 +3,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import de.fayard.VersionsOnlyMode
 
 plugins {
-    kotlin("jvm") version "1.3.50"
+    id("org.lovedev.greeting.kotlin")
+    id("de.fayard.buildSrcVersions")
+    id("ch.tutteli.kotlin.utils")
+    id("nebula.kotlin")
+    kotlin("jvm")
     `build-scan`
-    id("de.fayard.buildSrcVersions") version "0.5.0"
 }
 group = "de.fayard"
 

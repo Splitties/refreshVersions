@@ -1,6 +1,6 @@
 plugins {
-    idea
     `build-scan`
+    idea
 }
 
 group = "de.fayard"

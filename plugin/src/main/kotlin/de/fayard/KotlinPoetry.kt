@@ -47,6 +47,12 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension
 
 }
 
+// https://github.com/jmfayard/buildSrcVersions/issues/65
+fun <T> List<T>.sortedBeautifullyBy(exceptIf: Boolean = false, selection: (T) -> String?) : List<T> =
+    this.filterNot { selection(it) == null }
+        .sortedBy { selection(it)!! }
+        .sortedByDescending { selection(it)!!.length }
+
 fun FileSpec.Builder.addMaybeBuildSrcVersions(versions: List<Dependency>, extension: BuildSrcVersionsExtension) {
     versions.firstOrNull {
         it.name in listOf("de.fayard.buildSrcVersions.gradle.plugin", "buildSrcVersions-plugin")
@@ -138,7 +144,9 @@ fun parseGraph(
             d.escapedName = key
         }
     }
-    return dependencies.orderDependencies().findCommonVersions()
+    return dependencies
+        .findCommonVersions()
+        .sortedBeautifullyBy(exceptIf = OutputFile.VERSIONS.existed) { it.versionName }
 }
 
 fun Dependency.fdqnName(): String = escapeName("${group}_${name}")

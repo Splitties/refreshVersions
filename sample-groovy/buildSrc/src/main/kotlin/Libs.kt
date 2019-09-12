@@ -7,10 +7,6 @@ import kotlin.String
  *   `$ ./gradlew buildSrcVersions`
  */
 object Libs {
-  const val guava: String = "com.google.guava:guava:" + Versions.guava
-
-  const val guice: String = "com.google.inject:guice:" + Versions.guice
-
   const val com_gradle_build_scan_gradle_plugin: String =
       "com.gradle.build-scan:com.gradle.build-scan.gradle.plugin:" +
       Versions.com_gradle_build_scan_gradle_plugin
@@ -19,8 +15,12 @@ object Libs {
       "io.vertx.vertx-plugin:io.vertx.vertx-plugin.gradle.plugin:" +
       Versions.io_vertx_vertx_plugin_gradle_plugin
 
-  const val vertx_core: String = "io.vertx:vertx-core"
-
   const val vertx_stack_depchain: String = "io.vertx:vertx-stack-depchain:" +
       Versions.vertx_stack_depchain
+
+  const val vertx_core: String = "io.vertx:vertx-core"
+
+  const val guava: String = "com.google.guava:guava:" + Versions.guava
+
+  const val guice: String = "com.google.inject:guice:" + Versions.guice
 }
