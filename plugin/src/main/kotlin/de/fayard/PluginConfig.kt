@@ -113,7 +113,7 @@ repositories {
         "# See https://github.com/jmfayard/buildSrcVersions/issues/60"
     )
     val PLUGIN_INFORMATION_END = listOf(
-        "# You can edit the rest of the file")
+        "# You can edit the rest of the file, it will be kept intact")
 
     const val GRADLE_CURRENT_VERSION = "gradleCurrentVersion"
     const val GRADLE_LATEST_VERSION = "gradleLatestVersion"

@@ -69,12 +69,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             checkIfFilesExistInitiallyAndCreateThem(project)
         }
 
-        val sortedDependencies = when {
-            OutputFile.VERSIONS.existed -> dependencies
-            else -> dependencies.sortedByDescending { it.versionName.length }
-        }
-
-        val kotlinPoetry: KotlinPoetry = kotlinpoet(sortedDependencies, dependencyGraph.gradle, extension)
+        val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle, extension)
 
         if (generatesAll) {
             kotlinPoetry.Libs.writeTo(outputDir)
@@ -97,17 +92,21 @@ open class BuildSrcVersionsTask : DefaultTask() {
             val classpath: Configuration = it.buildscript.configurations.named("classpath").get()
             classpath.allDependencies.withType()
         }
+        val sortedDependencies = dependencies
+            .sortedBeautifullyBy { it.group }
+            .distinctBy { it.group }
+
         val file = project.file("gradle.properties")
         if (!file.exists()) file.createNewFile()
 
         val existingLines = file.readLines().filterNot {
             it.startsWith("plugin.") || it in  PluginConfig.PLUGIN_NFORMATION_START + PluginConfig.PLUGIN_INFORMATION_END
         }
-        val newLines = dependencies.map { it ->
+        val newLines = sortedDependencies.map { it ->
             "plugin.${it.group}=${it.version}"
         }
         val newFileContent = PluginConfig.PLUGIN_NFORMATION_START + newLines + existingLines + PluginConfig.PLUGIN_INFORMATION_END
-        file.writeText(newFileContent.joinToString(separator = "\n", postfix = "\n"))
+        file.writeText(newFileContent.joinToString(separator = "\n"))
     }
 
 

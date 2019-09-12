@@ -10,11 +10,17 @@ import kotlin.String
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
+    const val org_lovedev_greeting_kotlin_gradle_plugin: String = "1.1"
+
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.50"
 
-    const val kotlin_scripting_compiler_embeddable: String = "1.3.50"
+    const val ch_tutteli_kotlin_utils_gradle_plugin: String = "0.29.0"
 
     const val com_gradle_build_scan_gradle_plugin: String = "2.4.1" // available: "2.4.2"
+
+    const val nebula_kotlin_gradle_plugin: String = "1.3.50"
+
+    const val org_jetbrains_kotlin: String = "1.3.50"
 
     const val guava: String = "15.0" // available: "23.0"
 

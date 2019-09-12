@@ -1,10 +1,10 @@
 plugins {
-    id 'java'
+    id 'de.fayard.buildSrcVersions'
+    id 'io.vertx.vertx-plugin'
+    id 'com.gradle.build-scan'
     id 'application'
     id 'idea'
-    id "io.vertx.vertx-plugin" version "0.3.1"
-    id 'de.fayard.buildSrcVersions' version '0.5.0'
-    id 'com.gradle.build-scan' version '2.4.2'
+    id 'java'
 }
 
 group = "de.fayard"
