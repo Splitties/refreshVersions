@@ -1,6 +1,6 @@
 import de.fayard.BuildSrcVersionsTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import de.fayard.VersionsOnlyMode
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.lovedev.greeting.kotlin")
@@ -39,6 +39,11 @@ tasks.register<Copy>("copyReport") {
 }
 
 VersionsOnlyMode.values().forEach { mode ->
+    if (mode == VersionsOnlyMode.GRADLE_PROPERTIES) {
+        tasks.register<DefaultTask>(mode.name)
+        return@forEach
+    }
+
     tasks.register<BuildSrcVersionsTask>(mode.name) {
         description = "buildSrcVersion - $mode"
         group = "Custom"
