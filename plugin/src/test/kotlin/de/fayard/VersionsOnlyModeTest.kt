@@ -1,6 +1,10 @@
 package de.fayard
 
+import de.fayard.UpdateVersionsOnly.parseBuildFile
+import de.fayard.UpdateVersionsOnly.parseBuildFileOrNew
+import de.fayard.UpdateVersionsOnly.regenerateBuildFile
 import de.fayard.VersionsOnlyMode.*
+import io.kotlintest.matchers.withClue
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
 import java.io.File
@@ -8,9 +12,12 @@ import java.nio.file.Files
 
 class VersionsOnlyModeTest: FreeSpec({
 
-    val versionOnlyFolder = testResourceFile("versionOnly")
-
+    val versionOnlyFolder = testResourceFile("versionOnly").absoluteFile
     val kotlinValInput = versionOnlyFolder.resolve("singleBuildFile.txt")
+
+    "check repos" {
+        buildSrcVersionsDir.name shouldBe "buildSrcVersions"
+    }
 
 
     "Parse file" {
@@ -50,32 +57,22 @@ class VersionsOnlyModeTest: FreeSpec({
                 val received = versionOnlyFolder.resolve("${mode}_received.txt")
                 val validated = versionOnlyFolder.resolve("${mode}_validated.txt")
                 kotlinValInput.copyTo(received, overwrite = true)
-                val config = BuildSrcVersionsExtensionImpl(versionsOnlyMode = mode, versionsOnlyFile = "KOTLIN_VAL_expected.txt")
+
                 val deps = listOf(
                     "com.squareup.okhttp3:okhttp:2.1.0 // 2.2.0",
                     "com.squareup.okio:okio:2.0.0"
                 ).map { it.asDependency() }
-                regenerateBuildFile(received, config, deps)
-                received.readText() shouldBe validated.readText()
-                received.delete()
+
+                regenerateBuildFile(received, mode, deps)
+                withClue(
+                    """Files differ. Run:
+                    |$ diff -u  ${validated.relativeTo(buildSrcVersionsDir)} ${received.relativeTo(buildSrcVersionsDir)}
+                    |""".trimMargin()
+                ) {
+                    (received.readText() == validated.readText()).shouldBe(true)
+                    received.delete()
+                }
             }
         }
     }
 })
-
-fun String.asDependency(): Dependency {
-    val available = this.substringAfter("// ", "").trim()
-    val rest = this.substringBefore(" // ")
-    val (group, name, version) = rest.split(":")
-    return Dependency(
-        group = group,
-        version = version,
-        reason = "",
-        latest = available,
-        projectUrl = "",
-        name = name,
-        escapedName = name,
-        versionName = name,
-        available = if (available.isBlank()) null else AvailableDependency(release = available)
-    )
-}

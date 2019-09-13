@@ -1,17 +1,18 @@
-import de.fayard.VersionsOnlyMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.buildSrcVersions") version "0.5.0"
-    id("com.gradle.plugin-publish") version "0.10.0"
+    id("de.fayard.buildSrcVersions")
+
+    id("com.gradle.plugin-publish")
     `java-gradle-plugin`
     `maven-publish`
     `kotlin-dsl`
     `build-scan`
 }
 
+
+version = "0.6.0" // CHECK_VERSION
 group = "de.fayard"
-version = "0.5.0"
 
 
 gradlePlugin {

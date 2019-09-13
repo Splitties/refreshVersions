@@ -10,6 +10,8 @@ import java.io.File
 
 object PluginConfig {
 
+    const val currentVersion = "0.6.0" // CHECK_VERSION
+
     /**
      * The name of the extension for configuring the runtime behavior of the plugin.
      *
@@ -132,6 +134,14 @@ repositories {
 
     fun supportSettingPluginVersions() : Boolean =
         GradleVersion.current() >= GradleVersion.version("5.6")
+
+    fun spaces(nbSpaces: Int): String =
+        StringBuilder().run {
+            repeat(Math.max(0, nbSpaces)) {
+                append(' ')
+            }
+            toString()
+        }
 
     lateinit var configureGradleVersions: (DependencyUpdatesTask.() -> Unit) -> Unit
 

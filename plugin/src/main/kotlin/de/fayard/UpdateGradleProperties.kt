@@ -9,25 +9,50 @@ data class UpdateGradleProperties(
     val extension: BuildSrcVersionsExtension,
     val dependencies: List<Dependency>
 ) {
+
     fun generateProjectProperties(project: Project) {
         val dependencies: List<DefaultExternalModuleDependency> = project.allprojects.flatMap {
             val classpath: Configuration = it.buildscript.configurations.named("classpath").get()
             classpath.allDependencies.withType()
         }
+
         val sortedDependencies = dependencies
             .sortedBeautifullyBy { it.group }
             .distinctBy { it.group }
 
-        val file = project.file("gradle.properties")
-        if (!file.exists()) file.createNewFile()
+        val newLines = PluginConfig.PLUGIN_NFORMATION_START +
+            sortedDependencies.map { it -> "plugin.${it.group}=${it.version}" } +
+            PluginConfig.PLUGIN_INFORMATION_END
 
-        val existingLines = file.readLines().filterNot {
-            it.startsWith("plugin.") || it in  PluginConfig.PLUGIN_NFORMATION_START + PluginConfig.PLUGIN_INFORMATION_END
-        }
-        val newLines = sortedDependencies.map { it ->
-            "plugin.${it.group}=${it.version}"
-        }
-        val newFileContent = PluginConfig.PLUGIN_NFORMATION_START + newLines + existingLines + PluginConfig.PLUGIN_INFORMATION_END
-        file.writeText(newFileContent.joinToString(separator = "\n"))
+        updateGradleProperties(
+            project = project,
+            newLines = newLines,
+            removeIf = { line ->
+                line.startsWith("plugin.") || line in PluginConfig.PLUGIN_NFORMATION_START + PluginConfig.PLUGIN_INFORMATION_END
+            })
     }
+
+    fun generateVersionProperties(project: Project, dependencies: List<Dependency>) {
+        val newLines = with(UpdateVersionsOnly) {
+            dependencies.map { d: Dependency -> d.asGradleProperty() }
+        }
+
+        updateGradleProperties(
+            project = project,
+            newLines = newLines,
+            removeIf = { line ->
+                line.startsWith("version.") //|| line in  PluginConfig.PLUGIN_NFORMATION_START + PluginConfig.PLUGIN_INFORMATION_END
+            })
+    }
+}
+
+
+fun updateGradleProperties(project: Project, newLines: List<String>, removeIf: (String) -> Boolean) {
+    val file = project.file("gradle.properties")
+    if (!file.exists()) file.createNewFile()
+
+    val existingLines = file.readLines().filterNot { line -> removeIf(line) }
+
+    val newFileContent = newLines + existingLines
+    file.writeText(newFileContent.joinToString(separator = "\n"))
 }

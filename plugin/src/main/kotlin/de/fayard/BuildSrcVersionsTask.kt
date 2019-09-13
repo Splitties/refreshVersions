@@ -1,5 +1,7 @@
 package de.fayard
 
+import de.fayard.UpdateVersionsOnly.regenerateBuildFile
+import de.fayard.VersionsOnlyMode.GRADLE_PROPERTIES
 import de.fayard.VersionsOnlyMode.KOTLIN_OBJECT
 import org.gradle.api.Action
 import org.gradle.api.DefaultTask
@@ -78,14 +80,26 @@ open class BuildSrcVersionsTask : DefaultTask() {
     @TaskAction
     fun versionsOnlyMode() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
-        val (_, dependencies: List<Dependency>) = parsedGradleVersionsPluginReport
-        val buildSrcMode = extension.versionsOnlyMode in listOf(null, KOTLIN_OBJECT)
-        if (buildSrcMode) return
 
-        val file = extension.versionsOnlyFile?.let { project.file(it) }
-        val projectUseKotlin = project.file("build.gradle.kts").exists()
-        regenerateBuildFile(file, extension, dependencies, projectUseKotlin)
-        if (file != null) OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
+        val versionsOnlyMode = when(val mode = extension.versionsOnlyMode) {
+            null, KOTLIN_OBJECT -> return
+            else -> mode
+        }
+
+        val dependencies = parsedGradleVersionsPluginReport.second
+            .sortedBeautifullyBy { it.versionName }
+            .distinctBy { it.versionName }
+
+        if (versionsOnlyMode == GRADLE_PROPERTIES) {
+            UpdateGradleProperties(extension, dependencies).generateVersionProperties(project, dependencies)
+            OutputFile.GRADLE_PROPERTIES.logFileWasModified()
+
+        } else {
+            val file = extension.versionsOnlyFile?.let { project.file(it) }
+            val projectUseKotlin = project.file("build.gradle.kts").exists()
+            regenerateBuildFile(file, versionsOnlyMode, dependencies, projectUseKotlin)
+            if (file != null) OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
+        }
     }
 
 
