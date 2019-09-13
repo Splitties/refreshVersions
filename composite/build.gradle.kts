@@ -11,6 +11,8 @@ val PLUGIN: IncludedBuild = gradle.includedBuild("plugin")
 val SAMPLE_KOTLIN: IncludedBuild = gradle.includedBuild("sample-kotlin")
 val SAMPLE_GROOVY: IncludedBuild = gradle.includedBuild("sample-groovy")
 val SAMPLE_VERSIONS_ONLY: IncludedBuild = gradle.includedBuild("sample-versionsOnlyMode")
+val REFRESH_VERSIONS = ":refreshVersions"
+val BUILD_SRC_VERSIONS = ":buildSrcVersions"
 
 tasks.register("publishLocally") {
     group = "Custom"
@@ -36,10 +38,13 @@ tasks.register("pluginTests") {
 tasks.register("checkAll") {
     group = "Custom"
     description = "Run all checks"
+    dependsOn(SAMPLE_VERSIONS_ONLY.task(REFRESH_VERSIONS))
+    dependsOn(SAMPLE_KOTLIN.task(REFRESH_VERSIONS))
+    dependsOn(SAMPLE_GROOVY.task(REFRESH_VERSIONS))
+    dependsOn(SAMPLE_KOTLIN.task(BUILD_SRC_VERSIONS))
+    dependsOn(SAMPLE_GROOVY.task(BUILD_SRC_VERSIONS))
     dependsOn(PLUGIN.task(":validateTaskProperties"))
     dependsOn(PLUGIN.task(":check"))
-    dependsOn(SAMPLE_KOTLIN.task(":buildSrcVersions"))
-    dependsOn(SAMPLE_GROOVY.task(":buildSrcVersions"))
     dependsOn(SAMPLE_VERSIONS_ONLY.task(":checkAll"))
 }
 

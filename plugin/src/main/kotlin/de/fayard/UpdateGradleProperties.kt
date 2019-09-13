@@ -1,5 +1,6 @@
 package de.fayard
 
+import de.fayard.PluginConfig.VERSIONS_INFORMATION_START
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
@@ -33,7 +34,7 @@ data class UpdateGradleProperties(
     }
 
     fun generateVersionProperties(project: Project, dependencies: List<Dependency>) {
-        val newLines = with(UpdateVersionsOnly) {
+        val newLines = VERSIONS_INFORMATION_START + with(UpdateVersionsOnly) {
             dependencies.map { d: Dependency -> d.asGradleProperty() }
         }
 
@@ -41,7 +42,7 @@ data class UpdateGradleProperties(
             project = project,
             newLines = newLines,
             removeIf = { line ->
-                line.startsWith("version.") //|| line in  PluginConfig.PLUGIN_NFORMATION_START + PluginConfig.PLUGIN_INFORMATION_END
+                line.startsWith("version.") || line in  VERSIONS_INFORMATION_START || line.contains("available=")
             })
     }
 }

@@ -26,7 +26,7 @@ val buildSrcVersionsDir: File
  *  "com.github.ben-manes:gradle-versions-plugin:0.22.0 // 0.25.0".asDependency()
  *  ```
  * **/
-fun String.asDependency(): Dependency {
+fun String.asDependency(fqdn: Boolean = false): Dependency {
     val available = this.substringAfter("// ", "").trim()
     val rest = this.substringBefore(" // ")
     val (group, name, version) = rest.split(":")
@@ -40,5 +40,7 @@ fun String.asDependency(): Dependency {
         escapedName = name,
         versionName = name,
         available = if (available.isBlank()) null else AvailableDependency(release = available)
-    )
+    ).run {
+        if (fqdn) copy(versionName = fqdnName()) else this
+    }
 }

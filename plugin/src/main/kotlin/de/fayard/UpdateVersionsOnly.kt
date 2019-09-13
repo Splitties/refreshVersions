@@ -10,12 +10,12 @@ object UpdateVersionsOnly {
     const val newline = "\n"
 
     fun Dependency.asGradleProperty(): String {
-        val key = "version.${versionName}="
-        val commentPrefix = "\\-- available="
+        val key = escapeName("version.${versionName}").replace("_", ".") + "="
+        val commentPrefix = " \\-- available="
         val spacing = PluginConfig.spaces(key.length - commentPrefix.length - 1)
         val available = when (val v = newerVersion()) {
             null -> ""
-            else -> "\n#$spacing$commentPrefix$v"
+            else -> "\n$spacing#$commentPrefix$v"
         }
         return "$key$version$available"
     }
@@ -121,18 +121,6 @@ object UpdateVersionsOnly {
         result += "$indent$comment ${PluginConfig.VERSIONS_ONLY_END}"
 
         return result
-    }
-
-    fun List<Dependency>.availableGradleProperties(): String? {
-        val availables = this.mapNotNull { d: Dependency ->
-            d.newerVersion()?.run {
-                "#${d.versionName}=$this"
-            }
-        }
-        return when {
-            availables.isEmpty() -> null
-            else -> "\n## Available updates ##\n" + availables.joinWithNewlines()
-        }
     }
 
     fun versionOnly(d: Dependency, mode: VersionsOnlyMode, indent: String): String {

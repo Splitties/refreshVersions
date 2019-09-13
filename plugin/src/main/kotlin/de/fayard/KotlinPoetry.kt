@@ -125,7 +125,7 @@ fun parseGraph(
     val map = mutableMapOf<String, Dependency>()
     for (d: Dependency in dependencies) {
         val key = escapeName(d.name)
-        val fdqnName = d.fdqnName()
+        val fdqnName = d.fqdnName()
 
 
         if (key in useFdqnByDefault) {
@@ -135,7 +135,7 @@ fun parseGraph(
 
             // also use FDQN for the dependency that conflicts with this one
             val other = map[key]!!
-            other.escapedName = other.fdqnName()
+            other.escapedName = other.fqdnName()
         } else {
             map[key] = d
             d.escapedName = key
@@ -146,7 +146,7 @@ fun parseGraph(
         .sortedBeautifullyBy(exceptIf = OutputFile.VERSIONS.existed) { it.versionName }
 }
 
-fun Dependency.fdqnName(): String = escapeName("${group}_${name}")
+fun Dependency.fqdnName(): String = escapeName("${group}_${name}")
 
 
 fun List<Dependency>.orderDependencies(): List<Dependency> {

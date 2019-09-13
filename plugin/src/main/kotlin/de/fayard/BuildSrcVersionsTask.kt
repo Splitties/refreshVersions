@@ -80,6 +80,11 @@ open class BuildSrcVersionsTask : DefaultTask() {
     @TaskAction
     fun versionsOnlyMode() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
+        val updateGradleProperties = UpdateGradleProperties(extension, parsedGradleVersionsPluginReport.second)
+
+        if (PluginConfig.supportSettingPluginVersions()) {
+            updateGradleProperties.generateProjectProperties(project)
+        }
 
         val versionsOnlyMode = when(val mode = extension.versionsOnlyMode) {
             null, KOTLIN_OBJECT -> return
@@ -91,7 +96,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             .distinctBy { it.versionName }
 
         if (versionsOnlyMode == GRADLE_PROPERTIES) {
-            UpdateGradleProperties(extension, dependencies).generateVersionProperties(project, dependencies)
+            updateGradleProperties.generateVersionProperties(project, dependencies)
             OutputFile.GRADLE_PROPERTIES.logFileWasModified()
 
         } else {
@@ -101,17 +106,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
             if (file != null) OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
         }
     }
-
-
-
-    @TaskAction
-    fun generateProjectProperties() {
-        if (PluginConfig.supportSettingPluginVersions().not()) return
-
-        val extension: BuildSrcVersionsExtension = extension()
-        UpdateGradleProperties(extension, parsedGradleVersionsPluginReport.second).generateProjectProperties(project)
-    }
-
 
     val parsedGradleVersionsPluginReport: Pair<DependencyGraph, List<Dependency>>  by lazy {
         val extension: BuildSrcVersionsExtensionImpl = extension()

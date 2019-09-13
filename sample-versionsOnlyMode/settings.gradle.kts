@@ -7,7 +7,7 @@ pluginManagement {
         val key = "plugin.${requested.id.id}"
         if (extra.has(key)) {
             val version = extra.get(key) as String
-            println("Plugins: useVersion($version) for $key")
+            //println("Plugins: useVersion($version) for $key")
             useVersion(version)
         }
     }
