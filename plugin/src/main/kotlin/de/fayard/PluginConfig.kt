@@ -12,11 +12,8 @@ object PluginConfig {
 
     const val currentVersion = "0.6.0" // CHECK_VERSION
 
-    /**
-     * The name of the extension for configuring the runtime behavior of the plugin.
-     *
-     * @see org.gradle.plugins.site.SitePluginExtension
-     */
+    const val PLUGIN_ID = "de.fayard.buildSrcVersions"
+    const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
     const val EXTENSION_NAME = "buildSrcVersions"
     const val DEPENDENCY_UPDATES = "dependencyUpdates"
     const val DEPENDENCY_UPDATES_PATH = ":$DEPENDENCY_UPDATES"
@@ -94,6 +91,8 @@ repositories {
 }
         """
 
+
+    val errorGVPAlreadyApplied = """WARNING: don't apply ${PluginConfig.GRADLE_VERSIONS_PLUGIN_ID}! It is already inclueded."""
 
     val moshi = Moshi.Builder().build()
 
