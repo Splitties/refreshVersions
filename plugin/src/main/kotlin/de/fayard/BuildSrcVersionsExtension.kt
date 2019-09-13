@@ -18,18 +18,6 @@ interface BuildSrcVersionsExtension {
 
     var versionsOnlyFile: String?
 
-    fun isNonStable(version: String) : Boolean
+    fun isNonStable(version: String): Boolean
 
-    @Deprecated("Deprecated, see #64", ReplaceWith("useFqdnFor()"))
-    var useFdqnFor: MutableList<String>
-
-    @Deprecated("Deprecated, see #64", ReplaceWith("useFqdnFor(dependencyName)"))
-    fun useFdqnFor(vararg dependencyName: String)
-
-
-    @Deprecated("Remove or use rejectVersionIf { ... }", replaceWith = ReplaceWith(""))
-    var rejectedVersionKeywords: MutableList<String>
-
-    @Deprecated("Remove or use rejectVersionIf { selection -> ... }", replaceWith = ReplaceWith(""))
-    fun rejectedVersionKeywords(vararg keyword: String)
 }

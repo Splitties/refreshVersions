@@ -35,7 +35,16 @@ data class Dependency(
     var escapedName: String = "",
     var versionName: String = "",
     val available: AvailableDependency? = null
-)
+) {
+    fun maybeUpdate(update: Boolean): Dependency {
+        val newerVersion = newerVersion()
+        return when {
+            update.not() -> this
+            newerVersion == null -> this
+            else -> this.copy(available = null, version = newerVersion)
+        }
+    }
+}
 
 data class GradleConfig(
     val current: GradleVersion,

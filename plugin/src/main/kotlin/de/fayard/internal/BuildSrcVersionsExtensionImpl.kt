@@ -12,6 +12,7 @@ internal open class BuildSrcVersionsExtensionImpl(
     override var versionsOnlyFile: String? = null
 ) : BuildSrcVersionsExtension, java.io.Serializable {
     var useFqqnFor: List<String> = emptyList()
+    var updateForce = false
 
     // Use @Transient for fields that should not be present in toString()
     override fun toString(): String = PluginConfig.extensionAdapter.toJson(this)
@@ -29,20 +30,6 @@ internal open class BuildSrcVersionsExtensionImpl(
     override fun useFqdnFor(vararg dependencyName: String) {
         useFqqnFor = dependencyName.toList()
     }
-
-    override fun rejectedVersionKeywords(vararg keyword: String) {
-        println("Warning: rejectedVersionKeywords is deprecated, see ${PluginConfig.issue53PluginConfiguration}")
-    }
-
-    override fun useFdqnFor(vararg dependencyName: String) {
-        println("Warning: useFdqnFor is deprecated, use useFqqnFor() instead. ${PluginConfig.issue53PluginConfiguration}")
-        useFqdnFor(*dependencyName)
-    }
-
-    @Transient
-    override var useFdqnFor: MutableList<String> = mutableListOf()
-    @Transient
-    override var rejectedVersionKeywords: MutableList<String> = mutableListOf()
 
     companion object {
         private const val serialVersionUID = 20180617104400L

@@ -1,6 +1,5 @@
 package de.fayard
 
-import de.fayard.internal.UpdateVersionsOnly.regenerateBuildFile
 import de.fayard.VersionsOnlyMode.GRADLE_PROPERTIES
 import de.fayard.VersionsOnlyMode.KOTLIN_OBJECT
 import de.fayard.internal.BuildSrcVersionsExtensionImpl
@@ -11,6 +10,7 @@ import de.fayard.internal.KotlinPoetry
 import de.fayard.internal.OutputFile
 import de.fayard.internal.PluginConfig
 import de.fayard.internal.UpdateGradleProperties
+import de.fayard.internal.UpdateVersionsOnly.regenerateBuildFile
 import de.fayard.internal.escapeName
 import de.fayard.internal.kotlinpoet
 import de.fayard.internal.parseGraph
@@ -20,6 +20,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.options.Option
 import org.gradle.kotlin.dsl.getByType
 import java.io.File
 
@@ -31,6 +32,10 @@ open class BuildSrcVersionsTask : DefaultTask() {
         action.execute(this._extension!!)
     }
 
+    @Input
+    @Optional
+    @Option(description = "Update all versions, I will check git diff afterwards")
+    var update: Boolean = false
 
     @TaskAction
     fun initializeBuildSrc() {
@@ -88,6 +93,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         }
     }
 
+
     @TaskAction
     fun versionsOnlyMode() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
@@ -118,6 +124,12 @@ open class BuildSrcVersionsTask : DefaultTask() {
         }
     }
 
+    fun lookAtGitDiff() {
+        if (update) {
+            logger.warn("!! Versions Updated !! Have a look at the git diff")
+        }
+    }
+
     val dependencyGraph: DependencyGraph by lazy {
         val extension: BuildSrcVersionsExtensionImpl = extension()
 
@@ -138,9 +150,8 @@ open class BuildSrcVersionsTask : DefaultTask() {
     val parsedDependencies : List<Dependency> by lazy {
         val useFdqnByDefault = extension().useFqqnFor.map(::escapeName)
         parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
+            .map { d -> d.maybeUpdate(update) }
     }
-
-
 
     @Input @Optional @Transient
     var _extension: BuildSrcVersionsExtension? = null

@@ -1,6 +1,12 @@
 package de.fayard.internal
 
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.asClassName
 import de.fayard.BuildSrcVersionsExtension
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
@@ -84,11 +90,9 @@ fun Dependency.versionInformation(): String {
         newerVersion == null -> ""
         else -> """ // available: "$newerVersion""""
     }
-    return if (comment.length + versionName.length + version.length > 70) {
-            '\n' + comment
-        } else {
-            comment
-        }
+    val addNewLine = comment.length + versionName.length + version.length > 70
+
+    return if (addNewLine) "\n$comment" else comment
 }
 
 fun Dependency.newerVersion(): String?  =
