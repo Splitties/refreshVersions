@@ -1,7 +1,10 @@
 package de.fayard
 
+import de.fayard.VersionsOnlyMode.*
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
+import java.io.File
+import java.nio.file.Files
 
 class VersionsOnlyModeTest: FreeSpec({
 
@@ -11,16 +14,36 @@ class VersionsOnlyModeTest: FreeSpec({
 
 
     "Parse file" {
-        val singleModeResult = parseBuildFile(kotlinValInput, VersionsOnlyMode.KOTLIN_VAL)
+        val singleModeResult = parseBuildFile(kotlinValInput, KOTLIN_VAL)
         singleModeResult shouldBe SingleModeResult(6, 11, "    ")
+
+        parseBuildFileOrNew(kotlinValInput, KOTLIN_VAL, File(".")) shouldBe Pair(kotlinValInput, singleModeResult)
+    }
+
+    val tempDir = Files.createTempDirectory("versions-only").toFile()
+
+    "always modify gradle.properties" {
+        val (file1, result1) = parseBuildFileOrNew(null, GRADLE_PROPERTIES, File("."))
+        file1.name shouldBe "gradle.properties"
+        result1 shouldBe SingleModeResult.NEW_FILE
+
+        val (file2, result2) = parseBuildFileOrNew(File("gradle.properties"), GRADLE_PROPERTIES, File("."))
+        file2.name shouldBe "gradle.properties"
+        result2 shouldBe SingleModeResult.NEW_FILE
+    }
+
+    "Create new file if needed" {
+        val (file, result) = parseBuildFileOrNew(null, KOTLIN_VAL, tempDir)
+        file shouldBe tempDir.resolve("build.gradle.kts")
+        result shouldBe SingleModeResult.NEW_FILE.copy(indentation = PluginConfig.SPACES4)
     }
 
     "Regenerate file" - {
         val testCases = listOf(
-            VersionsOnlyMode.KOTLIN_VAL,
-            VersionsOnlyMode.GROOVY_DEF,
-            VersionsOnlyMode.GROOVY_EXT,
-            VersionsOnlyMode.GRADLE_PROPERTIES
+            KOTLIN_VAL,
+            GROOVY_DEF,
+            GROOVY_EXT,
+            GRADLE_PROPERTIES
         )
         for (mode in testCases) {
             "For mode = $mode" {

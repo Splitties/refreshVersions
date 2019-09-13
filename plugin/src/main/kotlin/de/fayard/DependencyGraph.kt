@@ -65,8 +65,10 @@ data class SingleModeResult(
     val endOfBlock: Int,
     val indentation: String
 ) {
+
     companion object {
-        val DEFAULT = SingleModeResult(-1, -1, PluginConfig.DEFAULT_INDENT)
+        val NEW_FILE = SingleModeResult(0, 0, "")
+        val BLOC_NOT_FOUND = SingleModeResult(-1, -1, PluginConfig.DEFAULT_INDENT)
     }
 }
 

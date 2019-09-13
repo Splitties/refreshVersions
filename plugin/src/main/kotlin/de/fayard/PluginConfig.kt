@@ -122,6 +122,10 @@ repositories {
     const val GRADLE_CURRENT_VERSION = "gradleCurrentVersion"
     const val GRADLE_LATEST_VERSION = "gradleLatestVersion"
 
+    const val SPACES4 = "    "
+    const val SPACES2 = "  "
+    const val SPACES0 = ""
+    const val TAB = "\t"
 
     fun supportsTaskAvoidance(): Boolean =
         GradleVersion.current() >= GradleVersion.version("4.9")
