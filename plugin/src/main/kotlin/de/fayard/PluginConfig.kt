@@ -10,7 +10,7 @@ import java.io.File
 
 object PluginConfig {
 
-    const val currentVersion = "0.6.0" // CHECK_VERSION
+    const val currentVersion = "0.6.0" // plugin.de.fayard.buildSrcVersions
 
     const val PLUGIN_ID = "de.fayard.buildSrcVersions"
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
