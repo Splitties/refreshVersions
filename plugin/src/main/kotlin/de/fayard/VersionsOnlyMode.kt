@@ -1,8 +1,9 @@
 package de.fayard
 
-import de.fayard.UpdateVersionsOnly.doubleQuote
-import de.fayard.UpdateVersionsOnly.singleQuote
-import de.fayard.UpdateVersionsOnly.slashslash
+import de.fayard.internal.PluginConfig
+import de.fayard.internal.UpdateVersionsOnly.doubleQuote
+import de.fayard.internal.UpdateVersionsOnly.singleQuote
+import de.fayard.internal.UpdateVersionsOnly.slashslash
 
 enum class VersionsOnlyMode {
     KOTLIN_VAL,

@@ -18,6 +18,7 @@ interface BuildSrcVersionsExtension {
 
     var versionsOnlyFile: String?
 
+    fun isNonStable(version: String) : Boolean
 
     @Deprecated("Deprecated, see #64", ReplaceWith("useFqdnFor()"))
     var useFdqnFor: MutableList<String>

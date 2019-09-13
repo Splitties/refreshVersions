@@ -1,5 +1,8 @@
 package de.fayard
 
+import de.fayard.internal.AvailableDependency
+import de.fayard.internal.Dependency
+import de.fayard.internal.fqdnName
 import org.intellij.lang.annotations.Language
 import java.io.File
 

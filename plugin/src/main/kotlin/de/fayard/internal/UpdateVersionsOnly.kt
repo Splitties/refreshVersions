@@ -1,5 +1,6 @@
-package de.fayard
+package de.fayard.internal
 
+import de.fayard.VersionsOnlyMode
 import java.io.File
 
 object UpdateVersionsOnly {
@@ -11,7 +12,7 @@ object UpdateVersionsOnly {
 
     fun Dependency.asGradleProperty(): String {
         val key = escapeName("version.${versionName}").replace("_", ".") + "="
-        val commentPrefix = " \\-- available="
+        val commentPrefix = " available="
         val spacing = PluginConfig.spaces(key.length - commentPrefix.length - 1)
         val available = when (val v = newerVersion()) {
             null -> ""

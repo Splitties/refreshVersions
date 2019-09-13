@@ -1,5 +1,13 @@
 package de.fayard
 
+import de.fayard.internal.AvailableDependency
+import de.fayard.internal.Dependencies
+import de.fayard.internal.Dependency
+import de.fayard.internal.PluginConfig
+import de.fayard.internal.findCommonVersions
+import de.fayard.internal.gradleNotation
+import de.fayard.internal.orderDependencies
+import de.fayard.internal.versionInformation
 import io.kotlintest.inspectors.forAll
 import io.kotlintest.matchers.string.contain
 import io.kotlintest.should

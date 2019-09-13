@@ -1,8 +1,20 @@
 package de.fayard
 
-import de.fayard.UpdateVersionsOnly.regenerateBuildFile
+import de.fayard.internal.UpdateVersionsOnly.regenerateBuildFile
 import de.fayard.VersionsOnlyMode.GRADLE_PROPERTIES
 import de.fayard.VersionsOnlyMode.KOTLIN_OBJECT
+import de.fayard.internal.BuildSrcVersionsExtensionImpl
+import de.fayard.internal.Dependency
+import de.fayard.internal.DependencyGraph
+import de.fayard.internal.EditorConfig
+import de.fayard.internal.KotlinPoetry
+import de.fayard.internal.OutputFile
+import de.fayard.internal.PluginConfig
+import de.fayard.internal.UpdateGradleProperties
+import de.fayard.internal.escapeName
+import de.fayard.internal.kotlinpoet
+import de.fayard.internal.parseGraph
+import de.fayard.internal.sortedBeautifullyBy
 import org.gradle.api.Action
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
@@ -47,7 +59,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
     @TaskAction
     fun updateBuildSrc() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
-        val (dependencyGraph: DependencyGraph, dependencies: List<Dependency>) = parsedGradleVersionsPluginReport
         val outputDir = project.file(OutputFile.OUTPUTDIR.path)
         val shouldGenerateLibsKt = when(extension.versionsOnlyMode) {
             null -> true
@@ -55,7 +66,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             else -> return
         }
 
-        val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle, extension)
+        val kotlinPoetry: KotlinPoetry = kotlinpoet(parsedDependencies, dependencyGraph.gradle, extension)
 
         if (shouldGenerateLibsKt) {
             kotlinPoetry.Libs.writeTo(outputDir)
@@ -80,7 +91,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
     @TaskAction
     fun versionsOnlyMode() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
-        val updateGradleProperties = UpdateGradleProperties(extension, parsedGradleVersionsPluginReport.second)
+        val updateGradleProperties = UpdateGradleProperties(extension, parsedDependencies)
 
         if (PluginConfig.supportSettingPluginVersions()) {
             updateGradleProperties.generateProjectProperties(project)
@@ -91,7 +102,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             else -> mode
         }
 
-        val dependencies = parsedGradleVersionsPluginReport.second
+        val dependencies = parsedDependencies
             .sortedBeautifullyBy { it.versionName }
             .distinctBy { it.versionName }
 
@@ -107,7 +118,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         }
     }
 
-    val parsedGradleVersionsPluginReport: Pair<DependencyGraph, List<Dependency>>  by lazy {
+    val dependencyGraph: DependencyGraph by lazy {
         val extension: BuildSrcVersionsExtensionImpl = extension()
 
         println(
@@ -121,13 +132,14 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
         val jsonInput = project.file(PluginConfig.BENMANES_REPORT_PATH)
 
-        val dependencyGraph = PluginConfig.readGraphFromJsonFile(jsonInput)
-
-        val useFdqnByDefault = extension.useFqqnFor.map(::escapeName)
-
-        val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
-        Pair(dependencyGraph, dependencies)
+        return@lazy PluginConfig.readGraphFromJsonFile(jsonInput)
     }
+
+    val parsedDependencies : List<Dependency> by lazy {
+        val useFdqnByDefault = extension().useFqqnFor.map(::escapeName)
+        parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
+    }
+
 
 
     @Input @Optional @Transient

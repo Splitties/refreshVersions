@@ -1,4 +1,3 @@
-import de.fayard.PluginConfig.isNonStable
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {

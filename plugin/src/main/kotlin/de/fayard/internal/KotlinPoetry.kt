@@ -1,13 +1,18 @@
-package de.fayard
+package de.fayard.internal
 
 import com.squareup.kotlinpoet.*
+import de.fayard.BuildSrcVersionsExtension
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
 
 fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension: BuildSrcVersionsExtension): KotlinPoetry {
 
-    val gradleVersion = constStringProperty(PluginConfig.GRADLE_LATEST_VERSION, gradleConfig.current.version, CodeBlock.of(PluginConfig.gradleKdoc(gradleConfig.running.version)))
+    val gradleVersion = constStringProperty(
+        PluginConfig.GRADLE_LATEST_VERSION,
+        gradleConfig.current.version,
+        CodeBlock.of(PluginConfig.gradleKdoc(gradleConfig.running.version))
+    )
 
     val versionsProperties: List<PropertySpec> = versions
         .distinctBy { it.versionName }

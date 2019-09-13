@@ -1,6 +1,7 @@
-package de.fayard
+package de.fayard.internal
 
-import de.fayard.PluginConfig.VERSIONS_INFORMATION_START
+import de.fayard.BuildSrcVersionsExtension
+import de.fayard.internal.PluginConfig.VERSIONS_INFORMATION_START
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency

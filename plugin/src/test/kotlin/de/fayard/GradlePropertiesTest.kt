@@ -1,11 +1,13 @@
 package de.fayard
 
+import de.fayard.internal.BuildSrcVersionsExtensionImpl
+import de.fayard.internal.PluginConfig
+import de.fayard.internal.UpdateGradleProperties
+import de.fayard.internal.UpdateVersionsOnly
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
 
 class GradlePropertiesTest : FreeSpec({
-
-    val updater = UpdateGradleProperties(BuildSrcVersionsExtensionImpl(), emptyList())
 
     "spaces" {
         PluginConfig.spaces(-2) shouldBe ""
@@ -21,7 +23,7 @@ class GradlePropertiesTest : FreeSpec({
                 val gvp = "com.github.ben-manes:gradle-versions-plugin:0.22.0 // 0.25.0".asDependency()
                 gvp.asGradleProperty() shouldBe """
                     |version.gradle.versions.plugin=0.22.0
-                    |               # \-- available=0.25.0
+                    |                   # available=0.25.0
                 """.trimMargin()
             }
 

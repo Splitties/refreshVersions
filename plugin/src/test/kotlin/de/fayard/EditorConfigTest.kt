@@ -1,5 +1,7 @@
 package de.fayard
 
+import de.fayard.internal.EditorConfig
+import de.fayard.internal.Section
 import io.kotlintest.matchers.haveSize
 import io.kotlintest.matchers.withClue
 import io.kotlintest.should
@@ -71,7 +73,7 @@ class EditorConfigTest: FreeSpec({
                 section.findIndent() shouldBe null
             }
             "no information" {
-                val section = Section("*", mutableListOf( "key" to "value"))
+                val section = Section("*", mutableListOf("key" to "value"))
                 section.findIndent() shouldBe null
             }
         }

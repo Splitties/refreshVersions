@@ -1,9 +1,11 @@
 package de.fayard
 
-import de.fayard.UpdateVersionsOnly.parseBuildFile
-import de.fayard.UpdateVersionsOnly.parseBuildFileOrNew
-import de.fayard.UpdateVersionsOnly.regenerateBuildFile
+import de.fayard.internal.UpdateVersionsOnly.parseBuildFile
+import de.fayard.internal.UpdateVersionsOnly.parseBuildFileOrNew
+import de.fayard.internal.UpdateVersionsOnly.regenerateBuildFile
 import de.fayard.VersionsOnlyMode.*
+import de.fayard.internal.PluginConfig
+import de.fayard.internal.SingleModeResult
 import io.kotlintest.matchers.withClue
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec

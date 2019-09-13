@@ -1,5 +1,8 @@
 package de.fayard
 
+import de.fayard.internal.Dependency
+import de.fayard.internal.PluginConfig
+import de.fayard.internal.parseGraph
 import io.kotlintest.fail
 import io.kotlintest.specs.FreeSpec
 import java.io.File

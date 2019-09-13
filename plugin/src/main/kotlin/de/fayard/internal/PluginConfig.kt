@@ -1,4 +1,4 @@
-package de.fayard
+package de.fayard.internal
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.squareup.moshi.JsonAdapter
@@ -92,7 +92,7 @@ repositories {
         """
 
 
-    val errorGVPAlreadyApplied = """WARNING: don't apply ${PluginConfig.GRADLE_VERSIONS_PLUGIN_ID}! It is already inclueded."""
+    val errorGVPAlreadyApplied = """WARNING: don't apply $GRADLE_VERSIONS_PLUGIN_ID! It is already inclueded."""
 
     val moshi = Moshi.Builder().build()
 

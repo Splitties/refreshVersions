@@ -1,8 +1,9 @@
 package de.fayard
 
-import com.github.benmanes.gradle.versions.VersionsPlugin
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import de.fayard.PluginConfig.isNonStable
+import de.fayard.internal.PluginConfig.isNonStable
+import de.fayard.internal.BuildSrcVersionsExtensionImpl
+import de.fayard.internal.PluginConfig
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply

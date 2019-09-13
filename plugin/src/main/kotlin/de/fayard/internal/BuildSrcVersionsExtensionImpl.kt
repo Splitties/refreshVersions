@@ -1,8 +1,8 @@
-package de.fayard
+package de.fayard.internal
 
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentFilter
-import org.gradle.kotlin.dsl.withType
+import de.fayard.BuildSrcVersionsExtension
+import de.fayard.VersionsOnlyMode
 
 internal open class BuildSrcVersionsExtensionImpl(
     override var renameLibs: String = PluginConfig.DEFAULT_LIBS,
@@ -20,6 +20,10 @@ internal open class BuildSrcVersionsExtensionImpl(
         (PluginConfig.configureGradleVersions) {
             this.rejectVersionIf(filter)
         }
+    }
+
+    override fun isNonStable(version: String): Boolean {
+        return PluginConfig.isNonStable(version)
     }
 
     override fun useFqdnFor(vararg dependencyName: String) {

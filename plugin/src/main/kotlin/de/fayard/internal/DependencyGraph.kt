@@ -1,7 +1,6 @@
-package de.fayard
+package de.fayard.internal
 
 import com.squareup.kotlinpoet.FileSpec
-import java.io.File
 
 data class KotlinPoetry(
     val Libs: FileSpec,
