@@ -55,11 +55,8 @@ open class BuildSrcVersionsTask : DefaultTask() {
         val generatesAll = extension.versionsOnlyMode != VersionsOnlyMode.KOTLIN_OBJECT
 
         if (generatesAll && extension.versionsOnlyMode != null) {
-            val gradleDeps = listOf(
-                Dependency(version = dependencyGraph.gradle.running.version, group = PluginConfig.GRADLE_CURRENT_VERSION, versionName = PluginConfig.GRADLE_CURRENT_VERSION),
-                Dependency(version = dependencyGraph.gradle.current.version, group = PluginConfig.GRADLE_LATEST_VERSION, versionName = PluginConfig.GRADLE_LATEST_VERSION)
-            )
-            onSingleActionMode(dependencies + gradleDeps, extension)
+            val gradleLatestVersion = Dependency(version = dependencyGraph.gradle.current.version, group = PluginConfig.GRADLE_LATEST_VERSION, versionName = PluginConfig.GRADLE_LATEST_VERSION)
+            onSingleActionMode(dependencies + gradleLatestVersion, extension)
             return
         }
 

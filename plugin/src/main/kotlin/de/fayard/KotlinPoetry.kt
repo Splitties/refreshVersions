@@ -7,22 +7,19 @@ import org.gradle.plugin.use.PluginDependencySpec
 
 fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension: BuildSrcVersionsExtension): KotlinPoetry {
 
+    val gradleVersion = constStringProperty(PluginConfig.GRADLE_LATEST_VERSION, gradleConfig.current.version, CodeBlock.of(PluginConfig.gradleKdoc(gradleConfig.running.version)))
+
     val versionsProperties: List<PropertySpec> = versions
         .distinctBy { it.versionName }
-        .map(Dependency::generateVersionProperty)
+        .map(Dependency::generateVersionProperty) + gradleVersion
 
     val libsProperties: List<PropertySpec> = versions
         .distinctBy { it.escapedName }
         .map { it.generateLibsProperty(extension) }
 
-    val gradleProperties: List<PropertySpec> = listOf(
-        constStringProperty(PluginConfig.GRADLE_LATEST_VERSION, gradleConfig.current.version, CodeBlock.of(PluginConfig.GRADLE_KDOC)),
-        constStringProperty(PluginConfig.GRADLE_CURRENT_VERSION, gradleConfig.running.version)
-    )
-
     val Versions: TypeSpec = TypeSpec.objectBuilder(extension.renameVersions)
         .addKdoc(PluginConfig.KDOC_VERSIONS)
-        .addProperties(versionsProperties + gradleProperties)
+        .addProperties(versionsProperties)
         .build()
 
 

@@ -59,7 +59,8 @@ object PluginConfig {
 build/
 """
 
-    val GRADLE_KDOC = """
+    fun gradleKdoc(currentVersion: String): String = """
+Current version: "$currentVersion"        
 See issue 19: How to update Gradle itself?
 $issue19UpdateGradle
 """
@@ -119,7 +120,6 @@ repositories {
     val PLUGIN_INFORMATION_END = listOf(
         "# You can edit the rest of the file, it will be kept intact")
 
-    const val GRADLE_CURRENT_VERSION = "gradleCurrentVersion"
     const val GRADLE_LATEST_VERSION = "gradleLatestVersion"
 
     const val SPACES4 = "    "
