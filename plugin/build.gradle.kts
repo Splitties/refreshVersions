@@ -13,10 +13,6 @@ plugins {
 group = "de.fayard"
 version = "0.5.0"
 
-buildSrcVersions {
-    versionsOnlyMode = VersionsOnlyMode.GRADLE_PROPERTIES
-    versionsOnlyFile = "gradle.properties"
-}
 
 gradlePlugin {
     plugins {

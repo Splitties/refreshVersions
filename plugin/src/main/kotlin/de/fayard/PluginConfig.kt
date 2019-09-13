@@ -16,6 +16,10 @@ object PluginConfig {
      * @see org.gradle.plugins.site.SitePluginExtension
      */
     const val EXTENSION_NAME = "buildSrcVersions"
+    const val DEPENDENCY_UPDATES = "dependencyUpdates"
+    const val DEPENDENCY_UPDATES_PATH = ":$DEPENDENCY_UPDATES"
+    const val REFRESH_VERSIONS = "refreshVersions"
+    const val BUILD_SRC_VERSIONS = EXTENSION_NAME
 
     fun isNonStable(version: String): Boolean {
         val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
