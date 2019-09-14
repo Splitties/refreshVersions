@@ -19,7 +19,6 @@ object Versions {
     const val guice: String = "2.0"
 
     /**
-     *
      * Current version: "5.6.2"
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19

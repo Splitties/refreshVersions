@@ -33,7 +33,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
     }
 
     @Input
-    @Optional
     @Option(description = "Update all versions, I will check git diff afterwards")
     var update: Boolean = false
 
@@ -120,7 +119,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         }
     }
 
-    val dependencyGraph: DependencyGraph by lazy {
+    private val dependencyGraph: DependencyGraph by lazy {
         val extension: BuildSrcVersionsExtensionImpl = extension()
 
         println(
@@ -137,7 +136,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         return@lazy PluginConfig.readGraphFromJsonFile(jsonInput)
     }
 
-    val parsedDependencies : List<Dependency> by lazy {
+    private val parsedDependencies: List<Dependency> by lazy {
         val useFdqnByDefault = extension().useFqqnFor.map(::escapeName)
         parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
             .map { d -> d.maybeUpdate(update) }

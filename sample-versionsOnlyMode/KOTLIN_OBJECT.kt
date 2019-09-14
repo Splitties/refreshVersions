@@ -19,8 +19,7 @@ object Versions {
     const val okio: String = "2.0.0"
 
     /**
-     *
-     * Current version: "5.5.1"        
+     * Current version: "5.5.1"
      * See issue 19: How to update Gradle itself?
      * https://github.com/jmfayard/buildSrcVersions/issues/19
      */

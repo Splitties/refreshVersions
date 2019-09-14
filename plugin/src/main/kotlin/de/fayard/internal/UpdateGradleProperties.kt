@@ -31,15 +31,15 @@ data class UpdateGradleProperties(
         this in PluginConfig.ALL_GRADLE_PROPERTIES_LINES -> true
         else -> false
     }
-}
 
+    fun updateGradleProperties(project: Project, newLines: List<String>, removeIf: (String) -> Boolean) {
+        val file = project.file("gradle.properties")
+        if (!file.exists()) file.createNewFile()
 
-fun updateGradleProperties(project: Project, newLines: List<String>, removeIf: (String) -> Boolean) {
-    val file = project.file("gradle.properties")
-    if (!file.exists()) file.createNewFile()
+        val existingLines = file.readLines().filterNot { line -> removeIf(line) }
 
-    val existingLines = file.readLines().filterNot { line -> removeIf(line) }
+        val newFileContent = existingLines + newLines
+        file.writeText(newFileContent.joinToString(separator = "\n"))
+    }
 
-    val newFileContent = newLines + existingLines
-    file.writeText(newFileContent.joinToString(separator = "\n"))
 }
