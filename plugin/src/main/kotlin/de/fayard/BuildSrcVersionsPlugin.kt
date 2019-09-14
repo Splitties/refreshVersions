@@ -1,21 +1,25 @@
 package de.fayard
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import de.fayard.internal.PluginConfig.isNonStable
 import de.fayard.internal.BuildSrcVersionsExtensionImpl
 import de.fayard.internal.PluginConfig
+import de.fayard.internal.PluginConfig.escapeVersionName
+import de.fayard.internal.PluginConfig.isNonStable
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.extra
 
 
 open class BuildSrcVersionsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
+        check(project == project.rootProject) { "ERROR: plugins de.fayard.buildSrcVersions must be applied to the root build.gradle(.kts)" }
         project.tasks.removeIf { it.name == PluginConfig.DEPENDENCY_UPDATES }
         project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
         project.configure()
+        project.useVersionsFromGradleProperties()
     }
 
     fun Project.configure() = with(PluginConfig) {
@@ -37,10 +41,36 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
             tasks.create(BUILD_SRC_VERSIONS, BuildSrcVersionsTask::class, BuildSrcVersionsTask::configureBuildSrcVersions)
             tasks.create(REFRESH_VERSIONS, BuildSrcVersionsTask::class, BuildSrcVersionsTask::configureRefreshVersions)
         }
-
     }
 }
 
+fun Project.useVersionsFromGradleProperties() {
+    val extra = this.extra.properties
+    println("extra=$extra")
+    allprojects {
+        val projectName = name
+        configurations.all {
+            val configurationName = name
+            println("Resolving dependency $group:$name in project=$projectName")
+            if (name.contains("copy").not()) {
+                resolutionStrategy.eachDependency {
+                    println("Resolving dependency $group:$name in project=$projectName and configuration=$configurationName")
+                    val gradleProperties = listOf(
+                        escapeVersionName("version.$group.$name"),
+                        escapeVersionName("version.$group"),
+                        escapeVersionName("version.$name")
+                    )
+                    val versionFromGradleProperties: String = gradleProperties
+                        .firstOrNull { key -> key in extra }
+                        ?.let { key -> extra[key] as String }
+                        ?: return@eachDependency
+                    println("useVersion($versionFromGradleProperties) for $group:$name")
+                    useVersion(versionFromGradleProperties)
+                }
+            }
+        }
+    }
+}
 
 fun DependencyUpdatesTask.configureBenManesVersions() {
     rejectVersionIf { isNonStable(candidate.version) }

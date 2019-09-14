@@ -11,7 +11,7 @@ object UpdateVersionsOnly {
     const val newline = "\n"
 
     fun Dependency.asGradleProperty(): String {
-        val escapedVersionName = versionName.replace(":", ".").replace("_", ".").replace("-", ".")
+        val escapedVersionName = PluginConfig.escapeVersionName(versionName)
         val pluginName = escapedVersionName.substringBeforeLast(".gradle.plugin", "")
         val key = when {
             pluginName.isNotBlank() -> "plugin.$pluginName"

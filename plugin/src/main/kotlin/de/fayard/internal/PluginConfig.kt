@@ -20,12 +20,17 @@ object PluginConfig {
     const val REFRESH_VERSIONS = "refreshVersions"
     const val BUILD_SRC_VERSIONS = EXTENSION_NAME
 
+    @JvmStatic
     fun isNonStable(version: String): Boolean {
         val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
         val regex = "^[0-9,.v-]+$".toRegex()
         val isStable = stableKeyword || regex.matches(version)
         return isStable.not()
     }
+
+    @JvmStatic
+    fun escapeVersionName(name: String): String =
+        name.replace(":", ".").replace("_", ".").replace("-", ".")
 
     const val DEFAULT_LIBS = "Libs"
     const val DEFAULT_VERSIONS = "Versions"
