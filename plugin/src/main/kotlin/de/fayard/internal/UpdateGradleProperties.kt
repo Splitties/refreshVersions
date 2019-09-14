@@ -1,50 +1,35 @@
 package de.fayard.internal
 
 import de.fayard.BuildSrcVersionsExtension
-import de.fayard.internal.PluginConfig.VERSIONS_INFORMATION_START
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Configuration
-import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
-import org.gradle.kotlin.dsl.withType
 
 data class UpdateGradleProperties(
     val extension: BuildSrcVersionsExtension,
     val dependencies: List<Dependency>
 ) {
 
-    fun generateProjectProperties(project: Project) {
-        val dependencies: List<DefaultExternalModuleDependency> = project.allprojects.flatMap {
-            val classpath: Configuration = it.buildscript.configurations.named("classpath").get()
-            classpath.allDependencies.withType()
+    fun generateVersionProperties(project: Project, dependencies: List<Dependency>) = with(UpdateVersionsOnly) {
+        val dependenciesLines = dependencies
+            .sortedBy { d -> d.versionName.contains("gradle_plugin").not() }
+            .map { d -> d.asGradleProperty() }
+
+        val newLines = with(PluginConfig) {
+            REFRESH_VERSIONS_START + dependenciesLines + REFRESH_VERSIONS_END
         }
-
-        val sortedDependencies = dependencies
-            .sortedBeautifullyBy { it.group }
-            .distinctBy { it.group }
-
-        val newLines = PluginConfig.PLUGIN_NFORMATION_START +
-            sortedDependencies.map { it -> "plugin.${it.group}=${it.version}" } +
-            PluginConfig.PLUGIN_INFORMATION_END
 
         updateGradleProperties(
             project = project,
             newLines = newLines,
-            removeIf = { line ->
-                line.startsWith("plugin.") || line in PluginConfig.PLUGIN_NFORMATION_START + PluginConfig.PLUGIN_INFORMATION_END
-            })
+            removeIf = { line -> line.wasGeneratedByPlugin() }
+        )
     }
 
-    fun generateVersionProperties(project: Project, dependencies: List<Dependency>) {
-        val newLines = VERSIONS_INFORMATION_START + with(UpdateVersionsOnly) {
-            dependencies.map { d: Dependency -> d.asGradleProperty() }
-        }
-
-        updateGradleProperties(
-            project = project,
-            newLines = newLines,
-            removeIf = { line ->
-                line.startsWith("version.") || line in  VERSIONS_INFORMATION_START || line.contains("available=")
-            })
+    fun String.wasGeneratedByPlugin(): Boolean = when {
+        startsWith("version.") -> true
+        startsWith("plugin.") -> true
+        contains("# available=") -> true
+        this in PluginConfig.ALL_GRADLE_PROPERTIES_LINES -> true
+        else -> false
     }
 }
 

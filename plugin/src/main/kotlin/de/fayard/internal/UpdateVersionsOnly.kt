@@ -11,14 +11,19 @@ object UpdateVersionsOnly {
     const val newline = "\n"
 
     fun Dependency.asGradleProperty(): String {
-        val key = escapeName("version.${versionName}").replace("_", ".") + "="
+        val escapedVersionName = versionName.replace(":", ".").replace("_", ".").replace("-", ".")
+        val pluginName = escapedVersionName.substringBeforeLast(".gradle.plugin", "")
+        val key = when {
+            pluginName.isNotBlank() -> "plugin.$pluginName"
+            else -> "version.${escapedVersionName}"
+        }
         val commentPrefix = " available="
-        val spacing = PluginConfig.spaces(key.length - commentPrefix.length - 1)
+        val spacing = PluginConfig.spaces(key.length - commentPrefix.length)
         val available = when (val v = newerVersion()) {
             null -> ""
             else -> "\n$spacing#$commentPrefix$v"
         }
-        return "$key$version$available"
+        return "$key=$version$available"
     }
 
     fun parseBuildFileOrNew(versionsOnlyFile: File?, versionsOnlyMode: VersionsOnlyMode, fromDir: File): Pair<File, SingleModeResult> = when {

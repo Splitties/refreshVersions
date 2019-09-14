@@ -4,7 +4,7 @@ pluginManagement {
         gradlePluginPortal()
     }
     resolutionStrategy.eachPlugin {
-        val key = "plugin.${requested.id.id}"
+        val key = "plugin.${requested.id.id}".replace("-", ".")
         if (extra.has(key)) {
             val version = extra.get(key) as String
             //println("Plugins: useVersion($version) for $key")

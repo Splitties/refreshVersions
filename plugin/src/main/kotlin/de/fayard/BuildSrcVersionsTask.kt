@@ -99,10 +99,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
         val updateGradleProperties = UpdateGradleProperties(extension, parsedDependencies)
 
-        if (PluginConfig.supportSettingPluginVersions()) {
-            updateGradleProperties.generateProjectProperties(project)
-        }
-
         val versionsOnlyMode = when(val mode = extension.versionsOnlyMode) {
             null, KOTLIN_OBJECT -> return
             else -> mode
@@ -121,12 +117,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
             val projectUseKotlin = project.file("build.gradle.kts").exists()
             regenerateBuildFile(file, versionsOnlyMode, dependencies, projectUseKotlin)
             if (file != null) OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
-        }
-    }
-
-    fun lookAtGitDiff() {
-        if (update) {
-            logger.warn("!! Versions Updated !! Have a look at the git diff")
         }
     }
 
