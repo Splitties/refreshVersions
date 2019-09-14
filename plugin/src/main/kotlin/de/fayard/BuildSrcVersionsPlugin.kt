@@ -7,6 +7,7 @@ import de.fayard.internal.PluginConfig.escapeVersionName
 import de.fayard.internal.PluginConfig.isNonStable
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.ModuleVersionSelector
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.extra
@@ -45,32 +46,34 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
 }
 
 fun Project.useVersionsFromGradleProperties() {
-    val extra = this.extra.properties
-    println("extra=$extra")
+    val resolutionStrategyConfig = project.findProperty("resolutionStrategyConfig") as? String
+    if (resolutionStrategyConfig == "false") return
     allprojects {
-        val projectName = name
-        configurations.all {
-            val configurationName = name
-            println("Resolving dependency $group:$name in project=$projectName")
-            if (name.contains("copy").not()) {
-                resolutionStrategy.eachDependency {
-                    println("Resolving dependency $group:$name in project=$projectName and configuration=$configurationName")
-                    val gradleProperties = listOf(
-                        escapeVersionName("version.$group.$name"),
-                        escapeVersionName("version.$group"),
-                        escapeVersionName("version.$name")
-                    )
-                    val versionFromGradleProperties: String = gradleProperties
-                        .firstOrNull { key -> key in extra }
-                        ?.let { key -> extra[key] as String }
-                        ?: return@eachDependency
-                    println("useVersion($versionFromGradleProperties) for $group:$name")
-                    useVersion(versionFromGradleProperties)
+        val project: Project = this
+        @Suppress("UNCHECKED_CAST")
+        val properties = project.extra.properties
+            .filterKeys { it.startsWith("version.") } as Map<String, String>
+        project.configurations.all {
+            val configurationName = this.name
+            if (configurationName.contains("copy")) return@all
+            resolutionStrategy {
+                eachDependency {
+                    val candidate: ModuleVersionSelector = this.requested
+                    val gradleProperty = listOf(
+                        escapeVersionName("version.${candidate.group}.${candidate.name}"),
+                        escapeVersionName("version.${candidate.group}"),
+                        escapeVersionName("version.${candidate.name}")
+                    ).firstOrNull { it in properties } ?: return@eachDependency
+                    val message =
+                        "ResolutionStrategy for configuration=$configurationName selected version=${properties[gradleProperty]} from property=$gradleProperty with for dependency=${candidate.group}:${candidate.name}"
+                    if (resolutionStrategyConfig in listOf("debug", "verbose")) println(message)
+                    useVersion(properties[gradleProperty] ?: error(message))
                 }
             }
         }
     }
 }
+
 
 fun DependencyUpdatesTask.configureBenManesVersions() {
     rejectVersionIf { isNonStable(candidate.version) }

@@ -22,13 +22,10 @@ object Libs {
             "com.gradle.build-scan:com.gradle.build-scan.gradle.plugin:" +
             Versions.com_gradle_build_scan_gradle_plugin
 
-    /**
-     * https://github.com/google/guava
-     */
     const val guava: String = "com.google.guava:guava:" + Versions.guava
 
     /**
-     * https://github.com/google/guice
+     * http://code.google.com/p/google-guice/
      */
     const val guice: String = "com.google.inject:guice:" + Versions.guice
 }

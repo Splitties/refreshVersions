@@ -29,6 +29,10 @@ tasks.register("publishPlugins") {
     dependsOn(PLUGIN.task(":publishPlugins"))
 }
 
+tasks.register<DefaultTask>("hello") {
+    group = "Custom"
+}
+
 tasks.register("pluginTests") {
     group = "Custom"
     description = "Run plugin unit tests"

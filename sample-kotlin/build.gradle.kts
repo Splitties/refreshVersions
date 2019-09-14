@@ -8,6 +8,10 @@ plugins {
 
 group = "de.fayard"
 
+
+tasks.register<DefaultTask>("hello") {
+    group = "Custom"
+}
 repositories {
     maven {
         setUrl("../plugin/src/test/resources/maven")

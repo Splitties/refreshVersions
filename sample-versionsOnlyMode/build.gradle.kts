@@ -38,6 +38,10 @@ tasks.register<Copy>("copyReport") {
     into("build/dependencyUpdates")
 }
 
+tasks.register<DefaultTask>("hello") {
+    group = "Custom"
+}
+
 VersionsOnlyMode.values().forEach { mode ->
     if (mode == VersionsOnlyMode.GRADLE_PROPERTIES) {
         tasks.register<DefaultTask>(mode.name)
