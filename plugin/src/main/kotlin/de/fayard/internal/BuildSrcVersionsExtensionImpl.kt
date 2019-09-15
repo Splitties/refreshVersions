@@ -13,7 +13,6 @@ internal open class BuildSrcVersionsExtensionImpl(
 ) : BuildSrcVersionsExtension, java.io.Serializable {
     override fun alwaysUpdateVersions() {
         this.alwaysUpdateVersions = true
-        println("After alwaysUpdateVersions, this=$this")
     }
 
     var useFqqnFor: List<String> = emptyList()

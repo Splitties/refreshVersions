@@ -131,7 +131,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
     }
 
     private val parsedDependencies: List<Dependency> by lazy {
-        println("TasK: update=$update extension=${extension()}")
         val useFdqnByDefault = extension().useFqqnFor.map { PluginConfig.escapeVersionsKt(it) }
         parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
             .map { d -> d.maybeUpdate(update) }
