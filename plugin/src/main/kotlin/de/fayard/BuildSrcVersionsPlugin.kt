@@ -3,11 +3,12 @@ package de.fayard
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import de.fayard.internal.BuildSrcVersionsExtensionImpl
 import de.fayard.internal.PluginConfig
-import de.fayard.internal.PluginConfig.escapeVersionName
+import de.fayard.internal.PluginConfig.escapeGradleProperty
 import de.fayard.internal.PluginConfig.isNonStable
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ModuleVersionSelector
+import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.extra
@@ -17,7 +18,6 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         check(project == project.rootProject) { "ERROR: plugins de.fayard.buildSrcVersions must be applied to the root build.gradle(.kts)" }
-        project.tasks.removeIf { it.name == PluginConfig.DEPENDENCY_UPDATES }
         project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
         project.configure()
         project.useVersionsFromGradleProperties()
@@ -27,7 +27,11 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
         extensions.create(BuildSrcVersionsExtension::class, EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
 
         if (PluginConfig.supportsTaskAvoidance()) {
-            val provider = tasks.named(DEPENDENCY_UPDATES, DependencyUpdatesTask::class.java)
+            val provider: TaskProvider<DependencyUpdatesTask> = when {
+                tasks.findByPath(DEPENDENCY_UPDATES_PATH) == null -> tasks.register(DEPENDENCY_UPDATES_PATH, DependencyUpdatesTask::class.java)
+                else -> tasks.named(DEPENDENCY_UPDATES, DependencyUpdatesTask::class.java)
+            }
+
             configureGradleVersions = { operation -> provider.configure(operation) }
             configureGradleVersions(DependencyUpdatesTask::configureBenManesVersions)
 
@@ -60,9 +64,9 @@ fun Project.useVersionsFromGradleProperties() {
                 eachDependency {
                     val candidate: ModuleVersionSelector = this.requested
                     val gradleProperty = listOf(
-                        escapeVersionName("version.${candidate.group}.${candidate.name}"),
-                        escapeVersionName("version.${candidate.group}"),
-                        escapeVersionName("version.${candidate.name}")
+                        escapeGradleProperty("version.${candidate.group}.${candidate.name}"),
+                        escapeGradleProperty("version.${candidate.group}"),
+                        escapeGradleProperty("version.${candidate.name}")
                     ).firstOrNull { it in properties } ?: return@eachDependency
                     val message =
                         "ResolutionStrategy for configuration=$configurationName selected version=${properties[gradleProperty]} from property=$gradleProperty with for dependency=${candidate.group}:${candidate.name}"

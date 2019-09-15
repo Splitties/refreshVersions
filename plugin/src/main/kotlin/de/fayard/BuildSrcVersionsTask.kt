@@ -11,7 +11,6 @@ import de.fayard.internal.OutputFile
 import de.fayard.internal.PluginConfig
 import de.fayard.internal.UpdateGradleProperties
 import de.fayard.internal.UpdateVersionsOnly.regenerateBuildFile
-import de.fayard.internal.escapeName
 import de.fayard.internal.kotlinpoet
 import de.fayard.internal.parseGraph
 import de.fayard.internal.sortedBeautifullyBy
@@ -103,7 +102,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             else -> mode
         }
 
-        val dependencies = parsedDependencies
+        val dependencies = (parsedDependencies + PluginConfig.gradleVersionsPlugin)
             .sortedBeautifullyBy { it.versionName }
             .distinctBy { it.versionName }
 
@@ -137,7 +136,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
     }
 
     private val parsedDependencies: List<Dependency> by lazy {
-        val useFdqnByDefault = extension().useFqqnFor.map(::escapeName)
+        val useFdqnByDefault = extension().useFqqnFor.map { PluginConfig.escapeVersionsKt(it) }
         parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
             .map { d -> d.maybeUpdate(update) }
     }

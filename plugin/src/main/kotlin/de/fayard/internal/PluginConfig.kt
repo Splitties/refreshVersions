@@ -10,10 +10,12 @@ import java.io.File
 
 object PluginConfig {
 
+
     const val currentVersion = "0.6.0" // plugin.de.fayard.buildSrcVersions
 
     const val PLUGIN_ID = "de.fayard.buildSrcVersions"
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
+    const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.25.0" // Sync with plugin/build.gradle.kts
     const val EXTENSION_NAME = "buildSrcVersions"
     const val DEPENDENCY_UPDATES = "dependencyUpdates"
     const val DEPENDENCY_UPDATES_PATH = ":$DEPENDENCY_UPDATES"
@@ -29,8 +31,19 @@ object PluginConfig {
     }
 
     @JvmStatic
-    fun escapeVersionName(name: String): String =
+    fun escapeGradleProperty(name: String): String =
         name.replace(":", ".").replace("_", ".").replace("-", ".")
+
+    @JvmStatic
+    fun escapeVersionsKt(name: String): String {
+        val escapedChars = listOf('-', '.', ':')
+        return buildString {
+            for (c in name) {
+                append(if (c in escapedChars) '_' else c.toLowerCase())
+            }
+        }
+    }
+
 
     const val DEFAULT_LIBS = "Libs"
     const val DEFAULT_VERSIONS = "Versions"
@@ -152,6 +165,15 @@ object PluginConfig {
             }
             toString()
         }
+
+
+    val gradleVersionsPlugin = Dependency(
+        group = "com.github.ben-manes",
+        name = "gradle-versions-plugin",
+        version = GRADLE_VERSIONS_PLUGIN_VERSION,
+        versionName = escapeVersionsKt("$GRADLE_VERSIONS_PLUGIN_ID.gradle.plugin"),
+        available = null
+    )
 
     lateinit var configureGradleVersions: (DependencyUpdatesTask.() -> Unit) -> Unit
 
