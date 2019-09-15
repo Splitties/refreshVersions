@@ -27,8 +27,10 @@ dependencies {
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
+
+// How to update Gradle itself? https://github.com/jmfayard/buildSrcVersions/issues/19
 tasks.withType<Wrapper> {
-    gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"
+    gradleVersion = Versions.gradleLatestVersion
     distributionType = Wrapper.DistributionType.ALL
 }
 

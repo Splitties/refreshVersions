@@ -102,7 +102,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             else -> mode
         }
 
-        val dependencies = (parsedDependencies + PluginConfig.gradleVersionsPlugin)
+        val dependencies = (parsedDependencies + PluginConfig.gradleVersionsPlugin + PluginConfig.gradleLatestVersion(dependencyGraph))
             .sortedBeautifullyBy { it.versionName }
             .distinctBy { it.versionName }
 

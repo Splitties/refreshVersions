@@ -41,8 +41,8 @@ buildSrcVersions {
     }
 }
 wrapper {
-    gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"
     distributionType = Wrapper.DistributionType.ALL
+    gradleVersion = findProperty("gradleLatestVersion") ?: gradle.gradleVersion
 }
 
 buildScan {

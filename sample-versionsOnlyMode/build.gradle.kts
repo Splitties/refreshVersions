@@ -70,3 +70,9 @@ buildScan {
     setTermsOfServiceUrl("https://gradle.com/terms-of-service")
     setTermsOfServiceAgree("yes")
 }
+
+// How to update Gradle itself? https://github.com/jmfayard/buildSrcVersions/issues/19
+tasks.withType<Wrapper> {
+    gradleVersion = findProperty("gradleLatestVersion") as? String ?: gradle.gradleVersion
+    distributionType = Wrapper.DistributionType.ALL
+}
