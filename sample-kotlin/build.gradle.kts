@@ -41,6 +41,7 @@ tasks.withType<Wrapper> {
 }
 
 buildSrcVersions {
+    // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
     alwaysUpdateVersions()
     useFqdnFor("dependency")
     renameLibs = "Libs"
