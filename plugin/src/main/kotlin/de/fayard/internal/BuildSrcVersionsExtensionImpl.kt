@@ -1,8 +1,8 @@
-package de.fayard
+package de.fayard.internal
 
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentFilter
-import org.gradle.kotlin.dsl.withType
+import de.fayard.BuildSrcVersionsExtension
+import de.fayard.VersionsOnlyMode
 
 internal open class BuildSrcVersionsExtensionImpl(
     override var renameLibs: String = PluginConfig.DEFAULT_LIBS,
@@ -11,7 +11,12 @@ internal open class BuildSrcVersionsExtensionImpl(
     override var versionsOnlyMode: VersionsOnlyMode? = null,
     override var versionsOnlyFile: String? = null
 ) : BuildSrcVersionsExtension, java.io.Serializable {
+    override fun alwaysUpdateVersions() {
+        this.alwaysUpdateVersions = true
+    }
+
     var useFqqnFor: List<String> = emptyList()
+    var alwaysUpdateVersions = false
 
     // Use @Transient for fields that should not be present in toString()
     override fun toString(): String = PluginConfig.extensionAdapter.toJson(this)
@@ -22,23 +27,13 @@ internal open class BuildSrcVersionsExtensionImpl(
         }
     }
 
+    override fun isNonStable(version: String): Boolean {
+        return PluginConfig.isNonStable(version)
+    }
+
     override fun useFqdnFor(vararg dependencyName: String) {
         useFqqnFor = dependencyName.toList()
     }
-
-    override fun rejectedVersionKeywords(vararg keyword: String) {
-        println("Warning: rejectedVersionKeywords is deprecated, see ${PluginConfig.issue53PluginConfiguration}")
-    }
-
-    override fun useFdqnFor(vararg dependencyName: String) {
-        println("Warning: useFdqnFor is deprecated, use useFqqnFor() instead. ${PluginConfig.issue53PluginConfiguration}")
-        useFqdnFor(*dependencyName)
-    }
-
-    @Transient
-    override var useFdqnFor: MutableList<String> = mutableListOf()
-    @Transient
-    override var rejectedVersionKeywords: MutableList<String> = mutableListOf()
 
     companion object {
         private const val serialVersionUID = 20180617104400L

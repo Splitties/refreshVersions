@@ -1,28 +1,36 @@
-package de.fayard
+package de.fayard.internal
 
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.asClassName
+import de.fayard.BuildSrcVersionsExtension
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
 
 fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension: BuildSrcVersionsExtension): KotlinPoetry {
 
+    val gradleVersion = constStringProperty(
+        PluginConfig.GRADLE_LATEST_VERSION,
+        gradleConfig.current.version,
+        CodeBlock.of(PluginConfig.gradleKdoc(gradleConfig.running.version))
+    )
+
     val versionsProperties: List<PropertySpec> = versions
         .distinctBy { it.versionName }
-        .map(Dependency::generateVersionProperty)
+        .map(Dependency::generateVersionProperty) + gradleVersion
 
     val libsProperties: List<PropertySpec> = versions
         .distinctBy { it.escapedName }
         .map { it.generateLibsProperty(extension) }
 
-    val gradleProperties: List<PropertySpec> = listOf(
-        constStringProperty(PluginConfig.GRADLE_LATEST_VERSION, gradleConfig.current.version, CodeBlock.of(PluginConfig.GRADLE_KDOC)),
-        constStringProperty(PluginConfig.GRADLE_CURRENT_VERSION, gradleConfig.running.version)
-    )
-
     val Versions: TypeSpec = TypeSpec.objectBuilder(extension.renameVersions)
         .addKdoc(PluginConfig.KDOC_VERSIONS)
-        .addProperties(versionsProperties + gradleProperties)
+        .addProperties(versionsProperties)
         .build()
 
 
@@ -82,11 +90,9 @@ fun Dependency.versionInformation(): String {
         newerVersion == null -> ""
         else -> """ // available: "$newerVersion""""
     }
-    return if (comment.length + versionName.length + version.length > 70) {
-            '\n' + comment
-        } else {
-            comment
-        }
+    val addNewLine = comment.length + versionName.length + version.length > 70
+
+    return if (addNewLine) "\n$comment" else comment
 }
 
 fun Dependency.newerVersion(): String?  =
@@ -127,8 +133,8 @@ fun parseGraph(
 
     val map = mutableMapOf<String, Dependency>()
     for (d: Dependency in dependencies) {
-        val key = escapeName(d.name)
-        val fdqnName = d.fdqnName()
+        val key = PluginConfig.escapeVersionsKt(d.name)
+        val fdqnName = d.fqdnName()
 
 
         if (key in useFdqnByDefault) {
@@ -138,7 +144,7 @@ fun parseGraph(
 
             // also use FDQN for the dependency that conflicts with this one
             val other = map[key]!!
-            other.escapedName = other.fdqnName()
+            other.escapedName = other.fqdnName()
         } else {
             map[key] = d
             d.escapedName = key
@@ -149,7 +155,7 @@ fun parseGraph(
         .sortedBeautifullyBy(exceptIf = OutputFile.VERSIONS.existed) { it.versionName }
 }
 
-fun Dependency.fdqnName(): String = escapeName("${group}_${name}")
+fun Dependency.fqdnName(): String = PluginConfig.escapeVersionsKt("${group}_${name}")
 
 
 fun List<Dependency>.orderDependencies(): List<Dependency> {
@@ -162,7 +168,7 @@ fun List<Dependency>.findCommonVersions(): List<Dependency> {
         val groupTogether = deps.size > 1  && deps.map { it.version }.distinct().size == 1
 
         for (d in deps) {
-            d.versionName = if (groupTogether) escapeName(d.group) else d.escapedName
+            d.versionName = if (groupTogether) PluginConfig.escapeVersionsKt(d.group) else d.escapedName
         }
     }
     return this
@@ -200,11 +206,3 @@ fun constStringProperty(name: String, initializer: String, kdoc: CodeBlock? = nu
     constStringProperty(name, CodeBlock.of("%S", initializer), kdoc)
 
 
-fun escapeName(name: String): String {
-    val escapedChars = listOf('-', '.', ':')
-    return buildString {
-        for (c in name) {
-            append(if (c in escapedChars) '_' else c.toLowerCase())
-        }
-    }
-}

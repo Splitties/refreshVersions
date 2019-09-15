@@ -1,7 +1,6 @@
-package de.fayard
+package de.fayard.internal
 
 import com.squareup.kotlinpoet.FileSpec
-import java.io.File
 
 data class KotlinPoetry(
     val Libs: FileSpec,
@@ -36,7 +35,16 @@ data class Dependency(
     var escapedName: String = "",
     var versionName: String = "",
     val available: AvailableDependency? = null
-)
+) {
+    fun maybeUpdate(update: Boolean): Dependency {
+        val newerVersion = newerVersion()
+        return when {
+            update.not() -> this
+            newerVersion == null -> this
+            else -> this.copy(available = null, version = newerVersion)
+        }
+    }
+}
 
 data class GradleConfig(
     val current: GradleVersion,
@@ -65,8 +73,10 @@ data class SingleModeResult(
     val endOfBlock: Int,
     val indentation: String
 ) {
+
     companion object {
-        val DEFAULT = SingleModeResult(-1, -1, PluginConfig.DEFAULT_INDENT)
+        val NEW_FILE = SingleModeResult(0, 0, "")
+        val BLOC_NOT_FOUND = SingleModeResult(-1, -1, PluginConfig.DEFAULT_INDENT)
     }
 }
 

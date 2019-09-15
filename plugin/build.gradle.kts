@@ -1,22 +1,19 @@
-import de.fayard.VersionsOnlyMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.buildSrcVersions") version "0.5.0"
-    id("com.gradle.plugin-publish") version "0.10.0"
+    id("de.fayard.buildSrcVersions") version ("0.6.1") // plugin.de.fayard.buildSrcVersions
+
+    id("com.gradle.plugin-publish")
     `java-gradle-plugin`
     `maven-publish`
     `kotlin-dsl`
     `build-scan`
 }
 
-group = "de.fayard"
-version = "0.5.0"
 
-buildSrcVersions {
-    versionsOnlyMode = VersionsOnlyMode.GRADLE_PROPERTIES
-    versionsOnlyFile = "gradle.properties"
-}
+version = "0.6.1" // plugin.de.fayard.buildSrcVersions
+group = "de.fayard"
+
 
 gradlePlugin {
     plugins {
@@ -27,6 +24,11 @@ gradlePlugin {
             implementationClass = "de.fayard.BuildSrcVersionsPlugin"
         }
     }
+}
+
+tasks.register<DefaultTask>("hello") {
+    group = "Custom"
+    description = "Minimal task that do nothing. Useful to debug a failing build"
 }
 
 publishing {
@@ -50,7 +52,9 @@ pluginBundle {
 dependencies {
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
 
+    // SYNC WITH plugin/src/main/kotlin/de/fayard/internal/PluginConfig.kt
     implementation("com.github.ben-manes:gradle-versions-plugin:0.25.0")
+
     implementation("com.squareup.okio:okio:2.1.0")
     implementation( "com.squareup.moshi:moshi:1.7.0")
     implementation("com.squareup:kotlinpoet:1.3.0")

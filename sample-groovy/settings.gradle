@@ -3,10 +3,13 @@ pluginManagement {
         mavenLocal()
         gradlePluginPortal()
     }
+    def resolutionStrategyConfig = ext.find("resolutionStrategyConfig")
     resolutionStrategy.eachPlugin {
-        def key = "plugin.${requested.id.id}"
-        if (settings.ext.has(key)) {
-            useVersion(settings.ext.get(key) as String)
+        def property = "plugin.${requested.id.id}".replaceAll("-", ".")
+        if (settings.ext.has(property) && resolutionStrategyConfig != "false") {
+            def version = settings.ext.get(property)
+            if (resolutionStrategyConfig == "verbose") print("ResolutionStrategy found version=$version from property=$property")
+            useVersion(version)
         }
     }
 }

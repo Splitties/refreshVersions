@@ -1,4 +1,4 @@
-package de.fayard
+package de.fayard.internal
 
 import java.io.File
 

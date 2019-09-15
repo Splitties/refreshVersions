@@ -1,5 +1,6 @@
-package de.fayard
+package de.fayard.internal
 
+import de.fayard.BuildSrcVersionsExtension
 import org.gradle.api.Project
 
 internal enum class OutputFile(var path: String, var existed: Boolean = false, val alternativePath: String? = null) {
@@ -7,12 +8,17 @@ internal enum class OutputFile(var path: String, var existed: Boolean = false, v
     BUILD("buildSrc/build.gradle.kts", alternativePath = "buildSrc/build.gradle"),
     GIT_IGNORE("buildSrc/.gitignore"),
     LIBS("buildSrc/src/main/kotlin/Libs.kt"),
-    VERSIONS("buildSrc/src/main/kotlin/Versions.kt");
+    VERSIONS("buildSrc/src/main/kotlin/Versions.kt"),
+    GRADLE_PROPERTIES("gradle.properties");
 
     fun fileExists(project: Project) = when {
         project.file(path).exists() -> true
         alternativePath != null -> project.file(alternativePath).exists()
         else -> false
+    }
+
+    fun logFileWasModified() {
+        logFileWasModified(path, existed)
     }
 
     companion object {

@@ -1,6 +1,6 @@
 import de.fayard.BuildSrcVersionsTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import de.fayard.VersionsOnlyMode
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.lovedev.greeting.kotlin")
@@ -11,6 +11,10 @@ plugins {
     `build-scan`
 }
 group = "de.fayard"
+
+buildSrcVersions {
+    // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
+}
 
 repositories {
     maven {
@@ -38,7 +42,16 @@ tasks.register<Copy>("copyReport") {
     into("build/dependencyUpdates")
 }
 
+tasks.register<DefaultTask>("hello") {
+    group = "Custom"
+}
+
 VersionsOnlyMode.values().forEach { mode ->
+    if (mode == VersionsOnlyMode.GRADLE_PROPERTIES) {
+        tasks.register<DefaultTask>(mode.name)
+        return@forEach
+    }
+
     tasks.register<BuildSrcVersionsTask>(mode.name) {
         description = "buildSrcVersion - $mode"
         group = "Custom"
@@ -60,4 +73,10 @@ tasks.register<DefaultTask>("checkAll") {
 buildScan {
     setTermsOfServiceUrl("https://gradle.com/terms-of-service")
     setTermsOfServiceAgree("yes")
+}
+
+// How to update Gradle itself? https://github.com/jmfayard/buildSrcVersions/issues/19
+tasks.withType<Wrapper> {
+    gradleVersion = findProperty("gradleLatestVersion") as? String ?: gradle.gradleVersion
+    distributionType = Wrapper.DistributionType.ALL
 }

@@ -1,137 +1,50 @@
 package de.fayard
 
+import de.fayard.VersionsOnlyMode.GRADLE_PROPERTIES
+import de.fayard.VersionsOnlyMode.KOTLIN_OBJECT
+import de.fayard.internal.BuildSrcVersionsExtensionImpl
+import de.fayard.internal.Dependency
+import de.fayard.internal.DependencyGraph
+import de.fayard.internal.EditorConfig
+import de.fayard.internal.KotlinPoetry
+import de.fayard.internal.OutputFile
+import de.fayard.internal.PluginConfig
+import de.fayard.internal.UpdateGradleProperties
+import de.fayard.internal.UpdateVersionsOnly.regenerateBuildFile
+import de.fayard.internal.kotlinpoet
+import de.fayard.internal.parseGraph
+import de.fayard.internal.sortedBeautifullyBy
 import org.gradle.api.Action
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
-import org.gradle.api.artifacts.Configuration
-import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.options.Option
 import org.gradle.kotlin.dsl.getByType
-import org.gradle.kotlin.dsl.withType
+import java.io.File
 
 @Suppress("UnstableApiUsage")
 open class BuildSrcVersionsTask : DefaultTask() {
 
-    init {
-        group = "Help"
-        description = "Update buildSrc/src/main/kotlin/{Versions.kt,Libs.kt}"
-        dependsOn(":dependencyUpdates")
-        outputs.upToDateWhen { false }
-    }
-
-    fun configure(action: Action<BuildSrcVersionsExtension>) {
-        this.extension = BuildSrcVersionsExtensionImpl()
-        action.execute(this.extension!!)
-    }
-
-    @Input @Optional @Transient
-    var extension: BuildSrcVersionsExtension? = null
+    @Input
+    @Option(description = "Update all versions, I will check git diff afterwards")
+    var update: Boolean = false
 
     @TaskAction
-    fun taskAction() {
-        generateProjectProperties()
+    fun initializeBuildSrc() {
+        val extension: BuildSrcVersionsExtensionImpl = extension()
+        if (extension.shouldInitializeBuildSrc().not()) return
 
-        val extension : BuildSrcVersionsExtension = extension ?: project.extensions.getByType()
-        if (extension.indent == PluginConfig.DEFAULT_INDENT) {
-            extension.indent = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin")) ?: "  "
-        }
-        println("""
-            |Plugin configuration: $extension
-            |See documentation at ${PluginConfig.issue53PluginConfiguration}
-            |
-        """.trimMargin())
-        OutputFile.configure(extension)
-
-        val jsonInput = project.file(PluginConfig.BENMANES_REPORT_PATH)
-
-        val dependencyGraph = PluginConfig.readGraphFromJsonFile(jsonInput)
-
-        val useFdqnByDefault = extension.useFdqnFor.map(::escapeName)
-
-        val dependencies: List<Dependency> = parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
-
-        val generatesAll = extension.versionsOnlyMode != VersionsOnlyMode.KOTLIN_OBJECT
-
-        if (generatesAll && extension.versionsOnlyMode != null) {
-            val gradleDeps = listOf(
-                Dependency(version = dependencyGraph.gradle.running.version, group = PluginConfig.GRADLE_CURRENT_VERSION, versionName = PluginConfig.GRADLE_CURRENT_VERSION),
-                Dependency(version = dependencyGraph.gradle.current.version, group = PluginConfig.GRADLE_LATEST_VERSION, versionName = PluginConfig.GRADLE_LATEST_VERSION)
-            )
-            onSingleActionMode(dependencies + gradleDeps, extension)
-            return
-        }
-
-        val outputDir = project.file(OutputFile.OUTPUTDIR.path)
-
-        if (generatesAll) {
-            checkIfFilesExistInitiallyAndCreateThem(project)
-        }
-
-        val kotlinPoetry: KotlinPoetry = kotlinpoet(dependencies, dependencyGraph.gradle, extension)
-
-        if (generatesAll) {
-            kotlinPoetry.Libs.writeTo(outputDir)
-            OutputFile.logFileWasModified(OutputFile.LIBS.path, OutputFile.LIBS.existed)
-        }
-
-        kotlinPoetry.Versions.writeTo(outputDir)
-        OutputFile.logFileWasModified(OutputFile.VERSIONS.path, OutputFile.VERSIONS.existed)
-
-        val file = extension.versionsOnlyFile?.let { project.file(it) }
-        if (file != null && generatesAll.not()) {
-            project.file(OutputFile.VERSIONS.path).renameTo(file)
-            OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
-        }
-    }
-
-    private fun generateProjectProperties() {
-        if (PluginConfig.supportSettingPluginVersions().not()) return
-        val dependencies: List<DefaultExternalModuleDependency> = project.allprojects.flatMap {
-            val classpath: Configuration = it.buildscript.configurations.named("classpath").get()
-            classpath.allDependencies.withType()
-        }
-        val sortedDependencies = dependencies
-            .sortedBeautifullyBy { it.group }
-            .distinctBy { it.group }
-
-        val file = project.file("gradle.properties")
-        if (!file.exists()) file.createNewFile()
-
-        val existingLines = file.readLines().filterNot {
-            it.startsWith("plugin.") || it in  PluginConfig.PLUGIN_NFORMATION_START + PluginConfig.PLUGIN_INFORMATION_END
-        }
-        val newLines = sortedDependencies.map { it ->
-            "plugin.${it.group}=${it.version}"
-        }
-        val newFileContent = PluginConfig.PLUGIN_NFORMATION_START + newLines + existingLines + PluginConfig.PLUGIN_INFORMATION_END
-        file.writeText(newFileContent.joinToString(separator = "\n"))
-    }
-
-
-    fun onSingleActionMode(dependencies: List<Dependency>, extension: BuildSrcVersionsExtension) {
-        val file = extension.versionsOnlyFile?.let { project.file(it) }
-        val projectUseKotlin = project.file("build.gradle.kts").exists()
-        regenerateBuildFile(file, extension, dependencies, projectUseKotlin)
-        if (file != null)  OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
-
-    }
-
-    fun checkIfFilesExistInitiallyAndCreateThem(project: Project) {
         project.file(OutputFile.OUTPUTDIR.path).also {
             if (it.isDirectory.not()) it.mkdirs()
         }
-
         for (output in OutputFile.values()) {
             output.existed = output.fileExists(project)
         }
-
         val initializationMap = mapOf(
             OutputFile.BUILD to PluginConfig.INITIAL_BUILD_GRADLE_KTS,
             OutputFile.GIT_IGNORE to PluginConfig.INITIAL_GITIGNORE
         )
-
         for ((outputFile, initialContent) in initializationMap) {
             if (outputFile.existed.not()) {
                 project.file(outputFile.path).writeText(initialContent)
@@ -140,5 +53,113 @@ open class BuildSrcVersionsTask : DefaultTask() {
         }
     }
 
+
+    @TaskAction
+    fun updateBuildSrc() {
+        val extension: BuildSrcVersionsExtensionImpl = extension()
+        val outputDir = project.file(OutputFile.OUTPUTDIR.path)
+        val shouldGenerateLibsKt = when(extension.versionsOnlyMode) {
+            null -> true
+            KOTLIN_OBJECT -> false
+            else -> return
+        }
+
+        val kotlinPoetry: KotlinPoetry = kotlinpoet(parsedDependencies, dependencyGraph.gradle, extension)
+
+        if (shouldGenerateLibsKt) {
+            kotlinPoetry.Libs.writeTo(outputDir)
+            OutputFile.logFileWasModified(OutputFile.LIBS.path, OutputFile.LIBS.existed)
+        }
+
+        kotlinPoetry.Versions.writeTo(outputDir)
+        OutputFile.logFileWasModified(OutputFile.VERSIONS.path, OutputFile.VERSIONS.existed)
+
+        val renamedVersionsKt: File? = when(extension.versionsOnlyMode to extension.versionsOnlyFile) {
+            null to null -> null
+            KOTLIN_OBJECT to null -> null
+            else -> project.file(extension.versionsOnlyFile!!)
+        }
+
+        if (renamedVersionsKt != null) {
+            project.file(OutputFile.VERSIONS.path).renameTo(renamedVersionsKt)
+            OutputFile.logFileWasModified(renamedVersionsKt.relativeTo(project.projectDir).path, existed = true)
+        }
+    }
+
+
+    @TaskAction
+    fun versionsOnlyMode() {
+        val extension: BuildSrcVersionsExtensionImpl = extension()
+        val updateGradleProperties = UpdateGradleProperties(extension, parsedDependencies)
+
+        val versionsOnlyMode = when(val mode = extension.versionsOnlyMode) {
+            null, KOTLIN_OBJECT -> return
+            else -> mode
+        }
+
+        val dependencies = (parsedDependencies + PluginConfig.gradleVersionsPlugin + PluginConfig.gradleLatestVersion(dependencyGraph))
+            .sortedBeautifullyBy { it.versionName }
+            .distinctBy { it.versionName }
+
+        if (versionsOnlyMode == GRADLE_PROPERTIES) {
+            updateGradleProperties.generateVersionProperties(project, dependencies)
+            OutputFile.GRADLE_PROPERTIES.logFileWasModified()
+
+        } else {
+            val file = extension.versionsOnlyFile?.let { project.file(it) }
+            val projectUseKotlin = project.file("build.gradle.kts").exists()
+            regenerateBuildFile(file, versionsOnlyMode, dependencies, projectUseKotlin)
+            if (file != null) OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
+        }
+    }
+
+    private val dependencyGraph: DependencyGraph by lazy {
+        val extension: BuildSrcVersionsExtensionImpl = extension()
+
+        println(
+            """
+                |Plugin configuration: $extension
+                |See documentation at ${PluginConfig.issue53PluginConfiguration}
+                |
+            """.trimMargin()
+        )
+        OutputFile.configure(extension)
+
+        val jsonInput = project.file(PluginConfig.BENMANES_REPORT_PATH)
+
+        return@lazy PluginConfig.readGraphFromJsonFile(jsonInput)
+    }
+
+    private val parsedDependencies: List<Dependency> by lazy {
+        val useFdqnByDefault = extension().useFqqnFor.map { PluginConfig.escapeVersionsKt(it) }
+        parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
+            .map { d -> d.maybeUpdate(update) }
+    }
+
+    @Input @Optional @Transient
+    private lateinit var _extension: BuildSrcVersionsExtensionImpl
+
+    fun configure(action: Action<BuildSrcVersionsExtension>) {
+        this._extension = project.extensions.getByType<BuildSrcVersionsExtension>() as BuildSrcVersionsExtensionImpl
+        action.execute(this._extension)
+    }
+
+    private fun extension(): BuildSrcVersionsExtensionImpl {
+        val extension: BuildSrcVersionsExtensionImpl = _extension
+        if (extension.indent == PluginConfig.DEFAULT_INDENT) {
+            extension.indent = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin")) ?: "  "
+        }
+        if (extension.alwaysUpdateVersions) {
+            update = true
+        }
+        return extension
+    }
+
+
+    fun BuildSrcVersionsExtension.shouldInitializeBuildSrc() = when(versionsOnlyMode) {
+        null -> true
+        KOTLIN_OBJECT -> false
+        else -> false
+    }
 
 }

@@ -3,11 +3,12 @@ pluginManagement {
         mavenLocal()
         gradlePluginPortal()
     }
+    val resolutionStrategyConfig: String? by extra
     resolutionStrategy.eachPlugin {
-        val key = "plugin.${requested.id.id}"
-        if (extra.has(key)) {
-            val version = extra.get(key) as String
-            println("Plugins: useVersion($version) for $key")
+        val property = "plugin.${requested.id.id}".replace("-", ".")
+        if (extra.has(property) && resolutionStrategyConfig != "false") {
+            val version = extra.get(property) as String
+            if (resolutionStrategyConfig == "verbose") println("ResolutionStrategy used version=$version from property=$property")
             useVersion(version)
         }
     }
