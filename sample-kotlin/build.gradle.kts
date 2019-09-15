@@ -19,10 +19,19 @@ repositories {
 dependencies {
     implementation("com.google.guava:guava:15.0")
     implementation("com.google.inject:guice:2.0")
+    implementation(kotlin("stdlib-jdk8"))
+}
+
+tasks.register("run", JavaExec::class.java) {
+    this.main = "de.fayard.GuavaTest"
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.withType(JavaExec::class.java) {
+    classpath = sourceSets["main"].runtimeClasspath
 }
 
 // How to update Gradle itself? https://github.com/jmfayard/buildSrcVersions/issues/19
@@ -51,4 +60,12 @@ buildScan {
 tasks.register<DefaultTask>("hello") {
     group = "Custom"
     description = "Minimal task that do nothing. Useful to debug a failing build"
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
