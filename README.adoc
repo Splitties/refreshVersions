@@ -34,25 +34,10 @@
 
 {badge_version} {badge_build} {badge_mit} {badge_issues} {badge_pr}
 
-The Gradle plugin `de.fayard.buildSrcVersions` it painless to manage your dependencies inside your IDE.
-It extracts all your dependencies and search for available dependencies updates.
+The Gradle plugin `de.fayard.buildSrcVersions` goal is to make it painless to manage your dependencies inside your IDE.
 
-It provides two tasks: `:refreshVersions` and `:buildSrcVersions`
-
-== The task `:refreshVersions`
-
-The task `:refreshVersions` was introduced in the version `0.6.0` of the plugin.
-
-It provides **just the versions and their available updates** and is a good solution for simple, single-module Gradle projects,
-while the task `:buildSrcVersions` is well suited for complex multi-module Gradle projects: Android, Kotlin multi-platform, ...
-
-The task `:refreshVersions` is described in great details at https://github.com/jmfayard/buildSrcVersions/issues/77
-
-
-== The task `:buildSrcVersions`
-
-[[img-carbon-Libs-Version]]
-image::carbon-Libs-Versions.png[title = "Gradle buildSrcVersions extracts all your dependencies and search for available dependencies updates. See link:{versions_kt}[`Versions.kt`^] and link:{libs_kt}[`Libs.kt`^]"]
+It does that by extracting all your dependencies, searching for available dependencies updates
+and generating Kotlin code, Groovy code or Gradle properties.
 
 == Design goals
 
@@ -60,7 +45,7 @@ image::carbon-Libs-Versions.png[title = "Gradle buildSrcVersions extracts all yo
 - **Be Lazy.** Use code generation to avoid writing tedious code manually. Find available updates automatically instead of googling them. The plugin should do the right thing by default, no configuration should be mandatory. Leverage IDE tooling support (auto-completion, ...).
 - **Be Humble.** Render to the programmer the things that are the programmer's. This include using the generated code and updating the dependencies.
 
-== Prerequisites
+== Requirements
 
 * Kotlin, JVM and Android projects.
 * Gradle 4.3+ and Gradle 5.0+
@@ -68,6 +53,30 @@ image::carbon-Libs-Versions.png[title = "Gradle buildSrcVersions extracts all yo
 ** for both `build.gradle` (Groovy) and `build.gradle.kts` (Kotlin) files.
 ** in IntelliJ IDEA 2018.03 and better
 ** in Android Studio 3.5 and better. It was broken in 3.3 and 3.4 due https://issuetracker.google.com/issues/123032843[bug #123032843:  IDE integration with the buildSrc^]
+
+
+The plugin `de.fayard.buildSrcVersions` provides two tasks: `:refreshVersions` and `:buildSrcVersions`
+
+== The task `:refreshVersions`
+
+The task `:refreshVersions` was introduced in the version `0.6.0` of the plugin.
+
+It provides **just the versions and their available updates** and is a good solution for simple, single-module Gradle projects.
+
+The task `:refreshVersions` is described in great details at https://github.com/jmfayard/buildSrcVersions/issues/77
+
+
+== The task `:buildSrcVersions`
+
+The task `:buildSrcVersions` is well suited for complex multi-module Gradle projects: Android, Kotlin multi-platform, ...
+
+It generates this kind of code inside the Gradle `buildSrc` module.
+
+See [What is the Gradle buildSrc module? #30](https://github.com/jmfayard/buildSrcVersions/issues/30)
+
+[[img-carbon-Libs-Version]]
+image::carbon-Libs-Versions.png[title = "Gradle buildSrcVersions extracts all your dependencies and search for available dependencies updates. See link:{versions_kt}[`Versions.kt`^] and link:{libs_kt}[`Libs.kt`^]"]
+
 
 
 == Installation
@@ -185,6 +194,7 @@ No configuration is required, but some things are configurable.
 The default configuration is:
 
 ```
+// See Plugin configuration at https://github.com/jmfayard/buildSrcVersions/issues/53
 buildSrcVersions {
     indent = "  "
     renameLibs = "Libs"
@@ -210,6 +220,10 @@ image::{image_faq}[title="FAQ",alt="IDE Integration", width="600", link="{issues
 == Changelog
 
 See {master}/CHANGELOG.md[CHANGELOG.md]
+
+If you migrate from an older version, two configuration options have been removed: `rejectedVersionKeywords` and `useFdqnFor`.
+
+See https://github.com/jmfayard/buildSrcVersions/issues/53:[#53 Plugin configuration]
 
 
 == Contributing
