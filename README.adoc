@@ -1,5 +1,5 @@
 //include::includes.adoc[]
-:plugin_version: 0.4.2
+:plugin_version: 0.6.0
 :repo: jmfayard/buildSrcVersions
 :branch: 26-buildSrcVersions
 :github: https://github.com/{repo}
@@ -16,7 +16,8 @@
 :issues: https://github.com/jmfayard/buildSrcVersions/issues
 :master: https://github.com/jmfayard/buildSrcVersions/blob/master
 :badge_mit: image:https://img.shields.io/github/license/mashape/apistatus.svg["GitHub",link="{github}/blob/master/LICENSE.txt"]
-:badge_version: image:https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/buildSrcVersions/maven-metadata.xml.svg?label=gradlePluginPortal["Maven Central",link="https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions"]
+:image_version: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/buildSrcVersions/de.fayard.buildSrcVersions.gradle.plugin/maven-metadata.xml.svg
+:badge_version: image:{image_version}?label=gradlePluginPortal["Maven Central",link="https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions"]
 :badge_issues: image:https://img.shields.io/github/issues/{repo}.svg["GitHub issues",link="{github}/issues"]
 :badge_pr:  image:https://img.shields.io/github/issues-pr/{repo}.svg["GitHub pull requests",link="{github}/pulls?utf8=%E2%9C%93&q=is%3Apr+"]
 :badge_build: image:https://img.shields.io/travis/com/{repo}/{branch}.svg["Travis (.org)",link="https://travis-ci.com/{repo}"]
@@ -29,12 +30,26 @@
 :imagesdir: doc
 
 
-= buildSrcVersions
+= de.fayard.buildSrcVersions
 
 {badge_version} {badge_build} {badge_mit} {badge_issues} {badge_pr}
 
-Gradle `buildSrcVersions` is a plugin that makes it painless to manage your dependencies inside your IDE.
+The Gradle plugin `de.fayard.buildSrcVersions` it painless to manage your dependencies inside your IDE.
 It extracts all your dependencies and search for available dependencies updates.
+
+It provides two tasks: `:refreshVersions` and `:buildSrcVersions`
+
+== The task `:refreshVersions`
+
+The task `:refreshVersions` was introduced in the version `0.6.0` of the plugin.
+
+It provides **just the versions and their available updates** and is a good solution for simple, single-module Gradle projects,
+while the task `:buildSrcVersions` is well suited for complex multi-module Gradle projects: Android, Kotlin multi-platform, ...
+
+The task `:refreshVersions` is described in great details at https://github.com/jmfayard/buildSrcVersions/issues/77
+
+
+== The task `:buildSrcVersions`
 
 [[img-carbon-Libs-Version]]
 image::carbon-Libs-Versions.png[title = "Gradle buildSrcVersions extracts all your dependencies and search for available dependencies updates. See link:{versions_kt}[`Versions.kt`^] and link:{libs_kt}[`Libs.kt`^]"]
