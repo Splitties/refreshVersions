@@ -3,7 +3,6 @@ package de.fayard
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import de.fayard.internal.BuildSrcVersionsExtensionImpl
 import de.fayard.internal.PluginConfig
-import de.fayard.internal.PluginConfig.escapeGradleProperty
 import de.fayard.internal.PluginConfig.isNonStable
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -63,11 +62,8 @@ fun Project.useVersionsFromGradleProperties() {
             resolutionStrategy {
                 eachDependency {
                     val candidate: ModuleVersionSelector = this.requested
-                    val gradleProperty = listOf(
-                        escapeGradleProperty("version.${candidate.group}.${candidate.name}"),
-                        escapeGradleProperty("version.${candidate.group}"),
-                        escapeGradleProperty("version.${candidate.name}")
-                    ).firstOrNull { it in properties } ?: return@eachDependency
+                    val gradleProperty = PluginConfig.considerGradleProperties(candidate.group, candidate.name)
+                        .firstOrNull { it in properties } ?: return@eachDependency
                     val message =
                         "ResolutionStrategy for configuration=$configurationName selected version=${properties[gradleProperty]} from property=$gradleProperty with for dependency=${candidate.group}:${candidate.name}"
                     if (resolutionStrategyConfig in listOf("debug", "verbose")) println(message)

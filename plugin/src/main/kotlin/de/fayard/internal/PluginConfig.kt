@@ -34,6 +34,24 @@ object PluginConfig {
         return isStable.not()
     }
 
+    /**
+     * Naming convention:
+     * Given a dependency like
+     *      "org.jetbrains.kotlin:kotlin-stdlib"
+     * the resolutionStrategy will pick the first of those
+     *      version.org.jetbrains.kotlin.kotlin.stdlib=1.3.50
+     *      version.org.jetbrains.kotlin=1.3.50
+     *      version.kotlin.stdlib=1.3.50
+     * Gradle properties can be set either in "gradle.properties" or from the command-line with
+     *      $ ./gradlew -Pversion.kotlin.stdlib=1.3.50
+     *  **/
+    fun considerGradleProperties(group: String, module: String): List<String> = listOf(
+        escapeGradleProperty("version.$group.$module"),
+        escapeGradleProperty("version.$module"),
+        escapeGradleProperty("version.$module")
+    )
+
+    /** Naming convention: replace [:-_] with "." **/
     @JvmStatic
     fun escapeGradleProperty(name: String): String =
         name.replace(":", ".").replace("_", ".").replace("-", ".")
