@@ -43,9 +43,9 @@ The `composite` module defines a number of custom tasks to simplify the workflow
 
 ```
 $ pwd
-/Users/jmfayard/try/buildSrcVersions/composite   
+buildSrcVersions/composite   
 
-$ ./gradlew tasks --group=Custom
+$ ./gradlew tasks --group=custom -q
 Custom tasks
 ------------
 checkAll - Run all checks
@@ -54,6 +54,8 @@ pluginTests - Run plugin unit tests
 publishLocally - Publish the plugin locally
 publishPlugins - Publishes this plugin to the Gradle Plugin portal.
 updateGradle - Update Gradle in all modules
+wrapper - Update Gradle with ./gradlew wrapper
+
 ```
 
 

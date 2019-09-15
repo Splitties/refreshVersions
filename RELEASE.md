@@ -1,5 +1,6 @@
 - Run task `:checkAll` and verify output
-- Check version in `plugin/build.gradle.kts`
+- Search in the whole project for: plugin.de.fayard.buildSrcVersions  
+- Update all versions`plugin/build.gradle.kts`
 - Run task `:publishPlugins` 
 - Check plugin portal https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions
 - Update CHANGELOG
