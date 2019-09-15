@@ -9,9 +9,6 @@ plugins {
 group = "de.fayard"
 
 
-tasks.register<DefaultTask>("hello") {
-    group = "Custom"
-}
 repositories {
     maven {
         setUrl("../plugin/src/test/resources/maven")
@@ -35,6 +32,7 @@ tasks.withType<Wrapper> {
 }
 
 buildSrcVersions {
+    alwaysUpdateVersions()
     useFqdnFor("dependency")
     renameLibs = "Libs"
     renameVersions = "Versions"
@@ -48,4 +46,9 @@ buildSrcVersions {
 buildScan {
     setTermsOfServiceUrl("https://gradle.com/terms-of-service")
     setTermsOfServiceAgree("yes")
+}
+
+tasks.register<DefaultTask>("hello") {
+    group = "Custom"
+    description = "Minimal task that do nothing. Useful to debug a failing build"
 }

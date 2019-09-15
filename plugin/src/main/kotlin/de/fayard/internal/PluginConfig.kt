@@ -23,6 +23,9 @@ object PluginConfig {
     const val REFRESH_VERSIONS = "refreshVersions"
     const val BUILD_SRC_VERSIONS = EXTENSION_NAME
 
+    /** There is no standard on how to name stable and unstable versions
+     * This version is a good starting point but you can define you rown
+     */
     @JvmStatic
     fun isNonStable(version: String): Boolean {
         val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }

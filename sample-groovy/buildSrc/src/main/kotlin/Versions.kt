@@ -12,8 +12,6 @@ import kotlin.String
 object Versions {
     const val com_gradle_build_scan_gradle_plugin: String = "2.4.2"
 
-    const val io_vertx_vertx_plugin_gradle_plugin: String = "0.3.1"
-
     /**
      * Current version: "5.6.2"
      * See issue 19: How to update Gradle itself?

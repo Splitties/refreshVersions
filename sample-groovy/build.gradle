@@ -1,6 +1,5 @@
 plugins {
     id 'de.fayard.buildSrcVersions'
-    id 'io.vertx.vertx-plugin'
     id 'com.gradle.build-scan'
     id 'application'
     id 'idea'
@@ -19,10 +18,6 @@ repositories {
 dependencies {
     implementation("com.google.guava:guava:15.0")
     implementation("com.google.inject:guice:2.0")
-}
-
-vertx {
-    mainVerticle = 'sample.App'
 }
 
 def isNonStable = { String version ->

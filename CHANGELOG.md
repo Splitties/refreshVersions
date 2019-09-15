@@ -1,5 +1,27 @@
 # Unreleased
 
+# 0.6.0
+
+Major new feature: 
+
+A new task `:refreshVersions` now generates Gradle properties for all dependencies
+and plugins inside `gradle.properties` AND their available updates, if any. 
+The plugin also installed a Gradle resolutionStrategy that enforce the use of those versions, if present.
+
+See documentation at https://github.com/jmfayard/buildSrcVersions/issues/77
+
+See a detail of the changes from `versionsOnlyMode` at https://github.com/jmfayard/buildSrcVersions/issues/67
+
+**Breaking change:** 
+
+Deprecated plugin configurations were removed from the `buildSrcVersions { ... }` extension:
+- `useFdqnFor` was a typo, corrected to **useFqdnFor**
+- `rejectedVersionKeywords` was replaced for the better by the lambda `rejectVersionsIf { ... }`
+
+https://github.com/jmfayard/buildSrcVersions/issues/53
+
+# 0.5.0
+
 Major new feature! 
 versionsOnlyMode for simple Gradle projects who just need the versions
 5 modes supported: KOTLIN_VAL, KOTLIN_OBJECT, GROOVY_DEF, GROOVY_EXT, GRADLE_PROPERTIES

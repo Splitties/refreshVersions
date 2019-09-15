@@ -31,6 +31,7 @@ tasks.register("publishPlugins") {
 
 tasks.register<DefaultTask>("hello") {
     group = "Custom"
+    description = "Minimal task that do nothing. Useful to debug a failing build"
 }
 
 tasks.register("pluginTests") {
@@ -55,7 +56,7 @@ tasks.register("checkAll") {
 
 tasks.register("updateGradle") {
     group = "Custom"
-    description = "Run all checks"
+    description = "Update Gradle in all modules"
     dependsOn(":wrapper")
     dependsOn(PLUGIN.task(":wrapper"))
     dependsOn(SAMPLE_KOTLIN.task(":wrapper"))

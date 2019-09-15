@@ -37,9 +37,46 @@ From the `Gradle` tool window, run the tasks `checkAll`
 ![image](https://user-images.githubusercontent.com/459464/51464714-8662c380-1d66-11e9-87f7-2ac45d4ff620.png)
 
 
-Wit this setup:
+## Tasks 
 
-- You can work at the same time on the `plugin` codebase as well as on the samples `sample-groovy` and `sample-kotlin`.
-- Thanks to [Gradle's composite build feature](https://github.com/jmfayard/buildSrcVersions/issues/31), any change you make to the `plugin` codebase is immediatly available to the samples.
-- `:checkAll` will run the task `:buildSrcVersions` in both samples.
-- `:checkAll` will run the unit tests presents in [plugin/src/test/resources/libs](https://github.com/jmfayard/buildSrcVersions/tree/master/plugin/src/test/kotlin/de/fayard)
+The `composite` module defines a number of custom tasks to simplify the workflow
+
+```
+$ pwd
+/Users/jmfayard/try/buildSrcVersions/composite   
+
+$ ./gradlew tasks --group=Custom
+Custom tasks
+------------
+checkAll - Run all checks
+hello - Minimal task that do nothing. Useful to debug a failing build
+pluginTests - Run plugin unit tests
+publishLocally - Publish the plugin locally
+publishPlugins - Publishes this plugin to the Gradle Plugin portal.
+updateGradle - Update Gradle in all modules
+```
+
+
+### Publishing the plugin locally
+
+The samples are useful to test quickly how the plugin behaves, but sometimes it's best to test it into a real project. 
+
+This is as easy as editing your `Settings`:
+
+```
+// MY_PROJECT/settings.gradle(.kts)
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+    }
+}
+//rootProject.name = "MY_PROJECT"
+```
+
+The workflow is then:
+
+- change something inside the plugin
+- Run either the task `:publishLocally` from `composite`
+- ... or the task `:publishToMavenLocal` from `plugin`
+- Then run `:refreshVersions` or `:buildSrcVersions` inside `MY_PROJECT`
