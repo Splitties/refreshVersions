@@ -26,11 +26,6 @@ import java.io.File
 @Suppress("UnstableApiUsage")
 open class BuildSrcVersionsTask : DefaultTask() {
 
-    fun configure(action: Action<BuildSrcVersionsExtension>) {
-        this._extension = BuildSrcVersionsExtensionImpl()
-        action.execute(this._extension!!)
-    }
-
     @Input
     @Option(description = "Update all versions, I will check git diff afterwards")
     var update: Boolean = false
@@ -136,20 +131,29 @@ open class BuildSrcVersionsTask : DefaultTask() {
     }
 
     private val parsedDependencies: List<Dependency> by lazy {
+        println("TasK: update=$update extension=${extension()}")
         val useFdqnByDefault = extension().useFqqnFor.map { PluginConfig.escapeVersionsKt(it) }
         parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
             .map { d -> d.maybeUpdate(update) }
     }
 
     @Input @Optional @Transient
-    var _extension: BuildSrcVersionsExtension? = null
+    private lateinit var _extension: BuildSrcVersionsExtensionImpl
+
+    fun configure(action: Action<BuildSrcVersionsExtension>) {
+        this._extension = project.extensions.getByType<BuildSrcVersionsExtension>() as BuildSrcVersionsExtensionImpl
+        action.execute(this._extension)
+    }
 
     private fun extension(): BuildSrcVersionsExtensionImpl {
-        val extension: BuildSrcVersionsExtension = _extension ?: project.extensions.getByType()
+        val extension: BuildSrcVersionsExtensionImpl = _extension
         if (extension.indent == PluginConfig.DEFAULT_INDENT) {
             extension.indent = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin")) ?: "  "
         }
-        return extension as BuildSrcVersionsExtensionImpl
+        if (extension.alwaysUpdateVersions) {
+            update = true
+        }
+        return extension
     }
 
 

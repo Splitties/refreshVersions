@@ -11,8 +11,13 @@ internal open class BuildSrcVersionsExtensionImpl(
     override var versionsOnlyMode: VersionsOnlyMode? = null,
     override var versionsOnlyFile: String? = null
 ) : BuildSrcVersionsExtension, java.io.Serializable {
+    override fun alwaysUpdateVersions() {
+        this.alwaysUpdateVersions = true
+        println("After alwaysUpdateVersions, this=$this")
+    }
+
     var useFqqnFor: List<String> = emptyList()
-    var updateForce = false
+    var alwaysUpdateVersions = false
 
     // Use @Transient for fields that should not be present in toString()
     override fun toString(): String = PluginConfig.extensionAdapter.toJson(this)
