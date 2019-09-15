@@ -143,7 +143,7 @@ object PluginConfig {
     const val TAB = "\t"
 
     fun supportsTaskAvoidance(): Boolean =
-        GradleVersion.current() >= GradleVersion.version("4.9")
+        GradleVersion.current() >= GradleVersion.version("5.0")
 
     fun spaces(nbSpaces: Int): String =
         StringBuilder().run {

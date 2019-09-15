@@ -26,7 +26,7 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
     fun Project.configure() = with(PluginConfig) {
         extensions.create(BuildSrcVersionsExtension::class, EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
 
-        if (supportsTaskAvoidance()) {
+        if (PluginConfig.supportsTaskAvoidance()) {
             val provider = tasks.named(DEPENDENCY_UPDATES, DependencyUpdatesTask::class.java)
             configureGradleVersions = { operation -> provider.configure(operation) }
             configureGradleVersions(DependencyUpdatesTask::configureBenManesVersions)
