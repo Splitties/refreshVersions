@@ -1,8 +1,4 @@
 pluginManagement {
-    repositories {
-        mavenLocal()
-        gradlePluginPortal()
-    }
     val resolutionStrategyConfig: String? by extra
     resolutionStrategy.eachPlugin {
         val property = "plugin.${requested.id.id}".replace("-", ".")
