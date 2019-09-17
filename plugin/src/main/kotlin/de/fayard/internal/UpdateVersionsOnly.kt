@@ -18,10 +18,10 @@ object UpdateVersionsOnly {
             else -> "version.${escapedVersionName}"
         }
         val commentPrefix = " available="
-        val spacing = PluginConfig.spaces(key.length - commentPrefix.length)
+        val spacing = PluginConfig.spaces(key.length - commentPrefix.length - 1)
         val available = when (val v = newerVersion()) {
             null -> ""
-            else -> "\n$spacing#$commentPrefix$v"
+            else -> "\n#$spacing#$commentPrefix$v"
         }
         return "$key=$version$available"
     }

@@ -116,13 +116,15 @@ open class BuildSrcVersionsTask : DefaultTask() {
     private val dependencyGraph: DependencyGraph by lazy {
         val extension: BuildSrcVersionsExtensionImpl = extension()
 
-        println(
+        val message = with(PluginConfig) {
             """
-                |Plugin configuration: $extension
-                |See documentation at ${PluginConfig.issue53PluginConfiguration}
+                |Running plugins.id("$PLUGIN_ID").version("$PLUGIN_VERSION") with configuration: $extension
+                |See documentation at $issue53PluginConfiguration
                 |
             """.trimMargin()
-        )
+
+        }
+        println(message)
         OutputFile.configure(extension)
 
         val jsonInput = project.file(PluginConfig.BENMANES_REPORT_PATH)
@@ -147,7 +149,8 @@ open class BuildSrcVersionsTask : DefaultTask() {
     private fun extension(): BuildSrcVersionsExtensionImpl {
         val extension: BuildSrcVersionsExtensionImpl = _extension
         if (extension.indent == PluginConfig.DEFAULT_INDENT) {
-            extension.indent = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin")) ?: "  "
+            val findIndentForKotlin = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin"))
+            extension.indent = findIndentForKotlin ?: PluginConfig.DEFAULT_INDENT
         }
         if (extension.alwaysUpdateVersions) {
             update = true

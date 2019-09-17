@@ -21,7 +21,7 @@ class GradlePropertiesTest : FreeSpec({
                 val gvp = "com.github.ben-manes:gradle-versions-plugin:0.22.0 // 0.25.0".asDependency()
                 gvp.asGradleProperty() shouldBe """
                     |version.gradle.versions.plugin=0.22.0
-                    |                   # available=0.25.0
+                    |#                  # available=0.25.0
                 """.trimMargin()
             }
 
@@ -39,7 +39,7 @@ class GradlePropertiesTest : FreeSpec({
                 val bsv = "de.fayard.buildSrcVersions:de.fayard.buildSrcVersions.gradle.plugin:0.5.0 // 0.6.0".asDependency()
                 bsv.asGradleProperty() shouldBe ("""
                     |plugin.de.fayard.buildSrcVersions=0.5.0
-                    |                      # available=0.6.0""").trimMargin()
+                    |#                     # available=0.6.0""").trimMargin()
             }
 
             "plugin com.gradle.plugin.publish"  {
