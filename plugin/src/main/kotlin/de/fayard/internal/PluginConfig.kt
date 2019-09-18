@@ -3,6 +3,9 @@ package de.fayard.internal
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import de.fayard.internal.VersionMode.GROUP
+import de.fayard.internal.VersionMode.GROUP_MODULE
+import de.fayard.internal.VersionMode.MODULE
 import okio.buffer
 import okio.source
 import org.gradle.util.GradleVersion
@@ -14,7 +17,7 @@ object PluginConfig {
 
 
     const val PLUGIN_ID = "de.fayard.buildSrcVersions"
-    const val PLUGIN_VERSION = "0.6.1" // plugin.de.fayard.buildSrcVersions
+    const val PLUGIN_VERSION = "0.6.2" // plugin.de.fayard.buildSrcVersions
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
     const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.25.0" // Sync with plugin/build.gradle.kts
     const val EXTENSION_NAME = "buildSrcVersions"
@@ -46,17 +49,26 @@ object PluginConfig {
      *      $ ./gradlew -Pversion.kotlin.stdlib=1.3.50
      *  **/
     fun considerGradleProperties(group: String, module: String): List<String> = listOf(
-        escapeGradleProperty("version.$group.$module"),
-        escapeGradleProperty("version.$module"),
-        escapeGradleProperty("version.$module")
+        "version.$group..$module",
+        "version.$group",
+        "version.$module"
     )
 
-    /** Naming convention: replace [:-_] with "." **/
     @JvmStatic
-    fun escapeGradleProperty(name: String): String =
-        name.replace(":", ".").replace("_", ".").replace("-", ".")
+    fun versionPropertyFor(d: Dependency): String = when (d.mode) {
+        MODULE -> d.name
+        GROUP -> d.group
+        GROUP_MODULE -> "${d.group}..${d.name}"
+    }
 
-    @JvmStatic
+    fun versionKtFor(d: Dependency): String = escapeVersionsKt(
+        when (d.mode) {
+            MODULE -> d.name
+            GROUP -> d.group
+            GROUP_MODULE -> "${d.group}:${d.name}"
+        }
+    )
+
     fun escapeVersionsKt(name: String): String {
         val escapedChars = listOf('-', '.', ':')
         return buildString {
@@ -69,7 +81,12 @@ object PluginConfig {
 
     const val DEFAULT_LIBS = "Libs"
     const val DEFAULT_VERSIONS = "Versions"
-    const val DEFAULT_INDENT = "from-editorconfig-file"
+    const val INDENT_FROM_EDITOR_CONFIG = "from-editorconfig-file"
+    const val SPACES4 = "    "
+    const val SPACES2 = "  "
+    const val SPACES0 = ""
+    const val TAB = "\t"
+    const val DEFAULT_INDENT = SPACES4
     const val BENMANES_REPORT_PATH = "build/dependencyUpdates/report.json"
 
     /** Documentation **/
@@ -89,7 +106,7 @@ object PluginConfig {
      * Found many inspiration for bad libs here https://developer.android.com/jetpack/androidx/migrate
      * **/
     val MEANING_LESS_NAMES: List<String> = listOf(
-        "common", "core", "core-testing", "testing", "runtime", "extensions",
+        "common", "core", "testing", "runtime", "extensions",
         "compiler", "migration", "db", "rules", "runner", "monitor", "loader",
         "media", "print", "io", "media", "collection", "gradle", "android"
     )
@@ -170,11 +187,6 @@ object PluginConfig {
 
     const val GRADLE_LATEST_VERSION = "gradleLatestVersion"
 
-    const val SPACES4 = "    "
-    const val SPACES2 = "  "
-    const val SPACES0 = ""
-    const val TAB = "\t"
-
     fun supportsTaskAvoidance(): Boolean =
         GradleVersion.current() >= GradleVersion.version("5.0")
 
@@ -189,16 +201,16 @@ object PluginConfig {
 
     val gradleVersionsPlugin: Dependency = Dependency(
         group = "com.github.ben-manes",
-        name = "gradle-versions-plugin",
+        name = "$GRADLE_VERSIONS_PLUGIN_ID.gradle.plugin",
         version = GRADLE_VERSIONS_PLUGIN_VERSION,
-        versionName = escapeVersionsKt("$GRADLE_VERSIONS_PLUGIN_ID.gradle.plugin"),
+        mode = MODULE,
         available = null
     )
 
     fun gradleLatestVersion(graph: DependencyGraph): Dependency = Dependency(
         group = "org.gradle",
         name = GRADLE_LATEST_VERSION,
-        versionName = GRADLE_LATEST_VERSION,
+        mode = MODULE,
         version = graph.gradle.running.version,
         available = when {
             graph.gradle.running == graph.gradle.current -> null

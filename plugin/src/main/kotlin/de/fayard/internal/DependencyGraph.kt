@@ -33,9 +33,15 @@ data class Dependency(
     val projectUrl: String? = "",
     val name: String = "",
     var escapedName: String = "",
-    var versionName: String = "",
+    var mode: VersionMode = VersionMode.MODULE,
     val available: AvailableDependency? = null
 ) {
+    val versionName: String
+        get() = PluginConfig.versionKtFor(this)
+
+    val versionProperty: String
+        get() = PluginConfig.versionPropertyFor(this)
+
     fun maybeUpdate(update: Boolean): Dependency {
         val newerVersion = newerVersion()
         return when {
@@ -44,6 +50,10 @@ data class Dependency(
             else -> this.copy(available = null, version = newerVersion)
         }
     }
+}
+
+enum class VersionMode {
+    MODULE, GROUP, GROUP_MODULE
 }
 
 data class GradleConfig(
@@ -76,7 +86,7 @@ data class SingleModeResult(
 
     companion object {
         val NEW_FILE = SingleModeResult(0, 0, "")
-        val BLOC_NOT_FOUND = SingleModeResult(-1, -1, PluginConfig.DEFAULT_INDENT)
+        val BLOC_NOT_FOUND = SingleModeResult(-1, -1, PluginConfig.INDENT_FROM_EDITOR_CONFIG)
     }
 }
 

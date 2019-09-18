@@ -65,7 +65,7 @@ fun Project.useVersionsFromGradleProperties() {
                     val gradleProperty = PluginConfig.considerGradleProperties(candidate.group, candidate.name)
                         .firstOrNull { it in properties } ?: return@eachDependency
                     val message =
-                        "ResolutionStrategy for configuration=$configurationName selected version=${properties[gradleProperty]} from property=$gradleProperty with for dependency=${candidate.group}:${candidate.name}"
+                        "ResolutionStrategy selected version=${properties[gradleProperty]} from property=$gradleProperty with for dependency=${candidate.group}:${candidate.name}"
                     if (resolutionStrategyConfig == "verbose") println(message)
                     useVersion(properties[gradleProperty] ?: error(message))
                 }

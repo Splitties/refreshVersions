@@ -5,7 +5,7 @@ pluginManagement {
     }
     def resolutionStrategyConfig = ext.find("resolutionStrategyConfig")
     resolutionStrategy.eachPlugin {
-        def property = "plugin.${requested.id.id}".replaceAll("-", ".")
+        def property = "plugin.${requested.id.id}"
         if (settings.ext.has(property) && resolutionStrategyConfig != "false") {
             def version = settings.ext.get(property)
             if (resolutionStrategyConfig == "verbose") print("ResolutionStrategy found version=$version from property=$property")

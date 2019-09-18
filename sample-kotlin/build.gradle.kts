@@ -19,6 +19,8 @@ repositories {
 dependencies {
     implementation("com.google.guava:guava:15.0")
     implementation("com.google.inject:guice:2.0")
+    implementation("com.squareup.okhttp3:okhttp:3.10.0")
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:3.10.0")
     implementation(kotlin("stdlib-jdk8"))
 }
 
@@ -43,7 +45,7 @@ tasks.withType<Wrapper> {
 buildSrcVersions {
     // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
     alwaysUpdateVersions()
-    useFqdnFor("dependency")
+    useFqdnFor("guice")
     renameLibs = "Libs"
     renameVersions = "Versions"
 //    indent = "  "

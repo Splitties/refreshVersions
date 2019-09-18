@@ -20,7 +20,7 @@ class GradlePropertiesTest : FreeSpec({
             "gradle-versions-plugin" {
                 val gvp = "com.github.ben-manes:gradle-versions-plugin:0.22.0 // 0.25.0".asDependency()
                 gvp.asGradleProperty() shouldBe """
-                    |version.gradle.versions.plugin=0.22.0
+                    |version.gradle-versions-plugin=0.22.0
                     |#                  # available=0.25.0
                 """.trimMargin()
             }
@@ -32,7 +32,7 @@ class GradlePropertiesTest : FreeSpec({
 
             "fully qualified domain name" {
                 val guava = "com.google.guava:guava:15.0".asDependency(fqdn = true)
-                guava.asGradleProperty() shouldBe "version.com.google.guava.guava=15.0"
+                guava.asGradleProperty() shouldBe "version.com.google.guava..guava=15.0"
             }
 
             "plugin buildSrcVersions" {
@@ -42,9 +42,9 @@ class GradlePropertiesTest : FreeSpec({
                     |#                     # available=0.6.0""").trimMargin()
             }
 
-            "plugin com.gradle.plugin.publish"  {
+            "plugin com.gradle.plugin-publish"  {
                 val publish = "com.gradle.plugin-publish:com.gradle.plugin-publish.gradle.plugin:1.0".asDependency()
-                publish.asGradleProperty() shouldBe "plugin.com.gradle.plugin.publish=1.0"
+                publish.asGradleProperty() shouldBe "plugin.com.gradle.plugin-publish=1.0"
             }
         }
     }

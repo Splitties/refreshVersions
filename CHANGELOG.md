@@ -1,5 +1,13 @@
 # Unreleased
 
+# 0.6.1
+
+
+- #80 Refine naming convention
+- Add plugin version in the output
+- Restore indent=FOUR_SPACES when no editorconfig is there
+- Add "#" at the beginning of a line in "gradle.properties" so that IntelliJ does not refactor/break the alignment
+
 # 0.6.0
 
 Major new feature: 

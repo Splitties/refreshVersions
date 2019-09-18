@@ -52,11 +52,12 @@ fun nonRegressionForFile(json: File, libsFile: File, versionsFile: File) {
         emptyList()
     }
 
+
     println("Comparing identifiers with ${libsFile.absolutePath}")
     if (missingLibs.isNotEmpty()) {
         fail(
             """
-              Missing identifiers for ${json.name} compared to ${libsFile.name}:
+              Missing libs identifiers for ${json.name} compared to ${libsFile.name}:
               $missingLibs""".trimIndent()
         )
     } else {
@@ -65,10 +66,13 @@ fun nonRegressionForFile(json: File, libsFile: File, versionsFile: File) {
     }
 
     if (missingVersions.isNotEmpty()) {
+        val newVersions = versionsIdentifiers - versionsFile.readLines()
         fail(
             """
-              Missing identifiers for ${json.name} compared to ${libsFile.name}:
-              $missingVersions""".trimIndent()
+             | Missing versions identifiers for ${json.name} compared to ${libsFile.name}:
+             | missing=$missingVersions
+             | new=$newVersions
+             | """.trimMargin()
         )
     } else {
         versionsFile.writeText(versionsIdentifiers.joinToStringWithNewLines())

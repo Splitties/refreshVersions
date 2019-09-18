@@ -63,8 +63,9 @@ open class BuildSrcVersionsTask : DefaultTask() {
             KOTLIN_OBJECT -> false
             else -> return
         }
+        val versions = unsortedParsedDependencies.sortedBeautifullyBy { it.versionName }
 
-        val kotlinPoetry: KotlinPoetry = kotlinpoet(parsedDependencies, dependencyGraph.gradle, extension)
+        val kotlinPoetry: KotlinPoetry = kotlinpoet(versions, dependencyGraph.gradle, extension)
 
         if (shouldGenerateLibsKt) {
             kotlinPoetry.Libs.writeTo(outputDir)
@@ -90,16 +91,16 @@ open class BuildSrcVersionsTask : DefaultTask() {
     @TaskAction
     fun versionsOnlyMode() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
-        val updateGradleProperties = UpdateGradleProperties(extension, parsedDependencies)
+        val updateGradleProperties = UpdateGradleProperties(extension)
 
         val versionsOnlyMode = when(val mode = extension.versionsOnlyMode) {
             null, KOTLIN_OBJECT -> return
             else -> mode
         }
 
-        val dependencies = (parsedDependencies + PluginConfig.gradleVersionsPlugin + PluginConfig.gradleLatestVersion(dependencyGraph))
-            .sortedBeautifullyBy { it.versionName }
-            .distinctBy { it.versionName }
+        val dependencies = (unsortedParsedDependencies + PluginConfig.gradleVersionsPlugin + PluginConfig.gradleLatestVersion(dependencyGraph))
+            .sortedBeautifullyBy { it.versionProperty }
+            .distinctBy { it.versionProperty }
 
         if (versionsOnlyMode == GRADLE_PROPERTIES) {
             updateGradleProperties.generateVersionProperties(project, dependencies)
@@ -132,7 +133,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         return@lazy PluginConfig.readGraphFromJsonFile(jsonInput)
     }
 
-    private val parsedDependencies: List<Dependency> by lazy {
+    private val unsortedParsedDependencies: List<Dependency> by lazy {
         val useFdqnByDefault = extension().useFqqnFor.map { PluginConfig.escapeVersionsKt(it) }
         parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
             .map { d -> d.maybeUpdate(update) }
@@ -148,7 +149,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
     private fun extension(): BuildSrcVersionsExtensionImpl {
         val extension: BuildSrcVersionsExtensionImpl = _extension
-        if (extension.indent == PluginConfig.DEFAULT_INDENT) {
+        if (extension.indent == PluginConfig.INDENT_FROM_EDITOR_CONFIG) {
             val findIndentForKotlin = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin"))
             extension.indent = findIndentForKotlin ?: PluginConfig.DEFAULT_INDENT
         }

@@ -4,7 +4,6 @@ import de.fayard.internal.AvailableDependency
 import de.fayard.internal.Dependencies
 import de.fayard.internal.Dependency
 import de.fayard.internal.PluginConfig
-import de.fayard.internal.findCommonVersions
 import de.fayard.internal.gradleNotation
 import de.fayard.internal.orderDependencies
 import de.fayard.internal.versionInformation
@@ -41,12 +40,6 @@ class UnitTests: FreeSpec({
             .map { it.gradleNotation() }
         shuffleAndReorder shouldBe DEPS
 
-    }
-
-    "Finding common versions" {
-        val versions = dependencies.findCommonVersions().map { it.versionName }.distinct().sorted()
-        val expected = listOf("android_arch_persistence_room", "compiler", "gradle", "okio", "krangl", "rxjava", "konan-utils", "kotlin-test").sorted()
-        versions shouldBe expected
     }
 
     "Version information" - {

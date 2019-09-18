@@ -7,7 +7,7 @@ import de.fayard.VersionsOnlyMode
 internal open class BuildSrcVersionsExtensionImpl(
     override var renameLibs: String = PluginConfig.DEFAULT_LIBS,
     override var renameVersions: String = PluginConfig.DEFAULT_VERSIONS,
-    override var indent: String = PluginConfig.DEFAULT_INDENT,
+    override var indent: String = PluginConfig.INDENT_FROM_EDITOR_CONFIG,
     override var versionsOnlyMode: VersionsOnlyMode? = null,
     override var versionsOnlyFile: String? = null
 ) : BuildSrcVersionsExtension, java.io.Serializable {

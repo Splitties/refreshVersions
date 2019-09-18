@@ -4,8 +4,7 @@ import de.fayard.BuildSrcVersionsExtension
 import org.gradle.api.Project
 
 data class UpdateGradleProperties(
-    val extension: BuildSrcVersionsExtension,
-    val dependencies: List<Dependency>
+    val extension: BuildSrcVersionsExtension
 ) {
 
     fun generateVersionProperties(project: Project, dependencies: List<Dependency>) = with(UpdateVersionsOnly) {

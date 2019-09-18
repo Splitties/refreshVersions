@@ -2,7 +2,7 @@ package de.fayard
 
 import de.fayard.internal.AvailableDependency
 import de.fayard.internal.Dependency
-import de.fayard.internal.fqdnName
+import de.fayard.internal.VersionMode
 import org.intellij.lang.annotations.Language
 import java.io.File
 
@@ -41,9 +41,7 @@ fun String.asDependency(fqdn: Boolean = false): Dependency {
         projectUrl = "",
         name = name,
         escapedName = name,
-        versionName = name,
+        mode = if (fqdn) VersionMode.GROUP_MODULE else VersionMode.MODULE,
         available = if (available.isBlank()) null else AvailableDependency(release = available)
-    ).run {
-        if (fqdn) copy(versionName = fqdnName()) else this
-    }
+    )
 }
