@@ -14,6 +14,7 @@ import org.gradle.plugin.use.PluginDependencySpec
 
 fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension: BuildSrcVersionsExtension): KotlinPoetry {
 
+
     val gradleVersion = constStringProperty(
         PluginConfig.GRADLE_LATEST_VERSION,
         gradleConfig.current.version,
@@ -130,45 +131,42 @@ fun parseGraph(
 ): List<Dependency> {
 
     val dependencies: List<Dependency> = graph.current + graph.exceeded + graph.outdated + graph.unresolved
-
-    val map = mutableMapOf<String, Dependency>()
-    for (d: Dependency in dependencies) {
-        val key = PluginConfig.escapeVersionsKt(d.name)
-        val fdqnName = d.fqdnName()
-
-
-        if (key in useFdqnByDefault) {
-            d.escapedName = fdqnName
-        } else if (map.containsKey(key)) {
-            d.escapedName = fdqnName
-
-            // also use FDQN for the dependency that conflicts with this one
-            val other = map[key]!!
-            other.escapedName = other.fqdnName()
-        } else {
-            map[key] = d
-            d.escapedName = key
-        }
-    }
-    return dependencies
-        .findCommonVersions()
-        .sortedBeautifullyBy(exceptIf = OutputFile.VERSIONS.existed) { it.versionName }
+    return dependencies.checkModeAndNames(useFdqnByDefault).findCommonVersions()
 }
 
-fun Dependency.fqdnName(): String = PluginConfig.escapeVersionsKt("${group}_${name}")
+fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): List<Dependency> {
+    groupBy { d -> d.name }
+        .forEach { (name, list) ->
+            for (d: Dependency in list) {
+                d.mode = when {
+                    d.name in useFdqnByDefault -> VersionMode.GROUP_MODULE
+                    list.size >= 2 -> VersionMode.GROUP_MODULE
+                    else -> VersionMode.MODULE
+                }
+                d.escapedName = PluginConfig.escapeVersionsKt(
+                    when (d.mode) {
+                        VersionMode.MODULE -> d.name
+                        VersionMode.GROUP -> d.group
+                        VersionMode.GROUP_MODULE -> "${d.group}_${d.name}"
+                    }
+                )
+            }
+        }
+    return this
+}
 
 
 fun List<Dependency>.orderDependencies(): List<Dependency> {
     return this.sortedBy { it.gradleNotation() }
 }
 
+
 fun List<Dependency>.findCommonVersions(): List<Dependency> {
     val map = groupBy { d -> d.group }
     for (deps in map.values) {
         val groupTogether = deps.size > 1  && deps.map { it.version }.distinct().size == 1
-
-        for (d in deps) {
-            d.versionName = if (groupTogether) PluginConfig.escapeVersionsKt(d.group) else d.escapedName
+        if (groupTogether) {
+            deps.forEach { d -> d.mode = VersionMode.GROUP }
         }
     }
     return this

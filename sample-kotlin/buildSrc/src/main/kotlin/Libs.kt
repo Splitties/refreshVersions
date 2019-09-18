@@ -14,6 +14,23 @@ object Libs {
             Versions.com_gradle_build_scan_gradle_plugin
 
     /**
+     * http://code.google.com/p/google-guice/
+     */
+    const val com_google_inject_guice: String = "com.google.inject:guice:" +
+        Versions.com_google_inject_guice
+
+    /**
+     * https://github.com/square/okhttp
+     */
+    const val okhttp: String = "com.squareup.okhttp3:okhttp:" + Versions.com_squareup_okhttp3
+
+    /**
+     * https://github.com/square/okhttp
+     */
+    const val okhttp_urlconnection: String = "com.squareup.okhttp3:okhttp-urlconnection:" +
+        Versions.com_squareup_okhttp3
+
+    /**
      * https://kotlinlang.org/
      */
     const val kotlin_scripting_compiler_embeddable: String =
@@ -27,9 +44,4 @@ object Libs {
         Versions.org_jetbrains_kotlin
 
     const val guava: String = "com.google.guava:guava:" + Versions.guava
-
-    /**
-     * http://code.google.com/p/google-guice/
-     */
-    const val guice: String = "com.google.inject:guice:" + Versions.guice
 }

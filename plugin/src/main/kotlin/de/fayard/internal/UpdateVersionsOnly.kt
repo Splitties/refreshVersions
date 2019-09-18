@@ -11,11 +11,10 @@ object UpdateVersionsOnly {
     const val newline = "\n"
 
     fun Dependency.asGradleProperty(): String {
-        val escapedVersionName = PluginConfig.escapeGradleProperty(versionName)
-        val pluginName = escapedVersionName.substringBeforeLast(".gradle.plugin", "")
+        val pluginName = versionProperty.substringBeforeLast(".gradle.plugin", "")
         val key = when {
             pluginName.isNotBlank() -> "plugin.$pluginName"
-            else -> "version.${escapedVersionName}"
+            else -> "version.${versionProperty}"
         }
         val commentPrefix = " available="
         val spacing = PluginConfig.spaces(key.length - commentPrefix.length - 1)
@@ -110,7 +109,7 @@ object UpdateVersionsOnly {
     fun regenerateBlock(mode: VersionsOnlyMode, dependencies: List<Dependency>, indent: String): List<String> {
         val comment = mode.comment
         val result = mutableListOf<String>()
-        var (before, after) = mode.beforeAfter()
+        val (before, after) = mode.beforeAfter()
 
         result += PluginConfig.VERSIONS_ONLY_INTRO.map { "$indent$comment $it" }
 

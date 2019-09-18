@@ -12,11 +12,13 @@ object Versions {
 
     const val com_gradle_build_scan_gradle_plugin: String = "2.4.2"
 
+    const val com_google_inject_guice: String = "2.0"
+
+    const val com_squareup_okhttp3: String = "4.2.0"
+
     const val org_jetbrains_kotlin: String = "1.3.50"
 
     const val guava: String = "15.0"
-
-    const val guice: String = "2.0"
 
     /**
      * Current version: "5.6.2"
