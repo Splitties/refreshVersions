@@ -25,7 +25,7 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
     fun Project.configure() = with(PluginConfig) {
         extensions.create(BuildSrcVersionsExtension::class, EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
 
-        if (PluginConfig.supportsTaskAvoidance()) {
+        if (supportsTaskAvoidance()) {
             val provider: TaskProvider<DependencyUpdatesTask> = when {
                 tasks.findByPath(DEPENDENCY_UPDATES_PATH) == null -> tasks.register(DEPENDENCY_UPDATES_PATH, DependencyUpdatesTask::class.java)
                 else -> tasks.named(DEPENDENCY_UPDATES, DependencyUpdatesTask::class.java)
