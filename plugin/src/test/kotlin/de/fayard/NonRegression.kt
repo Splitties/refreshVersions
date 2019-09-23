@@ -1,9 +1,14 @@
 package de.fayard
 
+import de.fayard.internal.BuildSrcVersionsExtensionImpl
 import de.fayard.internal.Dependency
 import de.fayard.internal.PluginConfig
+import de.fayard.internal.UpdateGradleProperties
 import de.fayard.internal.parseGraph
-import io.kotlintest.fail
+import de.fayard.internal.sortedBeautifullyBy
+import io.kotlintest.matchers.collections.shouldBeEmpty
+import io.kotlintest.matchers.withClue
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
 import java.io.File
 
@@ -12,75 +17,88 @@ class NonRegression : FreeSpec({
     val reportsFolder = testResourceFile("reports")
     val libsFolder = testResourceFile("libs")
     val versionsFolder = testResourceFile("versions")
+    val propertiesFolder = testResourceFile("properties")
     val jsonReports = reportsFolder.walk().filter { it.extension == "json" }.toList()
 
+    fun receivedMessage(approved: File): Pair<File, String> {
+        val received = approved.resolveSibling(approved.nameWithoutExtension + "-received" + approved.extension)
+        val message = """
+            |Files differ. Run:
+            |$ diff -u  ${approved.relativeTo(buildSrcVersionsDir)} ${received.relativeTo(buildSrcVersionsDir)}
+            |""".trimMargin()
+        return Pair(received, message)
+    }
 
-    "Files from resources folder" - {
 
-        // Run test for each file in src/test/resources/reports
-        for (jsonFile in jsonReports) {
+    // Run test for each file in src/test/resources/reports
+    for (json in jsonReports) {
+        "For non-regression file=${json.name}" - {
+            val name = json.nameWithoutExtension + ".txt"
 
-            "For file ${jsonFile.name}" {
-                val name = jsonFile.nameWithoutExtension + ".txt"
-                nonRegressionForFile(jsonFile, libsFolder.resolve(name), versionsFolder.resolve(name))
+            println("Parsing ${json.absolutePath}")
+            val dependencyGraph: List<Dependency> = parseGraph(
+                PluginConfig.readGraphFromJsonFile(json),
+                PluginConfig.MEANING_LESS_NAMES
+            )
+
+            "Identifiers in Libs" {
+                val libsFile = libsFolder.resolve(name)
+                val libsIdentifiers: List<String> = dependencyGraph.map { it.escapedName }.sorted().distinct()
+                val (received, message) = receivedMessage(libsFile)
+                received.writeText(libsIdentifiers.joinToStringWithNewLines())
+                if (libsFile.exists()) {
+                    withClue(message) {
+                        (libsFile.readLines() - libsIdentifiers).shouldBeEmpty()
+                        received.delete()
+                    }
+                } else {
+                    println("Added to non-regression file ${libsFile.absolutePath}")
+                }
+            }
+
+            "Identifiers in Versions" {
+                val versionsFile = versionsFolder.resolve(name)
+                val versionsIdentifiers = dependencyGraph.map { it.versionName }.sorted().distinct()
+                val (received, message) = receivedMessage(versionsFile)
+                received.writeText(versionsIdentifiers.joinToStringWithNewLines())
+                if (versionsFile.exists()) {
+                    withClue(message) {
+                        (versionsFile.readLines() - versionsIdentifiers).shouldBeEmpty()
+                        received.delete()
+                    }
+                } else {
+                    println("Added to non-regression file ${versionsFile.absolutePath}")
+                }
+            }
+
+            "Identifiers in Properties" {
+
+                val propertiesFile = propertiesFolder.resolve(name)
+                val (received, message) = receivedMessage(propertiesFile)
+                val extension = BuildSrcVersionsExtensionImpl(
+                    versionsOnlyMode = VersionsOnlyMode.GRADLE_PROPERTIES,
+                    versionsOnlyFile = propertiesFile.relativeTo(buildSrcVersionsDir).path
+                )
+                val dependencies = (dependencyGraph.map { it.copy(available = null) })
+                    .sortedBeautifullyBy { it.versionProperty }
+                    .distinctBy { it.versionProperty }
+                UpdateGradleProperties(extension).generateVersionProperties(received, dependencies)
+
+                if (propertiesFile.exists()) {
+                    val receivedIdentifiers = received.readLines().map { it.substringBefore("=", "") }.filter { it.startsWith("#") || it.isBlank() }
+                    val approvedIdentifiers = propertiesFile.readLines().map { it.substringBefore("=", "") }.filter { it.startsWith("#") || it.isBlank() }
+                    withClue(message) {
+                        receivedIdentifiers shouldBe approvedIdentifiers
+                        received.delete()
+                    }
+                } else {
+                    println("Added to non-regression file ${propertiesFile.absolutePath}")
+                }
             }
         }
     }
 })
 
 
-fun nonRegressionForFile(json: File, libsFile: File, versionsFile: File) {
-    println("Parsing ${json.absolutePath}")
-    val dependencyGraph: List<Dependency> = parseGraph(
-        PluginConfig.readGraphFromJsonFile(
-            json
-        ),
-        PluginConfig.MEANING_LESS_NAMES
-    )
-    val libsIdentifiers: List<String> = dependencyGraph.map { it.escapedName }.sorted().distinct()
-    val versionsIdentifiers = dependencyGraph.map { it.versionName }.sorted().distinct()
-
-
-    val missingLibs = if (libsFile.exists()) {
-        libsFile.readLines() - libsIdentifiers
-    } else {
-        emptyList()
-    }
-    val missingVersions = if (versionsFile.exists()) {
-        versionsFile.readLines() - versionsIdentifiers
-    } else {
-        emptyList()
-    }
-
-
-    println("Comparing identifiers with ${libsFile.absolutePath}")
-    if (missingLibs.isNotEmpty()) {
-        fail(
-            """
-              Missing libs identifiers for ${json.name} compared to ${libsFile.name}:
-              $missingLibs""".trimIndent()
-        )
-    } else {
-        libsFile.writeText(libsIdentifiers.joinToStringWithNewLines())
-        println("Added to non-regression file ${libsFile.absolutePath}")
-    }
-
-    if (missingVersions.isNotEmpty()) {
-        val newVersions = versionsIdentifiers - versionsFile.readLines()
-        fail(
-            """
-             | Missing versions identifiers for ${json.name} compared to ${libsFile.name}:
-             | missing=$missingVersions
-             | new=$newVersions
-             | """.trimMargin()
-        )
-    } else {
-        versionsFile.writeText(versionsIdentifiers.joinToStringWithNewLines())
-        println("Added to non-regression file ${versionsFile.absolutePath}")
-    }
-
-    println()
-
-}
 
 

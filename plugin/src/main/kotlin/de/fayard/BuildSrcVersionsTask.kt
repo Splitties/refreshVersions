@@ -103,7 +103,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             .distinctBy { it.versionProperty }
 
         if (versionsOnlyMode == GRADLE_PROPERTIES) {
-            updateGradleProperties.generateVersionProperties(project, dependencies)
+            updateGradleProperties.generateVersionProperties(project.file("gradle.properties"), dependencies)
             OutputFile.GRADLE_PROPERTIES.logFileWasModified()
 
         } else {
