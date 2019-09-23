@@ -6,12 +6,18 @@
  */
 object Libs {
     const val org_jetbrains_kotlin_jvm_gradle_plugin: String =
-            "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:" +
+        "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:" +
             Versions.org_jetbrains_kotlin_jvm_gradle_plugin
 
     const val com_gradle_build_scan_gradle_plugin: String =
         "com.gradle.build-scan:com.gradle.build-scan.gradle.plugin:" +
             Versions.com_gradle_build_scan_gradle_plugin
+
+    /**
+     * http://www.mongodb.org
+     */
+    const val org_mongodb_mongo_java_driver: String = "org.mongodb:mongo-java-driver:" +
+        Versions.org_mongodb_mongo_java_driver
 
     /**
      * http://code.google.com/p/google-guice/
@@ -34,8 +40,8 @@ object Libs {
      * https://kotlinlang.org/
      */
     const val kotlin_scripting_compiler_embeddable: String =
-            "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" +
-                Versions.org_jetbrains_kotlin
+        "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" +
+            Versions.org_jetbrains_kotlin
 
     /**
      * https://kotlinlang.org/
