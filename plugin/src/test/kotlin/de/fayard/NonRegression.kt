@@ -32,7 +32,8 @@ class NonRegression : FreeSpec({
 
     // Run test for each file in src/test/resources/reports
     for (json in jsonReports) {
-        "For non-regression file=${json.name}" - {
+        val name = json.name
+        "For non-regression file=$name" - {
             val name = json.nameWithoutExtension + ".txt"
 
             println("Parsing ${json.absolutePath}")
@@ -41,7 +42,7 @@ class NonRegression : FreeSpec({
                 PluginConfig.MEANING_LESS_NAMES
             )
 
-            "Identifiers in Libs" {
+            "Identifiers in Libs for file=$name" {
                 val libsFile = libsFolder.resolve(name)
                 val libsIdentifiers: List<String> = dependencyGraph.map { it.escapedName }.sorted().distinct()
                 val (received, message) = receivedMessage(libsFile)
@@ -56,7 +57,7 @@ class NonRegression : FreeSpec({
                 }
             }
 
-            "Identifiers in Versions" {
+            "Identifiers in Versions for file=$name" {
                 val versionsFile = versionsFolder.resolve(name)
                 val versionsIdentifiers = dependencyGraph.map { it.versionName }.sorted().distinct()
                 val (received, message) = receivedMessage(versionsFile)
@@ -71,7 +72,7 @@ class NonRegression : FreeSpec({
                 }
             }
 
-            "Identifiers in Properties" {
+            "Identifiers in Properties for file=$name" {
 
                 val propertiesFile = propertiesFolder.resolve(name)
                 val (received, message) = receivedMessage(propertiesFile)
