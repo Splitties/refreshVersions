@@ -15,7 +15,7 @@ assignees: ''
 
 If possible, fork the project and submit a change in the samples that demo what your idea would do differently
 
-- `$git clone https://github.com/jmfayard/buildSrcVersions`
+- `$ git clone https://github.com/jmfayard/buildSrcVersions`
 - `$ cd sample-groovy` # or `sample-kotlin` or `sample-versionsOnlyMode`
 - change things and submit a pull-request
 
