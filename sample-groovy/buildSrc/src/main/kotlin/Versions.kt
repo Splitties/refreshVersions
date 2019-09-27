@@ -12,9 +12,9 @@ import kotlin.String
 object Versions {
     const val com_gradle_build_scan_gradle_plugin: String = "2.4.2"
 
-    const val guava: String = "15.0" // available: "23.0"
+    const val guava: String = "15.0"
 
-    const val guice: String = "2.0" // available: "4.2.2"
+    const val guice: String = "2.0"
 
     /**
      * Current version: "5.6.2"

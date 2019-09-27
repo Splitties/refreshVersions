@@ -148,7 +148,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
     fun configure(action: Action<BuildSrcVersionsExtension>) {
         this._extension = project.extensions.getByType<BuildSrcVersionsExtension>() as BuildSrcVersionsExtensionImpl
-        val indentBefore = _extension.indent
         action.execute(this._extension)
         if (_extension.indent == PluginConfig.INDENT_FROM_EDITOR_CONFIG) {
             val findIndentForKotlin = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin"))

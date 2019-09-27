@@ -39,11 +39,30 @@ The Gradle plugin `de.fayard.buildSrcVersions` goal is to make it painless to ma
 It does that by extracting all your dependencies, searching for available dependencies updates
 and generating Kotlin code, Groovy code or Gradle properties.
 
-== Design goals
+== The task `:refreshVersions`
 
-- **First, to do no harm.** The plugin should never update itself or otherwise break an existing build. The plugin should do nothing unless it's explicitely called.
-- **Be Lazy.** Use code generation to avoid writing tedious code manually. Find available updates automatically instead of googling them. The plugin should do the right thing by default, no configuration should be mandatory. Leverage IDE tooling support (auto-completion, ...).
-- **Be Humble.** Render to the programmer the things that are the programmer's. This include using the generated code and updating the dependencies.
+The task `:refreshVersions` was introduced in the version `0.6.0` of the plugin.
+
+It provides **just the versions and their available updates** and is a good solution for simple, single-module Gradle projects.
+
+https://github.com/jmfayard/buildSrcVersions/issues/77[Read the friendly documentation]
+
+[[img-gradle-properties]]
+image::versions-gradle-properties.png[]
+
+
+== The task `:buildSrcVersions`
+
+The task `:buildSrcVersions` is well suited for complex multi-module Gradle projects: Android, Kotlin multi-platform, ...
+
+It generates this kind of code inside the Gradle `buildSrc` module.
+
+
+[[img-carbon-Libs-Version]]
+image::carbon-Libs-Versions.png[]
+
+https://github.com/jmfayard/buildSrcVersions/issues/88[Read the friendly documentation]
+
 
 == Requirements
 
@@ -56,27 +75,6 @@ and generating Kotlin code, Groovy code or Gradle properties.
 
 
 The plugin `de.fayard.buildSrcVersions` provides two tasks: `:refreshVersions` and `:buildSrcVersions`
-
-== The task `:refreshVersions`
-
-The task `:refreshVersions` was introduced in the version `0.6.0` of the plugin.
-
-It provides **just the versions and their available updates** and is a good solution for simple, single-module Gradle projects.
-
-The task `:refreshVersions` is described in great details at https://github.com/jmfayard/buildSrcVersions/issues/77
-
-
-== The task `:buildSrcVersions`
-
-The task `:buildSrcVersions` is well suited for complex multi-module Gradle projects: Android, Kotlin multi-platform, ...
-
-It generates this kind of code inside the Gradle `buildSrc` module.
-
-See [What is the Gradle buildSrc module? #30](https://github.com/jmfayard/buildSrcVersions/issues/30)
-
-[[img-carbon-Libs-Version]]
-image::carbon-Libs-Versions.png[title = "Gradle buildSrcVersions extracts all your dependencies and search for available dependencies updates. See link:{versions_kt}[`Versions.kt`^] and link:{libs_kt}[`Libs.kt`^]"]
-
 
 
 == Installation
@@ -114,79 +112,6 @@ buildscript {
 apply plugin: "de.fayard.buildSrcVersions"
 ----
 
-== Extract your dependencies
-
-The plugin adds a task to your build, also called `:buildSrcVersions`. Run it like this:
-
-```bash
-$ ./gradlew buildSrcVersions
-> Task :dependencyUpdates
-> Task :buildSrcVersions
-        new file:   buildSrc/build.gradle.kts
-        new file:   buildSrc/.gitignore
-        new file:   buildSrc/settings.gradle.kts
-        new file:   buildSrc/src/main/kotlin/Libs.kt
-        new file:   buildSrc/src/main/kotlin/Versions.kt
-```
-
-== Replace your dependencies
-
-[[img-libs]]
-image::Libs.gif[title="_IDE integration when you put your dependencies information in the buildSrc_",alt="IDE Integration", link="{master}/doc/Libs.gif"]
-
-Synchronize your Gradle build.
-
-You can now start to replace your magic strings with the properties available in link:{libs_kt}[`Libs.kt`^]
-
-```kotlin
-dependencies {
-    implementation(Libs.okio)
-    implementation(Libs.com_squareup_moshi_moshi)
-}
-```
-
-Once you have replaced your magic strings by `Libs.xxx`, the main feature provided by this plugin is to search for dependencies updates.
-
-== Search for dependencies updates
-
-Upgrade dependencies tend to be tedious but it is critically important:
-
-- Few projects have versioned documentation: master/README.md is their documentation. This means you can waste time trying out snippets that do not work in the version you are using.
-- When you open an issue, you will often be asked: Can you reproduce this problem in the latest version?
-- On the other hand, you don’t want to break your app because there was a breaking change and you didn’t bother to read the CHANGELOG documenting it.
-
-This plugin inherits from the {benmanes}[Gradle Versions plugin^]
-the feature to automatically determine which dependencies have updates.
-
-When you decide you want to update some dependencies, run again the plugin:
-
-```bash
-$ ./gradlew buildSrcVersions
-> Task :dependencyUpdates
-> Task :buildSrcVersions
-        modified:   buildSrc/src/main/kotlin/Libs.kt
-        modified:   buildSrc/src/main/kotlin/Versions.kt
-
-```
-
-The file link:{versions_kt}[`Versions.kt`^]  is regenerated with a comment indicating which new version is available.
-
-At that point, your build is exactly the same. Commit.
-
-
-[[img-versions]]
-image::Versions.gif[title="_buildSrcVersions search for dependencies updates and let you decide which you want to apply_",alt="IDE Integration", link="{master}/doc/Libs.gif"]
-
-Don’t waste your time finding out manually what is the exact latest stable version available. Instead, spend it deciding whether you want or not to update the version. The format is optimized to update with one DELETE key:
-
-image::press-to-delete.png[title="Press DELETE to update",alt="Press DELETE to update"]
-
-Once you are done:
-
-- Sync your Gradle build
-- Run your unit tests and otherwise verify that it works.
-- Commit.
-
 == Configuration
 
 No configuration is required, but some things are configurable.
@@ -196,16 +121,25 @@ The default configuration is:
 ```
 // See Plugin configuration at https://github.com/jmfayard/buildSrcVersions/issues/53
 buildSrcVersions {
-    indent = "  "
+    rejectVersionIf {
+        isNonStable(candidate.version)
+    }
+    indent = "from-editorconfig-file"
     renameLibs = "Libs"
     renameVersions = "Versions"
-    rejectedVersionKeywords("alpha", "beta", "rc", "cr", "m", "preview", "eap")
     useFdqnFor() // nothing
 }
 ```
 
-
 See https://github.com/jmfayard/buildSrcVersions/issues/53[Issue #53: Plugin Configuration]
+
+
+== Design goals
+
+- **First, to do no harm.** The plugin should never update itself or otherwise break an existing build. The plugin should do nothing unless it's explicitely called.
+- **Be Lazy.** Use code generation to avoid writing tedious code manually. Find available updates automatically instead of googling them. The plugin should do the right thing by default, no configuration should be mandatory. Leverage IDE tooling support (auto-completion, ...).
+- **Be Humble.** Render to the programmer the things that are the programmer's. This include using the generated code and updating the dependencies.
+
 
 == FAQ
 

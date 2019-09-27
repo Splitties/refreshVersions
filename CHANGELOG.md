@@ -1,7 +1,11 @@
 # Unreleased
 
-# 0.6.1
+- Add non regression for identifiers in gradle.properties
+- Add Github issue and pull-request templates
+- Improve README
 
+
+# 0.6.1
 
 - #80 Refine naming convention
 - Add plugin version in the output
