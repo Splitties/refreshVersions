@@ -34,7 +34,7 @@
 
 {badge_version} {badge_build} {badge_mit} {badge_issues} {badge_pr}
 
-The Gradle plugin `de.fayard.buildSrcVersions` goal is to make it painless to manage your dependencies inside your IDE.
+The Gradle plugin `de.fayard.buildSrcVersions` goal is to make it as painless as possible to upgrade your project to the latest and greatest version of everything.
 
 It does that by extracting all your dependencies, searching for available dependencies updates
 and generating Kotlin code, Groovy code or Gradle properties.
