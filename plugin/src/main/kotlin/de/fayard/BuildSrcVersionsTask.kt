@@ -30,6 +30,10 @@ open class BuildSrcVersionsTask : DefaultTask() {
     @Option(description = "Update all versions, I will check git diff afterwards")
     var update: Boolean = false
 
+    @Input
+    @Option(description = "Tabs or Spaces?")
+    var indent: String = PluginConfig.INDENT_FROM_EDITOR_CONFIG
+
     @TaskAction
     fun initializeBuildSrc() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
@@ -103,7 +107,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             .distinctBy { it.versionProperty }
 
         if (versionsOnlyMode == GRADLE_PROPERTIES) {
-            updateGradleProperties.generateVersionProperties(project, dependencies)
+            updateGradleProperties.generateVersionProperties(project.file("gradle.properties"), dependencies)
             OutputFile.GRADLE_PROPERTIES.logFileWasModified()
 
         } else {
@@ -145,20 +149,16 @@ open class BuildSrcVersionsTask : DefaultTask() {
     fun configure(action: Action<BuildSrcVersionsExtension>) {
         this._extension = project.extensions.getByType<BuildSrcVersionsExtension>() as BuildSrcVersionsExtensionImpl
         action.execute(this._extension)
-    }
-
-    private fun extension(): BuildSrcVersionsExtensionImpl {
-        val extension: BuildSrcVersionsExtensionImpl = _extension
-        if (extension.indent == PluginConfig.INDENT_FROM_EDITOR_CONFIG) {
+        if (_extension.indent == PluginConfig.INDENT_FROM_EDITOR_CONFIG) {
             val findIndentForKotlin = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin"))
-            extension.indent = findIndentForKotlin ?: PluginConfig.DEFAULT_INDENT
+            indent = findIndentForKotlin ?: PluginConfig.DEFAULT_INDENT
         }
-        if (extension.alwaysUpdateVersions) {
+        if (_extension.alwaysUpdateVersions) {
             update = true
         }
-        return extension
     }
 
+    private fun extension(): BuildSrcVersionsExtensionImpl = _extension
 
     fun BuildSrcVersionsExtension.shouldInitializeBuildSrc() = when(versionsOnlyMode) {
         null -> true

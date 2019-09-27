@@ -14,6 +14,7 @@ group = "de.fayard"
 
 buildSrcVersions {
     // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
+    indent = "     "
 }
 
 repositories {

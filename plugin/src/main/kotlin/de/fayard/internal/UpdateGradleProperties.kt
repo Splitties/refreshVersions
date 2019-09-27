@@ -1,13 +1,13 @@
 package de.fayard.internal
 
 import de.fayard.BuildSrcVersionsExtension
-import org.gradle.api.Project
+import java.io.File
 
 data class UpdateGradleProperties(
     val extension: BuildSrcVersionsExtension
 ) {
 
-    fun generateVersionProperties(project: Project, dependencies: List<Dependency>) = with(UpdateVersionsOnly) {
+    fun generateVersionProperties(file: File, dependencies: List<Dependency>) = with(UpdateVersionsOnly) {
         val dependenciesLines = dependencies
             .sortedBy { d -> d.versionName.contains("gradle_plugin").not() }
             .map { d -> d.asGradleProperty() }
@@ -17,7 +17,7 @@ data class UpdateGradleProperties(
         }
 
         updateGradleProperties(
-            project = project,
+            file = file,
             newLines = newLines,
             removeIf = { line -> line.wasGeneratedByPlugin() }
         )
@@ -31,8 +31,7 @@ data class UpdateGradleProperties(
         else -> false
     }
 
-    fun updateGradleProperties(project: Project, newLines: List<String>, removeIf: (String) -> Boolean) {
-        val file = project.file("gradle.properties")
+    fun updateGradleProperties(file: File, newLines: List<String>, removeIf: (String) -> Boolean) {
         if (!file.exists()) file.createNewFile()
 
         val existingLines = file.readLines().filterNot { line -> removeIf(line) }

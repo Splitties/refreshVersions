@@ -8,7 +8,7 @@ pluginManagement {
         def property = "plugin.${requested.id.id}"
         if (settings.ext.has(property) && resolutionStrategyConfig != "false") {
             def version = settings.ext.get(property)
-            if (resolutionStrategyConfig == "verbose") print("ResolutionStrategy found version=$version from property=$property")
+            if (resolutionStrategyConfig == "verbose") print("ResolutionStrategy selected version=$version from property=$property")
             useVersion(version)
         }
     }

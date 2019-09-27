@@ -22,6 +22,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:3.10.0")
     implementation("com.squareup.okhttp3:okhttp-urlconnection:3.10.0")
     implementation(kotlin("stdlib-jdk8"))
+    implementation("org.mongodb:mongo-java-driver:3.11.0")
 }
 
 tasks.register("run", JavaExec::class.java) {
@@ -45,10 +46,10 @@ tasks.withType<Wrapper> {
 buildSrcVersions {
     // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
     alwaysUpdateVersions()
-    useFqdnFor("guice")
+    useFqdnFor("guice", "mongo-java-driver")
     renameLibs = "Libs"
     renameVersions = "Versions"
-//    indent = "  "
+    indent = "     "
     rejectVersionIf {
         isNonStable(candidate.version) && isNonStable(currentVersion).not()
     }

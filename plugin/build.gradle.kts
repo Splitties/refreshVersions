@@ -85,3 +85,7 @@ buildScan {
     setTermsOfServiceAgree("yes")
     publishAlways()
 }
+
+kotlinDslPluginOptions {
+    experimentalWarning.set(false)
+}

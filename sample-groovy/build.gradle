@@ -10,6 +10,7 @@ group = "de.fayard"
 
 buildSrcVersions {
     // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
+    indent = "     "
 }
 
 repositories {
@@ -20,8 +21,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.google.guava:guava:15.0")
-    implementation("com.google.inject:guice:2.0")
+    compile("com.google.guava:guava:15.0")
+    compile("com.google.inject:guice:2.0")
 }
 
 def isNonStable = { String version ->
@@ -34,10 +35,10 @@ buildSrcVersions {
     useFqdnFor('module')
     renameLibs = "Libs"
     renameVersions = "Versions"
-    indent = "  "
-    rejectVersionIf {
-        isNonStable(candidate.version) && !isNonStable(currentVersion)
-    }
+    indent = "    "
+//    rejectVersionIf {
+//        isNonStable(candidate.version) && !isNonStable(currentVersion)
+//    }
 }
 wrapper {
     distributionType = Wrapper.DistributionType.ALL

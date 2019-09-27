@@ -12,6 +12,8 @@ object Versions {
 
     const val com_gradle_build_scan_gradle_plugin: String = "2.4.2"
 
+    const val org_mongodb_mongo_java_driver: String = "3.11.0"
+
     const val com_google_inject_guice: String = "2.0"
 
     const val com_squareup_okhttp3: String = "4.2.0"

@@ -1,11 +1,14 @@
 package de.fayard
 
+import de.fayard.VersionsOnlyMode.GRADLE_PROPERTIES
+import de.fayard.VersionsOnlyMode.GROOVY_DEF
+import de.fayard.VersionsOnlyMode.GROOVY_EXT
+import de.fayard.VersionsOnlyMode.KOTLIN_VAL
+import de.fayard.internal.PluginConfig
+import de.fayard.internal.SingleModeResult
 import de.fayard.internal.UpdateVersionsOnly.parseBuildFile
 import de.fayard.internal.UpdateVersionsOnly.parseBuildFileOrNew
 import de.fayard.internal.UpdateVersionsOnly.regenerateBuildFile
-import de.fayard.VersionsOnlyMode.*
-import de.fayard.internal.PluginConfig
-import de.fayard.internal.SingleModeResult
 import io.kotlintest.matchers.withClue
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
@@ -47,33 +50,33 @@ class VersionsOnlyModeTest: FreeSpec({
         result shouldBe SingleModeResult.NEW_FILE.copy(indentation = PluginConfig.SPACES4)
     }
 
-    "Regenerate file" - {
-        val testCases = listOf(
-            KOTLIN_VAL,
-            GROOVY_DEF,
-            GROOVY_EXT
-        )
-        for (mode in testCases) {
-            "For mode = $mode" {
-                val received = versionOnlyFolder.resolve("${mode}_received.txt")
-                val validated = versionOnlyFolder.resolve("${mode}_validated.txt")
-                kotlinValInput.copyTo(received, overwrite = true)
 
-                val deps = listOf(
-                    "com.squareup.okhttp3:okhttp:2.1.0 // 2.2.0",
-                    "com.squareup.okio:okio:2.0.0"
-                ).map { it.asDependency() }
+    val testCases = listOf(
+        KOTLIN_VAL,
+        GROOVY_DEF,
+        GROOVY_EXT
+    )
+    for (mode in testCases) {
+        "VersionsOnlyMode for mode = $mode" {
+            val received = versionOnlyFolder.resolve("${mode}_received.txt")
+            val validated = versionOnlyFolder.resolve("${mode}_validated.txt")
+            kotlinValInput.copyTo(received, overwrite = true)
 
-                regenerateBuildFile(received, mode, deps)
-                withClue(
-                    """Files differ. Run:
+            val deps = listOf(
+                "com.squareup.okhttp3:okhttp:2.1.0 // 2.2.0",
+                "com.squareup.okio:okio:2.0.0"
+            ).map { it.asDependency() }
+
+            regenerateBuildFile(received, mode, deps)
+            withClue(
+                """Files differ. Run:
                     |$ diff -u  ${validated.relativeTo(buildSrcVersionsDir)} ${received.relativeTo(buildSrcVersionsDir)}
                     |""".trimMargin()
-                ) {
-                    (received.readText() == validated.readText()).shouldBe(true)
-                    received.delete()
-                }
+            ) {
+                (received.readText() == validated.readText()).shouldBe(true)
+                received.delete()
             }
         }
     }
+
 })

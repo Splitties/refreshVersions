@@ -140,6 +140,7 @@ fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): List<Dep
             for (d: Dependency in list) {
                 d.mode = when {
                     d.name in useFdqnByDefault -> VersionMode.GROUP_MODULE
+                    PluginConfig.escapeVersionsKt(d.name) in useFdqnByDefault -> VersionMode.GROUP_MODULE
                     list.size >= 2 -> VersionMode.GROUP_MODULE
                     else -> VersionMode.MODULE
                 }
