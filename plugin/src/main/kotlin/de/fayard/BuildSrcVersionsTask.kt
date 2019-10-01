@@ -76,8 +76,10 @@ open class BuildSrcVersionsTask : DefaultTask() {
             OutputFile.logFileWasModified(OutputFile.LIBS.path, OutputFile.LIBS.existed)
         }
 
-        kotlinPoetry.Versions.writeTo(outputDir)
-        OutputFile.logFileWasModified(OutputFile.VERSIONS.path, OutputFile.VERSIONS.existed)
+        if (PluginConfig.useRefreshVersions.not()) {
+            kotlinPoetry.Versions.writeTo(outputDir)
+            OutputFile.logFileWasModified(OutputFile.VERSIONS.path, OutputFile.VERSIONS.existed)
+        }
 
         val renamedVersionsKt: File? = when(extension.versionsOnlyMode to extension.versionsOnlyFile) {
             null to null -> null
@@ -97,12 +99,15 @@ open class BuildSrcVersionsTask : DefaultTask() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
         val updateGradleProperties = UpdateGradleProperties(extension)
 
+        val specialDependencies =
+            listOf(PluginConfig.gradleVersionsPlugin, PluginConfig.buildSrcVersionsPlugin, PluginConfig.gradleLatestVersion(dependencyGraph))
+
         val versionsOnlyMode = when(val mode = extension.versionsOnlyMode) {
             null, KOTLIN_OBJECT -> return
             else -> mode
         }
 
-        val dependencies = (unsortedParsedDependencies + PluginConfig.gradleVersionsPlugin + PluginConfig.gradleLatestVersion(dependencyGraph))
+        val dependencies = (unsortedParsedDependencies + specialDependencies)
             .sortedBeautifullyBy { it.versionProperty }
             .distinctBy { it.versionProperty }
 
@@ -123,7 +128,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
         val message = with(PluginConfig) {
             """
-                |Running plugins.id("$PLUGIN_ID").version("$PLUGIN_VERSION") with configuration: $extension
+                |Running plugins.id("$PLUGIN_ID").version("$PLUGIN_VERSION") with useRefreshVersions=${useRefreshVersions} and extension: $extension
                 |See documentation at $issue53PluginConfiguration
                 |
             """.trimMargin()
@@ -147,7 +152,9 @@ open class BuildSrcVersionsTask : DefaultTask() {
     private lateinit var _extension: BuildSrcVersionsExtensionImpl
 
     fun configure(action: Action<BuildSrcVersionsExtension>) {
-        this._extension = project.extensions.getByType<BuildSrcVersionsExtension>() as BuildSrcVersionsExtensionImpl
+        val projectExtension = project.extensions.getByType<BuildSrcVersionsExtension>() as BuildSrcVersionsExtensionImpl
+        this._extension = projectExtension.defensiveCopy()
+
         action.execute(this._extension)
         if (_extension.indent == PluginConfig.INDENT_FROM_EDITOR_CONFIG) {
             val findIndentForKotlin = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin"))
@@ -156,6 +163,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         if (_extension.alwaysUpdateVersions) {
             update = true
         }
+        PluginConfig.useRefreshVersions = project.hasProperty("plugin.de.fayard.buildSrcVersions")
     }
 
     private fun extension(): BuildSrcVersionsExtensionImpl = _extension
