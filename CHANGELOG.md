@@ -1,5 +1,18 @@
 # Unreleased
 
+# 0.6.2
+
+If you want to manage your versions from gradle.properties for better compilation avoidance,
+but still want to have buildSrc/src/main/Libs.kt generated in your multi-module Gradle build,
+that's now possible.
+ 
+- Run `$ ./gradlew refreshVersions && ./gradlew buildSrcVersions`
+- To look for available dependency updates, run `$ ./gradlew refreshVersions`
+- When you add a dependency, run `$ ./gradlew buildSrcVersions`
+
+Other changes
+
+- Fixes #92 gradle.properties is getting updated and Versions.kt stops updating when running buildSrcVersions  
 - Add non regression for identifiers in gradle.properties
 - Add Github issue and pull-request templates
 - Improve README

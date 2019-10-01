@@ -4,6 +4,7 @@
 - Run task `:publishPlugins` 
 - Check plugin portal https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions
 - Update CHANGELOG
+- Create a GitHub release https://github.com/jmfayard/buildSrcVersions/releases/new
 - Try the plugin in sample projects
 - Update `:plugin_version:` in `README.adoc`
 - Otherwise update the README

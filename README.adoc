@@ -1,5 +1,5 @@
 //include::includes.adoc[]
-:plugin_version: 0.6.1
+:plugin_version: 0.6.2
 :repo: jmfayard/buildSrcVersions
 :branch: 26-buildSrcVersions
 :github: https://github.com/{repo}
@@ -114,6 +114,7 @@ Not only code, but also good documentation can help you upgrate an old project t
 
 I have a series of articles called `Built with Gradle`:
 
+- https://dev.to/jmfayard/my-project-is-open-to-kotlin-contributors-m4b[#hacktoberfest : project is open to contributors!]
 - https://dev.to/jmfayard/helping-out-with-gradle-builds-for-hacktoberfest-1c1c[Helping out with Gradle builds for hacktoberfest]
 - https://dev.to/jmfayard/the-one-gradle-trick-that-supersedes-all-the-others-5bpg[Use the Build Scan ! The one Gradle trick that supersedes all the others]
 - https://dev.to/jmfayard/configuring-gradle-with-gradle-properties-211k[Configuring Gradle with the `gradle.properties` file]

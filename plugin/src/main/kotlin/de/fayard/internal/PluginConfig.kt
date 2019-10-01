@@ -17,7 +17,7 @@ object PluginConfig {
 
 
     const val PLUGIN_ID = "de.fayard.buildSrcVersions"
-    const val PLUGIN_VERSION = "0.6.2" // plugin.de.fayard.buildSrcVersions
+    const val PLUGIN_VERSION = "0.6.3" // plugin.de.fayard.buildSrcVersions
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
     const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.25.0" // Sync with plugin/build.gradle.kts
     const val EXTENSION_NAME = "buildSrcVersions"
@@ -207,6 +207,14 @@ object PluginConfig {
         available = null
     )
 
+    val buildSrcVersionsPlugin: Dependency = Dependency(
+        group = "de.fayard",
+        name = "$PLUGIN_ID.gradle.plugin",
+        version = PLUGIN_VERSION,
+        mode = MODULE,
+        available = null
+    )
+
     fun gradleLatestVersion(graph: DependencyGraph): Dependency = Dependency(
         group = "org.gradle",
         name = GRADLE_LATEST_VERSION,
@@ -218,6 +226,7 @@ object PluginConfig {
         }
     )
 
+    var useRefreshVersions: Boolean = false
 
     lateinit var configureGradleVersions: (DependencyUpdatesTask.() -> Unit) -> Unit
 
