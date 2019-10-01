@@ -39,7 +39,7 @@ tasks.withType(JavaExec::class.java) {
 
 // How to update Gradle itself? https://github.com/jmfayard/buildSrcVersions/issues/19
 tasks.withType<Wrapper> {
-    gradleVersion = Versions.gradleLatestVersion
+    gradleVersion = findProperty("gradleLatestVersion") as? String ?: gradle.gradleVersion
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -49,7 +49,7 @@ buildSrcVersions {
     useFqdnFor("guice", "mongo-java-driver")
     renameLibs = "Libs"
     renameVersions = "Versions"
-    indent = "     "
+    indent = "    "
     rejectVersionIf {
         isNonStable(candidate.version) && isNonStable(currentVersion).not()
     }

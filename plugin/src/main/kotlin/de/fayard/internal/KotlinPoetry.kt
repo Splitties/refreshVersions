@@ -106,13 +106,15 @@ fun Dependency.newerVersion(): String?  =
     }
 
 fun Dependency.generateLibsProperty(extension: BuildSrcVersionsExtension): PropertySpec {
-    val libValue = when(version) {
-        "none" -> CodeBlock.of("%S", "$group:$name")
+    val libValue = when {
+        version == "none" -> CodeBlock.of("%S", "$group:$name")
+        PluginConfig.useRefreshVersions -> CodeBlock.of("%S", "$group:$name:$version")
         else -> CodeBlock.of("%S + ${extension.renameVersions}.%L", "$group:$name:", versionName)
     }
 
     val libComment = when {
         projectUrl == null -> null
+        PluginConfig.useRefreshVersions -> null
          else -> CodeBlock.of("%L", this.projectUrl)
     }
 

@@ -207,6 +207,14 @@ object PluginConfig {
         available = null
     )
 
+    val buildSrcVersionsPlugin: Dependency = Dependency(
+        group = "de.fayard",
+        name = "$PLUGIN_ID.gradle.plugin",
+        version = PLUGIN_VERSION,
+        mode = MODULE,
+        available = null
+    )
+
     fun gradleLatestVersion(graph: DependencyGraph): Dependency = Dependency(
         group = "org.gradle",
         name = GRADLE_LATEST_VERSION,
@@ -218,6 +226,7 @@ object PluginConfig {
         }
     )
 
+    var useRefreshVersions: Boolean = false
 
     lateinit var configureGradleVersions: (DependencyUpdatesTask.() -> Unit) -> Unit
 
