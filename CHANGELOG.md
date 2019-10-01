@@ -1,6 +1,6 @@
 # Unreleased
 
-New feature
+# 0.6.2
 
 If you want to manage your versions from gradle.properties for better compilation avoidance,
 but still want to have buildSrc/src/main/Libs.kt generated in your multi-module Gradle build,
