@@ -1,5 +1,6 @@
-//include::includes.adoc[]
-:plugin_version: 0.6.2
+// plugin.de.fayard.buildSrcVersions
+:plugin_version: 0.6.3
+:gradle_version: 5.6.2
 :repo: jmfayard/buildSrcVersions
 :branch: 26-buildSrcVersions
 :github: https://github.com/{repo}
@@ -55,6 +56,10 @@ plugins {
 }
 // Don't put any code before the buildscripts {} and plugins {} block
 ----
+
+Updating Gradle is usually a good idea. You get less bugs, more features and more build speed, and it's as simple as this:
+
+`$ ./gradlew wrapper --gradle-version {gradle_version}`
 
 
 If you have to, use instead the legacy `buildscript { ... }` syntax
@@ -122,6 +127,7 @@ I have a series of articles called `Built with Gradle`:
 - https://dev.to/jmfayard/better-dependency-management-in-android-studio-3-5-with-gradle-buildsrcversions-34e9[Better dependency management in Android Studio 3.5 with Gradle buildSrcVersions]
 
 You can follow me at https://dev.to/jmfayard
+
 
 
 == Configuration

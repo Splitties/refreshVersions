@@ -24,7 +24,7 @@ class NonRegression : FreeSpec({
         val received = approved.resolveSibling(approved.nameWithoutExtension + "-received" + approved.extension)
         val message = """
             |Files differ. Run:
-            |$ diff -u  ${approved.relativeTo(buildSrcVersionsDir)} ${received.relativeTo(buildSrcVersionsDir)}
+            |       diff -u  ${approved.relativeTo(buildSrcVersionsDir)} ${received.relativeTo(buildSrcVersionsDir)}
             |""".trimMargin()
         return Pair(received, message)
     }

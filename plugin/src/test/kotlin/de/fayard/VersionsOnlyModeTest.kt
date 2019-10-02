@@ -4,7 +4,6 @@ import de.fayard.VersionsOnlyMode.GRADLE_PROPERTIES
 import de.fayard.VersionsOnlyMode.GROOVY_DEF
 import de.fayard.VersionsOnlyMode.GROOVY_EXT
 import de.fayard.VersionsOnlyMode.KOTLIN_VAL
-import de.fayard.internal.PluginConfig
 import de.fayard.internal.SingleModeResult
 import de.fayard.internal.UpdateVersionsOnly.parseBuildFile
 import de.fayard.internal.UpdateVersionsOnly.parseBuildFileOrNew
@@ -37,17 +36,17 @@ class VersionsOnlyModeTest: FreeSpec({
     "always modify gradle.properties" {
         val (file1, result1) = parseBuildFileOrNew(null, GRADLE_PROPERTIES, File("."))
         file1.name shouldBe "gradle.properties"
-        result1 shouldBe SingleModeResult.NEW_FILE
+        result1 shouldBe SingleModeResult.newFile(GRADLE_PROPERTIES)
 
         val (file2, result2) = parseBuildFileOrNew(File("gradle.properties"), GRADLE_PROPERTIES, File("."))
         file2.name shouldBe "gradle.properties"
-        result2 shouldBe SingleModeResult.NEW_FILE
+        result2 shouldBe SingleModeResult.newFile(GRADLE_PROPERTIES)
     }
 
     "Create new file if needed" {
         val (file, result) = parseBuildFileOrNew(null, KOTLIN_VAL, tempDir)
         file shouldBe tempDir.resolve("build.gradle.kts")
-        result shouldBe SingleModeResult.NEW_FILE.copy(indentation = PluginConfig.SPACES4)
+        result shouldBe SingleModeResult.newFile(KOTLIN_VAL)
     }
 
 
@@ -70,7 +69,7 @@ class VersionsOnlyModeTest: FreeSpec({
             regenerateBuildFile(received, mode, deps)
             withClue(
                 """Files differ. Run:
-                    |$ diff -u  ${validated.relativeTo(buildSrcVersionsDir)} ${received.relativeTo(buildSrcVersionsDir)}
+                    |       diff -u  ${validated.relativeTo(buildSrcVersionsDir)} ${received.relativeTo(buildSrcVersionsDir)}
                     |""".trimMargin()
             ) {
                 (received.readText() == validated.readText()).shouldBe(true)

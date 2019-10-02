@@ -29,15 +29,15 @@ object UpdateVersionsOnly {
         versionsOnlyMode == VersionsOnlyMode.GRADLE_PROPERTIES -> {
             val file = versionsOnlyFile ?: fromDir.resolve("gradle.properties")
             if (file.canRead().not()) file.createNewFile()
-            Pair(file, SingleModeResult.NEW_FILE)
+            Pair(file, SingleModeResult.newFile(versionsOnlyMode))
         }
         versionsOnlyFile == null || versionsOnlyFile.canRead().not() -> Pair(
             fromDir.resolve(versionsOnlyMode.suggestedFilename()),
-            SingleModeResult.NEW_FILE.copy(indentation = versionsOnlyMode.defaultIndent)
+            SingleModeResult.newFile(versionsOnlyMode)
         )
         else -> Pair(
             versionsOnlyFile,
-            parseBuildFile(versionsOnlyFile, versionsOnlyMode) ?: SingleModeResult.BLOC_NOT_FOUND
+            parseBuildFile(versionsOnlyFile, versionsOnlyMode) ?: SingleModeResult.blockNotFound(versionsOnlyMode)
         )
     }
 
@@ -75,7 +75,7 @@ object UpdateVersionsOnly {
 
         val newBlock = regenerateBlock(versionsOnlyMode, sortedDependencies, indent)
 
-        if (parseResult != SingleModeResult.BLOC_NOT_FOUND) {
+        if (parseResult.isBlockNotFound().not()) {
             val lines = file.readLines()
             val newLines = lines.subList(0, startOfBlock) + newBlock + lines.subList(endOfBlock + 1, lines.size)
             file.writeText(newLines.joinWithNewlines() + "\n")

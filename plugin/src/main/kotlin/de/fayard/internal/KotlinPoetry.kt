@@ -12,7 +12,12 @@ import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
 
-fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension: BuildSrcVersionsExtension): KotlinPoetry {
+fun kotlinpoet(
+    versions: List<Dependency>,
+    gradleConfig: GradleConfig,
+    extension: BuildSrcVersionsExtension,
+    indent: String
+): KotlinPoetry {
 
 
     val gradleVersion = constStringProperty(
@@ -42,12 +47,12 @@ fun kotlinpoet(versions: List<Dependency>, gradleConfig: GradleConfig, extension
 
 
     val LibsFile = FileSpec.builder("", extension.renameLibs)
-        .indent(extension.indent)
+        .indent(indent)
         .addType(Libs)
         .build()
 
     val VersionsFile = FileSpec.builder("", extension.renameVersions)
-        .indent(extension.indent)
+        .indent(indent)
         .addType(Versions)
         .apply { addMaybeBuildSrcVersions(versions, extension) }
         .build()

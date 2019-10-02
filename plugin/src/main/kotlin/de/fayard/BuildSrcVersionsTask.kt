@@ -31,8 +31,9 @@ open class BuildSrcVersionsTask : DefaultTask() {
     var update: Boolean = false
 
     @Input
+    @Optional
     @Option(description = "Tabs or Spaces?")
-    var indent: String = PluginConfig.INDENT_FROM_EDITOR_CONFIG
+    var indent: String? = null
 
     @TaskAction
     fun initializeBuildSrc() {
@@ -69,7 +70,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         }
         val versions = unsortedParsedDependencies.sortedBeautifullyBy { it.versionName }
 
-        val kotlinPoetry: KotlinPoetry = kotlinpoet(versions, dependencyGraph.gradle, extension)
+        val kotlinPoetry: KotlinPoetry = kotlinpoet(versions, dependencyGraph.gradle, extension, computeIndent())
 
         if (shouldGenerateLibsKt) {
             kotlinPoetry.Libs.writeTo(outputDir)
@@ -145,7 +146,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
     private val unsortedParsedDependencies: List<Dependency> by lazy {
         val useFdqnByDefault = extension().useFqqnFor.map { PluginConfig.escapeVersionsKt(it) }
         parseGraph(dependencyGraph, useFdqnByDefault + PluginConfig.MEANING_LESS_NAMES)
-            .map { d -> d.maybeUpdate(update) }
+            .map { d -> d.maybeUpdate(update || extension().alwaysUpdateVersions) }
     }
 
     @Input @Optional @Transient
@@ -154,16 +155,14 @@ open class BuildSrcVersionsTask : DefaultTask() {
     fun configure(action: Action<BuildSrcVersionsExtension>) {
         val projectExtension = project.extensions.getByType<BuildSrcVersionsExtension>() as BuildSrcVersionsExtensionImpl
         this._extension = projectExtension.defensiveCopy()
-
         action.execute(this._extension)
-        if (_extension.indent == PluginConfig.INDENT_FROM_EDITOR_CONFIG) {
-            val findIndentForKotlin = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin"))
-            indent = findIndentForKotlin ?: PluginConfig.DEFAULT_INDENT
-        }
-        if (_extension.alwaysUpdateVersions) {
-            update = true
-        }
         PluginConfig.useRefreshVersions = project.hasProperty("plugin.de.fayard.buildSrcVersions")
+    }
+
+    private fun computeIndent(): String {
+        val fromEditorConfig = EditorConfig.findIndentForKotlin(project.file("buildSrc/src/main/kotlin"))
+        val computedIndent = indent ?: extension().indent ?: fromEditorConfig ?: PluginConfig.DEFAULT_INDENT
+        return if (computedIndent.isBlank()) computedIndent else PluginConfig.DEFAULT_INDENT
     }
 
     private fun extension(): BuildSrcVersionsExtensionImpl = _extension

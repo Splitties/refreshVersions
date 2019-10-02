@@ -1,6 +1,7 @@
 package de.fayard.internal
 
 import com.squareup.kotlinpoet.FileSpec
+import de.fayard.VersionsOnlyMode
 
 data class KotlinPoetry(
     val Libs: FileSpec,
@@ -83,10 +84,15 @@ data class SingleModeResult(
     val endOfBlock: Int,
     val indentation: String
 ) {
+    fun isBlockNotFound(): Boolean {
+        return startOfBlock == -1 && endOfBlock == -1
+    }
+
+    fun isNewFile() = startOfBlock == 0 && endOfBlock == 0
 
     companion object {
-        val NEW_FILE = SingleModeResult(0, 0, "")
-        val BLOC_NOT_FOUND = SingleModeResult(-1, -1, PluginConfig.INDENT_FROM_EDITOR_CONFIG)
+        fun blockNotFound(versionMode: VersionsOnlyMode) = SingleModeResult(-1, -1, versionMode.defaultIndent)
+        fun newFile(versionMode: VersionsOnlyMode) = SingleModeResult(0, 0, versionMode.defaultIndent)
     }
 }
 

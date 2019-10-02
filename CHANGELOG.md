@@ -1,5 +1,9 @@
 # Unreleased
 
+# 0.6.3
+
+Fix #94: Libs.kt is broken by a wrong indent
+
 # 0.6.2
 
 If you want to manage your versions from gradle.properties for better compilation avoidance,

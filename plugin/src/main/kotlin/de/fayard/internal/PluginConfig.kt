@@ -17,7 +17,7 @@ object PluginConfig {
 
 
     const val PLUGIN_ID = "de.fayard.buildSrcVersions"
-    const val PLUGIN_VERSION = "0.6.3" // plugin.de.fayard.buildSrcVersions
+    const val PLUGIN_VERSION = "0.6.4" // plugin.de.fayard.buildSrcVersions
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
     const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.25.0" // Sync with plugin/build.gradle.kts
     const val EXTENSION_NAME = "buildSrcVersions"
@@ -81,7 +81,6 @@ object PluginConfig {
 
     const val DEFAULT_LIBS = "Libs"
     const val DEFAULT_VERSIONS = "Versions"
-    const val INDENT_FROM_EDITOR_CONFIG = "from-editorconfig-file"
     const val SPACES4 = "    "
     const val SPACES2 = "  "
     const val SPACES0 = ""

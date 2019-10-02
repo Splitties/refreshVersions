@@ -7,6 +7,6 @@
 - Create a GitHub release https://github.com/jmfayard/buildSrcVersions/releases/new
 - Try the plugin in sample projects
 - Update `:plugin_version:` in `README.adoc`
+- Search for `plugin.de.fayard.buildSrcVersions` everywhere to update the version
 - Otherwise update the README
-- Increment `version` in `{plugin,sample-kotlin,sample-groovy}/build.kts`
 - Increment the version in recent articles that talk about the plugin

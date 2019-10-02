@@ -59,7 +59,7 @@ interface BuildSrcVersionsExtension {
      * Even better, define an https://editorconfig.org file.
      * It will be used if detected.
      */
-    var indent: String
+    var indent: String?
 
     /**
      * Possible values: KOTLIN_VAL, KOTLIN_OBJECT, GROOVY_DEF, GROOVY_EXT, GRADLE_PROPERTIES
