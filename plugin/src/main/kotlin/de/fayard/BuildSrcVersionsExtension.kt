@@ -36,6 +36,9 @@ interface BuildSrcVersionsExtension {
      */
     fun isNonStable(version: String): Boolean
 
+    /** Shortcut for [isNonStable(version).not()] **/
+    fun isStable(version: String): Boolean
+
     /**
      * Some dependency have a meaningful name, like "guava".
      * Others are called "core" or "compiler" and don't make sense out of context.

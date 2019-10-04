@@ -36,7 +36,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
     var indent: String? = null
 
     @TaskAction
-    fun initializeBuildSrc() {
+    fun taskActionInitializeBuildSrc() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
         if (extension.shouldInitializeBuildSrc().not()) return
 
@@ -60,7 +60,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
 
     @TaskAction
-    fun updateBuildSrc() {
+    fun taskActionUpdateBuildSrc() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
         val outputDir = project.file(OutputFile.OUTPUTDIR.path)
         val shouldGenerateLibsKt = when(extension.versionsOnlyMode) {
@@ -96,7 +96,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
 
     @TaskAction
-    fun versionsOnlyMode() {
+    fun taskActionGradleProperties() {
         val extension: BuildSrcVersionsExtensionImpl = extension()
         val updateGradleProperties = UpdateGradleProperties(extension)
 
