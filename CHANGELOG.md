@@ -1,5 +1,9 @@
 # Unreleased
 
+# 0.6.4
+
+- isStable(currentVersion) && isNonStable(candidate.version) #96
+
 # 0.6.3
 
 Fix #94: Libs.kt is broken by a wrong indent

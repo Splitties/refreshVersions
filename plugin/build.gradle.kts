@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.buildSrcVersions") version ("0.6.3") // plugin.de.fayard.buildSrcVersions
+    id("de.fayard.buildSrcVersions") version ("0.6.4") // plugin.de.fayard.buildSrcVersions
 
     id("com.gradle.plugin-publish")
     `java-gradle-plugin`
@@ -11,7 +11,7 @@ plugins {
 }
 
 
-version = "0.6.4" // plugin.de.fayard.buildSrcVersions
+version = "0.6.5" // plugin.de.fayard.buildSrcVersions
 group = "de.fayard"
 
 

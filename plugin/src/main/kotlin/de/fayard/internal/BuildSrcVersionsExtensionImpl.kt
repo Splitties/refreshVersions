@@ -36,6 +36,10 @@ internal open class BuildSrcVersionsExtensionImpl(
         return PluginConfig.isNonStable(version)
     }
 
+    override fun isStable(version: String): Boolean {
+        return isNonStable(version).not()
+    }
+
     override fun useFqdnFor(vararg dependencyName: String) {
         useFqqnFor = dependencyName.toList()
     }
