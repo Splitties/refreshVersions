@@ -46,6 +46,16 @@ class GradlePropertiesTest : FreeSpec({
                 val publish = "com.gradle.plugin-publish:com.gradle.plugin-publish.gradle.plugin:1.0".asDependency()
                 publish.asGradleProperty() shouldBe "plugin.com.gradle.plugin-publish=1.0"
             }
+
+            "replace versionPlaceHolder = _" {
+                val bsv = "com.wealthfront:magellan:_ // 1.1.0".asDependency()
+                bsv.asGradleProperty() shouldBe ("version.magellan=1.1.0")
+            }
+
+            "replace versionPlaceHolder = +" {
+                val bsv = "com.wealthfront:magellan:+ // 1.1.0".asDependency()
+                bsv.asGradleProperty() shouldBe ("version.magellan=1.1.0")
+            }
         }
     }
 })
