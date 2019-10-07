@@ -18,11 +18,17 @@ object UpdateVersionsOnly {
         }
         val commentPrefix = " available="
         val spacing = PluginConfig.spaces(key.length - commentPrefix.length - 1)
-        val available = when (val v = newerVersion()) {
-            null -> ""
-            else -> "\n#$spacing#$commentPrefix$v"
+        val newerVersion = newerVersion()
+        val available = when {
+            newerVersion == null -> ""
+            version in listOf("+", "_") -> ""
+            else -> "\n#$spacing#$commentPrefix$newerVersion"
         }
-        return "$key=$version$available"
+        val validatedVersion = when (version) {
+            "+", "_" -> newerVersion() ?: version
+            else -> version
+        }
+        return "$key=$validatedVersion$available"
     }
 
     fun parseBuildFileOrNew(versionsOnlyFile: File?, versionsOnlyMode: VersionsOnlyMode, fromDir: File): Pair<File, SingleModeResult> = when {

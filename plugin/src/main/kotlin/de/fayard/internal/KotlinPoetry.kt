@@ -108,7 +108,7 @@ fun Dependency.newerVersion(): String?  =
         available.milestone.isNullOrBlank().not() -> available.milestone
         available.integration.isNullOrBlank().not() -> available.integration
         else -> null
-    }
+    }?.trim()
 
 fun Dependency.generateLibsProperty(extension: BuildSrcVersionsExtension): PropertySpec {
     val libValue = when {

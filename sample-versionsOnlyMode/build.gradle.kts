@@ -27,6 +27,8 @@ repositories {
 dependencies {
     implementation("com.google.guava:guava:15.0")
     implementation("com.google.inject:guice:2.0")
+    implementation("com.wealthfront:magellan:_")
+    implementation("com.wealthfront:magellan-rx:+")
 }
 
 tasks.withType<KotlinCompile> {
