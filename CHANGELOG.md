@@ -1,8 +1,17 @@
 # Unreleased
 
+# 0.6.5
+
+- useFqdnFor() should also work for groups #99
+- Always update version "_" or "+" #98
+- (maybe) Non deterministic behavior #95 
+- rejectVersionIf { isStable(currentVersion) && isNonStable(candidate.version) } #96
+
 # 0.6.4
 
 - isStable(currentVersion) && isNonStable(candidate.version) #96
+- useFqdnFor() should also work for groups #99
+- 
 
 # 0.6.3
 
