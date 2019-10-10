@@ -8,9 +8,13 @@ import kotlin.String
  */
 object Libs {
     const val com_gradle_build_scan_gradle_plugin: String =
-        "com.gradle.build-scan:com.gradle.build-scan.gradle.plugin:2.4.2"
+            "com.gradle.build-scan:com.gradle.build-scan.gradle.plugin:2.4.2"
+
+    const val androidx_annotation_annotation: String = "androidx.annotation:annotation:1.1.0"
+
+    const val org_jetbrains_annotation: String = "org.jetbrains:annotation:17.0.0"
+
+    const val com_google_inject_guice: String = "com.google.inject:guice:2.0"
 
     const val guava: String = "com.google.guava:guava:15.0"
-
-    const val guice: String = "com.google.inject:guice:2.0"
 }

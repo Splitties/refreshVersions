@@ -37,6 +37,7 @@ data class Dependency(
     var mode: VersionMode = VersionMode.MODULE,
     val available: AvailableDependency? = null
 ) {
+    val module: String get() = name
     val versionName: String
         get() = PluginConfig.versionKtFor(this)
 

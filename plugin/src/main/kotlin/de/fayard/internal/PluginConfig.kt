@@ -17,7 +17,7 @@ object PluginConfig {
 
 
     const val PLUGIN_ID = "de.fayard.buildSrcVersions"
-    const val PLUGIN_VERSION = "0.6.5" // plugin.de.fayard.buildSrcVersions
+    const val PLUGIN_VERSION = "0.7.0" // plugin.de.fayard.buildSrcVersions
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
     const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.25.0" // Sync with plugin/build.gradle.kts
     const val EXTENSION_NAME = "buildSrcVersions"
@@ -107,7 +107,7 @@ object PluginConfig {
     val MEANING_LESS_NAMES: List<String> = listOf(
         "common", "core", "testing", "runtime", "extensions",
         "compiler", "migration", "db", "rules", "runner", "monitor", "loader",
-        "media", "print", "io", "media", "collection", "gradle", "android"
+        "media", "print", "io", "collection", "gradle", "android"
     )
 
     val INITIAL_GITIGNORE = """
@@ -224,6 +224,17 @@ object PluginConfig {
             else -> AvailableDependency(release = graph.gradle.current.version)
         }
     )
+
+    fun computeUseFqdnFor(
+        dependencies: List<Dependency>,
+        configured: List<String>,
+        byDefault: List<String> = MEANING_LESS_NAMES
+    ) : List<String> {
+        val groups = (configured + byDefault).filter { it.contains(".") }.distinct()
+        val depsFromGroups = dependencies.filter { it.group in groups }.map { it.module }
+        val ambiguities = dependencies.groupBy { it.module }.filter { it.value.size > 1 }.map { it.key }
+        return (configured + byDefault + ambiguities + depsFromGroups - groups).distinct().sorted()
+    }
 
     var useRefreshVersions: Boolean = false
 
