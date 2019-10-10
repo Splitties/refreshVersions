@@ -107,7 +107,7 @@ object PluginConfig {
     val MEANING_LESS_NAMES: List<String> = listOf(
         "common", "core", "testing", "runtime", "extensions",
         "compiler", "migration", "db", "rules", "runner", "monitor", "loader",
-        "media", "print", "io", "media", "collection", "gradle", "android"
+        "media", "print", "io", "collection", "gradle", "android"
     )
 
     val INITIAL_GITIGNORE = """
@@ -224,6 +224,17 @@ object PluginConfig {
             else -> AvailableDependency(release = graph.gradle.current.version)
         }
     )
+
+    fun computeUseFqdnFor(
+        dependencies: List<Dependency>,
+        configured: List<String>,
+        byDefault: List<String> = MEANING_LESS_NAMES
+    ) : List<String> {
+        val groups = (configured + byDefault).filter { it.contains(".") }.distinct()
+        val depsFromGroups = dependencies.filter { it.group in groups }.map { it.module }
+        val ambiguities = dependencies.groupBy { it.module }.filter { it.value.size > 1 }.map { it.key }
+        return (configured + byDefault + ambiguities + depsFromGroups - groups).distinct().sorted()
+    }
 
     var useRefreshVersions: Boolean = false
 

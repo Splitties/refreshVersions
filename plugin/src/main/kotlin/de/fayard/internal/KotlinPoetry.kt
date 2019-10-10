@@ -134,32 +134,28 @@ fun Dependency.generateLibsProperty(extension: BuildSrcVersionsExtension): Prope
 
 fun parseGraph(
     graph: DependencyGraph,
-    useFdqnByDefault: List<String>
+    useFdqn: List<String>
 ): List<Dependency> {
-
     val dependencies: List<Dependency> = graph.current + graph.exceeded + graph.outdated + graph.unresolved
-    return dependencies.checkModeAndNames(useFdqnByDefault).findCommonVersions()
+    val resolvedUseFqdn = PluginConfig.computeUseFqdnFor(dependencies, useFdqn, PluginConfig.MEANING_LESS_NAMES)
+    return dependencies.checkModeAndNames(resolvedUseFqdn).findCommonVersions()
 }
 
 fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): List<Dependency> {
-    groupBy { d -> d.name }
-        .forEach { (name, list) ->
-            for (d: Dependency in list) {
-                d.mode = when {
-                    d.name in useFdqnByDefault -> VersionMode.GROUP_MODULE
-                    PluginConfig.escapeVersionsKt(d.name) in useFdqnByDefault -> VersionMode.GROUP_MODULE
-                    list.size >= 2 -> VersionMode.GROUP_MODULE
-                    else -> VersionMode.MODULE
-                }
-                d.escapedName = PluginConfig.escapeVersionsKt(
-                    when (d.mode) {
-                        VersionMode.MODULE -> d.name
-                        VersionMode.GROUP -> d.group
-                        VersionMode.GROUP_MODULE -> "${d.group}_${d.name}"
-                    }
-                )
-            }
+    for (d: Dependency in this) {
+        d.mode = when {
+            d.name in useFdqnByDefault -> VersionMode.GROUP_MODULE
+            PluginConfig.escapeVersionsKt(d.name) in useFdqnByDefault -> VersionMode.GROUP_MODULE
+            else -> VersionMode.MODULE
         }
+        d.escapedName = PluginConfig.escapeVersionsKt(
+            when (d.mode) {
+                VersionMode.MODULE -> d.name
+                VersionMode.GROUP -> d.group
+                VersionMode.GROUP_MODULE -> "${d.group}_${d.name}"
+            }
+        )
+    }
     return this
 }
 
