@@ -46,7 +46,7 @@ multidex_instrumentation
 okhttp
 okio
 org_jetbrains_kotlin
-org_jetbrains_kotlinx
+org_jetbrains_kotlinx_kotlinx_coroutines
 org_robolectric
 photoview
 play_services_gcm

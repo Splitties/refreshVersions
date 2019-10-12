@@ -27,7 +27,7 @@ lint_gradle
 logback_classic
 mockito_inline
 org_jetbrains_kotlin
-org_jetbrains_kotlinx
+org_jetbrains_kotlinx_kotlinx_coroutines
 retrofit2_kotlin_coroutines_experimental_adapter
 rxandroid
 rxjava
