@@ -4,12 +4,13 @@ import de.fayard.internal.Dependency
 import de.fayard.internal.PluginConfig
 import de.fayard.internal.VersionMode
 import de.fayard.internal.findCommonVersions
+import de.fayard.internal.sortedBeautifullyBy
 import io.kotlintest.matchers.collections.containExactlyInAnyOrder
 import io.kotlintest.should
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
 
-class FqdnTest: FreeSpec({
+class DependenciesTest: FreeSpec({
     val appCompat = "androidx.appcompat:appcompat:_".asDependency()
     val asyncLayoutInflater = "androidx.asynclayoutinflater:asynclayoutinflater:_".asDependency()
     val browser = "androidx.browser:browser:_".asDependency()
@@ -20,9 +21,29 @@ class FqdnTest: FreeSpec({
     val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0".asDependency()
     val coroutinesCommon = "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.0.0".asDependency()
     val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.0".asDependency()
+    val guava = "com.google.guava:guava:15.0".asDependency(fqdn = true)
 
     val ALL = listOf(appCompat, asyncLayoutInflater, browser, car, sliceCore, sliceView)
     val NO_DEFAULT = emptyList<String>()
+
+    "order by" - {
+        fun orderDependencies(orderBy: OrderBy, vararg dependency: Dependency): List<String> = dependency.toList()
+            .findCommonVersions()
+            .sortedBeautifullyBy(orderBy) { PluginConfig.versionPropertyFor(it) }
+            .map { PluginConfig.versionPropertyFor(it) }
+
+        "group and length" {
+            orderDependencies(OrderBy.GROUP_AND_LENGTH, guava, coroutinesCommon, car, sliceCore, kotlinxSerialization) shouldBe listOf(
+                "org.jetbrains.kotlinx.kotlinx-serialization", "org.jetbrains.kotlinx.kotlinx-coroutines", "com.google.guava..guava", "slice-core", "car"
+            )
+        }
+
+        "group and alhpabetical" {
+            orderDependencies(OrderBy.GROUP_AND_ALPHABETICAL, guava, coroutinesCommon, car, sliceCore, kotlinxSerialization) shouldBe listOf(
+                "org.jetbrains.kotlinx.kotlinx-coroutines", "org.jetbrains.kotlinx.kotlinx-serialization", "com.google.guava..guava", "car", "slice-core"
+            )
+        }
+    }
 
     "findCommonVersions" - {
 

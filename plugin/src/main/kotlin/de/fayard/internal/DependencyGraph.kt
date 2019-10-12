@@ -68,7 +68,7 @@ data class Dependency(
 }
 
 enum class VersionMode {
-    MODULE, GROUP, GROUP_MODULE
+    GROUP, GROUP_MODULE, MODULE
 }
 
 data class GradleConfig(

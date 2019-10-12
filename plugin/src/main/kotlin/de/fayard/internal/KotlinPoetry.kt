@@ -8,6 +8,8 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.asClassName
 import de.fayard.BuildSrcVersionsExtension
+import de.fayard.OrderBy
+import de.fayard.OrderBy.*
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
@@ -62,10 +64,14 @@ fun kotlinpoet(
 }
 
 // https://github.com/jmfayard/buildSrcVersions/issues/65
-fun <T> List<T>.sortedBeautifullyBy(exceptIf: Boolean = false, selection: (T) -> String?) : List<T> =
-    this.filterNot { selection(it) == null }
+fun List<Dependency>.sortedBeautifullyBy(orderBy: OrderBy, selection: (Dependency) -> String?) : List<Dependency> {
+    val unsorted = this.filterNot { selection(it) == null }
         .sortedBy { selection(it)!! }
-        .sortedByDescending { selection(it)!!.length }
+    return when(orderBy) {
+        GROUP_AND_LENGTH -> unsorted.sortedByDescending { selection(it)!!.length }.sortedBy { it.mode }
+        GROUP_AND_ALPHABETICAL -> unsorted.sortedBy { it.mode }
+    }
+}
 
 fun FileSpec.Builder.addMaybeBuildSrcVersions(versions: List<Dependency>, extension: BuildSrcVersionsExtension) {
     versions.firstOrNull {

@@ -2,6 +2,7 @@ package de.fayard.internal
 
 import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentFilter
 import de.fayard.BuildSrcVersionsExtension
+import de.fayard.OrderBy
 import de.fayard.VersionsOnlyMode
 
 internal open class BuildSrcVersionsExtensionImpl(
@@ -11,12 +12,13 @@ internal open class BuildSrcVersionsExtensionImpl(
     override var versionsOnlyMode: VersionsOnlyMode? = null,
     override var versionsOnlyFile: String? = null,
     var useFqqnFor: List<String> = emptyList(),
-    var alwaysUpdateVersions: Boolean = false
+    var alwaysUpdateVersions: Boolean = false,
+    override var orderBy: OrderBy = OrderBy.GROUP_AND_LENGTH
 ) : BuildSrcVersionsExtension, java.io.Serializable {
 
     // Necessary because of https://github.com/jmfayard/buildSrcVersions/issues/92
     fun defensiveCopy(): BuildSrcVersionsExtensionImpl = BuildSrcVersionsExtensionImpl(
-        renameLibs, renameVersions, indent, versionsOnlyMode, versionsOnlyFile, useFqqnFor, alwaysUpdateVersions
+        renameLibs, renameVersions, indent, versionsOnlyMode, versionsOnlyFile, useFqqnFor, alwaysUpdateVersions, orderBy
     )
 
     override fun alwaysUpdateVersions() {

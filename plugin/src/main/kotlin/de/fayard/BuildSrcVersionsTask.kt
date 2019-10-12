@@ -68,7 +68,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
             KOTLIN_OBJECT -> false
             else -> return
         }
-        val versions = unsortedParsedDependencies.sortedBeautifullyBy { it.versionName }
+        val versions = unsortedParsedDependencies.sortedBeautifullyBy(extension.orderBy) { it.versionName }
 
         val kotlinPoetry: KotlinPoetry = kotlinpoet(versions, dependencyGraph.gradle, extension, computeIndent())
 
@@ -109,7 +109,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         }
 
         val dependencies = (unsortedParsedDependencies + specialDependencies)
-            .sortedBeautifullyBy { it.versionProperty }
+            .sortedBeautifullyBy(extension.orderBy) { it.versionProperty }
             .distinctBy { it.versionProperty }
 
         if (versionsOnlyMode == GRADLE_PROPERTIES) {

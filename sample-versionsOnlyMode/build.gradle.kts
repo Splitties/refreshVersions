@@ -1,4 +1,5 @@
 import de.fayard.BuildSrcVersionsTask
+import de.fayard.OrderBy
 import de.fayard.VersionsOnlyMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -15,6 +16,7 @@ group = "de.fayard"
 buildSrcVersions {
     // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
     indent = "     "
+    orderBy = OrderBy.GROUP_AND_ALPHABETICAL
 }
 
 repositories {

@@ -81,7 +81,7 @@ class NonRegression : FreeSpec({
                     versionsOnlyFile = propertiesFile.relativeTo(buildSrcVersionsDir).path
                 )
                 val dependencies = (dependencyGraph.map { it.copy(available = null) })
-                    .sortedBeautifullyBy { it.versionProperty }
+                    .sortedBeautifullyBy(OrderBy.GROUP_AND_LENGTH) { it.versionProperty }
                     .distinctBy { it.versionProperty }
                 UpdateGradleProperties(extension).generateVersionProperties(received, dependencies)
 
