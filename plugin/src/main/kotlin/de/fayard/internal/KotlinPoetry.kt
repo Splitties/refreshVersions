@@ -151,7 +151,7 @@ fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): List<Dep
         d.escapedName = PluginConfig.escapeVersionsKt(
             when (d.mode) {
                 VersionMode.MODULE -> d.name
-                VersionMode.GROUP -> d.group
+                VersionMode.GROUP -> d.groupOrVirtualGroup()
                 VersionMode.GROUP_MODULE -> "${d.group}_${d.name}"
             }
         )
@@ -166,10 +166,11 @@ fun List<Dependency>.orderDependencies(): List<Dependency> {
 
 
 fun List<Dependency>.findCommonVersions(): List<Dependency> {
-    val map = groupBy { d -> d.group }
+    val map = groupBy { d: Dependency -> d.groupOrVirtualGroup() }
     for (deps in map.values) {
-        val groupTogether = deps.size > 1  && deps.map { it.version }.distinct().size == 1
-        if (groupTogether) {
+        val sameVersions = deps.map { it.version }.distinct().size == 1
+        val hasVirtualGroup = deps.any { it.groupOrVirtualGroup() != it.group }
+        if (sameVersions && (hasVirtualGroup || deps.size > 1)) {
             deps.forEach { d -> d.mode = VersionMode.GROUP }
         }
     }

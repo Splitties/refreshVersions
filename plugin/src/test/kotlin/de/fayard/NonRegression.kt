@@ -21,7 +21,7 @@ class NonRegression : FreeSpec({
     val jsonReports = reportsFolder.walk().filter { it.extension == "json" }.toList()
 
     fun receivedMessage(approved: File): Pair<File, String> {
-        val received = approved.resolveSibling(approved.nameWithoutExtension + "-received" + approved.extension)
+        val received = approved.resolveSibling(approved.nameWithoutExtension + "-received." + approved.extension)
         val message = """
             |Files differ. Run:
             |       diff -u  ${approved.relativeTo(buildSrcVersionsDir)} ${received.relativeTo(buildSrcVersionsDir)}

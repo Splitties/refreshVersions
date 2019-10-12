@@ -27,8 +27,11 @@ repositories {
 dependencies {
     implementation("com.google.guava:guava:15.0")
     implementation("com.google.inject:guice:2.0")
-    implementation("com.wealthfront:magellan:_")
+    implementation("com.wealthfront:magellan:+")
     implementation("com.wealthfront:magellan-rx:+")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.0")
 }
 
 tasks.withType<KotlinCompile> {

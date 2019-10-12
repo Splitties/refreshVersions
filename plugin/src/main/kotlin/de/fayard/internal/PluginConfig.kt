@@ -48,23 +48,36 @@ object PluginConfig {
      * Gradle properties can be set either in "gradle.properties" or from the command-line with
      *      $ ./gradlew -Pversion.kotlin.stdlib=1.3.50
      *  **/
-    fun considerGradleProperties(group: String, module: String): List<String> = listOf(
+    fun considerGradleProperties(group: String, module: String): List<String> = listOfNotNull(
         "version.$group..$module",
+        Dependency.virtualGroup(Dependency(group = group, name = module)),
         "version.$group",
         "version.$module"
     )
 
+    /**
+     * We want to treat all "org.getbrains.kotlinx:kotlinx-coroutines-*" as if they were a maven group
+     * with one common version, but different from org.jetbrains.kotlinx:kotlinx-serialization*
+     * For now this list is not part of the public API but feel free to add feedback that you need it.
+     * Add your use case here https://github.com/jmfayard/buildSrcVersions/issues/102
+     ***/
+    val virtualGroups : MutableList<String> = mutableListOf(
+        "org.jetbrains.kotlinx.kotlinx-coroutines",
+        "org.jetbrains.kotlinx.kotlinx-serialization"
+    )
+
+
     @JvmStatic
     fun versionPropertyFor(d: Dependency): String = when (d.mode) {
         MODULE -> d.name
-        GROUP -> d.group
+        GROUP -> d.groupOrVirtualGroup()
         GROUP_MODULE -> "${d.group}..${d.name}"
     }
 
     fun versionKtFor(d: Dependency): String = escapeVersionsKt(
         when (d.mode) {
             MODULE -> d.name
-            GROUP -> d.group
+            GROUP -> d.groupOrVirtualGroup()
             GROUP_MODULE -> "${d.group}:${d.name}"
         }
     )
