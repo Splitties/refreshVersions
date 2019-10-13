@@ -1,5 +1,31 @@
 # Unreleased
 
+# 0.7.0
+
+The plugin will in the future focus on `:refreshVersions`.
+
+For now it is published under two names, with an identical content:
+
+```
+plugins {
+  id("de.fayard.refreshVersions").version("0.7.0")
+  // or
+  id("de.fayard.buildSrcVersions).version("0.7.0")
+}
+``` 
+
+Next step: integration with https://github.com/LouisCAD/Splitties
+
+See https://github.com/jmfayard/buildSrcVersions/issues/104
+
+Changes:
+
+- New configuration: orderBy = GROUP_AND_LENGTH or GROUP_AND_ALPHABETICAL #65
+- PluginConfig.virtualGroups for kotlinx-coroutines #102
+
+
+
+
 # 0.6.5
 
 - useFqdnFor() should also work for groups #99

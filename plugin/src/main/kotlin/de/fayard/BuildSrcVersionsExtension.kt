@@ -76,5 +76,13 @@ interface BuildSrcVersionsExtension {
      */
     var versionsOnlyFile: String?
 
+    /**
+     * orderBy = OrderBy.GROUP_AND_ALPHABETICAL to override the default behavior
+     * https://github.com/jmfayard/buildSrcVersions/issues/65 **/
+    var orderBy: OrderBy
 
+}
+
+enum class OrderBy {
+    GROUP_AND_LENGTH, GROUP_AND_ALPHABETICAL
 }

@@ -1,5 +1,5 @@
 plugins {
-    id 'de.fayard.buildSrcVersions'
+    id 'de.fayard.refreshVersions'
     id 'com.gradle.build-scan'
     id 'application'
     id 'idea'

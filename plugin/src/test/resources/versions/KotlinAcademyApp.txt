@@ -49,13 +49,12 @@ kotlinx_coroutines_core_native
 kotlinx_coroutines_javafx
 kotlinx_gradle_serialization_plugin
 kotlinx_html_js
-kotlinx_serialization_runtime
-kotlinx_serialization_runtime_js
 lint_gradle
 logback_classic
 mockk
 multidex
 multidex_instrumentation
+org_jetbrains_kotlinx_kotlinx_serialization
 org_jetbrains_squash
 recyclerview_v7
 retrofit2_kotlin_coroutines_experimental_adapter

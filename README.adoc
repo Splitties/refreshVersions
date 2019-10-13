@@ -1,11 +1,12 @@
-// plugin.de.fayard.buildSrcVersions
-:plugin_version: 0.6.5
+// plugin.de.fayard.buildSrcVersions (aka buildSrcVersions)
+:plugin_version: 0.7.0
 :gradle_version: 5.6.2
+:imagesdir: doc
 :repo: jmfayard/buildSrcVersions
 :branch: 26-buildSrcVersions
 :github: https://github.com/{repo}
 :plugin_issues: https://github.com/gradle/kotlin-dsl/issues?utf8=%E2%9C%93&q=author%3Ajmfayard+
-:plugin_gradle_portal: https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions
+:plugin_gradle_portal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
 :contributors_badge: image:https://www.codetriage.com/jmfayard/buildsrcversions/badges/users.svg["Code Triage",link="https://www.codetriage.com/jmfayard/buildsrcversions"]
 :gradle_kotlin_dsl:	https://github.com/gradle/kotlin-dsl
 :slack_url: https://app.slack.com/client/T09229ZC6/CP5659EL9
@@ -17,12 +18,11 @@
 :medium_protips: https://proandroiddev.com/android-studio-pro-tips-for-working-with-gradle-8a7aa61a8cc4
 :medium_mvp: https://dev.to/jmfayard/the-minimum-viable-pull-request-5e7p
 :devto_readme: https://dev.to/jmfayard/how-to-write-a-good-readme-discuss-4hkl
-:root: file:///Users/jmfayard/Dev/mautinoa/buildSrcVersions
 :issues: https://github.com/jmfayard/buildSrcVersions/issues
 :master: https://github.com/jmfayard/buildSrcVersions/blob/master
 :badge_mit: image:https://img.shields.io/github/license/mashape/apistatus.svg["GitHub",link="{github}/blob/master/LICENSE.txt"]
-:image_version: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/buildSrcVersions/de.fayard.buildSrcVersions.gradle.plugin/maven-metadata.xml.svg
-:badge_version: image:{image_version}?label=gradlePluginPortal["Maven Central",link="https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions"]
+:image_version: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg
+:badge_version: image:{image_version}?label=gradlePluginPortal["Maven Central",link="https://plugins.gradle.org/plugin/de.fayard.refreshVersions"]
 :badge_issues: image:https://img.shields.io/github/issues/{repo}.svg["GitHub issues",link="{github}/issues"]
 :badge_pr:  image:https://img.shields.io/github/issues-pr/{repo}.svg["GitHub pull requests",link="{github}/pulls?utf8=%E2%9C%93&q=is%3Apr+"]
 :badge_build: image:https://img.shields.io/travis/com/{repo}/{branch}.svg["Travis (.org)",link="https://travis-ci.com/{repo}"]
@@ -31,18 +31,19 @@
 :benmanes: https://github.com/ben-manes/gradle-versions-plugin
 :image_faq: https://user-images.githubusercontent.com/459464/64926128-1a076980-d7fa-11e9-8a69-eb354d211f51.png
 
-//:imagesdir: /Users/jmfayard/Dev/mautinoa/buildSrcVersions/doc
-:imagesdir: doc
 
-
-= de.fayard.buildSrcVersions
+= de.fayard.refreshVersions
 
 {badge_version} {slack_badge} {contributors_badge} {badge_build} {badge_mit} {badge_issues} {badge_pr}
 
-The Gradle plugin `de.fayard.buildSrcVersions` goal is to make it as painless as possible to upgrade your project to the latest and greatest version of everything.
+The Gradle plugin `de.fayard.refreshVersions` goal is to make it as painless as possible to upgrade your project to the latest and greatest version of everything.
 
 It does that by extracting all your dependencies, searching for available dependencies updates
 and generating Kotlin code, Groovy code or Gradle properties.
+
+The plugin was called before `de.fayard.buildSrcVersions`, which still exists and is currently identical.
+
+[The goal in the future is to focus on :refreshVersions](https://github.com/jmfayard/buildSrcVersions/issues/104)
 
 == Installation
 
@@ -56,7 +57,7 @@ buildscript {
     //...
 }
 plugins {
-  id("de.fayard.buildSrcVersions") version "{plugin_version}"
+  id("de.fayard.refreshVersions") version "{plugin_version}"
 }
 // Don't put any code before the buildscripts {} and plugins {} block
 ----
@@ -82,11 +83,11 @@ buildscript {
     }
   }
   dependencies {
-    classpath "de.fayard.buildSrcVersions:de.fayard.buildSrcVersions.gradle.plugin:{plugin_version}"
+    classpath "de.fayard.refrshVersions:de.fayard.refrshVersions.gradle.plugin:{plugin_version}"
   }
 }
 
-apply plugin: "de.fayard.buildSrcVersions"
+apply plugin: "de.fayard.refrshVersions"
 ----
 ++++
 </details>
@@ -146,6 +147,7 @@ buildSrcVersions {
     rejectVersionIf {
         isNonStable(candidate.version)
     }
+    orderBy = OrderBy.GROUP_AND_LENGTH
     indent = "from-editorconfig-file"
     renameLibs = "Libs"
     renameVersions = "Versions"

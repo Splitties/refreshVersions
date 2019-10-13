@@ -37,6 +37,8 @@ data class Dependency(
     var mode: VersionMode = VersionMode.MODULE,
     val available: AvailableDependency? = null
 ) {
+    fun groupOrVirtualGroup() : String = virtualGroup(this) ?: group
+
     val module: String get() = name
     val versionName: String
         get() = PluginConfig.versionKtFor(this)
@@ -52,10 +54,21 @@ data class Dependency(
             else -> this.copy(available = null, version = newerVersion)
         }
     }
+
+    companion object {
+        fun virtualGroup(dependency: Dependency, withVersion: Boolean = false): String? {
+            val virtualGroup = PluginConfig.virtualGroups.firstOrNull { "${dependency.group}.${dependency.module}".startsWith(it) }
+            return when {
+                virtualGroup == null -> null
+                withVersion -> "version.$virtualGroup"
+                else -> virtualGroup
+            }
+        }
+    }
 }
 
 enum class VersionMode {
-    MODULE, GROUP, GROUP_MODULE
+    GROUP, GROUP_MODULE, MODULE
 }
 
 data class GradleConfig(

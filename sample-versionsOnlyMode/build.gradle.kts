@@ -1,4 +1,5 @@
 import de.fayard.BuildSrcVersionsTask
+import de.fayard.OrderBy
 import de.fayard.VersionsOnlyMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -15,6 +16,7 @@ group = "de.fayard"
 buildSrcVersions {
     // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
     indent = "     "
+    orderBy = OrderBy.GROUP_AND_ALPHABETICAL
 }
 
 repositories {
@@ -27,8 +29,12 @@ repositories {
 dependencies {
     implementation("com.google.guava:guava:15.0")
     implementation("com.google.inject:guice:2.0")
-    implementation("com.wealthfront:magellan:_")
+    implementation("com.wealthfront:magellan:+")
     implementation("com.wealthfront:magellan-rx:+")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.0")
+    implementation("com.jakewharton.timber:timber:4.7.0")
 }
 
 tasks.withType<KotlinCompile> {

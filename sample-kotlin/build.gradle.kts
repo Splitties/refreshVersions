@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.buildSrcVersions")
+    id("de.fayard.refreshVersions")
     kotlin("jvm")
     `build-scan`
 }

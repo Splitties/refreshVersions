@@ -11,7 +11,7 @@ plugins {
 }
 
 
-version = "0.7.0" // plugin.de.fayard.buildSrcVersions
+version = "0.7.1" // plugin.de.fayard.refreshversions
 group = "de.fayard"
 
 
@@ -19,7 +19,13 @@ gradlePlugin {
     plugins {
         create("buildSrcVersions") {
             id = "de.fayard.buildSrcVersions"
-            displayName = "buildSrcVersions"
+            displayName = "./gradlew buildSrcVersions"
+            description = "Painless dependencies management"
+            implementationClass = "de.fayard.BuildSrcVersionsPlugin"
+        }
+        create("refreshVersions") {
+            id = "de.fayard.refreshVersions"
+            displayName = "./gradlew refreshVersions"
             description = "Painless dependencies management"
             implementationClass = "de.fayard.BuildSrcVersionsPlugin"
         }
