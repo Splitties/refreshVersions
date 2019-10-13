@@ -1,4 +1,4 @@
-// plugin.de.fayard.buildSrcVersions
+// plugin.de.fayard.buildSrcVersions (aka buildSrcVersions)
 :plugin_version: 0.7.0
 :gradle_version: 5.6.2
 :imagesdir: doc

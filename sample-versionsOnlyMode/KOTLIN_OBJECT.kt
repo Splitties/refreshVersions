@@ -10,13 +10,13 @@ import kotlin.String
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
-    const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.50"
-
     const val org_jetbrains_kotlin: String = "1.3.50"
 
     const val okhttp: String = "4.1.0" // available: "4.1.1"
 
     const val okio: String = "2.0.0"
+
+    const val org_jetbrains_kotlin_jvm_gradle_plugin: String = "1.3.50"
 
     /**
      * Current version: "5.5.1"
