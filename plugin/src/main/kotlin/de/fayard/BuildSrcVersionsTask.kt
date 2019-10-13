@@ -155,7 +155,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
         val projectExtension = project.extensions.getByType<BuildSrcVersionsExtension>() as BuildSrcVersionsExtensionImpl
         this._extension = projectExtension.defensiveCopy()
         action.execute(this._extension)
-        PluginConfig.useRefreshVersions = project.hasProperty("plugin.de.fayard.buildSrcVersions")
+        PluginConfig.useRefreshVersions = project.hasProperty("plugin.de.fayard.buildSrcVersions") || project.hasProperty("plugin.de.refreshVersions")
     }
 
     private fun computeIndent(): String {

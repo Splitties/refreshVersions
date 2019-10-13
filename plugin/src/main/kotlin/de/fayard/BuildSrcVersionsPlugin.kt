@@ -16,7 +16,7 @@ import org.gradle.kotlin.dsl.extra
 open class BuildSrcVersionsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
-        check(project == project.rootProject) { "ERROR: plugins de.fayard.buildSrcVersions must be applied to the root build.gradle(.kts)" }
+        check(project == project.rootProject) { "ERROR: plugins de.fayard.refreshVersions must be applied to the root build.gradle(.kts)" }
         project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
         project.configure()
         project.useVersionsFromGradleProperties()

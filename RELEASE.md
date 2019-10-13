@@ -7,7 +7,7 @@
 - Create a GitHub release https://github.com/jmfayard/buildSrcVersions/releases/new
 - Try the plugin in sample projects
 - Update `:plugin_version:` in `README.adoc`
-- Search for `plugin.de.fayard.buildSrcVersions` everywhere to update the version
+- Search for `plugin.de.fayard.refreshVersions` everywhere to update the version
 - Otherwise update the README
 - Update Plugin Configuration https://github.com/jmfayard/buildSrcVersions/issues/53
 

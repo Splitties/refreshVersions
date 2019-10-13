@@ -11,7 +11,7 @@ plugins {
 }
 
 
-version = "0.7.0" // plugin.de.fayard.buildSrcVersions
+version = "0.7.1" // plugin.de.fayard.refreshversions
 group = "de.fayard"
 
 
