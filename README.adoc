@@ -8,6 +8,9 @@
 :plugin_gradle_portal: https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions
 :contributors_badge: image:https://www.codetriage.com/jmfayard/buildsrcversions/badges/users.svg["Code Triage",link="https://www.codetriage.com/jmfayard/buildsrcversions"]
 :gradle_kotlin_dsl:	https://github.com/gradle/kotlin-dsl
+:slack_url: https://app.slack.com/client/T09229ZC6/CP5659EL9
+:slack_image: https://img.shields.io/static/v1?label=@kotlinlang&message=gradle-refresh-versions&color=brightgreen&logo=slack
+:slack_badge: {slack_image}["Kotlinlang Slack", link="{slack_url}"]
 :gradle_guide_new:	https://guides.gradle.org/creating-new-gradle-builds
 :gradle_guide_buidllogic:	https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
 :medium_puzzle: https://blog.kotlin-academy.com/gradle-kotlin-the-missing-piece-of-the-puzzle-7528a85f0d2c
@@ -34,7 +37,7 @@
 
 = de.fayard.buildSrcVersions
 
-{badge_version} {contributors_badge} {badge_build} {badge_mit} {badge_issues} {badge_pr}
+{badge_version} {slack_badge} {contributors_badge} {badge_build} {badge_mit} {badge_issues} {badge_pr}
 
 The Gradle plugin `de.fayard.buildSrcVersions` goal is to make it as painless as possible to upgrade your project to the latest and greatest version of everything.
 
