@@ -34,6 +34,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.0")
+    implementation("com.jakewharton.timber:timber:4.7.0")
 }
 
 tasks.withType<KotlinCompile> {

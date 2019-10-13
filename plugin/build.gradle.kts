@@ -19,7 +19,13 @@ gradlePlugin {
     plugins {
         create("buildSrcVersions") {
             id = "de.fayard.buildSrcVersions"
-            displayName = "buildSrcVersions"
+            displayName = "./gradlew buildSrcVersions"
+            description = "Painless dependencies management"
+            implementationClass = "de.fayard.BuildSrcVersionsPlugin"
+        }
+        create("refreshVersions") {
+            id = "de.fayard.refreshVersions"
+            displayName = "./gradlew refreshVersions"
             description = "Painless dependencies management"
             implementationClass = "de.fayard.BuildSrcVersionsPlugin"
         }
