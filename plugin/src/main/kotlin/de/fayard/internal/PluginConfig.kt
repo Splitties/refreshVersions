@@ -162,6 +162,12 @@ object PluginConfig {
         "# You can edit the rest of the file, it will be kept intact",
         "# See $issue77RefreshVersionsGradleProperties"
     )
+    var isAndroidProject: Boolean = false
+    val MODULES
+        get() = listOfNotNull(
+            "module.kotlin=1.3.50",
+            if (isAndroidProject) "module.android=3.5.0" else null
+        )
 
     val REFRESH_VERSIONS_END: List<String> = listOf()
 

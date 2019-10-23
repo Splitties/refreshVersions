@@ -54,10 +54,9 @@ apply(from = "plugins.gradle.kts")
     val androidPluginIds = listOf("com.android.application", "com.android.library")
     val kotlinPluginIds = listOf("org.jetbrains.kotlin.android", "org.jetbrains.kotlin.kapt", "kotlin-android-extensions")
     @Suppress("UNCHECKED_CAST")
-    val properties: Map<String, String> = Properties().apply {
+    val properties: Map<String, String> = java.util.Properties().apply {
         load(file("versions.properties").reader())
     } as Map<String, String>
-    require("module.kotlin" in properties && "module.android" in properties) { "version.properties MUST contain module.android=... and module.kotlin=...." }
     resolutionStrategy.eachPlugin {
         val pluginId = requested.id.id
         val version = properties["plugin.$pluginId"]

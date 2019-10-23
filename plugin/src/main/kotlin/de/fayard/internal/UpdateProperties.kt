@@ -8,12 +8,13 @@ data class UpdateProperties(
 ) {
 
     fun generateVersionProperties(file: File, dependencies: List<Dependency>) = with(UpdateVersionsOnly) {
+        PluginConfig.isAndroidProject = dependencies.any { it.group.contains("android") }
         val dependenciesLines = dependencies
             .sortedBy { d -> d.versionName.contains("gradle_plugin").not() }
             .map { d -> d.asGradleProperty() }
 
         val newLines = with(PluginConfig) {
-            REFRESH_VERSIONS_START + dependenciesLines + REFRESH_VERSIONS_END
+            REFRESH_VERSIONS_START + MODULES + dependenciesLines + REFRESH_VERSIONS_END
         }
 
         updateGradleProperties(
@@ -24,6 +25,8 @@ data class UpdateProperties(
     }
 
     fun String.wasGeneratedByPlugin(): Boolean = when {
+        startsWith("module.kotlin") -> true
+        startsWith("module.android") -> true
         startsWith("version.") -> true
         startsWith("plugin.") -> true
         contains("# available=") -> true

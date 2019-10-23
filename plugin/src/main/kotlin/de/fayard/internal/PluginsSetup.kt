@@ -22,11 +22,10 @@ apply(from = "plugins.gradle.kts")
 """
 
     fun pluginFileContent(): String {
-        return this::class.java.getResourceAsStream("/$PLUGIN_GRADLE_KTS").reader().readText()
+        return this::class.java.getResourceAsStream("/$PLUGIN_GRADLE_KTS.txt").reader().readText()
     }
 
     fun copyPluginsGradleKtsIfNeeded(project: Project) {
-        println("copyPluginsGradleKtsIfNeeded")
         val file = project.rootProject.file(PLUGIN_GRADLE_KTS)
         val settingsFile = project.rootProject.file(SETTINGS_GRADLE_KTS)
         if (settingsFile.canRead() && file.canRead().not()) {
