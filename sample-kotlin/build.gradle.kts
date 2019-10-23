@@ -8,10 +8,10 @@ plugins {
     kotlin("jvm")
     id("com.louiscad.splitties")
     `build-scan`
+    id("org.nosphere.gradle.github.actions")
 }
 
 group = "de.fayard"
-
 
 repositories {
     maven {
