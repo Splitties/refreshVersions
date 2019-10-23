@@ -9,7 +9,7 @@ plugins {
     id("com.louiscad.splitties")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
-    //id("kotlin-android-extensions")
+    id("kotlin-android-extensions")
 }
 
 apply(from = "android.gradle")
