@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Small Victories</string>
+    <string name="action_reset">Reset</string>
+    <string name="your_victory_title">Your Victory</string>
+    <string name="dialog_title">Set Victory title</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+</resources>

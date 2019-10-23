@@ -1,0 +1,16 @@
+android {
+    compileSdkVersion findProperty("compileSdkVersion") as Integer
+    defaultConfig {
+        applicationId findProperty("applicationId")
+        minSdkVersion findProperty("minSdkVersion") as Integer
+        targetSdkVersion findProperty("targetSdkVersion")
+        versionCode findProperty("versionCode") as Integer
+        versionName findProperty("versionName")
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
