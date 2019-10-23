@@ -9,11 +9,6 @@ import java.util.Properties
  ***/
 
 pluginManagement {
-    repositories {
-        google()
-        mavenLocal()
-        gradlePluginPortal()
-    }
 
     /**
      * This `resolutionStrategy` allows plugin versions to be configured from
@@ -24,7 +19,7 @@ pluginManagement {
      *     resolutionStrategyConfig=verbose
      **/
     val resolutionStrategyConfig: String? by extra
-    if (resolutionStrategyConfig == "false") return@pluginManagement
+    if (resolutionStrategyConfig == "false" || file("versions.properties").canRead().not()) return@pluginManagement
     val androidPluginIds = listOf("com.android.application", "com.android.library")
     val kotlinPluginIds = listOf("org.jetbrains.kotlin.android", "org.jetbrains.kotlin.kapt", "kotlin-android-extensions")
     @Suppress("UNCHECKED_CAST")
