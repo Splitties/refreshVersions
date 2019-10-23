@@ -85,18 +85,6 @@ fun BuildSrcVersionsTask.configureRefreshVersions() {
     dependsOn(PluginConfig.DEPENDENCY_UPDATES_PATH)
     outputs.upToDateWhen { false }
     configure {
-        versionsOnlyMode = VersionsOnlyMode.GRADLE_PROPERTIES
-        versionsOnlyFile = "gradle.properties"
-    }
-}
-
-fun BuildSrcVersionsTask.configureBuildSrcVersions() {
-    group = "Help"
-    description = "Update buildSrc/src/main/kotlin/{Versions.kt,Libs.kt}"
-    dependsOn(PluginConfig.DEPENDENCY_UPDATES_PATH)
-    outputs.upToDateWhen { false }
-    configure {
-        versionsOnlyMode = null
-        versionsOnlyFile = null
+        propertiesFile = "gradle.properties"
     }
 }

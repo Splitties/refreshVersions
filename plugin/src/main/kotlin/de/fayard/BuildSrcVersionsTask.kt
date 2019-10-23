@@ -1,14 +1,11 @@
 package de.fayard
 
-import de.fayard.VersionsOnlyMode.GRADLE_PROPERTIES
-import de.fayard.VersionsOnlyMode.KOTLIN_OBJECT
 import de.fayard.internal.BuildSrcVersionsExtensionImpl
 import de.fayard.internal.Dependency
 import de.fayard.internal.DependencyGraph
 import de.fayard.internal.OutputFile
 import de.fayard.internal.PluginConfig
 import de.fayard.internal.UpdateGradleProperties
-import de.fayard.internal.UpdateVersionsOnly.regenerateBuildFile
 import de.fayard.internal.parseGraph
 import de.fayard.internal.sortedBeautifullyBy
 import org.gradle.api.Action
@@ -39,25 +36,13 @@ open class BuildSrcVersionsTask : DefaultTask() {
         val specialDependencies =
             listOf(PluginConfig.gradleVersionsPlugin, PluginConfig.gradleRefreshVersions, PluginConfig.gradleLatestVersion(dependencyGraph))
 
-        val versionsOnlyMode = when(val mode = extension.versionsOnlyMode) {
-            null, KOTLIN_OBJECT -> return
-            else -> mode
-        }
-
         val dependencies = (unsortedParsedDependencies + specialDependencies)
             .sortedBeautifullyBy(extension.orderBy) { it.versionProperty }
             .distinctBy { it.versionProperty }
 
-        if (versionsOnlyMode == GRADLE_PROPERTIES) {
-            updateGradleProperties.generateVersionProperties(project.file("gradle.properties"), dependencies)
-            OutputFile.GRADLE_PROPERTIES.logFileWasModified()
+        updateGradleProperties.generateVersionProperties(project.file("gradle.properties"), dependencies)
+        OutputFile.GRADLE_PROPERTIES.logFileWasModified()
 
-        } else {
-            val file = extension.versionsOnlyFile?.let { project.file(it) }
-            val projectUseKotlin = project.file("build.gradle.kts").exists()
-            regenerateBuildFile(file, versionsOnlyMode, dependencies, projectUseKotlin)
-            if (file != null) OutputFile.logFileWasModified(file.relativeTo(project.projectDir).path, existed = true)
-        }
     }
 
     private val dependencyGraph: DependencyGraph by lazy {
@@ -72,7 +57,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
         }
         println(message)
-        OutputFile.configure(extension)
 
         val jsonInput = project.file(PluginConfig.BENMANES_REPORT_PATH)
 

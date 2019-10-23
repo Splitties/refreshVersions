@@ -15,8 +15,6 @@ import java.io.File
 class NonRegression : FreeSpec({
 
     val reportsFolder = testResourceFile("reports")
-    val libsFolder = testResourceFile("libs")
-    val versionsFolder = testResourceFile("versions")
     val propertiesFolder = testResourceFile("properties")
     val jsonReports = reportsFolder.walk().filter { it.extension == "json" }.toList()
 
@@ -42,43 +40,12 @@ class NonRegression : FreeSpec({
                 PluginConfig.MEANING_LESS_NAMES
             )
 
-            "Identifiers in Libs for file=$name" {
-                val libsFile = libsFolder.resolve(name)
-                val libsIdentifiers: List<String> = dependencyGraph.map { it.escapedName }.sorted().distinct()
-                val (received, message) = receivedMessage(libsFile)
-                received.writeText(libsIdentifiers.joinToStringWithNewLines())
-                if (libsFile.exists()) {
-                    withClue(message) {
-                        (libsFile.readLines() - libsIdentifiers).shouldBeEmpty()
-                        received.delete()
-                    }
-                } else {
-                    println("Added to non-regression file ${libsFile.absolutePath}")
-                }
-            }
-
-            "Identifiers in Versions for file=$name" {
-                val versionsFile = versionsFolder.resolve(name)
-                val versionsIdentifiers = dependencyGraph.map { it.versionName }.sorted().distinct()
-                val (received, message) = receivedMessage(versionsFile)
-                received.writeText(versionsIdentifiers.joinToStringWithNewLines())
-                if (versionsFile.exists()) {
-                    withClue(message) {
-                        (versionsFile.readLines() - versionsIdentifiers).shouldBeEmpty()
-                        received.delete()
-                    }
-                } else {
-                    println("Added to non-regression file ${versionsFile.absolutePath}")
-                }
-            }
-
             "Identifiers in Properties for file=$name" {
 
                 val propertiesFile = propertiesFolder.resolve(name)
                 val (received, message) = receivedMessage(propertiesFile)
                 val extension = BuildSrcVersionsExtensionImpl(
-                    versionsOnlyMode = VersionsOnlyMode.GRADLE_PROPERTIES,
-                    versionsOnlyFile = propertiesFile.relativeTo(buildSrcVersionsDir).path
+                    propertiesFile = propertiesFile.relativeTo(buildSrcVersionsDir).path
                 )
                 val dependencies = (dependencyGraph.map { it.copy(available = null) })
                     .sortedBeautifullyBy(OrderBy.GROUP_AND_LENGTH) { it.versionProperty }

@@ -22,10 +22,6 @@ internal enum class OutputFile(var path: String, var existed: Boolean = false, v
     }
 
     companion object {
-        fun configure(extension: BuildSrcVersionsExtension) {
-            LIBS.path = "buildSrc/src/main/kotlin/${extension.renameLibs}.kt"
-            VERSIONS.path = "buildSrc/src/main/kotlin/${extension.renameVersions}.kt"
-        }
 
         fun logFileWasModified(path: String, existed: Boolean) {
             val ANSI_RESET = "\u001B[0m"

@@ -48,9 +48,6 @@ buildSrcVersions {
     // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
     alwaysUpdateVersions()
     useFqdnFor("guice", "mongo-java-driver")
-    renameLibs = "Libs"
-    renameVersions = "Versions"
-    indent = "    "
     rejectVersionIf {
         isNonStable(candidate.version) && isNonStable(currentVersion).not()
     }

@@ -1,7 +1,0 @@
-com_github_bumptech_glide_compiler
-jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin
-kotlin_scripting_compiler_embeddable
-krangl
-okio
-org_jetbrains_kotlin_jvm_gradle_plugin
-rxjava

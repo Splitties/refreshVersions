@@ -48,33 +48,10 @@ interface BuildSrcVersionsExtension {
     fun useFqdnFor(vararg dependencyName: String)
 
     /**
-     * `renameLibs = Deps` if you think that Deps.kt is much better than Libs.kt
-     ***/
-    var renameLibs: String
-
-    /**
-     * `renameVersions = "V"` if you think that V.kt is much better than Versionskt
-     ***/
-    var renameVersions: String
-
-    /**
-     * Tabs or Spaces? You choose.
-     * Even better, define an https://editorconfig.org file.
-     * It will be used if detected.
-     */
-    var indent: String?
-
-    /**
-     * Possible values: KOTLIN_VAL, KOTLIN_OBJECT, GROOVY_DEF, GROOVY_EXT, GRADLE_PROPERTIES
-     * See https://github.com/jmfayard/buildSrcVersions/tree/master/sample-versionsOnlyMode
-     **/
-    var versionsOnlyMode: VersionsOnlyMode?
-
-    /**
      * See [versionsOnlyMode]
      * Probably "gradle.properties" for GRADLE_PROPERTIES, "build.gradle" for GROOVY_DEF, ...
      */
-    var versionsOnlyFile: String?
+    var propertiesFile: String?
 
     /**
      * orderBy = OrderBy.GROUP_AND_ALPHABETICAL to override the default behavior

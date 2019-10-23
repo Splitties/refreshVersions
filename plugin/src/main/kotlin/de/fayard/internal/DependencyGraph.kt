@@ -1,14 +1,6 @@
 package de.fayard.internal
 
-import com.squareup.kotlinpoet.FileSpec
 import de.fayard.VersionsOnlyMode
-
-data class KotlinPoetry(
-    val Libs: FileSpec,
-    val Versions: FileSpec
-)
-
-
 
 data class DependencyGraph(
     val gradle: GradleConfig,
