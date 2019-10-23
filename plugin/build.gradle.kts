@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.buildSrcVersions") version ("0.6.5") // plugin.de.fayard.buildSrcVersions
+    id("de.fayard.refreshVersions") version ("0.8.0") // plugin.de.fayard.buildSrcVersions
 
     id("com.gradle.plugin-publish")
     `java-gradle-plugin`
