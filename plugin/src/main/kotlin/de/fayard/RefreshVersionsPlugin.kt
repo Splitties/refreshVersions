@@ -3,6 +3,7 @@ package de.fayard
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import de.fayard.internal.PluginConfig
 import de.fayard.internal.PluginConfig.isNonStable
+import de.fayard.internal.PluginsSetup
 import de.fayard.internal.RefreshVersionsExtensionImpl
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -23,6 +24,8 @@ open class RefreshVersionsPlugin : Plugin<Project> {
     }
 
     fun Project.configure() = with(PluginConfig) {
+        PluginsSetup.copyPluginsGradleKtsIfNeeded(project)
+
         extensions.create(RefreshVersionsExtension::class, EXTENSION_NAME, RefreshVersionsExtensionImpl::class)
 
         if (supportsTaskAvoidance()) {
@@ -49,7 +52,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
 fun Project.useVersionsFromProperties() {
     @Suppress("UNCHECKED_CAST")
     val properties: Map<String, String> = Properties().apply {
-        val propertiesFile = listOf("versions.properties", "gradle.properties").first { project.file(it).canRead() }
+        val propertiesFile = listOf("versions.properties", "gradle.properties").firstOrNull { project.file(it).canRead() } ?: return
         load(project.file(propertiesFile).reader())
     } as Map<String, String>
 
