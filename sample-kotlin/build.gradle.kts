@@ -4,10 +4,10 @@ plugins {
     id("de.fayard.refreshVersions")
     kotlin("jvm")
     `build-scan`
+    id("org.nosphere.gradle.github.actions")
 }
 
 group = "de.fayard"
-
 
 repositories {
     maven {
