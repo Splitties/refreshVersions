@@ -13,6 +13,16 @@ plugins {
 
 group = "de.fayard"
 
+refreshVersions {
+    // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
+    propertiesFile = "versions.properties"
+    alwaysUpdateVersions()
+    useFqdnFor("guice", "mongo-java-driver")
+    rejectVersionIf {
+        isNonStable(candidate.version) && isNonStable(currentVersion).not()
+    }
+}
+
 repositories {
     maven {
         setUrl("../plugin/src/test/resources/maven")
@@ -57,14 +67,7 @@ tasks.withType<Wrapper> {
     distributionType = Wrapper.DistributionType.ALL
 }
 
-refreshVersions {
-    // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
-    alwaysUpdateVersions()
-    useFqdnFor("guice", "mongo-java-driver")
-    rejectVersionIf {
-        isNonStable(candidate.version) && isNonStable(currentVersion).not()
-    }
-}
+
 
 
 buildScan {

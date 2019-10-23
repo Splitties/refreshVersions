@@ -10,7 +10,7 @@ import org.gradle.api.artifacts.ModuleVersionSelector
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.extra
+import java.util.Properties
 
 
 open class RefreshVersionsPlugin : Plugin<Project> {
@@ -47,13 +47,17 @@ open class RefreshVersionsPlugin : Plugin<Project> {
 }
 
 fun Project.useVersionsFromProperties() {
+    @Suppress("UNCHECKED_CAST")
+    val properties: Map<String, String> = Properties().apply {
+        val propertiesFile = listOf("versions.properties", "gradle.properties").first { project.file(it).canRead() }
+        load(project.file(propertiesFile).reader())
+    } as Map<String, String>
+
+
     val resolutionStrategyConfig = project.findProperty("resolutionStrategyConfig") as? String
     if (resolutionStrategyConfig == "false") return
     allprojects {
         val project: Project = this
-        @Suppress("UNCHECKED_CAST")
-        val properties = project.extra.properties
-            .filterKeys { it.startsWith("version.") } as Map<String, String>
         project.configurations.all {
             val configurationName = this.name
             if (configurationName.contains("copy")) return@all
