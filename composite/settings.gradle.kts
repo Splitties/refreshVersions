@@ -2,4 +2,9 @@ rootProject.name = "buildSrcVersions-composite"
 includeBuild("../plugin")
 includeBuild("../sample-kotlin")
 includeBuild("../sample-groovy")
-includeBuild("../sample-android")
+
+// ../sample-android should be opened in Android Studio
+//Adding
+//   includeBuild("../sample-android")
+// would fail with the error:
+//    New Gradle Sync is not supported due to containing Kotlin modules
