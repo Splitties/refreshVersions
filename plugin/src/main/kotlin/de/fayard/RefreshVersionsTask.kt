@@ -77,6 +77,8 @@ open class RefreshVersionsTask : DefaultTask() {
         this._extension = projectExtension.defensiveCopy()
         action.execute(this._extension)
         PluginConfig.useRefreshVersions = project.hasProperty("plugin.de.fayard.buildSrcVersions") || project.hasProperty("plugin.de.refreshVersions")
+        PluginConfig.ALIGN_VERSION_GROUPS.clear()
+        PluginConfig.ALIGN_VERSION_GROUPS.addAll(_extension.alignVersionsForGroups)
     }
 
 

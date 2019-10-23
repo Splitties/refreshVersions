@@ -47,6 +47,8 @@ interface RefreshVersionsExtension {
      ***/
     fun useFqdnFor(vararg dependencyName: String)
 
+    var alignVersionsForGroups: MutableList<String>
+
     /**
      * See [versionsOnlyMode]
      * Probably "gradle.properties" for GRADLE_PROPERTIES, "build.gradle" for GROOVY_DEF, ...

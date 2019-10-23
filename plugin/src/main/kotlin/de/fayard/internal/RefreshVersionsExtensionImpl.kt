@@ -1,19 +1,20 @@
 package de.fayard.internal
 
 import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentFilter
-import de.fayard.RefreshVersionsExtension
 import de.fayard.OrderBy
+import de.fayard.RefreshVersionsExtension
 
 internal open class RefreshVersionsExtensionImpl(
     override var propertiesFile: String? = null,
     var useFqqnFor: List<String> = emptyList(),
     var alwaysUpdateVersions: Boolean = false,
-    override var orderBy: OrderBy = OrderBy.GROUP_AND_LENGTH
+    override var orderBy: OrderBy = OrderBy.GROUP_AND_LENGTH,
+    override var alignVersionsForGroups: MutableList<String> = PluginConfig.ALIGN_VERSION_GROUPS
 ) : RefreshVersionsExtension, java.io.Serializable {
 
     // Necessary because of https://github.com/jmfayard/buildSrcVersions/issues/92
     fun defensiveCopy(): RefreshVersionsExtensionImpl = RefreshVersionsExtensionImpl(
-        propertiesFile, useFqqnFor, alwaysUpdateVersions, orderBy
+        propertiesFile, useFqqnFor, alwaysUpdateVersions, orderBy, alignVersionsForGroups
     )
 
     override fun alwaysUpdateVersions() {

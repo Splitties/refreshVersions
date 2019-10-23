@@ -45,7 +45,7 @@ data class Dependency(
 
     companion object {
         fun virtualGroup(dependency: Dependency, withVersion: Boolean = false): String? {
-            val virtualGroup = PluginConfig.virtualGroups.firstOrNull { "${dependency.group}.${dependency.module}".startsWith(it) }
+            val virtualGroup = PluginConfig.ALIGN_VERSION_GROUPS.firstOrNull { "${dependency.group}.${dependency.module}".startsWith(it) }
             return when {
                 virtualGroup == null -> null
                 withVersion -> "version.$virtualGroup"

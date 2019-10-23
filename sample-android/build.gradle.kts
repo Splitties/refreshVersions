@@ -14,6 +14,7 @@ group = "de.fayard"
 refreshVersions {
     // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
     orderBy = OrderBy.GROUP_AND_ALPHABETICAL
+    //alignVersionsForGroups = listOf()
 }
 
 repositories {

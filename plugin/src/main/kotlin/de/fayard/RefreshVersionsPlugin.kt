@@ -19,7 +19,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
         check(project == project.rootProject) { "ERROR: plugins de.fayard.refreshVersions must be applied to the root build.gradle(.kts)" }
         project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
         project.configure()
-        project.useVersionsFromGradleProperties()
+        project.useVersionsFromProperties()
     }
 
     fun Project.configure() = with(PluginConfig) {
@@ -46,7 +46,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
     }
 }
 
-fun Project.useVersionsFromGradleProperties() {
+fun Project.useVersionsFromProperties() {
     val resolutionStrategyConfig = project.findProperty("resolutionStrategyConfig") as? String
     if (resolutionStrategyConfig == "false") return
     allprojects {
@@ -86,5 +86,6 @@ fun RefreshVersionsTask.configureRefreshVersions() {
     outputs.upToDateWhen { false }
     configure {
         propertiesFile = PluginConfig.DEFAULT_PROPERTIES_FILE
+        alignVersionsForGroups = mutableListOf()
     }
 }

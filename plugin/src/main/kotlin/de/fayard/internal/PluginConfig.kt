@@ -60,9 +60,11 @@ object PluginConfig {
      * For now this list is not part of the public API but feel free to add feedback that you need it.
      * Add your use case here https://github.com/jmfayard/buildSrcVersions/issues/102
      ***/
-    val virtualGroups : MutableList<String> = mutableListOf(
+    val ALIGN_VERSION_GROUPS: MutableList<String> = mutableListOf(
         "org.jetbrains.kotlinx.kotlinx-coroutines",
-        "org.jetbrains.kotlinx.kotlinx-serialization"
+        "org.jetbrains.kotlinx.kotlinx-serialization",
+        "com.louiscad.splitties:splitties",
+        "com.squareup.retrofit2"
     )
 
 
