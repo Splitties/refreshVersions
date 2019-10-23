@@ -68,11 +68,6 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-tasks.withType<Wrapper> {
-    gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"
-    distributionType = Wrapper.DistributionType.ALL
-}
-
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8

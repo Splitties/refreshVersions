@@ -38,10 +38,6 @@ refreshVersions {
         isNonStable(candidate.version) && !isNonStable(currentVersion)
     }
 }
-wrapper {
-    distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = findProperty("gradleLatestVersion") ?: gradle.gradleVersion
-}
 
 buildScan {
     setTermsOfServiceUrl("https://gradle.com/terms-of-service")

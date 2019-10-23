@@ -23,10 +23,13 @@ refreshVersions {
     }
 }
 
+buildScan {
+    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
+    setTermsOfServiceAgree("yes")
+}
+
 repositories {
-    maven {
-        setUrl("../plugin/src/test/resources/maven")
-    }
+    maven("../plugin/src/test/resources/maven")
     mavenCentral()
 }
 
@@ -61,29 +64,7 @@ tasks.withType(JavaExec::class.java) {
     classpath = sourceSets["main"].runtimeClasspath
 }
 
-// How to update Gradle itself? https://github.com/jmfayard/buildSrcVersions/issues/19
-tasks.withType<Wrapper> {
-    gradleVersion = findProperty("gradleLatestVersion") as? String ?: gradle.gradleVersion
-    distributionType = Wrapper.DistributionType.ALL
-}
-
-
-
-
-buildScan {
-    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
-    setTermsOfServiceAgree("yes")
-}
-
 tasks.register<DefaultTask>("hello") {
     group = "Custom"
     description = "Minimal task that do nothing. Useful to debug a failing build"
-}
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    jvmTarget = "1.8"
-}
-val compileTestKotlin: KotlinCompile by tasks
-compileTestKotlin.kotlinOptions {
-    jvmTarget = "1.8"
 }
