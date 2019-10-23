@@ -1,7 +1,7 @@
 # .github/workflows/gradle-build-pr.yml
 # https://github.com/marketplace/actions/gradle-command
 name: Gradle 5.6.3
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   gradle:
     strategy:
