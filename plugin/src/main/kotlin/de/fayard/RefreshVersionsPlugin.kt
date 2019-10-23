@@ -1,9 +1,9 @@
 package de.fayard
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import de.fayard.internal.RefreshVersionsExtensionImpl
 import de.fayard.internal.PluginConfig
 import de.fayard.internal.PluginConfig.isNonStable
+import de.fayard.internal.RefreshVersionsExtensionImpl
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ModuleVersionSelector
@@ -85,6 +85,6 @@ fun RefreshVersionsTask.configureRefreshVersions() {
     dependsOn(PluginConfig.DEPENDENCY_UPDATES_PATH)
     outputs.upToDateWhen { false }
     configure {
-        propertiesFile = "gradle.properties"
+        propertiesFile = PluginConfig.DEFAULT_PROPERTIES_FILE
     }
 }

@@ -46,7 +46,7 @@ class NonRegression : FreeSpec({
                 val dependencies = (dependencyGraph.map { it.copy(available = null) })
                     .sortedBeautifullyBy(OrderBy.GROUP_AND_LENGTH) { it.versionProperty }
                     .distinctBy { it.versionProperty }
-                UpdateGradleProperties(extension).generateVersionProperties(received, dependencies)
+                UpdateProperties(extension).generateVersionProperties(received, dependencies)
 
                 if (propertiesFile.exists()) {
                     val receivedIdentifiers = received.readLines().map { it.substringBefore("=", "") }.filter { it.startsWith("#") || it.isBlank() }

@@ -1,11 +1,11 @@
 package de.fayard
 
-import de.fayard.internal.RefreshVersionsExtensionImpl
 import de.fayard.internal.Dependency
 import de.fayard.internal.DependencyGraph
-import de.fayard.internal.OutputFile
 import de.fayard.internal.PluginConfig
+import de.fayard.internal.RefreshVersionsExtensionImpl
 import de.fayard.internal.UpdateProperties
+import de.fayard.internal.logFileWasModified
 import de.fayard.internal.parseGraph
 import de.fayard.internal.sortedBeautifullyBy
 import org.gradle.api.Action
@@ -40,9 +40,10 @@ open class RefreshVersionsTask : DefaultTask() {
             .sortedBeautifullyBy(extension.orderBy) { it.versionProperty }
             .distinctBy { it.versionProperty }
 
-        updateGradleProperties.generateVersionProperties(project.file("gradle.properties"), dependencies)
-        OutputFile.GRADLE_PROPERTIES.logFileWasModified()
-
+        val propertiesFile = project.file(extension.propertiesFile!!)
+        val existed = propertiesFile.canRead()
+        updateGradleProperties.generateVersionProperties(propertiesFile, dependencies)
+        logFileWasModified(propertiesFile.name, existed)
     }
 
     private val dependencyGraph: DependencyGraph by lazy {

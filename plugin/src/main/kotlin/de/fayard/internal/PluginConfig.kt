@@ -23,6 +23,7 @@ object PluginConfig {
     const val DEPENDENCY_UPDATES_PATH = ":$DEPENDENCY_UPDATES"
     const val REFRESH_VERSIONS = "refreshVersions"
     const val EXTENSION_NAME = REFRESH_VERSIONS
+    const val DEFAULT_PROPERTIES_FILE = "gradle.properties"
 
     /** There is no standard on how to name stable and unstable versions
      * This version is a good starting point but you can define you rown
