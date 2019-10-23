@@ -19,10 +19,10 @@ object PluginConfig {
     const val PLUGIN_VERSION = "0.8.0" // plugin.de.fayard.refreshVersions
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
     const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.25.0" // Sync with plugin/build.gradle.kts
-    const val EXTENSION_NAME = "buildSrcVersions"
     const val DEPENDENCY_UPDATES = "dependencyUpdates"
     const val DEPENDENCY_UPDATES_PATH = ":$DEPENDENCY_UPDATES"
     const val REFRESH_VERSIONS = "refreshVersions"
+    const val EXTENSION_NAME = REFRESH_VERSIONS
 
     /** There is no standard on how to name stable and unstable versions
      * This version is a good starting point but you can define you rown

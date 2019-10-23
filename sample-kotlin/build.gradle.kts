@@ -44,7 +44,7 @@ tasks.withType<Wrapper> {
     distributionType = Wrapper.DistributionType.ALL
 }
 
-buildSrcVersions {
+refreshVersions {
     // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
     alwaysUpdateVersions()
     useFqdnFor("guice", "mongo-java-driver")

@@ -8,7 +8,7 @@ plugins {
 
 group = "de.fayard"
 
-buildSrcVersions {
+refreshVersions {
     // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
 }
 
@@ -32,7 +32,7 @@ def isNonStable = { String version ->
     return !stableKeyword && !(version ==~ regex)
 }
 
-buildSrcVersions {
+refreshVersions {
     useFqdnFor('module', 'com.google.inject')
     rejectVersionIf {
         isNonStable(candidate.version) && !isNonStable(currentVersion)
