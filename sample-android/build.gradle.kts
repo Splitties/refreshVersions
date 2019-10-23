@@ -1,5 +1,4 @@
 import de.fayard.OrderBy
-import de.fayard.VersionsOnlyMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -51,12 +50,6 @@ tasks.register<Copy>("copyReport") {
 
 tasks.register<DefaultTask>("hello") {
     group = "Custom"
-}
-
-tasks.register<DefaultTask>("checkAll") {
-    description = "versionsOnlyMode - check all modes"
-    group = "Custom"
-    dependsOn(VersionsOnlyMode.values().map { it.name })
 }
 
 buildScan {

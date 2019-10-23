@@ -1,7 +1,5 @@
 package de.fayard.internal
 
-import de.fayard.VersionsOnlyMode
-
 data class DependencyGraph(
     val gradle: GradleConfig,
     val current: Dependencies,
@@ -29,7 +27,7 @@ data class Dependency(
     var mode: VersionMode = VersionMode.MODULE,
     val available: AvailableDependency? = null
 ) {
-    fun groupOrVirtualGroup() : String = virtualGroup(this) ?: group
+    fun groupOrVirtualGroup(): String = virtualGroup(this) ?: group
 
     val module: String get() = name
     val versionName: String
@@ -72,33 +70,15 @@ data class GradleConfig(
 )
 
 data class GradleVersion(
-        val version: String = "",
-        val reason: String = "",
-        val isUpdateAvailable: Boolean = false,
-        val isFailure: Boolean = false
+    val version: String = "",
+    val reason: String = "",
+    val isUpdateAvailable: Boolean = false,
+    val isFailure: Boolean = false
 )
 
 data class AvailableDependency(
-        val release: String? = "",
-        val milestone: String? = "",
-        val integration: String? = ""
+    val release: String? = "",
+    val milestone: String? = "",
+    val integration: String? = ""
 )
-
-
-data class SingleModeResult(
-    val startOfBlock: Int,
-    val endOfBlock: Int,
-    val indentation: String
-) {
-    fun isBlockNotFound(): Boolean {
-        return startOfBlock == -1 && endOfBlock == -1
-    }
-
-    fun isNewFile() = startOfBlock == 0 && endOfBlock == 0
-
-    companion object {
-        fun blockNotFound(versionMode: VersionsOnlyMode) = SingleModeResult(-1, -1, versionMode.defaultIndent)
-        fun newFile(versionMode: VersionsOnlyMode) = SingleModeResult(0, 0, versionMode.defaultIndent)
-    }
-}
 
