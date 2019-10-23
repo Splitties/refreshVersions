@@ -1,8 +1,12 @@
+import com.louiscad.splitties.AndroidX
+import com.louiscad.splitties.KotlinX
+import com.louiscad.splitties.Testing
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("de.fayard.refreshVersions")
     kotlin("jvm")
+    id("com.louiscad.splitties")
     `build-scan`
 }
 
@@ -16,7 +20,16 @@ repositories {
     mavenCentral()
 }
 
+fun DependencyHandler.implementations(deps: List<String>) =
+    deps.forEach { implementation(it) }
+
+fun DependencyHandler.testImplementations(deps: List<String>) =
+    deps.forEach { testImplementation(it) }
+
 dependencies {
+    implementations(listOf(AndroidX.browser, AndroidX.cardView))
+    testImplementations(listOf(KotlinX.coroutines.core, KotlinX.coroutines.coreCommon))
+    testImplementations(listOf(Testing.kotestRunner, Testing.kotestExtensions))
     implementation("com.google.guava:guava:15.0")
     implementation("com.google.inject:guice:2.0")
     implementation("com.squareup.okhttp3:okhttp:3.10.0")
