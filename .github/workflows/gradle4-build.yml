@@ -16,5 +16,5 @@ jobs:
     - uses: eskatos/gradle-command-action@v1
       with:
         gradle-version: 4.8
-        arguments: checkAll
-        build-root-directory: composite
+        arguments: refreshVersions
+        build-root-directory: sample-android
