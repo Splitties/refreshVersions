@@ -3,7 +3,7 @@ package de.fayard
 import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentFilter
 import de.fayard.internal.PluginConfig
 
-interface BuildSrcVersionsExtension {
+interface RefreshVersionsExtension {
 
     /** If you prefer the plugin to update the versions and check afterwards the git diff **/
     fun alwaysUpdateVersions()

@@ -9,8 +9,6 @@ data class DependencyGraph(
     val count: Int = 0
 )
 
-fun Dependency.gradleNotation() = "$group:$name:$version"
-
 data class Dependencies(
     val dependencies: List<Dependency> = emptyList(),
     val count: Int = 0

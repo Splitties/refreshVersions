@@ -1,7 +1,7 @@
 package de.fayard
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import de.fayard.internal.BuildSrcVersionsExtensionImpl
+import de.fayard.internal.RefreshVersionsExtensionImpl
 import de.fayard.internal.PluginConfig
 import de.fayard.internal.PluginConfig.isNonStable
 import org.gradle.api.Plugin
@@ -13,7 +13,7 @@ import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.extra
 
 
-open class BuildSrcVersionsPlugin : Plugin<Project> {
+open class RefreshVersionsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         check(project == project.rootProject) { "ERROR: plugins de.fayard.refreshVersions must be applied to the root build.gradle(.kts)" }
@@ -23,7 +23,7 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
     }
 
     fun Project.configure() = with(PluginConfig) {
-        extensions.create(BuildSrcVersionsExtension::class, EXTENSION_NAME, BuildSrcVersionsExtensionImpl::class)
+        extensions.create(RefreshVersionsExtension::class, EXTENSION_NAME, RefreshVersionsExtensionImpl::class)
 
         if (supportsTaskAvoidance()) {
             val provider: TaskProvider<DependencyUpdatesTask> = when {
@@ -34,14 +34,14 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
             configureGradleVersions = { operation -> provider.configure(operation) }
             configureGradleVersions(DependencyUpdatesTask::configureBenManesVersions)
 
-            tasks.register(REFRESH_VERSIONS, BuildSrcVersionsTask::class.java, BuildSrcVersionsTask::configureRefreshVersions)
+            tasks.register(REFRESH_VERSIONS, RefreshVersionsTask::class.java, RefreshVersionsTask::configureRefreshVersions)
 
         } else {
             val dependencyUpdatesTask = tasks.maybeCreate(DEPENDENCY_UPDATES, DependencyUpdatesTask::class.java)
             configureGradleVersions = { operation -> dependencyUpdatesTask.operation() }
             configureGradleVersions(DependencyUpdatesTask::configureBenManesVersions)
 
-            tasks.create(REFRESH_VERSIONS, BuildSrcVersionsTask::class, BuildSrcVersionsTask::configureRefreshVersions)
+            tasks.create(REFRESH_VERSIONS, RefreshVersionsTask::class, RefreshVersionsTask::configureRefreshVersions)
         }
     }
 }
@@ -79,7 +79,7 @@ fun DependencyUpdatesTask.configureBenManesVersions() {
     outputFormatter = "json"
 }
 
-fun BuildSrcVersionsTask.configureRefreshVersions() {
+fun RefreshVersionsTask.configureRefreshVersions() {
     group = "Help"
     description = "Search for available dependencies updates and update gradle.properties"
     dependsOn(PluginConfig.DEPENDENCY_UPDATES_PATH)

@@ -1,12 +1,8 @@
-package de.fayard
+package de.fayard.internal
 
-import de.fayard.internal.BuildSrcVersionsExtensionImpl
-import de.fayard.internal.Dependency
-import de.fayard.internal.PluginConfig
-import de.fayard.internal.UpdateGradleProperties
-import de.fayard.internal.parseGraph
-import de.fayard.internal.sortedBeautifullyBy
-import io.kotlintest.matchers.collections.shouldBeEmpty
+import de.fayard.OrderBy
+import de.fayard.refreshVersionsDir
+import de.fayard.testResourceFile
 import io.kotlintest.matchers.withClue
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
@@ -22,7 +18,7 @@ class NonRegression : FreeSpec({
         val received = approved.resolveSibling(approved.nameWithoutExtension + "-received." + approved.extension)
         val message = """
             |Files differ. Run:
-            |       diff -u  ${approved.relativeTo(buildSrcVersionsDir)} ${received.relativeTo(buildSrcVersionsDir)}
+            |       diff -u  ${approved.relativeTo(refreshVersionsDir)} ${received.relativeTo(refreshVersionsDir)}
             |""".trimMargin()
         return Pair(received, message)
     }
@@ -44,8 +40,8 @@ class NonRegression : FreeSpec({
 
                 val propertiesFile = propertiesFolder.resolve(name)
                 val (received, message) = receivedMessage(propertiesFile)
-                val extension = BuildSrcVersionsExtensionImpl(
-                    propertiesFile = propertiesFile.relativeTo(buildSrcVersionsDir).path
+                val extension = RefreshVersionsExtensionImpl(
+                    propertiesFile = propertiesFile.relativeTo(refreshVersionsDir).path
                 )
                 val dependencies = (dependencyGraph.map { it.copy(available = null) })
                     .sortedBeautifullyBy(OrderBy.GROUP_AND_LENGTH) { it.versionProperty }

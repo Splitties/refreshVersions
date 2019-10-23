@@ -1,11 +1,11 @@
 package de.fayard
 
-import de.fayard.internal.BuildSrcVersionsExtensionImpl
+import de.fayard.internal.RefreshVersionsExtensionImpl
 import de.fayard.internal.Dependency
 import de.fayard.internal.DependencyGraph
 import de.fayard.internal.OutputFile
 import de.fayard.internal.PluginConfig
-import de.fayard.internal.UpdateGradleProperties
+import de.fayard.internal.UpdateProperties
 import de.fayard.internal.parseGraph
 import de.fayard.internal.sortedBeautifullyBy
 import org.gradle.api.Action
@@ -17,7 +17,7 @@ import org.gradle.api.tasks.options.Option
 import org.gradle.kotlin.dsl.getByType
 
 @Suppress("UnstableApiUsage")
-open class BuildSrcVersionsTask : DefaultTask() {
+open class RefreshVersionsTask : DefaultTask() {
 
     @Input
     @Option(description = "Update all versions, I will check git diff afterwards")
@@ -30,8 +30,8 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionGradleProperties() {
-        val extension: BuildSrcVersionsExtensionImpl = extension()
-        val updateGradleProperties = UpdateGradleProperties(extension)
+        val extension: RefreshVersionsExtensionImpl = extension()
+        val updateGradleProperties = UpdateProperties(extension)
 
         val specialDependencies =
             listOf(PluginConfig.gradleVersionsPlugin, PluginConfig.gradleRefreshVersions, PluginConfig.gradleLatestVersion(dependencyGraph))
@@ -46,7 +46,7 @@ open class BuildSrcVersionsTask : DefaultTask() {
     }
 
     private val dependencyGraph: DependencyGraph by lazy {
-        val extension: BuildSrcVersionsExtensionImpl = extension()
+        val extension: RefreshVersionsExtensionImpl = extension()
 
         val message = with(PluginConfig) {
             """
@@ -69,16 +69,16 @@ open class BuildSrcVersionsTask : DefaultTask() {
     }
 
     @Input @Optional @Transient
-    private lateinit var _extension: BuildSrcVersionsExtensionImpl
+    private lateinit var _extension: RefreshVersionsExtensionImpl
 
-    fun configure(action: Action<BuildSrcVersionsExtension>) {
-        val projectExtension = project.extensions.getByType<BuildSrcVersionsExtension>() as BuildSrcVersionsExtensionImpl
+    fun configure(action: Action<RefreshVersionsExtension>) {
+        val projectExtension = project.extensions.getByType<RefreshVersionsExtension>() as RefreshVersionsExtensionImpl
         this._extension = projectExtension.defensiveCopy()
         action.execute(this._extension)
         PluginConfig.useRefreshVersions = project.hasProperty("plugin.de.fayard.buildSrcVersions") || project.hasProperty("plugin.de.refreshVersions")
     }
 
 
-    private fun extension(): BuildSrcVersionsExtensionImpl = _extension
+    private fun extension(): RefreshVersionsExtensionImpl = _extension
 
 }

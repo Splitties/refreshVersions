@@ -1,18 +1,18 @@
 package de.fayard.internal
 
 import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentFilter
-import de.fayard.BuildSrcVersionsExtension
+import de.fayard.RefreshVersionsExtension
 import de.fayard.OrderBy
 
-internal open class BuildSrcVersionsExtensionImpl(
+internal open class RefreshVersionsExtensionImpl(
     override var propertiesFile: String? = null,
     var useFqqnFor: List<String> = emptyList(),
     var alwaysUpdateVersions: Boolean = false,
     override var orderBy: OrderBy = OrderBy.GROUP_AND_LENGTH
-) : BuildSrcVersionsExtension, java.io.Serializable {
+) : RefreshVersionsExtension, java.io.Serializable {
 
     // Necessary because of https://github.com/jmfayard/buildSrcVersions/issues/92
-    fun defensiveCopy(): BuildSrcVersionsExtensionImpl = BuildSrcVersionsExtensionImpl(
+    fun defensiveCopy(): RefreshVersionsExtensionImpl = RefreshVersionsExtensionImpl(
         propertiesFile, useFqqnFor, alwaysUpdateVersions, orderBy
     )
 

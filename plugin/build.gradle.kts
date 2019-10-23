@@ -21,7 +21,7 @@ gradlePlugin {
             id = "de.fayard.refreshVersions"
             displayName = "./gradlew refreshVersions"
             description = "Painless dependencies management"
-            implementationClass = "de.fayard.BuildSrcVersionsPlugin"
+            implementationClass = "de.fayard.RefreshVersionsPlugin"
         }
     }
 }

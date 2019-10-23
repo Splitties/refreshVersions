@@ -1,19 +1,5 @@
 package de.fayard.internal
 
-import de.fayard.OrderBy
-import de.fayard.OrderBy.GROUP_AND_ALPHABETICAL
-import de.fayard.OrderBy.GROUP_AND_LENGTH
-
-
-// https://github.com/jmfayard/buildSrcVersions/issues/65
-fun List<Dependency>.sortedBeautifullyBy(orderBy: OrderBy, selection: (Dependency) -> String?) : List<Dependency> {
-    val unsorted = this.filterNot { selection(it) == null }
-        .sortedBy { selection(it)!! }
-    return when(orderBy) {
-        GROUP_AND_LENGTH -> unsorted.sortedByDescending { selection(it)!!.length }.sortedBy { it.mode }
-        GROUP_AND_ALPHABETICAL -> unsorted.sortedBy { it.mode }
-    }
-}
 
 fun Dependency.versionInformation(): String {
     val newerVersion = newerVersion()
@@ -27,7 +13,7 @@ fun Dependency.versionInformation(): String {
     return if (addNewLine) "\n$comment" else comment
 }
 
-fun Dependency.newerVersion(): String?  =
+fun Dependency.newerVersion(): String? =
     when {
         available == null -> null
         available.release.isNullOrBlank().not() -> available.release
@@ -60,24 +46,6 @@ fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): List<Dep
                 VersionMode.GROUP_MODULE -> "${d.group}_${d.name}"
             }
         )
-    }
-    return this
-}
-
-
-fun List<Dependency>.orderDependencies(): List<Dependency> {
-    return this.sortedBy { it.gradleNotation() }
-}
-
-
-fun List<Dependency>.findCommonVersions(): List<Dependency> {
-    val map = groupBy { d: Dependency -> d.groupOrVirtualGroup() }
-    for (deps in map.values) {
-        val sameVersions = deps.map { it.version }.distinct().size == 1
-        val hasVirtualGroup = deps.any { it.groupOrVirtualGroup() != it.group }
-        if (sameVersions && (hasVirtualGroup || deps.size > 1)) {
-            deps.forEach { d -> d.mode = VersionMode.GROUP }
-        }
     }
     return this
 }

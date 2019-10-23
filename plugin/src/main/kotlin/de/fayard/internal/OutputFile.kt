@@ -1,6 +1,5 @@
 package de.fayard.internal
 
-import de.fayard.BuildSrcVersionsExtension
 import org.gradle.api.Project
 
 internal enum class OutputFile(var path: String, var existed: Boolean = false, val alternativePath: String? = null) {

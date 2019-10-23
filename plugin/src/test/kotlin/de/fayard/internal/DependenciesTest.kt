@@ -1,12 +1,7 @@
-package de.fayard
+package de.fayard.internal
 
-import de.fayard.internal.Dependency
-import de.fayard.internal.PluginConfig
-import de.fayard.internal.VersionMode
-import de.fayard.internal.findCommonVersions
-import de.fayard.internal.sortedBeautifullyBy
-import io.kotlintest.matchers.collections.containExactlyInAnyOrder
-import io.kotlintest.should
+import de.fayard.OrderBy
+import de.fayard.asDependency
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
 

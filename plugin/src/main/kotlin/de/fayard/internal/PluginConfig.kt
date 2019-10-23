@@ -139,7 +139,7 @@ object PluginConfig {
 
     val dependencyGraphAdapter: JsonAdapter<DependencyGraph> by moshiAdapter()
 
-    internal val extensionAdapter: JsonAdapter<BuildSrcVersionsExtensionImpl> by moshiAdapter()
+    internal val extensionAdapter: JsonAdapter<RefreshVersionsExtensionImpl> by moshiAdapter()
 
     fun readGraphFromJsonFile(jsonInput: File): DependencyGraph {
         return dependencyGraphAdapter.fromJson(jsonInput.source().buffer())!!

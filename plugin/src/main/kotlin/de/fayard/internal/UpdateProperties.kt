@@ -1,10 +1,10 @@
 package de.fayard.internal
 
-import de.fayard.BuildSrcVersionsExtension
+import de.fayard.RefreshVersionsExtension
 import java.io.File
 
-data class UpdateGradleProperties(
-    val extension: BuildSrcVersionsExtension
+data class UpdateProperties(
+    val extension: RefreshVersionsExtension
 ) {
 
     fun generateVersionProperties(file: File, dependencies: List<Dependency>) = with(UpdateVersionsOnly) {
