@@ -1,7 +1,7 @@
 # .github/workflows/gradle-build-pr.yml
 # https://github.com/marketplace/actions/gradle-command
 name: Run Gradle on PRs
-on: pull-request
+on: [push, pull_request]
 jobs:
   gradle:
     strategy:
