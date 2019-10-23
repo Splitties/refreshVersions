@@ -34,7 +34,6 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
             configureGradleVersions = { operation -> provider.configure(operation) }
             configureGradleVersions(DependencyUpdatesTask::configureBenManesVersions)
 
-            tasks.register(BUILD_SRC_VERSIONS, BuildSrcVersionsTask::class.java, BuildSrcVersionsTask::configureBuildSrcVersions)
             tasks.register(REFRESH_VERSIONS, BuildSrcVersionsTask::class.java, BuildSrcVersionsTask::configureRefreshVersions)
 
         } else {
@@ -42,7 +41,6 @@ open class BuildSrcVersionsPlugin : Plugin<Project> {
             configureGradleVersions = { operation -> dependencyUpdatesTask.operation() }
             configureGradleVersions(DependencyUpdatesTask::configureBenManesVersions)
 
-            tasks.create(BUILD_SRC_VERSIONS, BuildSrcVersionsTask::class, BuildSrcVersionsTask::configureBuildSrcVersions)
             tasks.create(REFRESH_VERSIONS, BuildSrcVersionsTask::class, BuildSrcVersionsTask::configureRefreshVersions)
         }
     }

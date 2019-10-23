@@ -23,6 +23,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-urlconnection:3.10.0")
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.mongodb:mongo-java-driver:3.11.0")
+
 }
 
 tasks.register("run", JavaExec::class.java) {

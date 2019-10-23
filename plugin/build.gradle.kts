@@ -11,18 +11,12 @@ plugins {
 }
 
 
-version = "0.7.1" // plugin.de.fayard.refreshversions
+version = "0.8.0" // plugin.de.fayard.refreshversions
 group = "de.fayard"
 
 
 gradlePlugin {
     plugins {
-        create("buildSrcVersions") {
-            id = "de.fayard.buildSrcVersions"
-            displayName = "./gradlew buildSrcVersions"
-            description = "Painless dependencies management"
-            implementationClass = "de.fayard.BuildSrcVersionsPlugin"
-        }
         create("refreshVersions") {
             id = "de.fayard.refreshVersions"
             displayName = "./gradlew refreshVersions"
@@ -63,8 +57,6 @@ dependencies {
 
     implementation("com.squareup.okio:okio:2.1.0")
     implementation( "com.squareup.moshi:moshi:1.7.0")
-    implementation("com.squareup:kotlinpoet:1.3.0")
-
 }
 
 
