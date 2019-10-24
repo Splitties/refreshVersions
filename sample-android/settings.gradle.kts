@@ -2,7 +2,7 @@ pluginManagement {
     repositories {
         google()
         gradlePluginPortal()
-        mavenLocal()
+        //mavenLocal()
     }
 }
 apply(from = "gradle/plugins.gradle.kts")

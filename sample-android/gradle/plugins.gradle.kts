@@ -18,13 +18,14 @@ pluginManagement {
      * To check what happen, you can set the property
      *     resolutionStrategyConfig=verbose
      **/
+    val versionProperties = file("../versions.properties")
     val resolutionStrategyConfig: String? by extra
-    if (resolutionStrategyConfig == "false" || file("../versions.properties").canRead().not()) return@pluginManagement
+    if (resolutionStrategyConfig == "false" || versionProperties.canRead().not()) return@pluginManagement
     val androidPluginIds = listOf("com.android.application", "com.android.library")
     val kotlinPluginIds = listOf("org.jetbrains.kotlin.android", "org.jetbrains.kotlin.kapt", "kotlin-android-extensions")
     @Suppress("UNCHECKED_CAST")
     val properties: Map<String, String> = Properties().apply {
-        load(file("../versions.properties").reader())
+        load(versionProperties.reader())
     } as Map<String, String>
     require("module.kotlin" in properties && "module.android" in properties) { "version.properties MUST contain module.android=... and module.kotlin=...." }
     resolutionStrategy.eachPlugin {
