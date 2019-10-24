@@ -1,11 +1,11 @@
 pluginManagement {
     repositories {
         google()
-        mavenLocal()
+        //mavenLocal()
         gradlePluginPortal()
     }
 }
 apply(from = "plugins.gradle.kts")
 rootProject.name = "sample-android"
-includeBuild("../plugin")
+//includeBuild("../plugin")
 include(":app")

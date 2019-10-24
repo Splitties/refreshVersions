@@ -1,5 +1,4 @@
 import de.fayard.OrderBy
-//TODO: find another solution to this problem https://gradle.com/s/7rm5h3bk6fzzq
 
 plugins {
     id("de.fayard.refreshVersions")
