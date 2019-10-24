@@ -5,10 +5,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("de.fayard.refreshVersions")
-    kotlin("jvm").version("1.3.50")
-    id("com.louiscad.splitties").version("0.1.2")
+    id("com.louiscad.splitties")
+    kotlin("jvm")
     `build-scan`
-    //id("org.nosphere.gradle.github.actions")
 }
 
 group = "de.fayard"

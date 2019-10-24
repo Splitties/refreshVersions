@@ -4,7 +4,7 @@ pluginManagement {
         mavenCentral()
     }
 }
-//apply(from = "plugins.gradle.kts")
+apply(from = "gradle/plugins.gradle.kts")
 rootProject.name = "sample-kotlin"
 includeBuild("../plugin")
 

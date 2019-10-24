@@ -9,16 +9,7 @@ object PluginsSetup {
     const val OK = "✔ \uD83C\uDD97"
 
     const val INCLUDE_PLUGINS_GRADLE_KTS = """
-pluginManagement {
-    repositories {
-        google()  // for Android projects only
-        jcenter() // if you use plugins not published on the gradlePluginPortal()
-        gradlePluginPortal()
-    }
-}
-apply(from = "plugins.gradle.kts")
-// rootProject.name = xxx
-// include(":app")
+apply(from = "gradle/plugins.gradle.kts")
 """
 
     fun pluginFileContent(): String {
@@ -26,11 +17,11 @@ apply(from = "plugins.gradle.kts")
     }
 
     fun copyPluginsGradleKtsIfNeeded(project: Project) {
-        val file = project.rootProject.file(PLUGIN_GRADLE_KTS)
+        val file = project.rootProject.file("gradle/$PLUGIN_GRADLE_KTS")
         val settingsFile = project.rootProject.file(SETTINGS_GRADLE_KTS)
         if (settingsFile.canRead() && file.canRead().not()) {
             file.writeText(pluginFileContent())
-            println("$OK Created file ./$PLUGIN_GRADLE_KTS")
+            println("$OK Created file ./gradle/$PLUGIN_GRADLE_KTS")
             throw GradleException(
                 """
                 |Action required: Please include $PLUGIN_GRADLE_KTS file in $SETTINGS_GRADLE_KTS

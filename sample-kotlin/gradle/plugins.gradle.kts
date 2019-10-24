@@ -50,14 +50,14 @@ apply(from = "plugins.gradle.kts")
      *     resolutionStrategyConfig=verbose
      **/
     val resolutionStrategyConfig: String? by extra
-    if (resolutionStrategyConfig == "false" || file("versions.properties").canRead().not()) return@pluginManagement
+    val versionProperties = file("../versions.properties")
+    if (resolutionStrategyConfig == "false" || versionProperties.canRead().not()) return@pluginManagement
     val androidPluginIds = listOf("com.android.application", "com.android.library")
     val kotlinPluginIds = listOf("org.jetbrains.kotlin.android", "org.jetbrains.kotlin.kapt", "kotlin-android-extensions")
     @Suppress("UNCHECKED_CAST")
     val properties: Map<String, String> = java.util.Properties().apply {
-        load(file("versions.properties").reader())
+        load(versionProperties.reader())
     } as Map<String, String>
-    require("module.kotlin" in properties) { "version.properties MUST contain module.kotlin=.... and/or module.android=...." }
     resolutionStrategy.eachPlugin {
         val pluginId = requested.id.id
         val version = properties["plugin.$pluginId"]
