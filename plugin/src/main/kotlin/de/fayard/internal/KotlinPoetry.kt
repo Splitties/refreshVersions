@@ -28,7 +28,8 @@ fun parseGraph(
     useFdqn: List<String>
 ): List<Dependency> {
     val dependencies: List<Dependency> = graph.current + graph.exceeded + graph.outdated + graph.unresolved
-    val resolvedUseFqdn = PluginConfig.computeUseFqdnFor(dependencies, useFdqn, PluginConfig.MEANING_LESS_NAMES)
+    val androidx = dependencies.map { it.group }.distinct().filter { it.startsWith("androidx.") }
+    val resolvedUseFqdn = PluginConfig.computeUseFqdnFor(dependencies, useFdqn + androidx, PluginConfig.MEANING_LESS_NAMES)
     return dependencies.checkModeAndNames(resolvedUseFqdn).findCommonVersions()
 }
 
