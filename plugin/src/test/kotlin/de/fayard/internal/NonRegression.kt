@@ -8,6 +8,9 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
 import java.io.File
 
+// TODO: transform plugin/src/test/resources/reports from JSON to the new file format
+// TODO: mmake sure the unit tests still pass
+
 class NonRegression : FreeSpec({
 
     val reportsFolder = testResourceFile("reports")

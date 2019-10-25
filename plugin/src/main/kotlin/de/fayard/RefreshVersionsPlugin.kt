@@ -18,8 +18,15 @@ open class RefreshVersionsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         check(project == project.rootProject) { "ERROR: plugins de.fayard.refreshVersions must be applied to the root build.gradle(.kts)" }
-        project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
+
+        if (project.useGradleVersionsPlugin) {
+            project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
+        } else {
+            project.addVersionsUpdatesPath()
+        }
+
         project.configure()
+
         project.useVersionsFromProperties()
     }
 
@@ -33,21 +40,46 @@ open class RefreshVersionsPlugin : Plugin<Project> {
                 tasks.findByPath(DEPENDENCY_UPDATES_PATH) == null -> tasks.register(DEPENDENCY_UPDATES_PATH, DependencyUpdatesTask::class.java)
                 else -> tasks.named(DEPENDENCY_UPDATES, DependencyUpdatesTask::class.java)
             }
-
-            configureGradleVersions = { operation -> provider.configure(operation) }
-            configureGradleVersions(DependencyUpdatesTask::configureBenManesVersions)
+            if (useGradleVersionsPlugin) {
+                configureGradleVersions = { operation -> provider.configure(operation) }
+                configureGradleVersions(DependencyUpdatesTask::configureBenManesVersions)
+            }
 
             tasks.register(REFRESH_VERSIONS, RefreshVersionsTask::class.java, RefreshVersionsTask::configureRefreshVersions)
 
         } else {
             val dependencyUpdatesTask = tasks.maybeCreate(DEPENDENCY_UPDATES, DependencyUpdatesTask::class.java)
-            configureGradleVersions = { operation -> dependencyUpdatesTask.operation() }
-            configureGradleVersions(DependencyUpdatesTask::configureBenManesVersions)
+
+            if (useRefreshVersions) {
+                configureGradleVersions = { operation -> dependencyUpdatesTask.operation() }
+                configureGradleVersions(DependencyUpdatesTask::configureBenManesVersions)
+            }
 
             tasks.create(REFRESH_VERSIONS, RefreshVersionsTask::class, RefreshVersionsTask::configureRefreshVersions)
         }
     }
 }
+
+fun Project.addVersionsUpdatesPath() = with(PluginConfig) {
+    if (supportsTaskAvoidance()) {
+        tasks.register(REFRESH_VERSIONS_UPDATES_PATH) {
+
+        }
+    } else {
+        tasks.create(REFRESH_VERSIONS_UPDATES_PATH) {
+
+        }
+    }
+}
+
+/***
+ * Overwrite the default by adding to gradle.properties:
+ *
+ * # gradle.properties
+ * useExperimentalUpdater=true
+ * **/
+val Project.useGradleVersionsPlugin: Boolean
+    get() = findProperty(PluginConfig.USE_EXPERIMENTAL_UPDATER) != "true"
 
 fun Project.useVersionsFromProperties() {
     @Suppress("UNCHECKED_CAST")
@@ -87,9 +119,13 @@ fun DependencyUpdatesTask.configureBenManesVersions() {
 }
 
 fun RefreshVersionsTask.configureRefreshVersions() {
+    val taskUpdater = when {
+        project.useGradleVersionsPlugin -> PluginConfig.DEPENDENCY_UPDATES_PATH
+        else -> PluginConfig.REFRESH_VERSIONS_UPDATES_PATH
+    }
     group = "Help"
     description = "Search for available dependencies updates and update gradle.properties"
-    dependsOn(PluginConfig.DEPENDENCY_UPDATES_PATH)
+    dependsOn(taskUpdater)
     outputs.upToDateWhen { false }
     configure {
         propertiesFile = PluginConfig.DEFAULT_PROPERTIES_FILE

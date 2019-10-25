@@ -13,17 +13,18 @@ import java.io.File
 
 @Suppress("unused")
 object PluginConfig {
-
-
     const val PLUGIN_ID = "de.fayard.refreshVersions"
     const val PLUGIN_VERSION = "0.8.2" // plugin.de.fayard.refreshVersions
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
     const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.25.0" // Sync with plugin/build.gradle.kts
     const val DEPENDENCY_UPDATES = "dependencyUpdates"
+    const val REFRESH_VERSIONS_UPDATES_PATH = "refreshVersionsUpdates" // TODO: think about a better name
+    const val USE_EXPERIMENTAL_UPDATER = "useExperimentalUpdater" // TODO: think about a better name
     const val DEPENDENCY_UPDATES_PATH = ":$DEPENDENCY_UPDATES"
     const val REFRESH_VERSIONS = "refreshVersions"
     const val EXTENSION_NAME = REFRESH_VERSIONS
     const val DEFAULT_PROPERTIES_FILE = "versions.properties"
+    const val AVAILABLE_DEPENDENCIES_FILE = "build/dependencyUpdates/refreshVersions.txt"
 
     /** There is no standard on how to name stable and unstable versions
      * This version is a good starting point but you can define you rown
@@ -54,19 +55,24 @@ object PluginConfig {
         "version.$module"
     )
 
-    /**
-     * We want to treat all "org.getbrains.kotlinx:kotlinx-coroutines-*" as if they were a maven group
-     * with one common version, but different from org.jetbrains.kotlinx:kotlinx-serialization*
-     * For now this list is not part of the public API but feel free to add feedback that you need it.
-     * Add your use case here https://github.com/jmfayard/buildSrcVersions/issues/102
-     ***/
-    val ALIGN_VERSION_GROUPS: MutableList<String> = mutableListOf(
-        "org.jetbrains.kotlinx.kotlinx-coroutines",
-        "org.jetbrains.kotlinx.kotlinx-serialization",
-        "com.louiscad.splitties:splitties",
-        "com.squareup.retrofit2"
-    )
+    // TODO: replace ALIGN_VERSION_GROUPS by DEFAULT_MAPPING
+    val ALIGN_VERSION_GROUPS: MutableList<String>
+        get() = DEFAULT_MAPPING.values.toMutableList()
 
+    val DEFAULT_MAPPING: Map<String, String> = mapOf(
+        "org.jetbrains.kotlinx..kotlinx-coroutines" to "org.jetbrains.kotlinx.kotlinx-coroutines",
+        "org.jetbrains.kotlinx..kotlinx-serialization" to "org.jetbrains.kotlinx.kotlinx-serialization",
+        "com.louiscad.splitties..splitties" to "com.louiscad.splitties:splitties",
+        "com.squareup.retrofit2" to "com.squareup.retrofit2"
+        /**
+         * TODO: improve DEFAULT_MAPPING according to
+         * https://github.com/LouisCAD/Splitties/blob/9f4a85e7ecc612d290fd6e4615b3472c05aece51/build.gradle.kts#L151-L167
+         * for example:
+        "retrofit2" to "com.squareup.retrofit2",
+        "kotlin" to "org.jetbrains.kotlin:kotlin",
+        "moshi" to "com.squareup.moshi"
+         **/
+    )
 
     @JvmStatic
     fun versionPropertyFor(d: Dependency): String = when (d.mode) {
@@ -143,6 +149,8 @@ object PluginConfig {
     val dependencyGraphAdapter: JsonAdapter<DependencyGraph> by moshiAdapter()
 
     internal val extensionAdapter: JsonAdapter<RefreshVersionsExtensionImpl> by moshiAdapter()
+
+    internal val dependencyAdapter: JsonAdapter<Dependency> by moshiAdapter()
 
     fun readGraphFromJsonFile(jsonInput: File): DependencyGraph {
         return dependencyGraphAdapter.fromJson(jsonInput.source().buffer())!!
@@ -229,7 +237,7 @@ object PluginConfig {
         return (configured + byDefault + ambiguities + depsFromGroups - groups).distinct().sorted()
     }
 
-    var useRefreshVersions: Boolean = false
+    var useRefreshVersions: Boolean = true
 
     lateinit var configureGradleVersions: (DependencyUpdatesTask.() -> Unit) -> Unit
 

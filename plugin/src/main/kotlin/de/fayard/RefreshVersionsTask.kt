@@ -51,7 +51,7 @@ open class RefreshVersionsTask : DefaultTask() {
 
         val message = with(PluginConfig) {
             """
-                |Running plugins.id("$PLUGIN_ID").version("$PLUGIN_VERSION") with useRefreshVersions=${useRefreshVersions} and extension: $extension
+                |Running plugins.id("$PLUGIN_ID").version("$PLUGIN_VERSION") with configuration: $extension
                 |See documentation at $issue53PluginConfiguration
                 |
             """.trimMargin()
@@ -76,7 +76,7 @@ open class RefreshVersionsTask : DefaultTask() {
         val projectExtension = project.extensions.getByType<RefreshVersionsExtension>() as RefreshVersionsExtensionImpl
         this._extension = projectExtension.defensiveCopy()
         action.execute(this._extension)
-        PluginConfig.useRefreshVersions = project.hasProperty("plugin.de.fayard.buildSrcVersions") || project.hasProperty("plugin.de.refreshVersions")
+        // TODO: use DEFAULT_MAPPING instead of ALIGN_VERSION_GROUPS
         PluginConfig.ALIGN_VERSION_GROUPS.clear()
         PluginConfig.ALIGN_VERSION_GROUPS.addAll(_extension.alignVersionsForGroups)
     }
