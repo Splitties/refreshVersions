@@ -16,7 +16,7 @@ object PluginConfig {
 
 
     const val PLUGIN_ID = "de.fayard.refreshVersions"
-    const val PLUGIN_VERSION = "0.8.0" // plugin.de.fayard.refreshVersions
+    const val PLUGIN_VERSION = "0.8.2" // plugin.de.fayard.refreshVersions
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
     const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.25.0" // Sync with plugin/build.gradle.kts
     const val DEPENDENCY_UPDATES = "dependencyUpdates"
