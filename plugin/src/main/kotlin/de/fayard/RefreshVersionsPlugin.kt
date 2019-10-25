@@ -21,9 +21,8 @@ open class RefreshVersionsPlugin : Plugin<Project> {
 
         if (project.useGradleVersionsPlugin) {
             project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
-        } else {
-            project.addVersionsUpdatesPath()
         }
+        project.addVersionsUpdatesPath()
 
         project.configure()
 
@@ -62,13 +61,9 @@ open class RefreshVersionsPlugin : Plugin<Project> {
 
 fun Project.addVersionsUpdatesPath() = with(PluginConfig) {
     if (supportsTaskAvoidance()) {
-        tasks.register(REFRESH_VERSIONS_UPDATES_PATH) {
-
-        }
+        tasks.register(REFRESH_VERSIONS_UPDATES_PATH, SearchAvailableUpdatesTask::class.java)
     } else {
-        tasks.create(REFRESH_VERSIONS_UPDATES_PATH) {
-
-        }
+        tasks.create(REFRESH_VERSIONS_UPDATES_PATH, SearchAvailableUpdatesTask::class.java)
     }
 }
 
