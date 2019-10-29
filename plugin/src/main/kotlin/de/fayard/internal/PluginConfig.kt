@@ -237,8 +237,6 @@ object PluginConfig {
         return (configured + byDefault + ambiguities + depsFromGroups - groups).distinct().sorted()
     }
 
-    var useRefreshVersions: Boolean = true
-
     lateinit var configureGradleVersions: (DependencyUpdatesTask.() -> Unit) -> Unit
 
 }
