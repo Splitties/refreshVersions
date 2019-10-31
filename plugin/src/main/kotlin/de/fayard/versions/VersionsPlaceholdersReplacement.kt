@@ -67,6 +67,7 @@ private fun getVersionPropertyName(moduleIdentifier: ModuleIdentifier): String {
 private fun ModuleIdentifier.findArtifactGroupingRule(): ArtifactGroupingRule? {
     if (forceFullyQualifiedName(this)) return null
     val fullArtifactName = "$group:$name"
+    //TODO: Make the rules user-editable
     return artifactsGroupingRules.find { fullArtifactName.startsWith(it.artifactNamesStartingWith) }
 }
 
