@@ -1,33 +1,32 @@
 package de.fayard.versions
 
 import de.fayard.versions.ArtifactGroupNaming.*
-import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.ModuleVersionSelector
 
 internal const val versionPlaceholder = "_"
 
-internal fun Project.setupVersionPlaceholdersResolvingForConfiguration(configuration: Configuration) {
-    configuration.resolutionStrategy.eachDependency {
+internal fun Configuration.setupVersionPlaceholdersResolving(properties: Map<String, String>) {
+    resolutionStrategy.eachDependency {
         if (requested.version != versionPlaceholder) return@eachDependency
-        useVersion(getVersionFromPropertiesForModule(requested))
+        useVersion(requested.getVersionFromProperties(properties))
     }
 }
 
-private fun Project.getVersionFromPropertiesForModule(module: ModuleVersionSelector): String {
+private fun ModuleVersionSelector.getVersionFromProperties(properties: Map<String, String>): String {
     val moduleIdentifier: ModuleIdentifier = try {
         @Suppress("UnstableApiUsage")
-        (module.module)
+        module
     } catch (e: Throwable) { // Guard against possible API changes.
         println(e)
         object : ModuleIdentifier {
-            override fun getGroup(): String = module.group
-            override fun getName(): String = module.name
+            override fun getGroup(): String = this@getVersionFromProperties.group
+            override fun getName(): String = this@getVersionFromProperties.name
         }
     }
     val propertyName = getVersionPropertyName(moduleIdentifier)
-    val version = property(propertyName)
+    val version = properties[propertyName]
     return version as String
 }
 

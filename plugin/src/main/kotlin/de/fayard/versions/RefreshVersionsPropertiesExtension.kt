@@ -2,7 +2,7 @@ package de.fayard.versions
 
 import org.gradle.api.Incubating
 
-class RefreshVersionsPropertiesExtension {
+open class RefreshVersionsPropertiesExtension {
 
     /**
      * Return true to reject a candidate.

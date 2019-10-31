@@ -13,13 +13,7 @@ plugins {
 group = "de.fayard"
 
 refreshVersions {
-    // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
-    propertiesFile = "versions.properties"
-    alwaysUpdateVersions()
-    useFqdnFor("guice", "mongo-java-driver")
-    rejectVersionIf {
-        isNonStable(candidate.version) && isNonStable(currentVersion).not()
-    }
+
 }
 
 buildScan {
@@ -30,6 +24,8 @@ buildScan {
 repositories {
     maven("../plugin/src/test/resources/maven")
     mavenCentral()
+    google()
+    jcenter()
 }
 
 fun DependencyHandler.implementations(deps: List<String>) =
@@ -42,7 +38,7 @@ dependencies {
     implementations(listOf(AndroidX.browser, AndroidX.cardView))
     testImplementations(listOf(KotlinX.coroutines.core, KotlinX.coroutines.coreCommon))
     testImplementations(listOf(Testing.kotestRunner, Testing.kotestExtensions))
-    implementation("com.google.guava:guava:15.0")
+    implementation("com.google.guava:guava:_")
     implementation("com.google.inject:guice:2.0")
     implementation("com.squareup.okhttp3:okhttp:3.10.0")
     implementation("com.squareup.okhttp3:okhttp-urlconnection:3.10.0")

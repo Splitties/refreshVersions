@@ -8,23 +8,25 @@ import de.fayard.internal.RefreshVersionsExtensionImpl
 import de.fayard.versions.RefreshVersionsPropertiesExtension
 import de.fayard.versions.RefreshVersionsPropertiesTask
 import de.fayard.versions.extensions.registerOrCreate
-import de.fayard.versions.setupVersionPlaceholdersResolvingForConfiguration
+import de.fayard.versions.setupVersionPlaceholdersResolving
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ModuleVersionSelector
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.buildscript
 import org.gradle.kotlin.dsl.create
 import java.util.Properties
 
 
 open class RefreshVersionsPlugin : Plugin<Project> {
 
-    /***
-     * Overwrite the default by adding to gradle.properties:
+    /**
+     * Overwrite the default by adding the following line to gradle.properties:
      *
-     * # gradle.properties
+     * ```
      * useExperimentalUpdater=true
+     * ```
      * **/
     internal val Project.useExperimentalUpdater: Boolean
         get() = findProperty(PluginConfig.USE_EXPERIMENTAL_UPDATER) == "true"
@@ -36,7 +38,14 @@ open class RefreshVersionsPlugin : Plugin<Project> {
 
         if (project.useExperimentalUpdater) {
             project.configureExperimentalUpdater()
-            project.allprojects { configurations.all { setupVersionPlaceholdersResolvingForConfiguration(this) } }
+            val properties: Map<String, String> = mutableMapOf<String, String>().also { map ->
+                project.properties.forEach { (k, v) -> if (v is String) map[k] = v }
+                Properties().also {
+                    it.load(project.file("versions.properties").reader())
+                }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
+            }
+            //project.buildscript.configurations.all { setupVersionPlaceholdersResolving(properties) }
+            project.allprojects { configurations.all { setupVersionPlaceholdersResolving(properties) } }
         } else {
             project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
             project.configure()
