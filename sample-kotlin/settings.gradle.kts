@@ -6,7 +6,9 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-    dependencies.classpath("de.fayard:plugin:0.8.2") // Didn't find a way to use classpath from composite build.
+    // Didn't find a way to use classpath from composite build, so we are hardcoding a
+    // version expected to be released in one of the configured repositories.
+    dependencies.classpath("de.fayard:plugin:0.8.2")
 }
 
 pluginManagement {

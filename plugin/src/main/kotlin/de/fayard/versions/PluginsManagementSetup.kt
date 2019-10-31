@@ -1,5 +1,6 @@
 package de.fayard.versions
 
+import de.fayard.internal.PluginConfig
 import org.gradle.kotlin.dsl.SettingsScriptApi
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.provideDelegate
@@ -30,6 +31,10 @@ fun SettingsScriptApi.setupVersionPlaceholdersResolving() {
         } as Map<String, String>
         resolutionStrategy.eachPlugin {
             val pluginId = requested.id.id
+            if (pluginId == "de.fayard.refreshVersions") {
+                useVersion(PluginConfig.PLUGIN_VERSION)
+                return@eachPlugin
+            }
             val pluginNamespace = requested.id.namespace ?: ""
             val versionKey = when {
                 pluginNamespace.startsWith("org.jetbrains.kotlin") -> "version.kotlin"
