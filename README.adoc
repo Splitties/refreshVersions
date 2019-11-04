@@ -43,7 +43,7 @@ and generating Kotlin code, Groovy code or Gradle properties.
 
 The plugin was called before `de.fayard.buildSrcVersions`, which still exists and is currently identical.
 
-[The goal in the future is to focus on :refreshVersions](https://github.com/jmfayard/buildSrcVersions/issues/104)
+https://github.com/jmfayard/buildSrcVersions/issues/104[The goal in the future is to focus on :refreshVersions]
 
 == Installation
 
