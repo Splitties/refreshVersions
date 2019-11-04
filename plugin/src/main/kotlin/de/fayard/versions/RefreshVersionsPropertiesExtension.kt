@@ -24,6 +24,13 @@ open class RefreshVersionsPropertiesExtension {
      */
     fun rejectVersionIf(predicate: ComponentSelectionData.() -> Boolean) {
         rejectVersionsPredicate = predicate
+        acceptVersionsPredicate = null
+    }
+
+    @Incubating
+    fun acceptVersionOnlyIf(predicate: ComponentSelectionData.() -> Boolean) {
+        acceptVersionsPredicate = predicate
+        rejectVersionsPredicate = null
     }
 
     @Incubating
@@ -34,6 +41,11 @@ open class RefreshVersionsPropertiesExtension {
     internal var alwaysUpdateStraightAway = false
         private set
 
-    internal var rejectVersionsPredicate: ComponentSelectionData.() -> Boolean = { candidateIsLessStableThanCurrent() }
+    internal var rejectVersionsPredicate: (ComponentSelectionData.() -> Boolean)? = {
+        candidateIsLessStableThanCurrent()
+    }
+        private set
+
+    internal var acceptVersionsPredicate: (ComponentSelectionData.() -> Boolean)? = null
         private set
 }

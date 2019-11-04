@@ -61,8 +61,15 @@ private fun Project.getLatestDependencyVersion(
                 currentVersion = dependency.version ?: "",
                 candidate = candidate
             )
-            if (extension.rejectVersionsPredicate(componentSelectionData)) {
-                reject("Rejected according to rejectVersionsIf { ... }")
+            extension.rejectVersionsPredicate?.let { rejectPredicate ->
+                if (rejectPredicate(componentSelectionData)) {
+                    reject("Rejected in rejectVersionsIf { ... }")
+                }
+            }
+            extension.acceptVersionsPredicate?.let { acceptPredicate ->
+                if (acceptPredicate(componentSelectionData).not()) {
+                    reject("Accepted in to acceptVersionOnlyIf { ... }")
+                }
             }
         }
         resolutionStrategy.eachDependency {
