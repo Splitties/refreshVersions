@@ -169,7 +169,7 @@ See https://github.com/jmfayard/buildSrcVersions/issues/53[Issue #53: Plugin Con
 
 == Design goals
 
-- **First, to do no harm.** The plugin should never update itself or otherwise break an existing build. The plugin should do nothing unless it's explicitely called.
+- **First, to do no harm.** The plugin should never update itself or otherwise break an existing build. The plugin should do nothing unless it's explicitly called.
 - **Be Lazy.** Use code generation to avoid writing tedious code manually. Find available updates automatically instead of googling them. The plugin should do the right thing by default, no configuration should be mandatory. Leverage IDE tooling support (auto-completion, ...).
 - **Be Humble.** Render to the programmer the things that are the programmer's. This include using the generated code and updating the dependencies.
 
