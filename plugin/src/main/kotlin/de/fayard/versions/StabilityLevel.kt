@@ -13,5 +13,6 @@ enum class StabilityLevel {
     Development,
     Unknown;
 
-    fun isAtLeastAsStableAs(other: StabilityLevel): Boolean = ordinal <= other.ordinal
+    fun isLessStableThan(other: StabilityLevel): Boolean = ordinal > other.ordinal
+    fun isAtLeastAsStableAs(other: StabilityLevel): Boolean = isLessStableThan(other).not()
 }
