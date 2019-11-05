@@ -14,10 +14,8 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.ModuleVersionSelector
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.buildscript
 import org.gradle.kotlin.dsl.create
 import java.util.Properties
-
 
 open class RefreshVersionsPlugin : Plugin<Project> {
 
@@ -25,7 +23,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
      * Overwrite the default by adding the following line to gradle.properties:
      *
      * ```
-     * useExperimentalUpdater=true
+     * refreshVersions.useExperimentalUpdater=true
      * ```
      * **/
     internal val Project.useExperimentalUpdater: Boolean
@@ -44,7 +42,6 @@ open class RefreshVersionsPlugin : Plugin<Project> {
                     it.load(project.file("versions.properties").reader())
                 }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
             }
-            //project.buildscript.configurations.all { setupVersionPlaceholdersResolving(properties) }
             project.allprojects { configurations.all { setupVersionPlaceholdersResolving(properties) } }
         } else {
             project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)

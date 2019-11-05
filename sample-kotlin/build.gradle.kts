@@ -16,7 +16,7 @@ group = "de.fayard"
 
 refreshVersions {
     rejectVersionIf {
-        candidateStabilityLevel().isLessStableThan(StabilityLevel.Stable)
+        candidateStabilityLevel() isLessStableThan StabilityLevel.Stable
     }
 }
 

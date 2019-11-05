@@ -19,7 +19,7 @@ object PluginConfig {
     const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.25.0" // Sync with plugin/build.gradle.kts
     const val DEPENDENCY_UPDATES = "dependencyUpdates"
     const val REFRESH_VERSIONS_UPDATES_PATH = "refreshVersionsUpdates" // TODO: think about a better name
-    const val USE_EXPERIMENTAL_UPDATER = "useExperimentalUpdater" // TODO: think about a better name
+    const val USE_EXPERIMENTAL_UPDATER = "refreshVersions.useExperimentalUpdater" // TODO: think about a better name
     const val DEPENDENCY_UPDATES_PATH = ":$DEPENDENCY_UPDATES"
     const val REFRESH_VERSIONS = "refreshVersions"
     const val EXTENSION_NAME = REFRESH_VERSIONS
