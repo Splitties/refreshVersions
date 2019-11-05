@@ -15,6 +15,9 @@ internal fun Configuration.setupVersionPlaceholdersResolving(properties: Map<Str
 }
 
 internal fun ModuleIdentifier.getVersionPropertyName(): String {
+    //TODO: Reconsider the TODO below because we don't care about strings.gradle buildscript for plugins since
+    // it can alias to any version property.
+
     //TODO: Allow customizing the artifact grouping rules, including resetting the default ones.
     // What about the plugins? Should we use a custom text-based file format to allow early configuration?
     // If we go down that road, what about invalidation? Also, would that invalidate the whole build or can we do
