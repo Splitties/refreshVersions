@@ -68,7 +68,7 @@ private fun Project.getLatestDependencyVersion(
             }
             extension.acceptVersionsPredicate?.let { acceptPredicate ->
                 if (acceptPredicate(componentSelectionData).not()) {
-                    reject("Accepted in to acceptVersionOnlyIf { ... }")
+                    reject("Not accepted in acceptVersionOnlyIf { ... }")
                 }
             }
         }

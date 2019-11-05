@@ -2,10 +2,13 @@ package de.fayard.versions
 
 import org.gradle.api.Incubating
 
+@Suppress("MemberVisibilityCanBePrivate")
 open class RefreshVersionsPropertiesExtension {
 
     /**
-     * Return true to reject a candidate.
+     * If the passed [predicate] returns `true`, candidate version will be rejected.
+     *
+     * This predicate is mutually exclusive with [acceptVersionOnlyIf], you should use only one (the last one wins).
      *
      * Default:
      *
@@ -15,10 +18,10 @@ open class RefreshVersionsPropertiesExtension {
      *  }
      *  ```
      *
-     * Possible usage:
+     * **Usage example:**
      * ```kotlin
      *  rejectVersionIf {
-     *      TODO("Show actual example with kotlinx.coroutines and some AndroidX library using non stable releases")
+     *      candidateStabilityLevel() isLessStableThan StabilityLevel.Milestone
      *  }
      *  ```
      */
@@ -27,6 +30,24 @@ open class RefreshVersionsPropertiesExtension {
         acceptVersionsPredicate = null
     }
 
+    /**
+     * Candidate version will be **rejected** unless the passed [predicate] returns `true`.
+     *
+     * This predicate is mutually exclusive with [rejectVersionIf], you should use only one (the last one wins).
+     *
+     * **Usage example:**
+     * ```kotlin
+     * acceptVersionOnlyIf {
+     *     candidateStabilityLevel() isAtLeastAsStableAs when (candidate.group) {
+     *         "org.jetbrains.kotlinx" -> when (candidate.module) {
+     *             "kotlinx-coroutines" -> StabilityLevel.Alpha
+     *             else -> StabilityLevel.Beta
+     *         }
+     *         else -> StabilityLevel.ReleaseCandidate
+     *     }
+     * }
+     * ```
+     */
     @Incubating
     fun acceptVersionOnlyIf(predicate: ComponentSelectionData.() -> Boolean) {
         acceptVersionsPredicate = predicate
