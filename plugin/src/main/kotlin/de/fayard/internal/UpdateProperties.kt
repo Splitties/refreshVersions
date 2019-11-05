@@ -1,11 +1,8 @@
 package de.fayard.internal
 
-import de.fayard.RefreshVersionsExtension
 import java.io.File
 
-data class UpdateProperties(
-    val extension: RefreshVersionsExtension
-) {
+class UpdateProperties() {
 
     fun generateVersionProperties(file: File, dependencies: List<Dependency>) = with(UpdateVersionsOnly) {
         PluginConfig.isAndroidProject = dependencies.any { it.group.contains("android") }
@@ -24,7 +21,7 @@ data class UpdateProperties(
         )
     }
 
-    fun String.wasGeneratedByPlugin(): Boolean = when {
+    private fun String.wasGeneratedByPlugin(): Boolean = when {
         startsWith("module.kotlin") -> true
         startsWith("module.android") -> true
         startsWith("version.") -> true
@@ -34,7 +31,7 @@ data class UpdateProperties(
         else -> false
     }
 
-    fun updateGradleProperties(file: File, newLines: List<String>, removeIf: (String) -> Boolean) {
+    private fun updateGradleProperties(file: File, newLines: List<String>, removeIf: (String) -> Boolean) {
         if (!file.exists()) file.createNewFile()
 
         val existingLines = file.readLines().filterNot { line -> removeIf(line) }

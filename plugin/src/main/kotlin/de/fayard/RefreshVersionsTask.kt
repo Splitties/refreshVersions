@@ -31,12 +31,12 @@ open class RefreshVersionsTask : DefaultTask() {
     @TaskAction
     fun taskActionGradleProperties() {
         val extension: RefreshVersionsExtensionImpl = extension()
-        val updateGradleProperties = UpdateProperties(extension)
+        val updateGradleProperties = UpdateProperties()
 
         val specialDependencies =
             listOf(PluginConfig.gradleVersionsPlugin, PluginConfig.gradleRefreshVersions, PluginConfig.gradleLatestVersion(dependencyGraph))
 
-        val dependencies = (unsortedParsedDependencies + specialDependencies)
+        val dependencies: List<Dependency> = (unsortedParsedDependencies + specialDependencies)
             .sortedBeautifullyBy(extension.orderBy) { it.versionProperty }
             .distinctBy { it.versionProperty }
 

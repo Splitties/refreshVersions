@@ -14,22 +14,33 @@ internal fun Configuration.setupVersionPlaceholdersResolving(properties: Map<Str
     }
 }
 
+internal fun ModuleIdentifier.getVersionPropertyName(): String {
+    //TODO: Allow customizing the artifact grouping rules, including resetting the default ones.
+    // What about the plugins? Should we use a custom text-based file format to allow early configuration?
+    // If we go down that road, what about invalidation? Also, would that invalidate the whole build or can we do
+    // better? Or would we have to hack to have the needed invalidation to happen?
+    return getVersionPropertyName(this)
+}
+
 private fun ModuleVersionSelector.getVersionFromProperties(properties: Map<String, String>): String {
-    val moduleIdentifier: ModuleIdentifier = try {
+    val propertyName = moduleIdentifier.getVersionPropertyName()
+    val version = properties[propertyName]
+    return version as String
+}
+
+private val ModuleVersionSelector.moduleIdentifier: ModuleIdentifier
+    get() = try {
         @Suppress("UnstableApiUsage")
         module
     } catch (e: Throwable) { // Guard against possible API changes.
         println(e)
         object : ModuleIdentifier {
-            override fun getGroup(): String = this@getVersionFromProperties.group
-            override fun getName(): String = this@getVersionFromProperties.name
+            override fun getGroup(): String = this@moduleIdentifier.group
+            override fun getName(): String = this@moduleIdentifier.name
         }
     }
-    val propertyName = getVersionPropertyName(moduleIdentifier)
-    val version = properties[propertyName]
-    return version as String
-}
 
+@JvmName("_getVersionPropertyName")
 private fun getVersionPropertyName(moduleIdentifier: ModuleIdentifier): String {
     val group = moduleIdentifier.group
     val name = moduleIdentifier.name
