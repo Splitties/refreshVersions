@@ -1,15 +1,5 @@
 package de.fayard.internal
 
-import com.squareup.kotlinpoet.FileSpec
-import de.fayard.VersionsOnlyMode
-
-data class KotlinPoetry(
-    val Libs: FileSpec,
-    val Versions: FileSpec
-)
-
-
-
 data class DependencyGraph(
     val gradle: GradleConfig,
     val current: Dependencies,
@@ -18,8 +8,6 @@ data class DependencyGraph(
     val unresolved: Dependencies,
     val count: Int = 0
 )
-
-fun Dependency.gradleNotation() = "$group:$name:$version"
 
 data class Dependencies(
     val dependencies: List<Dependency> = emptyList(),
@@ -37,7 +25,7 @@ data class Dependency(
     var mode: VersionMode = VersionMode.MODULE,
     val available: AvailableDependency? = null
 ) {
-    fun groupOrVirtualGroup() : String = virtualGroup(this) ?: group
+    fun groupOrVirtualGroup(): String = virtualGroup(this) ?: group
 
     val module: String get() = name
     val versionName: String
@@ -57,7 +45,7 @@ data class Dependency(
 
     companion object {
         fun virtualGroup(dependency: Dependency, withVersion: Boolean = false): String? {
-            val virtualGroup = PluginConfig.virtualGroups.firstOrNull { "${dependency.group}.${dependency.module}".startsWith(it) }
+            val virtualGroup = PluginConfig.ALIGN_VERSION_GROUPS.firstOrNull { "${dependency.group}.${dependency.module}".startsWith(it) }
             return when {
                 virtualGroup == null -> null
                 withVersion -> "version.$virtualGroup"
@@ -80,33 +68,15 @@ data class GradleConfig(
 )
 
 data class GradleVersion(
-        val version: String = "",
-        val reason: String = "",
-        val isUpdateAvailable: Boolean = false,
-        val isFailure: Boolean = false
+    val version: String = "",
+    val reason: String = "",
+    val isUpdateAvailable: Boolean = false,
+    val isFailure: Boolean = false
 )
 
 data class AvailableDependency(
-        val release: String? = "",
-        val milestone: String? = "",
-        val integration: String? = ""
+    val release: String? = "",
+    val milestone: String? = "",
+    val integration: String? = ""
 )
-
-
-data class SingleModeResult(
-    val startOfBlock: Int,
-    val endOfBlock: Int,
-    val indentation: String
-) {
-    fun isBlockNotFound(): Boolean {
-        return startOfBlock == -1 && endOfBlock == -1
-    }
-
-    fun isNewFile() = startOfBlock == 0 && endOfBlock == 0
-
-    companion object {
-        fun blockNotFound(versionMode: VersionsOnlyMode) = SingleModeResult(-1, -1, versionMode.defaultIndent)
-        fun newFile(versionMode: VersionsOnlyMode) = SingleModeResult(0, 0, versionMode.defaultIndent)
-    }
-}
 

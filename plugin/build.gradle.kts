@@ -1,8 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.buildSrcVersions") version ("0.6.5") // plugin.de.fayard.buildSrcVersions
-
+    id("de.fayard.refreshVersions")
     id("com.gradle.plugin-publish")
     `java-gradle-plugin`
     `maven-publish`
@@ -11,23 +10,17 @@ plugins {
 }
 
 
-version = "0.7.1" // plugin.de.fayard.refreshversions
+version = "0.8.2" // plugin.de.fayard.refreshversions
 group = "de.fayard"
 
 
 gradlePlugin {
     plugins {
-        create("buildSrcVersions") {
-            id = "de.fayard.buildSrcVersions"
-            displayName = "./gradlew buildSrcVersions"
-            description = "Painless dependencies management"
-            implementationClass = "de.fayard.BuildSrcVersionsPlugin"
-        }
         create("refreshVersions") {
             id = "de.fayard.refreshVersions"
             displayName = "./gradlew refreshVersions"
             description = "Painless dependencies management"
-            implementationClass = "de.fayard.BuildSrcVersionsPlugin"
+            implementationClass = "de.fayard.RefreshVersionsPlugin"
         }
     }
 }
@@ -63,8 +56,6 @@ dependencies {
 
     implementation("com.squareup.okio:okio:2.1.0")
     implementation( "com.squareup.moshi:moshi:1.7.0")
-    implementation("com.squareup:kotlinpoet:1.3.0")
-
 }
 
 
@@ -74,11 +65,6 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-tasks.withType<Wrapper> {
-    gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"
-    distributionType = Wrapper.DistributionType.ALL
 }
 
 java {

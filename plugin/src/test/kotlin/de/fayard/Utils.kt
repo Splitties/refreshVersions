@@ -19,7 +19,7 @@ fun List<String>.joinToStringWithNewLines(): String =
 val testResourcesDir: File
     get() = File("src/test/resources").absoluteFile
 
-val buildSrcVersionsDir: File
+val refreshVersionsDir: File
     get() = File(".").absoluteFile.parentFile.parentFile
 
 /**

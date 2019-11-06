@@ -1,6 +1,0 @@
-language: java
-cache:
-    directories:
-    - $HOME/.gradle
-script:
-  - cd composite && ./gradlew checkAll

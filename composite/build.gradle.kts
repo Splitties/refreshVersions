@@ -10,9 +10,8 @@ defaultTasks("run")
 val PLUGIN: IncludedBuild = gradle.includedBuild("plugin")
 val SAMPLE_KOTLIN: IncludedBuild = gradle.includedBuild("sample-kotlin")
 val SAMPLE_GROOVY: IncludedBuild = gradle.includedBuild("sample-groovy")
-val SAMPLE_VERSIONS_ONLY: IncludedBuild = gradle.includedBuild("sample-versionsOnlyMode")
+// val SAMPLE_ANDROID: IncludedBuild = gradle.includedBuild("sample-android")
 val REFRESH_VERSIONS = ":refreshVersions"
-val BUILD_SRC_VERSIONS = ":buildSrcVersions"
 val CUSTOM = "custom"
 
 tasks.register("publishLocally") {
@@ -44,32 +43,11 @@ tasks.register("pluginTests") {
 tasks.register("checkAll") {
     group = CUSTOM
     description = "Run all checks"
-    dependsOn(SAMPLE_VERSIONS_ONLY.task(REFRESH_VERSIONS))
+    //dependsOn(SAMPLE_ANDROID.task(REFRESH_VERSIONS))
     dependsOn(SAMPLE_KOTLIN.task(REFRESH_VERSIONS))
     dependsOn(SAMPLE_GROOVY.task(REFRESH_VERSIONS))
-    dependsOn(SAMPLE_KOTLIN.task(BUILD_SRC_VERSIONS))
-    dependsOn(SAMPLE_GROOVY.task(BUILD_SRC_VERSIONS))
     dependsOn(PLUGIN.task(":validateTaskProperties"))
     dependsOn(PLUGIN.task(":check"))
-    dependsOn(SAMPLE_VERSIONS_ONLY.task(":checkAll"))
-}
-
-
-tasks.register("updateGradle") {
-    group = CUSTOM
-    description = "Update Gradle in all modules"
-    dependsOn(":wrapper")
-    dependsOn(PLUGIN.task(":wrapper"))
-    dependsOn(SAMPLE_KOTLIN.task(":wrapper"))
-    dependsOn(SAMPLE_GROOVY.task(":wrapper"))
-    dependsOn(SAMPLE_VERSIONS_ONLY.task(":wrapper"))
-}
-
-tasks.withType<Wrapper> {
-    group = CUSTOM
-    description = "Update Gradle with ./gradlew wrapper"
-    gradleVersion = System.getenv("GRADLE_VERSION") ?: "5.6.1"
-    distributionType = Wrapper.DistributionType.ALL
 }
 
 buildScan {

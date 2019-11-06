@@ -1,9 +1,0 @@
-jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin
-junit
-kotlin_reflect
-kotlin_scripting_compiler_embeddable
-kotlintest_runner_junit5
-org_jetbrains_kotlin_kotlin_gradle_plugin
-org_jetbrains_kotlin_kotlin_stdlib_jdk8
-org_junit_jupiter
-org_spekframework_spek2
