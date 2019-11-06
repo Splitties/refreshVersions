@@ -38,22 +38,19 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
         }
         try {
             val extension = project.rootProject.extensions.getByType<RefreshVersionsPropertiesExtension>()
-            val dependenciesToUpdate: Sequence<Pair<Dependency, String>> = allDependencies.mapNotNull { dependency ->
-                val latestVersion =
-                    project.rootProject.getLatestDependencyVersion(extension, dependency) ?: return@mapNotNull null
-                val usedVersion = dependency.version //TODO: Resolve version placeholders
-                if (usedVersion == latestVersion) null else dependency to latestVersion
+
+            val dependenciesWithUpdate: Sequence<Pair<Dependency, String?>> = allDependencies.mapNotNull { dependency ->
+
+                val usedVersion = dependency.version.takeIf {
+                    it == versionPlaceholder
+                } ?: return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
+                //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
+
+                val latestVersion = project.rootProject.getLatestDependencyVersion(extension, dependency)
+
+                return@mapNotNull dependency to (if (usedVersion == latestVersion) null else latestVersion)
             }
-            dependenciesToUpdate.onEach { (dependency: Dependency, latestVersion: String) ->
-                println("Dependency ${dependency.group}:${dependency.name}:${dependency.version} -> $latestVersion")
-            }.toList().let {
-                //TODO: Write updates to gradle.properties without overwriting unrelated properties, comments and structure.
-                val updateGradleProperties = UpdateProperties()
-                val propertiesFile = project.file("versions.properties")
-                val existed = propertiesFile.canRead()
-                it.first().first.moduleIdentifier?.getVersionPropertyName() // TODO: Replace with actual code
-                updateGradleProperties.generateVersionProperties(propertiesFile, TODO())
-            }
+            project.rootProject.updateVersionsProperties(dependenciesWithUpdate)
         } finally {
             project.rootProject.repositories.let {
                 it.clear()
@@ -62,17 +59,6 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
         }
     }
 }
-
-private val Dependency.moduleIdentifier: ModuleIdentifier?
-    get() {
-        val group = group ?: return null
-        val name = name ?: return null
-        return object : ModuleIdentifier {
-            override fun getGroup(): String = group
-            override fun getName(): String = name
-        }
-    }
-
 
 private fun Project.getLatestDependencyVersion(
     extension: RefreshVersionsPropertiesExtension,

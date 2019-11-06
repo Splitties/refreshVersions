@@ -2,7 +2,7 @@ package de.fayard.internal
 
 import java.io.File
 
-class UpdateProperties() {
+class UpdateProperties {
 
     fun generateVersionProperties(file: File, dependencies: List<Dependency>) = with(UpdateVersionsOnly) {
         PluginConfig.isAndroidProject = dependencies.any { it.group.contains("android") }

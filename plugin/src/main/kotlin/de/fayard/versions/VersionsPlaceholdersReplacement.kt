@@ -1,9 +1,11 @@
 package de.fayard.versions
 
 import de.fayard.versions.ArtifactGroupNaming.*
+import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.ModuleVersionSelector
+import java.util.Properties
 
 internal const val versionPlaceholder = "_"
 
@@ -23,6 +25,23 @@ internal fun ModuleIdentifier.getVersionPropertyName(): String {
     // If we go down that road, what about invalidation? Also, would that invalidate the whole build or can we do
     // better? Or would we have to hack to have the needed invalidation to happen?
     return getVersionPropertyName(this)
+}
+
+internal fun Project.getVersionProperties(): Map<String, String> {
+    return mutableMapOf<String, String>().also { map ->
+        // Read from versions.properties
+        Properties().also {
+            it.load(file("versions.properties").reader())
+        }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
+        // Overwrite with relevant project properties
+        properties.forEach { (k, v) ->
+            if (v is String) {
+                if (v.startsWith("version.") || v.startsWith("plugin.")) {
+                    map[k] = v
+                }
+            }
+        }
+    }
 }
 
 internal tailrec fun resolveVersion(properties: Map<String, String>, key: String, redirects: Int = 0): String? {

@@ -5,8 +5,7 @@ import org.gradle.api.Incubating
 /**
  * We assume each part of the "group" is dot separated (`.`), and each part of the name is dash separated (`-`).
  */
-@Incubating
-enum class ArtifactGroupNaming {
+internal enum class ArtifactGroupNaming {
     GroupOnly,
     GroupLastPart,
     GroupFirstTwoParts,
@@ -16,8 +15,7 @@ enum class ArtifactGroupNaming {
     GroupFirstPartAndNameTwoFirstParts
 }
 
-@Incubating
-class ArtifactGroupingRule(
+internal class ArtifactGroupingRule(
     val artifactNamesStartingWith: String,
     val groupNaming: ArtifactGroupNaming
 ) {
