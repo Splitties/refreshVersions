@@ -15,7 +15,7 @@ internal fun Configuration.setupVersionPlaceholdersResolving(properties: Map<Str
 }
 
 internal fun ModuleIdentifier.getVersionPropertyName(): String {
-    //TODO: Reconsider the TODO below because we don't care about strings.gradle buildscript for plugins since
+    //TODO: Reconsider the TODO below because we don't care about settings.gradle(.kts) buildscript for plugins since
     // it can alias to any version property.
 
     //TODO: Allow customizing the artifact grouping rules, including resetting the default ones.
