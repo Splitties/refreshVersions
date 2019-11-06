@@ -50,9 +50,3 @@ fun SettingsScriptApi.setupVersionPlaceholdersResolving() {
         }
     }
 }
-
-private tailrec fun resolveVersion(properties: Map<String, String>, key: String, redirects: Int = 0): String? {
-    if (redirects > 5) error("Up to five redirects are allowed, for readability. You should only need one.")
-    val value = properties[key] ?: return null
-    return if (value.startsWith("version.")) resolveVersion(properties, key, redirects + 1) else value
-}

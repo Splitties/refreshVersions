@@ -25,10 +25,16 @@ internal fun ModuleIdentifier.getVersionPropertyName(): String {
     return getVersionPropertyName(this)
 }
 
+internal tailrec fun resolveVersion(properties: Map<String, String>, key: String, redirects: Int = 0): String? {
+    if (redirects > 5) error("Up to five redirects are allowed, for readability. You should only need one.")
+    val value = properties[key] ?: return null
+    return if (value.startsWith("version.")) resolveVersion(properties, key, redirects + 1) else value
+}
+
 private fun ModuleVersionSelector.getVersionFromProperties(properties: Map<String, String>): String {
     val propertyName = moduleIdentifier.getVersionPropertyName()
-    val version = properties[propertyName]
-    return version as String
+    return resolveVersion(properties, propertyName)
+        ?: error("Property with key $propertyName wasn't found in the versions.properties file")
 }
 
 private val ModuleVersionSelector.moduleIdentifier: ModuleIdentifier
