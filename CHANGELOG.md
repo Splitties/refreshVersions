@@ -1,5 +1,30 @@
 # Unreleased
 
+# v0.8.x
+
+The long-term plan for v1.0 is to focus on `:refreshVersions` instead of `:buildSrcVersions`
+
+See https://github.com/jmfayard/buildSrcVersions/issues/104
+
+Starting from release 0.8.0 the plugin is now called and contain only the task `refreshVersions`
+
+```groovy
+plugins {
+  id("de.fayard.refreshVersions").version("0.8.x") // or newer
+}
+```
+
+We are not quite ready yet to extract the useful parts of `buildSrcVersions` to another plugin, 
+so if you need the features from buildSrcVersions, stay with this for now:
+
+```groovy
+plugins {
+  id("de.fayard.buildSrcVersions").version("0.7.0")
+}
+```
+
+
+
 # 0.7.0
 
 The plugin will in the future focus on `:refreshVersions`.
