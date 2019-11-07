@@ -7,8 +7,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("de.fayard.refreshVersions")
-    id("com.louiscad.splitties")
-    kotlin("jvm")
+    id("com.louiscad.splitties") version "0.1.3"
+    kotlin("jvm") version "1.3.50"
     `build-scan`
 }
 

@@ -28,14 +28,16 @@ internal fun ModuleIdentifier.getVersionPropertyName(): String {
     return getVersionPropertyName(this)
 }
 
-internal fun Project.getVersionProperties(): Map<String, String> {
+internal fun Project.getVersionProperties(
+    includeProjectProperties: Boolean = true
+): Map<String, String> {
     return mutableMapOf<String, String>().also { map ->
         // Read from versions.properties
         Properties().also {
             it.load(file("versions.properties").reader())
         }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
         // Overwrite with relevant project properties
-        properties.forEach { (k, v) ->
+        if (includeProjectProperties) properties.forEach { (k, v) ->
             if (v is String) {
                 if (v.startsWith("version.") || v.startsWith("plugin.")) {
                     map[k] = v

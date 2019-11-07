@@ -40,8 +40,10 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
             val extension = project.rootProject.extensions.getByType<RefreshVersionsPropertiesExtension>()
 
             val versionProperties: Map<String, String> = project.getVersionProperties()
-            val dependenciesWithUpdate: Sequence<Pair<Dependency, String?>> = allDependencies.mapNotNull { dependency ->
+            val dependenciesWithUpdate: List<Pair<Dependency, String?>> = allDependencies.mapNotNull { dependency ->
+
                 println("Dependency ${dependency.group}:${dependency.name}:${dependency.version}")
+
                 val usedVersion = dependency.version.takeIf {
                     dependency.isManageableVersion(versionProperties)
                 } ?: return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
@@ -50,7 +52,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                 val latestVersion = project.rootProject.getLatestDependencyVersion(extension, dependency)
 
                 return@mapNotNull dependency to (if (usedVersion == latestVersion) null else latestVersion)
-            }
+            }.toList()
             project.rootProject.updateVersionsProperties(dependenciesWithUpdate)
         } finally {
             project.rootProject.repositories.let {
