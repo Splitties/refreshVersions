@@ -14,5 +14,5 @@ pluginManagement {
     }
 }
 rootProject.name = 'sample-groovy'
-includeBuild '../plugin'
+includeBuild '../refreshVersions'
 

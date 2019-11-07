@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 apply(from = "gradle/plugins.gradle.kts")
-rootProject.name = "plugin"
+rootProject.name = "refreshVersions"

@@ -1,5 +1,5 @@
 rootProject.name = "buildSrcVersions-composite"
-includeBuild("../plugin")
+includeBuild("../refreshVersions")
 includeBuild("../sample-kotlin")
 includeBuild("../sample-groovy")
 

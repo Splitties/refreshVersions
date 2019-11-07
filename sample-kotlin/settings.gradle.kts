@@ -21,5 +21,5 @@ pluginManagement {
 setupVersionPlaceholdersResolving()
 
 rootProject.name = "sample-kotlin"
-includeBuild("../plugin")
+includeBuild("../refreshVersions")
 
