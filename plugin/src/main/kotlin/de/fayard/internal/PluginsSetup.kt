@@ -12,7 +12,7 @@ object PluginsSetup {
 apply(from = "gradle/plugins.gradle.kts")
 """
 
-    fun pluginFileContent(): String {
+    private fun pluginFileContent(): String {
         return this::class.java.getResourceAsStream("/$PLUGIN_GRADLE_KTS.txt").reader().readText()
     }
 

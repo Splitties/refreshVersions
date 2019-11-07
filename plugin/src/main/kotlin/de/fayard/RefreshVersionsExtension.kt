@@ -47,7 +47,10 @@ interface RefreshVersionsExtension {
      ***/
     fun useFqdnFor(vararg dependencyName: String)
 
+    // TODO: remove
     var alignVersionsForGroups: MutableList<String>
+    // TODO: do something with it
+    var versionsMapping: MutableMap<String, String>
 
     /**
      * See [versionsOnlyMode]

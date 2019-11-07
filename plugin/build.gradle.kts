@@ -50,6 +50,7 @@ pluginBundle {
 
 dependencies {
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
+    implementation(gradleKotlinDsl())
 
     // SYNC WITH plugin/src/main/kotlin/de/fayard/internal/PluginConfig.kt
     implementation("com.github.ben-manes:gradle-versions-plugin:0.25.0")
@@ -61,6 +62,7 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.freeCompilerArgs = listOf("-Xinline-classes")
 }
 
 tasks.withType<Test> {

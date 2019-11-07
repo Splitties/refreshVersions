@@ -13,8 +13,6 @@ import io.kotlintest.tables.row
 import io.kotlintest.tables.table
 import java.io.File
 
-
-
 class EditorConfigTest: FreeSpec({
     val testFolder = File("src/test/resources").absoluteFile
 

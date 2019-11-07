@@ -14,6 +14,7 @@ class GradlePropertiesTest : FreeSpec({
     }
 
 
+    //TODO: update the tests for the new config "versionsMapping"
     "Versions Properties" - {
         with(UpdateVersionsOnly) {
 
