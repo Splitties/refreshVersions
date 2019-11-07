@@ -1,11 +1,11 @@
 package de.fayard.versions
 
-import de.fayard.internal.UpdateProperties
+import de.fayard.versions.extensions.isGradlePlugin
+import de.fayard.versions.extensions.moduleIdentifier
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.specs.Specs
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
@@ -39,10 +39,11 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
         try {
             val extension = project.rootProject.extensions.getByType<RefreshVersionsPropertiesExtension>()
 
+            val versionProperties: Map<String, String> = project.getVersionProperties()
             val dependenciesWithUpdate: Sequence<Pair<Dependency, String?>> = allDependencies.mapNotNull { dependency ->
-
+                println("Dependency ${dependency.group}:${dependency.name}:${dependency.version}")
                 val usedVersion = dependency.version.takeIf {
-                    it == versionPlaceholder
+                    dependency.isManageableVersion(versionProperties)
                 } ?: return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
                 //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
 
@@ -56,6 +57,18 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                 it.clear()
                 it.addAll(initialRepositories)
             }
+        }
+    }
+
+    private fun Dependency.isManageableVersion(versionProperties: Map<String, String>): Boolean {
+        return when {
+            version == versionPlaceholder -> true
+            moduleIdentifier?.isGradlePlugin == true -> {
+                val versionFromProperty = versionProperties[moduleIdentifier!!.getVersionPropertyName()]
+                    ?: return false
+                versionFromProperty.isAVersionAlias().not()
+            }
+            else -> false
         }
     }
 }

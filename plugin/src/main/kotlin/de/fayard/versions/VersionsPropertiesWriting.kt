@@ -1,8 +1,8 @@
 package de.fayard.versions
 
+import de.fayard.versions.extensions.moduleIdentifier
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.ModuleIdentifier
 
 internal fun Project.updateVersionsProperties(dependenciesWithUpdate: Sequence<Pair<Dependency, String?>>) {
     val file = file("versions.properties")
@@ -11,7 +11,7 @@ internal fun Project.updateVersionsProperties(dependenciesWithUpdate: Sequence<P
     val properties: Map<String, String> = getVersionProperties()
 
     val newFileContent = buildString {
-        appendln("File header") //TODO: Use constant with actual content.
+        appendln("# File header") //TODO: Use constant with actual content.
         appendln()
         dependenciesWithUpdate
             .mapNotNull { (dependency, lastVersionOrNull) ->
@@ -45,13 +45,3 @@ private class VersionWithUpdateIfAvailable(
     val currentVersion: String,
     val availableUpdateVersion: String?
 )
-
-private val Dependency.moduleIdentifier: ModuleIdentifier?
-    get() {
-        val group = group ?: return null
-        val name = name ?: return null
-        return object : ModuleIdentifier {
-            override fun getGroup(): String = group
-            override fun getName(): String = name
-        }
-    }
