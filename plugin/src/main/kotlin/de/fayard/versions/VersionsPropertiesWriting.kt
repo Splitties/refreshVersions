@@ -11,7 +11,7 @@ internal fun Project.updateVersionsProperties(dependenciesWithUpdate: Sequence<P
     val properties: Map<String, String> = getVersionProperties()
 
     val newFileContent = buildString {
-        appendln("File header")//TODO: Use constant with actual content.
+        appendln("File header") //TODO: Use constant with actual content.
         appendln()
         dependenciesWithUpdate
             .mapNotNull { (dependency, lastVersionOrNull) ->
@@ -24,20 +24,18 @@ internal fun Project.updateVersionsProperties(dependenciesWithUpdate: Sequence<P
                 }
             }
             .distinctBy { it.key }
-            //TODO: Sort in a readability friendly way.
+            .sortedBy { it.key }
             .forEach {
                 it.key.padStart(available.length + 1)
-                val currentVersionSpacing = if (it.key.length < available.length) {
-                    " "
-                } else ""
                 val currentVersionLine = "${it.key}=${it.currentVersion}"
                 appendln(currentVersionLine)
                 it.availableUpdateVersion?.let { newVersion ->
-                    TODO("Have a first comment starter (#) before the pad and $available and the newVersion")
+                    append('#'); append(available.padStart(it.key.length - 1))
+                    append('='); appendln(newVersion)
                 }
             }
     }
-    TODO("Define the parameters")
+    file.writeText(newFileContent)
 }
 
 private const val available = "# available"
