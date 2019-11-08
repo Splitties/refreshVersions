@@ -40,20 +40,23 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
             val extension = project.rootProject.extensions.getByType<RefreshVersionsPropertiesExtension>()
 
             val versionProperties: Map<String, String> = project.getVersionProperties()
-            val dependenciesWithUpdate: List<Pair<Dependency, String?>> = allDependencies.mapNotNull { dependency ->
+
+            val dependenciesWithLastVersion: List<Pair<Dependency, String?>>
+            dependenciesWithLastVersion = allDependencies.mapNotNull { dependency ->
 
                 println("Dependency ${dependency.group}:${dependency.name}:${dependency.version}")
+                //TODO: Replace line above with optional diagnostic option, or show status in progress.
 
-                val usedVersion = dependency.version.takeIf {
-                    dependency.isManageableVersion(versionProperties)
-                } ?: return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
-                //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
+                if (dependency.isManageableVersion(versionProperties)) {
+                    return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
+                    //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
+                }
 
                 val latestVersion = project.rootProject.getLatestDependencyVersion(extension, dependency)
 
-                return@mapNotNull dependency to (if (usedVersion == latestVersion) null else latestVersion)
+                return@mapNotNull dependency to latestVersion
             }.toList()
-            project.rootProject.updateVersionsProperties(dependenciesWithUpdate)
+            project.rootProject.updateVersionsProperties(dependenciesWithLastVersion)
         } finally {
             project.rootProject.repositories.let {
                 it.clear()
