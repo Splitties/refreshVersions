@@ -47,12 +47,19 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                 println("Dependency ${dependency.group}:${dependency.name}:${dependency.version}")
                 //TODO: Replace line above with optional diagnostic option, or show status in progress.
 
-                if (dependency.isManageableVersion(versionProperties)) {
+                if (dependency.isManageableVersion(versionProperties).not()) {
                     return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
                     //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
                 }
 
-                val latestVersion = project.rootProject.getLatestDependencyVersion(extension, dependency)
+                val latestVersion = project.rootProject.getLatestDependencyVersion(
+                    extension = extension,
+                    dependency = dependency,
+                    resolvedVersion = resolveVersion(
+                        properties = versionProperties,
+                        key = dependency.moduleIdentifier?.getVersionPropertyName() ?: return@mapNotNull null
+                    )
+                )
 
                 return@mapNotNull dependency to latestVersion
             }.toList()
@@ -80,13 +87,14 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
 
 private fun Project.getLatestDependencyVersion(
     extension: RefreshVersionsPropertiesExtension,
-    dependency: Dependency
+    dependency: Dependency,
+    resolvedVersion: String?
 ): String? {
     val tmpDependencyUpdateConfiguration = configurations.create("getLatestVersion") {
         dependencies.add(dependency)
         resolutionStrategy.componentSelection.all {
             val componentSelectionData = ComponentSelectionData(
-                currentVersion = dependency.version ?: "",
+                currentVersion = resolvedVersion ?: "",
                 candidate = candidate
             )
             extension.rejectVersionsPredicate?.let { rejectPredicate ->
