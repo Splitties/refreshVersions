@@ -10,7 +10,7 @@ plugins {
 }
 
 
-version = "0.8.3" // plugin.de.fayard.refreshversions
+version = "0.8.4" // plugin.de.fayard.refreshversions
 group = "de.fayard"
 
 

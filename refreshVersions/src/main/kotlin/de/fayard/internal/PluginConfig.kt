@@ -14,7 +14,7 @@ import java.io.File
 @Suppress("unused")
 object PluginConfig {
     const val PLUGIN_ID = "de.fayard.refreshVersions"
-    const val PLUGIN_VERSION = "0.8.3" // plugin.de.fayard.refreshVersions
+    const val PLUGIN_VERSION = "0.8.4" // plugin.de.fayard.refreshVersions
     const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions"
     const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.25.0" // Sync with plugin/build.gradle.kts
     const val DEPENDENCY_UPDATES = "dependencyUpdates"
