@@ -7,7 +7,7 @@ buildscript {
     }
     // Didn't find a way to use classpath from composite build, so we are hardcoding a
     // version expected to be released in one of the configured repositories.
-    dependencies.classpath("de.fayard:refreshVersions:0.8.2")
+    dependencies.classpath("de.fayard:refreshVersions:0.8.3")
 }
 pluginManagement {
     plugins {

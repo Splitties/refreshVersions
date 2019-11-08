@@ -1,14 +1,11 @@
-import com.louiscad.splitties.AndroidX
 import com.louiscad.splitties.KotlinX
 import com.louiscad.splitties.Testing
-import de.fayard.versions.StabilityLevel
-import de.fayard.versions.candidateStabilityLevel
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.refreshVersions")  .version("0.8.2")
-    id("com.louiscad.splitties")     .version("0.1.3")
-    kotlin("jvm")                .version("1.3.50")
+    id("de.fayard.refreshVersions").version("0.8.2")
+    id("com.louiscad.splitties").version("0.1.3")
+    kotlin("jvm").version("1.3.50")
     application
 }
 group = "de.fayard.experimental"
@@ -35,7 +32,7 @@ repositories {
 
 
 tasks.named<JavaExec>("run") {
-    main = "de.fayard.experimental.HelloKt.main"
+    main = "de.fayard.experimental.HelloKt"
 }
 
 tasks.register("hello") {
