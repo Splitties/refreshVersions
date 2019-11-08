@@ -3,7 +3,7 @@ package de.fayard.versions
 import org.gradle.api.Incubating
 
 fun ComponentSelectionData.candidateIsLessStableThanCurrent(): Boolean {
-    return candidateVersion.stabilityLevel().isAtLeastAsStableAs(currentlyUsedVersion.stabilityLevel()).not()
+    return candidateVersion.stabilityLevel().isLessStableThan(currentlyUsedVersion.stabilityLevel())
 }
 
 @Incubating
