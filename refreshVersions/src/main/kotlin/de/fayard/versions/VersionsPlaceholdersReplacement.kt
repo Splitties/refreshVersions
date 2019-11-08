@@ -33,8 +33,11 @@ internal fun Project.getVersionProperties(
 ): Map<String, String> {
     return mutableMapOf<String, String>().also { map ->
         // Read from versions.properties
-        Properties().also {
-            it.load(file("versions.properties").reader())
+        Properties().also { properties ->
+            val relativePath = "versions.properties".let {
+                if (project.name == "buildSrc") "../$it" else it
+            }
+            properties.load(file(relativePath).reader())
         }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
         // Overwrite with relevant project properties
         if (includeProjectProperties) properties.forEach { (k, v) ->

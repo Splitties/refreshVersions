@@ -28,7 +28,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
      * ```
      * **/
     internal val Project.useExperimentalUpdater: Boolean
-        get() = findProperty(PluginConfig.USE_EXPERIMENTAL_UPDATER) == "true"
+        get() = findProperty(PluginConfig.USE_EXPERIMENTAL_UPDATER) == "true" || name == "buildSrc"
 
     override fun apply(project: Project) {
         check(project == project.rootProject) {
