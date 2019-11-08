@@ -7,10 +7,12 @@ group = "de.fayard"
 version = "0.5.0"
 defaultTasks("run")
 
+/// ../sample-android should be opened in Android Studio
+// val SAMPLE_ANDROID: IncludedBuild = gradle.includedBuild("sample-android")
+
 val PLUGIN: IncludedBuild = gradle.includedBuild("refreshVersions")
 val SAMPLE_KOTLIN: IncludedBuild = gradle.includedBuild("sample-kotlin")
 val SAMPLE_GROOVY: IncludedBuild = gradle.includedBuild("sample-groovy")
-// val SAMPLE_ANDROID: IncludedBuild = gradle.includedBuild("sample-android")
 val REFRESH_VERSIONS = ":refreshVersions"
 val CUSTOM = "custom"
 
