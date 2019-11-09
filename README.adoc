@@ -120,7 +120,7 @@ image::carbon-Libs-Versions.png[]
 
 == Articles
 
-Not only code, but also good documentation can help you upgrate an old project to the latest and greatest.
+Not only code, but also good documentation can help you upgrade an old project to the latest and greatest.
 
 I have a series of articles called `Built with Gradle`:
 
