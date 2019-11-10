@@ -87,7 +87,7 @@ buildscript {
   }
 }
 
-apply plugin: "de.fayard.refrshVersions"
+apply plugin: "de.fayard.refreshVersions"
 ----
 ++++
 </details>
