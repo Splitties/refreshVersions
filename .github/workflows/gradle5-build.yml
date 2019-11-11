@@ -1,7 +1,14 @@
 # .github/workflows/gradle-build-pr.yml
 # https://github.com/marketplace/actions/gradle-command
+# https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions
 name: Gradle 5.6.3
-on: [pull_request]
+on:
+  pull_request:
+      types: [assigned, opened, synchronize, reopened, ready_for_review]
+      paths-ignore:
+          - '**.md'
+          - '**.adoc'
+          - 'website/**'
 jobs:
   gradle:
     strategy:
@@ -15,6 +22,5 @@ jobs:
         java-version: 11
     - uses: eskatos/gradle-command-action@v1
       with:
-        gradle-version: 5.6.3
         arguments: checkAll
         build-root-directory: composite
