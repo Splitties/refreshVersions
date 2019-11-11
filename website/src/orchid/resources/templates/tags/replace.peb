@@ -1,0 +1,2 @@
+{# @pebvariable name="tag" type="com.eden.orchid.starter.ReplaceTag" #}
+{{ tag.content.replaceAll(tag.find, tag.replace) | raw }}

@@ -1,0 +1,54 @@
+site:
+  about:
+    siteName: 'Orchid Starter'
+    subtitle: 'Basic starter repo to get going with Orchid quickly'
+    siteDescription: 'This is a short blurb you can set below this index layouts sidebar.'
+    avatar: '/assets/media/logo.jpg'
+
+theme:
+  social:
+    facebook: 'facebookUsername'
+    twitter: 'twitterHandle'
+    instagram: 'instagramHandle'
+    github: 'githubUsername'
+    other:
+      - label: 'linkedin'
+        link: 'https://www.example.com'
+        icon: 'fa-tag'
+  menu:
+    - type: 'page'
+      title: 'Home'
+      url: '/'
+    - type: "wikiSections"
+    - type: 'taxonomy'
+      taxonomyType: 'categories'
+      includeTerms: true
+      termsAtRoot: true
+    - type: 'page'
+      title: 'About'
+      itemId: 'Author One'
+    - type: "pages"
+      atRoot: true
+  sidebar:
+    - type: recentPosts
+      limit: 3
+      category: gallery
+      noWrapper: true
+      template:
+        - 'includes/postPreview_mini'
+    - type: recentPosts
+      limit: 5
+      category: personal
+      noWrapper: true
+      template:
+        - 'includes/postPreview_list'
+  extraCss:
+    - 'assets/css/extraCss.scss'
+    - 'assets/css/pygments.scss'
+  extraJs:
+    - 'assets/js/extraJs.js'
+
+services:
+  generators:
+    externalIndices:
+      - 'https://orchid.netlify.com/meta/all.index.json'

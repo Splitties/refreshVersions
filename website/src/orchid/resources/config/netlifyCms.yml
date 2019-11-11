@@ -1,0 +1,5 @@
+config:
+  backend:
+    name: github
+    repo: 'user/repo'
+    branch: master

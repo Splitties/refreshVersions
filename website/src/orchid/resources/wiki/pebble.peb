@@ -1,0 +1,22 @@
+---
+articles:
+    - title: 'Article One'
+      content: 'Some long body content for article one.'
+    - title: 'Article Two'
+      content: 'Some long body content for article two.'
+    - title: 'Article Three'
+      content: 'Some long body content for article three.'
+---
+
+{% for article in articles %}
+<h3>{{ article.title }}</h3>
+<p>{{ article.content }}</p>
+{% else %}
+<p> There are no articles. </p>
+{% endfor %}
+
+{{ input(name="country") }}
+
+{% macro input(type="text", name, value) %}
+<input type="{{ type }}" name="{{ name }}" value="{{ value }}" placeholder="{{ name }}" />
+{% endmacro %}
