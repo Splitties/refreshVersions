@@ -30,11 +30,13 @@
 :libs_kt: {master}/sample-groovy/buildSrc/src/main/kotlin/Libs.kt
 :benmanes: https://github.com/ben-manes/gradle-versions-plugin
 :image_faq: https://user-images.githubusercontent.com/459464/64926128-1a076980-d7fa-11e9-8a69-eb354d211f51.png
-
+:image_netlify: https://api.netlify.com/api/v1/badges/ccacc3ce-06c7-4768-a3d3-96d46b58d523/deploy-status
+:link_netlify: https://app.netlify.com/sites/gradle-refreshversions/deploys
+:badge_netlify: image:{image_netlify}["Website",link="{link_netlify}"]
 
 = de.fayard.refreshVersions
 
-{badge_version} {slack_badge} {contributors_badge} {badge_build} {badge_mit} {badge_issues} {badge_pr}
+{badge_version} {slack_badge} {contributors_badge} {badge_build} {badge_mit} {badge_issues} {badge_pr} {badge_netlify}
 
 The Gradle plugin `de.fayard.refreshVersions` goal is to make it as painless as possible to upgrade your project to the latest and greatest version of everything.
 

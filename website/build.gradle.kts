@@ -49,9 +49,12 @@ orchid {
     version = "${project.version}"
     theme = "FutureImperfect"
     environment = if (isProd) "production" else "debug"
-    baseUrl = when {
+    val url = when {
         isProd && envOrProperty("PULL_REQUEST") == "true" -> envOrProperty("DEPLOY_URL", required = true)
         isProd -> envOrProperty("URL", required = true)
         else -> "http://localhost:8080"
     }
+    println("Orchid will deploy to $url")
+    baseUrl = url
+
 }
