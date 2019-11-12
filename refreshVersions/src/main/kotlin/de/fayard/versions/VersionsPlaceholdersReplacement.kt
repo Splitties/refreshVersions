@@ -53,13 +53,13 @@ internal fun Project.getVersionProperties(
 internal tailrec fun resolveVersion(properties: Map<String, String>, key: String, redirects: Int = 0): String? {
     if (redirects > 5) error("Up to five redirects are allowed, for readability. You should only need one.")
     val value = properties[key] ?: return null
-    return if (value.isAVersionAlias()) resolveVersion(properties, key, redirects + 1) else value
+    return if (value.isAVersionAlias()) resolveVersion(properties, value, redirects + 1) else value
 }
 
 /**
  * Expects the value of a version property (values of the map returned by [getVersionProperties]).
  */
-internal fun String.isAVersionAlias(): Boolean = startsWith("version.")
+internal fun String.isAVersionAlias(): Boolean = startsWith("version.") || startsWith("plugin.")
 
 private fun ModuleVersionSelector.getVersionFromProperties(properties: Map<String, String>): String {
     val propertyName = moduleIdentifier.getVersionPropertyName()
@@ -110,6 +110,7 @@ private fun getVersionPropertyName(moduleIdentifier: ModuleIdentifier): String {
             "$groupFirstPart.$nameFirstPart-$nameSecondPart"
         }
         null -> when {
+            name == "gradle" && group == "com.android.tools.build" -> return "plugin.android"
             moduleIdentifier.isGradlePlugin -> {
                 val pluginId = name.substringBeforeLast(".gradle.plugin")
                 return when {
