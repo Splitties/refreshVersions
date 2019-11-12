@@ -1,6 +1,7 @@
 package de.fayard.versions
 
 import de.fayard.versions.ArtifactGroupNaming.*
+import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isGradlePlugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -35,7 +36,7 @@ internal fun Project.getVersionProperties(
         // Read from versions.properties
         Properties().also { properties ->
             val relativePath = "versions.properties".let {
-                if (project.name == "buildSrc") "../$it" else it
+                if (project.isBuildSrc) "../$it" else it
             }
             properties.load(file(relativePath).reader())
         }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
