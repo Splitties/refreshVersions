@@ -27,7 +27,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
         }.toSet()
         val allDependencies = allConfigurations.asSequence()
             .flatMap { it.allDependencies.asSequence() }
-            .distinctBy { it.group + it.name }
+            .distinctBy { it.group + ':' + it.name }
 
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance.
