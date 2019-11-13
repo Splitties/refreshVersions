@@ -6,10 +6,11 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.specs.Specs
+import org.gradle.api.internal.artifacts.dependencies.AbstractDependency
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
+import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
 open class RefreshVersionsPropertiesTask : DefaultTask() {
@@ -25,9 +26,17 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
         val allConfigurations: Set<Configuration> = project.allprojects.flatMap {
             it.buildscript.configurations + it.configurations
         }.toSet()
-        val allDependencies = allConfigurations.asSequence()
-            .flatMap { it.allDependencies.asSequence() }
-            .distinctBy { it.group + ':' + it.name }
+
+        val buildSrcDependencies: Sequence<Dependency> = project.file("buildSrc")
+            .resolve(usedDependenciesFilePath)
+            .let { file ->
+                if (file.exists().not()) return@let emptySequence<Dependency>()
+                file.readLines().asSequence().map { line -> line.parseDependency() }
+            }
+
+        val allDependencies = (allConfigurations.asSequence()
+            .flatMap { it.allDependencies.asSequence() } + buildSrcDependencies)
+            .distinctBy { it.group + ':' + it.name + ':' + it.version }
 
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance.
@@ -91,7 +100,6 @@ private fun Project.getLatestDependencyVersion(
     resolvedVersion: String?
 ): String? {
     val tmpDependencyUpdateConfiguration = configurations.create("getLatestVersion") {
-        dependencies.add(dependency)
         resolutionStrategy.componentSelection.all {
             val componentSelectionData = ComponentSelectionData(
                 currentVersion = resolvedVersion ?: "",
@@ -99,11 +107,13 @@ private fun Project.getLatestDependencyVersion(
             )
             extension.rejectVersionsPredicate?.let { rejectPredicate ->
                 if (rejectPredicate(componentSelectionData)) {
+                    println("Rejected version: ${candidate.version}")
                     reject("Rejected in rejectVersionsIf { ... }")
                 }
             }
             extension.acceptVersionsPredicate?.let { acceptPredicate ->
                 if (acceptPredicate(componentSelectionData).not()) {
+                    println("Rejected version: ${candidate.version}")
                     reject("Not accepted in acceptVersionOnlyIf { ... }")
                 }
             }
@@ -112,10 +122,35 @@ private fun Project.getLatestDependencyVersion(
             if (requested.version != null) useVersion("+")
         }
     }
+    if (dependency is ParsedDependency) dependencies {
+        // Directly using a ParsedDependency leads to a ResolveException, so we use dependencyNotation.
+        tmpDependencyUpdateConfiguration(dependency.dependencyNotation)
+    } else tmpDependencyUpdateConfiguration.dependencies.add(dependency)
     try {
-        val lenientConfiguration = tmpDependencyUpdateConfiguration.resolvedConfiguration.lenientConfiguration
-        return lenientConfiguration.getFirstLevelModuleDependencies(Specs.SATISFIES_ALL).singleOrNull()?.moduleVersion
+        return tmpDependencyUpdateConfiguration
+            .resolvedConfiguration
+            .firstLevelModuleDependencies
+            .singleOrNull()
+            ?.moduleVersion
     } finally {
         configurations.remove(tmpDependencyUpdateConfiguration)
     }
+}
+
+private abstract class ParsedDependency(val dependencyNotation: String) : AbstractDependency()
+
+private fun String.parseDependency(): Dependency = object : ParsedDependency(this) {
+
+    private val group = substringBefore(':').unwrappedNullableValue()
+    private val name = substringAfter(':').substringBefore(':')
+    private val version = substringAfterLast(':').unwrappedNullableValue()
+
+    override fun getGroup() = group
+    override fun getName() = name
+    override fun getVersion(): String? = version
+
+    override fun contentEquals(dependency: Dependency): Boolean = throw UnsupportedOperationException()
+    override fun copy(): Dependency = parseDependency()
+
+    private fun String.unwrappedNullableValue(): String? = if (this == "null") null else this
 }

@@ -50,8 +50,7 @@ internal fun Project.updateVersionsProperties(dependenciesWithLastVersion: List<
                 }
             }
     }
-    println(newFileContent)
-    //file.writeText(newFileContent)
+    file.writeText(newFileContent)
 }
 
 private const val available = "# available"
