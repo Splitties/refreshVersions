@@ -1,7 +1,7 @@
 package de.fayard.versions
 
-import de.fayard.internal.PluginConfig
-import org.gradle.kotlin.dsl.SettingsScriptApi
+import de.fayard.versions.extensions.isBuildSrc
+import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.provideDelegate
 import java.util.Properties
@@ -19,12 +19,13 @@ import java.util.Properties
  * This function also sets up the module for the Android and Fabric (Crashlytics) Gradle plugins, so you can avoid the
  * buildscript classpath configuration boilerplate.
  */
-fun SettingsScriptApi.setupVersionPlaceholdersResolving() {
+fun Settings.setupVersionPlaceholdersResolving() {
+    val thisPluginVersion = getPluginVersion(this)
     pluginManagement {
         val resolutionStrategyConfig: String? by extra // Allows disabling the resolutionStrategy if ever needed.
-        val versionProperties = file("versions.properties")
-        if (resolutionStrategyConfig == "false" || versionProperties.canRead().not()) return@pluginManagement
-
+        val relativePath = "versions.properties".let { if (isBuildSrc) "../$it" else it }
+        val versionProperties = rootDir.resolve(relativePath)
+        if (resolutionStrategyConfig == "false" || versionProperties.exists().not()) return@pluginManagement
         @Suppress("UNCHECKED_CAST")
         val properties: Map<String, String> = Properties().apply {
             load(versionProperties.reader())
@@ -32,7 +33,7 @@ fun SettingsScriptApi.setupVersionPlaceholdersResolving() {
         resolutionStrategy.eachPlugin {
             val pluginId = requested.id.id
             if (pluginId == "de.fayard.refreshVersions") {
-                useVersion(PluginConfig.PLUGIN_VERSION)
+                useVersion(thisPluginVersion)
                 return@eachPlugin
             }
             val pluginNamespace = requested.id.namespace ?: ""
@@ -50,3 +51,13 @@ fun SettingsScriptApi.setupVersionPlaceholdersResolving() {
         }
     }
 }
+
+private fun getPluginVersion(settings: Settings): String = runCatching {
+    @Suppress("UnstableApiUsage")
+    settings.buildscript.configurations.getByName("classpath").allDependencies.single {
+        it.group == "de.fayard.refreshVersions" && it.name == "de.fayard.refreshVersions.gradle.plugin"
+    }.version
+}.onFailure {
+    println(it)
+    it.printStackTrace()
+}.getOrNull() ?: "latest.release"
