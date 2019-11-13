@@ -1,7 +1,5 @@
 package de.fayard.versions
 
-import org.gradle.api.Incubating
-
 /**
  * We assume each part of the "group" is dot separated (`.`), and each part of the name is dash separated (`-`).
  */
