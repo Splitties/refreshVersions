@@ -10,5 +10,9 @@ internal val Dependency.moduleIdentifier: ModuleIdentifier?
         return object : ModuleIdentifier {
             override fun getGroup(): String = group
             override fun getName(): String = name
+            override fun toString(): String = "${getGroup()}:${getName()}"
         }
     }
+
+internal val Dependency.isGradlePlugin: Boolean
+    get() = name.endsWith(".gradle.plugin")

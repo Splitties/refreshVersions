@@ -61,7 +61,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                     //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
                 }
 
-                val latestVersion = project.rootProject.getLatestDependencyVersion(
+                val latestVersion = project.rootProject.getLatestDependencyVersionFromRepo(
                     extension = extension,
                     dependency = dependency,
                     resolvedVersion = resolveVersion(
@@ -107,13 +107,13 @@ private fun Project.getLatestDependencyVersion(
             )
             extension.rejectVersionsPredicate?.let { rejectPredicate ->
                 if (rejectPredicate(componentSelectionData)) {
-                    println("Rejected version: ${candidate.version}")
+                    //println("Rejected version: ${candidate.version}")
                     reject("Rejected in rejectVersionsIf { ... }")
                 }
             }
             extension.acceptVersionsPredicate?.let { acceptPredicate ->
                 if (acceptPredicate(componentSelectionData).not()) {
-                    println("Rejected version: ${candidate.version}")
+                    //println("Rejected version: ${candidate.version}")
                     reject("Not accepted in acceptVersionOnlyIf { ... }")
                 }
             }

@@ -7,8 +7,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("de.fayard.refreshVersions")
-    id("com.louiscad.splitties") version "0.1.3"
-    kotlin("jvm") version "1.3.50"
+    id("com.louiscad.splitties")
+    kotlin("jvm")
     `build-scan`
 }
 
@@ -30,6 +30,7 @@ repositories {
     mavenCentral()
     google()
     jcenter()
+    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap/")
 }
 
 fun DependencyHandler.implementations(deps: List<String>) =
