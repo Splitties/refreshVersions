@@ -4,7 +4,9 @@ import de.fayard.versions.extensions.moduleIdentifier
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 
-internal fun Project.updateVersionsProperties(dependenciesWithLastVersion: List<Pair<Dependency, String?>>) {
+internal fun Project.updateVersionsProperties(
+    dependenciesWithLastVersion: List<Pair<Dependency, List<VersionCandidate>>>
+) {
     val file = file("versions.properties")
     if (file.exists().not()) file.createNewFile()
 
@@ -16,15 +18,14 @@ internal fun Project.updateVersionsProperties(dependenciesWithLastVersion: List<
         //TODO: Keep comments from user (ours begin with ##, while user's begin with a single #),
         // we need to find a solution to keep the order/position.
         val versionsWithUpdatesIfAvailable: List<VersionWithUpdateIfAvailable> = dependenciesWithLastVersion
-            .mapNotNull { (dependency, lastVersionOrNull) ->
+            .mapNotNull { (dependency, versionsCandidates) ->
                 dependency.moduleIdentifier?.getVersionPropertyName()?.let {
-                    val currentVersion = properties[it]?.takeUnless { version -> version.isAVersionAlias()}
+                    val currentVersion = properties[it]?.takeUnless { version -> version.isAVersionAlias() }
                         ?: return@mapNotNull null
-                    val updateAvailable = currentVersion != lastVersionOrNull
                     VersionWithUpdateIfAvailable(
                         key = it,
                         currentVersion = currentVersion,
-                        availableUpdateVersion = if (updateAvailable) lastVersionOrNull else null
+                        versionsCandidates = versionsCandidates
                     )
                 }
             }
@@ -34,7 +35,7 @@ internal fun Project.updateVersionsProperties(dependenciesWithLastVersion: List<
                 VersionWithUpdateIfAvailable(
                     key = k,
                     currentVersion = v,
-                    availableUpdateVersion = null
+                    versionsCandidates = emptyList()
                 )
             }
         }
@@ -44,9 +45,9 @@ internal fun Project.updateVersionsProperties(dependenciesWithLastVersion: List<
                 val paddedKey = it.key.padStart(available.length + 2)
                 val currentVersionLine = "${paddedKey}=${it.currentVersion}"
                 appendln(currentVersionLine)
-                it.availableUpdateVersion?.let { newVersion ->
+                it.versionsCandidates.forEach { versionCandidate ->
                     append("##"); append(available.padStart(it.key.length - 2))
-                    append('='); appendln(newVersion)
+                    append('='); appendln(versionCandidate.version.value)
                 }
             }
     }
@@ -65,5 +66,5 @@ private val fileHeader = """
 private class VersionWithUpdateIfAvailable(
     val key: String,
     val currentVersion: String,
-    val availableUpdateVersion: String?
+    val versionsCandidates: List<VersionCandidate>
 )

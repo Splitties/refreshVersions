@@ -1,11 +1,44 @@
 package de.fayard.versions
 
 import de.fayard.versions.extensions.isGradlePlugin
+import de.fayard.versions.extensions.stabilityLevel
 import de.fayard.versions.extensions.versionComparator
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import java.net.URI
+
+internal class VersionCandidate(val stabilityLevel: StabilityLevel, val version: Version)
+
+internal fun Project.getDependenciesVersionsCandidates(
+    extension: RefreshVersionsPropertiesExtension,
+    dependency: Dependency,
+    resolvedVersion: String?
+): List<VersionCandidate> {
+    val currentVersion = Version(resolvedVersion ?: "")
+    val mavenMetadataUris = getMavenMetadataUrls(dependency)
+    return mavenMetadataUris.asSequence().mapNotNull { uri ->
+        runCatching {
+            uri.toURL().readText()
+        }.getOrNull()?.let { xml ->
+            parseVersionsFromMavenMetaData(xml)
+        }
+    }.flatten()
+        .sortedWith(versionComparator.reversed())
+        .distinct()
+        .takeWhile { candidate -> candidate > currentVersion }
+        .fold<Version, List<VersionCandidate>>(emptyList()) { acc, candidateVersion ->
+            val previousStabilityLevel = acc.lastOrNull()?.stabilityLevel
+                ?: return@fold acc + VersionCandidate(candidateVersion.stabilityLevel(), candidateVersion)
+            if (candidateVersion.stabilityLevel() isMoreStableThan previousStabilityLevel) {
+                acc + VersionCandidate(candidateVersion.stabilityLevel(), candidateVersion)
+            } else acc
+        }.asReversed()
+}
+
+private operator fun Version.compareTo(currentVersion: Version): Int {
+    return versionComparator.compare(this, currentVersion)
+}
 
 internal fun Project.getLatestDependencyVersionFromRepo(
     extension: RefreshVersionsPropertiesExtension,

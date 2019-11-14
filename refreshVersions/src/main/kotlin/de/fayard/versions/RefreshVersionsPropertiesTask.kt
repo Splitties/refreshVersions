@@ -50,7 +50,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
 
             val versionProperties: Map<String, String> = project.getVersionProperties()
 
-            val dependenciesWithLastVersion: List<Pair<Dependency, String?>>
+            val dependenciesWithLastVersion: List<Pair<Dependency, List<VersionCandidate>>>
             dependenciesWithLastVersion = allDependencies.mapNotNull { dependency ->
 
                 println("Dependency ${dependency.group}:${dependency.name}:${dependency.version}")
@@ -61,7 +61,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                     //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
                 }
 
-                val latestVersion = project.rootProject.getLatestDependencyVersionFromRepo(
+                val versionCandidates = project.rootProject.getDependenciesVersionsCandidates(
                     extension = extension,
                     dependency = dependency,
                     resolvedVersion = resolveVersion(
@@ -70,7 +70,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                     )
                 )
 
-                return@mapNotNull dependency to latestVersion
+                return@mapNotNull dependency to versionCandidates
             }.toList()
             project.rootProject.updateVersionsProperties(dependenciesWithLastVersion)
         } finally {
