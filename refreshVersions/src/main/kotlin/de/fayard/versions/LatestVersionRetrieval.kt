@@ -7,19 +7,23 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import java.net.URI
+import java.net.URL
 
 internal class VersionCandidate(val stabilityLevel: StabilityLevel, val version: Version)
 
-internal fun Project.getDependenciesVersionsCandidates(
+internal fun Project.getDependencyVersionsCandidates(
     extension: RefreshVersionsPropertiesExtension,
-    dependency: Dependency,
+    repositories: List<MavenRepoUrl>,
+    group: String,
+    name: String,
     resolvedVersion: String?
 ): List<VersionCandidate> {
     val currentVersion = Version(resolvedVersion ?: "")
-    val mavenMetadataUris = getMavenMetadataUrls(dependency)
-    return mavenMetadataUris.asSequence().mapNotNull { uri ->
+    return repositories.asSequence().map {
+        URL(it.metadataUrlForArtifact(group = group, name = name))
+    }.mapNotNull { url ->
         runCatching {
-            uri.toURL().readText()
+            url.readText()
         }.getOrNull()?.let { xml ->
             parseVersionsFromMavenMetaData(xml)
         }
@@ -38,22 +42,6 @@ internal fun Project.getDependenciesVersionsCandidates(
 
 private operator fun Version.compareTo(currentVersion: Version): Int {
     return versionComparator.compare(this, currentVersion)
-}
-
-internal fun Project.getLatestDependencyVersionFromRepo(
-    extension: RefreshVersionsPropertiesExtension,
-    dependency: Dependency,
-    resolvedVersion: String?
-): String? {
-    val mavenMetadataUris = getMavenMetadataUrls(dependency)
-    val versions = mavenMetadataUris.asSequence().mapNotNull { uri ->
-        runCatching {
-            uri.toURL().readText()
-        }.getOrNull()?.let { xml ->
-            parseVersionsFromMavenMetaData(xml)
-        }
-    }.flatten().sortedWith(versionComparator).distinct()
-    return versions.last().value
 }
 
 private fun parseVersionsFromMavenMetaData(xml: String): List<Version> {

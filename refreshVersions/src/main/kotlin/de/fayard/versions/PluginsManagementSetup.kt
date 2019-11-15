@@ -2,8 +2,6 @@ package de.fayard.versions
 
 import de.fayard.versions.extensions.isBuildSrc
 import org.gradle.api.initialization.Settings
-import org.gradle.kotlin.dsl.extra
-import org.gradle.kotlin.dsl.provideDelegate
 import java.util.Properties
 
 /**
@@ -22,10 +20,10 @@ import java.util.Properties
 fun Settings.setupVersionPlaceholdersResolving() {
     val thisPluginVersion = getPluginVersion(this)
     pluginManagement {
-        val resolutionStrategyConfig: String? by extra // Allows disabling the resolutionStrategy if ever needed.
+        writeUsedRepositories(settings)
         val relativePath = "versions.properties".let { if (isBuildSrc) "../$it" else it }
         val versionProperties = rootDir.resolve(relativePath)
-        if (resolutionStrategyConfig == "false" || versionProperties.exists().not()) return@pluginManagement
+        if (versionProperties.exists().not()) return@pluginManagement
         @Suppress("UNCHECKED_CAST")
         val properties: Map<String, String> = Properties().apply {
             load(versionProperties.reader())

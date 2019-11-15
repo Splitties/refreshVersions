@@ -13,6 +13,7 @@ import de.fayard.versions.extensions.registerOrCreate
 import de.fayard.versions.getVersionProperties
 import de.fayard.versions.setupVersionPlaceholdersResolving
 import de.fayard.versions.writeUsedDependencies
+import de.fayard.versions.writeUsedRepositories
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ModuleVersionSelector
@@ -42,7 +43,10 @@ open class RefreshVersionsPlugin : Plugin<Project> {
             project.configureExperimentalUpdater()
             val properties: Map<String, String> = project.getVersionProperties()
             project.allprojects { configurations.all { setupVersionPlaceholdersResolving(properties) } }
-            if (project.isBuildSrc) project.afterEvaluate { writeUsedDependencies() }
+            if (project.isBuildSrc) project.afterEvaluate {
+                writeUsedDependencies()
+                writeUsedRepositories()
+            }
         } else {
             project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
             project.configure()
