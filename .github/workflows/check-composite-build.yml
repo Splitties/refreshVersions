@@ -15,7 +15,7 @@ on:
       - '**.md'
       - '**.adoc'
 jobs:
-  gradle-plugins-publishing:
+  composite-check-all:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -26,9 +26,9 @@ jobs:
         with:
           wrapper-directory: refreshVersions
           build-root-directory: refreshVersions
-          arguments: publishToMavenLocal
+          arguments: publishToMavenLocal --stacktrace
       - uses: eskatos/gradle-command-action@v1
         with:
           wrapper-directory: composite
           build-root-directory: composite
-          arguments: checkAll
+          arguments: checkAll --stacktrace
