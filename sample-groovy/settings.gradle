@@ -1,18 +1,23 @@
+import static de.fayard.versions.PluginsManagementSetupKt.setupVersionPlaceholdersResolving
+
 pluginManagement {
     repositories {
         mavenLocal()
         gradlePluginPortal()
     }
-    def resolutionStrategyConfig = ext.find("resolutionStrategyConfig")
-    resolutionStrategy.eachPlugin {
-        def property = "plugin.${requested.id.id}"
-        if (settings.ext.has(property) && resolutionStrategyConfig != "false") {
-            def version = settings.ext.get(property)
-            if (resolutionStrategyConfig == "verbose") print("ResolutionStrategy selected version=$version from property=$property")
-            useVersion(version)
-        }
-    }
 }
+
+buildscript {
+    repositories {
+        mavenLocal() // Only necessary for testing
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    dependencies.classpath("de.fayard.refreshVersions:de.fayard.refreshVersions.gradle.plugin:0.8.3")
+}
+
+setupVersionPlaceholdersResolving(settings)
+
 rootProject.name = 'sample-groovy'
 includeBuild '../refreshVersions'
 
