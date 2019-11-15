@@ -19,7 +19,10 @@ internal fun Project.writeUsedDependencies() {
     require(isRootProject)
 
     val file = file(usedDependenciesFilePath)
-    if (file.exists().not()) file.createNewFile()
+    if (file.exists().not()) {
+        file.parentFile.mkdirs()
+        file.createNewFile()
+    }
 
     val allDependencies = configurations.asSequence()
         .flatMap { it.allDependencies.asSequence() }

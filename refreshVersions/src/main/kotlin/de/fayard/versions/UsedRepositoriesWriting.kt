@@ -44,7 +44,10 @@ internal fun Project.writeUsedRepositories() {
 }
 
 private fun writeUsedRepositories(repositories: RepositoryHandler, file: File) {
-    if (file.exists().not()) file.createNewFile()
+    if (file.exists().not()) {
+        file.parentFile.mkdirs()
+        file.createNewFile()
+    }
     file.bufferedWriter().use { writer ->
         repositories.forEach { repo ->
             if (repo is MavenArtifactRepository) writer.appendln(repo.url.toString())
