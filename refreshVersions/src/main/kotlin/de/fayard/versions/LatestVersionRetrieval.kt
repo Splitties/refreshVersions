@@ -49,11 +49,3 @@ private fun parseVersionsFromMavenMetaData(xml: String): List<Version> {
         .split("<version>", "</version>")
         .mapNotNull { if (it.isBlank()) null else Version(it.trim()) }
 }
-
-private fun Project.getMavenMetadataUrls(dependency: Dependency): List<URI> {
-    val group = dependency.group ?: return emptyList()
-    val urlEnd = "${group.replace('.', '/')}/${dependency.name}/maven-metadata.xml"
-    return repositories.mapNotNull { (it as? MavenArtifactRepository)?.url?.resolve(urlEnd) }.let {
-        if (dependency.isGradlePlugin) listOf(URI("https://plugins.gradle.org/m2/$urlEnd")) + it else it
-    }
-}
