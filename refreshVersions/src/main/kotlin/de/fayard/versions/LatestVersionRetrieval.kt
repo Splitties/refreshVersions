@@ -1,12 +1,8 @@
 package de.fayard.versions
 
-import de.fayard.versions.extensions.isGradlePlugin
 import de.fayard.versions.extensions.stabilityLevel
 import de.fayard.versions.extensions.versionComparator
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.repositories.MavenArtifactRepository
-import java.net.URI
 import java.net.URL
 
 internal class VersionCandidate(val stabilityLevel: StabilityLevel, val version: Version)
