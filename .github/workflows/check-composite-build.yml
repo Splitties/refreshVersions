@@ -7,6 +7,11 @@ on:
     paths-ignore:
       - '**.md'
       - '**.adoc'
+      - '.editorconfig'
+      - '**/.gitignore'
+      - 'sample-android/**'
+      - 'sample-bleeding-edge/**'
+      - 'sample-versionsOnlyMode/**'
   push:
     branches:
       - develop
@@ -14,6 +19,11 @@ on:
     paths-ignore:
       - '**.md'
       - '**.adoc'
+      - '.editorconfig'
+      - '**/.gitignore'
+      - 'sample-android/**'
+      - 'sample-bleeding-edge/**'
+      - 'sample-versionsOnlyMode/**'
 jobs:
   composite-check-all:
     runs-on: ubuntu-latest
