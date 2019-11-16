@@ -10,7 +10,7 @@ plugins {
 }
 
 
-version = "0.8.4" // plugin.de.fayard.refreshversions
+version = projectDir.parentFile.resolve("plugins_version.txt").bufferedReader().use { it.readLine() }
 group = "de.fayard"
 
 
