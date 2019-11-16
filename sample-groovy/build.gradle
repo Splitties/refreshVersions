@@ -20,23 +20,10 @@ repositories {
 }
 
 dependencies {
-    compile("com.google.guava:guava:15.0")
-    compile("com.google.inject:guice:2.0")
-    compile("androidx.annotation:annotation:1.1.0")
-    compile("org.jetbrains:annotation:17.0.0")
-}
-
-def isNonStable = { String version ->
-    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
-    def regex = /^[0-9,.v-]+$/
-    return !stableKeyword && !(version ==~ regex)
-}
-
-refreshVersions {
-    useFqdnFor('module', 'com.google.inject')
-    rejectVersionIf {
-        isNonStable(candidate.version) && !isNonStable(currentVersion)
-    }
+    compile("com.google.guava:guava:_")
+    compile("com.google.inject:guice:_")
+    compile("androidx.annotation:annotation:_")
+    compile("org.jetbrains:annotation:_")
 }
 
 buildScan {
