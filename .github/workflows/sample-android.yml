@@ -1,10 +1,10 @@
 # .github/workflows/gradle-build-pr.yml
 # https://github.com/marketplace/actions/gradle-command
 name: sample-android
-on:
-  push:
-    paths:
-      - 'sample-android/**'
+on: push
+#  push:
+#    paths:
+#      - 'sample-android/**'
 jobs:
   gradle:
     strategy:
