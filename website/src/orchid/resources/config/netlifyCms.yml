@@ -1,5 +1,5 @@
 config:
   backend:
     name: github
-    repo: 'jmfayard/buildSrcVersions'
+    repo: 'jmfayard/gradle-dependencies-plugins'
     branch: website

@@ -1,16 +1,16 @@
 site:
   about:
     siteName: 'gradle refreshVersions'
-    subtitle: 'Basic starter repo to get going with Orchid quickly'
-    siteDescription: 'This is a short blurb you can set below this index layouts sidebar.'
+    subtitle: 'Plugins and Articles to help you build cool things with Gradle'
+    siteDescription: 'Dependencies Management made easy and more'
     avatar: '/assets/media/logo.jpg'
 
 theme:
   social:
     facebook: 'facebookUsername'
-    twitter: 'twitterHandle'
+    twitter: 'jm_fayard'
     instagram: 'instagramHandle'
-    github: 'githubUsername'
+    github: 'jmfayard'
     other:
       - label: 'linkedin'
         link: 'https://www.example.com'

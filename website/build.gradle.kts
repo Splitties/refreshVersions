@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    val orchid_version = "0.17.6"
+    val orchid_version = "0.17.7"
     compile("io.github.javaeden.orchid:OrchidCore:$orchid_version")
     orchidCompile("io.github.javaeden.orchid:OrchidCore:$orchid_version")
     orchidRuntime("io.github.javaeden.orchid:OrchidPosts:$orchid_version")
