@@ -1,6 +1,6 @@
 // plugin.de.fayard.buildSrcVersions (aka buildSrcVersions)
 :plugin_version: 0.7.0
-:gradle_version: 5.6.2
+:gradle_version: 5.6.4
 :imagesdir: doc
 :repo: jmfayard/buildSrcVersions
 :branch: 26-buildSrcVersions
@@ -31,14 +31,14 @@
 :benmanes: https://github.com/ben-manes/gradle-versions-plugin
 :image_faq: https://user-images.githubusercontent.com/459464/64926128-1a076980-d7fa-11e9-8a69-eb354d211f51.png
 :image_netlify: https://api.netlify.com/api/v1/badges/ccacc3ce-06c7-4768-a3d3-96d46b58d523/deploy-status
-:link_netlify: https://app.netlify.com/sites/gradle-refreshversions/deploys
+:link_netlify: https://app.netlify.com/sites/builtwithgradle/deploys
 :badge_netlify: image:{image_netlify}["Website",link="{link_netlify}"]
 
-= de.fayard.refreshVersions
+= de.fayard.buildSrcVersions
 
 {badge_version} {slack_badge} {contributors_badge} {badge_build} {badge_mit} {badge_issues} {badge_pr} {badge_netlify}
 
-The Gradle plugin `de.fayard.refreshVersions` goal is to make it as painless as possible to upgrade your project to the latest and greatest version of everything.
+The Gradle plugin `de.fayard.buildSrcVersions` goal is to make it as painless as possible to upgrade your project to the latest and greatest version of everything.
 
 It does that by extracting all your dependencies, searching for available dependencies updates
 and generating Kotlin code, Groovy code or Gradle properties.
@@ -59,7 +59,7 @@ buildscript {
     //...
 }
 plugins {
-  id("de.fayard.refreshVersions") version "{plugin_version}"
+  id("de.fayard.buildSrcVersions") version "{plugin_version}"
 }
 // Don't put any code before the buildscripts {} and plugins {} block
 ----
@@ -67,46 +67,6 @@ plugins {
 Updating Gradle is usually a good idea. You get less bugs, more features and more build speed, and it's as simple as this:
 
 `$ ./gradlew wrapper --gradle-version {gradle_version}`
-
-
-If you have to, use instead the legacy `buildscript { ... }` syntax
-
-++++
-<details>
-<summary>Legacy buildscript syntax - click to expand</summary>
-++++
-
-[source,kotlin,subs=attributes]
-----
-buildscript {
-  repositories {
-    maven {
-      url "https://plugins.gradle.org/m2/"
-    }
-  }
-  dependencies {
-    classpath "de.fayard.refrshVersions:de.fayard.refrshVersions.gradle.plugin:{plugin_version}"
-  }
-}
-
-apply plugin: "de.fayard.refrshVersions"
-----
-++++
-</details>
-++++
-
-The plugin provides two tasks: `:refreshVersions` and `:buildSrcVersions`
-
-== The task `:refreshVersions`
-
-The task `:refreshVersions` was introduced in the version `0.6.0` of the plugin.
-
-It provides **just the versions and their available updates** and is a good solution for simple, single-module Gradle projects.
-
-https://github.com/jmfayard/buildSrcVersions/issues/77[Read the friendly documentation]
-
-[[img-gradle-properties]]
-image::versions-gradle-properties.png[]
 
 
 == The task `:buildSrcVersions`
@@ -119,6 +79,16 @@ https://github.com/jmfayard/buildSrcVersions/issues/88[Read the friendly documen
 
 [[img-carbon-Libs-Version]]
 image::carbon-Libs-Versions.png[]
+
+
+== Requirements
+
+* Kotlin, JVM and Android projects.
+* Gradle 4.3+, 5+, 6+
+* The IDE integration works
+** for both `build.gradle` (Groovy) and `build.gradle.kts` (Kotlin) files.
+** in IntelliJ IDEA 2018.03 and better
+** in Android Studio 3.5 and better.
 
 == Articles
 
@@ -136,37 +106,31 @@ I have a series of articles called `Built with Gradle`:
 You can follow me at https://dev.to/jmfayard
 
 
+== Exciting new features coming!
 
-== Configuration
+`buildSrcVersions` will be replaced by three better plugins
 
-No configuration is required, but some things are configurable.
+1) The plugin `de.fayard.refreshVersions` and its task `gradle refreshVersions` will provide a better alternative to `buildSrc/.../Versions.kt`
 
-The default configuration is:
+[[img-gradle-properties]]
+image::versions-gradle-properties.png[]
 
-```
-// See Plugin configuration at https://github.com/jmfayard/buildSrcVersions/issues/53
-buildSrcVersions {
-    rejectVersionIf {
-        isNonStable(candidate.version)
-    }
-    orderBy = OrderBy.GROUP_AND_LENGTH
-    indent = "from-editorconfig-file"
-    renameLibs = "Libs"
-    renameVersions = "Versions"
-    useFdqnFor() // nothing
-}
-```
+2) The plugin `de.fayard.dependencies` will provide a faster way to add new dependencies
 
-See https://github.com/jmfayard/buildSrcVersions/issues/53[Issue #53: Plugin Configuration]
+image:https://user-images.githubusercontent.com/459464/68317452-6e70ec00-00bb-11ea-84c4-94d3ef0fb86f.png[]
 
-== Requirements
+3) The plugin `com.louiscad.splitties` will provide Android specific features
 
-* Kotlin, JVM and Android projects.
-* Gradle 4.3+ and Gradle 5.0+
-* The IDE integration works
-** for both `build.gradle` (Groovy) and `build.gradle.kts` (Kotlin) files.
-** in IntelliJ IDEA 2018.03 and better
-** in Android Studio 3.5 and better. It was broken in 3.3 and 3.4 due https://issuetracker.google.com/issues/123032843[bug #123032843:  IDE integration with the buildSrc^]
+Spoiler here: https://dev.to/jmfayard/gradle-migratetoandroidx-beta-testers-needed-2f05
+
+
+## Should I use refreshVersions today?
+
+No, we are not ready yet.
+
+https://github.com/jmfayard/buildSrcVersions/issues/104[But please subscribe to this issue]
+
+
 
 
 == Design goals
