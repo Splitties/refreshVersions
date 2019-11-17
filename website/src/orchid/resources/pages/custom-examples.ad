@@ -1,0 +1,37 @@
++++
+title = "Examples - Custom"
+
+[[components]]
+type = 'pageContent'
+
+[[components]]
+type = 'replace'
+resource = 'snippets/snippet1.md'
+find = 'static site generator'
+replace = 'JAMstack tool'
++++
+
+
+Below is an example tag that replaces all occurrances of `Orchid` with `site.about.siteName` (which is
+{{site.about.siteName}}). This tag was created just for this site, and is included as a "private plugin" for Orchid.
+This page also demonstrates how pages can be rendered with the Asciidoctor format, and use Front Matter with TOML
+instead of YAML.
+
+***
+
+{% replace "Orchid" site.about.siteName %}
+
+Orchid is a wonderful new Static Site Generator designed to be easy to use, while being highly extensible and incredibly
+powerful. Orchid consists of a core framework which provides the structure for extensibility, and numerous official
+plugins that give you the freedom to make your Orchid site perfectly unique. As Orchid is designed to replace Javadocs,
+Jekyll, Gitbook, Hugo, and just about any other static site generator out there, many of these plugins are designed with
+a content model that closely matches that of these other frameworks, but being a part of the larger Orchid ecosystem,
+provides all benefits that come in addition to those models that the core Orchid frameworks gives us for free, while all
+being rendered in one single, beautiful theme.
+
+{% endreplace %}
+
+{{ "New Orchid site"|replace("Orchid", site.about.siteName) }}
+
+***
+

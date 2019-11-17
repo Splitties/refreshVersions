@@ -1,0 +1,5 @@
+<div class="post-archive">
+{# @pebvariable name="page" type="com.eden.orchid.taxonomies.pages.TermArchivePage" #}
+<p><a href="{{page.taxonomy.link}}">Return To {{page.taxonomy.title}}</a></p>
+{% include 'includes/basicTermArchive' with {'taxonomy': page.taxonomy, 'term': page.term, 'pages': page.pageList} %}
+</div>

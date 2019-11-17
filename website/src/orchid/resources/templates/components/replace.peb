@@ -1,0 +1,9 @@
+<i>
+  The following content was added as a custom Component. Find/replace values are set at <code>@Option</code>s in the
+  Component.
+</i>
+<br>
+<br>
+
+{# @pebvariable name="component" type="com.eden.orchid.starter.ReplaceComponent" #}
+{{ component.content.replaceAll(component.find, component.replace) | raw }}
