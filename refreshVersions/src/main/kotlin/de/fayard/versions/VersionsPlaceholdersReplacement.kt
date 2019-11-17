@@ -1,6 +1,7 @@
 package de.fayard.versions
 
 import de.fayard.versions.ArtifactGroupNaming.*
+import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isGradlePlugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -33,8 +34,11 @@ internal fun Project.getVersionProperties(
 ): Map<String, String> {
     return mutableMapOf<String, String>().also { map ->
         // Read from versions.properties
-        Properties().also {
-            it.load(file("versions.properties").reader())
+        Properties().also { properties ->
+            val relativePath = "versions.properties".let {
+                if (project.isBuildSrc) "../$it" else it
+            }
+            properties.load(file(relativePath).reader())
         }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
         // Overwrite with relevant project properties
         if (includeProjectProperties) properties.forEach { (k, v) ->
@@ -50,13 +54,13 @@ internal fun Project.getVersionProperties(
 internal tailrec fun resolveVersion(properties: Map<String, String>, key: String, redirects: Int = 0): String? {
     if (redirects > 5) error("Up to five redirects are allowed, for readability. You should only need one.")
     val value = properties[key] ?: return null
-    return if (value.isAVersionAlias()) resolveVersion(properties, key, redirects + 1) else value
+    return if (value.isAVersionAlias()) resolveVersion(properties, value, redirects + 1) else value
 }
 
 /**
  * Expects the value of a version property (values of the map returned by [getVersionProperties]).
  */
-internal fun String.isAVersionAlias(): Boolean = startsWith("version.")
+internal fun String.isAVersionAlias(): Boolean = startsWith("version.") || startsWith("plugin.")
 
 private fun ModuleVersionSelector.getVersionFromProperties(properties: Map<String, String>): String {
     val propertyName = moduleIdentifier.getVersionPropertyName()
@@ -107,6 +111,7 @@ private fun getVersionPropertyName(moduleIdentifier: ModuleIdentifier): String {
             "$groupFirstPart.$nameFirstPart-$nameSecondPart"
         }
         null -> when {
+            name == "gradle" && group == "com.android.tools.build" -> return "plugin.android"
             moduleIdentifier.isGradlePlugin -> {
                 val pluginId = name.substringBeforeLast(".gradle.plugin")
                 return when {

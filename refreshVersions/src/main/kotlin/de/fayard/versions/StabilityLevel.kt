@@ -11,8 +11,10 @@ enum class StabilityLevel {
     Beta,
     Alpha,
     Development,
+    Preview,
     Unknown;
 
+    infix fun isMoreStableThan(other: StabilityLevel): Boolean = ordinal < other.ordinal
     infix fun isLessStableThan(other: StabilityLevel): Boolean = ordinal > other.ordinal
     infix fun isAtLeastAsStableAs(other: StabilityLevel): Boolean = isLessStableThan(other).not()
 }

@@ -1,0 +1,44 @@
+# https://help.github.com/en/github/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions
+# https://github.com/marketplace/actions/gradle-command
+name: Check composite build
+on:
+  pull_request:
+    types: [assigned, opened, synchronize, reopened, ready_for_review]
+    paths-ignore:
+      - '**.md'
+      - '**.adoc'
+      - '.editorconfig'
+      - '**/.gitignore'
+      - 'sample-android/**'
+      - 'sample-bleeding-edge/**'
+      - 'sample-versionsOnlyMode/**'
+  push:
+    branches:
+      - develop
+      - master
+    paths-ignore:
+      - '**.md'
+      - '**.adoc'
+      - '.editorconfig'
+      - '**/.gitignore'
+      - 'sample-android/**'
+      - 'sample-bleeding-edge/**'
+      - 'sample-versionsOnlyMode/**'
+jobs:
+  composite-check-all:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          wrapper-directory: refreshVersions
+          build-root-directory: refreshVersions
+          arguments: publishToMavenLocal --stacktrace
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          wrapper-directory: composite
+          build-root-directory: composite
+          arguments: checkAll --stacktrace

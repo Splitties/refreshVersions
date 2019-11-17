@@ -7,9 +7,13 @@ import de.fayard.internal.PluginsSetup
 import de.fayard.internal.RefreshVersionsExtensionImpl
 import de.fayard.versions.RefreshVersionsPropertiesExtension
 import de.fayard.versions.RefreshVersionsPropertiesTask
+import de.fayard.versions.extensions.isBuildSrc
+import de.fayard.versions.extensions.isRootProject
 import de.fayard.versions.extensions.registerOrCreate
 import de.fayard.versions.getVersionProperties
 import de.fayard.versions.setupVersionPlaceholdersResolving
+import de.fayard.versions.writeUsedDependencies
+import de.fayard.versions.writeUsedRepositories
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ModuleVersionSelector
@@ -28,10 +32,10 @@ open class RefreshVersionsPlugin : Plugin<Project> {
      * ```
      * **/
     internal val Project.useExperimentalUpdater: Boolean
-        get() = findProperty(PluginConfig.USE_EXPERIMENTAL_UPDATER) == "true"
+        get() = findProperty(PluginConfig.USE_EXPERIMENTAL_UPDATER) == "true" || isBuildSrc
 
     override fun apply(project: Project) {
-        check(project == project.rootProject) {
+        check(project.isRootProject) {
             "ERROR: plugins de.fayard.refreshVersions must be applied to the root build.gradle(.kts)"
         }
 
@@ -39,6 +43,10 @@ open class RefreshVersionsPlugin : Plugin<Project> {
             project.configureExperimentalUpdater()
             val properties: Map<String, String> = project.getVersionProperties()
             project.allprojects { configurations.all { setupVersionPlaceholdersResolving(properties) } }
+            if (project.isBuildSrc) project.afterEvaluate {
+                writeUsedDependencies()
+                writeUsedRepositories()
+            }
         } else {
             project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
             project.configure()
