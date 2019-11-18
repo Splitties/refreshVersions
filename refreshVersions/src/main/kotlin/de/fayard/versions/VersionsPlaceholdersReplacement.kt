@@ -104,11 +104,9 @@ private fun getVersionPropertyName(moduleIdentifier: ModuleIdentifier): String {
             val nameSecondPart = name.substringAfter('-').substringBefore('-')
             "$groupLastPart.$nameSecondPart"
         }
-        GroupFirstPartAndNameTwoFirstParts -> {
+        GroupFirstPartAndName -> {
             val groupFirstPart = group.substringBefore('.')
-            val nameFirstPart = name.substringBefore('-')
-            val nameSecondPart = name.substringAfter('-').substringBefore('-')
-            "$groupFirstPart.$nameFirstPart-$nameSecondPart"
+            "$groupFirstPart.$name"
         }
         null -> when {
             name == "gradle" && group == "com.android.tools.build" -> return "plugin.android"
@@ -151,7 +149,8 @@ private val artifactsGroupingRules: List<ArtifactGroupingRule> = sequenceOf(
     "org.jetbrains.kotlin:kotlin" to GroupLastPart,
     "org.jetbrains.kotlinx:kotlinx" to GroupLastPartAndNameSecondPart,
     "androidx." to GroupOnly,
-    "androidx.media:media-widget" to GroupFirstPartAndNameTwoFirstParts,
+    "androidx.media:media-widget" to GroupFirstPartAndName,
+    "androidx.slice:slice-builders-ktx" to GroupFirstPartAndName,
     "androidx.test:core" to GroupAndNameFirstPart, // Rest of androidx.test share the same version.
     "androidx.test.ext:junit" to GroupAndNameFirstPart,
     "androidx.test.ext:truth" to GroupFirstTwoParts, // Same version as the rest of androidx.test.

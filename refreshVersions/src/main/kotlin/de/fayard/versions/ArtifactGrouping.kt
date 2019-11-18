@@ -10,7 +10,7 @@ internal enum class ArtifactGroupNaming {
     GroupFirstThreeParts,
     GroupAndNameFirstPart,
     GroupLastPartAndNameSecondPart,
-    GroupFirstPartAndNameTwoFirstParts
+    GroupFirstPartAndName
 }
 
 internal class ArtifactGroupingRule(
