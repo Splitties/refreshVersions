@@ -149,6 +149,11 @@ private val artifactsGroupingRules: List<ArtifactGroupingRule> = sequenceOf(
     "org.jetbrains.kotlin:kotlin" to GroupLastPart,
     "org.jetbrains.kotlinx:kotlinx" to GroupLastPartAndNameSecondPart,
     "androidx." to GroupOnly,
+    "androidx.camera:camera-extensions" to GroupFirstPartAndName,
+    "androidx.camera:camera-view" to GroupFirstPartAndName,
+    "androidx.car:car-cluster" to GroupFirstPartAndName,
+    "androidx.core:core-role" to GroupFirstPartAndName,
+    "androidx.dynamicanimation:dynamicanimation-ktx" to GroupFirstPartAndName,
     "androidx.media:media-widget" to GroupFirstPartAndName,
     "androidx.slice:slice-builders-ktx" to GroupFirstPartAndName,
     "androidx.test:core" to GroupAndNameFirstPart, // Rest of androidx.test share the same version.
