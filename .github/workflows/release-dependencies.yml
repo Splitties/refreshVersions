@@ -4,7 +4,7 @@ name: Publish to repository
 on:
   push:
     paths:
-      - 'plugins_version.txt'
+      - 'dependencies/plugins_version.txt'
     branches:
       - master
       - develop
@@ -18,6 +18,6 @@ jobs:
           java-version: 11
       - uses: eskatos/gradle-command-action@v1
         with:
-          wrapper-directory: refreshVersions
-          build-root-directory: refreshVersions
+          wrapper-directory: dependencies
+          build-root-directory: dependencies
           arguments: publishPlugins --scan -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}

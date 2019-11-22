@@ -10,7 +10,7 @@ plugins {
 }
 
 
-version = projectDir.parentFile.resolve("plugins_version.txt").bufferedReader().use { it.readLine() }
+version = file("plugins_version.txt").readLines().first()
 group = "de.fayard"
 
 
