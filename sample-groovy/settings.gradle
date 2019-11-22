@@ -20,4 +20,5 @@ setupVersionPlaceholdersResolving(settings)
 
 rootProject.name = 'sample-groovy'
 includeBuild '../refreshVersions'
+includeBuild '../dependencies'
 

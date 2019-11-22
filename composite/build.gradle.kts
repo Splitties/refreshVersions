@@ -11,6 +11,7 @@ defaultTasks("run")
 // val SAMPLE_ANDROID: IncludedBuild = gradle.includedBuild("sample-android")
 
 val PLUGIN: IncludedBuild = gradle.includedBuild("refreshVersions")
+val DEPENDENCIES: IncludedBuild = gradle.includedBuild("dependencies")
 val SAMPLE_KOTLIN: IncludedBuild = gradle.includedBuild("sample-kotlin")
 val SAMPLE_GROOVY: IncludedBuild = gradle.includedBuild("sample-groovy")
 val REFRESH_VERSIONS = ":refreshVersions"
@@ -23,12 +24,19 @@ tasks.register("publishLocally") {
     dependsOn(PLUGIN.task(":publishToMavenLocal"))
 }
 
-tasks.register("publishPlugins") {
+tasks.register("publishRefreshVersions") {
     group = CUSTOM
     description = "Publishes this plugin to the Gradle Plugin portal."
     dependsOn(":publishLocally")
     dependsOn(":checkAll")
     dependsOn(PLUGIN.task(":publishPlugins"))
+}
+tasks.register("publishDependencies") {
+    group = CUSTOM
+    description = "Publishes this plugin to the Gradle Plugin portal."
+    dependsOn(":publishLocally")
+    dependsOn(":checkAll")
+    dependsOn(DEPENDENCIES.task(":publishPlugins"))
 }
 
 tasks.register<DefaultTask>("hello") {
@@ -40,6 +48,7 @@ tasks.register("pluginTests") {
     group = CUSTOM
     description = "Run plugin unit tests"
     dependsOn(PLUGIN.task(":check"))
+    dependsOn(DEPENDENCIES.task(":check"))
 }
 
 tasks.register("checkAll") {
@@ -50,6 +59,8 @@ tasks.register("checkAll") {
     dependsOn(SAMPLE_GROOVY.task(REFRESH_VERSIONS))
     dependsOn(PLUGIN.task(":validateTaskProperties"))
     dependsOn(PLUGIN.task(":check"))
+    dependsOn(DEPENDENCIES.task(":validateTaskProperties"))
+    dependsOn(DEPENDENCIES.task(":check"))
 }
 
 buildScan {
