@@ -1,6 +1,4 @@
-package com.louiscad.splitties
-
-
+package dependencies
 
 /**
  * The actual dependency version comes from `gradle.properties`

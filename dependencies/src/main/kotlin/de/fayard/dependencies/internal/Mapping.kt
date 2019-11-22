@@ -1,6 +1,6 @@
-package com.louiscad.splitties.de.fayard.dependencies.internal
+package de.fayard.dependencies.internal
 
-import com.louiscad.splitties.*
+import dependencies.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.memberProperties

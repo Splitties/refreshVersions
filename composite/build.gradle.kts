@@ -22,6 +22,8 @@ tasks.register("publishLocally") {
     description = "Publish the plugin locally"
     dependsOn(":checkAll")
     dependsOn(PLUGIN.task(":publishToMavenLocal"))
+    dependsOn(DEPENDENCIES.task(":publishToMavenLocal"))
+
 }
 
 tasks.register("publishRefreshVersions") {

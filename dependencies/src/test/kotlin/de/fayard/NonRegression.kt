@@ -1,7 +1,7 @@
 package de.fayard
 
-import com.louiscad.splitties.de.fayard.dependencies.internal.DependencyMapping
-import com.louiscad.splitties.de.fayard.dependencies.internal.getArtifactNameToSplittiesConstantMapping
+import de.fayard.dependencies.internal.DependencyMapping
+import de.fayard.dependencies.internal.getArtifactNameToSplittiesConstantMapping
 import io.kotlintest.matchers.haveSize
 import io.kotlintest.matchers.withClue
 import io.kotlintest.should

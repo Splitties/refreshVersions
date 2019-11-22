@@ -1,4 +1,4 @@
-package com.louiscad.splitties
+package dependencies
 
 object KotlinX {
     val coroutines = Coroutines

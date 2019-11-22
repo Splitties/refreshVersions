@@ -1,4 +1,4 @@
-package com.louiscad.splitties
+package dependencies
 
 object Testing {
     private const val strikt_version = "+"

@@ -1,7 +1,8 @@
 package de.fayard.dependencies
 
-import com.louiscad.splitties.de.fayard.dependencies.internal.getArtifactNameToSplittiesConstantMapping
+
 import com.louiscad.splitties.de.fayard.dependencies.internal.registerOrCreate
+import de.fayard.dependencies.internal.getArtifactNameToSplittiesConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project

@@ -1,5 +1,4 @@
-import com.louiscad.splitties.KotlinX
-import com.louiscad.splitties.Testing
+import dependencies.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
