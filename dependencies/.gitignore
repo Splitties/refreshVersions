@@ -1,0 +1,5 @@
+### Gradle template
+.gradle/
+build/
+.idea/
+!gradle-wrapper.jar
