@@ -31,7 +31,7 @@ fun DependencyHandler.testImplementations(deps: List<String>) =
 dependencies {
     implementations(listOf(AndroidX.browser, AndroidX.cardView))
     testImplementations(listOf(KotlinX.coroutines.core, KotlinX.coroutines.coreCommon))
-    testImplementations(listOf(Testing.kotestRunner, Testing.kotestExtensions))
+    testImplementations(listOf(Testing.kotlinTest.runner.jvm, Testing.kotlinTest.extensions.extensions))
     implementation("com.google.guava:guava:_")
     implementation("com.google.inject:guice:2.0")
     implementation("com.squareup.okhttp3:okhttp:3.10.0")
