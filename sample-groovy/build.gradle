@@ -8,10 +8,6 @@ plugins {
 
 group = "de.fayard"
 
-refreshVersions {
-    // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
-}
-
 repositories {
     maven {
         setUrl("../plugin/src/test/resources/maven")

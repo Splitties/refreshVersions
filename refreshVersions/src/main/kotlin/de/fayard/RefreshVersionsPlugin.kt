@@ -5,7 +5,6 @@ import de.fayard.internal.PluginConfig
 import de.fayard.internal.PluginConfig.isNonStable
 import de.fayard.internal.PluginsSetup
 import de.fayard.internal.RefreshVersionsExtensionImpl
-import de.fayard.versions.RefreshVersionsPropertiesExtension
 import de.fayard.versions.RefreshVersionsPropertiesTask
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isRootProject
@@ -55,7 +54,6 @@ open class RefreshVersionsPlugin : Plugin<Project> {
     }
 
     private fun Project.configureExperimentalUpdater() {
-        extensions.create<RefreshVersionsPropertiesExtension>(name = PluginConfig.EXTENSION_NAME)
         tasks.registerOrCreate<RefreshVersionsPropertiesTask>(name = PluginConfig.REFRESH_VERSIONS) {
             group = "Help"
             description = "Search for new dependencies versions and update versions.properties"

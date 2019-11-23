@@ -1,8 +1,3 @@
-import com.louiscad.splitties.AndroidX
-import com.louiscad.splitties.KotlinX
-import com.louiscad.splitties.Testing
-import de.fayard.versions.StabilityLevel
-import de.fayard.versions.candidateStabilityLevel
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -13,12 +8,6 @@ plugins {
 }
 
 group = "de.fayard"
-
-refreshVersions {
-    rejectVersionIf {
-        candidateStabilityLevel() isLessStableThan StabilityLevel.Stable
-    }
-}
 
 buildScan {
     setTermsOfServiceUrl("https://gradle.com/terms-of-service")

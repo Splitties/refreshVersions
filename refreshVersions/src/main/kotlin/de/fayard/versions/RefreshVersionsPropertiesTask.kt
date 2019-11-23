@@ -23,7 +23,6 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
-import org.gradle.kotlin.dsl.getByType
 
 open class RefreshVersionsPropertiesTask : DefaultTask() {
 
@@ -56,8 +55,6 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
             .distinct()
             .toList()
 
-        val extension = project.rootProject.extensions.getByType<RefreshVersionsPropertiesExtension>()
-
         val versionProperties: Map<String, String> = project.getVersionProperties()
 
         val dependenciesWithVersionCandidates: List<Pair<Dependency, List<VersionCandidate>>> = runBlocking {
@@ -77,7 +74,6 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                 )
                 async {
                     dependency to getDependencyVersionsCandidates(
-                        extension = extension,
                         repositories = allRepositories,
                         group = group,
                         name = dependency.name,

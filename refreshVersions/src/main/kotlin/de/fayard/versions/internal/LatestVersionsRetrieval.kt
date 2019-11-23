@@ -2,7 +2,6 @@
 
 package de.fayard.versions.internal
 
-import de.fayard.versions.RefreshVersionsPropertiesExtension
 import de.fayard.versions.StabilityLevel
 import de.fayard.versions.extensions.stabilityLevel
 import de.fayard.versions.extensions.versionComparator
@@ -15,7 +14,6 @@ import java.net.URL
 internal class VersionCandidate(val stabilityLevel: StabilityLevel, val version: Version)
 
 internal suspend fun getDependencyVersionsCandidates(
-    extension: RefreshVersionsPropertiesExtension,
     repositories: List<MavenRepoUrl>,
     group: String,
     name: String,
