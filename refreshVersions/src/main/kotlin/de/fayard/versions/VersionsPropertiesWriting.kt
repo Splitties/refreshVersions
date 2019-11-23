@@ -14,7 +14,6 @@ internal fun Project.updateVersionsProperties(
 
     val newFileContent = buildString {
         appendln(fileHeader)
-        appendln()
         //TODO: Keep comments from user (ours begin with ##, while user's begin with a single #),
         // we need to find a solution to keep the order/position.
         val versionsWithUpdatesIfAvailable: List<VersionWithUpdateIfAvailable> = dependenciesWithLastVersion
@@ -42,6 +41,7 @@ internal fun Project.updateVersionsProperties(
         (versionsWithUpdatesIfAvailable + versionAliases)
             .sortedBy { it.key }
             .forEach {
+                appendln()
                 val paddedKey = it.key.padStart(available.length + 2)
                 val currentVersionLine = "${paddedKey}=${it.currentVersion}"
                 appendln(currentVersionLine)
