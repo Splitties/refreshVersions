@@ -15,7 +15,7 @@ internal fun Project.updateVersionsProperties(
     val newFileContent = buildString {
         appendln(fileHeader)
         //TODO: Keep comments from user (ours begin with ##, while user's begin with a single #),
-        // we need to find a solution to keep the order/position.
+        // property related comments are placed above it. Also keep header and footer comments.
         val versionsWithUpdatesIfAvailable: List<VersionWithUpdateIfAvailable> = dependenciesWithLastVersion
             .mapNotNull { (dependency, versionsCandidates) ->
                 dependency.moduleIdentifier?.getVersionPropertyName()?.let {
