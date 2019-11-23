@@ -14,7 +14,7 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-    dependencies.classpath("de.fayard.refreshVersions:de.fayard.refreshVersions.gradle.plugin:0.8.4")
+    dependencies.classpath("de.fayard.refreshVersions:de.fayard.refreshVersions.gradle.plugin:0.8.5")
 }
 
 setupVersionPlaceholdersResolving()
