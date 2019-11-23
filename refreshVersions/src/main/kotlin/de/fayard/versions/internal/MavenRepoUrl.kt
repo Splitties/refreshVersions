@@ -1,4 +1,4 @@
-package de.fayard.versions
+package de.fayard.versions.internal
 
 internal class MavenRepoUrl(url: String) {
 

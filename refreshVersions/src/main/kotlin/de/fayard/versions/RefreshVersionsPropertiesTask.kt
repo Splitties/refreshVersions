@@ -2,6 +2,20 @@ package de.fayard.versions
 
 import de.fayard.versions.extensions.isGradlePlugin
 import de.fayard.versions.extensions.moduleIdentifier
+import de.fayard.versions.internal.MavenRepoUrl
+import de.fayard.versions.internal.VersionCandidate
+import de.fayard.versions.internal.getDependencyVersionsCandidates
+import de.fayard.versions.internal.getVersionProperties
+import de.fayard.versions.internal.getVersionPropertyName
+import de.fayard.versions.internal.isAVersionAlias
+import de.fayard.versions.internal.readDependenciesUsedInBuildSrc
+import de.fayard.versions.internal.readExtraUsedRepositories
+import de.fayard.versions.internal.resolveVersion
+import de.fayard.versions.internal.updateVersionsProperties
+import de.fayard.versions.internal.versionPlaceholder
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
@@ -9,7 +23,6 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
-import org.gradle.kotlin.dsl.getByType
 
 open class RefreshVersionsPropertiesTask : DefaultTask() {
 
@@ -42,35 +55,34 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
             .distinct()
             .toList()
 
-        val extension = project.rootProject.extensions.getByType<RefreshVersionsPropertiesExtension>()
-
         val versionProperties: Map<String, String> = project.getVersionProperties()
 
-        val dependenciesWithLastVersion: List<Pair<Dependency, List<VersionCandidate>>>
-        dependenciesWithLastVersion = allDependencies.mapNotNull { dependency ->
+        val dependenciesWithVersionCandidates: List<Pair<Dependency, List<VersionCandidate>>> = runBlocking {
+            allDependencies.mapNotNull { dependency ->
 
-            println("Dependency ${dependency.group}:${dependency.name}:${dependency.version}")
-            //TODO: Replace line above with optional diagnostic option, or show status in progress.
+                println("Dependency ${dependency.group}:${dependency.name}:${dependency.version}")
+                //TODO: Replace line above with optional diagnostic option, or show status in progress.
 
-            if (dependency.isManageableVersion(versionProperties).not()) {
-                return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
-                //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
-            }
-
-            val versionCandidates = project.rootProject.getDependencyVersionsCandidates(
-                extension = extension,
-                repositories = allRepositories,
-                group = dependency.group ?: return@mapNotNull null,
-                name = dependency.name,
-                resolvedVersion = resolveVersion(
+                if (dependency.isManageableVersion(versionProperties).not()) {
+                    return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
+                    //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
+                }
+                val group = dependency.group ?: return@mapNotNull null
+                val resolvedVersion = resolveVersion(
                     properties = versionProperties,
                     key = dependency.moduleIdentifier?.getVersionPropertyName() ?: return@mapNotNull null
                 )
-            )
-
-            return@mapNotNull dependency to versionCandidates
-        }.toList()
-        project.rootProject.updateVersionsProperties(dependenciesWithLastVersion)
+                async {
+                    dependency to getDependencyVersionsCandidates(
+                        repositories = allRepositories,
+                        group = group,
+                        name = dependency.name,
+                        resolvedVersion = resolvedVersion
+                    )
+                }
+            }.toList().awaitAll()
+        }
+        project.rootProject.updateVersionsProperties(dependenciesWithVersionCandidates)
     }
 
     private fun Dependency.isManageableVersion(versionProperties: Map<String, String>): Boolean {

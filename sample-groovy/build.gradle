@@ -8,22 +8,19 @@ plugins {
 
 group = "de.fayard"
 
-refreshVersions {
-    // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
-}
-
 repositories {
     maven {
         setUrl("../plugin/src/test/resources/maven")
     }
     mavenCentral()
+    google()
 }
 
 dependencies {
     compile("com.google.guava:guava:_")
     compile("com.google.inject:guice:_")
     compile("androidx.annotation:annotation:_")
-    compile("org.jetbrains:annotation:_")
+    compile("org.jetbrains:annotations:_")
 }
 
 buildScan {
