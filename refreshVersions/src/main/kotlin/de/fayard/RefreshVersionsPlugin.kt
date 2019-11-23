@@ -9,7 +9,6 @@ import de.fayard.versions.RefreshVersionsPropertiesTask
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isRootProject
 import de.fayard.versions.extensions.registerOrCreate
-import de.fayard.versions.internal.getVersionProperties
 import de.fayard.versions.internal.setupVersionPlaceholdersResolving
 import de.fayard.versions.internal.writeUsedDependencies
 import de.fayard.versions.internal.writeUsedRepositories
@@ -40,8 +39,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
 
         if (project.useExperimentalUpdater) {
             project.configureExperimentalUpdater()
-            val properties: Map<String, String> = project.getVersionProperties()
-            project.allprojects { configurations.all { setupVersionPlaceholdersResolving(properties) } }
+            project.setupVersionPlaceholdersResolving()
             if (project.isBuildSrc) project.afterEvaluate {
                 writeUsedDependencies()
                 writeUsedRepositories()

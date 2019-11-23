@@ -3,6 +3,7 @@ package de.fayard.versions.internal
 import de.fayard.versions.extensions.moduleIdentifier
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
+import java.io.File
 
 internal fun Project.updateVersionsProperties(
     dependenciesWithLastVersion: List<Pair<Dependency, List<VersionCandidate>>>
@@ -40,18 +41,41 @@ internal fun Project.updateVersionsProperties(
         }
         (versionsWithUpdatesIfAvailable + versionAliases)
             .sortedBy { it.key }
-            .forEach {
-                appendln()
-                val paddedKey = it.key.padStart(available.length + 2)
-                val currentVersionLine = "${paddedKey}=${it.currentVersion}"
-                appendln(currentVersionLine)
-                it.versionsCandidates.forEach { versionCandidate ->
-                    append("##"); append(available.padStart(it.key.length - 2))
-                    append('='); appendln(versionCandidate.version.value)
-                }
-            }
+            .forEach { appendVersionWithUpdatesIfAvailable(it) }
     }
     file.writeText(newFileContent)
+}
+
+internal fun writeWithAddedVersions(
+    versionsFile: File,
+    propertyName: String,
+    versionsCandidates: List<VersionCandidate>
+) {
+    if (versionsFile.exists().not()) {
+        versionsFile.createNewFile()
+        versionsFile.writeText(buildString { appendln(fileHeader) })
+    }
+    val newFileContent = buildString {
+        append(versionsFile.readText())
+        //TODO: Add new version in the right order regarding existing version properties
+        appendVersionWithUpdatesIfAvailable(VersionWithUpdateIfAvailable(
+            key = propertyName,
+            currentVersion = versionsCandidates.first().version.value,
+            versionsCandidates = versionsCandidates.drop(1)
+        ))
+    }
+    versionsFile.writeText(newFileContent)
+}
+
+private fun StringBuilder.appendVersionWithUpdatesIfAvailable(it: VersionWithUpdateIfAvailable) {
+    appendln()
+    val paddedKey = it.key.padStart(available.length + 2)
+    val currentVersionLine = "${paddedKey}=${it.currentVersion}"
+    appendln(currentVersionLine)
+    it.versionsCandidates.forEach { versionCandidate ->
+        append("##"); append(available.padStart(it.key.length - 2))
+        append('='); appendln(versionCandidate.version.value)
+    }
 }
 
 private const val available = "# available"
