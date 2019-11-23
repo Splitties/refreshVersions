@@ -10,10 +10,10 @@ import de.fayard.versions.RefreshVersionsPropertiesTask
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isRootProject
 import de.fayard.versions.extensions.registerOrCreate
-import de.fayard.versions.getVersionProperties
-import de.fayard.versions.setupVersionPlaceholdersResolving
-import de.fayard.versions.writeUsedDependencies
-import de.fayard.versions.writeUsedRepositories
+import de.fayard.versions.internal.getVersionProperties
+import de.fayard.versions.internal.setupVersionPlaceholdersResolving
+import de.fayard.versions.internal.writeUsedDependencies
+import de.fayard.versions.internal.writeUsedRepositories
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ModuleVersionSelector

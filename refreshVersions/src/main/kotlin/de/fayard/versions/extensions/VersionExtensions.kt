@@ -1,7 +1,7 @@
 package de.fayard.versions.extensions
 
 import de.fayard.versions.StabilityLevel
-import de.fayard.versions.Version
+import de.fayard.versions.internal.Version
 
 /**
  * Check order is important. From least stable to most stable, then unknown

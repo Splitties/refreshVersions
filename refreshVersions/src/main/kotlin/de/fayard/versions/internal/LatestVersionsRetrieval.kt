@@ -1,7 +1,9 @@
 @file:Suppress("EXPERIMENTAL_API_USAGE")
 
-package de.fayard.versions
+package de.fayard.versions.internal
 
+import de.fayard.versions.RefreshVersionsPropertiesExtension
+import de.fayard.versions.StabilityLevel
 import de.fayard.versions.extensions.stabilityLevel
 import de.fayard.versions.extensions.versionComparator
 import kotlinx.coroutines.Dispatchers

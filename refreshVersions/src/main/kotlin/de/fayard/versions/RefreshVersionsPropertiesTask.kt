@@ -2,6 +2,17 @@ package de.fayard.versions
 
 import de.fayard.versions.extensions.isGradlePlugin
 import de.fayard.versions.extensions.moduleIdentifier
+import de.fayard.versions.internal.MavenRepoUrl
+import de.fayard.versions.internal.VersionCandidate
+import de.fayard.versions.internal.getDependencyVersionsCandidates
+import de.fayard.versions.internal.getVersionProperties
+import de.fayard.versions.internal.getVersionPropertyName
+import de.fayard.versions.internal.isAVersionAlias
+import de.fayard.versions.internal.readDependenciesUsedInBuildSrc
+import de.fayard.versions.internal.readExtraUsedRepositories
+import de.fayard.versions.internal.resolveVersion
+import de.fayard.versions.internal.updateVersionsProperties
+import de.fayard.versions.internal.versionPlaceholder
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking

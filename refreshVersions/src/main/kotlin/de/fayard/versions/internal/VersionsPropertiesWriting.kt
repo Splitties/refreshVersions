@@ -1,4 +1,4 @@
-package de.fayard.versions
+package de.fayard.versions.internal
 
 import de.fayard.versions.extensions.moduleIdentifier
 import org.gradle.api.Project

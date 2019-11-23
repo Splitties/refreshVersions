@@ -1,6 +1,7 @@
 package de.fayard.versions
 
 import de.fayard.versions.extensions.stabilityLevel
+import de.fayard.versions.internal.Version
 import org.gradle.api.Incubating
 
 fun ComponentSelectionData.candidateIsLessStableThanCurrent(): Boolean {
