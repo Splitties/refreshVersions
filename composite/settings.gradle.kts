@@ -1,7 +1,8 @@
-rootProject.name = "buildSrcVersions-composite"
+rootProject.name = "gradle-dependencies-plugins"
 includeBuild("../refreshVersions")
 includeBuild("../sample-kotlin")
 includeBuild("../sample-groovy")
+includeBuild("../dependencies")
 
 // ../sample-android should be opened in Android Studio
 //Adding

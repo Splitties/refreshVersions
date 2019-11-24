@@ -15,7 +15,7 @@ internal open class RefreshVersionsExtensionImpl(
 
     override var alignVersionsForGroups: MutableList<String>
         get() = versionsMapping.values.toMutableList()
-        set(value) = println("WARNING: alignVersionsForGroups is deprecated, use instead versionsMapping")
+        set(value) {}
 
     // Necessary because of https://github.com/jmfayard/buildSrcVersions/issues/92
     fun defensiveCopy(): RefreshVersionsExtensionImpl = RefreshVersionsExtensionImpl(

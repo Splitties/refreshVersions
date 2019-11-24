@@ -1,9 +1,9 @@
-import com.louiscad.splitties.KotlinX
-import com.louiscad.splitties.Testing
+import dependencies.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("de.fayard.refreshVersions").version("0.8.2")
+    id("de.fayard.dependencies").version("0.3")
     id("com.louiscad.splitties").version("0.1.3")
     kotlin("jvm").version("1.3.50")
     application

@@ -4,6 +4,7 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
+        mavenLocal()
         maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
     }
 }
@@ -21,3 +22,4 @@ setupVersionPlaceholdersResolving()
 
 rootProject.name = "sample-kotlin"
 includeBuild("../refreshVersions")
+includeBuild("../dependencies")

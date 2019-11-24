@@ -10,7 +10,7 @@ plugins {
 }
 
 
-version = projectDir.parentFile.resolve("plugins_version.txt").bufferedReader().use { it.readLine() }
+version = file("plugins_version.txt").readLines().first()
 group = "de.fayard"
 
 
@@ -30,12 +30,6 @@ tasks.register<DefaultTask>("hello") {
     description = "Minimal task that do nothing. Useful to debug a failing build"
 }
 
-publishing {
-    repositories {
-        maven(url = "build/repository")
-    }
-}
-
 repositories {
     mavenLocal()
     jcenter()
@@ -43,8 +37,8 @@ repositories {
 }
 
 pluginBundle {
-    website = "https://github.com/jmfayard/buildSrcVersions"
-    vcsUrl = "https://github.com/jmfayard/buildSrcVersions"
+    website = "https://builtwithgradle.netlify.com/"
+    vcsUrl = "https://github.com/jmfayard/gradle-dependencies-plugins"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
 }
 
@@ -52,8 +46,7 @@ dependencies {
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
     implementation(gradleKotlinDsl())
 
-    // SYNC WITH plugin/src/main/kotlin/de/fayard/internal/PluginConfig.kt
-    implementation("com.github.ben-manes:gradle-versions-plugin:0.25.0")
+    implementation("com.github.ben-manes:gradle-versions-plugin:0.25.0") // TODO: remove
 
     implementation("com.squareup.okio:okio:2.1.0")
     implementation( "com.squareup.moshi:moshi:1.7.0")
@@ -76,8 +69,8 @@ java {
 }
 
 buildScan {
-    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
-    setTermsOfServiceAgree("yes")
+    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+    termsOfServiceAgree = "yes"
     publishAlways()
 }
 

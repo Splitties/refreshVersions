@@ -1,4 +1,0 @@
-<div class="post-archive">
-{# @pebvariable name="page" type="com.eden.orchid.taxonomies.pages.TaxonomyArchivePage" #}
-{% include 'includes/basicTaxonomyArchive' with {'taxonomy': page.taxonomy} %}
-</div>
