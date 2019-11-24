@@ -1,6 +1,13 @@
 package de.fayard.dependencies.internal
 
-import dependencies.*
+import AndroidX
+import Google
+import JakeWharton
+import Kotlin
+import KotlinX
+import Splitties
+import Square
+import Testing
 import kotlin.reflect.KClass
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.memberProperties
@@ -14,6 +21,7 @@ data class DependencyMapping(
 ) {
     companion object {
         fun fromLine(line: String) : DependencyMapping? {
+            if (line.isEmpty()) return null
             val (key, constantName) = line.split("=").takeIf { it.size == 2 } ?: return null
             val (group, artifact) = key.split("..").takeIf { it.size == 2 } ?: return null
             return DependencyMapping(group, artifact, constantName)
@@ -24,7 +32,16 @@ data class DependencyMapping(
 
 
 fun getArtifactNameToSplittiesConstantMapping(): List<DependencyMapping> {
-    return listOf(AndroidX, Google, Kotlin, KotlinX, Splitties, Square, Testing).flatMap { objectInstance ->
+    return listOf(
+        AndroidX,
+        Google,
+        JakeWharton,
+        Kotlin,
+        KotlinX,
+        Splitties,
+        Square,
+        Testing
+    ).flatMap { objectInstance ->
         (objectInstance::class).getArtifactNameToSplittiesConstantMapping(objectInstance::class.simpleName!!)
     }.sortedBy { it.toString() }
 }
@@ -39,8 +56,14 @@ private fun KClass<*>.getArtifactNameToSplittiesConstantMapping(prefix: String):
             it.visibility == KVisibility.PUBLIC &&
             it.returnType == typeOf<String>()
     }.map {
-        val (group, artifact) = it.javaField!!.get(null).toString().substringBeforeLast(':').split(":")
+        val artifactName = it.javaField!!.get(null).toString().substringBeforeLast(':') // Before version delimiter.
         val constantName = "$prefix.${it.name}"
-        DependencyMapping(group, artifact, constantName)
+        val group = artifactName.substringBefore(':')
+        val name = artifactName.substringAfter(':')
+        DependencyMapping(
+            group = group,
+            artifact = name,
+            constantName = constantName
+        )
     }
 }
