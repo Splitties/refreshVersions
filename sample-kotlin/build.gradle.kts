@@ -1,8 +1,3 @@
-import com.louiscad.splitties.AndroidX
-import com.louiscad.splitties.KotlinX
-import com.louiscad.splitties.Testing
-import de.fayard.versions.StabilityLevel
-import de.fayard.versions.candidateStabilityLevel
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -14,12 +9,6 @@ plugins {
 }
 
 group = "de.fayard"
-
-refreshVersions {
-    rejectVersionIf {
-        candidateStabilityLevel() isLessStableThan StabilityLevel.Stable
-    }
-}
 
 buildScan {
     setTermsOfServiceUrl("https://gradle.com/terms-of-service")
@@ -43,7 +32,7 @@ fun DependencyHandler.testImplementations(deps: List<String>) =
 dependencies {
     implementations(listOf(AndroidX.browser, AndroidX.cardView))
     testImplementations(listOf(KotlinX.coroutines.core, KotlinX.coroutines.coreCommon))
-    testImplementations(listOf(Testing.kotestRunner, Testing.kotestExtensions))
+    testImplementations(listOf(Testing.kotlinTest.runner.jvm, Testing.kotlinTest.extensions.extensions))
     implementation("com.google.guava:guava:_")
     implementation("com.google.inject:guice:2.0")
     implementation("com.squareup.okhttp3:okhttp:3.10.0")
