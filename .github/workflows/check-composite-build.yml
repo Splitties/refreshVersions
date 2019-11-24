@@ -39,6 +39,11 @@ jobs:
           arguments: publishToMavenLocal --stacktrace
       - uses: eskatos/gradle-command-action@v1
         with:
+          wrapper-directory: dependencies
+          build-root-directory: dependencies
+          arguments: publishToMavenLocal --stacktrace
+      - uses: eskatos/gradle-command-action@v1
+        with:
           wrapper-directory: composite
           build-root-directory: composite
           arguments: checkAll --stacktrace
