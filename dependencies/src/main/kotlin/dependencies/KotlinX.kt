@@ -8,14 +8,13 @@ object KotlinX {
      * from either `version.org.jetbrains.kotlinx=xxx` or `version.$NAME=xxx` or `version.org.jetbrains.kotlinx..$NAME=xxx`
      **/
     object Coroutines {
-        private const val version = "+"
         private const val artifactPrefix = "org.jetbrains.kotlinx:kotlinx-coroutines"
-        const val core = "$artifactPrefix-core:$version"
-        const val coreCommon = "$artifactPrefix-core-common:$version"
-        const val coreNative = "$artifactPrefix-core-native:$version"
-        const val coreJs = "$artifactPrefix-core-js:$version"
-        const val android = "$artifactPrefix-android:$version"
-        const val playServices = "$artifactPrefix-play-services:$version"
-        const val test = "$artifactPrefix-test:$version"
+        const val core = "$artifactPrefix-core:$placeholderVersion"
+        const val coreCommon = "$artifactPrefix-core-common:$placeholderVersion"
+        const val coreNative = "$artifactPrefix-core-native:$placeholderVersion"
+        const val coreJs = "$artifactPrefix-core-js:$placeholderVersion"
+        const val android = "$artifactPrefix-android:$placeholderVersion"
+        const val playServices = "$artifactPrefix-play-services:$placeholderVersion"
+        const val test = "$artifactPrefix-test:$placeholderVersion"
     }
 }

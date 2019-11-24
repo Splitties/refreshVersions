@@ -5,27 +5,22 @@ package dependencies
  * from either `version.$NAME=xxx` or `version.com.squareup.okhttp=xxx` or `version.com.squreup.retrofit2=xxxx`
  **/
 object Square {
-    private const val okHttpVersion = "+"
-    private const val retrofitversion = "+"
 
-    const val okHttp = "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    const val okHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
-    const val okhttpMockWebserver = "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+    const val okHttp = "com.squareup.okhttp3:okhttp:$placeholderVersion"
+    const val okHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$placeholderVersion"
+    const val okhttpMockWebserver = "com.squareup.okhttp3:mockwebserver:$placeholderVersion"
 
     private const val artifact = "com.squareup.retrofit2"
-    const val retrofit = "$artifact:retrofit:$retrofitversion"
-    const val retrofitMoshi = "$artifact:converter-moshi:$retrofitversion"
-    const val retrofitGson = "$artifact:converter-moshi:$retrofitversion"
-    const val retrofitJava8 = "$artifact:adapter-java8:$retrofitversion"
-    const val retrofitMock = "$artifact:retrofit-mock:$retrofitversion"
-    const val retrofitSimplexml = "$artifact:converter-simplexml:$retrofitversion"
-    const val retrofitScalars = "$artifact:converter-scalars:$retrofitversion"
-    const val retrofitJackson = "$artifact:converter-jackson:$retrofitversion"
-    const val retrofitRxjava1 = "$artifact:adapter-rxjava:$retrofitversion"
-    const val retrofitRxjava2 = "$artifact:adapter-rxjava2:$retrofitversion"
+    const val retrofit = "$artifact:retrofit:$placeholderVersion"
+    const val retrofitMoshi = "$artifact:converter-moshi:$placeholderVersion"
+    const val retrofitGson = "$artifact:converter-gson:$placeholderVersion"
+    const val retrofitJava8 = "$artifact:adapter-java8:$placeholderVersion"
+    const val retrofitMock = "$artifact:retrofit-mock:$placeholderVersion"
+    const val retrofitSimplexml = "$artifact:converter-simplexml:$placeholderVersion"
+    const val retrofitScalars = "$artifact:converter-scalars:$placeholderVersion"
+    const val retrofitJackson = "$artifact:converter-jackson:$placeholderVersion"
+    const val retrofitRxjava1 = "$artifact:adapter-rxjava:$placeholderVersion"
+    const val retrofitRxjava2 = "$artifact:adapter-rxjava2:$placeholderVersion"
 
-
-
-    private const val moshiVersion = "+"
-    const val moshi = "com.squareup.moshi:moshi:$moshiVersion"
+    const val moshi = "com.squareup.moshi:moshi:$placeholderVersion"
 }

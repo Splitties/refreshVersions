@@ -1,14 +1,6 @@
 package dependencies
 
 object Testing {
-    private const val strikt_version = "+"
-    private const val mockk_version = "+"
-    private const val mockitokotlin_version = "+"
-    private const val mockito_version = "+" // https://github.com/mockito/mockito/releases
-    private const val junitJupiterVersion = "+"
-    private const val spek_version = "+"
-    private const val kotestVersion = "+"
-    private const val junit4_version = "+"
 
     private const val kotestArtifact = "io.kotestArtifact:kotestArtifact-"
 
@@ -17,113 +9,115 @@ object Testing {
 
      * https://junit.org/junit4/
      */
-    const val junit4 = "junit:junit:$junit4_version"
+    const val junit4 = "junit:junit:$placeholderVersion"
 
     /**
      * The new major version of the programmer-friendly testing framework for Java
      * https://junit.org/junit5/
      */
-    const val junitJupiterApi = "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+    const val junitJupiterApi = "org.junit.jupiter:junit-jupiter-api:$placeholderVersion"
 
     /**
      * The new major version of the programmer-friendly testing framework for Java
      * https://junit.org/junit5/
      */
-    const val junitJupiterParams = "org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion"
+    const val junitJupiterParams = "org.junit.jupiter:junit-jupiter-params:$placeholderVersion"
 
     /**
      * The new major version of the programmer-friendly testing framework for Java
      * https://junit.org/junit5/
      */
-    const val junitJupiterEnding = "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+    const val junitJupiterEnding = "org.junit.jupiter:junit-jupiter-engine:$placeholderVersion"
 
 
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      * https://github.com/kotlintest/kotlintest
      * **/
-    const val kotestRunner = "$kotestArtifact-runner-junit5:$kotestVersion"
+    const val kotlintestRunner = "$kotestArtifact-runner-junit5:$placeholderVersion"
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      * https://github.com/kotlintest/kotlintest
      * **/
-    const val kotestRunnerConsole = "$kotestArtifact-assertions-runner-console:$kotestVersion"
+    const val kotlintestRunnerConsole = "$kotestArtifact-assertions-runner-console:$placeholderVersion"
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      * https://github.com/kotlintest/kotlintest
      * **/
-    const val kotestAssertions = "$kotestArtifact-assertions:$kotestVersion"
+    const val kotlintestAssertions = "$kotestArtifact-assertions:$placeholderVersion"
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      * https://github.com/kotlintest/kotlintest
      * **/
-    const val kotestAssertionsArrow = "$kotestArtifact-assertions-arrow:$kotestVersion"
+    const val kotlintestAssertionsArrow = "$kotestArtifact-assertions-arrow:$placeholderVersion"
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      * https://github.com/kotlintest/kotlintest
      * **/
-    const val kotestExtensions = "$kotestArtifact-assertions-extensions:$kotestVersion"
+    const val kotlintestExtensions = "$kotestArtifact-assertions-extensions:$placeholderVersion"
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      * https://github.com/kotlintest/kotlintest
      * **/
-    const val kotestSpring = "$kotestArtifact-assertions-extensions-spring:$kotestVersion"
+    const val kotlintestSpring = "$kotestArtifact-assertions-extensions-spring:$placeholderVersion"
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      * https://github.com/kotlintest/kotlintest
      * **/
-    const val kotestKtor = "$kotestArtifact-assertions-extensions-ktor:$kotestVersion"
+    const val kotlintestKtor = "$kotestArtifact-assertions-extensions-ktor:$placeholderVersion"
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      * https://github.com/kotlintest/kotlintest
      * **/
-    const val kotestKoin = "$kotestArtifact-assertions-extensions-koin:$kotestVersion"
+    const val kotlintestKoin = "$kotestArtifact-assertions-extensions-koin:$placeholderVersion"
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      * https://github.com/kotlintest/kotlintest
      * **/
-    const val kotestJson = "$kotestArtifact-assertions-extensions-json:$kotestVersion"
+    const val kotlintestJson = "$kotestArtifact-assertions-extensions-json:$placeholderVersion"
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      * https://github.com/kotlintest/kotlintest
      * **/
-    const val kotestSystem = "$kotestArtifact-assertions-extensions-system:$kotestVersion"
+    const val kotlintestSystem = "$kotestArtifact-assertions-extensions-system:$placeholderVersion"
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      * https://github.com/kotlintest/kotlintest
      * **/
-    const val kotestDatagen = "$kotestArtifact-datagen:$kotestVersion"
+    const val kotlintestDatagen = "$kotestArtifact-datagen:$placeholderVersion"
 
 
 
     /** https://www.spekframework.org **/
-    const val spekDslJvm = "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+    const val spekDslJvm = "org.spekframework.spek2:spek-dsl-jvm:$placeholderVersion"
     /** https://www.spekframework.org **/
-    const val spekRunner = "org.spekframework.spek2:spek-runner-junit5:$spek_version"
+    const val spekRunner = "org.spekframework.spek2:spek-runner-junit5:$placeholderVersion"
 
     /**
      * Tasty mocking framework for unit tests in Java
      * https://site.mockito.org/
      */
-    const val mockitoCore = "org.mockito:mockito-core:$mockito_version"
-    const val mockitoAndroid = "org.mockito:mockito-android:$mockito_version"
+    const val mockitoCore = "org.mockito:mockito-core:$placeholderVersion"
+    const val mockitoAndroid = "org.mockito:mockito-android:$placeholderVersion"
+    const val mockitoInline = "org.mockito:mockito-inline:$placeholderVersion"
+
 
     /**
      * Using Mockito with Kotlin
      * https://github.com/nhaarman/mockito-kotlin
      */
-    const val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitokotlin_version"
+    const val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:$placeholderVersion"
 
     /***
      * mocking library for Kotlin
      * http://mockk.io
      */
-    const val mokk = "io.mockk:mockk:$mockk_version"
+    const val mokk = "io.mockk:mockk:$placeholderVersion"
 
     /**
      * Strikt is an assertion library for Kotlin intended for use with a test runner such as JUnit or Spek.
      * https://strikt.io/
      */
-    const val strikt = "io.strikt:strikt-core:$strikt_version"
+    const val strikt = "io.strikt:strikt-core:$placeholderVersion"
 
 }
