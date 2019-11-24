@@ -1,6 +1,8 @@
 package de.fayard.versions
 
 import de.fayard.versions.extensions.isBuildSrc
+import de.fayard.versions.internal.resolveVersion
+import de.fayard.versions.internal.writeUsedRepositories
 import org.gradle.api.initialization.Settings
 import java.util.Properties
 

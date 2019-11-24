@@ -5,15 +5,13 @@ import de.fayard.internal.PluginConfig
 import de.fayard.internal.PluginConfig.isNonStable
 import de.fayard.internal.PluginsSetup
 import de.fayard.internal.RefreshVersionsExtensionImpl
-import de.fayard.versions.RefreshVersionsPropertiesExtension
 import de.fayard.versions.RefreshVersionsPropertiesTask
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isRootProject
 import de.fayard.versions.extensions.registerOrCreate
-import de.fayard.versions.getVersionProperties
-import de.fayard.versions.setupVersionPlaceholdersResolving
-import de.fayard.versions.writeUsedDependencies
-import de.fayard.versions.writeUsedRepositories
+import de.fayard.versions.internal.setupVersionPlaceholdersResolving
+import de.fayard.versions.internal.writeUsedDependencies
+import de.fayard.versions.internal.writeUsedRepositories
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ModuleVersionSelector
@@ -41,8 +39,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
 
         if (project.useExperimentalUpdater) {
             project.configureExperimentalUpdater()
-            val properties: Map<String, String> = project.getVersionProperties()
-            project.allprojects { configurations.all { setupVersionPlaceholdersResolving(properties) } }
+            project.setupVersionPlaceholdersResolving()
             if (project.isBuildSrc) project.afterEvaluate {
                 writeUsedDependencies()
                 writeUsedRepositories()
@@ -55,7 +52,6 @@ open class RefreshVersionsPlugin : Plugin<Project> {
     }
 
     private fun Project.configureExperimentalUpdater() {
-        extensions.create<RefreshVersionsPropertiesExtension>(name = PluginConfig.EXTENSION_NAME)
         tasks.registerOrCreate<RefreshVersionsPropertiesTask>(name = PluginConfig.REFRESH_VERSIONS) {
             group = "Help"
             description = "Search for new dependencies versions and update versions.properties"

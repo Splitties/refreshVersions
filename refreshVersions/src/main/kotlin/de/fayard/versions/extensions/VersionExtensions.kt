@@ -1,12 +1,13 @@
 package de.fayard.versions.extensions
 
 import de.fayard.versions.StabilityLevel
-import de.fayard.versions.Version
+import de.fayard.versions.internal.Version
 
 /**
  * Check order is important. From least stable to most stable, then unknown
  */
 internal fun Version.stabilityLevel(): StabilityLevel = when {
+    "SNAPSHOT" in value -> StabilityLevel.Snapshot
     "preview" in value -> StabilityLevel.Preview
     "dev" in value -> StabilityLevel.Development
     "alpha" in value -> StabilityLevel.Alpha

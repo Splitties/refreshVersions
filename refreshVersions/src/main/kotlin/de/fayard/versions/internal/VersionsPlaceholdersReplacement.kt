@@ -1,20 +1,46 @@
-package de.fayard.versions
+package de.fayard.versions.internal
 
-import de.fayard.versions.ArtifactGroupNaming.*
+import de.fayard.versions.internal.ArtifactGroupNaming.*
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isGradlePlugin
+import de.fayard.versions.extensions.isRootProject
+import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.ModuleVersionSelector
+import org.gradle.api.artifacts.ResolutionStrategy
+import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import java.io.File
 import java.util.Properties
 
 internal const val versionPlaceholder = "_"
 
-internal fun Configuration.setupVersionPlaceholdersResolving(properties: Map<String, String>) {
-    resolutionStrategy.eachDependency {
-        if (requested.version != versionPlaceholder) return@eachDependency
-        useVersion(requested.getVersionFromProperties(properties))
+internal fun Project.setupVersionPlaceholdersResolving() {
+    require(this.isRootProject)
+    var properties: Map<String, String> = project.getVersionProperties()
+    allprojects {
+        configurations.all {
+            resolutionStrategy.eachDependency {
+                if (requested.version == versionPlaceholder) {
+                    val propertyName = requested.moduleIdentifier.getVersionPropertyName()
+                    val versionFromProperties = resolveVersion(properties, propertyName)
+                        ?: synchronized(lock) {
+                            properties = project.getVersionProperties() // Refresh properties
+                            resolveVersion(properties, propertyName)
+                                ?: `Write versions candidates using latest most stable version and get it`(
+                                    versionsPropertiesFile = versionsPropertiesFile(),
+                                    repositories = repositories
+                                        .filterIsInstance<MavenArtifactRepository>()
+                                        .map { MavenRepoUrl(it.url.toString()) },
+                                    propertyName = propertyName,
+                                    group = requested.group,
+                                    name = requested.name
+                                )
+                        }
+                    useVersion(versionFromProperties)
+                }
+            }
+        }
     }
 }
 
@@ -35,10 +61,7 @@ internal fun Project.getVersionProperties(
     return mutableMapOf<String, String>().also { map ->
         // Read from versions.properties
         Properties().also { properties ->
-            val relativePath = "versions.properties".let {
-                if (project.isBuildSrc) "../$it" else it
-            }
-            properties.load(file(relativePath).reader())
+            properties.load(versionsPropertiesFile().reader())
         }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
         // Overwrite with relevant project properties
         if (includeProjectProperties) properties.forEach { (k, v) ->
@@ -62,10 +85,54 @@ internal tailrec fun resolveVersion(properties: Map<String, String>, key: String
  */
 internal fun String.isAVersionAlias(): Boolean = startsWith("version.") || startsWith("plugin.")
 
-private fun ModuleVersionSelector.getVersionFromProperties(properties: Map<String, String>): String {
-    val propertyName = moduleIdentifier.getVersionPropertyName()
-    return resolveVersion(properties, propertyName)
-        ?: error("Property with key $propertyName wasn't found in the versions.properties file")
+private fun Project.setupVersionPlaceholdersResolving(
+    resolutionStrategy: ResolutionStrategy,
+    properties: Map<String, String>
+) {
+    resolutionStrategy.eachDependency {
+        if (requested.version == versionPlaceholder) {
+            val propertyName = requested.moduleIdentifier.getVersionPropertyName()
+            val versionFromProperties = resolveVersion(properties, propertyName)
+                ?: synchronized(lock) {
+                    resolveVersion(properties, propertyName)
+                        ?: `Write versions candidates using latest most stable version and get it`(
+                            versionsPropertiesFile = versionsPropertiesFile(),
+                            repositories = repositories
+                                .filterIsInstance<MavenArtifactRepository>()
+                                .map { MavenRepoUrl(it.url.toString()) },
+                            propertyName = propertyName,
+                            group = requested.group,
+                            name = requested.name
+                        )
+                }
+            useVersion(versionFromProperties)
+        }
+    }
+}
+
+private val lock = Any()
+
+private fun Project.versionsPropertiesFile(): File {
+    val relativePath = "versions.properties".let { if (project.isBuildSrc) "../$it" else it }
+    return rootProject.file(relativePath)
+}
+
+@Suppress("FunctionName")
+private fun `Write versions candidates using latest most stable version and get it`(
+    versionsPropertiesFile: File,
+    repositories: List<MavenRepoUrl>,
+    propertyName: String,
+    group: String,
+    name: String
+): String = runBlocking {
+    val versionCandidates = getDependencyVersionsCandidates(
+        repositories = repositories,
+        group = group,
+        name = name,
+        resolvedVersion = null
+    )
+    writeWithAddedVersions(versionsPropertiesFile, propertyName, versionCandidates)
+    versionCandidates.first().version.value
 }
 
 private val ModuleVersionSelector.moduleIdentifier: ModuleIdentifier
@@ -104,11 +171,9 @@ private fun getVersionPropertyName(moduleIdentifier: ModuleIdentifier): String {
             val nameSecondPart = name.substringAfter('-').substringBefore('-')
             "$groupLastPart.$nameSecondPart"
         }
-        GroupFirstPartAndNameTwoFirstParts -> {
+        GroupFirstPartAndName -> {
             val groupFirstPart = group.substringBefore('.')
-            val nameFirstPart = name.substringBefore('-')
-            val nameSecondPart = name.substringAfter('-').substringBefore('-')
-            "$groupFirstPart.$nameFirstPart-$nameSecondPart"
+            "$groupFirstPart.$name"
         }
         null -> when {
             name == "gradle" && group == "com.android.tools.build" -> return "plugin.android"
@@ -151,7 +216,13 @@ private val artifactsGroupingRules: List<ArtifactGroupingRule> = sequenceOf(
     "org.jetbrains.kotlin:kotlin" to GroupLastPart,
     "org.jetbrains.kotlinx:kotlinx" to GroupLastPartAndNameSecondPart,
     "androidx." to GroupOnly,
-    "androidx.media:media-widget" to GroupFirstPartAndNameTwoFirstParts,
+    "androidx.camera:camera-extensions" to GroupFirstPartAndName,
+    "androidx.camera:camera-view" to GroupFirstPartAndName,
+    "androidx.car:car-cluster" to GroupFirstPartAndName,
+    "androidx.core:core-role" to GroupFirstPartAndName,
+    "androidx.dynamicanimation:dynamicanimation-ktx" to GroupFirstPartAndName,
+    "androidx.media:media-widget" to GroupFirstPartAndName,
+    "androidx.slice:slice-builders-ktx" to GroupFirstPartAndName,
     "androidx.test:core" to GroupAndNameFirstPart, // Rest of androidx.test share the same version.
     "androidx.test.ext:junit" to GroupAndNameFirstPart,
     "androidx.test.ext:truth" to GroupFirstTwoParts, // Same version as the rest of androidx.test.
