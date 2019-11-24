@@ -49,18 +49,13 @@ interface RefreshVersionsExtension {
 
     // TODO: remove
     var alignVersionsForGroups: MutableList<String>
-    // TODO: do something with it
+    // TODO: remove
     var versionsMapping: MutableMap<String, String>
 
-    /**
-     * See [versionsOnlyMode]
-     * Probably "gradle.properties" for GRADLE_PROPERTIES, "build.gradle" for GROOVY_DEF, ...
-     */
+    // TODO: remove
     var propertiesFile: String?
 
-    /**
-     * orderBy = OrderBy.GROUP_AND_ALPHABETICAL to override the default behavior
-     * https://github.com/jmfayard/buildSrcVersions/issues/65 **/
+    // TODO: rmeove
     var orderBy: OrderBy
 
 }

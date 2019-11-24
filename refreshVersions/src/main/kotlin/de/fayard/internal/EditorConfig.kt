@@ -2,12 +2,14 @@ package de.fayard.internal
 
 import java.io.File
 
+// TODO: remove
 data class Section(val name: String, val lines: MutableList<Pair<String, String>>) {
     operator fun get(key: String): String? {
         return lines.firstOrNull { it.first == key }?.second
     }
 }
 
+// TODO: remove
 object EditorConfig {
     const val NAME = ".editorconfig"
     const val INDENT_STYLE = "indent_style"

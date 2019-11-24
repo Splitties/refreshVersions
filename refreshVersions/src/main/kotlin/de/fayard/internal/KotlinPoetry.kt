@@ -1,6 +1,6 @@
 package de.fayard.internal
 
-
+// TODO: move away from using Ben Manes Dependency model, use something simpler
 fun Dependency.versionInformation(): String {
     val newerVersion = newerVersion()
     val comment = when {

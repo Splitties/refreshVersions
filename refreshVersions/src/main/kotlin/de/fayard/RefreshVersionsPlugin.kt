@@ -3,7 +3,6 @@ package de.fayard
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import de.fayard.internal.PluginConfig
 import de.fayard.internal.PluginConfig.isNonStable
-import de.fayard.internal.PluginsSetup
 import de.fayard.internal.RefreshVersionsExtensionImpl
 import de.fayard.versions.RefreshVersionsPropertiesTask
 import de.fayard.versions.extensions.isBuildSrc
@@ -18,7 +17,7 @@ import org.gradle.api.artifacts.ModuleVersionSelector
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
-import java.util.Properties
+import java.util.*
 
 open class RefreshVersionsPlugin : Plugin<Project> {
 
@@ -29,7 +28,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
      * refreshVersions.useExperimentalUpdater=true
      * ```
      * **/
-    internal val Project.useExperimentalUpdater: Boolean
+    internal val Project.useExperimentalUpdater: Boolean // TODO: make it always true
         get() = findProperty(PluginConfig.USE_EXPERIMENTAL_UPDATER) == "true" || isBuildSrc
 
     override fun apply(project: Project) {
@@ -44,7 +43,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
                 writeUsedDependencies()
                 writeUsedRepositories()
             }
-        } else {
+        } else { // TODO: remove
             project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
             project.configure()
             project.useVersionsFromProperties()
@@ -59,8 +58,6 @@ open class RefreshVersionsPlugin : Plugin<Project> {
     }
 
     private fun Project.configure() = with(PluginConfig) {
-        PluginsSetup.copyPluginsGradleKtsIfNeeded(project)
-
         extensions.create(RefreshVersionsExtension::class, EXTENSION_NAME, RefreshVersionsExtensionImpl::class)
 
         @Suppress("LiftReturnOrAssignment")
@@ -85,7 +82,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
 private fun Project.useVersionsFromProperties() {
     @Suppress("UNCHECKED_CAST")
     val properties: Map<String, String> = Properties().apply {
-        val propertiesFile =
+        val propertiesFile = // TODO: remove support for gradle.properties
             listOf("versions.properties", "gradle.properties").firstOrNull { project.file(it).canRead() } ?: return
         load(project.file(propertiesFile).reader())
     } as Map<String, String>
@@ -112,7 +109,7 @@ private fun Project.useVersionsFromProperties() {
     }
 }
 
-
+// TODO: remove
 private fun DependencyUpdatesTask.configureBenManesVersions() {
     rejectVersionIf { isNonStable(candidate.version) }
     checkForGradleUpdate = true

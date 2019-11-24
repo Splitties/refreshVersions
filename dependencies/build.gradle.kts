@@ -37,8 +37,8 @@ repositories {
 }
 
 pluginBundle {
-    website = "https://github.com/jmfayard/buildSrcVersions"
-    vcsUrl = "https://github.com/jmfayard/buildSrcVersions"
+    website = "https://builtwithgradle.netlify.com/"
+    vcsUrl = "https://github.com/jmfayard/gradle-dependencies-plugins"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
 }
 
@@ -62,8 +62,8 @@ java {
 }
 
 buildScan {
-    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
-    setTermsOfServiceAgree("yes")
+    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+    termsOfServiceAgree = "yes"
     publishAlways()
 }
 

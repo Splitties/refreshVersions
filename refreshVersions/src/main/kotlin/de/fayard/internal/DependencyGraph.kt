@@ -1,5 +1,6 @@
 package de.fayard.internal
 
+// TODO: do not depend anymore on Ben Manes datastructure
 data class DependencyGraph(
     val gradle: GradleConfig,
     val current: Dependencies,
@@ -9,11 +10,13 @@ data class DependencyGraph(
     val count: Int = 0
 )
 
+// TODO: do not depend anymore on Ben Manes datastructure
 data class Dependencies(
     val dependencies: List<Dependency> = emptyList(),
     val count: Int = 0
 ) : List<Dependency> by dependencies
 
+// TODO: do not depend anymore on Ben Manes datastructure
 data class Dependency(
     val group: String = "",
     val version: String = "",

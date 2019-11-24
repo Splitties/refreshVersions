@@ -20,7 +20,7 @@ fun List<Dependency>.findCommonVersions(): List<Dependency> {
     return this
 }
 
-// https://github.com/jmfayard/buildSrcVersions/issues/65
+// TODO: remove
 fun List<Dependency>.sortedBeautifullyBy(orderBy: OrderBy, selection: (Dependency) -> String?) : List<Dependency> {
     val unsorted = this.filterNot { selection(it) == null }
         .sortedBy { selection(it)!! }
