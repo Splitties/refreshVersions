@@ -1,4 +1,4 @@
-package com.louiscad.splitties.de.fayard.dependencies.internal
+package de.fayard.dependencies.internal
 
 import org.gradle.api.Action
 import org.gradle.api.Task
