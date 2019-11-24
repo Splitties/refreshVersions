@@ -1,29 +1,27 @@
-package dependencies
+@file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-/**
- * The actual dependency version comes from `gradle.properties`
- * from either `version.$NAME=xxx` or `version.com.google.android.$GROUP=xxx`
- **/
+import org.gradle.api.Incubating
+
+@Incubating
 object Google {
-    const val material = "com.google.android.material:material:$placeholderVersion"
-    const val wearable = "com.google.android.wearable:wearable:$placeholderVersion"
-    const val supportWearable = "com.google.android.support:wearable:$placeholderVersion"
+    const val material = "com.google.android.material:material:_"
 
+    private const val wearOsVersion = "_"
 
+    const val wearable = "com.google.android.wearable:wearable:$wearOsVersion"
+    const val supportWearable = "com.google.android.support:wearable:$wearOsVersion"
 
-    /**
-     * The actual dependency version comes from `gradle.properties`
-     * from either `version.$NAME=xxx` or `version.com.google.android.gms=xxx`
-     **/
     val playServices = PlayServices
+
     object PlayServices {
         private const val artifactPrefix = "com.google.android.gms:play-services"
-        const val base = "$artifactPrefix-base:$placeholderVersion"
-        const val auth = "$artifactPrefix-auth:$placeholderVersion"
-        const val location = "$artifactPrefix-location:$placeholderVersion"
-        const val tasks = "$artifactPrefix-tasks:$placeholderVersion"
-        const val vision = "$artifactPrefix-vision:$placeholderVersion"
-        const val visionCommon = "$artifactPrefix-vision-common:$placeholderVersion"
-        const val wearable = "$artifactPrefix-wearable:$placeholderVersion"
+        const val base = "$artifactPrefix-base:_"
+        const val auth = "$artifactPrefix-auth:_"
+        const val location = "$artifactPrefix-location:_"
+        const val tasks = "$artifactPrefix-tasks:_"
+        private const val visionVersion = "_"
+        const val vision = "$artifactPrefix-vision:$visionVersion"
+        const val visionCommon = "$artifactPrefix-vision-common:$visionVersion"
+        const val wearable = "$artifactPrefix-wearable:_"
     }
 }

@@ -2,9 +2,9 @@ import de.fayard.versions.setupVersionPlaceholdersResolving
 
 pluginManagement {
     repositories {
+        mavenLocal()
         gradlePluginPortal()
         mavenCentral()
-        mavenLocal()
         maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
     }
 }
