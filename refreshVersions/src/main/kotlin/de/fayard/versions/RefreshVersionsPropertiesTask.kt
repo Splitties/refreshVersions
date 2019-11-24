@@ -2,17 +2,7 @@ package de.fayard.versions
 
 import de.fayard.versions.extensions.isGradlePlugin
 import de.fayard.versions.extensions.moduleIdentifier
-import de.fayard.versions.internal.MavenRepoUrl
-import de.fayard.versions.internal.VersionCandidate
-import de.fayard.versions.internal.getDependencyVersionsCandidates
-import de.fayard.versions.internal.getVersionProperties
-import de.fayard.versions.internal.getVersionPropertyName
-import de.fayard.versions.internal.isAVersionAlias
-import de.fayard.versions.internal.readDependenciesUsedInBuildSrc
-import de.fayard.versions.internal.readExtraUsedRepositories
-import de.fayard.versions.internal.resolveVersion
-import de.fayard.versions.internal.updateVersionsProperties
-import de.fayard.versions.internal.versionPlaceholder
+import de.fayard.versions.internal.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
@@ -63,6 +53,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                 println("Dependency ${dependency.group}:${dependency.name}:${dependency.version}")
                 //TODO: Replace line above with optional diagnostic option, or show status in progress.
 
+                // TODO: I think this should be done for all dependencies!!
                 if (dependency.isManageableVersion(versionProperties).not()) {
                     return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
                     //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
