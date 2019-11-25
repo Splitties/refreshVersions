@@ -6,6 +6,7 @@ import org.gradle.api.Incubating
 object KotlinX {
     val coroutines = Coroutines
     val serialization = Serialization
+    val collections = Collections
 
     private const val artifactBase = "org.jetbrains.kotlinx:kotlinx"
 
@@ -30,5 +31,13 @@ object KotlinX {
         const val runtimeJs = "$artifactPrefix-runtime-js:$version"
         const val runtimeCommon = "$artifactPrefix-runtime-common:$version"
         const val runtimeNative = "$artifactPrefix-runtime-native:$version"
+    }
+
+    object Collections {
+        private const val immutableArtifactPrefix = "$artifactBase-collections-immutable"
+
+        const val immutable = "$immutableArtifactPrefix:_"
+
+        const val immutableJvmOnly = "$immutableArtifactPrefix-jvm:_"
     }
 }
