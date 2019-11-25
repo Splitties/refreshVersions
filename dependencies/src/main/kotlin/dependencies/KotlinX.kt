@@ -7,9 +7,11 @@ object KotlinX {
     val coroutines = Coroutines
     val serialization = Serialization
 
+    private const val artifactBase = "org.jetbrains.kotlinx:kotlinx"
+
     object Coroutines {
         private const val version = "_"
-        private const val artifactPrefix = "org.jetbrains.kotlinx:kotlinx-coroutines"
+        private const val artifactPrefix = "$artifactBase-coroutines"
 
         const val core = "$artifactPrefix-core:$version"
         const val coreCommon = "$artifactPrefix-core-common:$version"
@@ -22,10 +24,11 @@ object KotlinX {
 
     object Serialization {
         private const val version = "_"
+        private const val artifactPrefix = "$artifactBase-serialization"
 
-        const val runtime = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$version"
-        const val runtimeJs = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:$version"
-        const val runtimeCommon = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$version"
-        const val runtimeNative = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$version"
+        const val runtime = "$artifactPrefix-runtime:$version"
+        const val runtimeJs = "$artifactPrefix-runtime-js:$version"
+        const val runtimeCommon = "$artifactPrefix-runtime-common:$version"
+        const val runtimeNative = "$artifactPrefix-runtime-native:$version"
     }
 }
