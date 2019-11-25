@@ -22,6 +22,7 @@ object KotlinX {
 
     object Serialization {
         private const val version = "_"
+
         const val runtime = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$version"
         const val runtimeJs = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:$version"
         const val runtimeCommon = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$version"
