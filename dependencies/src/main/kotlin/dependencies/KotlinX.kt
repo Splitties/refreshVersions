@@ -5,6 +5,7 @@ import org.gradle.api.Incubating
 @Incubating
 object KotlinX {
     val coroutines = Coroutines
+    val serialization = Serialization
 
     object Coroutines {
         private const val version = "_"
@@ -17,5 +18,13 @@ object KotlinX {
         const val android = "$artifactPrefix-android:$version"
         const val playServices = "$artifactPrefix-play-services:$version"
         const val test = "$artifactPrefix-test:$version"
+    }
+
+    object Serialization {
+        private const val version = "_"
+        const val runtime = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$version"
+        const val runtimeJs = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:$version"
+        const val runtimeCommon = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$version"
+        const val runtimeNative = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$version"
     }
 }
