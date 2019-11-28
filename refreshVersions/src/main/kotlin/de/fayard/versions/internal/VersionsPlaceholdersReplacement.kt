@@ -233,7 +233,8 @@ private val artifactsGroupingRules: List<ArtifactGroupingRule> = sequenceOf(
     "com.squareup.okhttp3" to GroupLastPart,
     "com.squareup.moshi" to GroupLastPart,
     "com.squareup.sqldelight" to GroupLastPart,
-    "org.robolectric" to GroupLastPart
+    "org.robolectric" to GroupLastPart,
+    "io.kotlintest" to GroupOnly
 ).map { (artifactNamesStartingWith, groupNaming) ->
     ArtifactGroupingRule(
         artifactNamesStartingWith = artifactNamesStartingWith,

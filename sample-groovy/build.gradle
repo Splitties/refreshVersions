@@ -20,7 +20,7 @@ repositories {
 dependencies {
     compile("com.google.guava:guava:_")
     compile("com.google.inject:guice:_")
-    compile("androidx.annotation:annotation:_")
+    compile(AndroidX.annotation)
     compile("org.jetbrains:annotations:_")
 }
 
