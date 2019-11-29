@@ -53,8 +53,8 @@ internal fun Settings.clearUsedPluginsList() {
     file.delete()
 }
 
+/** Expects a Gradle plugins dependency (artifact style, not plugin id) with its version. */
 internal fun Settings.noteUsedPluginDependency(dependencyNotation: String) {
-    require(dependencyNotation.endsWith(".gradle.plugin")) { "Only accepts Gradle plugins dependencies (not ids)" }
     println("noting used dependency: $dependencyNotation")
     synchronized(lock) {
         val file = settings.rootDir.resolve(getUsedDependenciesFilePath(Type.PluginManagement))
