@@ -55,17 +55,13 @@ internal fun Settings.clearUsedPluginsList() {
 
 /** Expects a Gradle plugins dependency (artifact style, not plugin id) with its version. */
 internal fun Settings.noteUsedPluginDependency(dependencyNotation: String) {
-    println("noting used dependency: $dependencyNotation")
     synchronized(lock) {
         val file = settings.rootDir.resolve(getUsedDependenciesFilePath(Type.PluginManagement))
         val newContent = buildString {
             if (file.exists()) append(file.readText())
             appendln(dependencyNotation)
         }
-        println("Writing:")
-        println(newContent)
         file.writeText(newContent)
-        println("Writing complete")
     }
 }
 
