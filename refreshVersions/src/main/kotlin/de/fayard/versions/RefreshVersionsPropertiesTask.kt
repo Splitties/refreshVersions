@@ -27,7 +27,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
         val allConfigurations: Set<Configuration> = project.allprojects.flatMap { it.configurations }.toSet()
 
         val allDependencies = (
-            project.readExtraUsedDependencies() +
+            project.readPluginsAndBuildSrcDependencies() +
                 allConfigurations.asSequence().flatMap { it.allDependencies.asSequence() }
             )
             .distinctBy { it.group + ':' + it.name + ':' + it.version }
@@ -39,7 +39,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
             .flatMap { it.buildscript.repositories.asSequence() + it.repositories }
             .filterIsInstance<MavenArtifactRepository>()
             .map { MavenRepoUrl(it.url.toString()) }
-            .plus(project.readExtraUsedRepositories())
+            .plus(project.readPluginsAndBuildSrcRepositories())
             .distinct()
             .toList()
 

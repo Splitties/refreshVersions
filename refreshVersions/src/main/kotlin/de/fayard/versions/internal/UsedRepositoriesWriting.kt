@@ -9,7 +9,7 @@ import org.gradle.api.initialization.Settings
 import org.gradle.plugin.management.PluginManagementSpec
 import java.io.File
 
-internal fun Project.readExtraUsedRepositories(): List<MavenRepoUrl> {
+internal fun Project.readPluginsAndBuildSrcRepositories(): List<MavenRepoUrl> {
     require(isRootProject)
     require(isBuildSrc.not())
     val files = listOf(
@@ -23,7 +23,7 @@ internal fun Project.readExtraUsedRepositories(): List<MavenRepoUrl> {
 }
 
 /**
- * Writes repositories used in pluginManagement to a file so it can be used later in [readExtraUsedRepositories].
+ * Writes repositories used in pluginManagement to a file so it can be used later in [readPluginsAndBuildSrcRepositories].
  */
 internal fun PluginManagementSpec.writeUsedRepositories(settings: Settings) {
     writeUsedRepositories(
@@ -33,7 +33,7 @@ internal fun PluginManagementSpec.writeUsedRepositories(settings: Settings) {
 }
 
 /**
- * Writes repositories used in buildSrc to a file so it can be used later in [readExtraUsedRepositories].
+ * Writes repositories used in buildSrc to a file so it can be used later in [readPluginsAndBuildSrcRepositories].
  */
 internal fun Project.writeUsedRepositories() {
     require(isBuildSrc)

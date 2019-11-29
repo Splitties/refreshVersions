@@ -7,7 +7,7 @@ import org.gradle.api.initialization.Settings
 import org.gradle.api.internal.artifacts.dependencies.AbstractDependency
 import java.lang.Appendable
 
-internal fun Project.readExtraUsedDependencies(): Sequence<Dependency> {
+internal fun Project.readPluginsAndBuildSrcDependencies(): Sequence<Dependency> {
     require(isRootProject)
     val files = sequenceOf(
         rootDir.resolve("buildSrc").resolve(getUsedDependenciesFilePath(Type.Project)),
@@ -48,12 +48,13 @@ internal fun Project.writeUsedDependencies() {
     }
 }
 
-internal fun Settings.clearUsedPlugins() {
+internal fun Settings.clearUsedPluginsList() {
     val file = settings.rootDir.resolve(getUsedDependenciesFilePath(Type.PluginManagement))
     file.delete()
 }
 
-internal fun Settings.noteUsedDependency(dependencyNotation: String) {
+internal fun Settings.noteUsedPluginDependency(dependencyNotation: String) {
+    require(dependencyNotation.endsWith(".gradle.plugin")) { "Only accepts Gradle plugins dependencies (not ids)" }
     println("noting used dependency: $dependencyNotation")
     synchronized(lock) {
         val file = settings.rootDir.resolve(getUsedDependenciesFilePath(Type.PluginManagement))
@@ -73,9 +74,6 @@ private val lock = Any()
 private fun Appendable.appendDependency(group: String?, name: String, version: String?) {
     append(group); append(':'); append(name); append(':'); append(version); appendln()
 }
-
-private const val usedDependenciesFileName: String = "refreshVersions_used_dependencies.txt"
-private const val usedDependenciesFilePath: String = "build/$usedDependenciesFileName"
 
 private fun String.parseDependency(): Dependency = ParsedDependency(this)
 

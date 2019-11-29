@@ -1,8 +1,8 @@
 package de.fayard.versions
 
 import de.fayard.versions.extensions.isBuildSrc
-import de.fayard.versions.internal.clearUsedPlugins
-import de.fayard.versions.internal.noteUsedDependency
+import de.fayard.versions.internal.clearUsedPluginsList
+import de.fayard.versions.internal.noteUsedPluginDependency
 import de.fayard.versions.internal.resolveVersion
 import de.fayard.versions.internal.writeUsedRepositories
 import org.gradle.api.initialization.Settings
@@ -22,7 +22,7 @@ import java.util.Properties
  * buildscript classpath configuration boilerplate.
  */
 fun Settings.setupVersionPlaceholdersResolving() {
-    clearUsedPlugins()
+    clearUsedPluginsList()
     val thisPluginVersion = getPluginVersion(this)
     val relativePath = "versions.properties".let { if (isBuildSrc) "../$it" else it }
     val versionProperties = rootDir.resolve(relativePath)
@@ -49,16 +49,16 @@ fun Settings.setupVersionPlaceholdersResolving() {
             when {
                 pluginNamespace.startsWith("com.android") -> {
                     val dependencyNotation = "com.android.tools.build:gradle:$version"
-                    noteUsedDependency(dependencyNotation)
+                    noteUsedPluginDependency(dependencyNotation)
                     useModule(dependencyNotation)
                 }
                 pluginId == "io.fabric" -> {
                     val dependencyNotation = "io.fabric.tools:gradle:$version"
-                    noteUsedDependency(dependencyNotation)
+                    noteUsedPluginDependency(dependencyNotation)
                     useModule(dependencyNotation)
                 }
                 else -> {
-                    noteUsedDependency("$pluginId:$pluginId.gradle.plugin:$version")
+                    noteUsedPluginDependency("$pluginId:$pluginId.gradle.plugin:$version")
                     useVersion(version)
                 }
             }
