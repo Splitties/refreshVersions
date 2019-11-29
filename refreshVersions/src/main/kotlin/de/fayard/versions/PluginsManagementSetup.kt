@@ -1,6 +1,8 @@
 package de.fayard.versions
 
 import de.fayard.versions.extensions.isBuildSrc
+import de.fayard.versions.internal.clearUsedPluginsList
+import de.fayard.versions.internal.noteUsedPluginDependency
 import de.fayard.versions.internal.resolveVersion
 import de.fayard.versions.internal.writeUsedRepositories
 import org.gradle.api.initialization.Settings
@@ -20,16 +22,17 @@ import java.util.Properties
  * buildscript classpath configuration boilerplate.
  */
 fun Settings.setupVersionPlaceholdersResolving() {
+    clearUsedPluginsList()
     val thisPluginVersion = getPluginVersion(this)
+    val relativePath = "versions.properties".let { if (isBuildSrc) "../$it" else it }
+    val versionProperties = rootDir.resolve(relativePath)
+    if (versionProperties.exists().not()) return
+    @Suppress("UNCHECKED_CAST")
+    val properties: Map<String, String> = Properties().apply {
+        load(versionProperties.reader())
+    } as Map<String, String>
     pluginManagement {
         writeUsedRepositories(settings)
-        val relativePath = "versions.properties".let { if (isBuildSrc) "../$it" else it }
-        val versionProperties = rootDir.resolve(relativePath)
-        if (versionProperties.exists().not()) return@pluginManagement
-        @Suppress("UNCHECKED_CAST")
-        val properties: Map<String, String> = Properties().apply {
-            load(versionProperties.reader())
-        } as Map<String, String>
         resolutionStrategy.eachPlugin {
             val pluginId = requested.id.id
             if (pluginId == "de.fayard.refreshVersions") {
@@ -44,9 +47,20 @@ fun Settings.setupVersionPlaceholdersResolving() {
             }
             val version = resolveVersion(properties, versionKey) ?: return@eachPlugin
             when {
-                pluginNamespace.startsWith("com.android") -> useModule("com.android.tools.build:gradle:$version")
-                pluginId == "io.fabric" -> useModule("io.fabric.tools:gradle:$version")
-                else -> useVersion(version)
+                pluginNamespace.startsWith("com.android") -> {
+                    val dependencyNotation = "com.android.tools.build:gradle:$version"
+                    noteUsedPluginDependency(dependencyNotation)
+                    useModule(dependencyNotation)
+                }
+                pluginId == "io.fabric" -> {
+                    val dependencyNotation = "io.fabric.tools:gradle:$version"
+                    noteUsedPluginDependency(dependencyNotation)
+                    useModule(dependencyNotation)
+                }
+                else -> {
+                    noteUsedPluginDependency("$pluginId:$pluginId.gradle.plugin:$version")
+                    useVersion(version)
+                }
             }
         }
     }

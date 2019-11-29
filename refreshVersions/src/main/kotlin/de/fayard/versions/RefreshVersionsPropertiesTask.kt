@@ -24,24 +24,22 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
     @TaskAction
     fun taskActionRefreshVersions() {
 
-        val allConfigurations: Set<Configuration> = project.allprojects.flatMap {
-            it.buildscript.configurations + it.configurations
-        }.toSet()
+        val allConfigurations: Set<Configuration> = project.allprojects.flatMap { it.configurations }.toSet()
 
         val allDependencies = (
-            project.readDependenciesUsedInBuildSrc() +
+            project.readPluginsAndBuildSrcDependencies() +
                 allConfigurations.asSequence().flatMap { it.allDependencies.asSequence() }
             )
             .distinctBy { it.group + ':' + it.name + ':' + it.version }
 
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
-        // will reduce the number of repositories lookups, improving performance.
+        // will reduce the number of repositories lookups, improving performance a little more.
 
         val allRepositories = project.allprojects.asSequence()
             .flatMap { it.buildscript.repositories.asSequence() + it.repositories }
             .filterIsInstance<MavenArtifactRepository>()
             .map { MavenRepoUrl(it.url.toString()) }
-            .plus(project.readExtraUsedRepositories())
+            .plus(project.readPluginsAndBuildSrcRepositories())
             .distinct()
             .toList()
 
@@ -50,8 +48,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
         val dependenciesWithVersionCandidates: List<Pair<Dependency, List<VersionCandidate>>> = runBlocking {
             allDependencies.mapNotNull { dependency ->
 
-                println("Dependency ${dependency.group}:${dependency.name}:${dependency.version}")
-                //TODO: Replace line above with optional diagnostic option, or show status in progress.
+                //TODO: Show status and progress.
 
                 // TODO: I think this should be done for all dependencies!!
                 if (dependency.isManageableVersion(versionProperties).not()) {
@@ -79,6 +76,8 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
     private fun Dependency.isManageableVersion(versionProperties: Map<String, String>): Boolean {
         return when {
             version == versionPlaceholder -> true
+            @Suppress("UnstableApiUsage")
+            reason == becauseRefreshVersions -> true
             moduleIdentifier?.isGradlePlugin == true -> {
                 val versionFromProperty = versionProperties[moduleIdentifier!!.getVersionPropertyName()]
                     ?: return false
