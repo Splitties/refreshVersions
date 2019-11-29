@@ -4,25 +4,31 @@ import de.fayard.versions.internal.ArtifactGroupNaming.*
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isGradlePlugin
 import de.fayard.versions.extensions.isRootProject
+import de.fayard.versions.extensions.moduleIdentifier
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
+import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.ModuleIdentifier
-import org.gradle.api.artifacts.ModuleVersionSelector
-import org.gradle.api.artifacts.ResolutionStrategy
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import java.io.File
 import java.util.Properties
 
 internal const val versionPlaceholder = "_"
+internal const val becauseRefreshVersions = "refreshVersions"
 
 internal fun Project.setupVersionPlaceholdersResolving() {
     require(this.isRootProject)
     var properties: Map<String, String> = project.getVersionProperties()
     allprojects {
         configurations.all {
-            resolutionStrategy.eachDependency {
-                if (requested.version == versionPlaceholder) {
-                    val propertyName = requested.moduleIdentifier.getVersionPropertyName()
+            @Suppress("UnstableApiUsage")
+            withDependencies {
+                val dependenciesToReplace = filter { it is ModuleDependency && it.version == versionPlaceholder }
+                removeAll(dependenciesToReplace)
+                for (dependency in dependenciesToReplace) {
+                    val moduleIdentifier = dependency.moduleIdentifier
+                        ?: error("Didn't find a group for the following dependency: $dependency")
+                    val propertyName = moduleIdentifier.getVersionPropertyName()
                     val versionFromProperties = resolveVersion(properties, propertyName)
                         ?: synchronized(lock) {
                             properties = project.getVersionProperties() // Refresh properties
@@ -33,11 +39,12 @@ internal fun Project.setupVersionPlaceholdersResolving() {
                                         .filterIsInstance<MavenArtifactRepository>()
                                         .map { MavenRepoUrl(it.url.toString()) },
                                     propertyName = propertyName,
-                                    group = requested.group,
-                                    name = requested.name
+                                    group = moduleIdentifier.group,
+                                    name = moduleIdentifier.name
                                 )
                         }
-                    useVersion(versionFromProperties)
+                    val dependencyNotation = "${dependency.group}:${dependency.name}:$versionFromProperties"
+                    add(project.dependencies.create(dependencyNotation).also { it.because(becauseRefreshVersions) })
                 }
             }
         }
@@ -85,31 +92,6 @@ internal tailrec fun resolveVersion(properties: Map<String, String>, key: String
  */
 internal fun String.isAVersionAlias(): Boolean = startsWith("version.") || startsWith("plugin.")
 
-private fun Project.setupVersionPlaceholdersResolving(
-    resolutionStrategy: ResolutionStrategy,
-    properties: Map<String, String>
-) {
-    resolutionStrategy.eachDependency {
-        if (requested.version == versionPlaceholder) {
-            val propertyName = requested.moduleIdentifier.getVersionPropertyName()
-            val versionFromProperties = resolveVersion(properties, propertyName)
-                ?: synchronized(lock) {
-                    resolveVersion(properties, propertyName)
-                        ?: `Write versions candidates using latest most stable version and get it`(
-                            versionsPropertiesFile = versionsPropertiesFile(),
-                            repositories = repositories
-                                .filterIsInstance<MavenArtifactRepository>()
-                                .map { MavenRepoUrl(it.url.toString()) },
-                            propertyName = propertyName,
-                            group = requested.group,
-                            name = requested.name
-                        )
-                }
-            useVersion(versionFromProperties)
-        }
-    }
-}
-
 private val lock = Any()
 
 private fun Project.versionsPropertiesFile(): File {
@@ -134,18 +116,6 @@ private fun `Write versions candidates using latest most stable version and get 
     writeWithAddedVersions(versionsPropertiesFile, propertyName, versionCandidates)
     versionCandidates.first().version.value
 }
-
-private val ModuleVersionSelector.moduleIdentifier: ModuleIdentifier
-    get() = try {
-        @Suppress("UnstableApiUsage")
-        module
-    } catch (e: Throwable) { // Guard against possible API changes.
-        println(e)
-        object : ModuleIdentifier {
-            override fun getGroup(): String = this@moduleIdentifier.group
-            override fun getName(): String = this@moduleIdentifier.name
-        }
-    }
 
 @JvmName("_getVersionPropertyName")
 private fun getVersionPropertyName(moduleIdentifier: ModuleIdentifier): String {

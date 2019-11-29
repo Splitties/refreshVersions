@@ -55,7 +55,7 @@ private fun writeUsedRepositories(repositories: RepositoryHandler, file: File) {
     }
 }
 
-private enum class Type(val qualifier: String) {
+internal enum class Type(val qualifier: String) {
     PluginManagement("_plugins"),
     Project("")
 }
