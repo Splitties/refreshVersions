@@ -1,7 +1,9 @@
 package de.fayard
 
-import com.github.benmanes.gradle.versions.updates.resolutionstrategy.ComponentFilter
 import de.fayard.internal.PluginConfig
+import org.gradle.api.artifacts.ComponentSelection
+
+
 
 interface RefreshVersionsExtension {
 
@@ -39,27 +41,6 @@ interface RefreshVersionsExtension {
     /** Shortcut for [isNonStable(version).not()] **/
     fun isStable(version: String): Boolean
 
-    /**
-     * Some dependency have a meaningful name, like "guava".
-     * Others are called "core" or "compiler" and don't make sense out of context.
-     * Some of those meaningless names are detected by default, see [PluginConfig.MEANING_LESS_NAMES]
-     * You can add your own if necessary
-     ***/
-    fun useFqdnFor(vararg dependencyName: String)
-
-    // TODO: remove
-    var alignVersionsForGroups: MutableList<String>
-    // TODO: remove
     var versionsMapping: MutableMap<String, String>
 
-    // TODO: remove
-    var propertiesFile: String?
-
-    // TODO: rmeove
-    var orderBy: OrderBy
-
-}
-
-enum class OrderBy {
-    GROUP_AND_LENGTH, GROUP_AND_ALPHABETICAL
 }

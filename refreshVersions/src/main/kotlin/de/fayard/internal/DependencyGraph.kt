@@ -32,7 +32,7 @@ data class Dependency(
 
     val module: String get() = name
     val versionName: String
-        get() = PluginConfig.versionKtFor(this)
+        get() = name
 
     val versionProperty: String
         get() = PluginConfig.versionPropertyFor(this)
@@ -48,12 +48,11 @@ data class Dependency(
 
     companion object {
         fun virtualGroup(dependency: Dependency, withVersion: Boolean = false): String? {
-            // TODO: use DEFAULT_MAPPING instead of ALIGN_VERSION_GROUPS
-            val virtualGroup = PluginConfig.ALIGN_VERSION_GROUPS.firstOrNull { "${dependency.group}.${dependency.module}".startsWith(it) }
+            val virtualGroup = PluginConfig.DEFAULT_MAPPING.entries.firstOrNull { "${dependency.group}:${dependency.module}".startsWith(it.value) }
             return when {
                 virtualGroup == null -> null
-                withVersion -> "version.$virtualGroup"
-                else -> virtualGroup
+                withVersion -> "version.${virtualGroup.key}"
+                else -> virtualGroup.key
             }
         }
     }

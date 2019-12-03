@@ -1,12 +1,6 @@
 package de.fayard
 
-import de.fayard.internal.AvailableDependency
-import de.fayard.internal.Dependencies
-import de.fayard.internal.Dependency
-import de.fayard.internal.PluginConfig
-import de.fayard.internal.gradleNotation
-import de.fayard.internal.orderDependencies
-import de.fayard.internal.versionInformation
+import de.fayard.internal.*
 import io.kotlintest.inspectors.forAll
 import io.kotlintest.matchers.string.contain
 import io.kotlintest.should
@@ -27,11 +21,10 @@ class UnitTests: FreeSpec({
         "org.jetbrains.kotlin:konan-utils:0.9.0-native",
         "org.jetbrains.kotlin:kotlin-test:1.3.0-rc-190"
     )
-    val dependencies = Dependencies(DEPS.map {
+    val dependencies = DEPS.map {
         val (group, name, version) = it.split(":")
         Dependency(group = group, version = version, name = name, escapedName = name)
-    }, count = DEPS.size)
-
+    }
 
     "Ordering dependencies" {
         val shuffleAndReorder = dependencies
@@ -44,17 +37,17 @@ class UnitTests: FreeSpec({
 
     "Version information" - {
         "Available" {
-            Dependency(available = AvailableDependency(release = "1.0.0")).versionInformation() should contain("1.0.0")
+            Dependency(available = AvailableDependency(release = "1.0.0")).newerVersion() shouldBe("1.0.0")
         }
         "Up-to-date" {
-            Dependency(latest = "", reason = "", available = null).versionInformation() shouldBe ""
+            Dependency(latest = "", reason = "", available = null).newerVersion() shouldBe null
         }
         "Exceeded" {
-            Dependency(latest = "2.0.0").versionInformation() shouldBe ""
+            Dependency(latest = "2.0.0").newerVersion() shouldBe null
         }
 
         "Reason" {
-            Dependency(reason = "Could not find any matches").versionInformation() shouldBe ""
+            Dependency(reason = "Could not find any matches").newerVersion() shouldBe null
         }
     }
 

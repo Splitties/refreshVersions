@@ -46,8 +46,6 @@ dependencies {
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
     implementation(gradleKotlinDsl())
 
-    implementation("com.github.ben-manes:gradle-versions-plugin:0.25.0") // TODO: remove
-
     implementation("com.squareup.okio:okio:2.1.0")
     implementation( "com.squareup.moshi:moshi:1.7.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")

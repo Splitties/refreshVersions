@@ -1,7 +1,5 @@
 package de.fayard.internal
 
-import de.fayard.OrderBy
-
 fun Dependency.gradleNotation() = "$group:$name:$version"
 
 fun List<Dependency>.orderDependencies(): List<Dependency> {
@@ -20,15 +18,6 @@ fun List<Dependency>.findCommonVersions(): List<Dependency> {
     return this
 }
 
-// TODO: remove
-fun List<Dependency>.sortedBeautifullyBy(orderBy: OrderBy, selection: (Dependency) -> String?) : List<Dependency> {
-    val unsorted = this.filterNot { selection(it) == null }
-        .sortedBy { selection(it)!! }
-    return when(orderBy) {
-        OrderBy.GROUP_AND_LENGTH -> unsorted.sortedByDescending { selection(it)!!.length }.sortedBy { it.mode }
-        OrderBy.GROUP_AND_ALPHABETICAL -> unsorted.sortedBy { it.mode }
-    }
-}
 
 fun logFileWasModified(path: String, existed: Boolean) {
     val ANSI_RESET = "\u001B[0m"

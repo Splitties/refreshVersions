@@ -37,16 +37,8 @@ fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): List<Dep
     for (d: Dependency in this) {
         d.mode = when {
             d.name in useFdqnByDefault -> VersionMode.GROUP_MODULE
-            PluginConfig.escapeVersionsKt(d.name) in useFdqnByDefault -> VersionMode.GROUP_MODULE
             else -> VersionMode.MODULE
         }
-        d.escapedName = PluginConfig.escapeVersionsKt(
-            when (d.mode) {
-                VersionMode.MODULE -> d.name
-                VersionMode.GROUP -> d.groupOrVirtualGroup()
-                VersionMode.GROUP_MODULE -> "${d.group}_${d.name}"
-            }
-        )
     }
     return this
 }

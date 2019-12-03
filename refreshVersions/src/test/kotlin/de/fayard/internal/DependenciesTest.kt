@@ -1,6 +1,5 @@
 package de.fayard.internal
 
-import de.fayard.OrderBy
 import de.fayard.asDependency
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
@@ -20,25 +19,6 @@ class DependenciesTest: FreeSpec({
 
     val ALL = listOf(appCompat, asyncLayoutInflater, browser, car, sliceCore, sliceView)
     val NO_DEFAULT = emptyList<String>()
-
-    "order by" - {
-        fun orderDependencies(orderBy: OrderBy, vararg dependency: Dependency): List<String> = dependency.toList()
-            .findCommonVersions()
-            .sortedBeautifullyBy(orderBy) { PluginConfig.versionPropertyFor(it) }
-            .map { PluginConfig.versionPropertyFor(it) }
-
-        "group and length" {
-            orderDependencies(OrderBy.GROUP_AND_LENGTH, guava, coroutinesCommon, car, sliceCore, kotlinxSerialization) shouldBe listOf(
-                "org.jetbrains.kotlinx.kotlinx-serialization", "org.jetbrains.kotlinx.kotlinx-coroutines", "com.google.guava..guava", "slice-core", "car"
-            )
-        }
-
-        "group and alhpabetical" {
-            orderDependencies(OrderBy.GROUP_AND_ALPHABETICAL, guava, coroutinesCommon, car, sliceCore, kotlinxSerialization) shouldBe listOf(
-                "org.jetbrains.kotlinx.kotlinx-coroutines", "org.jetbrains.kotlinx.kotlinx-serialization", "com.google.guava..guava", "car", "slice-core"
-            )
-        }
-    }
 
     "findCommonVersions" - {
 
@@ -63,9 +43,8 @@ class DependenciesTest: FreeSpec({
         "virtual groups" {
             val kotlinX = "org.jetbrains.kotlinx"
             commonGroups(coroutinesCore, coroutinesCommon, kotlinxSerialization) shouldBe mapOf(
-                coroutinesCore.module to "$kotlinX.kotlinx-coroutines",
-                coroutinesCommon.module to "$kotlinX.kotlinx-coroutines",
-                kotlinxSerialization.module to "$kotlinX.kotlinx-serialization"
+                coroutinesCore.module to "coroutines",
+                coroutinesCommon.module to "coroutines"
             )
         }
     }

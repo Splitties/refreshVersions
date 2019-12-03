@@ -1,6 +1,5 @@
 package de.fayard.internal
 
-import de.fayard.OrderBy
 import de.fayard.refreshVersionsDir
 import de.fayard.testResourceFile
 import io.kotlintest.matchers.withClue
@@ -43,11 +42,8 @@ class NonRegression : FreeSpec({
 
                 val propertiesFile = propertiesFolder.resolve(name)
                 val (received, message) = receivedMessage(propertiesFile)
-                val extension = RefreshVersionsExtensionImpl(
-                    propertiesFile = propertiesFile.relativeTo(refreshVersionsDir).path
-                )
                 val dependencies = (dependencyGraph.map { it.copy(available = null) })
-                    .sortedBeautifullyBy(OrderBy.GROUP_AND_LENGTH) { it.versionProperty }
+                    .sortedBy { it.versionProperty }
                     .distinctBy { it.versionProperty }
                 UpdateProperties().generateVersionProperties(received, dependencies)
 

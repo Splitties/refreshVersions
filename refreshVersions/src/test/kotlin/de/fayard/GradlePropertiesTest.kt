@@ -2,6 +2,7 @@ package de.fayard
 
 import de.fayard.internal.PluginConfig
 import de.fayard.internal.UpdateVersionsOnly
+import de.fayard.internal.asGradleProperty
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FreeSpec
 

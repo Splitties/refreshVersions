@@ -1,6 +1,5 @@
 package de.fayard.internal
 
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import de.fayard.internal.VersionMode.*
@@ -13,15 +12,11 @@ import java.io.File
 object PluginConfig {
     const val PLUGIN_ID = "de.fayard.refreshVersions"
     const val PLUGIN_VERSION = "0.8.5" // plugin.de.fayard.refreshVersions
-    const val GRADLE_VERSIONS_PLUGIN_ID = "com.github.ben-manes.versions" // TODO: remove
-    const val GRADLE_VERSIONS_PLUGIN_VERSION = "0.25.0" // TODO: remove
-    const val DEPENDENCY_UPDATES = "dependencyUpdates" // TODO: remove
     const val REFRESH_VERSIONS_UPDATES_PATH = "refreshVersionsUpdates"
-    const val USE_EXPERIMENTAL_UPDATER = "refreshVersions.useExperimentalUpdater" // TODO: make it the default
-    const val DEPENDENCY_UPDATES_PATH = ":$DEPENDENCY_UPDATES" // TODO: remove
     const val REFRESH_VERSIONS = "refreshVersions"
+    const val REFRESH_VERSIONS_UPDATER = "refreshVersionsUpdater"
     const val EXTENSION_NAME = REFRESH_VERSIONS
-    const val DEFAULT_PROPERTIES_FILE = "versions.properties"
+    const val VERSIONS_PROPERTIES = "versions.properties"
     const val AVAILABLE_DEPENDENCIES_FILE = "build/dependencyUpdates/refreshVersions.txt"
 
     /** There is no standard on how to name stable and unstable versions
@@ -54,15 +49,10 @@ object PluginConfig {
         "version.$module"
     )
 
-    // TODO: replace ALIGN_VERSION_GROUPS by DEFAULT_MAPPING
-    val ALIGN_VERSION_GROUPS: MutableList<String>
-        get() = DEFAULT_MAPPING.values.toMutableList()
-
     val DEFAULT_MAPPING: Map<String, String> = mapOf(
-        "org.jetbrains.kotlinx..kotlinx-coroutines" to "org.jetbrains.kotlinx.kotlinx-coroutines",
-        "org.jetbrains.kotlinx..kotlinx-serialization" to "org.jetbrains.kotlinx.kotlinx-serialization",
-        "com.louiscad.splitties..splitties" to "com.louiscad.splitties:splitties",
-        "com.squareup.retrofit2" to "com.squareup.retrofit2"
+        "coroutines" to "org.jetbrains.kotlinx:kotlinx-coroutines",
+        "plitties" to "com.louiscad.splitties:splitties",
+        "retrofit2" to "com.squareup.retrofit2"
         /**
          * TODO: improve DEFAULT_MAPPING according to
          * https://github.com/LouisCAD/Splitties/blob/9f4a85e7ecc612d290fd6e4615b3472c05aece51/build.gradle.kts#L151-L167
@@ -80,39 +70,12 @@ object PluginConfig {
         GROUP_MODULE -> "${d.group}..${d.name}"
     }
 
-    fun versionKtFor(d: Dependency): String = escapeVersionsKt(
-        when (d.mode) {
-            MODULE -> d.name
-            GROUP -> d.groupOrVirtualGroup()
-            GROUP_MODULE -> "${d.group}:${d.name}"
-        }
-    )
-
-    // TODO: remove
-    fun escapeVersionsKt(name: String): String {
-        val escapedChars = listOf('-', '.', ':')
-        return buildString {
-            for (c in name) {
-                append(if (c in escapedChars) '_' else c.toLowerCase())
-            }
-        }
-    }
-
-
-    const val DEFAULT_LIBS = "Libs" // TODO: remove
-    const val DEFAULT_VERSIONS = "Versions" // TODO: remove
-    const val SPACES4 = "    "
-    const val SPACES2 = "  "
-    const val SPACES0 = ""
-    const val TAB = "\t"
-    const val DEFAULT_INDENT = SPACES4
-    const val BENMANES_REPORT_PATH = "build/dependencyUpdates/report.json" // TODO: remove
 
     /** Documentation **/
     fun issue(number: Int): String = "$buildSrcVersionsUrl/issues/$number"
 
     /** TODO: update all URLs to the new website builtwithgradle.netflify.com */
-    val buildSrcVersionsUrl = "https://github.com/jmfayard/buildSrcVersions"
+    val buildSrcVersionsUrl = "https://github.com/jmfayard/gradle-dependencies-plugins"
     val issue47UpdatePlugin = "See issue #47: how to update buildSrcVersions itself ${issue(47)}"
     val issue53PluginConfiguration = issue(53)
     val issue54VersionOnlyMode = issue(54)
@@ -130,20 +93,6 @@ object PluginConfig {
         "compiler", "migration", "db", "rules", "runner", "monitor", "loader",
         "media", "print", "io", "collection", "gradle", "android"
     )
-
-    // TODO: rmeove
-    val INITIAL_GITIGNORE = """
-        |.gradle/
-        |build/
-        """.trimMargin()
-
-    // TODO: rmeove
-    fun gradleKdoc(currentVersion: String): String = """
-        |Current version: "$currentVersion"
-        |See issue 19: How to update Gradle itself?
-        |$issue19UpdateGradle
-    """.trimMargin()
-
 
     val moshi: Moshi = Moshi.Builder().build()
 
@@ -188,7 +137,7 @@ object PluginConfig {
 
     val ALL_GRADLE_PROPERTIES_LINES = REFRESH_VERSIONS_START + REFRESH_VERSIONS_END + OLD_LINES
 
-    const val GRADLE_LATEST_VERSION = "gradleLatestVersion"
+    const val GRADLE_LATEST_VERSION = "6.0.1" // TODO: do not hardcode it
 
     fun supportsTaskAvoidance(): Boolean =
         GradleVersion.current() >= GradleVersion.version("5.0")
@@ -201,15 +150,6 @@ object PluginConfig {
             toString()
         }
 
-    // TODO: rmeove
-    val gradleVersionsPlugin: Dependency = Dependency(
-        group = "com.github.ben-manes",
-        name = "$GRADLE_VERSIONS_PLUGIN_ID.gradle.plugin",
-        version = GRADLE_VERSIONS_PLUGIN_VERSION,
-        mode = MODULE,
-        available = null
-    )
-
     val gradleRefreshVersions: Dependency = Dependency(
         group = "de.fayard",
         name = "$PLUGIN_ID.gradle.plugin",
@@ -218,15 +158,12 @@ object PluginConfig {
         available = null
     )
 
-    fun gradleLatestVersion(graph: DependencyGraph): Dependency = Dependency(
+    fun gradleLatestVersion(currentVersion: String, latestStableVersion: String): Dependency = Dependency(
         group = "org.gradle",
-        name = GRADLE_LATEST_VERSION,
+        name = "gradle",
         mode = MODULE,
-        version = graph.gradle.running.version,
-        available = when {
-            graph.gradle.running == graph.gradle.current -> null
-            else -> AvailableDependency(release = graph.gradle.current.version)
-        }
+        version = currentVersion,
+        available = AvailableDependency(release = latestStableVersion)
     )
 
     fun computeUseFqdnFor(
@@ -239,7 +176,5 @@ object PluginConfig {
         val ambiguities = dependencies.groupBy { it.module }.filter { it.value.size > 1 }.map { it.key }
         return (configured + byDefault + ambiguities + depsFromGroups - groups).distinct().sorted()
     }
-
-    lateinit var configureGradleVersions: (DependencyUpdatesTask.() -> Unit) -> Unit
 
 }
