@@ -25,18 +25,14 @@
 :badge_version: image:{image_version}?label=gradlePluginPortal["Maven Central",link="https://plugins.gradle.org/plugin/de.fayard.refreshVersions"]
 :badge_issues: image:https://img.shields.io/github/issues/{repo}.svg["GitHub issues",link="{github}/issues"]
 :badge_pr:  image:https://img.shields.io/github/issues-pr/{repo}.svg["GitHub pull requests",link="{github}/pulls?utf8=%E2%9C%93&q=is%3Apr+"]
-:badge_build: image:https://img.shields.io/travis/com/{repo}/{branch}.svg["Travis (.org)",link="https://travis-ci.com/{repo}"]
 :versions_kt: {master}/sample-groovy/buildSrc/src/main/kotlin/Versions.kt
 :libs_kt: {master}/sample-groovy/buildSrc/src/main/kotlin/Libs.kt
 :benmanes: https://github.com/ben-manes/gradle-versions-plugin
 :image_faq: https://user-images.githubusercontent.com/459464/64926128-1a076980-d7fa-11e9-8a69-eb354d211f51.png
-:image_netlify: https://api.netlify.com/api/v1/badges/ccacc3ce-06c7-4768-a3d3-96d46b58d523/deploy-status
-:link_netlify: https://app.netlify.com/sites/builtwithgradle/deploys
-:badge_netlify: image:{image_netlify}["Website",link="{link_netlify}"]
 
 = de.fayard.buildSrcVersions
 
-{badge_version} {slack_badge} {contributors_badge} {badge_build} {badge_mit} {badge_issues} {badge_pr} {badge_netlify}
+{badge_version} {slack_badge} {contributors_badge} {badge_mit} {badge_issues} {badge_pr}
 
 The Gradle plugin `de.fayard.buildSrcVersions` goal is to make it as painless as possible to upgrade your project to the latest and greatest version of everything.
 
