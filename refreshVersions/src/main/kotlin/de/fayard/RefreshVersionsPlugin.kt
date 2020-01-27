@@ -21,39 +21,22 @@ import java.util.*
 
 open class RefreshVersionsPlugin : Plugin<Project> {
 
-    /**
-     * Overwrite the default by adding the following line to gradle.properties:
-     *
-     * ```
-     * refreshVersions.useExperimentalUpdater=true
-     * ```
-     * **/
-    internal val Project.useExperimentalUpdater: Boolean // TODO: make it always true
-        get() = findProperty(PluginConfig.USE_EXPERIMENTAL_UPDATER) == "true" || isBuildSrc
-
     override fun apply(project: Project) {
         check(project.isRootProject) {
             "ERROR: plugins de.fayard.refreshVersions must be applied to the root build.gradle(.kts)"
         }
 
-        if (project.useExperimentalUpdater) {
-            project.configureExperimentalUpdater()
-            project.setupVersionPlaceholdersResolving()
-            if (project.isBuildSrc) project.afterEvaluate {
-                writeUsedDependencies()
-                writeUsedRepositories()
-            }
-        } else { // TODO: remove
-            project.apply(plugin = PluginConfig.GRADLE_VERSIONS_PLUGIN_ID)
-            project.configure()
-            project.useVersionsFromProperties()
-        }
-    }
-
-    private fun Project.configureExperimentalUpdater() {
-        tasks.registerOrCreate<RefreshVersionsPropertiesTask>(name = PluginConfig.REFRESH_VERSIONS) {
+        project.tasks.registerOrCreate<RefreshVersionsPropertiesTask>(name = PluginConfig.REFRESH_VERSIONS) {
             group = "Help"
             description = "Search for new dependencies versions and update versions.properties"
+        }
+
+
+
+        project.setupVersionPlaceholdersResolving()
+        if (project.isBuildSrc) project.afterEvaluate {
+            writeUsedDependencies()
+            writeUsedRepositories()
         }
     }
 
