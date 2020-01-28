@@ -45,15 +45,17 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
 
         val versionProperties: Map<String, String> = project.getVersionProperties()
 
+        var areSomeVersionsNotManageable = false
+
         val dependenciesWithVersionCandidates: List<Pair<Dependency, List<VersionCandidate>>> = runBlocking {
             allDependencies.mapNotNull { dependency ->
 
                 //TODO: Show status and progress.
 
-                // TODO: I think this should be done for all dependencies!!
                 if (dependency.isManageableVersion(versionProperties).not()) {
-                    return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
-                    //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
+                    areSomeVersionsNotManageable = true
+                    //TODO: Keep aside to report hardcoded versions and version ranges that
+                    // are not used. See this issue: https://github.com/jmfayard/refreshVersions/issues/126
                 }
                 val group = dependency.group ?: return@mapNotNull null
                 val resolvedVersion = resolveVersion(
@@ -71,6 +73,16 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
             }.toList().awaitAll()
         }
         project.rootProject.updateVersionsProperties(dependenciesWithVersionCandidates)
+
+        if (areSomeVersionsNotManageable) {
+            println("Some dependencies lack the version placeholder (the underscore character: '_').")
+            println("Their key have been added to versions.properties, but to use it and benefit from easy " +
+                "versions upgrading, you'll need to replace the hardcoded version to the version placeholder " +
+                "(underscore character).")
+            println()
+            println("Semi-automatically migrating these is planned. Please, subscribe to the following issue:")
+            println("https://github.com/jmfayard/refreshVersions/issues/126")
+        }
     }
 
     private fun Dependency.isManageableVersion(versionProperties: Map<String, String>): Boolean {
