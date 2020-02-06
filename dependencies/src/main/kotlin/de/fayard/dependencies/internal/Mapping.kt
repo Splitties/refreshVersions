@@ -31,7 +31,7 @@ data class DependencyMapping(
 }
 
 
-fun getArtifactNameToSplittiesConstantMapping(): List<DependencyMapping> {
+fun getArtifactNameToConstantMapping(): List<DependencyMapping> {
     return listOf(
         AndroidX,
         Google,
@@ -42,15 +42,15 @@ fun getArtifactNameToSplittiesConstantMapping(): List<DependencyMapping> {
         Square,
         Testing
     ).flatMap { objectInstance ->
-        (objectInstance::class).getArtifactNameToSplittiesConstantMapping(objectInstance::class.simpleName!!)
+        (objectInstance::class).getArtifactNameToConstantMapping(objectInstance::class.simpleName!!)
     }.sortedBy { it.toString() }
 }
 
 @UseExperimental(ExperimentalStdlibApi::class)
-private fun KClass<*>.getArtifactNameToSplittiesConstantMapping(prefix: String): List<DependencyMapping> {
+private fun KClass<*>.getArtifactNameToConstantMapping(prefix: String): List<DependencyMapping> {
     return nestedClasses.filter { it.visibility == KVisibility.PUBLIC }.flatMap { kClass ->
         val propertyName = kClass.simpleName!!.let { c -> "${c.first().toLowerCase()}${c.substring(1)}"}
-        kClass.getArtifactNameToSplittiesConstantMapping("$prefix.$propertyName")
+        kClass.getArtifactNameToConstantMapping("$prefix.$propertyName")
     } + this.memberProperties.filter {
         it.isConst &&
             it.visibility == KVisibility.PUBLIC &&
