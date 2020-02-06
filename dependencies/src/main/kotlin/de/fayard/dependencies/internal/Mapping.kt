@@ -5,6 +5,7 @@ import Google
 import JakeWharton
 import Kotlin
 import KotlinX
+import Ktor
 import Splitties
 import Square
 import Testing
@@ -40,6 +41,7 @@ fun getArtifactNameToConstantMapping(): List<DependencyMapping> {
         KotlinX,
         Splitties,
         Square,
+        Ktor,
         Testing
     ).flatMap { objectInstance ->
         (objectInstance::class).getArtifactNameToConstantMapping(objectInstance::class.simpleName!!)
