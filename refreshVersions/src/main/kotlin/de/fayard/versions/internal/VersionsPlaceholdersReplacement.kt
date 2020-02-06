@@ -199,6 +199,7 @@ private val artifactsGroupingRules: List<ArtifactGroupingRule> = sequenceOf(
     "androidx.test.services" to GroupFirstTwoParts, // Same version as the rest of androidx.test.
     "androidx.test.espresso.idling" to GroupFirstThreeParts, // Same version as other androidx.test.espresso artifacts.
     "com.louiscad.splitties:splitties" to GroupLastPart,
+    "com.google.ar" to GroupFirstThreeParts,
     "com.squareup.retrofit2" to GroupLastPart,
     "com.squareup.okhttp3" to GroupLastPart,
     "com.squareup.moshi" to GroupLastPart,

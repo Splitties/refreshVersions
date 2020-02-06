@@ -6,6 +6,7 @@ import org.gradle.api.Incubating
 object Google {
 
     val android = Android
+    val ar = Ar
 
     object Android {
         private const val artifactBase = "com.google.android"
@@ -81,6 +82,34 @@ object Google {
 
             /** Wear OS by Google */
             const val wearOS = "$artifactPrefix-wearable:_"
+        }
+    }
+
+    object Ar {
+        private const val baseArtifact = "com.google.ar"
+
+        /**
+         * [Android guide here](https://developers.google.com/ar/develop/java/quickstart).
+         */
+        const val core = "$baseArtifact:core:_"
+
+        /**
+         * [Official doc here](https://developers.google.com/ar/develop/java/sceneform).
+         */
+        val sceneform = Sceneform
+
+        object Sceneform {
+            private const val artifactPrefix = "$baseArtifact.sceneform"
+
+            const val animation = "$artifactPrefix:animation:_"
+            const val assets = "$artifactPrefix:assets:_"
+            const val core = "$artifactPrefix:core:_"
+            const val filamentAndroid = "$artifactPrefix:filament-android:_"
+            const val plugin = "$artifactPrefix:plugin:_"
+            const val rendering = "$artifactPrefix:rendering:_"
+            const val sceneformBase = "$artifactPrefix:sceneform-base:_"
+
+            const val ux = "$artifactPrefix.ux:sceneform-ux:_"
         }
     }
 }
