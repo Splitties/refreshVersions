@@ -2,6 +2,8 @@
 
 package dependencies
 
+import org.gradle.api.Incubating
+
 /**
  * Firebase Android libraries.
  *
@@ -10,6 +12,7 @@ package dependencies
  *
  * See available libraries with link to their docs [here](https://firebase.google.com/docs/android/setup#available-libraries).
  */
+@Incubating
 interface Firebase {
 
     companion object : Firebase by FirebaseImpl(isBom = true) {
