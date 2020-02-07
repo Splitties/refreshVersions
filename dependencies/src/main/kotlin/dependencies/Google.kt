@@ -1,5 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import dependencies.Firebase
 import org.gradle.api.Incubating
 
 @Incubating
@@ -7,6 +8,9 @@ object Google {
 
     val android = Android
     val ar = Ar
+    val firebase get() = Firebase
+
+    const val playServicesGradlePlugin = "com.google.gms:google-services:_"
 
     object Android {
         private const val artifactBase = "com.google.android"
@@ -19,6 +23,7 @@ object Google {
         const val supportWearable = "$artifactBase.support:wearable:$wearOsVersion"
 
         val playServices = PlayServices
+        val play = Play
 
         object PlayServices {
             private const val artifactPrefix = "$artifactBase.gms:play-services"
@@ -82,6 +87,13 @@ object Google {
 
             /** Wear OS by Google */
             const val wearOS = "$artifactPrefix-wearable:_"
+        }
+
+        object Play {
+            private const val group = "$artifactBase.play"
+
+            const val core = "$group:core:_"
+            const val coreKtx = "$group:core-ktx:_"
         }
     }
 
