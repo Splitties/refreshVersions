@@ -25,6 +25,12 @@ interface Firebase {
         const val bom = "com.google.firebase:firebase-bom:_"
 
         val `no-BoM`: Firebase by lazy { FirebaseImpl(isBom = false) }
+
+        private const val artifactPrefix = "com.google.firebase:firebase"
+
+        const val appDistributionGradlePlugin = "$artifactPrefix-appdistribution-gradle:_"
+
+        const val performanceMonitoringGradlePlugin = "com.google.firebase:perf-plugin:_"
     }
 
     // AdMob intentionally not included because ads are mental pollution.
