@@ -8,6 +8,29 @@ import de.fayard.versions.internal.writeUsedRepositories
 import org.gradle.api.initialization.Settings
 import java.util.Properties
 
+object RefreshVersionsSetup {
+
+    /***
+     * Configuration with the Gradle Kotlin DSL
+     *
+     * ```groovy
+    // settings.gradle
+    import de.fayard.versions.RefreshVersionsSetup
+    buildscript {
+        dependencies.classpath("de.fayard:refreshVersions:VERSION")
+    }
+
+    RefreshVersionsSetup.bootstrap(settings)
+     * ```
+     */
+    @JvmStatic
+    fun bootstrap(settings: Settings) {
+        settings.setupVersionPlaceholdersResolving()
+    }
+
+}
+
+
 /**
  * Sets up a resolution strategy for the plugins that does the following:
  * For each plugin, tries to find the corresponding version declared in `versions.properties`, and uses it.
@@ -67,9 +90,13 @@ fun Settings.setupVersionPlaceholdersResolving() {
 }
 
 private fun getPluginVersion(settings: Settings): String = runCatching {
+    val pluginClassPath = listOf(
+        "de.fayard.refreshVersions:de.fayard.refreshVersions.gradle.plugin",
+        "de.fayard:refreshVersions"
+    )
     @Suppress("UnstableApiUsage")
     settings.buildscript.configurations.getByName("classpath").allDependencies.single {
-        it.group == "de.fayard.refreshVersions" && it.name == "de.fayard.refreshVersions.gradle.plugin"
+        "${it.group}:${it.name}" in pluginClassPath
     }.version
 }.onFailure {
     println(it)

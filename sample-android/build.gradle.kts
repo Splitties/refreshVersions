@@ -1,7 +1,7 @@
 import de.fayard.OrderBy
 
 plugins {
-    id("de.fayard.refreshVersions").version("0.8.0")
+    id("de.fayard.refreshVersions")
     `build-scan`
 }
 group = "de.fayard"

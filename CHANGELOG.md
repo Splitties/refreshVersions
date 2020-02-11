@@ -1,7 +1,7 @@
 # Roadmap
 
 - [x] Make the new updater the default
-
+- [x] Bootstraping refreshVersions #155
 
 # v0.8.x
 

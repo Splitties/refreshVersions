@@ -1,3 +1,13 @@
+import de.fayard.versions.RefreshVersionsSetup
+
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        mavenLocal()
+    }
+    dependencies.classpath("de.fayard:refreshVersions:0.9.0")
+}
+
 pluginManagement {
     repositories {
         google()
@@ -5,6 +15,7 @@ pluginManagement {
         //mavenLocal()
     }
 }
-apply(from = "gradle/plugins.gradle.kts")
+RefreshVersionsSetup.bootstrap(settings)
+
 rootProject.name = "sample-android"
 include(":app")

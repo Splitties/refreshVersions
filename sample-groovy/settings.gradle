@@ -1,4 +1,4 @@
-import static de.fayard.versions.PluginsManagementSetupKt.setupVersionPlaceholdersResolving
+import de.fayard.versions.RefreshVersionsSetup
 
 pluginManagement {
     repositories {
@@ -13,10 +13,10 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-    dependencies.classpath("de.fayard.refreshVersions:de.fayard.refreshVersions.gradle.plugin:0.8.6")
+    dependencies.classpath("de.fayard:refreshVersions:0.9.0")
 }
 
-setupVersionPlaceholdersResolving(settings)
+RefreshVersionsSetup.bootstrap(settings)
 
 rootProject.name = 'sample-groovy'
 includeBuild '../refreshVersions'
