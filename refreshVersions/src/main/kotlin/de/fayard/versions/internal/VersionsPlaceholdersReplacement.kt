@@ -7,6 +7,8 @@ import de.fayard.versions.extensions.isRootProject
 import de.fayard.versions.extensions.moduleIdentifier
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Configuration
+import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
@@ -20,12 +22,23 @@ internal fun Project.setupVersionPlaceholdersResolving() {
     require(this.isRootProject)
     var properties: Map<String, String> = project.getVersionProperties()
     allprojects {
+        val project : Project = this
+
         configurations.all {
+            val configuration: Configuration = this
             @Suppress("UnstableApiUsage")
             withDependencies {
-                val dependenciesToReplace = filter { it is ModuleDependency && it.version == versionPlaceholder }
+                val dependencies = filterIsInstance<ModuleDependency>()
+
+                val dependenciesToReplace = dependencies.filter { it.version == versionPlaceholder }
                 removeAll(dependenciesToReplace)
-                for (dependency in dependenciesToReplace) {
+
+                if (dependencies.any { it.version != versionPlaceholder }) {
+                    val warnFor = (dependencies - dependenciesToReplace).take(3).map { it.name }
+                    logger.warn(""":${project.name}:${configuration.name} found hardcoded dependencies $warnFor   See https://github.com/jmfayard/refreshVersions/issues/160 """)
+                }
+
+                for (dependency in dependencies) {
                     val moduleIdentifier = dependency.moduleIdentifier
                         ?: error("Didn't find a group for the following dependency: $dependency")
                     val propertyName = moduleIdentifier.getVersionPropertyName()
