@@ -1,0 +1,5 @@
+com.google.firebase:firebase-bom
+                    ^^^^^^^^^^^^
+
+com.google.firebase:firebase-*
+                    ^^^^^^^^^^

@@ -1,0 +1,8 @@
+com.louiscad.splitties:splitties
+             ^^^^^^^^^
+
+com.squareup.*:*
+             ^
+
+org.robolectric
+    ^^^^^^^^^^^

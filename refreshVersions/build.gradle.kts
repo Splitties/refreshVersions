@@ -43,6 +43,7 @@ pluginBundle {
 }
 
 dependencies {
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
     implementation(gradleKotlinDsl())
 
@@ -60,7 +61,8 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform()
+    useJUnit()
+    //useJUnitPlatform()
 }
 
 java {
