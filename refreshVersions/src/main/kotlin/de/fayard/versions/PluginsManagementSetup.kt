@@ -30,6 +30,25 @@ object RefreshVersionsSetup {
 
 }
 
+/**
+ * Boostrap refreshVersion in settings.gradle.kts
+ *
+```kotlin
+// settings.gradle.kts
+import de.fayard.versions.bootstrapRefreshVersions
+
+buildscript {
+  dependencies.classpath("de.fayard:refreshVersions:VERSION")
+}
+
+settings.bootstrapRefreshVersions()
+```
+
+ */
+fun Settings.bootstrapRefreshVersions() : Unit =
+    settings.setupVersionPlaceholdersResolving()
+
+
 
 /**
  * Sets up a resolution strategy for the plugins that does the following:

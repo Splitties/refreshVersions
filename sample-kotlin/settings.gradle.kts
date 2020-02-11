@@ -1,3 +1,5 @@
+import de.fayard.versions.bootstrapRefreshVersions
+
 pluginManagement {
     repositories {
         mavenLocal()
