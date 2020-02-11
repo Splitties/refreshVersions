@@ -22,14 +22,15 @@ import java.util.*
 open class RefreshVersionsPlugin : Plugin<Project> {
 
     /**
-     * Overwrite the default by adding the following line to gradle.properties:
+     * By default, refreshVersions uses its own logic to fetch new updates.
+     * To revert to using Ben Manes's gradle-versions-plugin, add this in `gradle.properties`
      *
      * ```
-     * refreshVersions.useExperimentalUpdater=true
+     * refreshVersions.useExperimentalUpdater=false
      * ```
      * **/
-    internal val Project.useExperimentalUpdater: Boolean // TODO: make it always true
-        get() = findProperty(PluginConfig.USE_EXPERIMENTAL_UPDATER) == "true" || isBuildSrc
+    internal val Project.useExperimentalUpdater: Boolean
+        get() = findProperty(PluginConfig.USE_EXPERIMENTAL_UPDATER) != "false"
 
     override fun apply(project: Project) {
         check(project.isRootProject) {
