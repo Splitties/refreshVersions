@@ -6,7 +6,6 @@ plugins {
     `java-gradle-plugin`
     `maven-publish`
     `kotlin-dsl`
-    `build-scan`
 }
 
 
@@ -59,12 +58,6 @@ tasks.withType<Test> {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-buildScan {
-    termsOfServiceUrl = "https://gradle.com/terms-of-service"
-    termsOfServiceAgree = "yes"
-    publishAlways()
 }
 
 kotlinDslPluginOptions {
