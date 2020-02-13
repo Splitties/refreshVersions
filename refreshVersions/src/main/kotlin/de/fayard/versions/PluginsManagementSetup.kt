@@ -69,7 +69,8 @@ fun Settings.setupVersionPlaceholdersResolving() {
 private fun getPluginVersion(settings: Settings): String = runCatching {
     @Suppress("UnstableApiUsage")
     settings.buildscript.configurations.getByName("classpath").allDependencies.single {
-        it.group == "de.fayard.refreshVersions" && it.name == "de.fayard.refreshVersions.gradle.plugin"
+        it.group == "de.fayard.refreshVersions" && it.name == "de.fayard.refreshVersions.gradle.plugin" ||
+            it.group == "de.fayard" && it.name == "refreshVersions"
     }.version
 }.onFailure {
     println(it)
