@@ -25,18 +25,6 @@ class ArtifactVersionKeyRuleTest {
         println("Yo")
     }
 
-    @Test
-    fun `Test regex approach`() {
-        val regex = Regex("^org\\.jetbrains\\.(kotlinx)(?<Yo>:)kotlinx-([a-zA-Z0-9_]+)")
-        kotlinxArtifacts.first().let { artifact ->
-            println(artifact)
-            regex.find(artifact)?.let {
-                println("Found it!" + it.groups["Yo"]!!.value)
-                it.groups.forEach { group -> println("Group: ${group?.value}") }
-            }
-        }
-    }
-
     private val kotlinxArtifacts: List<String> = listOf(
         "org.jetbrains.kotlinx:kotlinx-coroutines-core",
         "org.jetbrains.kotlinx:kotlinx-coroutines-core-native",
