@@ -1,12 +1,9 @@
 package de.fayard.versions
 
 import de.fayard.versions.internal.ArtifactVersionKeyRule
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
-import kotlin.test.assertEquals
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
-@RunWith(JUnit4::class)
 class ArtifactVersionKeyRuleTest {
 
     @Test
