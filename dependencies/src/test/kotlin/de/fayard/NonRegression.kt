@@ -13,12 +13,12 @@ val resources: File = File(".").absoluteFile.resolve("src/test/resources")
 class NonRegression: FreeSpec({
 
     "We should never remove a property" {
-        val existingProperties = resources.resolve("dependencies-mapping-validated.properties")
-        val receivedProperties = resources.resolve("dependencies-mapping-received.properties")
+        val existingProperties = resources.resolve("dependencies-mapping-validated.txt")
+        val receivedProperties = resources.resolve("dependencies-mapping-received.txt")
 
         val existingMapping = existingProperties.readLines().mapNotNull { DependencyMapping.fromLine(it) }
         val receivedMapping = getArtifactNameToConstantMapping()
-        receivedProperties.writeText(receivedMapping.joinToString("\n"))
+        receivedProperties.writeText(receivedMapping.joinToString(separator = "\n", postfix = "\n"))
 
         val breakingChanges = existingMapping - receivedMapping
         withClue("diff -u ${existingProperties.absolutePath}  ${receivedProperties.absolutePath}") {
