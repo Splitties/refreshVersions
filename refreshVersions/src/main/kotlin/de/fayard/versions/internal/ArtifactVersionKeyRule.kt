@@ -26,43 +26,15 @@ internal abstract class ArtifactVersionKeyRule(
 
     companion object {
 
-        fun regexImpl(
+        operator fun invoke(
             artifactPattern: String,
             versionKeyPattern: String
         ): ArtifactVersionKeyRule = ArtifactVersionKeyRuleRegexImpl(artifactPattern, versionKeyPattern)
-
-        fun customImpl(
-            artifactPattern: String,
-            versionKeyPattern: String
-        ): ArtifactVersionKeyRule = ArtifactVersionKeyRuleCustomImpl(artifactPattern, versionKeyPattern)
 
         private val comparator: Comparator<ArtifactVersionKeyRule> = compareBy<ArtifactVersionKeyRule> {
             it.versionKeySignificantCharsLength
         }.thenBy { it.artifactPattern }.thenBy { it.versionKeyPattern }
     }
-}
-
-private class ArtifactVersionKeyRuleCustomImpl(
-    artifactPattern: String,
-    versionKeyPattern: String
-) : ArtifactVersionKeyRule(artifactPattern, versionKeyPattern) {
-
-    override fun matches(group: String, name: String): Boolean {
-        checkGroupAndName(group, name)
-        return artifactPatternMatcher.matches(group, name)
-    }
-
-    override fun key(group: String, name: String): String {
-        require(matches(group, name)) {
-            "Cannot get the key as this rule doesn't match the given artifact maven coordinates.\n" +
-                "artifactPattern: $artifactPattern\n" +
-                "group: $group name: $name"
-        }
-        return versionKeyReader.key(group, name)
-    }
-
-    private val artifactPatternMatcher = ArtifactPatternMatcher(textPattern = artifactPattern)
-    private val versionKeyReader = ArtifactVersionKeyReader(artifactPatternMatcher, textPattern = versionKeyPattern)
 }
 
 private class ArtifactVersionKeyRuleRegexImpl(

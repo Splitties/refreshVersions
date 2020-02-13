@@ -11,7 +11,7 @@ class ArtifactVersionKeyRuleTest {
 
     @Test
     fun `Test kotlinx libraries`() {
-        val versionKeyRule = ArtifactVersionKeyRule.regexImpl(
+        val versionKeyRule = ArtifactVersionKeyRule(
             artifactPattern = "org.jetbrains.kotlinx:kotlinx-???(-*)",
             versionKeyPattern = "              ^^^^^^^.        ^^^"
         )
