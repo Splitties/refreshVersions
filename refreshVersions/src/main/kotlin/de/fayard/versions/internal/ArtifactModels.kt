@@ -3,7 +3,7 @@ package de.fayard.versions.internal
 internal sealed class ArtifactPatternPart {
     data class Word(val value: String) : ArtifactPatternPart() {
         init {
-            require(value.all { it.isLetterOrDigit() })
+            require(value.all { it.isWordPart() })
         }
     }
     object Dot : ArtifactPatternPart() // .
@@ -11,4 +11,14 @@ internal sealed class ArtifactPatternPart {
     object WordPlaceholder : ArtifactPatternPart() // ???
     object SuffixPlaceholder : ArtifactPatternPart() // *
     object OptionalDashedSuffixPlaceholder : ArtifactPatternPart() // (-*)
+}
+
+internal sealed class ArtifactPart {
+    data class Word(val value: String) : ArtifactPart() {
+        init {
+            require(value.all { it.isWordPart() })
+        }
+    }
+    object Dot : ArtifactPart() // .
+    object Dash : ArtifactPart() // -
 }

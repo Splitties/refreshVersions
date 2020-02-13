@@ -13,6 +13,13 @@ internal class ArtifactPatternMatcher(textPattern: String) {
         return groupMatches(group) && nameMatches(name)
     }
 
+    val groupPatternParts: List<ArtifactPatternPart> =
+        buildArtifactPatternParts(textPattern.substringBefore(':'))
+
+    val namePatternParts: List<ArtifactPatternPart>? = if (':' in textPattern) {
+        buildArtifactPatternParts(textPattern.substringAfter(':'))
+    } else null
+
     private fun groupMatches(group: String): Boolean = matches(
         patternParts = groupPatternParts,
         text = group,
@@ -46,11 +53,6 @@ internal class ArtifactPatternMatcher(textPattern: String) {
         }
         error("Should never be reached. text: $text isGroup: $isGroup patternParts: $patternParts")
     }
-
-    private val groupPatternParts: List<ArtifactPatternPart> = buildArtifactPatternParts(textPattern.substringBefore(':'))
-    private val namePatternParts: List<ArtifactPatternPart>? = if (':' in textPattern) {
-        buildArtifactPatternParts(textPattern.substringAfter(':'))
-    } else null
 }
 
 
@@ -58,7 +60,7 @@ private fun buildArtifactPatternParts(text: String): List<ArtifactPatternPart> {
     require(':' !in text)
     return mutableListOf<ArtifactPatternPart>().also { list ->
         var index = 0
-        iterations@while (index <= text.lastIndex) {
+        iterations@ while (index <= text.lastIndex) {
             when (val c = text[index]) {
                 '.' -> list += Dot
                 '-' -> list += Dash
@@ -79,9 +81,9 @@ private fun buildArtifactPatternParts(text: String): List<ArtifactPatternPart> {
                 }
                 else -> {
                     require(c.isLetterOrDigit())
-                    val indexOfFirstNonDigit = text.indexOfFirst(startIndex = index) { it.isLetterOrDigit().not() }
-                    val word = if (indexOfFirstNonDigit == -1) text.substring(startIndex = index) else {
-                        text.substring(startIndex = index, endIndex = indexOfFirstNonDigit)
+                    val indexOfFirstNonWordPart = text.indexOfFirst(startIndex = index) { it.isWordPart().not() }
+                    val word = if (indexOfFirstNonWordPart == -1) text.substring(startIndex = index) else {
+                        text.substring(startIndex = index, endIndex = indexOfFirstNonWordPart)
                     }
                     list += Word(word)
                     index += word.length
@@ -111,7 +113,7 @@ private fun ArtifactPatternPart.indexOfNextPartIfMatching(text: String, startInd
         Dash -> if (text[startIndex] == '-') startIndex + 1 else -1
         WordPlaceholder -> {
             text.indexOfFirst(startIndex = startIndex) {
-                it.isLetterOrDigit().not()
+                it.isWordPart().not()
             }
         }
         SuffixPlaceholder -> 0

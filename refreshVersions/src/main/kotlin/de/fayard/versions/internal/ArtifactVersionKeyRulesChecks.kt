@@ -4,6 +4,7 @@ package de.fayard.versions.internal
 
 internal fun Char.isAllowedInMavenGroup(): Boolean = isLetterOrDigit() || this in "._-"
 internal fun Char.isAllowedInMavenName(): Boolean = isLetterOrDigit() || this in "._-"
+internal fun Char.isWordPart(): Boolean = isLetterOrDigit() || this == '_'
 
 internal fun checkGroupAndName(group: String, name: String) {
     group.indexOfFirst { it.isAllowedInMavenGroup().not() }.let { indexOfFirstInvalidChar ->
@@ -111,7 +112,7 @@ internal fun checkArtifactPatternIsValid(artifactPattern: String) {
             i++
         }
         else -> {
-            checkOrReport(c.isLetterOrDigit()) {
+            checkOrReport(c.isWordPart()) {
                 val allowedNonAlphanumericChars = ".:?(-*)"
                 "The following artifact pattern is invalid: $artifactPattern.\n" +
                     "Character at column ${i + 1} ($c) is not allowed. " +
