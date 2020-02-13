@@ -34,11 +34,14 @@ abstract class ArtifactVersionKeyReader private constructor() {
 }
 
 internal fun parseArtifactVersionKeysRules(fileContent: String): List<ArtifactVersionKeyRule> {
-    val minimized = fileContent
-        .replace("//.*$".toRegex(), "") // Remove line comments
-        .replace("\\s*\$".toRegex(), "") // Remove trailing whitespace
-    //.replace("^.*$".toRegex(), "") // Remove empty lines
-    val lines = minimized.lines()
+    val lines = fileContent.lineSequence()
+        .map {
+            val indexOfLineComment = it.indexOf("//")
+            if (indexOfLineComment == -1) it else it.substring(startIndex = 0, endIndex = indexOfLineComment)
+        }
+        .filter { it.isNotBlank() }
+        .map { it.trimEnd() }
+        .toList()
     require(lines.size % 2 == 0) {
         "Every artifact version key rule is made of two lines, but an odd count of rules lines has been found."
     }
