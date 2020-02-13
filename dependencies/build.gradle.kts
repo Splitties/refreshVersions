@@ -1,11 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.refreshVersions").version("0.8.4")
-    id("com.gradle.plugin-publish").version("0.10.1")
+    id("com.gradle.plugin-publish")
     `java-gradle-plugin`
     `maven-publish`
-    `kotlin-dsl`
+    id("org.gradle.kotlin.kotlin-dsl")
 }
 
 
@@ -14,6 +13,7 @@ group = "de.fayard"
 
 
 gradlePlugin {
+    de.fayard.versions.StabilityLevel.Alpha
     plugins {
         create("dependencies") {
             id = "de.fayard.dependencies"
@@ -42,9 +42,9 @@ pluginBundle {
 }
 
 dependencies {
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:_")
 
-    testImplementation(platform(notation = "org.junit:junit-bom:5.6.0"))
+    testImplementation(platform(notation = "org.junit:junit-bom:_"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
         because("allows tests to run from IDEs that bundle older version of launcher")
