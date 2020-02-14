@@ -22,8 +22,10 @@ abstract class ArtifactVersionKeyReader private constructor() {
 
     companion object {
 
-        fun fromRules(fileContent: String): ArtifactVersionKeyReader {
-            val rules = parseArtifactVersionKeysRules(fileContent)
+        fun fromRules(fileContent: String): ArtifactVersionKeyReader = fromRules(listOf(fileContent))
+
+        fun fromRules(filesContent: List<String>): ArtifactVersionKeyReader {
+            val rules = filesContent.flatMap { parseArtifactVersionKeysRules(it) }
             return object : ArtifactVersionKeyReader() {
                 override fun readVersionKey(group: String, name: String): String? {
                     return rules.firstOrNull { it.matches(group, name) }?.key(group, name)
