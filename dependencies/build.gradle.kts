@@ -13,7 +13,6 @@ group = "de.fayard"
 
 
 gradlePlugin {
-    de.fayard.versions.StabilityLevel.Alpha
     plugins {
         create("dependencies") {
             id = "de.fayard.dependencies"
@@ -51,6 +50,7 @@ dependencies {
     }
 
     implementation(gradleKotlinDsl())
+    api("de.fayard:refreshVersions:_")
 }
 
 
