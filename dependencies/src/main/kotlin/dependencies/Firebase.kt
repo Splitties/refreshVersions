@@ -104,7 +104,7 @@ interface Firebase {
     }
 }
 
-private class FirebaseImpl(isBom: Boolean) : Firebase {
+internal class FirebaseImpl(isBom: Boolean) : Firebase {
 
     private val suffix = if (isBom) "" else ":_"
     private val artifactPrefix = "com.google.firebase:firebase"
