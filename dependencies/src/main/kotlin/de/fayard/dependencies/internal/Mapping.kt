@@ -1,6 +1,7 @@
 package de.fayard.dependencies.internal
 
 import AndroidX
+import Firebase
 import Google
 import JakeWharton
 import Kotlin
@@ -9,34 +10,36 @@ import Ktor
 import Splitties
 import Square
 import Testing
-import kotlin.reflect.KClass
+import org.gradle.api.artifacts.ModuleIdentifier
+import kotlin.reflect.KProperty1
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 import kotlin.reflect.typeOf
 
-data class DependencyMapping(
+internal data class DependencyMapping(
     val group: String,
     val artifact: String,
     val constantName: String
 ) {
     companion object {
-        fun fromLine(line: String) : DependencyMapping? {
+        fun fromLine(line: String): DependencyMapping? {
             if (line.isEmpty()) return null
             val (key, constantName) = line.split("=").takeIf { it.size == 2 } ?: return null
             val (group, artifact) = key.split("..").takeIf { it.size == 2 } ?: return null
             return DependencyMapping(group, artifact, constantName)
         }
     }
+
     override fun toString(): String = "$group..$artifact=$constantName"
 }
 
-
-fun getArtifactNameToConstantMapping(): List<DependencyMapping> {
+internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = false): List<DependencyMapping> {
     return listOf(
         AndroidX,
         Google,
         JakeWharton,
+        Firebase,
         Kotlin,
         KotlinX,
         Splitties,
@@ -44,22 +47,51 @@ fun getArtifactNameToConstantMapping(): List<DependencyMapping> {
         Ktor,
         Testing
     ).flatMap { objectInstance ->
-        (objectInstance::class).getArtifactNameToConstantMapping(objectInstance::class.simpleName!!)
+        getArtifactNameToConstantMappingFromObject(objectInstance, excludeBomDependencies = excludeBomDependencies)
     }.sortedBy { it.toString() }
 }
 
-@UseExperimental(ExperimentalStdlibApi::class)
-private fun KClass<*>.getArtifactNameToConstantMapping(prefix: String): List<DependencyMapping> {
-    return nestedClasses.filter { it.visibility == KVisibility.PUBLIC }.flatMap { kClass ->
-        val propertyName = kClass.simpleName!!.let { c -> "${c.first().toLowerCase()}${c.substring(1)}"}
-        kClass.getArtifactNameToConstantMapping("$prefix.$propertyName")
-    } + this.memberProperties.filter {
-        it.isConst &&
-            it.visibility == KVisibility.PUBLIC &&
-            it.returnType == typeOf<String>()
-    }.map {
-        val artifactName = it.javaField!!.get(null).toString().substringBeforeLast(':') // Before version delimiter.
-        val constantName = "$prefix.${it.name}"
+internal fun getArtifactsFromDependenciesObject(objectInstance: Any): List<ModuleIdentifier> {
+    return getArtifactNameToConstantMappingFromObject(objectInstance, objectInstance::class.simpleName!!).map {
+        object : ModuleIdentifier {
+            override fun getGroup(): String = it.group
+            override fun getName(): String = it.artifact
+        }
+    }
+}
+
+private fun getArtifactNameToConstantMappingFromObject(
+    objectInstance: Any,
+    prefix: String = with(objectInstance::class) {
+        if (isCompanion) qualifiedName!!.removeSuffix(".Companion") else qualifiedName!!
+    },
+    excludeBomDependencies: Boolean = false
+): List<DependencyMapping> {
+    val objectClass = objectInstance::class
+    return objectClass.memberProperties.filter { kProperty ->
+        @UseExperimental(ExperimentalStdlibApi::class)
+        kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType != typeOf<String>()
+    }.flatMap { kProperty ->
+        @Suppress("unchecked_cast")
+        val nestedObjectInstance = (kProperty as KProperty1<Any?, Any>).get(objectInstance)
+        getArtifactNameToConstantMappingFromObject(
+            objectInstance = nestedObjectInstance,
+            prefix = "$prefix.${kProperty.name}",
+            excludeBomDependencies = excludeBomDependencies
+        )
+    } + objectClass.memberProperties.asSequence().filter { kProperty ->
+        @UseExperimental(ExperimentalStdlibApi::class)
+        kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType == typeOf<String>()
+    }.mapNotNull { kProperty ->
+        val artifactName = if (kProperty.isConst) {
+            kProperty.javaField!!.get(null).toString()
+        } else {
+            @Suppress("unchecked_cast")
+            (kProperty as KProperty1<Any?, String>).get(objectInstance)
+        }.also { value ->
+            if (value.count { it == ':' } < if (excludeBomDependencies) 2 else 1) return@mapNotNull null
+        }.substringBeforeLast(':') // Before version delimiter.
+        val constantName = "$prefix.${kProperty.name}"
         val group = artifactName.substringBefore(':')
         val name = artifactName.substringAfter(':')
         DependencyMapping(
