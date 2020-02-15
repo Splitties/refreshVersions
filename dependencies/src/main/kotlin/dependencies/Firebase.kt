@@ -1,7 +1,5 @@
 @file:Suppress("ObjectPropertyName", "SpellCheckingInspection")
 
-package dependencies
-
 import org.gradle.api.Incubating
 
 /**

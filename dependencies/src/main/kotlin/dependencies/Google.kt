@@ -1,6 +1,5 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import dependencies.Firebase
 import org.gradle.api.Incubating
 
 @Incubating
