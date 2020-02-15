@@ -1,4 +1,4 @@
-@file:Suppress("ObjectPropertyName", "SpellCheckingInspection")
+@file:Suppress("PackageDirectoryMismatch", "ObjectPropertyName", "SpellCheckingInspection")
 
 import org.gradle.api.Incubating
 
