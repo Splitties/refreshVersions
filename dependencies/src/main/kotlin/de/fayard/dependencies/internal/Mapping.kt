@@ -88,9 +88,14 @@ private fun getArtifactNameToConstantMappingFromObject(
         } else {
             @Suppress("unchecked_cast")
             (kProperty as KProperty1<Any?, String>).get(objectInstance)
-        }.also { value ->
-            if (value.count { it == ':' } < if (excludeBomDependencies) 2 else 1) return@mapNotNull null
-        }.substringBeforeLast(':') // Before version delimiter.
+        }.let { value ->
+            val columnCount = value.count { it == ':' }
+            if (columnCount < if (excludeBomDependencies) 2 else 1) return@mapNotNull null
+            val hasVersion = columnCount == 2
+            if (hasVersion) {
+                value.substringBeforeLast(':') // Before version delimiter.
+            } else value
+        }
         val constantName = "$prefix.${kProperty.name}"
         val group = artifactName.substringBefore(':')
         val name = artifactName.substringAfter(':')
