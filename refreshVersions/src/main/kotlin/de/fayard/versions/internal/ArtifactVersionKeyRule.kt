@@ -130,6 +130,10 @@ private fun createCapturingRegex(
             regexPatternBuilder.insert(0, artifactPattern[i])
         }
     }
+    if (isCapturing) {
+        regexPatternBuilder.insert(0, openingParenthesisSurrogate)
+        isCapturing = false
+    }
     val replaceIndexes = mutableListOf<Int>() //TODO: Reuse it while avoiding concurrency issues without prefs drop.
     orderedReplacementsForRegex.forEach { (patternPart, regexPart) ->
         replaceIndexes.clear()

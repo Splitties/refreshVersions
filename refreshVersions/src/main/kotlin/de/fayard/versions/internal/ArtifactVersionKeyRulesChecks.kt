@@ -75,7 +75,7 @@ internal fun checkArtifactPatternIsValid(artifactPattern: String) {
                     "An artifact pattern cannot end with a dot."
             }
             val nextChar = artifactPattern[i + 1]
-            val specialCharsAllowedNext = "?"
+            val specialCharsAllowedNext = "?*"
             checkOrReport(nextChar.isLetterOrDigit() || nextChar in specialCharsAllowedNext) {
                 "The following artifact pattern is invalid: $artifactPattern.\n" +
                     "Only letters, digits and the following characters are allowed after a dot: " +
