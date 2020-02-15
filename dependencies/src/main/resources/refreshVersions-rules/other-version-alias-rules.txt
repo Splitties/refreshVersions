@@ -1,8 +1,14 @@
-com.louiscad.splitties:splitties
+com.louiscad.splitties:splitties-*
              ^^^^^^^^^
 
 com.squareup.*:*
              ^
 
-org.robolectric
+org.robolectric:*
     ^^^^^^^^^^^
+
+io.ktor:*
+   ^^^^
+
+junit:junit
+^^^^^.^^^^^ // Allow to add digits/numbers in artifact rules if not too complicated
