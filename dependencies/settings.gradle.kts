@@ -9,6 +9,7 @@ pluginManagement {
 
 buildscript {
     repositories {
+        mavenLocal()
         gradlePluginPortal()
         mavenCentral()
     }
