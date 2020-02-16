@@ -45,20 +45,24 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
 
         val versionProperties: Map<String, String> = project.getVersionProperties()
 
+        val versionKeyReader = project.retrieveVersionKeyReader()
+
         val dependenciesWithVersionCandidates: List<Pair<Dependency, List<VersionCandidate>>> = runBlocking {
             allDependencies.mapNotNull { dependency ->
 
                 //TODO: Show status and progress.
 
                 // TODO: I think this should be done for all dependencies!!
-                if (dependency.isManageableVersion(versionProperties).not()) {
+                if (dependency.isManageableVersion(versionProperties, versionKeyReader).not()) {
                     return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
                     //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
                 }
                 val group = dependency.group ?: return@mapNotNull null
                 val resolvedVersion = resolveVersion(
                     properties = versionProperties,
-                    key = dependency.moduleIdentifier?.getVersionPropertyName() ?: return@mapNotNull null
+                    key = dependency.moduleIdentifier?.let {
+                        getVersionPropertyName(it, versionKeyReader)
+                    } ?: return@mapNotNull null
                 )
                 async {
                     dependency to getDependencyVersionsCandidates(
@@ -73,13 +77,16 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
         project.rootProject.updateVersionsProperties(dependenciesWithVersionCandidates)
     }
 
-    private fun Dependency.isManageableVersion(versionProperties: Map<String, String>): Boolean {
+    private fun Dependency.isManageableVersion(
+        versionProperties: Map<String, String>,
+        versionKeyReader: ArtifactVersionKeyReader
+    ): Boolean {
         return when {
             version == versionPlaceholder -> true
             @Suppress("UnstableApiUsage")
             reason == becauseRefreshVersions -> true
             moduleIdentifier?.isGradlePlugin == true -> {
-                val versionFromProperty = versionProperties[moduleIdentifier!!.getVersionPropertyName()]
+                val versionFromProperty = versionProperties[getVersionPropertyName(moduleIdentifier!!, versionKeyReader)]
                     ?: return false
                 versionFromProperty.isAVersionAlias().not()
             }
