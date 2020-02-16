@@ -20,6 +20,7 @@ class ArtifactVersionKeyRuleTest {
             assertEquals(expectedKey, versionKeyRule.key(group, name))
         }
         println("Yo")
+        //TODO: Rework or remove these tests (which overlap more complete tests in dependencies plugin)
     }
 
     private val kotlinxArtifacts: List<String> = listOf(
