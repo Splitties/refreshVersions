@@ -32,5 +32,3 @@ gradleEnterprise {
 }
 
 rootProject.name = "sample-kotlin"
-includeBuild("../refreshVersions")
-includeBuild("../dependencies")
