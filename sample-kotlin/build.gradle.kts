@@ -4,17 +4,13 @@ plugins {
     id("de.fayard.refreshVersions")
     id("de.fayard.dependencies")
     kotlin("jvm")
-    `build-scan`
+    id("org.gradle.kotlin.kotlin-dsl")
 }
 
 group = "de.fayard"
 
-buildScan {
-    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
-    setTermsOfServiceAgree("yes")
-}
-
 repositories {
+    mavenLocal()
     mavenCentral()
     google()
     jcenter()
