@@ -18,6 +18,11 @@ jobs:
           java-version: 11
       - uses: eskatos/gradle-command-action@v1
         with:
+          wrapper-directory: refreshVersions
+          build-root-directory: refreshVersions
+          arguments: publishToMavenLocal --stacktrace
+      - uses: eskatos/gradle-command-action@v1
+        with:
           wrapper-directory: dependencies
           build-root-directory: dependencies
           arguments: publishPlugins --scan -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
