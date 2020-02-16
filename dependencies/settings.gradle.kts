@@ -13,7 +13,7 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-    dependencies.classpath("de.fayard:refreshVersions:0.8.6")
+    dependencies.classpath("de.fayard:refreshVersions:0.8.7")
 }
 
 setupVersionPlaceholdersResolving()
