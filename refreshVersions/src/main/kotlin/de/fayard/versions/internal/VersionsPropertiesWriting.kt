@@ -12,6 +12,7 @@ internal fun Project.updateVersionsProperties(
     if (file.exists().not()) file.createNewFile()
 
     val properties: Map<String, String> = getVersionProperties(includeProjectProperties = false)
+    val versionKeyReader = project.retrieveVersionKeyReader()
 
     val newFileContent = buildString {
         appendln(fileHeader)
@@ -19,14 +20,16 @@ internal fun Project.updateVersionsProperties(
         // property related comments are placed above it. Also keep header and footer comments.
         val versionsWithUpdatesIfAvailable: List<VersionWithUpdateIfAvailable> = dependenciesWithLastVersion
             .mapNotNull { (dependency, versionsCandidates) ->
-                dependency.moduleIdentifier?.getVersionPropertyName()?.let {
-                    val currentVersion = properties[it]?.takeUnless { version -> version.isAVersionAlias() }
-                        ?: return@mapNotNull null
-                    VersionWithUpdateIfAvailable(
-                        key = it,
-                        currentVersion = currentVersion,
-                        versionsCandidates = versionsCandidates
-                    )
+                dependency.moduleIdentifier?.let { moduleId ->
+                    getVersionPropertyName(moduleId, versionKeyReader).let {
+                        val currentVersion = properties[it]?.takeUnless { version -> version.isAVersionAlias() }
+                            ?: return@mapNotNull null
+                        VersionWithUpdateIfAvailable(
+                            key = it,
+                            currentVersion = currentVersion,
+                            versionsCandidates = versionsCandidates
+                        )
+                    }
                 }
             }
             .distinctBy { it.key }

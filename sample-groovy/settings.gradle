@@ -19,6 +19,3 @@ buildscript {
 RefreshVersionsSetup.bootstrap(settings)
 
 rootProject.name = 'sample-groovy'
-includeBuild '../refreshVersions'
-includeBuild '../dependencies'
-

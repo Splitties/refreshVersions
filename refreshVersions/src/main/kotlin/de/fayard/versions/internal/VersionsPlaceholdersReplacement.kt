@@ -1,6 +1,6 @@
 package de.fayard.versions.internal
 
-import de.fayard.versions.internal.ArtifactGroupNaming.*
+import de.fayard.versions.VersionAliasProviderPlugin
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isGradlePlugin
 import de.fayard.versions.extensions.isRootProject
@@ -12,14 +12,24 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import org.gradle.kotlin.dsl.withType
 import java.io.File
 import java.util.Properties
 
 internal const val versionPlaceholder = "_"
 internal const val becauseRefreshVersions = "refreshVersions"
 
+internal fun Project.retrieveVersionKeyReader(): ArtifactVersionKeyReader {
+    return ArtifactVersionKeyReader.fromRules(
+        filesContent = rootProject.plugins.withType<VersionAliasProviderPlugin>().flatMap { providerPlugin ->
+            providerPlugin.artifactVersionKeyRules
+        }
+    )
+}
+
 internal fun Project.setupVersionPlaceholdersResolving() {
     require(this.isRootProject)
+    val versionKeyReader = retrieveVersionKeyReader()
     var properties: Map<String, String> = project.getVersionProperties()
     allprojects {
         val project : Project = this
@@ -41,7 +51,7 @@ internal fun Project.setupVersionPlaceholdersResolving() {
                 for (dependency in dependencies) {
                     val moduleIdentifier = dependency.moduleIdentifier
                         ?: error("Didn't find a group for the following dependency: $dependency")
-                    val propertyName = moduleIdentifier.getVersionPropertyName()
+                    val propertyName = getVersionPropertyName(moduleIdentifier, versionKeyReader)
                     val versionFromProperties = resolveVersion(properties, propertyName)
                         ?: synchronized(lock) {
                             properties = project.getVersionProperties() // Refresh properties
@@ -64,15 +74,32 @@ internal fun Project.setupVersionPlaceholdersResolving() {
     }
 }
 
-internal fun ModuleIdentifier.getVersionPropertyName(): String {
+internal fun getVersionPropertyName(
+    moduleIdentifier: ModuleIdentifier,
+    versionKeyReader: ArtifactVersionKeyReader
+): String {
     //TODO: Reconsider the TODO below because we don't care about settings.gradle(.kts) buildscript for plugins since
     // it can alias to any version property.
 
-    //TODO: Allow customizing the artifact grouping rules, including resetting the default ones.
-    // What about the plugins? Should we use a custom text-based file format to allow early configuration?
+    //TODO: What about the plugins? Should we use a custom text-based file format to allow early configuration?
     // If we go down that road, what about invalidation? Also, would that invalidate the whole build or can we do
     // better? Or would we have to hack to have the needed invalidation to happen?
-    return getVersionPropertyName(this)
+
+    val group = moduleIdentifier.group
+    val name = moduleIdentifier.name
+    val versionKey: String = versionKeyReader.readVersionKey(group = group, name = name) ?: when {
+        name == "gradle" && group == "com.android.tools.build" -> return "plugin.android"
+        moduleIdentifier.isGradlePlugin -> {
+            val pluginId = name.substringBeforeLast(".gradle.plugin")
+            return when {
+                pluginId.startsWith("org.jetbrains.kotlin") -> "version.kotlin"
+                pluginId.startsWith("com.android") -> "plugin.android"
+                else -> "plugin.$pluginId"
+            }
+        }
+        else -> "$group..$name"
+    }
+    return "version.$versionKey"
 }
 
 internal fun Project.getVersionProperties(
@@ -129,98 +156,3 @@ private fun `Write versions candidates using latest most stable version and get 
     writeWithAddedVersions(versionsPropertiesFile, propertyName, versionCandidates)
     versionCandidates.first().version.value
 }
-
-@JvmName("_getVersionPropertyName")
-private fun getVersionPropertyName(moduleIdentifier: ModuleIdentifier): String {
-    val group = moduleIdentifier.group
-    val name = moduleIdentifier.name
-    val versionKey: String = when (moduleIdentifier.findArtifactGroupingRule()?.groupNaming) {
-        GroupOnly -> group
-        GroupLastPart -> group.substringAfterLast('.')
-        GroupFirstTwoParts -> {
-            val groupFirstPart = group.substringBefore('.')
-            val groupSecondPart = group.substringAfter('.').substringBefore('.')
-            "$groupFirstPart.$groupSecondPart"
-        }
-        GroupFirstThreeParts -> {
-            val groupFirstPart = group.substringBefore('.')
-            val groupSecondPart = group.substringAfter('.').substringBefore('.')
-            val groupThirdPart = group.substringAfter('.').substringAfter('.').substringBefore('.')
-            "$groupFirstPart.$groupSecondPart.$groupThirdPart"
-        }
-        GroupAndNameFirstPart -> "$group.${name.substringBefore('-')}"
-        GroupLastPartAndNameSecondPart -> {
-            val groupLastPart = group.substringAfterLast('.')
-            val nameSecondPart = name.substringAfter('-').substringBefore('-')
-            "$groupLastPart.$nameSecondPart"
-        }
-        GroupFirstPartAndName -> {
-            val groupFirstPart = group.substringBefore('.')
-            "$groupFirstPart.$name"
-        }
-        null -> when {
-            name == "gradle" && group == "com.android.tools.build" -> return "plugin.android"
-            moduleIdentifier.isGradlePlugin -> {
-                val pluginId = name.substringBeforeLast(".gradle.plugin")
-                return when {
-                    pluginId.startsWith("org.jetbrains.kotlin") -> "version.kotlin"
-                    pluginId.startsWith("com.android") -> "plugin.android"
-                    else -> "plugin.$pluginId"
-                }
-            }
-            else -> "$group..$name"
-        }
-    }
-    return "version.$versionKey"
-}
-
-private fun ModuleIdentifier.findArtifactGroupingRule(): ArtifactGroupingRule? {
-    if (forceFullyQualifiedName(this)) return null
-    val fullArtifactName = "$group:$name"
-    //TODO: Make the rules user-editable
-    return artifactsGroupingRules.find { fullArtifactName.startsWith(it.artifactNamesStartingWith) }
-}
-
-private fun forceFullyQualifiedName(moduleIdentifier: ModuleIdentifier): Boolean {
-    val group = moduleIdentifier.group
-    val name = moduleIdentifier.name
-    if (group.startsWith("androidx.") && group != "androidx.legacy") {
-        val indexOfV = name.indexOf("-v")
-        if (indexOfV != -1 &&
-            indexOfV < name.lastIndex &&
-            name.substring(indexOfV + 1, name.lastIndex).all { it.isDigit() }
-        ) return true // AndroidX artifacts ending in "v18" or other "v${someApiLevel}" have standalone version number.
-    }
-    return false
-}
-
-@Suppress("SpellCheckingInspection")
-private val artifactsGroupingRules: List<ArtifactGroupingRule> = sequenceOf(
-    "org.jetbrains.kotlin:kotlin" to GroupLastPart,
-    "org.jetbrains.kotlinx:kotlinx" to GroupLastPartAndNameSecondPart,
-    "androidx." to GroupOnly,
-    "androidx.camera:camera-extensions" to GroupFirstPartAndName,
-    "androidx.camera:camera-view" to GroupFirstPartAndName,
-    "androidx.car:car-cluster" to GroupFirstPartAndName,
-    "androidx.core:core-role" to GroupFirstPartAndName,
-    "androidx.dynamicanimation:dynamicanimation-ktx" to GroupFirstPartAndName,
-    "androidx.media:media-widget" to GroupFirstPartAndName,
-    "androidx.slice:slice-builders-ktx" to GroupFirstPartAndName,
-    "androidx.test:core" to GroupAndNameFirstPart, // Rest of androidx.test share the same version.
-    "androidx.test.ext:junit" to GroupAndNameFirstPart,
-    "androidx.test.ext:truth" to GroupFirstTwoParts, // Same version as the rest of androidx.test.
-    "androidx.test.services" to GroupFirstTwoParts, // Same version as the rest of androidx.test.
-    "androidx.test.espresso.idling" to GroupFirstThreeParts, // Same version as other androidx.test.espresso artifacts.
-    "com.louiscad.splitties:splitties" to GroupLastPart,
-    "com.squareup.retrofit2" to GroupLastPart,
-    "com.squareup.okhttp3" to GroupLastPart,
-    "com.squareup.moshi" to GroupLastPart,
-    "com.squareup.sqldelight" to GroupLastPart,
-    "org.robolectric" to GroupLastPart,
-    "io.kotlintest" to GroupOnly
-).map { (artifactNamesStartingWith, groupNaming) ->
-    ArtifactGroupingRule(
-        artifactNamesStartingWith = artifactNamesStartingWith,
-        groupNaming = groupNaming
-    )
-}.sortedByDescending { it.artifactNamesStartingWith.length }.toList()

@@ -2,13 +2,25 @@ package de.fayard.dependencies
 
 
 import de.fayard.dependencies.internal.registerOrCreate
-import de.fayard.dependencies.internal.getArtifactNameToSplittiesConstantMapping
+import de.fayard.dependencies.internal.getArtifactNameToConstantMapping
+import de.fayard.versions.VersionAliasProviderPlugin
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import java.io.File
 
 
-open class DependenciesPlugin : Plugin<Project> {
+open class DependenciesPlugin : VersionAliasProviderPlugin() {
+
+    override val artifactVersionKeyRules: List<String> = listOf(
+        "androidx-version-alias-rules",
+        "google-version-alias-rules",
+        "kotlin(x)-version-alias-rules",
+        "other-version-alias-rules",
+        "testing-version-alias-rules"
+    ).map {
+        javaClass.getResourceAsStream("/refreshVersions-rules/$it.txt").bufferedReader().readText()
+    }
 
     override fun apply(project: Project) = with(PluginConfig) {
 
@@ -16,7 +28,7 @@ open class DependenciesPlugin : Plugin<Project> {
             group = "help"
             description = "Shows the mapping of Gradle dependencies and their typesafe accessors"
             doLast {
-                println(getArtifactNameToSplittiesConstantMapping().joinToString("\n"))
+                println(getArtifactNameToConstantMapping().joinToString("\n"))
             }
         }
     }

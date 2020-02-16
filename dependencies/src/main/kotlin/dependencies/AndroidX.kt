@@ -294,12 +294,16 @@ object AndroidX {
         const val core = "$artifactPrefix-core:_"
         const val foundation = "$artifactPrefix-foundation:_"
         const val framework = "$artifactPrefix-framework:_"
+        const val geometry = "$artifactPrefix-geometry:_"
+        const val graphics = "$artifactPrefix-graphics:_"
         const val layout = "$artifactPrefix-layout:_"
         const val material = "$artifactPrefix-material:_"
         const val platform = "$artifactPrefix-platform:_"
         const val test = "$artifactPrefix-test:_"
         const val text = "$artifactPrefix-text:_"
         const val tooling = "$artifactPrefix-tooling:_"
+        const val unit = "$artifactPrefix-unit:_"
+        const val util = "$artifactPrefix-util:_"
         const val vector = "$artifactPrefix-vector:_"
     }
 
@@ -389,9 +393,6 @@ object AndroidX {
 
         const val jankTestHelper = "$group.jank:janktesthelper:_"
         const val uiAutomator = "$group.uiautomator:uiautomator:_"
-
-        const val jankTestHelperV23 = "$group.jank:janktesthelper-v23:_"
-        const val uiAutomatorV18 = "$group.uiautomator:uiautomator-v18:_"
 
         object Espresso {
             private const val group = "androidx.test.espresso"
