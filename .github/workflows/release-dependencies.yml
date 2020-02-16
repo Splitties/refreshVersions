@@ -1,6 +1,6 @@
 # https://help.github.com/en/github/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions
 # https://github.com/marketplace/actions/gradle-command
-name: Publish plugin depndencies
+name: Publish plugin dependencies
 on:
   push:
     paths:
