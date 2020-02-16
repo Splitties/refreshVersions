@@ -3,27 +3,28 @@
 name: Check composite build
 on:
   pull_request:
-    types: [assigned, opened, synchronize, reopened, ready_for_review]
-    paths-ignore:
-      - '**.md'
-      - '**.adoc'
-      - '.editorconfig'
-      - '**/.gitignore'
-      - 'sample-android/**'
-      - 'sample-bleeding-edge/**'
-      - 'sample-versionsOnlyMode/**'
+    paths:
+      - 'refreshVersions/**'
+      - 'dependencies/**'
+      - 'sample-kotlin/**'
+      - 'sample-groovy/**'
+      - '!**.md'
+      - '!.editorconfig'
+      - '!**/.gitignore'
+      - '!**.adoc'
   push:
     branches:
       - develop
       - master
-    paths-ignore:
-      - '**.md'
-      - '**.adoc'
-      - '.editorconfig'
-      - '**/.gitignore'
-      - 'sample-android/**'
-      - 'sample-bleeding-edge/**'
-      - 'sample-versionsOnlyMode/**'
+    paths:
+      - 'refreshVersions/**'
+      - 'dependencies/**'
+      - 'sample-kotlin/**'
+      - 'sample-groovy/**'
+      - '!**.md'
+      - '!.editorconfig'
+      - '!**/.gitignore'
+      - '!**.adoc'
 jobs:
   composite-check-all:
     runs-on: ubuntu-latest
@@ -44,6 +45,11 @@ jobs:
           arguments: publishToMavenLocal --stacktrace
       - uses: eskatos/gradle-command-action@v1
         with:
-          wrapper-directory: composite
-          build-root-directory: composite
-          arguments: checkAll --stacktrace
+          wrapper-directory: sample-kotlin
+          build-root-directory: sample-kotlin
+          arguments: check --stacktrace
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          wrapper-directory: sample-groovy
+          build-root-directory: sample-groovy
+          arguments: check --stacktrace

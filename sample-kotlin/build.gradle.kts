@@ -4,17 +4,13 @@ plugins {
     id("de.fayard.refreshVersions")
     id("de.fayard.dependencies")
     kotlin("jvm")
-    `build-scan`
+    id("org.gradle.kotlin.kotlin-dsl")
 }
 
 group = "de.fayard"
 
-buildScan {
-    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
-    setTermsOfServiceAgree("yes")
-}
-
 repositories {
+    mavenLocal()
     mavenCentral()
     google()
     jcenter()
@@ -37,6 +33,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-urlconnection:3.10.0")
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.mongodb:mongo-java-driver:3.11.0")
+    implementation(kotlin("script-runtime"))
 
 }
 

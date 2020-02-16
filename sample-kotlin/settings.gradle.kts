@@ -15,11 +15,20 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-    dependencies.classpath("de.fayard.refreshVersions:de.fayard.refreshVersions.gradle.plugin:0.8.6")
+    dependencies.classpath("de.fayard:refreshVersions:0.8.7")
 }
 
 setupVersionPlaceholdersResolving()
 
+plugins {
+    id("com.gradle.enterprise").version("3.1.1")
+}
+
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+    }
+}
+
 rootProject.name = "sample-kotlin"
-includeBuild("../refreshVersions")
-includeBuild("../dependencies")

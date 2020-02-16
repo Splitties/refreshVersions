@@ -1,0 +1,14 @@
+com.google.firebase:firebase-bom
+                    ^^^^^^^^^^^^
+
+com.google.firebase:firebase-*
+                    ^^^^^^^^^^
+
+com.google.android.material:material
+    ^^^^^^^^^^^^^^^^^^^^^^^
+
+com.google.android.wearable:wearable
+    ^^^^^^^^^^^^^^^^^^^^^^^
+
+com.google.android.gms:play-services-*
+    ^^^^^^.^^^^^^^.    ^^^^^^^^^^^^^^^
