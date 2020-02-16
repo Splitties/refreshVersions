@@ -394,9 +394,6 @@ object AndroidX {
         const val jankTestHelper = "$group.jank:janktesthelper:_"
         const val uiAutomator = "$group.uiautomator:uiautomator:_"
 
-        const val jankTestHelperV23 = "$group.jank:janktesthelper-v23:_"
-        const val uiAutomatorV18 = "$group.uiautomator:uiautomator-v18:_"
-
         object Espresso {
             private const val group = "androidx.test.espresso"
             private const val artifactPrefix = "$group:espresso"
