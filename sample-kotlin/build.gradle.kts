@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.refreshVersions")
     id("de.fayard.dependencies")
     kotlin("jvm")
     id("org.gradle.kotlin.kotlin-dsl")

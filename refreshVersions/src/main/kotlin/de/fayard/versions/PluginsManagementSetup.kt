@@ -6,6 +6,7 @@ import de.fayard.versions.internal.noteUsedPluginDependency
 import de.fayard.versions.internal.resolveVersion
 import de.fayard.versions.internal.writeUsedRepositories
 import org.gradle.api.initialization.Settings
+import org.gradle.kotlin.dsl.apply
 import java.util.Properties
 
 object RefreshVersionsSetup {
@@ -105,6 +106,9 @@ fun Settings.setupVersionPlaceholdersResolving() {
                 }
             }
         }
+    }
+    gradle.rootProject {
+        apply<de.fayard.RefreshVersionsPlugin>()
     }
 }
 

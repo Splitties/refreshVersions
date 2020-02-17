@@ -1,4 +1,4 @@
-import de.fayard.versions.setupVersionPlaceholdersResolving
+import de.fayard.versions.bootstrapRefreshVersions
 
 pluginManagement {
     repositories {
@@ -16,14 +16,10 @@ buildscript {
     dependencies.classpath("de.fayard:refreshVersions:0.9.0")
 }
 
-setupVersionPlaceholdersResolving()
+bootstrapRefreshVersions()
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")
-}
-
-settings.gradle.allprojects {
-    apply<de.fayard.RefreshVersionsPlugin>()
 }
 
 gradleEnterprise {

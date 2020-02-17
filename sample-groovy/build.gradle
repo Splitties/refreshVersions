@@ -1,5 +1,4 @@
 plugins {
-    id 'de.fayard.refreshVersions'
     id 'de.fayard.dependencies'
     id 'com.gradle.build-scan'
     id 'application'
