@@ -30,6 +30,7 @@ tasks.register<DefaultTask>("hello") {
 
 repositories {
     mavenLocal()
+    gradlePluginPortal()
     jcenter()
     mavenCentral()
 }
