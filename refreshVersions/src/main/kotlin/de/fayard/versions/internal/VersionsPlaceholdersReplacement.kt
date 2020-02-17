@@ -35,10 +35,11 @@ internal fun Project.setupVersionPlaceholdersResolving() {
 
         configurations.all {
             val configuration: Configuration = this
+
             if (configuration.name in configurationNamesToIgnore) return@all
+
             @Suppress("UnstableApiUsage")
             withDependencies {
-                println("Configuration $configuration extends from: ${configuration.extendsFrom}")
                 val dependencies = filterIsInstance<ModuleDependency>()
 
                 val dependenciesToReplace = dependencies.filter { it.version == versionPlaceholder }
@@ -49,7 +50,7 @@ internal fun Project.setupVersionPlaceholdersResolving() {
                     logger.warn(""":${project.name}:${configuration.name} found hardcoded dependencies versions $warnFor   See https://github.com/jmfayard/refreshVersions/issues/160 """)
                 }
 
-                for (dependency in dependencies) {
+                for (dependency in dependenciesToReplace) {
                     val moduleIdentifier = dependency.moduleIdentifier
                         ?: error("Didn't find a group for the following dependency: $dependency")
                     val propertyName = getVersionPropertyName(moduleIdentifier, versionKeyReader)
