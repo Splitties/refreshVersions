@@ -1,6 +1,6 @@
 # https://help.github.com/en/github/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions
 # https://github.com/marketplace/actions/gradle-command
-name: Check composite build
+name: Check build and tests of plugins and samples
 on:
   pull_request:
     paths:
@@ -26,7 +26,7 @@ on:
       - '!**/.gitignore'
       - '!**.adoc'
 jobs:
-  composite-check-all:
+  check-all:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -37,12 +37,12 @@ jobs:
         with:
           wrapper-directory: refreshVersions
           build-root-directory: refreshVersions
-          arguments: publishToMavenLocal --stacktrace
+          arguments: check publishToMavenLocal --stacktrace
       - uses: eskatos/gradle-command-action@v1
         with:
           wrapper-directory: dependencies
           build-root-directory: dependencies
-          arguments: publishToMavenLocal --stacktrace
+          arguments: check publishToMavenLocal --stacktrace
       - uses: eskatos/gradle-command-action@v1
         with:
           wrapper-directory: sample-kotlin
