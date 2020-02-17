@@ -153,6 +153,11 @@ private fun `Write versions candidates using latest most stable version and get 
         name = name,
         resolvedVersion = null
     )
+    if (versionCandidates.isEmpty()) {
+        throw IllegalStateException("Unable to find a version candidate for the following artifact:\n" +
+            "$group:$name\n" +
+            "Please, check this artifact exists in the configured repositories.")
+    }
     writeWithAddedVersions(versionsPropertiesFile, propertyName, versionCandidates)
     versionCandidates.first().version.value
 }
