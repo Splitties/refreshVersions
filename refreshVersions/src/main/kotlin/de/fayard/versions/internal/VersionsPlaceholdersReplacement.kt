@@ -8,7 +8,6 @@ import de.fayard.versions.extensions.moduleIdentifier
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
-import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
@@ -32,20 +31,22 @@ internal fun Project.setupVersionPlaceholdersResolving() {
     val versionKeyReader = retrieveVersionKeyReader()
     var properties: Map<String, String> = project.getVersionProperties()
     allprojects {
-        val project : Project = this
+        val project: Project = this
 
         configurations.all {
             val configuration: Configuration = this
+            if (configuration.name in configurationNamesToIgnore) return@all
             @Suppress("UnstableApiUsage")
             withDependencies {
+                println("Configuration $configuration extends from: ${configuration.extendsFrom}")
                 val dependencies = filterIsInstance<ModuleDependency>()
 
                 val dependenciesToReplace = dependencies.filter { it.version == versionPlaceholder }
                 removeAll(dependenciesToReplace)
 
-                if (dependencies.any { it.version != versionPlaceholder }) {
+                if (dependencies.any { it.hasHardcodedVersion() }) {
                     val warnFor = (dependencies - dependenciesToReplace).take(3).map { it.name }
-                    logger.warn(""":${project.name}:${configuration.name} found hardcoded dependencies $warnFor   See https://github.com/jmfayard/refreshVersions/issues/160 """)
+                    logger.warn(""":${project.name}:${configuration.name} found hardcoded dependencies versions $warnFor   See https://github.com/jmfayard/refreshVersions/issues/160 """)
                 }
 
                 for (dependency in dependencies) {
@@ -73,6 +74,14 @@ internal fun Project.setupVersionPlaceholdersResolving() {
         }
     }
 }
+
+private val configurationNamesToIgnore: List<String> = listOf(
+    "embeddedKotlin",
+    "kotlinCompilerPluginClasspath",
+    "kotlinCompilerClasspath"
+)
+
+private fun ModuleDependency.hasHardcodedVersion(): Boolean = version != null && version != versionPlaceholder
 
 internal fun getVersionPropertyName(
     moduleIdentifier: ModuleIdentifier,
