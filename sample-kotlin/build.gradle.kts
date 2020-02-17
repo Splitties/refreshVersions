@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("de.fayard.dependencies")
     kotlin("jvm")
-    id("org.gradle.kotlin.kotlin-dsl")
 }
 
 group = "de.fayard"
