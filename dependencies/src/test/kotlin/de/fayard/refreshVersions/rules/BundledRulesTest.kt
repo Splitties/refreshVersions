@@ -2,6 +2,7 @@ package de.fayard.refreshVersions.rules
 
 import de.fayard.versions.internal.ArtifactVersionKeyReader
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -25,6 +26,7 @@ class BundledRulesTest {
     }
 
     @Test
+    @Disabled("Not implemented yet")
     fun `check all dependencies constants have version key rules`() {
         TODO()
     }
