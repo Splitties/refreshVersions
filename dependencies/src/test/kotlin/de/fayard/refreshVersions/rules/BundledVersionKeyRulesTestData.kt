@@ -123,8 +123,6 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.test.services", dependency = AndroidX.test.services),
     versionKeyWithModules(expected = "androidx.test.jank", dependency = AndroidX.test.jankTestHelper),
     versionKeyWithModules(expected = "androidx.test.uiautomator", dependency = AndroidX.test.uiAutomator),
-    versionKeyWithModules(expected = "androidx.test.jank", dependency = AndroidX.test.jankTestHelperV23),
-    versionKeyWithModules(expected = "androidx.test.uiautomator", dependency = AndroidX.test.uiAutomatorV18),
     versionKeyWithModules(expected = "androidx.test.espresso", dependenciesObject = AndroidX.test.espresso,
         excludes = getArtifactsFromDependenciesObject(AndroidX.test.espresso.idling).map { "${it.group}:${it.name}" }
     ),
