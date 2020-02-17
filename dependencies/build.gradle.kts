@@ -4,7 +4,7 @@ plugins {
     id("com.gradle.plugin-publish")
     `java-gradle-plugin`
     `maven-publish`
-    id("org.gradle.kotlin.kotlin-dsl")
+    `kotlin-dsl`
 }
 
 
@@ -30,6 +30,7 @@ tasks.register<DefaultTask>("hello") {
 
 repositories {
     mavenLocal()
+    gradlePluginPortal()
     jcenter()
     mavenCentral()
 }

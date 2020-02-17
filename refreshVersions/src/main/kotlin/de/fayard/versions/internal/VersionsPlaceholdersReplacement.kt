@@ -7,6 +7,7 @@ import de.fayard.versions.extensions.isRootProject
 import de.fayard.versions.extensions.moduleIdentifier
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
@@ -30,11 +31,25 @@ internal fun Project.setupVersionPlaceholdersResolving() {
     val versionKeyReader = retrieveVersionKeyReader()
     var properties: Map<String, String> = project.getVersionProperties()
     allprojects {
+        val project: Project = this
+
         configurations.all {
+            val configuration: Configuration = this
+
+            if (configuration.name in configurationNamesToIgnore) return@all
+
             @Suppress("UnstableApiUsage")
             withDependencies {
-                val dependenciesToReplace = filter { it is ModuleDependency && it.version == versionPlaceholder }
+                val dependencies = filterIsInstance<ModuleDependency>()
+
+                val dependenciesToReplace = dependencies.filter { it.version == versionPlaceholder }
                 removeAll(dependenciesToReplace)
+
+                if (dependencies.any { it.hasHardcodedVersion() }) {
+                    val warnFor = (dependencies - dependenciesToReplace).take(3).map { it.name }
+                    logger.warn(""":${project.name}:${configuration.name} found hardcoded dependencies versions $warnFor   See https://github.com/jmfayard/refreshVersions/issues/160 """)
+                }
+
                 for (dependency in dependenciesToReplace) {
                     val moduleIdentifier = dependency.moduleIdentifier
                         ?: error("Didn't find a group for the following dependency: $dependency")
@@ -60,6 +75,14 @@ internal fun Project.setupVersionPlaceholdersResolving() {
         }
     }
 }
+
+private val configurationNamesToIgnore: List<String> = listOf(
+    "embeddedKotlin",
+    "kotlinCompilerPluginClasspath",
+    "kotlinCompilerClasspath"
+)
+
+private fun ModuleDependency.hasHardcodedVersion(): Boolean = version != null && version != versionPlaceholder
 
 internal fun getVersionPropertyName(
     moduleIdentifier: ModuleIdentifier,
@@ -140,6 +163,11 @@ private fun `Write versions candidates using latest most stable version and get 
         name = name,
         resolvedVersion = null
     )
+    if (versionCandidates.isEmpty()) {
+        throw IllegalStateException("Unable to find a version candidate for the following artifact:\n" +
+            "$group:$name\n" +
+            "Please, check this artifact exists in the configured repositories.")
+    }
     writeWithAddedVersions(versionsPropertiesFile, propertyName, versionCandidates)
     versionCandidates.first().version.value
 }

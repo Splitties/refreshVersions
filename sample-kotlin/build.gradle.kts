@@ -1,10 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.refreshVersions")
     id("de.fayard.dependencies")
     kotlin("jvm")
-    id("org.gradle.kotlin.kotlin-dsl")
 }
 
 group = "de.fayard"
@@ -27,7 +25,8 @@ dependencies {
     implementations(listOf(AndroidX.browser, AndroidX.cardView))
     testImplementations(listOf(KotlinX.coroutines.core, KotlinX.coroutines.coreCommon))
     testImplementations(listOf(Testing.kotlinTest.runner.jvm, Testing.kotlinTest.extensions.extensions))
-    implementation("com.google.guava:guava:_")
+    testImplementation("junit:junit:4.12")
+    implementation("com.google.guava:guava:15.0")
     implementation("com.google.inject:guice:2.0")
     implementation("com.squareup.okhttp3:okhttp:3.10.0")
     implementation("com.squareup.okhttp3:okhttp-urlconnection:3.10.0")

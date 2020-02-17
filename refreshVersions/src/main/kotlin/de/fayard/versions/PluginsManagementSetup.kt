@@ -6,7 +6,50 @@ import de.fayard.versions.internal.noteUsedPluginDependency
 import de.fayard.versions.internal.resolveVersion
 import de.fayard.versions.internal.writeUsedRepositories
 import org.gradle.api.initialization.Settings
+import org.gradle.kotlin.dsl.apply
 import java.util.Properties
+
+object RefreshVersionsSetup {
+
+    /***
+     * Configuration with the Gradle Kotlin DSL
+     *
+     * ```groovy
+    // settings.gradle
+    import de.fayard.versions.RefreshVersionsSetup
+    buildscript {
+        dependencies.classpath("de.fayard:refreshVersions:VERSION")
+    }
+
+    RefreshVersionsSetup.bootstrap(settings)
+     * ```
+     */
+    @JvmStatic
+    fun bootstrap(settings: Settings) {
+        settings.setupVersionPlaceholdersResolving()
+    }
+
+}
+
+/**
+ * Boostrap refreshVersion in settings.gradle.kts
+ *
+```kotlin
+// settings.gradle.kts
+import de.fayard.versions.bootstrapRefreshVersions
+
+buildscript {
+  dependencies.classpath("de.fayard:refreshVersions:VERSION")
+}
+
+settings.bootstrapRefreshVersions()
+```
+
+ */
+fun Settings.bootstrapRefreshVersions() : Unit =
+    settings.setupVersionPlaceholdersResolving()
+
+
 
 /**
  * Sets up a resolution strategy for the plugins that does the following:
@@ -63,6 +106,9 @@ fun Settings.setupVersionPlaceholdersResolving() {
                 }
             }
         }
+    }
+    gradle.rootProject {
+        apply<de.fayard.RefreshVersionsPlugin>()
     }
 }
 

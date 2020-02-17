@@ -1,4 +1,7 @@
-# Unreleased
+# Roadmap
+
+- [x] Make the new updater the default
+- [x] Bootstraping refreshVersions #155
 
 # v0.8.x
 
@@ -14,7 +17,7 @@ plugins {
 }
 ```
 
-We are not quite ready yet to extract the useful parts of `buildSrcVersions` to another plugin, 
+We are not quite ready yet to extract the useful parts of `buildSrcVersions` to another plugin,
 so if you need the features from buildSrcVersions, stay with this for now:
 
 ```groovy
@@ -37,7 +40,7 @@ plugins {
   // or
   id("de.fayard.buildSrcVersions).version("0.7.0")
 }
-``` 
+```
 
 Next step: integration with https://github.com/LouisCAD/Splitties
 
@@ -55,14 +58,14 @@ Changes:
 
 - useFqdnFor() should also work for groups #99
 - Always update version "_" or "+" #98
-- (maybe) Non deterministic behavior #95 
+- (maybe) Non deterministic behavior #95
 - rejectVersionIf { isStable(currentVersion) && isNonStable(candidate.version) } #96
 
 # 0.6.4
 
 - isStable(currentVersion) && isNonStable(candidate.version) #96
 - useFqdnFor() should also work for groups #99
-- 
+-
 
 # 0.6.3
 
@@ -73,14 +76,14 @@ Fix #94: Libs.kt is broken by a wrong indent
 If you want to manage your versions from gradle.properties for better compilation avoidance,
 but still want to have buildSrc/src/main/Libs.kt generated in your multi-module Gradle build,
 that's now possible.
- 
+
 - Run `$ ./gradlew refreshVersions && ./gradlew buildSrcVersions`
 - To look for available dependency updates, run `$ ./gradlew refreshVersions`
 - When you add a dependency, run `$ ./gradlew buildSrcVersions`
 
 Other changes
 
-- Fixes #92 gradle.properties is getting updated and Versions.kt stops updating when running buildSrcVersions  
+- Fixes #92 gradle.properties is getting updated and Versions.kt stops updating when running buildSrcVersions
 - Add non regression for identifiers in gradle.properties
 - Add Github issue and pull-request templates
 - Improve README
@@ -95,17 +98,17 @@ Other changes
 
 # 0.6.0
 
-Major new feature: 
+Major new feature:
 
 A new task `:refreshVersions` now generates Gradle properties for all dependencies
-and plugins inside `gradle.properties` AND their available updates, if any. 
+and plugins inside `gradle.properties` AND their available updates, if any.
 The plugin also installed a Gradle resolutionStrategy that enforce the use of those versions, if present.
 
 See documentation at https://github.com/jmfayard/buildSrcVersions/issues/77
 
 See a detail of the changes from `versionsOnlyMode` at https://github.com/jmfayard/buildSrcVersions/issues/67
 
-**Breaking change:** 
+**Breaking change:**
 
 Deprecated plugin configurations were removed from the `buildSrcVersions { ... }` extension:
 - `useFdqnFor` was a typo, corrected to **useFqdnFor**
@@ -115,7 +118,7 @@ https://github.com/jmfayard/buildSrcVersions/issues/53
 
 # 0.5.0
 
-Major new feature! 
+Major new feature!
 versionsOnlyMode for simple Gradle projects who just need the versions
 5 modes supported: KOTLIN_VAL, KOTLIN_OBJECT, GROOVY_DEF, GROOVY_EXT, GRADLE_PROPERTIES
 See https://github.com/jmfayard/buildSrcVersions/issues/55
@@ -153,7 +156,7 @@ See https://github.com/jmfayard/buildSrcVersions/issues/55
 - IDE integration works again in Android 3.5 (bug #123032843)
 - Update to gradle-versions-plugin 0.22
 - Upgradle to Gradle 5.5.1
-- #43 by runningcode: Remove whitespace at the end of lines which do not include a comment. 
+- #43 by runningcode: Remove whitespace at the end of lines which do not include a comment.
 - #41 by lebeshev: use fully qualified name for: "library", "generator", "annotations" (breaking change)
 - #42 do not create buildSrc/settings.gradle.kts, check if buildSrc/build.gradle exists before creating buildSrc/build.gradle.kts
 - Don't include version which include "-eap-"
@@ -166,16 +169,16 @@ See https://github.com/jmfayard/buildSrcVersions/issues/55
 - Fix `Versions.kt` not compiling when the version name is very large #36
 - Do not recreate `buildSrc/.gitignore` if the user removes it #37
 
- 
+
 
 # 0.3.2
 
 - Invalid Comment linebreak #32
-- Don't inform about exceeded version number #29 
+- Don't inform about exceeded version number #29
 
 # 0.3.1
 
-- Allows to configure a set of dependencies for which to use the FDQN #25 
+- Allows to configure a set of dependencies for which to use the FDQN #25
 
 ```kotlin
 buildSrcVersions {
@@ -191,15 +194,15 @@ Why? and What? is described in details here https://github.com/jmfayard/buildSrc
 
 
 - Clean-up task group/description/output
-- [Fix #561 use non-breaking spaces in line comments](https://github.com/square/kotlinpoet/issues/561) 
+- [Fix #561 use non-breaking spaces in line comments](https://github.com/square/kotlinpoet/issues/561)
 - Extrace-space at the end of Versions.kt properties #24
- 
+
 
 
 
 # 0.2.6 Polish Versions.kt (see issue #14)
 
-- remove misleading "up-to-date" comment 
+- remove misleading "up-to-date" comment
 - avoid pulling in RC and alpha versions to the available tag
 - remove the website info, we'd like absolutely nothing in the versions file apart from the name, the version number
 - edit KDOC to document that the plugin update the comment but YOU edit the version
@@ -208,21 +211,21 @@ Why? and What? is described in details here https://github.com/jmfayard/buildSrc
 
 # 0.2.5
 
-- #10 Detect when multiple dependencies from the same group use the same version 
+- #10 Detect when multiple dependencies from the same group use the same version
 - #8 Order dependencies by group
 
 
 # 0.2.4
 
 - #4 SyncLibs generate wrong output file
-- #1 Make it slightly easier to manually update the version 
+- #1 Make it slightly easier to manually update the version
 - #3 Add buildSrc/.gitignore
 
- 
+
 
 # 0.2.3
 
-- Change folder to `buildSrc/src/main/kotlin` see [separate language source files](https://docs.gradle.org/current/userguide/organizing_gradle_projects.html#sec:separate_language_source_files)  
+- Change folder to `buildSrc/src/main/kotlin` see [separate language source files](https://docs.gradle.org/current/userguide/organizing_gradle_projects.html#sec:separate_language_source_files)
 - Create empty `buildSrc/settings.gradle.kts` if none exists
 
 # 0.2.2
