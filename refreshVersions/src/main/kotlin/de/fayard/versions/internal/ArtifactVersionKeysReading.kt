@@ -4,10 +4,7 @@
 
 package de.fayard.versions.internal
 
-import org.gradle.api.Incubating
-
-@Incubating
-abstract class ArtifactVersionKeyReader private constructor() {
+internal abstract class ArtifactVersionKeyReader private constructor() {
 
     abstract fun readVersionKey(group: String, name: String): String?
 
