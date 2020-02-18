@@ -1,6 +1,6 @@
 package de.fayard.versions.internal
 
-import de.fayard.versions.VersionAliasProviderPlugin
+import de.fayard.versions.artifactVersionKeyReader
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isGradlePlugin
 import de.fayard.versions.extensions.isRootProject
@@ -11,19 +11,14 @@ import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
-import org.gradle.kotlin.dsl.withType
 import java.io.File
 import java.util.Properties
 
 internal const val versionPlaceholder = "_"
 internal const val becauseRefreshVersions = "refreshVersions"
 
-internal fun Project.retrieveVersionKeyReader(): ArtifactVersionKeyReader {
-    return ArtifactVersionKeyReader.fromRules(
-        filesContent = rootProject.plugins.withType<VersionAliasProviderPlugin>().flatMap { providerPlugin ->
-            providerPlugin.artifactVersionKeyRules
-        }
-    )
+internal fun @Suppress("unused") Project.retrieveVersionKeyReader(): ArtifactVersionKeyReader {
+    return artifactVersionKeyReader
 }
 
 internal fun Project.setupVersionPlaceholdersResolving() {
