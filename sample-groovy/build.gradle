@@ -1,5 +1,4 @@
 plugins {
-    id 'com.gradle.build-scan'
     id 'application'
     id 'idea'
     id 'java'
@@ -16,13 +15,8 @@ repositories {
 }
 
 dependencies {
-    compile("com.google.guava:guava:_")
-    compile("com.google.inject:guice:_")
-    compile(AndroidX.annotation)
-    compile("org.jetbrains:annotations:_")
-}
-
-buildScan {
-    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
-    setTermsOfServiceAgree("yes")
+    implementation("com.google.guava:guava:_")
+    implementation("com.google.inject:guice:_")
+    implementation(AndroidX.annotation)
+    implementation("org.jetbrains:annotations:_")
 }
