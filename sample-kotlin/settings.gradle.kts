@@ -16,7 +16,7 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-    dependencies.classpath("de.fayard:dependencies:0.5.5")
+    dependencies.classpath("de.fayard:dependencies:0.5.6-SNAPSHOT")
 }
 
 bootstrapRefreshVersions(DependenciesPlugin.artifactVersionKeyRules)
