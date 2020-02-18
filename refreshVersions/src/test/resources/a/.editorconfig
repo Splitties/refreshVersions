@@ -1,7 +1,0 @@
-root = true
-
-[*.{java,kt,kts}]
-indent_style = space ; comment
-indent_size = 3 # comment
-
-# comment
