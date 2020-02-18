@@ -5,9 +5,7 @@ plugins {
     `java-gradle-plugin`
     `maven-publish`
     `kotlin-dsl`
-    `build-scan`
 }
-
 
 version = file("plugins_version.txt").readLines().first()
 group = "de.fayard"
@@ -68,12 +66,6 @@ tasks.withType<Test> {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-buildScan {
-    termsOfServiceUrl = "https://gradle.com/terms-of-service"
-    termsOfServiceAgree = "yes"
-    publishAlways()
 }
 
 kotlinDslPluginOptions {
