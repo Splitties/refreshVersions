@@ -44,7 +44,7 @@ pluginBundle {
 dependencies {
 
     testImplementation(platform(notation = "org.junit:junit-bom:_"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
         because("allows tests to run from IDEs that bundle older version of launcher")
     }
