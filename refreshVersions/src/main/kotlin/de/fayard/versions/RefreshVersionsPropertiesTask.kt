@@ -16,10 +16,12 @@ import org.gradle.api.tasks.options.Option
 
 open class RefreshVersionsPropertiesTask : DefaultTask() {
 
+    /*
     @Suppress("UnstableApiUsage")
     @Option(description = "Update all versions, I will check git diff afterwards")
     @Optional
     var update: Boolean = false
+    */
 
     @TaskAction
     fun taskActionRefreshVersions() {
