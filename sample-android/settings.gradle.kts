@@ -12,7 +12,7 @@ pluginManagement {
     repositories {
         google()
         gradlePluginPortal()
-        //mavenLocal()
+        mavenLocal()
     }
 }
 RefreshVersionsSetup.bootstrap(settings)

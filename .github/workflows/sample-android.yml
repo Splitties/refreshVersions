@@ -25,6 +25,16 @@ jobs:
         java-version: 8
     - uses: eskatos/gradle-command-action@v1
       with:
+        wrapper-directory: refreshVersions
+        build-root-directory: refreshVersions
+        arguments: publishToMavenLocal
+        - uses: eskatos/gradle-command-action@v1
+          with:
+            wrapper-directory: dependencies
+            build-root-directory: dependencies
+            arguments: publishToMavenLocal
+    - uses: eskatos/gradle-command-action@v1
+      with:
         wrapper-directory: sample-android
         build-root-directory: sample-android
         arguments: refreshVersions
