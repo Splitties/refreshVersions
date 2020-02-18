@@ -1,3 +1,4 @@
+import de.fayard.dependencies.DependenciesPlugin
 import de.fayard.versions.RefreshVersionsSetup
 
 pluginManagement {
@@ -13,9 +14,21 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-    dependencies.classpath("de.fayard:refreshVersions:0.9.0")
+    dependencies.classpath("de.fayard:dependencies:0.5.5")
 }
 
-RefreshVersionsSetup.bootstrap(settings)
+plugins {
+    id("com.gradle.enterprise").version("3.1.1")
+}
+
+RefreshVersionsSetup.bootstrap(settings, DependenciesPlugin.artifactVersionKeyRules)
+
+
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+    }
+}
 
 rootProject.name = 'sample-groovy'
