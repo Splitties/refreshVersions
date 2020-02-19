@@ -9,6 +9,7 @@ import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
@@ -16,10 +17,12 @@ import org.gradle.api.tasks.options.Option
 
 open class RefreshVersionsPropertiesTask : DefaultTask() {
 
+    /*
     @Suppress("UnstableApiUsage")
     @Option(description = "Update all versions, I will check git diff afterwards")
     @Optional
     var update: Boolean = false
+    */
 
     @TaskAction
     fun taskActionRefreshVersions() {
@@ -52,10 +55,8 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
 
                 //TODO: Show status and progress.
 
-                // TODO: I think this should be done for all dependencies!!
                 if (dependency.isManageableVersion(versionProperties, versionKeyReader).not()) {
-                    return@mapNotNull null //TODO: Keep aside to report hardcoded versions and version ranges,
-                    //todo... see this issue: https://github.com/jmfayard/buildSrcVersions/issues/126
+                    return@mapNotNull null
                 }
                 val group = dependency.group ?: return@mapNotNull null
                 val resolvedVersion = resolveVersion(
@@ -82,9 +83,8 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
         versionKeyReader: ArtifactVersionKeyReader
     ): Boolean {
         return when {
+            this is ExternalDependency && versionPlaceholder in this.versionConstraint.rejectedVersions -> true
             version == versionPlaceholder -> true
-            @Suppress("UnstableApiUsage")
-            reason == becauseRefreshVersions -> true
             moduleIdentifier?.isGradlePlugin == true -> {
                 val versionFromProperty = versionProperties[getVersionPropertyName(moduleIdentifier!!, versionKeyReader)]
                     ?: return false

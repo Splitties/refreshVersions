@@ -86,10 +86,6 @@ private class ParsedDependency(val dependencyNotation: String) : AbstractDepende
     private val name = dependencyNotation.substringAfter(':').substringBefore(':')
     private val version = dependencyNotation.substringAfterLast(':').unwrappedNullableValue()
 
-    init {
-        because(becauseRefreshVersions)
-    }
-
     private fun String.unwrappedNullableValue(): String? = if (this == "null") null else this
 }
 

@@ -1,14 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.refreshVersions")
     id("com.gradle.plugin-publish")
     `java-gradle-plugin`
     `maven-publish`
     `kotlin-dsl`
-    `build-scan`
 }
-
 
 version = file("plugins_version.txt").readLines().first()
 group = "de.fayard"
@@ -46,18 +43,11 @@ dependencies {
 
     testImplementation(platform(notation = "org.junit:junit-bom:5.6.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
-        because("allows tests to run from IDEs that bundle older version of launcher")
-    }
 
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:_")
     implementation(gradleKotlinDsl())
 
-    implementation("com.github.ben-manes:gradle-versions-plugin:0.25.0") // TODO: remove
-
-    implementation("com.squareup.okio:okio:2.1.0")
-    implementation( "com.squareup.moshi:moshi:1.7.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
 }
 
 
@@ -73,12 +63,6 @@ tasks.withType<Test> {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-buildScan {
-    termsOfServiceUrl = "https://gradle.com/terms-of-service"
-    termsOfServiceAgree = "yes"
-    publishAlways()
 }
 
 kotlinDslPluginOptions {
