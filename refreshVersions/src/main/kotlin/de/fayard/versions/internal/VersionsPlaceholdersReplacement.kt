@@ -36,44 +36,28 @@ internal fun Project.setupVersionPlaceholdersResolving() {
             withDependencies {
                 val dependencies = filterIsInstance<ExternalDependency>()
 
-                val dependenciesWithHardcodedVersions = mutableListOf<ExternalDependency>()
-
                 for (dependency in dependencies) {
-                    if (dependency.version != versionPlaceholder) {
-                        if (dependency.version != null) {
-                            // null version means it's expected to be added by a BoM or a plugin, so we ignore them.
-                            dependenciesWithHardcodedVersions.add(dependency)
-                        }
-                        continue
-                    }
+                    if (dependency.version != versionPlaceholder) continue
                     val moduleIdentifier = dependency.moduleIdentifier
                         ?: error("Didn't find a group for the following dependency: $dependency")
                     val propertyName = getVersionPropertyName(moduleIdentifier, versionKeyReader)
-                    val versionFromProperties = resolveVersion(properties, propertyName)
-                        ?: synchronized(lock) {
-                            properties = project.getVersionProperties() // Refresh properties
-                            resolveVersion(properties, propertyName)
-                                ?: `Write versions candidates using latest most stable version and get it`(
-                                    versionsPropertiesFile = versionsPropertiesFile(),
-                                    repositories = repositories
-                                        .filterIsInstance<MavenArtifactRepository>()
-                                        .map { MavenRepoUrl(it.url.toString()) },
-                                    propertyName = propertyName,
-                                    group = moduleIdentifier.group,
-                                    name = moduleIdentifier.name
-                                )
-                        }
+                    val versionFromProperties = resolveVersion(properties, propertyName) ?: synchronized(lock) {
+                        properties = project.getVersionProperties() // Refresh properties
+                        resolveVersion(properties, propertyName)
+                            ?: `Write versions candidates using latest most stable version and get it`(
+                                versionsPropertiesFile = versionsPropertiesFile(),
+                                repositories = repositories
+                                    .filterIsInstance<MavenArtifactRepository>()
+                                    .map { MavenRepoUrl(it.url.toString()) },
+                                propertyName = propertyName,
+                                group = moduleIdentifier.group,
+                                name = moduleIdentifier.name
+                            )
+                    }
                     dependency.version {
                         require(versionFromProperties)
                         reject(versionPlaceholder)
                     }
-                }
-
-                if (dependenciesWithHardcodedVersions.isNotEmpty()) {
-                    val warnFor = (dependenciesWithHardcodedVersions).take(3).map {
-                        "${it.group}:${it.name}:${it.version}"
-                    }
-                    logger.warn(""":${project.name}:${configuration.name} found hardcoded dependencies versions $warnFor   See https://github.com/jmfayard/refreshVersions/issues/160 """)
                 }
             }
         }
