@@ -41,11 +41,8 @@ pluginBundle {
 
 dependencies {
 
-    testImplementation(platform(notation = "org.junit:junit-bom:_"))
-    testImplementation("org.junit:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
-        because("allows tests to run from IDEs that bundle older version of launcher")
-    }
+    testImplementation(platform(notation = "org.junit:junit-bom:5.6.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
 
     testImplementation("io.kotlintest:kotlintest-runner-junit5:_")
     implementation(gradleKotlinDsl())
