@@ -9,7 +9,6 @@ import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ExternalDependency
-import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import java.io.File
