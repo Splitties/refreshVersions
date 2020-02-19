@@ -8,6 +8,7 @@ import de.fayard.versions.extensions.moduleIdentifier
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
@@ -15,7 +16,6 @@ import java.io.File
 import java.util.Properties
 
 internal const val versionPlaceholder = "_"
-internal const val becauseRefreshVersions = "refreshVersions"
 
 internal fun @Suppress("unused") Project.retrieveVersionKeyReader(): ArtifactVersionKeyReader {
     return artifactVersionKeyReader
@@ -35,17 +35,18 @@ internal fun Project.setupVersionPlaceholdersResolving() {
 
             @Suppress("UnstableApiUsage")
             withDependencies {
-                val dependencies = filterIsInstance<ModuleDependency>()
+                val dependencies = filterIsInstance<ExternalDependency>()
 
-                val dependenciesToReplace = dependencies.filter { it.version == versionPlaceholder }
-                removeAll(dependenciesToReplace)
+                val dependenciesWithHardcodedVersions = mutableListOf<ExternalDependency>()
 
-                if (dependencies.any { it.hasHardcodedVersion() }) {
-                    val warnFor = (dependencies - dependenciesToReplace).take(3).map { it.name }
-                    logger.warn(""":${project.name}:${configuration.name} found hardcoded dependencies versions $warnFor   See https://github.com/jmfayard/refreshVersions/issues/160 """)
-                }
-
-                for (dependency in dependenciesToReplace) {
+                for (dependency in dependencies) {
+                    if (dependency.version != versionPlaceholder) {
+                        if (dependency.version != null) {
+                            // null version means it's expected to be added by a BoM or a plugin, so we ignore them.
+                            dependenciesWithHardcodedVersions.add(dependency)
+                        }
+                        continue
+                    }
                     val moduleIdentifier = dependency.moduleIdentifier
                         ?: error("Didn't find a group for the following dependency: $dependency")
                     val propertyName = getVersionPropertyName(moduleIdentifier, versionKeyReader)
@@ -63,8 +64,17 @@ internal fun Project.setupVersionPlaceholdersResolving() {
                                     name = moduleIdentifier.name
                                 )
                         }
-                    val dependencyNotation = "${dependency.group}:${dependency.name}:$versionFromProperties"
-                    add(project.dependencies.create(dependencyNotation).also { it.because(becauseRefreshVersions) })
+                    dependency.version {
+                        require(versionFromProperties)
+                        reject(versionPlaceholder)
+                    }
+                }
+
+                if (dependenciesWithHardcodedVersions.isNotEmpty()) {
+                    val warnFor = (dependenciesWithHardcodedVersions).take(3).map {
+                        "${it.group}:${it.name}:${it.version}"
+                    }
+                    logger.warn(""":${project.name}:${configuration.name} found hardcoded dependencies versions $warnFor   See https://github.com/jmfayard/refreshVersions/issues/160 """)
                 }
             }
         }
@@ -76,8 +86,6 @@ private val configurationNamesToIgnore: List<String> = listOf(
     "kotlinCompilerPluginClasspath",
     "kotlinCompilerClasspath"
 )
-
-private fun ModuleDependency.hasHardcodedVersion(): Boolean = version != null && version != versionPlaceholder
 
 internal fun getVersionPropertyName(
     moduleIdentifier: ModuleIdentifier,
@@ -159,9 +167,11 @@ private fun `Write versions candidates using latest most stable version and get 
         resolvedVersion = null
     )
     if (versionCandidates.isEmpty()) {
-        throw IllegalStateException("Unable to find a version candidate for the following artifact:\n" +
-            "$group:$name\n" +
-            "Please, check this artifact exists in the configured repositories.")
+        throw IllegalStateException(
+            "Unable to find a version candidate for the following artifact:\n" +
+                "$group:$name\n" +
+                "Please, check this artifact exists in the configured repositories."
+        )
     }
     writeWithAddedVersions(versionsPropertiesFile, propertyName, versionCandidates)
     versionCandidates.first().version.value
