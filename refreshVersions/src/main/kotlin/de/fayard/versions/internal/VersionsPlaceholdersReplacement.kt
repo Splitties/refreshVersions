@@ -34,9 +34,8 @@ internal fun Project.setupVersionPlaceholdersResolving() {
 
             @Suppress("UnstableApiUsage")
             withDependencies {
-                val dependencies = filterIsInstance<ExternalDependency>()
-
-                for (dependency in dependencies) {
+                for (dependency in this) {
+                    if (dependency !is ExternalDependency) continue
                     if (dependency.version != versionPlaceholder) continue
                     val moduleIdentifier = dependency.moduleIdentifier
                         ?: error("Didn't find a group for the following dependency: $dependency")
