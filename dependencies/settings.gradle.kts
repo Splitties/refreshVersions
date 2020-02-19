@@ -16,7 +16,11 @@ buildscript {
     dependencies.classpath("de.fayard:refreshVersions:0.9.2-SNAPSHOT")
 }
 
-bootstrapRefreshVersions()
+bootstrapRefreshVersions(
+    settingsDir.resolve("src/main/resources/refreshVersions-rules").listFiles()!!.map {
+        it.readText()
+    }
+)
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")

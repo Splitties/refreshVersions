@@ -9,7 +9,11 @@ buildscript {
     dependencies.classpath("de.fayard.refreshVersions:de.fayard.refreshVersions.gradle.plugin:0.9.1")
 }
 
-bootstrapRefreshVersions()
+bootstrapRefreshVersions(
+    settingsDir.parentFile.resolve("dependencies/src/main/resources/refreshVersions-rules").listFiles()!!.map {
+        it.readText()
+    }
+)
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")
