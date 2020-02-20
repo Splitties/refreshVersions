@@ -1,5 +1,6 @@
 package de.fayard.versions
 
+import de.fayard.versions.extensions.hasDynamicVersion
 import de.fayard.versions.extensions.isGradlePlugin
 import de.fayard.versions.extensions.moduleIdentifier
 import de.fayard.versions.internal.*
@@ -50,12 +51,22 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
 
         val versionKeyReader = project.retrieveVersionKeyReader()
 
+        val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
+        val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
+
         val dependenciesWithVersionCandidates: List<Pair<Dependency, List<VersionCandidate>>> = runBlocking {
             allDependencies.mapNotNull { dependency ->
 
                 //TODO: Show status and progress.
 
                 if (dependency.isManageableVersion(versionProperties, versionKeyReader).not()) {
+                    if (dependency.version != null) {
+                        // null version means it's expected to be added by a BoM or a plugin, so we ignore them.
+                        dependenciesWithHardcodedVersions.add(dependency)
+                    }
+                    if (dependency is ExternalDependency && dependency.versionConstraint.hasDynamicVersion()) {
+                        dependenciesWithDynamicVersions.add(dependency)
+                    }
                     return@mapNotNull null
                 }
                 val group = dependency.group ?: return@mapNotNull null
@@ -76,6 +87,44 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
             }.toList().awaitAll()
         }
         project.rootProject.updateVersionsProperties(dependenciesWithVersionCandidates)
+        if (dependenciesWithHardcodedVersions.isNotEmpty()) {
+            //TODO: Suggest running a diagnosis task to list the hardcoded versions.
+            val warnFor = (dependenciesWithHardcodedVersions).take(3).map {
+                "${it.group}:${it.name}:${it.version}"
+            }
+            logger.warn(
+                """Found ${dependenciesWithHardcodedVersions.count()} hardcoded dependencies versions.
+                |
+                |$warnFor...
+                |
+                |To ensure single source of truth, refreshVersions only works with version placeholders,
+                |that is the explicit way of marking the version is not there (but in the versions.properties file).
+                |
+                |If you intentionally want to keep hardcoded versions so a module has a different version of a
+                |dependency than the rest of the project, you can safely ignore this warning for these artifacts,
+                |otherwise, but keep in mind refreshVersions will not show available updates for these.
+                |
+                |Note that a migration task is planned in a future version of refreshVersions.
+                |
+                |See https://github.com/jmfayard/refreshVersions/issues/160""".trimMargin()
+            )
+            //TODO: Replace issue link above with stable link to explanation in documentation.
+        }
+        if (dependenciesWithDynamicVersions.isNotEmpty()) {
+            //TODO: Suggest running a diagnosis task to list the dynamic versions.
+            logger.error(
+                """Found ${dependenciesWithDynamicVersions.count()} dynamic dependencies versions!
+                |This makes builds unreproducible, and can make you use unstable versions unknowingly.
+                |
+                |The simple fix is to replace the dynamic version by the version placeholder, i.e. the underscore (_)
+                |
+                |Another solution if that fits your needs is to specify a non dynamic strict or preferred version constraint.
+                |
+                |If you're not convinced to stop using dynamic versions, here's an article for you:
+                |https://blog.danlew.net/2015/09/09/dont-use-dynamic-versions-for-your-dependencies/
+                """.trimMargin()
+            )
+        }
     }
 
     private fun Dependency.isManageableVersion(
@@ -86,8 +135,8 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
             this is ExternalDependency && versionPlaceholder in this.versionConstraint.rejectedVersions -> true
             version == versionPlaceholder -> true
             moduleIdentifier?.isGradlePlugin == true -> {
-                val versionFromProperty = versionProperties[getVersionPropertyName(moduleIdentifier!!, versionKeyReader)]
-                    ?: return false
+                val versionFromProperty =
+                    versionProperties[getVersionPropertyName(moduleIdentifier!!, versionKeyReader)] ?: return false
                 versionFromProperty.isAVersionAlias().not()
             }
             else -> false
