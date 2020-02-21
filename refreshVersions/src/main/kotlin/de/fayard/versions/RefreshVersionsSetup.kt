@@ -89,7 +89,6 @@ private fun setupRefreshVersions(settings: Settings, artifactVersionKeyRules: Li
     )
 
     settings.gradle.rootProject {
-        project.extra.set("artifactVersionKeyRules", artifactVersionKeyRules)
         apply<RefreshVersionsPlugin>()
     }
 }
