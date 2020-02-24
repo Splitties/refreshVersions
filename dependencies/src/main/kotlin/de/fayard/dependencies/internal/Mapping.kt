@@ -31,7 +31,9 @@ internal data class DependencyMapping(
         }
     }
 
-    override fun toString(): String = "$group..$artifact=$constantName"
+    override fun toString(): String = string
+
+    private val string by lazy(LazyThreadSafetyMode.NONE) { "$group..$artifact=$constantName" }
 }
 
 internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = false): List<DependencyMapping> {
