@@ -131,7 +131,9 @@ private val lock = Any()
 
 private fun Project.versionsPropertiesFile(): File {
     val relativePath = "versions.properties".let { if (project.isBuildSrc) "../$it" else it }
-    return rootProject.file(relativePath)
+    return rootProject.file(relativePath).also {
+        it.createNewFile() // Creates the file if it doesn't exist yet
+    }
 }
 
 @Suppress("FunctionName")
