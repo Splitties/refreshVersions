@@ -28,11 +28,14 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
     @TaskAction
     fun taskActionRefreshVersions() {
 
-        val allConfigurations: Set<Configuration> = project.allprojects.flatMap { it.configurations }.toSet()
+        val allConfigurations: Set<Configuration> =
+            project.allprojects.flatMap { it.configurations }.toSet()
 
         val allDependencies = (
             project.readPluginsAndBuildSrcDependencies() +
-                allConfigurations.asSequence().flatMap { it.allDependencies.asSequence() }
+                allConfigurations.asSequence().flatMap {
+                    it.dependencies.asSequence().filterIsInstance<ExternalDependency>()
+                }
             )
             .distinctBy { it.group + ':' + it.name + ':' + it.version }
 
@@ -54,7 +57,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
         val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
         val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
 
-        val dependenciesWithVersionCandidates: List<Pair<Dependency, List<VersionCandidate>>> = runBlocking {
+        val dependenciesWithVersionCandidates: List<DependencyWithVersionCandidates> = runBlocking {
             allDependencies.mapNotNull { dependency ->
 
                 //TODO: Show status and progress.
@@ -64,24 +67,39 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                         // null version means it's expected to be added by a BoM or a plugin, so we ignore them.
                         dependenciesWithHardcodedVersions.add(dependency)
                     }
-                    if (dependency is ExternalDependency && dependency.versionConstraint.hasDynamicVersion()) {
+                    if (dependency is ExternalDependency && dependency.versionConstraint
+                            .hasDynamicVersion()
+                    ) {
                         dependenciesWithDynamicVersions.add(dependency)
                     }
                     return@mapNotNull null
                 }
+                val moduleIdentifier = dependency.moduleIdentifier ?: return@mapNotNull null
                 val group = dependency.group ?: return@mapNotNull null
                 val resolvedVersion = resolveVersion(
                     properties = versionProperties,
-                    key = dependency.moduleIdentifier?.let {
-                        getVersionPropertyName(it, versionKeyReader)
-                    } ?: return@mapNotNull null
+                    key = getVersionPropertyName(moduleIdentifier, versionKeyReader)
                 )
                 async {
-                    dependency to getDependencyVersionsCandidates(
+                    val versionCandidates = getDependencyVersionsCandidates(
                         repositories = allRepositories,
                         group = group,
                         name = dependency.name,
                         resolvedVersion = resolvedVersion
+                    )
+                    DependencyWithVersionCandidates(
+                        moduleIdentifier = moduleIdentifier,
+                        currentVersion = resolvedVersion ?: versionCandidates.let {
+                            if (it.isEmpty()) throw IllegalStateException(
+                                "Unable to find a version candidate for the following artifact:\n" +
+                                    "$group:$name\n" +
+                                    "Please, check this artifact exists in the configured repositories."
+                            )
+                            it.first().version.value
+                        },
+                        versionsCandidates = if (resolvedVersion != null) versionCandidates else {
+                            versionCandidates.drop(1)
+                        }
                     )
                 }
             }.toList().awaitAll()
@@ -102,7 +120,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                 |
                 |If you intentionally want to keep hardcoded versions so a module has a different version of a
                 |dependency than the rest of the project, you can safely ignore this warning for these artifacts,
-                |otherwise, but keep in mind refreshVersions will not show available updates for these.
+                |but keep in mind refreshVersions will not show available updates for these.
                 |
                 |Note that a migration task is planned in a future version of refreshVersions.
                 |
@@ -132,11 +150,13 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
         versionKeyReader: ArtifactVersionKeyReader
     ): Boolean {
         return when {
-            this is ExternalDependency && versionPlaceholder in this.versionConstraint.rejectedVersions -> true
+            this is ExternalDependency && versionPlaceholder in this.versionConstraint
+                .rejectedVersions -> true
             version == versionPlaceholder -> true
             moduleIdentifier?.isGradlePlugin == true -> {
                 val versionFromProperty =
-                    versionProperties[getVersionPropertyName(moduleIdentifier!!, versionKeyReader)] ?: return false
+                    versionProperties[getVersionPropertyName(moduleIdentifier!!, versionKeyReader)]
+                        ?: return false
                 versionFromProperty.isAVersionAlias().not()
             }
             else -> false
