@@ -1,7 +1,6 @@
 package de.fayard.versions
 
 import de.fayard.versions.extensions.hasDynamicVersion
-import de.fayard.versions.extensions.isGradlePlugin
 import de.fayard.versions.extensions.moduleIdentifier
 import de.fayard.versions.internal.*
 import kotlinx.coroutines.async
@@ -142,24 +141,6 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                 |https://blog.danlew.net/2015/09/09/dont-use-dynamic-versions-for-your-dependencies/
                 """.trimMargin()
             )
-        }
-    }
-
-    private fun Dependency.isManageableVersion(
-        versionProperties: Map<String, String>,
-        versionKeyReader: ArtifactVersionKeyReader
-    ): Boolean {
-        return when {
-            this is ExternalDependency && versionPlaceholder in this.versionConstraint
-                .rejectedVersions -> true
-            version == versionPlaceholder -> true
-            moduleIdentifier?.isGradlePlugin == true -> {
-                val versionFromProperty =
-                    versionProperties[getVersionPropertyName(moduleIdentifier!!, versionKeyReader)]
-                        ?: return false
-                versionFromProperty.isAVersionAlias().not()
-            }
-            else -> false
         }
     }
 }
