@@ -55,12 +55,13 @@ internal fun writeWithAddedVersions(
     propertyName: String,
     versionsCandidates: List<VersionCandidate>
 ) {
-    if (versionsFile.exists().not()) {
-        versionsFile.createNewFile()
-        versionsFile.writeText(buildString { appendln(fileHeader) })
-    }
     val newFileContent = buildString {
-        append(versionsFile.readText())
+        val existingContent = versionsFile.readText()
+        if (existingContent.isBlank()) {
+            appendln(fileHeader)
+        } else {
+            append(existingContent)
+        }
         //TODO: Add new version in the right order regarding existing version properties
         appendVersionWithUpdatesIfAvailable(
             VersionWithUpdateIfAvailable(

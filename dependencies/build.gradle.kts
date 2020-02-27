@@ -52,12 +52,16 @@ dependencies {
 
     implementation(gradleKotlinDsl())
     api("de.fayard:refreshVersions:_")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
 }
 
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
+    kotlinOptions.freeCompilerArgs += listOf(
+        "-Xuse-experimental=kotlin.Experimental",
+        "-Xuse-experimental=de.fayard.versions.internal.InternalRefreshVersionsApi"
+    )
 }
 
 tasks.withType<Test> {
