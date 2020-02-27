@@ -28,6 +28,7 @@ object Splitties {
     const val bundle = "$artifactPrefix-bundle:_"
     const val checkedlazy = "$artifactPrefix-checkedlazy:_"
     const val collections = "$artifactPrefix-collections:_"
+    const val coroutines = "$artifactPrefix-coroutines:_"
     const val dimensions = "$artifactPrefix-dimensions:_"
     const val exceptions = "$artifactPrefix-exceptions:_"
     const val fragments = "$artifactPrefix-fragments:_"
