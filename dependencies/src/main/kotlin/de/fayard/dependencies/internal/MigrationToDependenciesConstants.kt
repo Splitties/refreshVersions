@@ -92,7 +92,7 @@ private fun Project.promptConfigurationSelection(versionsProperties: Map<String,
         footer = "Type the number of the configuration you want to migrate first:",
         numberedEntries = configurationsWithHardcodedDependenciesVersions.map { (configuration, count) ->
             "${configuration.name} ($count)"
-        } + "Exit"
+        } + "Back"
     )
     return configurationsWithHardcodedDependenciesVersions.getOrNull(index.value)?.first
 }
