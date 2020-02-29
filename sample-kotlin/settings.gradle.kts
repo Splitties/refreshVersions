@@ -1,5 +1,4 @@
-import de.fayard.versions.bootstrapRefreshVersions
-import de.fayard.dependencies.DependenciesPlugin
+import de.fayard.dependencies.bootstrapRefreshVersionsAndDependencies
 
 pluginManagement {
     repositories {
@@ -19,7 +18,7 @@ buildscript {
     dependencies.classpath("de.fayard:dependencies:0.5.7-SNAPSHOT")
 }
 
-bootstrapRefreshVersions(DependenciesPlugin.artifactVersionKeyRules)
+bootstrapRefreshVersionsAndDependencies()
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")

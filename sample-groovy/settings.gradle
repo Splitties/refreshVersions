@@ -1,5 +1,4 @@
-import de.fayard.dependencies.DependenciesPlugin
-import de.fayard.versions.RefreshVersionsSetup
+import de.fayard.dependencies.DependenciesSetup
 
 pluginManagement {
     repositories {
@@ -21,7 +20,7 @@ plugins {
     id("com.gradle.enterprise").version("3.1.1")
 }
 
-RefreshVersionsSetup.bootstrap(settings, DependenciesPlugin.artifactVersionKeyRules)
+DependenciesSetup.bootstrapRefreshVersionsAndDependencies(settings)
 
 
 gradleEnterprise {
