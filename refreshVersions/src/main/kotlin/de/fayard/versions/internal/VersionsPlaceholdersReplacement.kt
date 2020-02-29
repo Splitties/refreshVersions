@@ -1,10 +1,10 @@
 package de.fayard.versions.internal
 
-import de.fayard.versions.artifactVersionKeyReader
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isGradlePlugin
 import de.fayard.versions.extensions.isRootProject
 import de.fayard.versions.extensions.moduleIdentifier
+import de.fayard.versions.extensions.stabilityLevel
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -12,13 +12,8 @@ import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import java.io.File
-import java.util.Properties
 
 internal const val versionPlaceholder = "_"
-
-internal fun @Suppress("unused") Project.retrieveVersionKeyReader(): ArtifactVersionKeyReader {
-    return artifactVersionKeyReader
-}
 
 internal fun Project.setupVersionPlaceholdersResolving() {
     require(this.isRootProject)
@@ -34,46 +29,29 @@ internal fun Project.setupVersionPlaceholdersResolving() {
 
             @Suppress("UnstableApiUsage")
             withDependencies {
-                val dependencies = filterIsInstance<ExternalDependency>()
-
-                val dependenciesWithHardcodedVersions = mutableListOf<ExternalDependency>()
-
-                for (dependency in dependencies) {
-                    if (dependency.version != versionPlaceholder) {
-                        if (dependency.version != null) {
-                            // null version means it's expected to be added by a BoM or a plugin, so we ignore them.
-                            dependenciesWithHardcodedVersions.add(dependency)
-                        }
-                        continue
-                    }
+                for (dependency in this) {
+                    if (dependency !is ExternalDependency) continue
+                    if (dependency.version != versionPlaceholder) continue
                     val moduleIdentifier = dependency.moduleIdentifier
                         ?: error("Didn't find a group for the following dependency: $dependency")
                     val propertyName = getVersionPropertyName(moduleIdentifier, versionKeyReader)
-                    val versionFromProperties = resolveVersion(properties, propertyName)
-                        ?: synchronized(lock) {
-                            properties = project.getVersionProperties() // Refresh properties
-                            resolveVersion(properties, propertyName)
-                                ?: `Write versions candidates using latest most stable version and get it`(
-                                    versionsPropertiesFile = versionsPropertiesFile(),
-                                    repositories = repositories
-                                        .filterIsInstance<MavenArtifactRepository>()
-                                        .map { MavenRepoUrl(it.url.toString()) },
-                                    propertyName = propertyName,
-                                    group = moduleIdentifier.group,
-                                    name = moduleIdentifier.name
-                                )
-                        }
+                    val versionFromProperties = resolveVersion(properties, propertyName) ?: synchronized(lock) {
+                        properties = project.getVersionProperties() // Refresh properties
+                        resolveVersion(properties, propertyName)
+                            ?: `Write versions candidates using latest most stable version and get it`(
+                                versionsPropertiesFile = versionsPropertiesFile(),
+                                repositories = repositories
+                                    .filterIsInstance<MavenArtifactRepository>()
+                                    .map { MavenRepoUrl(it.url.toString()) },
+                                propertyName = propertyName,
+                                group = moduleIdentifier.group,
+                                name = moduleIdentifier.name
+                            )
+                    }
                     dependency.version {
                         require(versionFromProperties)
                         reject(versionPlaceholder)
                     }
-                }
-
-                if (dependenciesWithHardcodedVersions.isNotEmpty()) {
-                    val warnFor = (dependenciesWithHardcodedVersions).take(3).map {
-                        "${it.group}:${it.name}:${it.version}"
-                    }
-                    logger.warn(""":${project.name}:${configuration.name} found hardcoded dependencies versions $warnFor   See https://github.com/jmfayard/refreshVersions/issues/160 """)
                 }
             }
         }
@@ -86,7 +64,8 @@ private val configurationNamesToIgnore: List<String> = listOf(
     "kotlinCompilerClasspath"
 )
 
-internal fun getVersionPropertyName(
+@InternalRefreshVersionsApi
+fun getVersionPropertyName(
     moduleIdentifier: ModuleIdentifier,
     versionKeyReader: ArtifactVersionKeyReader
 ): String {
@@ -114,25 +93,6 @@ internal fun getVersionPropertyName(
     return "version.$versionKey"
 }
 
-internal fun Project.getVersionProperties(
-    includeProjectProperties: Boolean = true
-): Map<String, String> {
-    return mutableMapOf<String, String>().also { map ->
-        // Read from versions.properties
-        Properties().also { properties ->
-            properties.load(versionsPropertiesFile().reader())
-        }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
-        // Overwrite with relevant project properties
-        if (includeProjectProperties) properties.forEach { (k, v) ->
-            if (v is String) {
-                if (v.startsWith("version.") || v.startsWith("plugin.")) {
-                    map[k] = v
-                }
-            }
-        }
-    }
-}
-
 internal tailrec fun resolveVersion(properties: Map<String, String>, key: String, redirects: Int = 0): String? {
     if (redirects > 5) error("Up to five redirects are allowed, for readability. You should only need one.")
     val value = properties[key] ?: return null
@@ -146,9 +106,26 @@ internal fun String.isAVersionAlias(): Boolean = startsWith("version.") || start
 
 private val lock = Any()
 
-private fun Project.versionsPropertiesFile(): File {
+internal fun Project.versionsPropertiesFile(): File {
     val relativePath = "versions.properties".let { if (project.isBuildSrc) "../$it" else it }
-    return rootProject.file(relativePath)
+    return rootProject.file(relativePath).also {
+        it.createNewFile() // Creates the file if it doesn't exist yet
+    }
+}
+
+@InternalRefreshVersionsApi
+fun Project.writeCurrentVersionInProperties(
+    versionKey: String,
+    currentVersion: String
+) {
+    val versionsPropertiesFile = versionsPropertiesFile()
+    val version = Version(currentVersion)
+    val candidate = VersionCandidate(version.stabilityLevel(), version)
+    writeWithAddedVersions(
+        versionsFile = versionsPropertiesFile,
+        propertyName = versionKey,
+        versionsCandidates = listOf(candidate)
+    )
 }
 
 @Suppress("FunctionName")

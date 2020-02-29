@@ -13,6 +13,8 @@ import org.gradle.api.Incubating
  */
 @Incubating
 object AndroidX {
+    // LibraryGroups.kt: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-master-dev:buildSrc/src/main/kotlin/androidx/build/LibraryGroups.kt;l=22?q=LibraryGroups&sq=
+    // LibraryVersions.kt: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-master-dev:buildSrc/src/main/kotlin/androidx/build/LibraryVersions.kt;l=22?q=LibraryVersions&sq=
 
     const val activityKtx = "androidx.activity:activity-ktx:_"
     const val activity = "androidx.activity:activity:_"

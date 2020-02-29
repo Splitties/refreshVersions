@@ -4,10 +4,7 @@
 
 package de.fayard.versions.internal
 
-import org.gradle.api.Incubating
-
-@Incubating // Public for use in tests for the dependencies companion plugin. No API stability commitments.
-// If you want to use it, please open an issue on GitHub to request API stability commitment.
+@InternalRefreshVersionsApi
 abstract class ArtifactVersionKeyReader private constructor() {
 
     abstract fun readVersionKey(group: String, name: String): String?

@@ -1,12 +1,17 @@
 package de.fayard.versions.internal
 
-import de.fayard.versions.extensions.moduleIdentifier
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.ModuleIdentifier
 import java.io.File
 
+internal data class DependencyWithVersionCandidates(
+    val moduleIdentifier: ModuleIdentifier,
+    val currentVersion: String,
+    val versionsCandidates: List<VersionCandidate>
+)
+
 internal fun Project.updateVersionsProperties(
-    dependenciesWithLastVersion: List<Pair<Dependency, List<VersionCandidate>>>
+    dependenciesWithLastVersion: List<DependencyWithVersionCandidates>
 ) {
     val file = file("versions.properties")
     if (file.exists().not()) file.createNewFile()
@@ -19,18 +24,14 @@ internal fun Project.updateVersionsProperties(
         //TODO: Keep comments from user (ours begin with ##, while user's begin with a single #),
         // property related comments are placed above it. Also keep header and footer comments.
         val versionsWithUpdatesIfAvailable: List<VersionWithUpdateIfAvailable> = dependenciesWithLastVersion
-            .mapNotNull { (dependency, versionsCandidates) ->
-                dependency.moduleIdentifier?.let { moduleId ->
-                    getVersionPropertyName(moduleId, versionKeyReader).let {
-                        val currentVersion = properties[it]?.takeUnless { version -> version.isAVersionAlias() }
-                            ?: return@mapNotNull null
-                        VersionWithUpdateIfAvailable(
-                            key = it,
-                            currentVersion = currentVersion,
-                            versionsCandidates = versionsCandidates
-                        )
-                    }
-                }
+            .mapNotNull { (moduleIdentifier, currentVersion, versionsCandidates) ->
+                val propertyName = getVersionPropertyName(moduleIdentifier, versionKeyReader)
+                if (currentVersion.isAVersionAlias()) return@mapNotNull null
+                VersionWithUpdateIfAvailable(
+                    key = propertyName,
+                    currentVersion = currentVersion,
+                    versionsCandidates = versionsCandidates
+                )
             }
             .distinctBy { it.key }
         val versionAliases: List<VersionWithUpdateIfAvailable> = properties.mapNotNull { (k, v) ->
@@ -54,18 +55,21 @@ internal fun writeWithAddedVersions(
     propertyName: String,
     versionsCandidates: List<VersionCandidate>
 ) {
-    if (versionsFile.exists().not()) {
-        versionsFile.createNewFile()
-        versionsFile.writeText(buildString { appendln(fileHeader) })
-    }
     val newFileContent = buildString {
-        append(versionsFile.readText())
+        val existingContent = versionsFile.readText()
+        if (existingContent.isBlank()) {
+            appendln(fileHeader)
+        } else {
+            append(existingContent)
+        }
         //TODO: Add new version in the right order regarding existing version properties
-        appendVersionWithUpdatesIfAvailable(VersionWithUpdateIfAvailable(
-            key = propertyName,
-            currentVersion = versionsCandidates.first().version.value,
-            versionsCandidates = versionsCandidates.drop(1)
-        ))
+        appendVersionWithUpdatesIfAvailable(
+            VersionWithUpdateIfAvailable(
+                key = propertyName,
+                currentVersion = versionsCandidates.first().version.value,
+                versionsCandidates = versionsCandidates.drop(1)
+            )
+        )
     }
     versionsFile.writeText(newFileContent)
 }

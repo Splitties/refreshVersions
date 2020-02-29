@@ -78,7 +78,7 @@ private fun setupRefreshVersions(settings: Settings, artifactVersionKeyRules: Li
 
     val relativePath = "versions.properties".let { if (settings.isBuildSrc) "../$it" else it }
     val versionProperties = settings.rootDir.resolve(relativePath)
-    if (versionProperties.exists().not()) return
+    versionProperties.createNewFile() // Creates the file if it doesn't exist yet
 
     privateArtifactVersionKeyReader = ArtifactVersionKeyReader.fromRules(filesContent = artifactVersionKeyRules)
 
@@ -89,7 +89,6 @@ private fun setupRefreshVersions(settings: Settings, artifactVersionKeyRules: Li
     )
 
     settings.gradle.rootProject {
-        project.extra.set("artifactVersionKeyRules", artifactVersionKeyRules)
         apply<RefreshVersionsPlugin>()
     }
 }

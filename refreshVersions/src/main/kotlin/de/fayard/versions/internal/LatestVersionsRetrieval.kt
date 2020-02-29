@@ -20,6 +20,14 @@ internal suspend fun getDependencyVersionsCandidates(
     resolvedVersion: String?
 ): List<VersionCandidate> = Dispatchers.Default {
     val currentVersion = Version(resolvedVersion ?: "")
+    //TODO: Retrieve (concurrently) the versions from each repo and put them into a list.
+    // For each list where resolvedVersion is found, drop it with all the entries before.
+    // Remove duplicates, keeping only the first occurrence (distinct).
+    // If there's a resolvedVersion, apply the following rule:
+    //   If dev, snapshot or unknown stability level versions are found in what's remaining,
+    //   check they are numerically equal or greater than the resolvedVersion (if any).
+    //   If they are not greater, of if they are equal but the resolvedVersion is stable, drop them.
+    // Keep only the last entries from the lists if any, flattening it as a list of VersionCandidates, and return it.
     retrieveAllVersions(
         repositories = repositories,
         group = group,

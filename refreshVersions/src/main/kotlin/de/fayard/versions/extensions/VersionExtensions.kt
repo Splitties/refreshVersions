@@ -44,6 +44,12 @@ private fun Version.isMilestone(): Boolean {
 @Suppress("NOTHING_TO_INLINE") // used only once above, to keep internal symbols before private ones.
 private inline fun createVersionComparator(): Comparator<Version> = object : Comparator<Version> {
 
+    // Usage of this comparator is likely to get discontinued in favor of distinct per-repo ordered results.
+    //
+    // Still this was made as an attempt to sort the versions, but it didn't follow the rules that Gradle defined,
+    // because I wasn't aware of them, but here's the documentation link for version ordering, for reference:
+    // https://docs.gradle.org/current/userguide/single_versions.html#version_ordering
+
     override fun compare(o1: Version, o2: Version): Int {
         if (o1 == o2) return 0
 
