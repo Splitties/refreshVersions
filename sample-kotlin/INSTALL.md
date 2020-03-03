@@ -33,10 +33,13 @@ https://docs.gradle.com/enterprise/gradle-plugin/
 # Update to Gradle 6
 
 ```
-$ ./gradle wrapper --gradle-version 4.10.2
 $ ./gradle --scan help
 Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
+
+$ ./gradle wrapper --gradle-version 4.10.2
+$ ./gradle wrapper --gradle-version 5.6.4
 $ ./gradle wrapper --gradle-version 6.2
+
 ```
 
 Look at [the deprecations view of the generated build scan](https://gradle.com/enterprise/releases/2018.4). If there are no warnings, the Deprecations tab will not appear. Deprecated usages information requires Gradle 4.10+ and build scan plugin 1.16+.
@@ -72,10 +75,10 @@ RefreshVersionsSetup.bootstrap(settings, DependenciesPlugin.artifactVersionKeyRu
 import de.fayard.versions.bootstrapRefreshVersions
 import de.fayard.dependencies.DependenciesPlugin
 
-pluginManagement {
-}
-
 buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
     dependencies.classpath("de.fayard:dependencies:0.5.6")
 }
 
