@@ -1,7 +1,5 @@
 // plugin.de.fayard.buildSrcVersions (aka buildSrcVersions)
-:plugin_version: 0.7.0
-:gradle_version: 5.6.4
-:imagesdir: doc
+:gradle_version: 6.2.1
 :repo: jmfayard/buildSrcVersions
 :branch: 26-buildSrcVersions
 :github: https://github.com/{repo}
@@ -13,7 +11,7 @@
 :slack_image: https://img.shields.io/static/v1?label=kotlinlang&message=gradle-refresh-versions&color=brightgreen&logo=slack
 :slack_badge: image:{slack_image}["Kotlinlang Slack", link="{slack_url}"]
 :gradle_guide_new:	https://guides.gradle.org/creating-new-gradle-builds
-:gradle_guide_buidllogic:	https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
+:gradle_guide_buildlogic:	https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
 :medium_puzzle: https://blog.kotlin-academy.com/gradle-kotlin-the-missing-piece-of-the-puzzle-7528a85f0d2c
 :medium_protips: https://proandroiddev.com/android-studio-pro-tips-for-working-with-gradle-8a7aa61a8cc4
 :medium_mvp: https://dev.to/jmfayard/the-minimum-viable-pull-request-5e7p
@@ -21,156 +19,142 @@
 :issues: https://github.com/jmfayard/buildSrcVersions/issues
 :master: https://github.com/jmfayard/buildSrcVersions/blob/master
 :badge_mit: image:https://img.shields.io/github/license/mashape/apistatus.svg["GitHub",link="{github}/blob/master/LICENSE.txt"]
-:image_version: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg
-:badge_version: image:{image_version}?label=gradlePluginPortal["Maven Central",link="https://plugins.gradle.org/plugin/de.fayard.refreshVersions"]
-:badge_issues: image:https://img.shields.io/github/issues/{repo}.svg["GitHub issues",link="{github}/issues"]
-:badge_pr:  image:https://img.shields.io/github/issues-pr/{repo}.svg["GitHub pull requests",link="{github}/pulls?utf8=%E2%9C%93&q=is%3Apr+"]
-:versions_kt: {master}/sample-groovy/buildSrc/src/main/kotlin/Versions.kt
-:libs_kt: {master}/sample-groovy/buildSrc/src/main/kotlin/Libs.kt
-:benmanes: https://github.com/ben-manes/gradle-versions-plugin
-:image_faq: https://user-images.githubusercontent.com/459464/64926128-1a076980-d7fa-11e9-8a69-eb354d211f51.png
+:image_refreshVersions_version: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg
+:image_dependencies_version: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/dependencies/de.fayard.dependencies.gradle.plugin/maven-metadata.xml.svg
+:badge_refreshVersions_version: image:{image_refreshVersions_version}?label=refreshVersions["refreshVersions latest release on Gradle plugin portal",link="https://plugins.gradle.org/plugin/de.fayard.refreshVersions"]
+:badge_dependencies_version: image:{image_dependencies_version}?label=dependencies["dependencies plugin latest release on Gradle plugin portal",link="https://plugins.gradle.org/plugin/de.fayard.dependencies"]
+:ext-relative: {outfilesuffix}
 
-= de.fayard.buildSrcVersions
+= refreshVersions
 
-{badge_version} {slack_badge} {contributors_badge} {badge_mit} {badge_issues} {badge_pr}
+*End the dependency hell in minutes.*
 
-The Gradle plugin `de.fayard.buildSrcVersions` goal is to make it as painless as possible to upgrade your project to the latest and greatest version of everything.
+{badge_refreshVersions_version} {badge_dependencies_version} {slack_badge} {contributors_badge} {badge_mit}
 
-It does that by extracting all your dependencies, searching for available dependencies updates
-and generating Kotlin code, Groovy code or Gradle properties.
+== What
 
-The plugin was called before `de.fayard.buildSrcVersions`, which still exists and is currently identical.
+The `refreshVersions` plugin targets *all kinds of Gradle projects*, including the following:
 
-https://github.com/jmfayard/buildSrcVersions/issues/104[The goal in the future is to focus on :refreshVersions]
+- Kotlin Multiplatform
+- Android
+- Kotlin/JS, Kotlin/JVM, Kotlin/Native
+- Java
 
-== Installation
+The `refreshVersions` Gradle plugin brings the following benefits:
 
-Edit your root `build.gradle(.kts)` file
+1. *Centralizes dependencies versions* (very useful in multi-module projects)
+2. *Shows available updates in seconds*
+3. *Allows applying the available updates with minimal effort*
 
-We recommend to use the `plugins` block:
+== Why (the problem this project solves)
 
-[source,kotlin,subs=attributes]
-----
-buildscript {
-    //...
-}
-plugins {
-  id("de.fayard.buildSrcVersions") version "{plugin_version}"
-}
-// Don't put any code before the buildscripts {} and plugins {} block
-----
+Gradle multi-module projects are on the rise because of how it enforces code decoupling,
+which is a good thing for maintenance and inevitable changes.
 
-Updating Gradle is usually a good idea. You get less bugs, more features and more build speed, and it's as simple as this:
+Unfortunately, that means the number of build files (`build.gradle[.kts]`) are multiplied,
+which makes upgrading the dependencies versions where significantly more tedious as you now
+need to open, edit and check more files.
+
+Also, some library vendors like Google are publishing artifacts with different versions
+(AndroidX, Google Play Services and Firebase, just to name a few). AndroidX for example has
+about 70 different families with different versions overall.
+
+We saw this made developers to update the dependencies less and less often, effectively
+leading to legacy accumulation, or even projects abandon.
+
+We firmly believe the *modularization benefits should not be hindered by these drawbacks*.
+That's how refreshVersions was born.
+
+We want discovery of dependencies updates to be as quick as possible, we want applying these
+updates be as quick as possible through the whole codebase, and we want to remove the human
+error factor in dependencies declaration and update.
+That's exactly what `refreshVersions` can already do today in your project.
+
+== Usage
+=== Adding to an existing project
+
+_Note: Only Gradle 6+ is supported at the moment, because it allows for simpler setup._
+
+_Updating Gradle is usually a good idea. You get fewer bugs, more features and more build speed, and it's as simple as this:_
 
 `$ ./gradlew wrapper --gradle-version {gradle_version}`
 
+==== Step 1: Adding the plugin
 
-== The task `:buildSrcVersions`
+Add the following snippet at the top your project's root `settings.gradle(.kts)` file:
 
-The task `:buildSrcVersions` is well suited for complex multi-module Gradle projects: Android, Kotlin multi-platform, ...
+[source,kts,subs=attributes]
+----
+import de.fayard.dependencies.bootstrapRefreshVersionsAndDependencies
 
-It generates this kind of code inside the Gradle `buildSrc` module.
+buildscript {
+    repositories { gradlePluginPortal() }
+    dependencies.classpath("de.fayard:dependencies:0.5.7")
+}
 
-https://github.com/jmfayard/buildSrcVersions/issues/88[Read the friendly documentation]
+bootstrapRefreshVersionsAndDependencies()
+----
 
-[[img-carbon-Libs-Version]]
-image::carbon-Libs-Versions.png[]
+==== Step 2: Migrating the dependencies versions declaration place
 
+Run the following command on the root project:
 
-== Requirements
+`./gradlew migrateToRefreshVersionsDependenciesConstants --console=plain`
 
-* Kotlin, JVM and Android projects.
-* Gradle 4.3+, 5+, 6+
-* The IDE integration works
-** for both `build.gradle` (Groovy) and `build.gradle.kts` (Kotlin) files.
-** in IntelliJ IDEA 2018.03 and better
-** in Android Studio 3.5 and better.
+This Gradle task is interactive.
+It will walk you through every module of your Gradle project, assisting you in replacing every hardcoded dependency version by the
+version placeholder (`_`) and an entry in the `versions.properties` file, for every configuration.
 
-== Articles
+_Note that while this Gradle task cannot break your build, it is experimental.
+We are aware its UX can be improved, and we have plans to work on it before the 1.0 release._
 
-Not only code, but also good documentation can help you upgrade an old project to the latest and greatest.
+=== Find available updates (aka. refreshVersions)
+
+Run the `refreshVersions` gradle task on the root project:
+
+`./gradlew refreshVersions`
+
+_(It usually takes less than 10 seconds to execute on relatively big projects.)_
+
+Open the `versions.properties` file and see the available updates added as comments.
+
+=== Apply updates
+
+Applying updates is done in the `versions.properties` file.
+
+1. Put the caret before or after the `=` symbol on the available update line.
+2. Hold shift to start text selection, press the up arrow key and release shift.
+3. Press the backspace/delete key.
+4. If you're in an IDE, sync Gradle changes to see new dependencies versions.
+
+== Bonus: tips for your Gradle projects
+
+Good documentation can also help you upgrade an old project to the latest and greatest.
 
 I have a series of articles called `Built with Gradle`:
 
-- https://dev.to/jmfayard/my-project-is-open-to-kotlin-contributors-m4b[#hacktoberfest : project is open to contributors!]
-- https://dev.to/jmfayard/helping-out-with-gradle-builds-for-hacktoberfest-1c1c[Helping out with Gradle builds for hacktoberfest]
 - https://dev.to/jmfayard/the-one-gradle-trick-that-supersedes-all-the-others-5bpg[Use the Build Scan ! The one Gradle trick that supersedes all the others]
 - https://dev.to/jmfayard/configuring-gradle-with-gradle-properties-211k[Configuring Gradle with the `gradle.properties` file]
 - https://dev.to/jmfayard/how-kotlin-makes-editing-your-gradle-build-less-frustrating-232l[How Kotlin makes editing your Gradle build less frustrating]
-- https://dev.to/jmfayard/better-dependency-management-in-android-studio-3-5-with-gradle-buildsrcversions-34e9[Better dependency management in Android Studio 3.5 with Gradle buildSrcVersions]
 
-You can follow me at https://dev.to/jmfayard
+To get the future tips and informative articles, you can follow me on https://dev.to/jmfayard[dev.to].
 
-
-== Exciting new features coming!
-
-`buildSrcVersions` will be replaced by three better plugins
-
-1) The plugin `de.fayard.refreshVersions` and its task `gradle refreshVersions` will provide a better alternative to `buildSrc/.../Versions.kt`
-
-[[img-gradle-properties]]
-image::versions-gradle-properties.png[]
-
-2) The plugin `de.fayard.dependencies` will provide a faster way to add new dependencies
-
-image:https://user-images.githubusercontent.com/459464/68317452-6e70ec00-00bb-11ea-84c4-94d3ef0fb86f.png[]
-
-3) The plugin `com.louiscad.splitties` will provide Android specific features
-
-Spoiler here: https://dev.to/jmfayard/gradle-migratetoandroidx-beta-testers-needed-2f05
-
-
-## Should I use refreshVersions today?
-
-No, we are not ready yet.
-
-https://github.com/jmfayard/buildSrcVersions/issues/104[But please subscribe to this issue]
-
-
-
-
-== Design goals
-
-- **First, to do no harm.** The plugin should never update itself or otherwise break an existing build. The plugin should do nothing unless it's explicitly called.
-- **Be Lazy.** Use code generation to avoid writing tedious code manually. Find available updates automatically instead of googling them. The plugin should do the right thing by default, no configuration should be mandatory. Leverage IDE tooling support (auto-completion, ...).
-- **Be Humble.** Render to the programmer the things that are the programmer's. This include using the generated code and updating the dependencies.
-
+== Authors
+- https://github.com/jmfayard[Jean-Michel Fayard]
+- https://github.com/LouisCAD[Louis CAD]
 
 == FAQ
 
 Questions? {issues}[Look at the existing issues], then ask your own.
 
+For special requests (not issues), you can also reach us out on Kotlin's Slack
 
-[[FAQ]]
-image::{image_faq}[title="FAQ",alt="IDE Integration", width="600", link="{issues}"]
+== Release notes
 
-
-
-== Changelog
-
-See {master}/CHANGELOG.md[CHANGELOG.md]
-
-If you migrate from an older version, two configuration options have been removed: `rejectedVersionKeywords` and `useFdqnFor`.
-
-See https://github.com/jmfayard/buildSrcVersions/issues/53:[#53 Plugin configuration]
-
+See the link:CHANGELOG.md[CHANGELOG.md] file.
 
 == Contributing
 
-- This project is licensed under the MIT License. See {master}/LICENSE.txt[LICENSE.txt]
+- This project is licensed under the MIT License. See link:LICENSE.txt[LICENSE.txt]
 - Explain your use case and start the discussion before your submit a pull-request
-- Your feature request or bug report may be better adressed by the parent plugin. Check out {benmanes}[ben-manes/gradle-versions-plugin].
 - {master}/CONTRIBUTING.md[*CONTRIBUTING.md*] describes the process for submitting pull requests.
-
-
-== Acknowledgments
-
-https://gradle.org[Gradle] and https://jetbrains.com[JetBrains] have made this plugin possible
-by working on improving the IDE support for Kotlin code from the `buildSrc` module.
-
-This plugin embraces and extends {benmanes}[Ben Manes's wonderful "Versions" plugin^].
-
-The Kotlin code generation is powered by https://github.com/square/kotlinpoet[Square's Kotlinpoet]
-
-
-

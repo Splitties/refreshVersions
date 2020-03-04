@@ -1,7 +1,12 @@
+## Important note:
+
+**This releasing process is outdated, it will be updated once the releasing assistant script
+is complete.**
+
 - Run task `:checkAll` and verify output
-- Search in the whole project for: plugin.de.fayard.buildSrcVersions  
+- Search in the whole project for: plugin.de.fayard.buildSrcVersions
 - Update all versions`plugin/build.gradle.kts`
-- Run task `:publishPlugins` 
+- Run task `:publishPlugins`
 - Check plugin portal https://plugins.gradle.org/plugin/de.fayard.buildSrcVersions
 - Update CHANGELOG
 - Create a GitHub release https://github.com/jmfayard/buildSrcVersions/releases/new
@@ -23,12 +28,12 @@ plugins {
 /**
  * Use ./gradlew refreshVersions to find available updates
  * See https://github.com/jmfayard/buildSrcVersions/issues/77
- 
+
 * Use ./gradlew buildSrcVersions to generate buildSrc/src/main/Libs.kt
  * See https://github.com/jmfayard/buildSrcVersions/issues/88
  */
 buildSrcVersions {
-    // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53    
+    // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
 }
 ```
 
