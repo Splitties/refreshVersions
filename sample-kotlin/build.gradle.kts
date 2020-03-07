@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("de.fayard.dependencies")
     kotlin("jvm")
 }
 
