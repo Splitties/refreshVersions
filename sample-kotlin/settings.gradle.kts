@@ -1,21 +1,8 @@
 import de.fayard.dependencies.bootstrapRefreshVersionsAndDependencies
 
-pluginManagement {
-    repositories {
-        mavenLocal()
-        gradlePluginPortal()
-        mavenCentral()
-        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
-    }
-}
-
 buildscript {
-    repositories {
-        mavenLocal() // Only necessary for testing
-        gradlePluginPortal()
-        mavenCentral()
-    }
-    dependencies.classpath("de.fayard:dependencies:0.5.7")
+    repositories { gradlePluginPortal() }
+    dependencies.classpath("de.fayard:dependencies:0.5.8-SNAPSHOT")
 }
 
 bootstrapRefreshVersionsAndDependencies()
