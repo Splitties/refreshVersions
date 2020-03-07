@@ -113,6 +113,7 @@ internal fun Project.versionsPropertiesFile(): File {
     }
 }
 
+@Suppress("unused") // Used in the dependencies plugin
 @InternalRefreshVersionsApi
 fun Project.writeCurrentVersionInProperties(
     versionKey: String,
