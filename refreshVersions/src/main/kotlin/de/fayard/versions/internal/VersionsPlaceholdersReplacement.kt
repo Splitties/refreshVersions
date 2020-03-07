@@ -24,7 +24,7 @@ internal fun Gradle.setupVersionPlaceholdersResolving(versionProperties: Map<Str
         properties = updatedProperties
     }
     beforeProject {
-        val project: Project = this
+        val project: Project = this@beforeProject
 
         fun replaceVersionPlaceholdersFromDependencies(configuration: Configuration) {
             if (configuration.name in configurationNamesToIgnore) return
@@ -132,7 +132,7 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                 resolveVersion(properties, propertyName)
                     ?: `Write versions candidates using latest most stable version and get it`(
                         versionsPropertiesFile = project.versionsPropertiesFile(),
-                        repositories = project.repositories
+                        repositories = (project.repositories + project.buildscript.repositories)
                             .filterIsInstance<MavenArtifactRepository>()
                             .map { MavenRepoUrl(it.url.toString()) },
                         propertyName = propertyName,
@@ -182,7 +182,9 @@ private fun `Write versions candidates using latest most stable version and get 
         throw IllegalStateException(
             "Unable to find a version candidate for the following artifact:\n" +
                 "$group:$name\n" +
-                "Please, check this artifact exists in the configured repositories."
+                "Please, check this artifact exists in the configured repositories.\n" +
+                "Searched the following repositories:" +
+                repositories.joinToString(separator = "\n") { "- " + it.url }
         )
     }
     writeWithAddedVersions(versionsPropertiesFile, propertyName, versionCandidates)
