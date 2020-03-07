@@ -34,7 +34,7 @@ private fun Project.attemptDependencyMigration(
     versionsProperties: Map<String, String>,
     dependency: ExternalDependency
 ) {
-    val versionKeyReader = project.retrieveVersionKeyReader()
+    val versionKeyReader = gradle.retrieveVersionKeyReader()
 
     if (dependency.hasHardcodedVersion(versionsProperties, versionKeyReader).not()) return
     val currentVersion = dependency.version ?: return

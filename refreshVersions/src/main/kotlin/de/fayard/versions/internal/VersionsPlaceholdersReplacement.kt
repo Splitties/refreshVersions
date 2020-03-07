@@ -2,7 +2,6 @@ package de.fayard.versions.internal
 
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.extensions.isGradlePlugin
-import de.fayard.versions.extensions.isRootProject
 import de.fayard.versions.extensions.moduleIdentifier
 import de.fayard.versions.extensions.stabilityLevel
 import kotlinx.coroutines.runBlocking
@@ -11,24 +10,24 @@ import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import org.gradle.api.initialization.Settings
+import org.gradle.api.invocation.Gradle
 import java.io.File
 
 internal const val versionPlaceholder = "_"
 
-internal fun Project.setupVersionPlaceholdersResolving() {
-    require(this.isRootProject)
+internal fun Gradle.setupVersionPlaceholdersResolving(versionProperties: Map<String, String>) {
+
     val versionKeyReader = retrieveVersionKeyReader()
-    var properties: Map<String, String> = project.getVersionProperties()
+    var properties: Map<String, String> = versionProperties
     val refreshProperties = { updatedProperties: Map<String, String> ->
         properties = updatedProperties
     }
-    allprojects {
+    beforeProject {
         val project: Project = this
 
-        configurations.all {
-            val configuration: Configuration = this
-
-            if (configuration.name in configurationNamesToIgnore) return@all
+        fun replaceVersionPlaceholdersFromDependencies(configuration: Configuration) {
+            if (configuration.name in configurationNamesToIgnore) return
 
             configuration.replaceVersionPlaceholdersFromDependencies(
                 project = project,
@@ -36,6 +35,14 @@ internal fun Project.setupVersionPlaceholdersResolving() {
                 initialProperties = properties,
                 refreshProperties = refreshProperties
             )
+        }
+
+        project.buildscript.configurations.configureEach {
+            replaceVersionPlaceholdersFromDependencies(configuration = this)
+        }
+
+        configurations.configureEach {
+            replaceVersionPlaceholdersFromDependencies(configuration = this)
         }
     }
 }
@@ -87,6 +94,13 @@ internal tailrec fun resolveVersion(properties: Map<String, String>, key: String
 internal fun String.isAVersionAlias(): Boolean = startsWith("version.") || startsWith("plugin.")
 
 private val lock = Any()
+
+internal fun Settings.versionsPropertiesFile(): File {
+    val relativePath = "versions.properties".let { if (isBuildSrc) "../$it" else it }
+    return rootDir.resolve(relativePath).also {
+        it.createNewFile() // Creates the file if it doesn't exist yet
+    }
+}
 
 internal fun Project.versionsPropertiesFile(): File {
     val relativePath = "versions.properties".let { if (project.isBuildSrc) "../$it" else it }

@@ -6,12 +6,13 @@ import de.fayard.RefreshVersionsPlugin
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.internal.ArtifactVersionKeyReader
 import de.fayard.versions.internal.clearUsedPluginsList
+import de.fayard.versions.internal.getVersionProperties
 import de.fayard.versions.internal.noteUsedPluginDependency
 import de.fayard.versions.internal.resolveVersion
+import de.fayard.versions.internal.setupVersionPlaceholdersResolving
 import de.fayard.versions.internal.writeUsedRepositories
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.extra
 import java.util.Properties
 
 /**
@@ -80,6 +81,8 @@ private fun setupRefreshVersions(settings: Settings, artifactVersionKeyRules: Li
         settings = settings,
         properties = Properties().apply { load(versionProperties.reader()) } as Map<String, String>
     )
+
+    settings.gradle.setupVersionPlaceholdersResolving(versionProperties = settings.getVersionProperties())
 
     settings.gradle.rootProject {
         apply<RefreshVersionsPlugin>()

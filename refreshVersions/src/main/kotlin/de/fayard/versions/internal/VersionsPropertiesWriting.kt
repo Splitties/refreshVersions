@@ -16,8 +16,8 @@ internal fun Project.updateVersionsProperties(
     val file = file("versions.properties")
     if (file.exists().not()) file.createNewFile()
 
-    val properties: Map<String, String> = getVersionProperties(includeProjectProperties = false)
-    val versionKeyReader = project.retrieveVersionKeyReader()
+    val properties: Map<String, String> = getVersionProperties()
+    val versionKeyReader = gradle.retrieveVersionKeyReader()
 
     val newFileContent = buildString {
         appendln(fileHeader)

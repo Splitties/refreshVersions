@@ -28,7 +28,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
     fun taskActionRefreshVersions() {
 
         val allConfigurations: Set<Configuration> =
-            project.allprojects.flatMap { it.configurations }.toSet()
+            project.allprojects.flatMap { it.buildscript.configurations + it.configurations }.toSet()
 
         val allDependencies = (
             project.readPluginsAndBuildSrcDependencies() +
@@ -51,7 +51,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
 
         val versionProperties: Map<String, String> = project.getVersionProperties()
 
-        val versionKeyReader = project.retrieveVersionKeyReader()
+        val versionKeyReader = project.gradle.retrieveVersionKeyReader()
 
         val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
         val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
