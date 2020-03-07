@@ -1,3 +1,5 @@
+@file:JvmName("RefreshVersionsSetup")
+
 package de.fayard.versions
 
 import de.fayard.RefreshVersionsPlugin
@@ -12,33 +14,12 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.extra
 import java.util.Properties
 
-object RefreshVersionsSetup {
-
-    /***
-     * Configuration with the Gradle Kotlin DSL
-     *
-     * // settings.gradle
-     * ```groovy
-     * import de.fayard.versions.RefreshVersionsSetup
-     * buildscript {
-     *     dependencies.classpath("de.fayard:refreshVersions:VERSION")
-     * }
-     *
-     * RefreshVersionsSetup.bootstrap(settings)
-     * ```
-     */
-    @JvmStatic
-    @JvmOverloads
-    fun bootstrap(settings: Settings, artifactVersionKeyRules: List<String> = emptyList()) {
-        settings.bootstrapRefreshVersions(artifactVersionKeyRules)
-    }
-
-}
-
 /**
- * Boostrap refreshVersion in settings.gradle.kts
+ * Boostrap refreshVersions **only** (without the dependencies plugin).
  *
- * // settings.gradle.kts
+ * Supports both Kotlin and Groovy Gradle DSL.
+ *
+ * // **`settings.gradle.kts`**
  * ```kotlin
  * import de.fayard.versions.bootstrapRefreshVersions
  *
@@ -48,7 +29,19 @@ object RefreshVersionsSetup {
  *
  * settings.bootstrapRefreshVersions()
  * ```
+ *
+ * // **`settings.gradle`**
+ * ```groovy
+ * import de.fayard.versions.RefreshVersionsSetup
+ * buildscript {
+ *     dependencies.classpath("de.fayard:refreshVersions:VERSION")
+ * }
+ *
+ * RefreshVersionsSetup.bootstrap(settings)
+ * ```
  */
+@JvmOverloads
+@JvmName("bootstrap")
 fun Settings.bootstrapRefreshVersions(artifactVersionKeyRules: List<String> = emptyList()) {
     setupRefreshVersions(settings, artifactVersionKeyRules)
 }
