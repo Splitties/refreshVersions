@@ -19,6 +19,9 @@ internal fun Project.setupVersionPlaceholdersResolving() {
     require(this.isRootProject)
     val versionKeyReader = retrieveVersionKeyReader()
     var properties: Map<String, String> = project.getVersionProperties()
+    val refreshProperties = { updatedProperties: Map<String, String> ->
+        properties = updatedProperties
+    }
     allprojects {
         val project: Project = this
 
@@ -27,33 +30,12 @@ internal fun Project.setupVersionPlaceholdersResolving() {
 
             if (configuration.name in configurationNamesToIgnore) return@all
 
-            @Suppress("UnstableApiUsage")
-            withDependencies {
-                for (dependency in this) {
-                    if (dependency !is ExternalDependency) continue
-                    if (dependency.version != versionPlaceholder) continue
-                    val moduleIdentifier = dependency.moduleIdentifier
-                        ?: error("Didn't find a group for the following dependency: $dependency")
-                    val propertyName = getVersionPropertyName(moduleIdentifier, versionKeyReader)
-                    val versionFromProperties = resolveVersion(properties, propertyName) ?: synchronized(lock) {
-                        properties = project.getVersionProperties() // Refresh properties
-                        resolveVersion(properties, propertyName)
-                            ?: `Write versions candidates using latest most stable version and get it`(
-                                versionsPropertiesFile = versionsPropertiesFile(),
-                                repositories = repositories
-                                    .filterIsInstance<MavenArtifactRepository>()
-                                    .map { MavenRepoUrl(it.url.toString()) },
-                                propertyName = propertyName,
-                                group = moduleIdentifier.group,
-                                name = moduleIdentifier.name
-                            )
-                    }
-                    dependency.version {
-                        require(versionFromProperties)
-                        reject(versionPlaceholder)
-                    }
-                }
-            }
+            configuration.replaceVersionPlaceholdersFromDependencies(
+                project = project,
+                versionKeyReader = versionKeyReader,
+                initialProperties = properties,
+                refreshProperties = refreshProperties
+            )
         }
     }
 }
@@ -110,6 +92,45 @@ internal fun Project.versionsPropertiesFile(): File {
     val relativePath = "versions.properties".let { if (project.isBuildSrc) "../$it" else it }
     return rootProject.file(relativePath).also {
         it.createNewFile() // Creates the file if it doesn't exist yet
+    }
+}
+
+private fun Configuration.replaceVersionPlaceholdersFromDependencies(
+    project: Project,
+    versionKeyReader: ArtifactVersionKeyReader,
+    initialProperties: Map<String, String>,
+    refreshProperties: (updatedProperties: Map<String, String>) -> Unit
+) {
+    var properties = initialProperties
+    @Suppress("UnstableApiUsage")
+    withDependencies {
+        for (dependency in this) {
+            if (dependency !is ExternalDependency) continue
+            if (dependency.version != versionPlaceholder) continue
+            val moduleIdentifier = dependency.moduleIdentifier
+                ?: error("Didn't find a group for the following dependency: $dependency")
+            val propertyName = getVersionPropertyName(moduleIdentifier, versionKeyReader)
+            val versionFromProperties = resolveVersion(properties, propertyName) ?: synchronized(lock) {
+                project.getVersionProperties().let { updatedProperties ->
+                    properties = updatedProperties
+                    refreshProperties(updatedProperties)
+                }
+                resolveVersion(properties, propertyName)
+                    ?: `Write versions candidates using latest most stable version and get it`(
+                        versionsPropertiesFile = project.versionsPropertiesFile(),
+                        repositories = project.repositories
+                            .filterIsInstance<MavenArtifactRepository>()
+                            .map { MavenRepoUrl(it.url.toString()) },
+                        propertyName = propertyName,
+                        group = moduleIdentifier.group,
+                        name = moduleIdentifier.name
+                    )
+            }
+            dependency.version {
+                require(versionFromProperties)
+                reject(versionPlaceholder) // Remember that we're managing the version of this dependency.
+            }
+        }
     }
 }
 
