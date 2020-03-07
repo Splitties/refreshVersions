@@ -33,6 +33,7 @@ open class DependenciesPlugin : Plugin<Project> {
             group = "help"
             description = "Assists migration from hardcoded dependencies to constants of " +
                 "the refreshVersions dependencies plugin"
+            finalizedBy("refreshVersions")
         }
 
         project.tasks.registerOrCreate<DefaultTask>(
