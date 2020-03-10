@@ -9,6 +9,7 @@ object Kotlin {
     val test = Test
 
     object Stdlib {
+        const val base = "org.jetbrains.kotlin:kotlin-stdlib:_"
         const val jdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:_"
         const val jdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:_"
         const val js = "org.jetbrains.kotlin:kotlin-stdlib-js:_"

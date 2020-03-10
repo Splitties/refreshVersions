@@ -44,4 +44,16 @@ object Square {
             const val retrofitRxJava2 = "$artifact:adapter-rxjava2:_"
         }
     }
+
+    object Picasso {
+        const val picasso = "com.squareup.picasso:picasso:_"
+    }
+
+    object SqlDelight {
+        private const val group = "com.squareup.sqldelight"
+
+        const val androidDriver = "$group:android-driver:_"
+        const val nativeDriver = "$group:native-driver:_"
+        const val iosDriver = "$group:ios-driver:_"
+    }
 }
