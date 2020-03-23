@@ -13,7 +13,7 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-    dependencies.classpath("de.fayard:refreshVersions:0.9.3")
+    dependencies.classpath("de.fayard:refreshVersions:0.9.4")
 }
 
 bootstrapRefreshVersions(
