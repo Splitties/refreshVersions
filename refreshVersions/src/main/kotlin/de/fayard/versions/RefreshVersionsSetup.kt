@@ -1,44 +1,26 @@
+@file:JvmName("RefreshVersionsSetup")
+
 package de.fayard.versions
 
 import de.fayard.RefreshVersionsPlugin
 import de.fayard.versions.extensions.isBuildSrc
 import de.fayard.versions.internal.ArtifactVersionKeyReader
 import de.fayard.versions.internal.clearUsedPluginsList
+import de.fayard.versions.internal.getVersionProperties
 import de.fayard.versions.internal.noteUsedPluginDependency
 import de.fayard.versions.internal.resolveVersion
+import de.fayard.versions.internal.setupVersionPlaceholdersResolving
 import de.fayard.versions.internal.writeUsedRepositories
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.extra
 import java.util.Properties
 
-object RefreshVersionsSetup {
-
-    /***
-     * Configuration with the Gradle Kotlin DSL
-     *
-     * // settings.gradle
-     * ```groovy
-     * import de.fayard.versions.RefreshVersionsSetup
-     * buildscript {
-     *     dependencies.classpath("de.fayard:refreshVersions:VERSION")
-     * }
-     *
-     * RefreshVersionsSetup.bootstrap(settings)
-     * ```
-     */
-    @JvmStatic
-    @JvmOverloads
-    fun bootstrap(settings: Settings, artifactVersionKeyRules: List<String> = emptyList()) {
-        settings.bootstrapRefreshVersions(artifactVersionKeyRules)
-    }
-
-}
-
 /**
- * Boostrap refreshVersion in settings.gradle.kts
+ * Boostrap refreshVersions **only** (without the dependencies plugin).
  *
- * // settings.gradle.kts
+ * Supports both Kotlin and Groovy Gradle DSL.
+ *
+ * // **`settings.gradle.kts`**
  * ```kotlin
  * import de.fayard.versions.bootstrapRefreshVersions
  *
@@ -48,7 +30,19 @@ object RefreshVersionsSetup {
  *
  * settings.bootstrapRefreshVersions()
  * ```
+ *
+ * // **`settings.gradle`**
+ * ```groovy
+ * import de.fayard.versions.RefreshVersionsSetup
+ * buildscript {
+ *     dependencies.classpath("de.fayard:refreshVersions:VERSION")
+ * }
+ *
+ * RefreshVersionsSetup.bootstrap(settings)
+ * ```
  */
+@JvmOverloads
+@JvmName("bootstrap")
 fun Settings.bootstrapRefreshVersions(artifactVersionKeyRules: List<String> = emptyList()) {
     setupRefreshVersions(settings, artifactVersionKeyRules)
 }
@@ -87,6 +81,8 @@ private fun setupRefreshVersions(settings: Settings, artifactVersionKeyRules: Li
         settings = settings,
         properties = Properties().apply { load(versionProperties.reader()) } as Map<String, String>
     )
+
+    settings.gradle.setupVersionPlaceholdersResolving(versionProperties = settings.getVersionProperties())
 
     settings.gradle.rootProject {
         apply<RefreshVersionsPlugin>()

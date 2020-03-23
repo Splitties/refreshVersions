@@ -6,6 +6,8 @@ import de.fayard.versions.extensions.moduleIdentifier
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
+import org.gradle.api.initialization.Settings
+import org.gradle.api.invocation.Gradle
 import java.util.Properties
 
 @InternalRefreshVersionsApi
@@ -33,26 +35,21 @@ fun Dependency.isManageableVersion(
 }
 
 @InternalRefreshVersionsApi
-fun @Suppress("unused") Project.retrieveVersionKeyReader(): ArtifactVersionKeyReader {
+fun @Suppress("unused") Gradle.retrieveVersionKeyReader(): ArtifactVersionKeyReader {
     return artifactVersionKeyReader
 }
 
 @InternalRefreshVersionsApi
-fun Project.getVersionProperties(
-    includeProjectProperties: Boolean = true
-): Map<String, String> {
-    return mutableMapOf<String, String>().also { map ->
-        // Read from versions.properties
-        Properties().also { properties ->
-            properties.load(versionsPropertiesFile().reader())
-        }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
-        // Overwrite with relevant project properties
-        if (includeProjectProperties) properties.forEach { (k, v) ->
-            if (v is String) {
-                if (v.startsWith("version.") || v.startsWith("plugin.")) {
-                    map[k] = v
-                }
-            }
-        }
-    }
+fun Project.getVersionProperties(): Map<String, String> = mutableMapOf<String, String>().also { map ->
+    // Read from versions.properties
+    Properties().also { properties ->
+        properties.load(versionsPropertiesFile().reader())
+    }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
+}
+
+internal fun Settings.getVersionProperties(): Map<String, String> = mutableMapOf<String, String>().also { map ->
+    // Read from versions.properties
+    Properties().also { properties ->
+        properties.load(versionsPropertiesFile().reader())
+    }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
 }

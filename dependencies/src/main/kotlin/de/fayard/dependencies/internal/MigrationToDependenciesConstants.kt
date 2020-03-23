@@ -35,7 +35,7 @@ internal fun Configuration.countDependenciesWithHardcodedVersions(
 }
 
 internal fun Project.countDependenciesWithHardcodedVersions(versionsProperties: Map<String, String>): Int {
-    val versionKeyReader = retrieveVersionKeyReader()
+    val versionKeyReader = gradle.retrieveVersionKeyReader()
     return configurations.sumBy { configuration ->
         if (configuration.shouldBeIgnored()) 0 else {
             configuration.countDependenciesWithHardcodedVersions(versionsProperties, versionKeyReader)
@@ -77,7 +77,7 @@ internal suspend fun runInteractiveMigrationToDependenciesConstants(project: Pro
 
 private fun Project.promptConfigurationSelection(versionsProperties: Map<String, String>): Configuration? {
     @Suppress("UnstableApiUsage")
-    val versionKeyReader = retrieveVersionKeyReader()
+    val versionKeyReader = gradle.retrieveVersionKeyReader()
     val configurationsWithHardcodedDependenciesVersions = configurations.mapNotNull { configuration ->
         if (configuration.shouldBeIgnored()) return@mapNotNull null
         val count = configuration.countDependenciesWithHardcodedVersions(versionsProperties, versionKeyReader)

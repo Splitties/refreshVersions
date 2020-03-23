@@ -11,7 +11,6 @@ import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.ModuleIdentifier
 
-@Suppress("UNREACHABLE_CODE") //TODO: Remove when implementation complete
 internal fun runConfigurationDependenciesMigration(
     project: Project,
     versionsProperties: Map<String, String>,
@@ -35,7 +34,7 @@ private fun Project.attemptDependencyMigration(
     versionsProperties: Map<String, String>,
     dependency: ExternalDependency
 ) {
-    val versionKeyReader = project.retrieveVersionKeyReader()
+    val versionKeyReader = gradle.retrieveVersionKeyReader()
 
     if (dependency.hasHardcodedVersion(versionsProperties, versionKeyReader).not()) return
     val currentVersion = dependency.version ?: return

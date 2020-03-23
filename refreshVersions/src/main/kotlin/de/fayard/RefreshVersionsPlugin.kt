@@ -18,7 +18,6 @@ open class RefreshVersionsPlugin : Plugin<Project> {
             group = "Help"
             description = "Search for new dependencies versions and update versions.properties"
         }
-        project.setupVersionPlaceholdersResolving()
         if (project.isBuildSrc) project.afterEvaluate {
             writeUsedDependencies()
             writeUsedRepositories()

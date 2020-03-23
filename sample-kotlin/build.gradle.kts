@@ -1,7 +1,17 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.gradle:gradle-hello-world-plugin:_")
+    }
+}
+
 plugins {
-    id("de.fayard.dependencies")
     kotlin("jvm")
 }
 

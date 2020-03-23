@@ -4,18 +4,17 @@ pluginManagement {
     repositories {
         mavenLocal()
         gradlePluginPortal()
-        mavenCentral()
         maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
     }
 }
 
 buildscript {
     repositories {
-        mavenLocal() // Only necessary for testing
+        mavenLocal()
         gradlePluginPortal()
-        mavenCentral()
+        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
     }
-    dependencies.classpath("de.fayard:dependencies:0.5.7")
+    dependencies.classpath("de.fayard:dependencies:0.5.8")
 }
 
 bootstrapRefreshVersionsAndDependencies()

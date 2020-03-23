@@ -11,24 +11,15 @@ import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
-import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
-import org.gradle.api.tasks.options.Option
 
 open class RefreshVersionsPropertiesTask : DefaultTask() {
-
-    /*
-    @Suppress("UnstableApiUsage")
-    @Option(description = "Update all versions, I will check git diff afterwards")
-    @Optional
-    var update: Boolean = false
-    */
 
     @TaskAction
     fun taskActionRefreshVersions() {
 
         val allConfigurations: Set<Configuration> =
-            project.allprojects.flatMap { it.configurations }.toSet()
+            project.allprojects.flatMap { it.buildscript.configurations + it.configurations }.toSet()
 
         val allDependencies = (
             project.readPluginsAndBuildSrcDependencies() +
@@ -51,7 +42,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
 
         val versionProperties: Map<String, String> = project.getVersionProperties()
 
-        val versionKeyReader = project.retrieveVersionKeyReader()
+        val versionKeyReader = project.gradle.retrieveVersionKeyReader()
 
         val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
         val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
