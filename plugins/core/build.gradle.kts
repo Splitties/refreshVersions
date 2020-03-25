@@ -30,7 +30,7 @@ pluginBundle {
 
 dependencies {
 
-    testImplementation(platform(notation = "org.junit:junit-bom:5.6.0"))
+    testImplementation(platform(notation = "org.junit:junit-bom:_"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     testImplementation("io.kotlintest:kotlintest-runner-junit5:_")
