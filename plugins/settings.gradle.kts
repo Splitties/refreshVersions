@@ -19,5 +19,5 @@ gradleEnterprise {
     }
 }
 
-include(":core")
-include(":dependencies")
+include("core"); project(":core").name = "refreshVersions"
+include("dependencies")

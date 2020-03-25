@@ -9,7 +9,6 @@ plugins {
 
 version = file("plugins_version.txt").readLines().first()
 group = "de.fayard"
-base.archivesBaseName = "refreshVersions"
 
 
 gradlePlugin {

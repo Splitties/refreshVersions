@@ -39,7 +39,7 @@ dependencies {
     }
 
     implementation(gradleKotlinDsl())
-    api(project(":core"))
+    api(project(":refreshVersions"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
 }
 
