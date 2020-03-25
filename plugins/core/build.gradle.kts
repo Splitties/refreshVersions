@@ -23,11 +23,6 @@ gradlePlugin {
     }
 }
 
-tasks.register<DefaultTask>("hello") {
-    group = "Custom"
-    description = "Minimal task that do nothing. Useful to debug a failing build"
-}
-
 repositories {
     mavenLocal()
     jcenter()
