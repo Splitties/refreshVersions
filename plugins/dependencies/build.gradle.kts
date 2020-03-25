@@ -7,7 +7,6 @@ plugins {
     `kotlin-dsl`
 }
 
-
 version = file("plugins_version.txt").readLines().first()
 group = "de.fayard"
 
