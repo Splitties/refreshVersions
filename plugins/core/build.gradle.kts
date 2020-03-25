@@ -23,12 +23,6 @@ gradlePlugin {
     }
 }
 
-repositories {
-    mavenLocal()
-    jcenter()
-    mavenCentral()
-}
-
 pluginBundle {
     website = "https://builtwithgradle.netlify.com/"
     vcsUrl = "https://github.com/jmfayard/gradle-dependencies-plugins"
