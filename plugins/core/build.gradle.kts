@@ -7,7 +7,7 @@ plugins {
     `kotlin-dsl`
 }
 
-version = file("plugins_version.txt").readLines().first()
+version = file("version.txt").readLines().first()
 group = "de.fayard"
 
 
@@ -26,6 +26,10 @@ pluginBundle {
     website = "https://builtwithgradle.netlify.com/"
     vcsUrl = "https://github.com/jmfayard/gradle-dependencies-plugins"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
+}
+
+publishing {
+    setupAllPublications(project)
 }
 
 dependencies {
