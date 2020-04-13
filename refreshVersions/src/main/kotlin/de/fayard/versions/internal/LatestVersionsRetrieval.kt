@@ -9,7 +9,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.invoke
+import org.w3c.dom.Element
+import org.w3c.dom.Node
+import org.w3c.dom.NodeList
 import java.net.URL
+import javax.xml.parsers.DocumentBuilderFactory
 
 internal class VersionCandidate(val stabilityLevel: StabilityLevel, val version: Version)
 
@@ -66,8 +70,27 @@ private suspend fun retrieveAllVersions(
     versionsAsync.awaitAll()
 }.flatten()
 
-private fun parseVersionsFromMavenMetaData(xml: String): List<Version> {
-    return xml.substringAfter("<versions>").substringBefore("</versions>")
-        .split("<version>", "</version>")
-        .mapNotNull { if (it.isBlank()) null else Version(it.trim()) }
+private fun NodeList.asList(): List<Node> {
+    return (0 until this.length).map {
+        this.item(it)
+    }
+}
+
+internal fun parseVersionsFromMavenMetaData(xml: String): List<Version> {
+    val factory = DocumentBuilderFactory.newInstance()
+    val builder = factory.newDocumentBuilder()
+    val resources = builder.parse(xml.byteInputStream())
+
+    return resources.documentElement.childNodes.asList()
+        .firstOrNull { it is Element && it.tagName == "versioning" }
+        ?.childNodes?.asList()
+        ?.firstOrNull { it is Element && it.tagName == "versions"  }
+        ?.childNodes?.asList()
+        ?.filterIsInstance(Element::class.java)
+        ?.filter {
+            it.tagName == "version"
+        }
+        ?.map {
+            Version(it.textContent)
+        } ?: emptyList()
 }
