@@ -6,3 +6,6 @@ com.squareup.*:*
 
 io.ktor:*
    ^^^^
+
+it.unibo.alchemist:alchemist-*
+         ^^^^^^^^^
