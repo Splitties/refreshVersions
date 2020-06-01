@@ -19,7 +19,19 @@ gradleEnterprise {
     }
 }
 
+val pluginsVersion: String = file("version.txt").bufferedReader().use { it.readLine() }
+
 gradle.beforeProject {
+    version = pluginsVersion
+    group = "de.fayard.refreshVersions"
+    loadLocalProperties()
+}
+
+include("core", "dependencies")
+project(":core").name = "refreshVersions-core"
+project(":dependencies").name = "refreshVersions"
+
+fun Project.loadLocalProperties() {
     val localPropertiesFile = rootDir.resolve("local.properties")
     if (localPropertiesFile.exists()) {
         val localProperties = java.util.Properties()
@@ -27,6 +39,3 @@ gradle.beforeProject {
         localProperties.forEach { (k, v) -> if (k is String) project.extra.set(k, v) }
     }
 }
-
-include("core"); project(":core").name = "refreshVersions"
-include("dependencies")

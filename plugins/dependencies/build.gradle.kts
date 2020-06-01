@@ -7,14 +7,10 @@ plugins {
     `kotlin-dsl`
 }
 
-version = file("version.txt").readLines().first()
-group = "de.fayard"
-
-
 gradlePlugin {
     plugins {
-        create("dependencies") {
-            id = "de.fayard.dependencies"
+        create("refreshVersions") {
+            id = "de.fayard.refreshVersions"
             displayName = "Typesafe Gradle Dependencies"
             description = "Common Gradle dependencies - See gradle refreshVersions"
             implementationClass = "de.fayard.dependencies.DependenciesPlugin"
@@ -24,7 +20,7 @@ gradlePlugin {
 
 pluginBundle {
     website = "https://builtwithgradle.netlify.com/"
-    vcsUrl = "https://github.com/jmfayard/gradle-dependencies-plugins"
+    vcsUrl = "https://github.com/jmfayard/refreshVersions"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
 }
 
@@ -42,7 +38,7 @@ dependencies {
     }
 
     implementation(gradleKotlinDsl())
-    api(project(":refreshVersions"))
+    api(project(":refreshVersions-core"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
 }
 

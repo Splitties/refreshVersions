@@ -14,9 +14,9 @@ buildscript {
         gradlePluginPortal()
         maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
     }
-    dependencies.classpath("de.fayard:dependencies") {
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions") {
         version {
-            val versionFile = rootDir.parentFile.resolve("plugins/dependencies/version.txt")
+            val versionFile = rootDir.parentFile.resolve("plugins/version.txt")
             strictly(versionFile.readLines().first())
         }
     }

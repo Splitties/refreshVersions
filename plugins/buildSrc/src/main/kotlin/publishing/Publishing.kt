@@ -52,7 +52,7 @@ private fun PublishingExtension.setupDevPublishRepo(project: Project) {
             name = "bintray"
             val bintrayUsername = "jmfayard"
             val bintrayRepoName = "maven"
-            val bintrayPackageName = "de.fayard.${project.name}"
+            val bintrayPackageName = "de.fayard.refreshVersions"
             setUrl(
                 "https://api.bintray.com/maven/" +
                     "$bintrayUsername/$bintrayRepoName/$bintrayPackageName/;" +

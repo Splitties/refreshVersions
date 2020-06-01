@@ -14,9 +14,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("de.fayard:dependencies") {
+        classpath("de.fayard.refreshVersions:refreshVersions") {
             version {
-                final File versionFile = new File(rootDir.parentFile, "plugins/dependencies/version.txt")
+                final File versionFile = new File(rootDir.parentFile, "plugins/version.txt")
                 strictly(versionFile.readLines().first())
             }
         }
