@@ -1,10 +1,10 @@
 # https://help.github.com/en/github/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions
 # https://github.com/marketplace/actions/gradle-command
-name: Publish plugin refreshVersions
+name: Publish plugins
 on:
   push:
     paths:
-      - 'refreshVersions/plugins_version.txt'
+      - 'plugins/version.txt'
     branches:
       - master
       - develop
@@ -18,6 +18,9 @@ jobs:
           java-version: 11
       - uses: eskatos/gradle-command-action@v1
         with:
-          wrapper-directory: refreshVersions
-          build-root-directory: refreshVersions
-          arguments: publishPlugins --scan -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
+          wrapper-directory: plugins
+          build-root-directory: plugins
+          arguments: :publishToAppropriateRepo --scan -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
+        env:
+          bintray_user: ${{ secrets.bintray_user }}
+          bintray_api_key: ${{ secrets.bintray_api_key }}

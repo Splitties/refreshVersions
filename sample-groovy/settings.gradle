@@ -13,7 +13,14 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-    dependencies.classpath("de.fayard:dependencies:0.5.9-SNAPSHOT")
+    dependencies {
+        classpath("de.fayard.refreshVersions:refreshVersions") {
+            version {
+                final File versionFile = new File(rootDir.parentFile, "plugins/version.txt")
+                strictly(versionFile.readLines().first())
+            }
+        }
+    }
 }
 
 plugins {

@@ -7,14 +7,10 @@ plugins {
     `kotlin-dsl`
 }
 
-version = file("plugins_version.txt").readLines().first()
-group = "de.fayard"
-
-
 gradlePlugin {
     plugins {
-        create("refreshVersions") {
-            id = "de.fayard.refreshVersions"
+        create("refreshVersions-core") {
+            id = "de.fayard.refreshVersions-core"
             displayName = "./gradlew refreshVersions"
             description = "Painless dependencies management"
             implementationClass = "de.fayard.RefreshVersionsPlugin"
@@ -24,8 +20,12 @@ gradlePlugin {
 
 pluginBundle {
     website = "https://builtwithgradle.netlify.com/"
-    vcsUrl = "https://github.com/jmfayard/gradle-dependencies-plugins"
+    vcsUrl = "https://github.com/jmfayard/refreshVersions"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
+}
+
+publishing {
+    setupAllPublications(project)
 }
 
 dependencies {
