@@ -81,11 +81,17 @@ _Updating Gradle is usually a good idea. You get fewer bugs, more features and m
 
 ==== Step 1: Adding the plugin
 
-Add the following snippet at the top your project's root `settings.gradle(.kts)` file:
+Add the following snippet in your project's root `settings.gradle(.kts)` file:
 
 [source,kts,subs=attributes]
 ----
+// settings.gradle.kts
 import de.fayard.dependencies.bootstrapRefreshVersionsAndDependencies
+
+// Here you might have some pluginManagement block:
+pluginManagement {
+    //...
+}
 
 buildscript {
     repositories { gradlePluginPortal() }
