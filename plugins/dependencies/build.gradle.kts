@@ -7,15 +7,10 @@ plugins {
     `kotlin-dsl`
 }
 
-
-version = file("plugins_version.txt").readLines().first()
-group = "de.fayard"
-
-
 gradlePlugin {
     plugins {
-        create("dependencies") {
-            id = "de.fayard.dependencies"
+        create("refreshVersions") {
+            id = "de.fayard.refreshVersions"
             displayName = "Typesafe Gradle Dependencies"
             description = "Common Gradle dependencies - See gradle refreshVersions"
             implementationClass = "de.fayard.dependencies.DependenciesPlugin"
@@ -23,22 +18,14 @@ gradlePlugin {
     }
 }
 
-tasks.register<DefaultTask>("hello") {
-    group = "Custom"
-    description = "Minimal task that do nothing. Useful to debug a failing build"
-}
-
-repositories {
-    mavenLocal()
-    gradlePluginPortal()
-    jcenter()
-    mavenCentral()
-}
-
 pluginBundle {
     website = "https://builtwithgradle.netlify.com/"
-    vcsUrl = "https://github.com/jmfayard/gradle-dependencies-plugins"
+    vcsUrl = "https://github.com/jmfayard/refreshVersions"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
+}
+
+publishing {
+    setupAllPublications(project)
 }
 
 dependencies {
@@ -51,7 +38,7 @@ dependencies {
     }
 
     implementation(gradleKotlinDsl())
-    api("de.fayard:refreshVersions:_")
+    api(project(":refreshVersions-core"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
 }
 
@@ -71,6 +58,7 @@ tasks.withType<Test> {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+    withSourcesJar()
 }
 
 kotlinDslPluginOptions {

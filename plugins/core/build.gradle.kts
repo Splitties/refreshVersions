@@ -7,14 +7,10 @@ plugins {
     `kotlin-dsl`
 }
 
-version = file("plugins_version.txt").readLines().first()
-group = "de.fayard"
-
-
 gradlePlugin {
     plugins {
-        create("refreshVersions") {
-            id = "de.fayard.refreshVersions"
+        create("refreshVersions-core") {
+            id = "de.fayard.refreshVersions-core"
             displayName = "./gradlew refreshVersions"
             description = "Painless dependencies management"
             implementationClass = "de.fayard.RefreshVersionsPlugin"
@@ -22,26 +18,19 @@ gradlePlugin {
     }
 }
 
-tasks.register<DefaultTask>("hello") {
-    group = "Custom"
-    description = "Minimal task that do nothing. Useful to debug a failing build"
-}
-
-repositories {
-    mavenLocal()
-    jcenter()
-    mavenCentral()
-}
-
 pluginBundle {
     website = "https://builtwithgradle.netlify.com/"
-    vcsUrl = "https://github.com/jmfayard/gradle-dependencies-plugins"
+    vcsUrl = "https://github.com/jmfayard/refreshVersions"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
+}
+
+publishing {
+    setupAllPublications(project)
 }
 
 dependencies {
 
-    testImplementation(platform(notation = "org.junit:junit-bom:5.6.0"))
+    testImplementation(platform(notation = "org.junit:junit-bom:_"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     testImplementation("io.kotlintest:kotlintest-runner-junit5:_")
@@ -67,6 +56,7 @@ tasks.withType<Test> {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+    withSourcesJar()
 }
 
 kotlinDslPluginOptions {

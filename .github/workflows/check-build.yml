@@ -4,8 +4,7 @@ name: Check build and tests of plugins and samples
 on:
   pull_request:
     paths:
-      - 'refreshVersions/**'
-      - 'dependencies/**'
+      - 'plugins/**'
       - 'sample-kotlin/**'
       - 'sample-groovy/**'
       - '!**.md'
@@ -17,8 +16,7 @@ on:
       - develop
       - master
     paths:
-      - 'refreshVersions/**'
-      - 'dependencies/**'
+      - 'plugins/**'
       - 'sample-kotlin/**'
       - 'sample-groovy/**'
       - '!**.md'
@@ -35,13 +33,8 @@ jobs:
           java-version: 11
       - uses: eskatos/gradle-command-action@v1
         with:
-          wrapper-directory: refreshVersions
-          build-root-directory: refreshVersions
-          arguments: check publishToMavenLocal --stacktrace
-      - uses: eskatos/gradle-command-action@v1
-        with:
-          wrapper-directory: dependencies
-          build-root-directory: dependencies
+          wrapper-directory: plugins
+          build-root-directory: plugins
           arguments: check publishToMavenLocal --stacktrace
       - uses: eskatos/gradle-command-action@v1
         with:
