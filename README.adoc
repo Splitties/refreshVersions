@@ -89,9 +89,9 @@ Add the following snippet in your project's root `settings.gradle(.kts)` file:
 import de.fayard.dependencies.bootstrapRefreshVersionsAndDependencies
 
 // Here you might have some pluginManagement block:
-// pluginManagement {
-//   ...
-// }
+pluginManagement {
+    //...
+}
 
 buildscript {
     repositories { gradlePluginPortal() }
