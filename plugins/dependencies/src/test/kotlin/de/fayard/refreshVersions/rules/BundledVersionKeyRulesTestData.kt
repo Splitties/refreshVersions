@@ -2,7 +2,7 @@ package de.fayard.refreshVersions.rules
 
 import Ktor
 import Splitties
-import de.fayard.dependencies.internal.getArtifactsFromDependenciesObject
+import de.fayard.refreshVersions.internal.getArtifactsFromDependenciesObject
 import org.gradle.api.artifacts.ModuleIdentifier
 
 data class VersionKeyWithModules(
@@ -124,7 +124,8 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.test.jank", dependency = AndroidX.test.jankTestHelper),
     versionKeyWithModules(expected = "androidx.test.uiautomator", dependency = AndroidX.test.uiAutomator),
     versionKeyWithModules(expected = "androidx.test.espresso", dependenciesObject = AndroidX.test.espresso,
-        excludes = getArtifactsFromDependenciesObject(AndroidX.test.espresso.idling).map { "${it.group}:${it.name}" }
+        excludes = getArtifactsFromDependenciesObject(AndroidX.test.espresso.idling)
+            .map { "${it.group}:${it.name}" }
     ),
     versionKeyWithModules(
         expected = "androidx.test.espresso.idling",
@@ -166,7 +167,8 @@ private fun versionKeyWithModules(
     excludes: List<String> = emptyList()
 ): VersionKeyWithModules {
     require(dependenciesObject !is String) { "Replace parameter named `dependenciesObject` by `dependency`" }
-    val modulesInObject = getArtifactsFromDependenciesObject(dependenciesObject)
+    val modulesInObject =
+        getArtifactsFromDependenciesObject(dependenciesObject)
     return VersionKeyWithModules(
         expectedVersionKey = expected,
         moduleIdentifiers = if (excludes.isEmpty()) {

@@ -44,8 +44,8 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xinline-classes",
-        "-Xuse-experimental=kotlin.Experimental",
-        "-Xuse-experimental=de.fayard.versions.internal.InternalRefreshVersionsApi"
+        "-Xopt-in=kotlin.RequiresOptIn",
+        "-Xopt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
     )
 }
 
