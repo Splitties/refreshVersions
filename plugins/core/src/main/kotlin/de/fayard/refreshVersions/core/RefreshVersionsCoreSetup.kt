@@ -34,7 +34,7 @@ import java.util.Properties
  * ```groovy
  * import de.fayard.refreshVersions.core.RefreshVersionsCoreSetup
  * buildscript {
- *     dependencies.classpath("de.fayard:refreshVersions:VERSION")
+ *     dependencies.classpath("de.fayard.refreshVersions:refreshVersions:VERSION")
  * }
  *
  * RefreshVersionsCoreSetup.bootstrap(settings)
