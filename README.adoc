@@ -1,9 +1,7 @@
-// plugin.de.fayard.buildSrcVersions (aka buildSrcVersions)
-:gradle_version: 6.2.1
-:repo: jmfayard/buildSrcVersions
-:branch: 26-buildSrcVersions
+// plugin.de.fayard.refreshVersions (aka refreshVersions)
+:gradle_version: 6.4.1
+:repo: jmfayard/refreshVersions
 :github: https://github.com/{repo}
-:plugin_issues: https://github.com/gradle/kotlin-dsl/issues?utf8=%E2%9C%93&q=author%3Ajmfayard+
 :plugin_gradle_portal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
 :contributors_badge: image:https://www.codetriage.com/jmfayard/buildsrcversions/badges/users.svg["Code Triage",link="https://www.codetriage.com/jmfayard/buildsrcversions"]
 :gradle_kotlin_dsl:	https://github.com/gradle/kotlin-dsl
@@ -12,24 +10,17 @@
 :slack_badge: image:{slack_image}["Kotlinlang Slack", link="{slack_url}"]
 :gradle_guide_new:	https://guides.gradle.org/creating-new-gradle-builds
 :gradle_guide_buildlogic:	https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
-:medium_puzzle: https://blog.kotlin-academy.com/gradle-kotlin-the-missing-piece-of-the-puzzle-7528a85f0d2c
-:medium_protips: https://proandroiddev.com/android-studio-pro-tips-for-working-with-gradle-8a7aa61a8cc4
-:medium_mvp: https://dev.to/jmfayard/the-minimum-viable-pull-request-5e7p
-:devto_readme: https://dev.to/jmfayard/how-to-write-a-good-readme-discuss-4hkl
-:issues: https://github.com/jmfayard/buildSrcVersions/issues
-:master: https://github.com/jmfayard/buildSrcVersions/blob/master
+:issues: https://github.com/jmfayard/refreshVersions/issues
+:master: https://github.com/jmfayard/refreshVersions/blob/master
 :badge_mit: image:https://img.shields.io/github/license/mashape/apistatus.svg["GitHub",link="{github}/blob/master/LICENSE.txt"]
 :image_refreshVersions_version: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg
-:image_dependencies_version: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/dependencies/de.fayard.dependencies.gradle.plugin/maven-metadata.xml.svg
-:badge_refreshVersions_version: image:{image_refreshVersions_version}?label=refreshVersions["refreshVersions latest release on Gradle plugin portal",link="https://plugins.gradle.org/plugin/de.fayard.refreshVersions"]
-:badge_dependencies_version: image:{image_dependencies_version}?label=dependencies["dependencies plugin latest release on Gradle plugin portal",link="https://plugins.gradle.org/plugin/de.fayard.dependencies"]
-:ext-relative: {outfilesuffix}
+:badge_refreshVersions_version: image:{image_refreshVersions_version}?label=refreshVersions["refreshVersions latest release on Gradle plugin portal",link="{plugin_gradle_portal}"]
 
 = refreshVersions
 
 *End the dependency hell in minutes.*
 
-{badge_refreshVersions_version} {badge_dependencies_version} {slack_badge} {contributors_badge} {badge_mit}
+{badge_refreshVersions_version} {slack_badge} {contributors_badge} {badge_mit}
 
 == What
 
@@ -45,6 +36,7 @@ The `refreshVersions` Gradle plugin brings the following benefits:
 1. *Centralizes dependencies versions* (very useful in multi-module projects)
 2. *Shows available updates in seconds*
 3. *Allows applying the available updates with minimal effort*
+4. *Makes discovering select dependencies a breeze with autocomplete in the IDE**
 
 == Why (the problem this project solves)
 
@@ -86,7 +78,7 @@ Add the following snippet in your project's root `settings.gradle(.kts)` file:
 [source,kts,subs=attributes]
 ----
 // settings.gradle.kts
-import de.fayard.dependencies.bootstrapRefreshVersionsAndDependencies
+import de.fayard.refreshVersions.bootstrapRefreshVersions
 
 // Here you might have some pluginManagement block:
 pluginManagement {
@@ -95,10 +87,10 @@ pluginManagement {
 
 buildscript {
     repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard:dependencies:0.5.7")
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.5.7")
 }
 
-bootstrapRefreshVersionsAndDependencies()
+bootstrapRefreshVersions()
 ----
 
 ==== Step 2: Migrating the dependencies versions declaration place
@@ -109,7 +101,7 @@ Run the following command on the root project:
 
 This Gradle task is interactive.
 It will walk you through every module of your Gradle project, assisting you in replacing every hardcoded dependency version by the
-version placeholder (`_`) and an entry in the `versions.properties` file, for every configuration.
+version placeholder (`_`), and an entry in the `versions.properties` file, for every configuration.
 
 _Note that while this Gradle task cannot break your build, it is experimental.
 We are aware its UX can be improved, and we have plans to work on it before the 1.0 release._
@@ -153,7 +145,7 @@ To get the future tips and informative articles, you can follow me on https://de
 
 Questions? {issues}[Look at the existing issues], then ask your own.
 
-For special requests (not issues), you can also reach us out on Kotlin's Slack
+For special requests (not issues), you can also reach us out on https://slack.kotl.in[Kotlin's Slack] in the {slack_url}[#gradle-refresh-versions] channel.
 
 == Release notes
 
