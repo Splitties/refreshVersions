@@ -1,4 +1,4 @@
-import de.fayard.dependencies.DependenciesSetup
+import de.fayard.refreshVersions.RefreshVersionsSetup
 
 pluginManagement {
     repositories {
@@ -27,8 +27,7 @@ plugins {
     id("com.gradle.enterprise").version("3.1.1")
 }
 
-DependenciesSetup.bootstrapRefreshVersionsAndDependencies(settings)
-
+RefreshVersionsSetup.bootstrapRefreshVersions(settings)
 
 gradleEnterprise {
     buildScan {
