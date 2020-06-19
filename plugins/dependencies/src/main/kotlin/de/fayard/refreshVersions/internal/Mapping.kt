@@ -77,7 +77,7 @@ private fun getArtifactNameToConstantMappingFromObject(
 ): List<DependencyMapping> {
     val objectClass = objectInstance::class
     return objectClass.memberProperties.filter { kProperty ->
-        @UseExperimental(ExperimentalStdlibApi::class)
+        @OptIn(ExperimentalStdlibApi::class)
         kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType != typeOf<String>()
     }.flatMap { kProperty ->
         @Suppress("unchecked_cast")
@@ -88,7 +88,7 @@ private fun getArtifactNameToConstantMappingFromObject(
             excludeBomDependencies = excludeBomDependencies
         )
     } + objectClass.memberProperties.asSequence().filter { kProperty ->
-        @UseExperimental(ExperimentalStdlibApi::class)
+        @OptIn(ExperimentalStdlibApi::class)
         kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType == typeOf<String>()
     }.mapNotNull { kProperty ->
         val artifactName = if (kProperty.isConst) {
