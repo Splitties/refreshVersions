@@ -1,7 +1,7 @@
 package de.fayard
 
-import de.fayard.dependencies.internal.DependencyMapping
-import de.fayard.dependencies.internal.getArtifactNameToConstantMapping
+import de.fayard.refreshVersions.internal.DependencyMapping
+import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import io.kotlintest.matchers.haveSize
 import io.kotlintest.matchers.withClue
 import io.kotlintest.should

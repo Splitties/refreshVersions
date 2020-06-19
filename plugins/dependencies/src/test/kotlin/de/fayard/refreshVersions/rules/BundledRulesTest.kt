@@ -1,6 +1,6 @@
 package de.fayard.refreshVersions.rules
 
-import de.fayard.versions.internal.ArtifactVersionKeyReader
+import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test

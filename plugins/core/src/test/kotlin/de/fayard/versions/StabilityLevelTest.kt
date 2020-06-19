@@ -1,6 +1,7 @@
 package de.fayard.versions
 
-import de.fayard.versions.StabilityLevel.*
+import de.fayard.refreshVersions.core.StabilityLevel
+import de.fayard.refreshVersions.core.StabilityLevel.*
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

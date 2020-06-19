@@ -1,4 +1,4 @@
-import de.fayard.dependencies.bootstrapRefreshVersionsAndDependencies
+import de.fayard.refreshVersions.bootstrapRefreshVersions
 
 pluginManagement {
     repositories {
@@ -22,7 +22,7 @@ buildscript {
     }
 }
 
-bootstrapRefreshVersionsAndDependencies()
+bootstrapRefreshVersions()
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")
