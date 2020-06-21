@@ -27,6 +27,7 @@ open class RefreshVersionsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionRefreshVersions() {
+        checkOnlyRefreshVersionsIsRun()
 
         val allConfigurations: Set<Configuration> =
             project.allprojects.flatMap { it.buildscript.configurations + it.configurations }.toSet()
@@ -143,6 +144,16 @@ open class RefreshVersionsTask : DefaultTask() {
                 |https://blog.danlew.net/2015/09/09/dont-use-dynamic-versions-for-your-dependencies/
                 """.trimMargin()
             )
+        }
+    }
+
+    private fun checkOnlyRefreshVersionsIsRun() {
+        // Running the clean task in the same build command as the refreshVersions task
+        // breaks it because it wipes the dependencies and repositories info needed from buildSrc.
+        // To avoid this issue, we disallow running refreshVersions with any other task,
+        // so the clean task is not run directly, or indirectly as part of another task dependency.
+        if (project.gradle.startParameter.taskNames.size != 1) {
+            throw UnsupportedOperationException("The refreshVersions task cannot be run with another task.")
         }
     }
 }
