@@ -44,6 +44,8 @@ dependencies {
     implementation("org.mongodb:mongo-java-driver:3.11.0")
     implementation(kotlin("script-runtime"))
 
+    api("org.apache.poi:poi:_")
+    api("org.apache.poi:poi-ooxml:_")
 }
 
 tasks.register("run", JavaExec::class.java) {

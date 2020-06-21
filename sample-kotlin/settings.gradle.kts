@@ -22,7 +22,11 @@ buildscript {
     }
 }
 
-bootstrapRefreshVersions()
+bootstrapRefreshVersions(
+    extraArtifactVersionKeyRules = listOf(
+        file("refreshVersions-extra-rules.txt").readText()
+    )
+)
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")
