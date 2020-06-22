@@ -1,11 +1,8 @@
 package de.fayard.refreshVersions.internal
 
-import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
+import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.cli.AnsiColor
 import de.fayard.refreshVersions.core.internal.cli.CliGenericUi
-import de.fayard.refreshVersions.core.internal.getVersionProperties
-import de.fayard.refreshVersions.core.internal.hasHardcodedVersion
-import de.fayard.refreshVersions.core.internal.retrieveVersionKeyReader
 import kotlinx.coroutines.*
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -35,7 +32,7 @@ internal fun Configuration.countDependenciesWithHardcodedVersions(
 }
 
 internal fun Project.countDependenciesWithHardcodedVersions(versionsProperties: Map<String, String>): Int {
-    val versionKeyReader = gradle.retrieveVersionKeyReader()
+    val versionKeyReader = RefreshVersionsInternals.versionKeyReader
     return configurations.sumBy { configuration ->
         if (configuration.shouldBeIgnored()) 0 else {
             configuration.countDependenciesWithHardcodedVersions(versionsProperties, versionKeyReader)
@@ -45,7 +42,7 @@ internal fun Project.countDependenciesWithHardcodedVersions(versionsProperties: 
 
 internal fun promptProjectSelection(rootProject: Project): Project? {
     require(rootProject == rootProject.rootProject) { "Expected a rootProject but got $rootProject" }
-    val versionsProperties = rootProject.getVersionProperties()
+    val versionsProperties = RefreshVersionsInternals.readVersionProperties()
     val projectsWithHardcodedDependenciesVersions: List<Pair<Project, Int>> = rootProject.allprojects.mapNotNull {
         val hardcodedDependenciesVersionsCount = it.countDependenciesWithHardcodedVersions(versionsProperties)
         if (hardcodedDependenciesVersionsCount > 0) {
@@ -64,7 +61,7 @@ internal fun promptProjectSelection(rootProject: Project): Project? {
 }
 
 internal suspend fun runInteractiveMigrationToDependenciesConstants(project: Project) {
-    val versionsProperties = project.rootProject.getVersionProperties()
+    val versionsProperties = RefreshVersionsInternals.readVersionProperties()
     while (coroutineContext.isActive) {
         val selectedConfiguration = project.promptConfigurationSelection(versionsProperties) ?: return
         runConfigurationDependenciesMigration(
@@ -77,7 +74,7 @@ internal suspend fun runInteractiveMigrationToDependenciesConstants(project: Pro
 
 private fun Project.promptConfigurationSelection(versionsProperties: Map<String, String>): Configuration? {
     @Suppress("UnstableApiUsage")
-    val versionKeyReader = gradle.retrieveVersionKeyReader()
+    val versionKeyReader = RefreshVersionsInternals.versionKeyReader
     val configurationsWithHardcodedDependenciesVersions = configurations.mapNotNull { configuration ->
         if (configuration.shouldBeIgnored()) return@mapNotNull null
         val count = configuration.countDependenciesWithHardcodedVersions(versionsProperties, versionKeyReader)

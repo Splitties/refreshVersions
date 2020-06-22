@@ -1,6 +1,5 @@
 package de.fayard.refreshVersions.core.internal
 
-import de.fayard.refreshVersions.core.extensions.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.isGradlePlugin
 import de.fayard.refreshVersions.core.extensions.moduleIdentifier
 import de.fayard.refreshVersions.core.extensions.stabilityLevel
@@ -10,7 +9,6 @@ import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.ModuleIdentifier
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
-import org.gradle.api.initialization.Settings
 import org.gradle.api.invocation.Gradle
 import java.io.File
 
@@ -18,7 +16,7 @@ internal const val versionPlaceholder = "_"
 
 internal fun Gradle.setupVersionPlaceholdersResolving(versionProperties: Map<String, String>) {
 
-    val versionKeyReader = retrieveVersionKeyReader()
+    val versionKeyReader = RefreshVersionsInternals.versionKeyReader
     var properties: Map<String, String> = versionProperties
     val refreshProperties = { updatedProperties: Map<String, String> ->
         properties = updatedProperties
@@ -89,25 +87,11 @@ internal tailrec fun resolveVersion(properties: Map<String, String>, key: String
 }
 
 /**
- * Expects the value of a version property (values of the map returned by [getVersionProperties]).
+ * Expects the value of a version property (values of the map returned by [RefreshVersionsInternals.readVersionProperties]).
  */
 internal fun String.isAVersionAlias(): Boolean = startsWith("version.") || startsWith("plugin.")
 
 private val lock = Any()
-
-internal fun Settings.versionsPropertiesFile(): File {
-    val relativePath = "versions.properties".let { if (isBuildSrc) "../$it" else it }
-    return rootDir.resolve(relativePath).also {
-        it.createNewFile() // Creates the file if it doesn't exist yet
-    }
-}
-
-internal fun Project.versionsPropertiesFile(): File {
-    val relativePath = "versions.properties".let { if (project.isBuildSrc) "../$it" else it }
-    return rootProject.file(relativePath).also {
-        it.createNewFile() // Creates the file if it doesn't exist yet
-    }
-}
 
 private fun Configuration.replaceVersionPlaceholdersFromDependencies(
     project: Project,
@@ -128,13 +112,13 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                 properties = properties,
                 key = propertyName
             ) ?: synchronized(lock) {
-                project.getVersionProperties().let { updatedProperties ->
+                RefreshVersionsInternals.readVersionProperties().let { updatedProperties ->
                     properties = updatedProperties
                     refreshProperties(updatedProperties)
                 }
                 resolveVersion(properties, propertyName)
                     ?: `Write versions candidates using latest most stable version and get it`(
-                        versionsPropertiesFile = project.versionsPropertiesFile(),
+                        versionsPropertiesFile = RefreshVersionsInternals.versionsPropertiesFile,
                         repositories = (project.repositories + project.buildscript.repositories)
                             .filterIsInstance<MavenArtifactRepository>()
                             .map { MavenRepoUrl(it.url.toString()) },
@@ -157,11 +141,10 @@ fun Project.writeCurrentVersionInProperties(
     versionKey: String,
     currentVersion: String
 ) {
-    val versionsPropertiesFile = versionsPropertiesFile()
     val version = Version(currentVersion)
     val candidate = VersionCandidate(version.stabilityLevel(), version)
     writeWithAddedVersions(
-        versionsFile = versionsPropertiesFile,
+        versionsFile = RefreshVersionsInternals.versionsPropertiesFile,
         propertyName = versionKey,
         versionsCandidates = listOf(candidate)
     )

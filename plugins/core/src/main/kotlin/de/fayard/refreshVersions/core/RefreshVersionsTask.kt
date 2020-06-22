@@ -1,18 +1,15 @@
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.extensions.hasDynamicVersion
+import de.fayard.refreshVersions.core.extensions.moduleIdentifier
+import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
 import de.fayard.refreshVersions.core.internal.MavenRepoUrl
 import de.fayard.refreshVersions.core.internal.getDependencyVersionsCandidates
-import de.fayard.refreshVersions.core.internal.getVersionProperties
-import de.fayard.refreshVersions.core.internal.getVersionPropertyName
-import de.fayard.refreshVersions.core.internal.isManageableVersion
 import de.fayard.refreshVersions.core.internal.readPluginsAndBuildSrcDependencies
 import de.fayard.refreshVersions.core.internal.readPluginsAndBuildSrcRepositories
 import de.fayard.refreshVersions.core.internal.resolveVersion
-import de.fayard.refreshVersions.core.internal.retrieveVersionKeyReader
 import de.fayard.refreshVersions.core.internal.updateVersionsProperties
-import de.fayard.refreshVersions.core.extensions.hasDynamicVersion
-import de.fayard.refreshVersions.core.extensions.moduleIdentifier
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
@@ -51,9 +48,9 @@ open class RefreshVersionsTask : DefaultTask() {
             .distinct()
             .toList()
 
-        val versionProperties: Map<String, String> = project.getVersionProperties()
+        val versionProperties: Map<String, String> = RefreshVersionsInternals.readVersionProperties()
 
-        val versionKeyReader = project.gradle.retrieveVersionKeyReader()
+        val versionKeyReader = RefreshVersionsInternals.versionKeyReader
 
         val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
         val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
@@ -112,13 +109,14 @@ open class RefreshVersionsTask : DefaultTask() {
             val warnFor = (dependenciesWithHardcodedVersions).take(3).map {
                 "${it.group}:${it.name}:${it.version}"
             }
+            val versionsFileName = RefreshVersionsInternals.versionsPropertiesFile.name
             logger.warn(
                 """Found ${dependenciesWithHardcodedVersions.count()} hardcoded dependencies versions.
                 |
                 |$warnFor...
                 |
                 |To ensure single source of truth, refreshVersions only works with version placeholders,
-                |that is the explicit way of marking the version is not there (but in the versions.properties file).
+                |that is the explicit way of marking the version is not there (but in the $versionsFileName file).
                 |
                 |If you intentionally want to keep hardcoded versions so a module has a different version of a
                 |dependency than the rest of the project, you can safely ignore this warning for these artifacts,

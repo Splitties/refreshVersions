@@ -1,11 +1,8 @@
 package de.fayard.refreshVersions.internal
 
+import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.cli.AnsiColor
 import de.fayard.refreshVersions.core.internal.cli.CliGenericUi
-import de.fayard.refreshVersions.core.internal.getVersionPropertyName
-import de.fayard.refreshVersions.core.internal.hasHardcodedVersion
-import de.fayard.refreshVersions.core.internal.retrieveVersionKeyReader
-import de.fayard.refreshVersions.core.internal.writeCurrentVersionInProperties
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ExternalDependency
@@ -34,7 +31,7 @@ private fun Project.attemptDependencyMigration(
     versionsProperties: Map<String, String>,
     dependency: ExternalDependency
 ) {
-    val versionKeyReader = gradle.retrieveVersionKeyReader()
+    val versionKeyReader = RefreshVersionsInternals.versionKeyReader
 
     if (dependency.hasHardcodedVersion(versionsProperties, versionKeyReader).not()) return
     val currentVersion = dependency.version ?: return
@@ -97,7 +94,8 @@ private fun offerReplacingHardcodedVersionWithConstantOrPlaceholder(
 }
 
 private fun logAddedVersionsKey(versionKey: String) {
-    println("Moved the current version to the versions.properties file under the following key:")
+    val versionsFileName = RefreshVersionsInternals.versionsPropertiesFile.name
+    println("Moved the current version to the $versionsFileName file under the following key:")
     print(AnsiColor.WHITE.boldHighIntensity)
     print(AnsiColor.YELLOW.background)
     print(versionKey)

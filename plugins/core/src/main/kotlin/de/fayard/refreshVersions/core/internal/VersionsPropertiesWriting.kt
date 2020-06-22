@@ -13,11 +13,9 @@ internal data class DependencyWithVersionCandidates(
 internal fun Project.updateVersionsProperties(
     dependenciesWithLastVersion: List<DependencyWithVersionCandidates>
 ) {
-    val file = file("versions.properties")
-    if (file.exists().not()) file.createNewFile()
 
-    val properties: Map<String, String> = getVersionProperties()
-    val versionKeyReader = gradle.retrieveVersionKeyReader()
+    val properties: Map<String, String> = RefreshVersionsInternals.readVersionProperties()
+    val versionKeyReader = RefreshVersionsInternals.versionKeyReader
 
     val newFileContent = buildString {
         appendln(fileHeader)
@@ -47,7 +45,7 @@ internal fun Project.updateVersionsProperties(
             .sortedBy { it.key }
             .forEach { appendVersionWithUpdatesIfAvailable(it) }
     }
-    file.writeText(newFileContent)
+    RefreshVersionsInternals.versionsPropertiesFile.writeText(newFileContent)
 }
 
 internal fun writeWithAddedVersions(

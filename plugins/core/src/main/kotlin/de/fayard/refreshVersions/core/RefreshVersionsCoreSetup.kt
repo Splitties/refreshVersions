@@ -2,17 +2,15 @@
 
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.extensions.isBuildSrc
-import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
+import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.clearUsedPluginsList
-import de.fayard.refreshVersions.core.internal.getVersionProperties
 import de.fayard.refreshVersions.core.internal.noteUsedPluginDependency
 import de.fayard.refreshVersions.core.internal.resolveVersion
 import de.fayard.refreshVersions.core.internal.setupVersionPlaceholdersResolving
 import de.fayard.refreshVersions.core.internal.writeUsedRepositories
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.apply
-import java.util.Properties
+import java.io.File
 
 /**
  * Boostrap refreshVersions **only** (without the dependencies plugin).
@@ -42,20 +40,20 @@ import java.util.Properties
  */
 @JvmOverloads
 @JvmName("bootstrap")
-fun Settings.bootstrapRefreshVersionsCore(artifactVersionKeyRules: List<String> = emptyList()) {
-    setupRefreshVersions(settings, artifactVersionKeyRules)
+fun Settings.bootstrapRefreshVersionsCore(
+    artifactVersionKeyRules: List<String> = emptyList(),
+    versionsPropertiesFile: File = defaultVersionsPropertiesFile()
+) {
+    setupRefreshVersions(settings, artifactVersionKeyRules, versionsPropertiesFile)
 }
 
 @Suppress("DeprecatedCallableAddReplaceWith") // ReplaceWith has a bug that removes the line of code in this case...
 @Deprecated("Replace with bootstrapRefreshVersionsCore")
 fun Settings.setupVersionPlaceholdersResolving(): Unit = bootstrapRefreshVersionsCore()
 
-
-internal val artifactVersionKeyReader: ArtifactVersionKeyReader get() = privateArtifactVersionKeyReader
-
 /**
  * Sets up a resolution strategy for the plugins that does the following:
- * For each plugin, tries to find the corresponding version declared in `versions.properties`, and uses it.
+ * For each plugin, tries to find the corresponding version declared in [versionsPropertiesFile], and uses it.
  *
  * The expected property key is the id of the plugin, prefixed with `plugin.` (e.g. `plugin.io.fabric`), excepted for
  * the Kotlin and Android gradle plugins where `version.kotlin` and `plugin.android` are used.
@@ -66,29 +64,28 @@ internal val artifactVersionKeyReader: ArtifactVersionKeyReader get() = privateA
  * This function also sets up the module for the Android and Fabric (Crashlytics) Gradle plugins, so you can avoid the
  * buildscript classpath configuration boilerplate.
  */
-private fun setupRefreshVersions(settings: Settings, artifactVersionKeyRules: List<String>) {
+private fun setupRefreshVersions(
+    settings: Settings,
+    artifactVersionKeyRules: List<String>,
+    versionsPropertiesFile: File
+) {
     settings.clearUsedPluginsList()
 
-    val relativePath = "versions.properties".let { if (settings.isBuildSrc) "../$it" else it }
-    val versionProperties = settings.rootDir.resolve(relativePath)
-    versionProperties.createNewFile() // Creates the file if it doesn't exist yet
+    RefreshVersionsInternals.initialize(artifactVersionKeyRules, versionsPropertiesFile)
 
-    privateArtifactVersionKeyReader = ArtifactVersionKeyReader.fromRules(filesContent = artifactVersionKeyRules)
-
+    val versionProperties = RefreshVersionsInternals.readVersionProperties()
     @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(
         settings = settings,
-        properties = Properties().apply { load(versionProperties.reader()) } as Map<String, String>
+        properties = versionProperties
     )
 
-    settings.gradle.setupVersionPlaceholdersResolving(versionProperties = settings.getVersionProperties())
+    settings.gradle.setupVersionPlaceholdersResolving(versionProperties = versionProperties)
 
     settings.gradle.rootProject {
         apply<RefreshVersionsCorePlugin>()
     }
 }
-
-private lateinit var privateArtifactVersionKeyReader: ArtifactVersionKeyReader
 
 private fun setupPluginsVersionsResolution(
     settings: Settings,
