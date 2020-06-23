@@ -111,11 +111,6 @@ private fun setupPluginsVersionsResolution(
                     settings.noteUsedPluginDependency(dependencyNotation)
                     useModule(dependencyNotation)
                 }
-                pluginId == "io.fabric" -> {
-                    val dependencyNotation = "io.fabric.tools:gradle:$version"
-                    settings.noteUsedPluginDependency(dependencyNotation)
-                    useModule(dependencyNotation)
-                }
                 else -> {
                     settings.noteUsedPluginDependency("$pluginId:$pluginId.gradle.plugin:$version")
                     useVersion(version)
