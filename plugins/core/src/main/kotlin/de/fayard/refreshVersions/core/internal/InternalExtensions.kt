@@ -1,14 +1,12 @@
 package de.fayard.refreshVersions.core.internal
 
-import de.fayard.refreshVersions.core.artifactVersionKeyReader
+import de.fayard.refreshVersions.core.extensions.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.isGradlePlugin
 import de.fayard.refreshVersions.core.extensions.moduleIdentifier
-import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.initialization.Settings
-import org.gradle.api.invocation.Gradle
-import java.util.Properties
+import java.io.File
 
 @InternalRefreshVersionsApi
 fun Dependency.hasHardcodedVersion(
@@ -35,21 +33,7 @@ fun Dependency.isManageableVersion(
 }
 
 @InternalRefreshVersionsApi
-fun @Suppress("unused") Gradle.retrieveVersionKeyReader(): ArtifactVersionKeyReader {
-    return artifactVersionKeyReader
-}
-
-@InternalRefreshVersionsApi
-fun Project.getVersionProperties(): Map<String, String> = mutableMapOf<String, String>().also { map ->
-    // Read from versions.properties
-    Properties().also { properties ->
-        properties.load(versionsPropertiesFile().reader())
-    }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
-}
-
-internal fun Settings.getVersionProperties(): Map<String, String> = mutableMapOf<String, String>().also { map ->
-    // Read from versions.properties
-    Properties().also { properties ->
-        properties.load(versionsPropertiesFile().reader())
-    }.forEach { (k, v) -> if (k is String && v is String) map[k] = v }
+fun Settings.defaultVersionsPropertiesFile(): File {
+    val relativePath = "versions.properties".let { if (settings.isBuildSrc) "../$it" else it }
+    return settings.rootDir.resolve(relativePath)
 }
