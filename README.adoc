@@ -125,6 +125,25 @@ Applying updates is done in the `versions.properties` file.
 3. Press the backspace/delete key.
 4. If you're in an IDE, sync Gradle changes to see new dependencies versions.
 
+== Using a development version
+
+In case you want to try new features or get a fix for a bug that affects a project you work on,
+before they make it into a release, you can use a development version.
+
+To do so, in your `settings.gradle.kts` file(s), ensure the `buildscript` has this maven repository:
+`https://dl.bintray.com/jmfayard/maven`, and a valid dev version is set, as such:
+
+[source,kts,subs=attributes]
+----
+buildscript {
+    repositories { maven(url = "https://dl.bintray.com/jmfayard/maven") } // <- here
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.5-dev-002")
+}
+----
+
+You can find the published development versions by searching in the recent commits on the develop
+branch, they start with "Dev version".
+
 == Bonus: tips for your Gradle projects
 
 Good documentation can also help you upgrade an old project to the latest and greatest.
