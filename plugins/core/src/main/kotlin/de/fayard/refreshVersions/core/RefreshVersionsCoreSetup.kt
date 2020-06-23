@@ -13,7 +13,7 @@ import org.gradle.kotlin.dsl.apply
 import java.io.File
 
 /**
- * Boostrap refreshVersions **only** (without the dependencies plugin).
+ * Boostrap refreshVersions-core **only** (excludes dependencies constants and version key rules).
  *
  * Supports both Kotlin and Groovy Gradle DSL.
  *
@@ -22,7 +22,7 @@ import java.io.File
  * import de.fayard.refreshVersions.core.bootstrap
  *
  * buildscript {
- *     dependencies.classpath("de.fayard.refreshVersions:refreshVersions:VERSION")
+ *     dependencies.classpath("de.fayard.refreshVersions:refreshVersions-core:VERSION")
  * }
  *
  * settings.bootstrapRefreshVersionsCore()
@@ -32,7 +32,7 @@ import java.io.File
  * ```groovy
  * import de.fayard.refreshVersions.core.RefreshVersionsCoreSetup
  * buildscript {
- *     dependencies.classpath("de.fayard.refreshVersions:refreshVersions:VERSION")
+ *     dependencies.classpath("de.fayard.refreshVersions:refreshVersions-core:VERSION")
  * }
  *
  * RefreshVersionsCoreSetup.bootstrap(settings)
