@@ -9,6 +9,7 @@ import org.gradle.kotlin.dsl.apply
 import java.io.File
 
 @JvmOverloads
+@JvmName("bootstrap")
 fun Settings.bootstrapRefreshVersions(
     extraArtifactVersionKeyRules: List<String> = emptyList(),
     versionsPropertiesFile: File = defaultVersionsPropertiesFile()
