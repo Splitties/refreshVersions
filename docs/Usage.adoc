@@ -1,6 +1,5 @@
 :imagesdir: screenshots-usage
 :sectanchors:
-:stylesheet:
 
 = Usage
 
