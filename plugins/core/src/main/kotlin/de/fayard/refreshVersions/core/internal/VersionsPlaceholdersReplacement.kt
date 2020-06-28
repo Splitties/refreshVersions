@@ -65,19 +65,23 @@ fun getVersionPropertyName(
 
     val group = moduleIdentifier.group
     val name = moduleIdentifier.name
-    val versionKey: String = versionKeyReader.readVersionKey(group = group, name = name) ?: when {
-        name == "gradle" && group == "com.android.tools.build" -> return "plugin.android"
+
+    return when {
+        name == "gradle" && group == "com.android.tools.build" -> "plugin.android"
         moduleIdentifier.isGradlePlugin -> {
-            val pluginId = name.substringBeforeLast(".gradle.plugin")
-            return when {
-                pluginId.startsWith("org.jetbrains.kotlin") -> "version.kotlin"
-                pluginId.startsWith("com.android") -> "plugin.android"
-                else -> "plugin.$pluginId"
+            name.substringBeforeLast(".gradle.plugin").let { pluginId ->
+                when {
+                    pluginId.startsWith("org.jetbrains.kotlin") -> "version.kotlin"
+                    pluginId.startsWith("com.android") -> "plugin.android"
+                    else -> "plugin.$pluginId"
+                }
             }
         }
-        else -> "$group..$name"
+        else -> {
+            val versionKey = versionKeyReader.readVersionKey(group = group, name = name) ?: "$group..$name"
+            "version.$versionKey"
+        }
     }
-    return "version.$versionKey"
 }
 
 internal tailrec fun resolveVersion(properties: Map<String, String>, key: String, redirects: Int = 0): String? {
