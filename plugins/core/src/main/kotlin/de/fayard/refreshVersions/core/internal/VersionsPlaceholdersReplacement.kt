@@ -56,12 +56,6 @@ fun getVersionPropertyName(
     moduleIdentifier: ModuleIdentifier,
     versionKeyReader: ArtifactVersionKeyReader
 ): String {
-    //TODO: Reconsider the TODO below because we don't care about settings.gradle(.kts) buildscript for plugins since
-    // it can alias to any version property.
-
-    //TODO: What about the plugins? Should we use a custom text-based file format to allow early configuration?
-    // If we go down that road, what about invalidation? Also, would that invalidate the whole build or can we do
-    // better? Or would we have to hack to have the needed invalidation to happen?
 
     val group = moduleIdentifier.group
     val name = moduleIdentifier.name
