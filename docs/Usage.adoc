@@ -56,12 +56,35 @@ allowing you to quickly upgrade if needed.
 [#adding-gradle-plugins]
 === Adding gradle plugins
 
-TK
+This section doesn't apply to plugins that are configured in a `buildscript` block
+(since these have their versions configured like regular dependencies),
+but only to those that are configured solely with a plugin id.
+
+To add such a plugin, do as usual, but do not specify the version in the `build.gradle` or
+`build.gradle.kts` file. Instead, set it up like so in the `versions.properties` file:
+
+[source,properties,subs=attributes]
+----
+plugin.the-id-of-the-plugin=1.0
+----
+
+where `the-id-of-the-plugin` is the actual id of the plugin, and `1.0` is replaced by
+the actual version you want to use.
 
 [#adding-other-dependencies]
 === Other dependencies
 
-TK
+For dependencies that are not included in the provided constants,
+all you need to have them work with refreshVersions is to replace the
+version with the version placeholder (`_`),
+
+After adding a dependency that doesn't have its version specified
+in the `versions.properties` file yet, refreshVersions will
+edit it and put the most stable recent version in it on the next
+Gradle sync (or any other Gradle run).
+
+It will also put any less stable versions as comments,
+allowing you to quickly upgrade if needed.
 
 [#updating-dependencies]
 == Updating the dependencies
