@@ -34,9 +34,9 @@ The `refreshVersions` plugin targets *all kinds of Gradle projects*, including t
 The `refreshVersions` Gradle plugin brings the following benefits:
 
 1. *Centralizes dependencies versions* (very useful in multi-module projects)
-2. *Shows available updates in seconds*
-3. *Allows applying the available updates with minimal effort*
-4. *Makes discovering select dependencies a breeze with autocomplete in the IDE**
+2. *Shows available updates* _in seconds_
+3. *Allows applying the available updates* _with minimal effort_
+4. *Brings autocomplete for select dependencies* (you can add yours too)
 
 == Why (the problem this project solves)
 
@@ -52,7 +52,7 @@ Also, some library vendors like Google are publishing artifacts with different v
 about 70 different families with different versions overall.
 
 We saw this made developers to update the dependencies less and less often, effectively
-leading to legacy accumulation, or even projects abandon.
+leading to legacy accumulation (a form of technical debt), or even projects abandon.
 
 We firmly believe the *modularization benefits should not be hindered by these drawbacks*.
 That's how refreshVersions was born.
