@@ -11,6 +11,7 @@ on:
       - '!.editorconfig'
       - '!**/.gitignore'
       - '!**.adoc'
+      - '!docs/**'
   push:
     branches:
       - develop
@@ -23,6 +24,7 @@ on:
       - '!.editorconfig'
       - '!**/.gitignore'
       - '!**.adoc'
+      - '!docs/**'
 jobs:
   check-all:
     runs-on: ubuntu-latest
