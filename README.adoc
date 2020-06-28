@@ -1,5 +1,6 @@
 // plugin.de.fayard.refreshVersions (aka refreshVersions)
 :ext-relative: {outfilesuffix}
+:sectanchors:
 :repo: jmfayard/refreshVersions
 :github: https://github.com/{repo}
 :plugin_gradle_portal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
