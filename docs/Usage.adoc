@@ -1,0 +1,55 @@
+:imagesdir: screenshots-usage
+
+= Usage
+
+Day-to-day usage of `refreshVersions` is done in two steps.
+
+First, you discover the available updates.
+Second, you apply the updates you want.
+
+(scroll down to see an example below)
+
+== Find available updates (aka. refreshVersions)
+
+Run the `refreshVersions` gradle task on the root project:
+
+`./gradlew refreshVersions`
+
+_(It usually takes less than 10 seconds to execute on relatively big projects.)_
+
+Open the `versions.properties` file and see the available updates added as comments.
+
+== Apply updates
+
+Applying updates can be done in the `versions.properties` file with just the keyboard:
+
+1. Put the caret before or after the `=` symbol on the available update line.
+2. While holding shift (for text selection), press the up arrow key until the version key.
+3. Press the backspace/delete key.
+4. If you're in an IDE, sync Gradle changes to see the updated dependencies.
+
+Note that checking for compatibility, regressions, and performing any required changes or migrations
+cannot be done by refreshVersions. This is your responsibility (shared with your tests and QA).
+
+== Example
+
+Because images speak better than thousands of words, here's an example with screenshots.
+
+_Note: kotlinx.coroutines latest releases at the time of that example are `1.3.7` and `1.3.7-1.4-M2`._
+
+.Initially used version
+image::versions.properties_step00.png[caption="Step 0: "]
+
+.Run the `refreshVersions` task to find updates
+image::versions.properties_step01.png[caption="Step 1: "]
+
+.Replace the previous version with the update
+image::versions.properties_step02.png[caption="Step 2: "]
+
+_Tip: You can upgrade easily with just the keyboard.
+To so do, place the caret next to the equals sign (`=`) of the
+version you want to use, hold shift and press the up arrow key,
+and press the delete key to complete the upgrade._
+
+.Usual post-upgrade actions (check, migrate, commit, push, CI…)
+image::versions.properties_step03.png[caption="Final step: "]

@@ -1,5 +1,5 @@
 // plugin.de.fayard.refreshVersions (aka refreshVersions)
-:gradle_version: 6.4.1
+:ext-relative: {outfilesuffix}
 :repo: jmfayard/refreshVersions
 :github: https://github.com/{repo}
 :plugin_gradle_portal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
@@ -62,87 +62,14 @@ updates be as quick as possible through the whole codebase, and we want to remov
 error factor in dependencies declaration and update.
 That's exactly what `refreshVersions` can already do today in your project.
 
-== Usage
-=== Adding to an existing project
+== How
 
-_Note: Only Gradle 6+ is supported at the moment, because it allows for simpler setup._
+link:docs/Setting-up{ext-relative}[The short Setting-up guide is here].
 
-_Updating Gradle is usually a good idea. You get fewer bugs, more features and more build speed, and it's as simple as this:_
+Once setup, you just need to run the `refreshVersions` Gradle task
+and apply the updates you want in the `versions.properties` file.
 
-`$ ./gradlew wrapper --gradle-version {gradle_version}`
-
-==== Step 1: Adding the plugin
-
-Add the following snippet in your project's root `settings.gradle(.kts)` file:
-
-[source,kts,subs=attributes]
-----
-// settings.gradle.kts
-import de.fayard.refreshVersions.bootstrapRefreshVersions
-
-// Here you might have some pluginManagement block:
-pluginManagement {
-    //...
-}
-
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.5")
-}
-
-bootstrapRefreshVersions()
-----
-
-==== Step 2: Migrating the dependencies versions declaration place
-
-Run the following command on the root project:
-
-`./gradlew migrateToRefreshVersionsDependenciesConstants --console=plain`
-
-This Gradle task is interactive.
-It will walk you through every module of your Gradle project, assisting you in replacing every hardcoded dependency version by the
-version placeholder (`_`), and an entry in the `versions.properties` file, for every configuration.
-
-_Note that while this Gradle task cannot break your build, it is experimental.
-We are aware its UX can be improved, and we have plans to work on it before the 1.0 release._
-
-=== Find available updates (aka. refreshVersions)
-
-Run the `refreshVersions` gradle task on the root project:
-
-`./gradlew refreshVersions`
-
-_(It usually takes less than 10 seconds to execute on relatively big projects.)_
-
-Open the `versions.properties` file and see the available updates added as comments.
-
-=== Apply updates
-
-Applying updates is done in the `versions.properties` file.
-
-1. Put the caret before or after the `=` symbol on the available update line.
-2. Hold shift to start text selection, press the up arrow key and release shift.
-3. Press the backspace/delete key.
-4. If you're in an IDE, sync Gradle changes to see new dependencies versions.
-
-== Using a development version
-
-In case you want to try new features or get a fix for a bug that affects a project you work on,
-before they make it into a release, you can use a development version.
-
-To do so, in your `settings.gradle.kts` file(s), ensure the `buildscript` has this maven repository:
-`https://dl.bintray.com/jmfayard/maven`, and a valid dev version is set, as such:
-
-[source,kts,subs=attributes]
-----
-buildscript {
-    repositories { maven(url = "https://dl.bintray.com/jmfayard/maven") } // <- here
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.5-dev-002")
-}
-----
-
-You can find the published development versions by searching in the recent commits on the develop
-branch, they start with "Dev version".
+The link:docs/Usage{ext-relative}}[full usage guide (with screenshots) is here].
 
 == Bonus: tips for your Gradle projects
 
