@@ -1,6 +1,69 @@
 :imagesdir: screenshots-usage
+:sectanchors:
 
 = Usage
+
+== Table of contents
+
+* <<adding-dependencies, Adding dependencies>>
+** <<Built-in dependencies constants>>
+** <<Other dependencies>>
+* <<Updating the dependencies>>
+** <<Find available updates (aka. refreshVersions)>>
+** <<Apply updates>>
+** <<updating-example, Example>>
+
+[#adding-dependencies]
+== Adding dependencies
+
+[#adding-built-in-dependencies]
+=== Built-in dependencies constants
+
+refreshVersions provides read-to-use organized constants for
+select popular dependencies of the following ecosystems:
+- Kotlin Multiplatform
+- Kotlin/JVM
+- Android
+
+You can use them in any `build.gradle` or `build.gradle.kts` file.
+
+_That doesn't prevent you from using refreshVersions in a Gradle
+project that is not using Kotlin or is not an Android project._
+
+Here's an example of how it looks like in the IDE:
+
+.No imports needed.
+image::dependencies_constants_autocomplete_1.png[caption=""]
+
+.Autocomplete in IDE for easy discoverability.
+image::dependencies_constants_autocomplete_2.png[caption=""]
+
+You can see link:../plugins/dependencies/src/main/kotlin/dependencies/[all the dependency objects in this directory].
+
+All these dependency constants specify their version as the
+version placeholder (`_`), so refreshVersions can replace it
+seamlessly with the value defined in the `versions.properties` file.
+
+After adding a dependency that doesn't have its version specified
+in the `versions.properties` file yet, refreshVersions will
+edit it and put the most stable recent version in it on the next
+Gradle sync (or any other Gradle run).
+
+It will also put any less stable versions as comments,
+allowing you to quickly upgrade if needed.
+
+[#adding-gradle-plugins]
+=== Adding gradle plugins
+
+TK
+
+[#adding-other-dependencies]
+=== Other dependencies
+
+TK
+
+[#updating-dependencies]
+== Updating the dependencies
 
 Day-to-day usage of `refreshVersions` is done in two steps.
 
@@ -9,7 +72,8 @@ Second, you apply the updates you want.
 
 (scroll down to see an example below)
 
-== Find available updates (aka. refreshVersions)
+[#finding-updates]
+=== Find available updates (aka. refreshVersions)
 
 Run the `refreshVersions` gradle task on the root project:
 
@@ -19,7 +83,8 @@ _(It usually takes less than 10 seconds to execute on relatively big projects.)_
 
 Open the `versions.properties` file and see the available updates added as comments.
 
-== Apply updates
+[#applying-updates]
+=== Apply updates
 
 Applying updates can be done in the `versions.properties` file with just the keyboard:
 
@@ -31,7 +96,8 @@ Applying updates can be done in the `versions.properties` file with just the key
 Note that checking for compatibility, regressions, and performing any required changes or migrations
 cannot be done by refreshVersions. This is your responsibility (shared with your tests and QA).
 
-== Example
+[#updating-example]
+=== Example
 
 Because images speak better than thousands of words, here's an example with screenshots.
 
