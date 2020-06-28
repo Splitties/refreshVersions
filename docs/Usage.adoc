@@ -1,5 +1,6 @@
 :imagesdir: screenshots-usage
 :sectanchors:
+:stylesheet:
 
 = Usage
 
@@ -32,12 +33,11 @@ project that is not using Kotlin or is not an Android project._
 
 Here's an example of how it looks like in the IDE:
 
-.No imports needed.
-image::dependencies_constants_autocomplete_1.png[caption=""]
+image::dependencies_constants_autocomplete_1.png[]
+_No imports needed._
 
-
-.Autocomplete in IDE for easy discoverability.
-image::dependencies_constants_autocomplete_2.png[caption=""]
+image::dependencies_constants_autocomplete_2.png[]
+_Autocomplete in IDE for easy discoverability._
 
 
 You can see link:../plugins/dependencies/src/main/kotlin/dependencies/[all the dependency objects in this directory].
@@ -105,16 +105,14 @@ Because images speak better than thousands of words, here's an example with scre
 
 _Note: kotlinx.coroutines latest releases at the time of that example are `1.3.7` and `1.3.7-1.4-M2`._
 
-.Initially used version
-image::versions.properties_step00.png[caption="Step 0: "]
+image::versions.properties_step00.png[]
+_Step 0: Initially used version_
 
+image::versions.properties_step01.png[]
+_Step 1: Run the `refreshVersions` task to find updates_
 
-.Run the `refreshVersions` task to find updates
-image::versions.properties_step01.png[caption="Step 1: "]
-
-
-.Replace the previous version with the update
-image::versions.properties_step02.png[caption="Step 2: "]
+image::versions.properties_step02.png[]
+_Step 2: Replace the previous version with the update_
 
 
 _Tip: You can upgrade easily with just the keyboard.
@@ -122,6 +120,6 @@ To so do, place the caret next to the equals sign (`=`) of the
 version you want to use, hold shift and press the up arrow key,
 and press the delete key to complete the upgrade._
 
-.Usual post-upgrade actions (check, migrate, commit, push, CI…)
-image::versions.properties_step03.png[caption="Final step: "]
+image::versions.properties_step03.png[]
+_Final step: Usual post-upgrade actions (check, migrate, commit, push, CI…)_
 
