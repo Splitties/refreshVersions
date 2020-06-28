@@ -8,8 +8,8 @@
 :slack_url: https://app.slack.com/client/T09229ZC6/CP5659EL9
 :slack_image: https://img.shields.io/static/v1?label=kotlinlang&message=gradle-refresh-versions&color=brightgreen&logo=slack
 :slack_badge: image:{slack_image}["Kotlinlang Slack", link="{slack_url}"]
-:gradle_guide_new:	https://guides.gradle.org/creating-new-gradle-builds
-:gradle_guide_buildlogic:	https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
+:gradle_guide_new: https://guides.gradle.org/creating-new-gradle-builds
+:gradle_guide_buildlogic: https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
 :issues: https://github.com/jmfayard/refreshVersions/issues
 :master: https://github.com/jmfayard/refreshVersions/blob/master
 :badge_mit: image:https://img.shields.io/github/license/mashape/apistatus.svg["GitHub",link="{github}/blob/master/LICENSE.txt"]
