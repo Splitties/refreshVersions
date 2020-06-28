@@ -35,8 +35,10 @@ Here's an example of how it looks like in the IDE:
 .No imports needed.
 image::dependencies_constants_autocomplete_1.png[caption=""]
 
+
 .Autocomplete in IDE for easy discoverability.
 image::dependencies_constants_autocomplete_2.png[caption=""]
+
 
 You can see link:../plugins/dependencies/src/main/kotlin/dependencies/[all the dependency objects in this directory].
 
@@ -106,11 +108,14 @@ _Note: kotlinx.coroutines latest releases at the time of that example are `1.3.7
 .Initially used version
 image::versions.properties_step00.png[caption="Step 0: "]
 
+
 .Run the `refreshVersions` task to find updates
 image::versions.properties_step01.png[caption="Step 1: "]
 
+
 .Replace the previous version with the update
 image::versions.properties_step02.png[caption="Step 2: "]
+
 
 _Tip: You can upgrade easily with just the keyboard.
 To so do, place the caret next to the equals sign (`=`) of the
@@ -119,3 +124,4 @@ and press the delete key to complete the upgrade._
 
 .Usual post-upgrade actions (check, migrate, commit, push, CI…)
 image::versions.properties_step03.png[caption="Final step: "]
+
