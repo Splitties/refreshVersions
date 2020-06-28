@@ -46,18 +46,18 @@ open class RefreshVersionsTask : DefaultTask() {
             .distinct()
             .toList()
 
-        val versionProperties: Map<String, String> = RefreshVersionsInternals.readVersionProperties()
-
-        val versionKeyReader = RefreshVersionsInternals.versionKeyReader
-
         val result: VersionCandidatesLookupResult = runBlocking {
-            lookupVersionCandidates(allDependencies, versionProperties, versionKeyReader, allRepositories)
+            lookupVersionCandidates(
+                allDependencies = allDependencies,
+                versionProperties = RefreshVersionsInternals.readVersionProperties(),
+                versionKeyReader = RefreshVersionsInternals.versionKeyReader,
+                allRepositories = allRepositories
+            )
         }
         project.rootProject.updateVersionsProperties(result.dependenciesWithVersionsCandidates)
-        val dependenciesWithHardcodedVersions = result.dependenciesWithHardcodedVersions
-        val dependenciesWithDynamicVersions = result.dependenciesWithDynamicVersions
-        warnAboutHarcodedVersionsIfAny(dependenciesWithHardcodedVersions)
-        warnAboutDynamicVersionsIfAny(dependenciesWithDynamicVersions)
+
+        warnAboutHarcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
+        warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
     }
 
     private fun checkOnlyRefreshVersionsIsRun() {
