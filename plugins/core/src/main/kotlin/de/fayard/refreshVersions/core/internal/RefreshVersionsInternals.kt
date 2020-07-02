@@ -17,7 +17,10 @@ object RefreshVersionsInternals {
         load(versionsPropertiesFile.reader())
     } as Map<String, String>
 
-    internal fun initialize(artifactVersionKeyRules: List<String>, versionsPropertiesFile: File) {
+    internal fun initialize(
+        artifactVersionKeyRules: List<String>,
+        versionsPropertiesFile: File
+    ) {
         privateVersionsPropertiesFile = versionsPropertiesFile.also {
             it.createNewFile() // Creates the file if it doesn't exist yet
         }

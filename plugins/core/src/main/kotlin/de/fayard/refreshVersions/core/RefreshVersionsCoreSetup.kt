@@ -44,7 +44,11 @@ fun Settings.bootstrapRefreshVersionsCore(
     artifactVersionKeyRules: List<String> = emptyList(),
     versionsPropertiesFile: File = defaultVersionsPropertiesFile()
 ) {
-    setupRefreshVersions(settings, artifactVersionKeyRules, versionsPropertiesFile)
+    setupRefreshVersions(
+        settings = settings,
+        artifactVersionKeyRules = artifactVersionKeyRules,
+        versionsPropertiesFile = versionsPropertiesFile
+    )
 }
 
 @Suppress("DeprecatedCallableAddReplaceWith") // ReplaceWith has a bug that removes the line of code in this case...
@@ -71,7 +75,10 @@ private fun setupRefreshVersions(
 ) {
     settings.clearUsedPluginsList()
 
-    RefreshVersionsInternals.initialize(artifactVersionKeyRules, versionsPropertiesFile)
+    RefreshVersionsInternals.initialize(
+        artifactVersionKeyRules = artifactVersionKeyRules,
+        versionsPropertiesFile = versionsPropertiesFile
+    )
 
     val versionProperties = RefreshVersionsInternals.readVersionProperties()
     @Suppress("unchecked_cast")
