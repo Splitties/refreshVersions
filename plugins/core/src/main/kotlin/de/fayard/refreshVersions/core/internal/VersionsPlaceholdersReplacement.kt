@@ -189,14 +189,17 @@ private fun `Write versions candidates using latest most stable version and get 
                 repository = repo
             )
         }
-    val versionCandidates = dependencyVersionsFetchers.getVersionCandidates(
+    dependencyVersionsFetchers.getVersionCandidates(
         currentVersion = Version(""),
         resultMode = RefreshVersionsConfigHolder.resultMode
-    )
-    writeWithAddedVersions(
-        versionsFile = versionsPropertiesFile,
-        propertyName = propertyName,
-        versionsCandidates = versionCandidates
-    )
-    versionCandidates.first().value
+    ).let { versionCandidates ->
+        val bestStability = versionCandidates.minBy { it.stabilityLevel }!!.stabilityLevel
+        val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
+        writeWithAddedVersions(
+            versionsFile = versionsPropertiesFile,
+            propertyName = propertyName,
+            versionsCandidates = versionCandidates.dropWhile { it != versionToUse }
+        )
+        versionToUse.value
+    }
 }
