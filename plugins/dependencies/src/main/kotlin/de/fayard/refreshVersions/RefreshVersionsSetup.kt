@@ -3,7 +3,8 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
-import de.fayard.refreshVersions.core.internal.defaultVersionsPropertiesFile
+import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
+import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.apply
 import java.io.File
@@ -38,8 +39,13 @@ import java.io.File
 @JvmName("bootstrap")
 fun Settings.bootstrapRefreshVersions(
     extraArtifactVersionKeyRules: List<String> = emptyList(),
-    versionsPropertiesFile: File = defaultVersionsPropertiesFile()
+    versionsPropertiesFile: File = rootDir.resolve("versions.properties")
 ) {
+    require(settings.isBuildSrc.not()) {
+        "This bootstrap is only for the root project. For buildSrc, please call " +
+                "bootstrapRefreshVersionsForBuildSrc() instead (Kotlin DSL)," +
+                "or RefreshVersionsSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
+    }
     bootstrapRefreshVersionsCore(
         artifactVersionKeyRules = if (extraArtifactVersionKeyRules.isEmpty()) {
             RefreshVersionsPlugin.artifactVersionKeyRules // Avoid unneeded list copy.
@@ -51,4 +57,37 @@ fun Settings.bootstrapRefreshVersions(
     gradle.rootProject {
         apply<RefreshVersionsPlugin>()
     }
+}
+
+/**
+ * **For buildSrc only!**
+ *
+ * Boostrap refreshVersions.
+ *
+ * Supports both Kotlin and Groovy Gradle DSL.
+ *
+ * // **`settings.gradle.kts`**
+ * ```kotlin
+ * import de.fayard.refreshVersions.bootstrapRefreshVersionsForBuildSrc
+ *
+ * buildscript {
+ *     dependencies.classpath("de.fayard.refreshVersions:refreshVersions:VERSION")
+ * }
+ *
+ * settings.bootstrapRefreshVersionsForBuildSrc()
+ * ```
+ *
+ * // **`settings.gradle`**
+ * ```groovy
+ * import de.fayard.refreshVersions.RefreshVersionsSetup
+ * buildscript {
+ *     dependencies.classpath("de.fayard.refreshVersions:refreshVersions:VERSION")
+ * }
+ *
+ * RefreshVersionsSetup.bootstrapForBuildSrc(settings)
+ * ```
+ */
+@JvmName("bootstrapForBuildSrc")
+fun Settings.bootstrapRefreshVersionsForBuildSrc() {
+    bootstrapRefreshVersionsCoreForBuildSrc()
 }

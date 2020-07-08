@@ -2,23 +2,16 @@
 
 package de.fayard.refreshVersions.core.internal
 
-import de.fayard.refreshVersions.core.StabilityLevel
-import de.fayard.refreshVersions.core.extensions.stabilityLevel
-import de.fayard.refreshVersions.core.extensions.versionComparator
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.invoke
+import de.fayard.refreshVersions.core.Version
+import kotlinx.coroutines.*
 import java.net.URL
-
-internal class VersionCandidate(val stabilityLevel: StabilityLevel, val version: Version)
 
 internal suspend fun getDependencyVersionsCandidates(
     repositories: List<MavenRepoUrl>,
     group: String,
     name: String,
     resolvedVersion: String?
-): List<VersionCandidate> = Dispatchers.Default {
+): List<Version> = Dispatchers.Default {
     val currentVersion = Version(resolvedVersion ?: "")
     //TODO: Retrieve (concurrently) the versions from each repo and put them into a list.
     // For each list where resolvedVersion is found, drop it with all the entries before.
@@ -32,20 +25,16 @@ internal suspend fun getDependencyVersionsCandidates(
         repositories = repositories,
         group = group,
         name = name
-    ).sortedWith(versionComparator.reversed())
+    ).sortedDescending()
         .distinct()
         .takeWhile { candidate -> candidate > currentVersion }
-        .fold<Version, List<VersionCandidate>>(emptyList()) { acc, candidateVersion ->
+        .fold<Version, List<Version>>(emptyList()) { acc, versionCandidate ->
             val previousStabilityLevel = acc.lastOrNull()?.stabilityLevel
-                ?: return@fold acc + VersionCandidate(candidateVersion.stabilityLevel(), candidateVersion)
-            if (candidateVersion.stabilityLevel() isMoreStableThan previousStabilityLevel) {
-                acc + VersionCandidate(candidateVersion.stabilityLevel(), candidateVersion)
+                ?: return@fold acc + versionCandidate
+            if (versionCandidate.stabilityLevel isMoreStableThan previousStabilityLevel) {
+                acc + versionCandidate
             } else acc
         }.asReversed()
-}
-
-private operator fun Version.compareTo(currentVersion: Version): Int {
-    return versionComparator.compare(this, currentVersion)
 }
 
 private suspend fun retrieveAllVersions(
@@ -54,11 +43,13 @@ private suspend fun retrieveAllVersions(
     name: String
 ): List<Version> = Dispatchers.Default {
     val versionsAsync = repositories.map { repo ->
-        async(Dispatchers.IO) {
-            val url = URL(repo.metadataUrlForArtifact(group = group, name = name))
-            runCatching {
-                url.readText() //TODO: Replace with cancellable network I/O
-            }.getOrNull()?.let { xml ->
+        async {
+            withContext(Dispatchers.IO) {
+                val url = URL(repo.metadataUrlForArtifact(group = group, name = name))
+                runCatching {
+                    url.readText() //TODO: Replace with cancellable network I/O
+                }.getOrNull()
+            }?.let { xml ->
                 parseVersionsFromMavenMetaData(xml)
             } ?: emptyList()
         }

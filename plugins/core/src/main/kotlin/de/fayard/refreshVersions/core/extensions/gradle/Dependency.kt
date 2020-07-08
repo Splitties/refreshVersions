@@ -1,7 +1,10 @@
-package de.fayard.refreshVersions.core.extensions
+package de.fayard.refreshVersions.core.extensions.gradle
 
+import de.fayard.refreshVersions.core.ModuleId
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleIdentifier
+
+internal val Dependency.moduleId: ModuleId get() = ModuleId(group, name)
 
 internal val Dependency.moduleIdentifier: ModuleIdentifier?
     get() {

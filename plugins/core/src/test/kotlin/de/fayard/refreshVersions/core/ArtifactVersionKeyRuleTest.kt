@@ -1,4 +1,4 @@
-package de.fayard.versions
+package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyRule
 import org.junit.jupiter.api.Assertions.assertEquals

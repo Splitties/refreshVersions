@@ -1,4 +1,4 @@
-package de.fayard.refreshVersions.core.extensions
+package de.fayard.refreshVersions.core.extensions.gradle
 
 import org.gradle.api.artifacts.VersionConstraint
 

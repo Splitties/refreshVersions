@@ -1,20 +1,16 @@
 package de.fayard.refreshVersions.core.internal
 
-internal class MavenRepoUrl(url: String) {
-
-    val url: String = if (url.endsWith('/')) url else "$url/"
+@Suppress("DataClassPrivateConstructor")
+internal data class MavenRepoUrl private constructor(val url: String) {
 
     fun metadataUrlForArtifact(group: String, name: String): String =
         "$url${group.replace('.', '/')}/$name/maven-metadata.xml"
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is MavenRepoUrl) return false
-
-        if (url != other.url) return false
-
-        return true
+    companion object {
+        operator fun invoke(url: String): MavenRepoUrl {
+            return MavenRepoUrl(
+                url = if (url.endsWith('/')) url else "$url/"
+            )
+        }
     }
-
-    override fun hashCode() = url.hashCode()
 }

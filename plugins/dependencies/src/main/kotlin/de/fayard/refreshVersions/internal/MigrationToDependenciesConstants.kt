@@ -32,7 +32,7 @@ internal fun Configuration.countDependenciesWithHardcodedVersions(
 }
 
 internal fun Project.countDependenciesWithHardcodedVersions(versionsProperties: Map<String, String>): Int {
-    val versionKeyReader = RefreshVersionsInternals.versionKeyReader
+    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
     return configurations.sumBy { configuration ->
         if (configuration.shouldBeIgnored()) 0 else {
             configuration.countDependenciesWithHardcodedVersions(versionsProperties, versionKeyReader)
@@ -42,7 +42,7 @@ internal fun Project.countDependenciesWithHardcodedVersions(versionsProperties: 
 
 internal fun promptProjectSelection(rootProject: Project): Project? {
     require(rootProject == rootProject.rootProject) { "Expected a rootProject but got $rootProject" }
-    val versionsProperties = RefreshVersionsInternals.readVersionProperties()
+    val versionsProperties = RefreshVersionsConfigHolder.readVersionProperties()
     val projectsWithHardcodedDependenciesVersions: List<Pair<Project, Int>> = rootProject.allprojects.mapNotNull {
         val hardcodedDependenciesVersionsCount = it.countDependenciesWithHardcodedVersions(versionsProperties)
         if (hardcodedDependenciesVersionsCount > 0) {
@@ -61,7 +61,7 @@ internal fun promptProjectSelection(rootProject: Project): Project? {
 }
 
 internal suspend fun runInteractiveMigrationToDependenciesConstants(project: Project) {
-    val versionsProperties = RefreshVersionsInternals.readVersionProperties()
+    val versionsProperties = RefreshVersionsConfigHolder.readVersionProperties()
     while (coroutineContext.isActive) {
         val selectedConfiguration = project.promptConfigurationSelection(versionsProperties) ?: return
         runConfigurationDependenciesMigration(
@@ -74,7 +74,7 @@ internal suspend fun runInteractiveMigrationToDependenciesConstants(project: Pro
 
 private fun Project.promptConfigurationSelection(versionsProperties: Map<String, String>): Configuration? {
     @Suppress("UnstableApiUsage")
-    val versionKeyReader = RefreshVersionsInternals.versionKeyReader
+    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
     val configurationsWithHardcodedDependenciesVersions = configurations.mapNotNull { configuration ->
         if (configuration.shouldBeIgnored()) return@mapNotNull null
         val count = configuration.countDependenciesWithHardcodedVersions(versionsProperties, versionKeyReader)

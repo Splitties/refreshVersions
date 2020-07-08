@@ -1,13 +1,12 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.extensions.hasDynamicVersion
-import de.fayard.refreshVersions.core.extensions.moduleIdentifier
+import de.fayard.refreshVersions.core.extensions.gradle.hasDynamicVersion
+import de.fayard.refreshVersions.core.extensions.gradle.moduleIdentifier
+import de.fayard.refreshVersions.core.extensions.gradle.toModuleId
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
 import de.fayard.refreshVersions.core.internal.MavenRepoUrl
 import de.fayard.refreshVersions.core.internal.getDependencyVersionsCandidates
-import de.fayard.refreshVersions.core.internal.readPluginsAndBuildSrcDependencies
-import de.fayard.refreshVersions.core.internal.readPluginsAndBuildSrcRepositories
 import de.fayard.refreshVersions.core.internal.resolveVersion
 import de.fayard.refreshVersions.core.internal.updateVersionsProperties
 import kotlinx.coroutines.*
@@ -22,59 +21,50 @@ open class RefreshVersionsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionRefreshVersions() {
-        checkOnlyRefreshVersionsIsRun()
 
-        val allConfigurations: Set<Configuration> =
-            project.allprojects.flatMap { it.buildscript.configurations + it.configurations }.toSet()
+        val projects = RefreshVersionsConfigHolder.allProjects(project)
+        val allConfigurations: Set<Configuration> = projects.flatMap {
+            it.buildscript.configurations.asSequence() + it.configurations
+        }.toSet()
 
-        val allDependencies = (
-            project.readPluginsAndBuildSrcDependencies() +
+        val allDependencies = (UsedPluginsHolder.readDependencies().asSequence() +
                 allConfigurations.asSequence().flatMap {
                     it.dependencies.asSequence().filterIsInstance<ExternalDependency>()
-                }
-            )
+                })
             .distinctBy { it.group + ':' + it.name + ':' + it.version }
 
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
 
-        val allRepositories = project.allprojects.asSequence()
-            .flatMap { it.buildscript.repositories.asSequence() + it.repositories }
+        val allRepositories = (
+                UsedPluginsHolder.readRepositories().asSequence() +
+                projects.asSequence()
+                    .flatMap { it.buildscript.repositories.asSequence() + it.repositories }
+                )
             .filterIsInstance<MavenArtifactRepository>()
             .map { MavenRepoUrl(it.url.toString()) }
-            .plus(project.readPluginsAndBuildSrcRepositories())
             .distinct()
             .toList()
 
         val result: VersionCandidatesLookupResult = runBlocking {
-            lookupVersionCandidates(
-                allDependencies = allDependencies,
-                versionProperties = RefreshVersionsInternals.readVersionProperties(),
-                versionKeyReader = RefreshVersionsInternals.versionKeyReader,
-                allRepositories = allRepositories
+            de.fayard.refreshVersions.core.internal.lookupVersionCandidates(
+                httpClient = RefreshVersionsConfigHolder.httpClient,
+                project = project,
+                versionProperties = RefreshVersionsConfigHolder.readVersionProperties(),
+                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
             )
+            /*lookupVersionCandidates(
+                allDependencies = allDependencies,
+                versionProperties = RefreshVersionsConfigHolder.readVersionProperties(),
+                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader,
+                allRepositories = allRepositories
+            )*/
         }
         project.rootProject.updateVersionsProperties(result.dependenciesWithVersionsCandidates)
 
         warnAboutHarcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
         warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
     }
-
-    private fun checkOnlyRefreshVersionsIsRun() {
-        // Running the clean task in the same build command as the refreshVersions task
-        // breaks it because it wipes the dependencies and repositories info needed from buildSrc.
-        // To avoid this issue, we disallow running refreshVersions with any other task,
-        // so the clean task is not run directly, or indirectly as part of another task dependency.
-        if (project.gradle.startParameter.taskNames.size != 1) {
-            throw UnsupportedOperationException("The refreshVersions task cannot be run with another task.")
-        }
-    }
-
-    internal class VersionCandidatesLookupResult(
-        val dependenciesWithVersionsCandidates: List<DependencyWithVersionCandidates>,
-        val dependenciesWithHardcodedVersions: List<Dependency>,
-        val dependenciesWithDynamicVersions: List<Dependency>
-    )
 
     private suspend fun lookupVersionCandidates(
         allDependencies: Sequence<Dependency>,
@@ -114,14 +104,14 @@ open class RefreshVersionsTask : DefaultTask() {
                     resolvedVersion = resolvedVersion
                 )
                 DependencyWithVersionCandidates(
-                    moduleIdentifier = moduleIdentifier,
+                    moduleId = moduleIdentifier.toModuleId(),
                     currentVersion = resolvedVersion ?: versionCandidates.let {
                         if (it.isEmpty()) throw IllegalStateException(
                             "Unable to find a version candidate for the following artifact:\n" +
-                                "$group:$name\n" +
-                                "Please, check this artifact exists in the configured repositories."
+                                    "$group:$name\n" +
+                                    "Please, check this artifact exists in the configured repositories."
                         )
-                        it.first().version.value
+                        it.first().value
                     },
                     versionsCandidates = if (resolvedVersion != null) versionCandidates else {
                         versionCandidates.drop(1)
@@ -160,7 +150,7 @@ open class RefreshVersionsTask : DefaultTask() {
             val warnFor = (dependenciesWithHardcodedVersions).take(3).map {
                 "${it.group}:${it.name}:${it.version}"
             }
-            val versionsFileName = RefreshVersionsInternals.versionsPropertiesFile.name
+            val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
             logger.warn(
                 """Found ${dependenciesWithHardcodedVersions.count()} hardcoded dependencies versions.
                     |

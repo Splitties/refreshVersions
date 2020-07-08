@@ -1,6 +1,5 @@
-package de.fayard.versions
+package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.StabilityLevel
 import de.fayard.refreshVersions.core.StabilityLevel.*
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
