@@ -2,7 +2,6 @@ package de.fayard.refreshVersions.core.internal
 
 import org.gradle.api.artifacts.ArtifactRepositoryContainer
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.repositories.ArtifactRepository
 import org.gradle.api.internal.artifacts.dependencies.AbstractDependency
 
 internal object UsedPluginsHolder {
@@ -21,16 +20,6 @@ internal object UsedPluginsHolder {
                 repositories = repositories
             )
         }
-    }
-
-    fun readDependencies(): List<Dependency> { //TODO: Replace with dependency + repos
-        return usedPluginDependencies.map {
-            ConfigurationLessDependency(it.dependencyNotation)
-        }
-    }
-
-    fun readRepositories(): List<ArtifactRepository> { //TODO: Replace with dependency + repos
-        return usedPluginDependencies.flatMap { it.repositories }
     }
 
     fun read(): Sequence<Pair<Dependency, ArtifactRepositoryContainer>> {
