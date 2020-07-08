@@ -73,7 +73,11 @@ private suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
                     fetcher.getAvailableVersions(versionFilter = versionFilter)
                 }.getOrElse { e ->
                     when {
-                        e is HttpException && e.code() == 404 -> null
+                        e is HttpException -> when (e.code()) {
+                            404 -> null // Normal not found result
+                            401 -> null // Returned by some repositories that have optional authentication (like jitpack.io)
+                            else -> throw e
+                        }
                         e is FileNotFoundException -> null
                         else -> throw e
                     }
