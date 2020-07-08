@@ -38,10 +38,11 @@ internal class MavenDependencyVersionsFetcher(
 
     override suspend fun getAvailableVersions(versionFilter: ((Version) -> Boolean)?): SuccessfulResult {
 
-        val response = httpClient.newCall(request).await()
-        val xml = if (response.isSuccessful) {
-            response.use { it.body!!.string() }
-        } else throw HttpException(Response.error<Any?>(response.code, response.body!!))
+        val xml = httpClient.newCall(request).await().use { response ->
+            if (response.isSuccessful) {
+                response.use { it.body!!.string() }
+            } else throw HttpException(Response.error<Any?>(response.code, response.body!!))
+        }
 
         val allVersions = parseVersionsFromMavenMetaData(xml)
         return SuccessfulResult(
