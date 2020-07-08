@@ -1,7 +1,7 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
-import de.fayard.refreshVersions.core.extensions.registerOrCreate
+import de.fayard.refreshVersions.core.extensions.gradle.registerOrCreate
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project

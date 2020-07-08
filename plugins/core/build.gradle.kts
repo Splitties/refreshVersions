@@ -29,14 +29,18 @@ publishing {
 }
 
 dependencies {
+    implementation(gradleKotlinDsl())
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
+    implementation(Square.okHttp3.okHttp)
+    implementation(Square.okHttp3.loggingInterceptor)
+    implementation(Square.retrofit2.retrofit) {
+        because("It has ready to use HttpException class")
+    }
 
+    testImplementation(Square.okHttp3.loggingInterceptor)
     testImplementation(platform(notation = "org.junit:junit-bom:_"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-
     testImplementation("io.kotlintest:kotlintest-runner-junit5:_")
-    implementation(gradleKotlinDsl())
-
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
 }
 
 

@@ -1,29 +1,24 @@
 package de.fayard.refreshVersions.core.internal
 
+import de.fayard.refreshVersions.core.Version
+import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
 import org.gradle.api.Project
-import org.gradle.api.artifacts.ModuleIdentifier
 import java.io.File
-
-internal data class DependencyWithVersionCandidates(
-    val moduleIdentifier: ModuleIdentifier,
-    val currentVersion: String,
-    val versionsCandidates: List<VersionCandidate>
-)
 
 internal fun Project.updateVersionsProperties(
     dependenciesWithLastVersion: List<DependencyWithVersionCandidates>
 ) {
 
-    val properties: Map<String, String> = RefreshVersionsInternals.readVersionProperties()
-    val versionKeyReader = RefreshVersionsInternals.versionKeyReader
+    val properties: Map<String, String> = RefreshVersionsConfigHolder.readVersionProperties()
+    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
 
     val newFileContent = buildString {
         appendln(fileHeader)
         //TODO: Keep comments from user (ours begin with ##, while user's begin with a single #),
         // property related comments are placed above it. Also keep header and footer comments.
         val versionsWithUpdatesIfAvailable: List<VersionWithUpdateIfAvailable> = dependenciesWithLastVersion
-            .mapNotNull { (moduleIdentifier, currentVersion, versionsCandidates) ->
-                val propertyName = getVersionPropertyName(moduleIdentifier, versionKeyReader)
+            .mapNotNull { (moduleId, currentVersion, versionsCandidates) ->
+                val propertyName = getVersionPropertyName(moduleId.toModuleIdentifier(), versionKeyReader)
                 if (currentVersion.isAVersionAlias()) return@mapNotNull null
                 VersionWithUpdateIfAvailable(
                     key = propertyName,
@@ -45,13 +40,13 @@ internal fun Project.updateVersionsProperties(
             .sortedBy { it.key }
             .forEach { appendVersionWithUpdatesIfAvailable(it) }
     }
-    RefreshVersionsInternals.versionsPropertiesFile.writeText(newFileContent)
+    RefreshVersionsConfigHolder.versionsPropertiesFile.writeText(newFileContent)
 }
 
 internal fun writeWithAddedVersions(
     versionsFile: File,
     propertyName: String,
-    versionsCandidates: List<VersionCandidate>
+    versionsCandidates: List<Version>
 ) {
     val newFileContent = buildString {
         val existingContent = versionsFile.readText()
@@ -64,7 +59,7 @@ internal fun writeWithAddedVersions(
         appendVersionWithUpdatesIfAvailable(
             VersionWithUpdateIfAvailable(
                 key = propertyName,
-                currentVersion = versionsCandidates.first().version.value,
+                currentVersion = versionsCandidates.first().value,
                 versionsCandidates = versionsCandidates.drop(1)
             )
         )
@@ -79,7 +74,7 @@ private fun StringBuilder.appendVersionWithUpdatesIfAvailable(it: VersionWithUpd
     appendln(currentVersionLine)
     it.versionsCandidates.forEach { versionCandidate ->
         append("##"); append(available.padStart(it.key.length - 2))
-        append('='); appendln(versionCandidate.version.value)
+        append('='); appendln(versionCandidate.value)
     }
 }
 
@@ -96,5 +91,5 @@ private val fileHeader = """
 private class VersionWithUpdateIfAvailable(
     val key: String,
     val currentVersion: String,
-    val versionsCandidates: List<VersionCandidate>
+    val versionsCandidates: List<Version>
 )

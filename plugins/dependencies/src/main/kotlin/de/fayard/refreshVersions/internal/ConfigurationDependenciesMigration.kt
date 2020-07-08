@@ -31,7 +31,7 @@ private fun Project.attemptDependencyMigration(
     versionsProperties: Map<String, String>,
     dependency: ExternalDependency
 ) {
-    val versionKeyReader = RefreshVersionsInternals.versionKeyReader
+    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
 
     if (dependency.hasHardcodedVersion(versionsProperties, versionKeyReader).not()) return
     val currentVersion = dependency.version ?: return
@@ -94,7 +94,7 @@ private fun offerReplacingHardcodedVersionWithConstantOrPlaceholder(
 }
 
 private fun logAddedVersionsKey(versionKey: String) {
-    val versionsFileName = RefreshVersionsInternals.versionsPropertiesFile.name
+    val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
     println("Moved the current version to the $versionsFileName file under the following key:")
     print(AnsiColor.WHITE.boldHighIntensity)
     print(AnsiColor.YELLOW.background)

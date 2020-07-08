@@ -1,12 +1,9 @@
 package de.fayard.refreshVersions.core.internal
 
-import de.fayard.refreshVersions.core.extensions.isBuildSrc
-import de.fayard.refreshVersions.core.extensions.isGradlePlugin
-import de.fayard.refreshVersions.core.extensions.moduleIdentifier
+import de.fayard.refreshVersions.core.extensions.gradle.isGradlePlugin
+import de.fayard.refreshVersions.core.extensions.gradle.moduleIdentifier
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
-import org.gradle.api.initialization.Settings
-import java.io.File
 
 @InternalRefreshVersionsApi
 fun Dependency.hasHardcodedVersion(
@@ -30,10 +27,4 @@ fun Dependency.isManageableVersion(
         }
         else -> false
     }
-}
-
-@InternalRefreshVersionsApi
-fun Settings.defaultVersionsPropertiesFile(): File {
-    val relativePath = "versions.properties".let { if (settings.isBuildSrc) "../$it" else it }
-    return settings.rootDir.resolve(relativePath)
 }

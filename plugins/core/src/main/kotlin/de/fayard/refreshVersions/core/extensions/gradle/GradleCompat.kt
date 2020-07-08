@@ -1,4 +1,4 @@
-package de.fayard.refreshVersions.core.extensions
+package de.fayard.refreshVersions.core.extensions.gradle
 
 import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import org.gradle.api.Action
