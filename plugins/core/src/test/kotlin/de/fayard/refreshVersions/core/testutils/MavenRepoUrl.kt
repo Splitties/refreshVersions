@@ -1,4 +1,4 @@
-package de.fayard.refreshVersions.core.internal
+package de.fayard.refreshVersions.core.testutils
 
 @Suppress("DataClassPrivateConstructor")
 internal data class MavenRepoUrl private constructor(val url: String) {
