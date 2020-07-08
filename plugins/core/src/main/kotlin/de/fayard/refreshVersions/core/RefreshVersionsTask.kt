@@ -25,7 +25,7 @@ open class RefreshVersionsTask : DefaultTask() {
         }
         project.rootProject.updateVersionsProperties(result.dependenciesWithVersionsCandidates)
 
-        warnAboutHarcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
+        warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
         warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
     }
 
@@ -47,7 +47,7 @@ open class RefreshVersionsTask : DefaultTask() {
         }
     }
 
-    private fun warnAboutHarcodedVersionsIfAny(dependenciesWithHardcodedVersions: List<Dependency>) {
+    private fun warnAboutHardcodedVersionsIfAny(dependenciesWithHardcodedVersions: List<Dependency>) {
         if (dependenciesWithHardcodedVersions.isNotEmpty()) {
             //TODO: Suggest running a diagnosis task to list the hardcoded versions.
             val warnFor = (dependenciesWithHardcodedVersions).take(3).map {
