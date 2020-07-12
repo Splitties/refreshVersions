@@ -1,3 +1,14 @@
+# Legacy changelog
+
+This is the changelog for versions prior to 0.9.5 of refreshVersions.
+
+It includes old released of the `dependencies` and `buildSrcVersions`
+plugins which have been replaced by the `refreshversions` plugin.
+
+_Note that versions from 0.8.X to 0.9.4 have not been properly tracked in
+this changelog. If you need a changelog for these versions, please open an
+issue with the reason why you need it._
+
 ## v0.8.x
 
 The long-term plan for v1.0 is to focus on `:refreshVersions` instead of `:buildSrcVersions`
