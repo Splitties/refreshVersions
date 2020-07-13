@@ -1,3 +1,4 @@
+:sectanchors:
 :gradle_version: 6.4.1
 :last_version: 0.9.5
 :last_dev_version: 0.9.5-dev-006
