@@ -76,7 +76,7 @@ inner class OngoingReleaseImpl {
 }
 
 //TODO: Make OngoingRelease and object again when https://youtrack.jetbrains.com/issue/KT-19423 is fixed.
-
+@Suppress("PropertyName")
 val OngoingRelease = OngoingReleaseImpl()
 
 var startAtStep: ReleaseStep //TODO: Make a val again when https://youtrack.jetbrains.com/issue/KT-20059 is fixed
