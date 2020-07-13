@@ -3,6 +3,7 @@
 :last_version: 0.9.5
 :last_dev_version: 0.9.5-dev-006
 :buildSrc_doc: https://docs.gradle.org/current/userguide/organizing_gradle_projects.html#sec:build_sources
+:included_builds_support: https://github.com/jmfayard/refreshVersions/issues/205
 
 = Setting up
 
@@ -51,6 +52,7 @@ If you're using *Gradle Groovy DSL*, use the same snippet as above for your root
 1. Replace the import with `import de.fayard.refreshVersions.RefreshVersionsSetup`
 2. Replace the `bootstrapRefreshVersions()` call with `RefreshVersionsSetup.bootstrap(settings)`
 
+
 === Bootstrap for buildSrc (if you use it)
 
 I you use {buildSrc_doc}[`buildSrc`], you probably want to use refreshVersions there as well.
@@ -80,6 +82,12 @@ If you're using *Gradle Groovy DSL*, use the same snippet as above for your root
 
 1. Replace the import with `import de.fayard.refreshVersions.RefreshVersionsSetup`
 2. Replace the `bootstrapRefreshVersionsForBuildSrc()` call with `RefreshVersionsSetup.bootstrapForBuildSrc(settings)`
+
+
+=== Bootstrap for composite/included builds (if you use them)
+
+Included builds are not supported yet. If you need/want this feature, please vote with a 👍
+on {included_builds_support}[this issue] to help us prioritize.
 
 == Step 2: Migrating the dependencies versions declaration place
 
