@@ -43,7 +43,7 @@ fun checkOnDevelopBranch() {
 @Suppress("EnumEntryName")
 enum class ReleaseStep { // Order of the steps, must be kept right.
     `Change this library version`,
-    `Request README update confirmation`,
+    `Request doc update confirmation`,
     `Request CHANGELOG update confirmation`,
     `Commit "prepare for release" and tag`,
     `Push release to origin`,
@@ -122,7 +122,7 @@ fun askNewVersionInput(
 }
 
 
-fun CliUi.runBintrayReleaseStep(step: ReleaseStep) = when (step) {
+fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
     `Change this library version` -> {
         checkOnDevelopBranch()
         OngoingRelease.newVersion.let { newVersion ->
@@ -131,9 +131,29 @@ fun CliUi.runBintrayReleaseStep(step: ReleaseStep) = when (step) {
             versionsFile.writeText(newVersion)
         }
     }
-    `Request README update confirmation` -> {
-        requestManualAction("Update the `README.md` with the new version and any other changes.")
-        dir.resolve("README.md").checkChanged()
+    `Request doc update confirmation` -> {
+        arrayOf(
+            "README.adoc",
+            "docs/Setting-up.adoc"
+        ).forEach { relativePath ->
+            runUntilSuccessWithErrorPrintingOrCancel {
+                requestManualAction(
+                    instructions = "Update the `$relativePath` file with the new version," +
+                            " and any other changes needed for this release."
+                )
+                dir.resolve(relativePath).checkChanged()
+            }
+        }.also {
+            if (askIfYes(
+                    yesNoQuestion = "Apart from the changelog, is there other files that " +
+                            "need to be updated for this new release?"
+                )
+            ) {
+                requestManualAction(
+                    instructions = "Let's ensure all these other files are updated."
+                )
+            }
+        }
     }
     `Request CHANGELOG update confirmation` -> {
         requestManualAction("Update the `CHANGELOG.md` for the impending release.")
@@ -153,7 +173,7 @@ fun CliUi.runBintrayReleaseStep(step: ReleaseStep) = when (step) {
         requestManualAction("Create a pull request from the `develop` to the `master` branch on GitHub for the new version, if not already done.")
     }
     `Wait for successful release by CI` -> {
-        printInfo("To perform this step, we need to wait for the artifacts building and uploading to Bintray.")
+        printInfo("To perform this step, we need to wait for the artifacts building and uploading.")
         requestUserConfirmation("Did the publishing/release Github Action complete successfully?")
         printInfo("Alright, we take your word.")
     }
@@ -222,18 +242,18 @@ fun CliUi.runBintrayReleaseStep(step: ReleaseStep) = when (step) {
     }
 }
 
-fun releaseOnBintray() {
+fun performRelease() {
     var stepIndex = startAtStep.ordinal
     val enumValues = enumValues<ReleaseStep>().toList()
     while (stepIndex < enumValues.size) {
         val step = enumValues[stepIndex]
         OngoingRelease.currentStepName = step.name
         OngoingRelease.write()
-        cliUi.runBintrayReleaseStep(step)
+        cliUi.runReleaseStep(step)
         stepIndex++
     }
     OngoingRelease.clear()
     cliUi.printQuestion("All Done! Let's brag about this new release!!")
 }
 
-releaseOnBintray()
+performRelease()
