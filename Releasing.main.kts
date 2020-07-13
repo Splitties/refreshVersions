@@ -62,7 +62,7 @@ enum class ReleaseStep { // Order of the steps, must be kept right.
 val ongoingReleaseFile = dir.resolve("ongoing_release.tmp.properties")
 val versionsFile = dir.resolve("plugins/version.txt")
 
-object OngoingRelease {
+inner class OngoingReleaseImpl {
     fun load() = properties.load(ongoingReleaseFile.inputStream())
     fun write() = properties.store(ongoingReleaseFile.outputStream(), null)
     fun clear() = ongoingReleaseFile.delete()
@@ -74,6 +74,10 @@ object OngoingRelease {
 
     var currentStepName: String by properties
 }
+
+//TODO: Make OngoingRelease and object again when https://youtrack.jetbrains.com/issue/KT-19423 is fixed.
+
+val OngoingRelease = OngoingReleaseImpl()
 
 var startAtStep: ReleaseStep //TODO: Make a val again when https://youtrack.jetbrains.com/issue/KT-20059 is fixed
 
