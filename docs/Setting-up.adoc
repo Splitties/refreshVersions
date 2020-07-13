@@ -1,4 +1,7 @@
 :gradle_version: 6.4.1
+:last_version: 0.9.5
+:last_dev_version: 0.9.5-dev-006
+:buildSrc_doc: https://docs.gradle.org/current/userguide/organizing_gradle_projects.html#sec:build_sources
 
 = Setting up
 
@@ -20,7 +23,9 @@ more features and more build speed, and it's as simple as this:_
 
 == Step 1: Adding the plugin
 
-Add the following snippet in your project's root `settings.gradle(.kts)` file:
+=== Bootstrap in root project
+
+If you're using *Gradle Kotlin DSL*, add the following snippet in your project's root `settings.gradle.kts` file:
 
 [source,kts,subs=attributes]
 ----
@@ -34,11 +39,46 @@ pluginManagement {
 
 buildscript {
     repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.5")
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{last_version}")
 }
 
 bootstrapRefreshVersions()
 ----
+
+If you're using *Gradle Groovy DSL*, use the same snippet as above for your root project's `settings.gradle` file, then:
+
+1. Replace the import with `import de.fayard.refreshVersions.RefreshVersionsSetup`
+2. Replace the `bootstrapRefreshVersions()` call with `RefreshVersionsSetup.bootstrap(settings)`
+
+=== Bootstrap for buildSrc (if you use it)
+
+I you use {buildSrc_doc}[`buildSrc`], you probably want to use refreshVersions there as well.
+Here's how to do so:
+
+If you're using *Gradle Kotlin DSL*, add the following snippet in your the `settings.gradle.kts` file of your `buildSrc`:
+
+[source,kts,subs=attributes]
+----
+// settings.gradle.kts
+import de.fayard.refreshVersions.bootstrapRefreshVersionsForBuildSrc
+
+// Here you might have some pluginManagement block:
+pluginManagement {
+    //...
+}
+
+buildscript {
+    repositories { gradlePluginPortal() }
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{last_version}")
+}
+
+bootstrapRefreshVersionsForBuildSrc()
+----
+
+If you're using *Gradle Groovy DSL*, use the same snippet as above for your root project's `settings.gradle` file, then:
+
+1. Replace the import with `import de.fayard.refreshVersions.RefreshVersionsSetup`
+2. Replace the `bootstrapRefreshVersionsForBuildSrc()` call with `RefreshVersionsSetup.bootstrapForBuildSrc(settings)`
 
 == Step 2: Migrating the dependencies versions declaration place
 
@@ -47,8 +87,10 @@ Run the following command on the root project:
 `./gradlew migrateToRefreshVersionsDependenciesConstants --console=plain`
 
 This Gradle task is interactive.
-It will walk you through every module of your Gradle project, assisting you in replacing every hardcoded dependency version by the
-version placeholder (`_`), and an entry in the `versions.properties` file, for every configuration.
+It will walk you through every module of your Gradle project,
+assisting you in replacing every hardcoded dependency version by the
+version placeholder (`_`), and an entry in the `versions.properties` file,
+for every configuration.
 
 _Note that while this Gradle task cannot break your build, it is experimental.
 We are aware its UX can be improved, and we have plans to work on it before the 1.0 release._
@@ -58,14 +100,14 @@ We are aware its UX can be improved, and we have plans to work on it before the 
 In case you want to try new features or get a fix for a bug that affects a project you work on,
 before they make it into a release, you can use a development version.
 
-To do so, in your `settings.gradle.kts` file(s), ensure the `buildscript` has this maven repository:
+To do so, in your `settings.gradle[.kts]` file(s), ensure the `buildscript` has this maven repository:
 `https://dl.bintray.com/jmfayard/maven`, and set a valid dev version, as such:
 
 [source,kts,subs=attributes]
 ----
 buildscript {
     repositories { maven(url = "https://dl.bintray.com/jmfayard/maven") } // <- here
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.5-dev-002")
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{last_dev_version}")
 }
 ----
 
