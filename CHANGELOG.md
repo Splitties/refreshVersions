@@ -6,7 +6,7 @@
 This is a major release that brings surface-level and internal changes,
 paving the way for the upcoming 1.0 release.
 
-The plugin setup/bootstrap has changed, so check out the updated documentation in [Setting-up.adoc](docs/Setting-up.adoc).
+**The plugin setup/bootstrap has changed**, so check out the updated documentation in [Setting-up.adoc](docs/Setting-up.adoc).
 
 ### New features
 
@@ -21,7 +21,7 @@ The plugin setup/bootstrap has changed, so check out the updated documentation i
 - There is now a connection timeout (10 seconds per request for now)
 - An error is reported if a dependency wasn't found in any of the configured repositories.
 - All the searched repositories are now listed if a dependency wasn't found in any of them.
-- Only declared repositories are now looked up. Before, refreshVersions would search all dependencies in all repositories of all modules and their buildscript, regardless of which module was declaring them. 
+- Only declared repositories are now looked up. (Before, refreshVersions would search all dependencies in all repositories of all modules and their buildscript, regardless of which module was declaring them.)
 
 ### Fixes
 - Version sorting would crash if a version had a long number in it. This has now been fixed, any length of digit sequence is now supported in versions.
