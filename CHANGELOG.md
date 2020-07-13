@@ -10,6 +10,7 @@ paving the way for the upcoming 1.0 release.
 
 ### New features
 
+- Support for `buildscript` dependencies. It now works just like regular dependencies.
 - First class support for `buildSrc`
 - Support maven repositories with basic authentication (aka. credentials with username and password)
 
