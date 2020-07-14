@@ -57,9 +57,6 @@ interface Firebase {
     val crashlyticsNdk: String
     val crashlyticsGradlePlugin: String
 
-    val crashlyticsLegacy: String
-    val crashlyticsLegacyGradlePlugin: String
-
     val dynamicLinks: String
 
     val inAppMessaging: String
@@ -122,8 +119,6 @@ internal class FirebaseImpl(isBom: Boolean) : Firebase {
     override val crashlytics = "$artifactPrefix-crashlytics$suffix"
     override val crashlyticsNdk = "$artifactPrefix-crashlytics-ndk$suffix"
     override val crashlyticsGradlePlugin = "$artifactPrefix-crashlytics-gradle$suffix"
-    override val crashlyticsLegacy = "com.crashlytics.sdk.android:crashlytics$suffix"
-    override val crashlyticsLegacyGradlePlugin = "io.fabric.tools:gradle$suffix"
     override val dynamicLinks = "$artifactPrefix-dynamic-links$suffix"
     override val inAppMessaging = "$artifactPrefix-inappmessaging$suffix"
     override val inAppMessagingKtx = "$artifactPrefix-inappmessaging-ktx$suffix"
