@@ -42,7 +42,11 @@ class BundledDependenciesTest {
 
     private fun createTestHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor())
+            .addInterceptor(HttpLoggingInterceptor(logger = object : HttpLoggingInterceptor.Logger {
+                override fun log(message: String) {
+                    println(message)
+                }
+            }).setLevel(HttpLoggingInterceptor.Level.BASIC))
             .build()
     }
 }
