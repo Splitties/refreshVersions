@@ -393,7 +393,7 @@ object AndroidX {
 
         const val services = "$group.services:test-services:_"
 
-        const val jankTestHelper = "$group.jank:janktesthelper:_"
+        const val jankTestHelper = "$group.janktesthelper:janktesthelper:_"
         const val uiAutomator = "$group.uiautomator:uiautomator:_"
 
         object Espresso {
