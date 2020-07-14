@@ -157,6 +157,7 @@ object Testing {
         const val gradle = "$artifactPrefix-gradle:_"
         const val jackson = "$artifactPrefix-jackson:_"
         const val javaTime = "$artifactPrefix-java-time:_"
+        const val mockk = "$artifactPrefix-mockk:_"
         const val protobuf = "$artifactPrefix-protobuf:_"
         const val spring = "$artifactPrefix-spring:_"
     }

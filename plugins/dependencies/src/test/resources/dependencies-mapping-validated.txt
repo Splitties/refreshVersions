@@ -501,6 +501,7 @@ io.strikt..strikt-core=Testing.strikt.core
 io.strikt..strikt-gradle=Testing.strikt.gradle
 io.strikt..strikt-jackson=Testing.strikt.jackson
 io.strikt..strikt-java-time=Testing.strikt.javaTime
+io.strikt..strikt-mockk=Testing.strikt.mockk
 io.strikt..strikt-protobuf=Testing.strikt.protobuf
 io.strikt..strikt-spring=Testing.strikt.spring
 junit..junit=Testing.junit4
