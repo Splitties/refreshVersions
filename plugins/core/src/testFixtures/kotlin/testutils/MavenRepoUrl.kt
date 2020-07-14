@@ -1,7 +1,7 @@
-package de.fayard.refreshVersions.core.testutils
+package testutils
 
 @Suppress("DataClassPrivateConstructor")
-internal data class MavenRepoUrl private constructor(val url: String) {
+data class MavenRepoUrl private constructor(val url: String) {
 
     fun metadataUrlForArtifact(group: String, name: String): String =
         "$url${group.replace('.', '/')}/$name/maven-metadata.xml"

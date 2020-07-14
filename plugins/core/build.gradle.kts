@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("com.gradle.plugin-publish")
     `java-gradle-plugin`
+    `java-test-fixtures`
     `maven-publish`
     `kotlin-dsl`
 }
@@ -30,7 +31,7 @@ publishing {
 
 dependencies {
     implementation(gradleKotlinDsl())
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
+    implementation(KotlinX.coroutines.core)
     implementation(Square.okHttp3.okHttp)
     implementation(Square.okHttp3.loggingInterceptor)
     implementation(Square.retrofit2.retrofit) {
@@ -41,8 +42,22 @@ dependencies {
     testImplementation(platform(notation = "org.junit:junit-bom:_"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("io.kotlintest:kotlintest-runner-junit5:_")
+
+    testFixturesApi(Square.okHttp3.okHttp)
+    testFixturesApi(Square.okHttp3.loggingInterceptor)
+    testFixturesApi(KotlinX.coroutines.core)
 }
 
+kotlin {
+    target.compilations.let {
+        it.getByName("testFixtures").associateWith(it.getByName("main"))
+    }
+}
+
+(components["java"] as AdhocComponentWithVariants).let { javaComponent ->
+    javaComponent.withVariantsFromConfiguration(configurations["testFixturesApiElements"]) { skip() }
+    javaComponent.withVariantsFromConfiguration(configurations["testFixturesRuntimeElements"]) { skip() }
+}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"

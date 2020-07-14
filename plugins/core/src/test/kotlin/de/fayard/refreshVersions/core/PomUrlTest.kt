@@ -1,7 +1,7 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.testutils.MavenRepoUrl
-import de.fayard.refreshVersions.core.testutils.disabledBecauseIsAnExperiment
+import testutils.MavenRepoUrl
+import testutils.disabledBecauseIsAnExperiment
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.Request

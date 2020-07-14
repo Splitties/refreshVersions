@@ -37,8 +37,11 @@ dependencies {
         because("allows tests to run from IDEs that bundle older version of launcher")
     }
 
+    val refreshVersionsCore = project(":refreshVersions-core")
+    testImplementation(testFixtures(refreshVersionsCore))
+
     implementation(gradleKotlinDsl())
-    api(project(":refreshVersions-core"))
+    api(refreshVersionsCore)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
 }
 

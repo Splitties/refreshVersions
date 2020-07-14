@@ -1,14 +1,12 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.internal.MavenDependencyVersionsFetcher
-import de.fayard.refreshVersions.core.internal.VersionCandidatesResultMode
-import de.fayard.refreshVersions.core.internal.getVersionCandidates
-import de.fayard.refreshVersions.core.testutils.disabledBecauseIsAnExperiment
+import testutils.getVersionCandidates
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
+import testutils.disabledBecauseIsAnExperiment
 
 class MavenDependencyVersionsFetchingTest {
 
@@ -34,21 +32,12 @@ class MavenDependencyVersionsFetchingTest {
     private suspend fun getVersionCandidates(
         moduleId: ModuleId,
         currentVersion: Version,
-        repoUrls: List<String>,
-        resultMode: VersionCandidatesResultMode = VersionCandidatesResultMode(
-            filterMode = VersionCandidatesResultMode.FilterMode.LatestByStabilityLevel,
-            sortingMode = VersionCandidatesResultMode.SortingMode.ByVersion
-        )
-    ): List<Version> = repoUrls.map {
-        MavenDependencyVersionsFetcher(
-            httpClient = defaultHttpClient,
-            moduleId = moduleId,
-            repoUrl = it,
-            repoAuthorization = null
-        )
-    }.getVersionCandidates(
+        repoUrls: List<String>
+    ): List<Version> = getVersionCandidates(
+        httpClient = defaultHttpClient,
+        moduleId = moduleId,
         currentVersion = currentVersion,
-        resultMode = resultMode
+        repoUrls = repoUrls
     )
 
     private val defaultHttpClient by lazy { createTestHttpClient() }
