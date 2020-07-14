@@ -65,5 +65,3 @@ dependencies {
 
     testImplementation("junit", "junit", "4.12")
 }
-// Engie 44
-//IBKSPLUS58606
