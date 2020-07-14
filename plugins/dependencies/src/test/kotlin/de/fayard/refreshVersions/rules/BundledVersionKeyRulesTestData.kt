@@ -121,7 +121,7 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.test.ext.junit", dependency = AndroidX.test.ext.junitKtx),
     versionKeyWithModules(expected = "androidx.test", dependency = AndroidX.test.ext.truth),
     versionKeyWithModules(expected = "androidx.test.services", dependency = AndroidX.test.services),
-    versionKeyWithModules(expected = "androidx.test.jank", dependency = AndroidX.test.jankTestHelper),
+    versionKeyWithModules(expected = "androidx.test.janktesthelper", dependency = AndroidX.test.jankTestHelper),
     versionKeyWithModules(expected = "androidx.test.uiautomator", dependency = AndroidX.test.uiAutomator),
     versionKeyWithModules(expected = "androidx.test.espresso", dependenciesObject = AndroidX.test.espresso,
         excludes = getArtifactsFromDependenciesObject(AndroidX.test.espresso.idling)
