@@ -126,7 +126,7 @@ object Ktor {
          *
          * ktor doc: [Using Freemarker Templates](https://ktor.io/servers/features/templates/freemarker.html)
          */
-        const val freemaker = "$artifactBase-freemaker:_"
+        const val freemarker = "$artifactBase-freemarker:_"
 
         /**
          * Supports JVM only (because Apache Velocity JVM-only).
