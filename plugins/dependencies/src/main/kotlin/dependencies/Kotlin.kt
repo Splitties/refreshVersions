@@ -23,6 +23,6 @@ object Kotlin {
 
         const val junit = "org.jetbrains.kotlin:kotlin-test-junit:_"
         const val junit5 = "org.jetbrains.kotlin:kotlin-test-junit5:_"
-        const val testng = "org.jetbrains.kotlin:kotlin-testng:_"
+        const val testng = "org.jetbrains.kotlin:kotlin-test-testng:_"
     }
 }
