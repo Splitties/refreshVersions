@@ -131,11 +131,12 @@ internal class FirebaseImpl(isBom: Boolean) : Firebase {
     override val inAppMessagingDisplayKtx = "$artifactPrefix-inappmessaging-display-ktx$suffix"
 
     override val mlKit: Firebase.MlKit = object : Firebase.MlKit {
-        override val vision = "$artifactPrefix-ml-vision$suffix"
-        override val naturalLanguage = "$artifactPrefix-ml-natural-language$suffix"
+        private val mlArtifactPrefix = "$artifactPrefix-ml"
+        override val vision = "$mlArtifactPrefix-vision$suffix"
+        override val naturalLanguage = "$mlArtifactPrefix-natural-language$suffix"
         override val models: Firebase.MlKit.Models = object : Firebase.MlKit.Models {
             override val vision: Firebase.MlKit.Models.Vision = object : Firebase.MlKit.Models.Vision {
-                private val artifactPrefix = "com.google.firebase:firebase-ml-vision"
+                private val artifactPrefix = "$mlArtifactPrefix-vision"
 
                 override val imageLabelling = "$artifactPrefix-image-label-model$suffix"
                 override val objectDetectionAndTracking = "$artifactPrefix-object-detection-model$suffix"
@@ -144,14 +145,14 @@ internal class FirebaseImpl(isBom: Boolean) : Firebase {
                 override val autoMl = "$artifactPrefix-automl$suffix"
             }
             override val naturalLanguage: Firebase.MlKit.Models.NaturalLanguage = object : Firebase.MlKit.Models.NaturalLanguage {
-                private val artifactPrefix = "com.google.firebase:firebase-ml-natural-language"
+                private val artifactPrefix = "$mlArtifactPrefix-natural-language"
 
                 override val languageIdentification = "$artifactPrefix-language-id-model$suffix"
                 override val translate = "$artifactPrefix-translate-model$suffix"
                 override val smartReply = "$artifactPrefix-smart-reply-model$suffix"
             }
 
-            override val custom: String = "$artifactPrefix-model-interpreter$suffix"
+            override val custom: String = "$mlArtifactPrefix-model-interpreter$suffix"
         }
     }
 
