@@ -158,7 +158,7 @@ object Testing {
         const val jackson = "$artifactPrefix-jackson:_"
         const val javaTime = "$artifactPrefix-java-time:_"
         const val protobuf = "$artifactPrefix-protobuf:_"
-        const val string = "$artifactPrefix-string:_"
+        const val spring = "$artifactPrefix-spring:_"
     }
 
     /**
