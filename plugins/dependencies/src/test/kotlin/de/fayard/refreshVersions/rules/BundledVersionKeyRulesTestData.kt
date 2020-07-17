@@ -3,6 +3,7 @@ package de.fayard.refreshVersions.rules
 import Ktor
 import Splitties
 import de.fayard.refreshVersions.internal.getArtifactsFromDependenciesObject
+import dependencies.COIL
 import org.gradle.api.artifacts.ModuleIdentifier
 
 data class VersionKeyWithModules(
@@ -149,7 +150,8 @@ private val androidX = listOf(
 internal val bundledRules = kotlinX + androidX + listOf(
     versionKeyWithModules(expected = "ktor", dependenciesObject = Ktor),
     versionKeyWithModules(expected = "splitties", dependenciesObject = Splitties),
-    versionKeyWithModules(expected = "junit.junit", dependency = Testing.junit4)
+    versionKeyWithModules(expected = "junit.junit", dependency = Testing.junit4),
+    versionKeyWithModules(expected = "coil-kt", dependenciesObject = COIL)
 )
 
 

@@ -6,3 +6,6 @@ com.squareup.*:*
 
 io.ktor:*
    ^^^^
+
+io.coil-kt:coil(-*)
+   ^^^^^^^
