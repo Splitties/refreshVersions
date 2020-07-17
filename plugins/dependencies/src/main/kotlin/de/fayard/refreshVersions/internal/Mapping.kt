@@ -10,6 +10,7 @@ import Ktor
 import Splitties
 import Square
 import Testing
+import dependencies.COIL
 import org.gradle.api.artifacts.ModuleIdentifier
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KVisibility
@@ -47,7 +48,8 @@ internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = 
         Splitties,
         Square,
         Ktor,
-        Testing
+        Testing,
+        COIL
     ).flatMap { objectInstance ->
         getArtifactNameToConstantMappingFromObject(
             objectInstance,
