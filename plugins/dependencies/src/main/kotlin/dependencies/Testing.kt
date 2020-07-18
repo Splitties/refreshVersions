@@ -17,7 +17,10 @@ object Testing {
     const val junit4 = "junit:junit:_"
 
     val junit = JunitJupiter
-    val kotlinTest = KotlinTest
+
+    @Deprecated("Renamed to KoTest. Replacement constants will be provided in a future release of refreshVersions.")
+    val kotlinTest = @Suppress("deprecation") KotlinTest
+
     val spek = Spek
     val strikt = Strikt
 
@@ -51,6 +54,8 @@ object Testing {
      *
      * GitHub page: [kotlintest/kotlintest](https://github.com/kotlintest/kotlintest)
      */
+    //TODO: Replace with KoTest when https://github.com/kotest/kotest/issues/1570 is resolved.
+    @Deprecated("Renamed to KoTest. Replacement constants will be provided in a future release of refreshVersions.")
     object KotlinTest {
         private const val artifactBase = "io.kotlintest:kotlintest"
 
