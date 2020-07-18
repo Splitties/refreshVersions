@@ -9,6 +9,7 @@ object Square {
 
     val okHttp3 = OkHttp3
     val retrofit2 = Retrofit2
+    val sqlDelight = SqlDelight
 
     object OkHttp3 {
         private const val artifactPrefix = "com.squareup.okhttp3"
@@ -42,6 +43,25 @@ object Square {
             const val retrofitJava8 = "$artifact:adapter-java8:_"
             const val retrofitRxJava1 = "$artifact:adapter-rxjava:_"
             const val retrofitRxJava2 = "$artifact:adapter-rxjava2:_"
+        }
+    }
+
+    object SqlDelight {
+        private const val group = "com.squareup.sqldelight"
+
+        const val gradlePlugin = "$group:gradle-plugin:_"
+
+        val drivers = Drivers
+
+        const val coroutinesExtensions = "$group:coroutines-extensions"
+
+        object Drivers {
+            const val android = "$group:android-driver:_"
+
+            const val jdbc = "$group:jdbc-driver:_"
+            const val jdbcSqlite = "$group:sqlite-driver:_"
+
+            const val native = "$group:native-driver:_"
         }
     }
 }
