@@ -14,6 +14,11 @@ paving the way for the upcoming 1.0 release.
 - First class support for `buildSrc`
 - Support maven repositories with basic authentication (aka. credentials with username and password)
 
+### New dependency constants
+
+- [COIL](https://coil-kt.github.io/coil/), a **Co**routine **I**mage **L**oader for Android.
+
+
 ### Changes
 - Make the `refreshVersions` task cancellable during network requests.
 - Now, only http 404 and 401 responses from repositories will be silent.
@@ -26,6 +31,7 @@ paving the way for the upcoming 1.0 release.
 
 ### Fixes
 - Version sorting would crash if a version had a long number in it. This has now been fixed, any length of digit sequence is now supported in versions.
+- Fix maven coordinates of several dependency constants
 
 ## Previous releases
 
