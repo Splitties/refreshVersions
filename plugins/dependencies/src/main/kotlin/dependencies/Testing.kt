@@ -12,7 +12,7 @@ object Testing {
     /**
      * JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks.
      *
-     * Official website: [junit.org/junit5](https://junit.org/junit4/)
+     * Official website: [junit.org/junit4](https://junit.org/junit4/)
      */
     const val junit4 = "junit:junit:_"
 
