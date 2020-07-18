@@ -20,6 +20,8 @@ object Testing {
 
     @Deprecated("Renamed to KoTest. Replacement constants will be provided in a future release of refreshVersions.")
     val kotlinTest = @Suppress("deprecation") KotlinTest
+    
+    val kotest = Kotest
 
     val spek = Spek
     val strikt = Strikt
@@ -102,6 +104,62 @@ object Testing {
         }
     }
 
+    /**
+     * Powerful, elegant and flexible test framework for Kotlin
+     *
+     * GitHub page: [kotest/kotest](https://github.com/kotest/kotest)
+     */
+    object Kotest {
+        private const val artifactBase = "io.kotest:kotest"
+
+        val runner = Runner
+        val plugins = Plugins
+        val extensions = Extensions
+        val assertions = Assertions
+
+        const val core = "$artifactBase-core:_"
+        const val property = "$artifactBase-property:_"
+        const val propertyArrow = "$artifactBase-property-arrow:_"    
+
+        object Runner {
+            private const val artifactPrefix = "$artifactBase-runner"
+
+            const val junit4 = "$artifactPrefix-junit4:_"
+            const val junit5 = "$artifactPrefix-junit5:_"
+        }
+
+        object Plugins {
+            private const val artifactPrefix = "$artifactBase-plugins"
+
+            const val piTest = "$artifactPrefix-pitest:_"
+        }
+
+        object Extensions {
+            private const val artifactPrefix = "$artifactBase-extensions"
+
+            const val spring = "$artifactPrefix-spring:_"
+            const val koin = "$artifactPrefix-koin:_"
+            const val allure = "$artifactPrefix-allure:_"
+            const val testContainers = "$artifactPrefix-testcontainers:_"
+            const val http = "$artifactPrefix-http:_"
+            const val mockserver = "$artifactPrefix-mockserver:_"
+        }
+
+        object Assertions {
+            private const val artifactPrefix = "$artifactBase-assertions"
+            
+            const val core = "$artifactPrefix-core:_"
+            const val ktor = "$artifactPrefix-ktor:_"
+            const val json = "$artifactPrefix-json:_"
+            const val arrow = "$artifactPrefix-arrow:_"
+            const val konform = "$artifactPrefix-konform:_"
+            const val jsoup = "$artifactPrefix-jsoup:_"
+            const val klock = "$artifactPrefix-klock:_"
+            const val sql = "$artifactPrefix-sql:_"
+            const val compiler = "$artifactPrefix-compiler:_"
+        }
+    }    
+    
     /**
      * A specification framework for Kotlin
      *
