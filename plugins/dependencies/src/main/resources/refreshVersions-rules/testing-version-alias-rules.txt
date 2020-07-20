@@ -4,8 +4,8 @@ junit:junit
 org.junit:*
     ^^^^^
 
-io.kotlintest:*
-   ^^^^^^^^^^
+io.kotest:*
+   ^^^^^^
 
 org.robolectric:*
     ^^^^^^^^^^^
