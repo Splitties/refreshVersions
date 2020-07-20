@@ -17,9 +17,6 @@ object Testing {
     const val junit4 = "junit:junit:_"
 
     val junit = JunitJupiter
-
-    @Deprecated("Renamed to KoTest. Replacement constants will be provided in a future release of refreshVersions.")
-    val kotlinTest = @Suppress("deprecation") KotlinTest
     
     val kotest = Kotest
 
@@ -49,59 +46,6 @@ object Testing {
         const val engine = "$artifactPrefix-engine:_"
         const val params = "$artifactPrefix-params:_"
         const val migrationSupport = "$artifactPrefix-migrationsupport:_"
-    }
-
-    /**
-     * Powerful, elegant and flexible test framework for Kotlin
-     *
-     * GitHub page: [kotlintest/kotlintest](https://github.com/kotlintest/kotlintest)
-     */
-    //TODO: Replace with KoTest when https://github.com/kotest/kotest/issues/1570 is resolved.
-    @Deprecated("Renamed to KoTest. Replacement constants will be provided in a future release of refreshVersions.")
-    object KotlinTest {
-        private const val artifactBase = "io.kotlintest:kotlintest"
-
-        val runner = Runner
-        val plugins = Plugins
-        val extensions = Extensions
-        val assertions = Assertions
-
-        const val core = "$artifactBase-core:_"
-        const val datagen = "$artifactBase-datagen:_"
-
-
-        object Runner {
-            private const val artifactPrefix = "$artifactBase-runner"
-
-            const val jvm = "$artifactPrefix-jvm:_"
-            const val junit4 = "$artifactPrefix-junit4:_"
-            const val junit5 = "$artifactPrefix-junit5:_"
-            const val console = "$artifactPrefix-console:_"
-        }
-
-        object Plugins {
-            private const val artifactPrefix = "$artifactBase-plugins"
-
-            const val piTest = "$artifactPrefix-pitest:_"
-        }
-
-        object Extensions {
-            private const val artifactPrefix = "$artifactBase-extensions"
-
-            const val spring = "$artifactPrefix-spring:_"
-            const val koin = "$artifactPrefix-koin:_"
-            const val allure = "$artifactPrefix-allure:_"
-            const val extensions = "$artifactPrefix:_"
-        }
-
-        object Assertions {
-            private const val artifactPrefix = "$artifactBase-assertions"
-            const val ktor = "$artifactPrefix-ktor:_"
-            const val json = "$artifactPrefix-json:_"
-            const val arrow = "$artifactPrefix-arrow:_"
-
-            const val assertions = "$artifactPrefix:_"
-        }
     }
 
     /**
