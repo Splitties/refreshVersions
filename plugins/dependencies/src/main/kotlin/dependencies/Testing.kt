@@ -142,7 +142,7 @@ object Testing {
             const val allure = "$artifactPrefix-allure:_"
             const val testContainers = "$artifactPrefix-testcontainers:_"
             const val http = "$artifactPrefix-http:_"
-            const val mockserver = "$artifactPrefix-mockserver:_"
+            const val mockServer = "$artifactPrefix-mockserver:_"
         }
 
         object Assertions {
