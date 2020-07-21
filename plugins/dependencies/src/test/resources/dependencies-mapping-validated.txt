@@ -442,6 +442,7 @@ com.squareup.sqldelight..gradle-plugin=Square.sqlDelight.gradlePlugin
 com.squareup.sqldelight..jdbc-driver=Square.sqlDelight.drivers.jdbc
 com.squareup.sqldelight..native-driver=Square.sqlDelight.drivers.native
 com.squareup.sqldelight..sqlite-driver=Square.sqlDelight.drivers.jdbcSqlite
+com.squareup.wire..wire-runtime=Square.wire.runtime
 io.coil-kt..coil-base=dependencies.COIL.base
 io.coil-kt..coil-gif=dependencies.COIL.gif
 io.coil-kt..coil-svg=dependencies.COIL.svg

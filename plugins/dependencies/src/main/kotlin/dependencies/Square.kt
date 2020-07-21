@@ -9,6 +9,7 @@ object Square {
     val retrofit2 = Retrofit2
     val sqlDelight = SqlDelight
     val moshi = Moshi
+    val wire = Wire
 
     const val okio = "com.squareup.okio:okio:_"
 
@@ -72,5 +73,11 @@ object Square {
         const val javaReflect = "$group:moshi:_"
         const val kotlinReflect = "$group:moshi-kotlin:_"
         const val kotlinCodegen = "$group:moshi-kotlin-codegen:_"
+    }
+
+    object Wire {
+        private const val group = "com.squareup.wire"
+
+        const val runtime = "$group:wire-runtime:_"
     }
 }
