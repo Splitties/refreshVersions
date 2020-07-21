@@ -10,6 +10,7 @@ object Square {
     val sqlDelight = SqlDelight
     val moshi = Moshi
     val wire = Wire
+    val leakCanary = LeakCanary
 
     const val okio = "com.squareup.okio:okio:_"
 
@@ -79,5 +80,13 @@ object Square {
         private const val group = "com.squareup.wire"
 
         const val runtime = "$group:wire-runtime:_"
+    }
+
+    object LeakCanary {
+        private const val artifact = "com.squareup.leakcanary"
+
+        const val android = "$artifact:leakcanary-android:_"
+        const val objectWatcher = "$artifact:leakcanary-object-watcher-android:_"
+        const val plumber = "$artifact:plumber-android:_"
     }
 }
