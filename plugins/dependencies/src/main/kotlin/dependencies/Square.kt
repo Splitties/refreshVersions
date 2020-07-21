@@ -5,11 +5,10 @@ import org.gradle.api.Incubating
 @Incubating
 object Square {
 
-    const val moshi = "com.squareup.moshi:moshi:_"
-
     val okHttp3 = OkHttp3
     val retrofit2 = Retrofit2
     val sqlDelight = SqlDelight
+    val moshi = Moshi
 
     object OkHttp3 {
         private const val artifactPrefix = "com.squareup.okhttp3"
@@ -63,5 +62,13 @@ object Square {
 
             const val native = "$group:native-driver:_"
         }
+    }
+
+    object Moshi {
+        private const val group = "com.squareup.moshi"
+
+        const val javaReflect = "$group:moshi:_"
+        const val kotlinReflect = "$group:moshi-kotlin:_"
+        const val kotlinCodegen = "$group:moshi-kotlin-codegen:_"
     }
 }
