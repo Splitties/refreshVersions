@@ -425,6 +425,7 @@ com.squareup.moshi..moshi=Square.moshi.javaReflect
 com.squareup.okhttp3..logging-interceptor=Square.okHttp3.loggingInterceptor
 com.squareup.okhttp3..mockwebserver=Square.okHttp3.mockWebServer
 com.squareup.okhttp3..okhttp=Square.okHttp3.okHttp
+com.squareup.okio..okio=Square.okio
 com.squareup.retrofit2..adapter-java8=Square.retrofit2.adapter.retrofitJava8
 com.squareup.retrofit2..adapter-rxjava2=Square.retrofit2.adapter.retrofitRxJava2
 com.squareup.retrofit2..adapter-rxjava=Square.retrofit2.adapter.retrofitRxJava1

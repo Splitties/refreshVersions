@@ -10,6 +10,8 @@ object Square {
     val sqlDelight = SqlDelight
     val moshi = Moshi
 
+    const val okio = "com.squareup.okio:okio:_"
+
     object OkHttp3 {
         private const val artifactPrefix = "com.squareup.okhttp3"
         const val okHttp = "$artifactPrefix:okhttp:_"
