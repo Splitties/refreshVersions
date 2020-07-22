@@ -86,7 +86,14 @@ object Square {
         private const val artifact = "com.squareup.leakcanary"
 
         const val android = "$artifact:leakcanary-android:_"
-        const val objectWatcher = "$artifact:leakcanary-object-watcher-android:_"
+        const val androidProcess = "$artifact:leakcanary-android-process:_"
+
+        const val androidInstrumentation = "$artifact:leakcanary-android-instrumentation:_"
+
         const val plumber = "$artifact:plumber-android:_"
+
+        const val objectWatcher = "$artifact:leakcanary-object-watcher-android:_"
+
+        const val shark = "$artifact:shark:_"
     }
 }
