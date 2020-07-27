@@ -94,6 +94,16 @@ object Square {
 
         const val objectWatcher = "$artifact:leakcanary-object-watcher-android:_"
 
-        const val shark = "$artifact:shark:_"
+        val shark = Shark
+
+        object Shark {
+            private const val artifactPrefix = "$artifact:shark"
+
+            const val hprof = "$artifactPrefix-hprof:_"
+            const val graph = "$artifactPrefix-graph:_"
+            const val shark = "$artifactPrefix:_"
+            const val android = "$artifactPrefix-android:_"
+            const val cli = "$artifactPrefix-cli:_"
+        }
     }
 }
