@@ -15,37 +15,37 @@ object Square {
     const val okio = "com.squareup.okio:okio:_"
 
     object OkHttp3 {
-        private const val artifactPrefix = "com.squareup.okhttp3"
-        const val okHttp = "$artifactPrefix:okhttp:_"
-        const val loggingInterceptor = "$artifactPrefix:logging-interceptor:_"
-        const val mockWebServer = "$artifactPrefix:mockwebserver:_"
+        private const val group = "com.squareup.okhttp3"
+        const val okHttp = "$group:okhttp:_"
+        const val loggingInterceptor = "$group:logging-interceptor:_"
+        const val mockWebServer = "$group:mockwebserver:_"
     }
 
     object Retrofit2 {
-        private const val artifact = "com.squareup.retrofit2"
+        private const val group = "com.squareup.retrofit2"
 
-        const val retrofit = "$artifact:retrofit:_"
-        const val mock = "$artifact:retrofit-mock:_"
+        const val retrofit = "$group:retrofit:_"
+        const val mock = "$group:retrofit-mock:_"
 
         val converter = Converter
         val adapter = Adapter
 
         object Converter {
-            private const val artifact = "${Retrofit2.artifact}:converter"
+            private const val artifactPrefix = "$group:converter"
 
-            const val scalars = "$artifact-scalars:_"
+            const val scalars = "$artifactPrefix-scalars:_"
 
-            const val moshi = "$artifact-moshi:_"
-            const val gson = "$artifact-gson:_"
-            const val jackson = "$artifact-jackson:_"
+            const val moshi = "$artifactPrefix-moshi:_"
+            const val gson = "$artifactPrefix-gson:_"
+            const val jackson = "$artifactPrefix-jackson:_"
 
-            const val simpleXml = "$artifact-simplexml:_"
+            const val simpleXml = "$artifactPrefix-simplexml:_"
         }
 
         object Adapter {
-            const val retrofitJava8 = "$artifact:adapter-java8:_"
-            const val retrofitRxJava1 = "$artifact:adapter-rxjava:_"
-            const val retrofitRxJava2 = "$artifact:adapter-rxjava2:_"
+            const val retrofitJava8 = "$group:adapter-java8:_"
+            const val retrofitRxJava1 = "$group:adapter-rxjava:_"
+            const val retrofitRxJava2 = "$group:adapter-rxjava2:_"
         }
     }
 
@@ -83,21 +83,21 @@ object Square {
     }
 
     object LeakCanary {
-        private const val artifact = "com.squareup.leakcanary"
+        private const val group = "com.squareup.leakcanary"
 
-        const val android = "$artifact:leakcanary-android:_"
-        const val androidProcess = "$artifact:leakcanary-android-process:_"
+        const val android = "$group:leakcanary-android:_"
+        const val androidProcess = "$group:leakcanary-android-process:_"
 
-        const val androidInstrumentation = "$artifact:leakcanary-android-instrumentation:_"
+        const val androidInstrumentation = "$group:leakcanary-android-instrumentation:_"
 
-        const val plumber = "$artifact:plumber-android:_"
+        const val plumber = "$group:plumber-android:_"
 
-        const val objectWatcher = "$artifact:leakcanary-object-watcher-android:_"
+        const val objectWatcher = "$group:leakcanary-object-watcher-android:_"
 
         val shark = Shark
 
         object Shark {
-            private const val artifactPrefix = "$artifact:shark"
+            private const val artifactPrefix = "$group:shark"
 
             const val hprof = "$artifactPrefix-hprof:_"
             const val graph = "$artifactPrefix-graph:_"
