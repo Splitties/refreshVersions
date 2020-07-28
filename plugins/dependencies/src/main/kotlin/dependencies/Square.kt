@@ -10,6 +10,19 @@ object Square {
     val sqlDelight = SqlDelight
     val moshi = Moshi
     val wire = Wire
+
+    /**
+     * **LeakCanary is a memory leak detection library for Android.**
+     *
+     * **Official website:**
+     * - [Home/Overview](https://square.github.io/leakcanary/)
+     * - [Getting Started](https://square.github.io/leakcanary/getting_started/)
+     * - [Fundamentals](https://square.github.io/leakcanary/fundamentals/)
+     * - [Code recipes](https://square.github.io/leakcanary/recipes/)
+     * - [FAQ](https://square.github.io/leakcanary/faq/)
+     *
+     * Browse the navigation menu on the website to see more.
+     */
     val leakCanary = LeakCanary
 
     const val okio = "com.squareup.okio:okio:_"
@@ -85,24 +98,90 @@ object Square {
     object LeakCanary {
         private const val group = "com.squareup.leakcanary"
 
+        /**
+         * [API reference](https://square.github.io/leakcanary/api/leakcanary-android-core/leakcanary/)
+         */
         const val android = "$group:leakcanary-android:_"
+
+        /**
+         * [Code recipe](https://square.github.io/leakcanary/recipes/#running-the-leakcanary-analysis-in-a-separate-process)
+         *
+         * [API reference](https://square.github.io/leakcanary/api/leakcanary-android-process/leakcanary/)
+         */
         const val androidProcess = "$group:leakcanary-android-process:_"
 
+        /**
+         * [Code recipe](https://square.github.io/leakcanary/recipes/#running-leakcanary-in-instrumentation-tests)
+         *
+         * [API reference](https://square.github.io/leakcanary/api/leakcanary-android-instrumentation/leakcanary/)
+         */
         const val androidInstrumentation = "$group:leakcanary-android-instrumentation:_"
 
+        /**
+         * [Blog post "LeakCanary—Deobfuscation Feature Explained" by the contributors to this feature](https://www.polidea.com/blog/leakcanary-deobfuscation-feature-explained/)
+         */
+        const val deobfuscationGradlePlugin = "$group:leakcanary-deobfuscation-gradle-plugin:_"
+
+        /**
+         * [Plumber introduction in the changelog of the version 2.4](https://square.github.io/leakcanary/changelog/#version-24-2020-06-10)
+         */
         const val plumber = "$group:plumber-android:_"
 
-        const val objectWatcher = "$group:leakcanary-object-watcher-android:_"
+        val objectWatcher = ObjectWatcher
 
+        object ObjectWatcher {
+            private const val artifactPrefix = "$group:leakcanary-object-watcher"
+
+            /**
+             * [Code recipe](https://square.github.io/leakcanary/recipes/#counting-retained-instances-in-release-builds)
+             *
+             * [API reference](https://square.github.io/leakcanary/api/leakcanary-object-watcher-android/leakcanary/)
+             */
+            const val android = "$artifactPrefix-android:_"
+
+            /**
+             * [API reference](https://square.github.io/leakcanary/api/leakcanary-object-watcher/leakcanary/)
+             */
+            const val core = "$artifactPrefix:_"
+        }
+
+        /**
+         * Shark: Smart Heap Analysis Reports for Kotlin
+         *
+         * [Official documentation](https://square.github.io/leakcanary/shark/)
+         *
+         * [Announcement blog post](https://developer.squareup.com/blog/announcing-shark-smart-heap-analysis-reports-for-kotlin/)
+         */
         val shark = Shark
 
         object Shark {
             private const val artifactPrefix = "$group:shark"
 
+            /**
+             * [API reference](https://square.github.io/leakcanary/api/shark-hprof/shark/)
+             */
             const val hprof = "$artifactPrefix-hprof:_"
+
+            /**
+             * [API reference](https://square.github.io/leakcanary/api/shark-graph/shark/)
+             */
             const val graph = "$artifactPrefix-graph:_"
+
+            /**
+             * [API reference](https://square.github.io/leakcanary/api/shark/shark/)
+             *
+             * [Logging API reference](https://square.github.io/leakcanary/api/shark-log/shark/)
+             */
             const val shark = "$artifactPrefix:_"
+
+            /**
+             * [API reference](https://square.github.io/leakcanary/api/shark-android/shark/)
+             */
             const val android = "$artifactPrefix-android:_"
+
+            /**
+             * [Official documentation](https://square.github.io/leakcanary/shark/#shark-cli)
+             */
             const val cli = "$artifactPrefix-cli:_"
         }
     }
