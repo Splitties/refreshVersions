@@ -36,6 +36,15 @@ object Square {
      */
     val kotlinPoet = KotlinPoet
 
+    /**
+     * Official website: [square.github.io/picasso](https://square.github.io/picasso/)
+     *
+     * [Change log](https://github.com/square/picasso/blob/master/CHANGELOG.md)
+     *
+     * GitHub page: [square/picasso](https://github.com/square/picasso)
+     */
+    val picasso = Picasso
+
     const val okio = "com.squareup.okio:okio:_"
 
     object OkHttp3 {
@@ -220,5 +229,16 @@ object Square {
          * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet-metadata-specs/com.squareup.kotlinpoet.metadata.specs/)
          */
         const val metadataSpecs = "$artifactPrefix-metadata-specs:_"
+    }
+
+    object Picasso {
+        private const val group = "com.squareup.picasso"
+
+        const val picasso = "$group:picasso:_"
+
+        /**
+         * [Documentation page](https://github.com/square/picasso/blob/master/picasso-pollexor/README.md)
+         */
+        const val pollexor = "$group:picasso-pollexor:_"
     }
 }
