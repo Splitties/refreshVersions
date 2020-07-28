@@ -25,6 +25,17 @@ object Square {
      */
     val leakCanary = LeakCanary
 
+    /**
+     * `KotlinPoet` is a Kotlin and Java API for generating `.kt` source files.
+     *
+     * Official website: [square.github.io/kotlinpoet](https://square.github.io/kotlinpoet/)
+     *
+     * [Change Log](https://square.github.io/kotlinpoet/changelog/)
+     *
+     * GitHub page: [square/kotlinpoet](https://github.com/square/kotlinpoet)
+     */
+    val kotlinPoet = KotlinPoet
+
     const val okio = "com.squareup.okio:okio:_"
 
     object OkHttp3 {
@@ -184,5 +195,30 @@ object Square {
              */
             const val cli = "$artifactPrefix-cli:_"
         }
+    }
+
+    object KotlinPoet {
+        private const val artifactPrefix = "com.squareup:kotlinpoet"
+
+        /**
+         * [Official webpage](https://square.github.io/kotlinpoet/)
+         *
+         * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet/)
+         */
+        const val kotlinPoet = "$artifactPrefix:_"
+
+        /**
+         * [Official webpage](https://square.github.io/kotlinpoet/kotlinpoet_metadata/)
+         *
+         * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet-metadata/com.squareup.kotlinpoet.metadata/)
+         */
+        const val metadata = "$artifactPrefix-metadata:_"
+
+        /**
+         * [Official webpage](https://square.github.io/kotlinpoet/kotlinpoet_metadata_specs/)
+         *
+         * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet-metadata-specs/com.squareup.kotlinpoet.metadata.specs/)
+         */
+        const val metadataSpecs = "$artifactPrefix-metadata-specs:_"
     }
 }
