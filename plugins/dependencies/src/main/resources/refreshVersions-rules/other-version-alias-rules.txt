@@ -1,9 +1,6 @@
 com.louiscad.splitties:splitties-*
              ^^^^^^^^^
 
-com.squareup.*:*
-             ^
-
 io.ktor:*
    ^^^^
 
