@@ -105,11 +105,13 @@ object RefreshVersionsConfigHolder {
         check(::_artifactVersionKeyReader.isInitialized)
 
         settings.artifactVersionKeyRulesFile.let { file ->
+            file.createNewFile()
             ObjectOutputStream(file.outputStream()).use {
                 it.writeObject(artifactVersionKeyRules.toTypedArray())
             }
         }
         settings.versionsPropertiesFileFile.let { file ->
+            file.createNewFile()
             ObjectOutputStream(file.outputStream()).use {
                 it.writeObject(_versionsPropertiesFile)
             }
