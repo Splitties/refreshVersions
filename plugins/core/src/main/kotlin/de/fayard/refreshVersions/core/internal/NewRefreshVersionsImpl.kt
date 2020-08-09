@@ -13,6 +13,7 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import org.gradle.api.initialization.Settings
 
 internal suspend fun lookupVersionCandidates(
     httpClient: OkHttpClient,
@@ -47,9 +48,10 @@ internal suspend fun lookupVersionCandidates(
         getUsedPluginsDependencyVersionFetchers(httpClient = httpClient)
     ).toSet()
 
-    val dependenciesWithVersionCandidates = coroutineScope {
+    return coroutineScope {
+
         val resultMode = RefreshVersionsConfigHolder.resultMode
-        dependencyVersionsFetchers.groupBy {
+        val dependenciesWithVersionCandidatesAsync = dependencyVersionsFetchers.groupBy {
             it.moduleId
         }.map { (moduleId: ModuleId, versionFetchers: List<DependencyVersionsFetcher>) ->
             val resolvedVersion = resolveVersion(
@@ -66,16 +68,52 @@ internal suspend fun lookupVersionCandidates(
                     )
                 )
             }
+        }
 
-        }.awaitAll()
+        val selfUpdateAsync = async {
+
+            val moduleId = ModuleId(group = "de.fayard.refreshVersions", name = "refreshVersions")
+
+            val versionsFetchers = RefreshVersionsConfigHolder.settings.getDependencyVersionFetchers(
+                httpClient = httpClient,
+                dependencyFilter = { dependency ->
+                    dependency.group == moduleId.group && dependency.name == moduleId.name
+                }
+            ).toList()
+
+            val currentVersion = RefreshVersionsConfigHolder.currentVersion
+
+            DependencyWithVersionCandidates(
+                moduleId = moduleId,
+                currentVersion = currentVersion,
+                versionsCandidates = versionsFetchers.getVersionCandidates(
+                    currentVersion = Version(currentVersion),
+                    resultMode = resultMode
+                )
+            )
+        }
+
+        val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
+
+        return@coroutineScope VersionCandidatesLookupResult(
+            dependenciesWithVersionsCandidates = dependenciesWithVersionCandidates,
+            dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
+            dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
+            selfUpdates = selfUpdateAsync.await()
+        )
+        TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
     }
-    return VersionCandidatesLookupResult(
-        dependenciesWithVersionsCandidates = dependenciesWithVersionCandidates,
-        dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
-        dependenciesWithDynamicVersions = dependenciesWithDynamicVersions
-    )
-    TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
 }
+
+private fun Settings.getDependencyVersionFetchers(
+    httpClient: OkHttpClient,
+    dependencyFilter: (Dependency) -> Boolean
+): Sequence<DependencyVersionsFetcher> = getDependencyVersionFetchers(
+    httpClient = httpClient,
+    configurations = buildscript.configurations,
+    repositories = buildscript.repositories,
+    dependencyFilter = dependencyFilter
+)
 
 private fun Project.getDependencyVersionFetchers(
     httpClient: OkHttpClient,

@@ -69,16 +69,16 @@ internal fun writeWithAddedVersions(
 
 private fun StringBuilder.appendVersionWithUpdatesIfAvailable(it: VersionWithUpdateIfAvailable) {
     appendln()
-    val paddedKey = it.key.padStart(available.length + 2)
+    val paddedKey = it.key.padStart(availableComment.length + 2)
     val currentVersionLine = "${paddedKey}=${it.currentVersion}"
     appendln(currentVersionLine)
     it.versionsCandidates.forEach { versionCandidate ->
-        append("##"); append(available.padStart(it.key.length - 2))
+        append("##"); append(availableComment.padStart(it.key.length - 2))
         append('='); appendln(versionCandidate.value)
     }
 }
 
-private const val available = "# available"
+internal const val availableComment = "# available"
 private val fileHeader = """
     |## suppress inspection "SpellCheckingInspection" for whole file
     |## suppress inspection "UnusedProperty" for whole file
