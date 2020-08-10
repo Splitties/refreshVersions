@@ -12,3 +12,9 @@ com.google.android.wearable:wearable
 
 com.google.android.gms:play-services-*
     ^^^^^^.^^^^^^^.    ^^^^^^^^^^^^^^^
+
+com.google.dagger:dagger(-*)
+    ^^^^^^.^^^^^^
+
+com.google.dagger:hilt-android(-*)
+    ^^^^^^.^^^^^^.^^^^

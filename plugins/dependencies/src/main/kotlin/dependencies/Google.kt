@@ -11,6 +11,8 @@ object Google {
 
     const val playServicesGradlePlugin = "com.google.gms:google-services:_"
 
+    val dagger = Dagger
+
     object Android {
         private const val artifactBase = "com.google.android"
 
@@ -121,6 +123,59 @@ object Google {
             const val sceneformBase = "$artifactPrefix:sceneform-base:_"
 
             const val ux = "$artifactPrefix.ux:sceneform-ux:_"
+        }
+    }
+
+    object Dagger {
+        private const val group = "com.google.dagger"
+        private const val artifactPrefix = "$group:dagger"
+
+        const val dagger = "$artifactPrefix:_"
+        const val compiler = "$artifactPrefix-compiler:_"
+
+        val hilt = Hilt
+
+        val grpc = Grpc
+
+        const val spi = "$artifactPrefix-spi:_"
+        const val producers = "$artifactPrefix-producers:_"
+        const val gwt = "$artifactPrefix-gwt:_"
+
+        @Deprecated("Consider migrating to Google.dagger.hilt.android")
+        @Suppress("deprecation")
+        val android = Android
+
+        object Hilt {
+            val android = Android
+
+            object Android {
+                private const val artifactPrefix = "$group:hilt-android"
+
+                const val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
+
+                const val core = "$artifactPrefix:_"
+
+                const val compiler = "$artifactPrefix-compiler:_"
+
+                const val testing = "$artifactPrefix-testing:_"
+            }
+        }
+
+        @Deprecated("Consider migrating to Google.dagger.hilt.android")
+        object Android {
+            const val core = "$artifactPrefix-android:_"
+            const val processor = "$artifactPrefix-android-processor:_"
+
+            /**
+             * ⚠️ Requires jetifier to be enabled.
+             */
+            const val support = "$artifactPrefix-android-support:_"
+        }
+
+        object Grpc {
+            const val server = "$artifactPrefix-grpc-server:_"
+            const val serverProcessor = "$artifactPrefix-grpc-server-processor:_"
+            const val serverAnnotations = "$artifactPrefix-grpc-server-annotations:_"
         }
     }
 }

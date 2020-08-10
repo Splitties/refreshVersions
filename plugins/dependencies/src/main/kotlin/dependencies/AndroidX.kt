@@ -92,6 +92,8 @@ object AndroidX {
 
     const val heifWriter = "androidx.heifwriter:heifwriter:_"
 
+    val hilt = Hilt
+
     const val interpolator = "androidx.interpolator:interpolator:_"
 
     const val leanback = "androidx.leanback:leanback:_"
@@ -382,6 +384,14 @@ object AndroidX {
         const val camera2 = "$artifactPrefix-camera2:_"
         const val extensions = "$artifactPrefix-extensions:_"
         const val view = "$artifactPrefix-view:_"
+    }
+
+    object Hilt {
+        private const val artifactPrefix = "androidx.hilt:hilt"
+
+        const val lifecycleViewModel = "$artifactPrefix-lifecycle-viewmodel:_"
+        const val work = "$artifactPrefix-work:_"
+        const val compiler = "$artifactPrefix-compiler:_"
     }
 
     object Enterprise {
