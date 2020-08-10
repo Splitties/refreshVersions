@@ -288,33 +288,74 @@ object AndroidX {
 
     @Incubating
     object Ui {
-        private const val artifactPrefix = "androidx.ui:ui"
-
-        const val androidText = "$artifactPrefix-android-text:_"
-        const val animation = "$artifactPrefix-animation:_"
-        const val animationCore = "$artifactPrefix-animation-core:_"
-        const val core = "$artifactPrefix-core:_"
-        const val foundation = "$artifactPrefix-foundation:_"
-        const val framework = "$artifactPrefix-framework:_"
-        const val geometry = "$artifactPrefix-geometry:_"
-        const val graphics = "$artifactPrefix-graphics:_"
-        const val layout = "$artifactPrefix-layout:_"
-        const val material = "$artifactPrefix-material:_"
-        const val platform = "$artifactPrefix-platform:_"
-        const val test = "$artifactPrefix-test:_"
-        const val text = "$artifactPrefix-text:_"
-        const val tooling = "$artifactPrefix-tooling:_"
-        const val unit = "$artifactPrefix-unit:_"
-        const val util = "$artifactPrefix-util:_"
-        const val vector = "$artifactPrefix-vector:_"
+        const val test = "androidx.ui:ui-test:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
+        const val tooling = "androidx.ui:ui-tooling:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
     }
 
     @Incubating
     object Compose {
-        private const val artifactPrefix = "androidx.compose:compose"
+        private const val groupPrefix = "androidx.compose"
 
-        const val compiler = "$artifactPrefix-compiler:_"
-        const val runtime = "$artifactPrefix-runtime:_"
+        val runtime = Runtime
+        val animation = Animation
+        val ui = Ui
+        val foundation = Foundation
+
+        @Incubating
+        const val compiler = "androidx.compose:compose-compiler:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
+
+        object Runtime {
+            private const val artifactPrefix = "$groupPrefix.runtime:runtime"
+
+            const val dispatch = "$artifactPrefix-dispatch:_"
+            const val runtime = "$artifactPrefix:_"
+            const val savedInstanceState = "$artifactPrefix-saved-instance-state:_"
+
+            const val liveData = "$artifactPrefix-livedata:_"
+            const val rxJava2 = "$artifactPrefix-rxjava2:_"
+        }
+
+        object Animation {
+            private const val artifactPrefix = "$groupPrefix.animation:animation"
+
+            const val animation = "$artifactPrefix:_"
+            const val animationCore = "$artifactPrefix-core:_"
+        }
+
+        object Ui {
+            private const val artifactPrefix = "$groupPrefix.ui:ui"
+
+            const val ui = "$artifactPrefix:_"
+            const val geometry = "$artifactPrefix-geometry:_"
+            const val graphics = "$artifactPrefix-graphics:_"
+
+            const val text = "$artifactPrefix-text:_"
+            const val textAndroid = "$artifactPrefix-text-android:_"
+
+            const val unit = "$artifactPrefix-unit:_"
+            const val util = "$artifactPrefix-util:_"
+        }
+
+        object Foundation {
+            private const val artifactPrefix = "$groupPrefix.foundation:foundation"
+
+            const val foundation = "$artifactPrefix:_"
+            const val layout = "$artifactPrefix-layout:_"
+            const val text = "$artifactPrefix-text:_"
+        }
+
+        object Material {
+            private const val artifactPrefix = "$groupPrefix.material:material"
+
+            const val material = "$artifactPrefix:_"
+
+            val icons = Icons
+
+            object Icons {
+                const val core = "$artifactPrefix-icons-core:_"
+                const val extended = "$artifactPrefix-icons-extended:_"
+            }
+        }
     }
 
     object Media2 {
