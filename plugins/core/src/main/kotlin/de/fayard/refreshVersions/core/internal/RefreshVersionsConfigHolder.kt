@@ -20,6 +20,12 @@ object RefreshVersionsConfigHolder {
 
     val buildSrc: Project? get() = buildSrcGradle?.rootProject
 
+    internal lateinit var currentVersion: String
+        private set
+
+    internal lateinit var settings: Settings
+        private set
+
     fun readVersionProperties(): Map<String, String> {
         @Suppress("unchecked_cast")
         return Properties().apply {
@@ -49,12 +55,19 @@ object RefreshVersionsConfigHolder {
         )
         .build()
 
+    internal fun initializedUsedVersion(settings: Settings) {
+        currentVersion = settings.buildscript.configurations.flatMap { it.dependencies }.single {
+            it.group == "de.fayard.refreshVersions" && it.name == "refreshVersions"
+        }.version!!
+    }
+
     internal fun initialize(
         settings: Settings,
         artifactVersionKeyRules: List<String>,
         versionsPropertiesFile: File
     ) {
         require(settings.isBuildSrc.not())
+        this.settings = settings
 
         _versionsPropertiesFile = versionsPropertiesFile.also {
             it.createNewFile() // Creates the file if it doesn't exist yet

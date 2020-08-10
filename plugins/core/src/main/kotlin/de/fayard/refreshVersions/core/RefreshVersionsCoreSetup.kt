@@ -105,6 +105,8 @@ fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
  */
 private fun setupRefreshVersions(settings: Settings) {
 
+    RefreshVersionsConfigHolder.initializedUsedVersion(settings)
+
     val versionProperties = RefreshVersionsConfigHolder.readVersionProperties()
     @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(

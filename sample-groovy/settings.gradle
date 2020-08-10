@@ -4,6 +4,7 @@ pluginManagement {
     repositories {
         mavenLocal()
         gradlePluginPortal()
+        maven { url = "https://dl.bintray.com/jmfayard/maven" }
     }
 }
 
@@ -12,6 +13,7 @@ buildscript {
         mavenLocal() // Only necessary for testing
         gradlePluginPortal()
         mavenCentral()
+        maven { url = "https://dl.bintray.com/jmfayard/maven" }
     }
     dependencies {
         classpath("de.fayard.refreshVersions:refreshVersions") {
