@@ -162,6 +162,8 @@ object AndroidX {
     const val sqliteFramework = "androidx.sqlite:sqlite-framework:_"
     const val sqlite = "androidx.sqlite:sqlite:_"
 
+    val startup = Startup
+
     const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:_"
 
     val test = Test
@@ -223,6 +225,10 @@ object AndroidX {
 
         @Deprecated("Replaced by more specific artifacts. Last available version is 2.2.0")
         const val extensions = "$artifactPrefix-extensions:_"
+    }
+
+    object Startup {
+        const val runtime = "androidx.startup:startup-runtime:_"
     }
 
     object Security {

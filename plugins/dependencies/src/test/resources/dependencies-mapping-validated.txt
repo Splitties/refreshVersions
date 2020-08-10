@@ -153,6 +153,7 @@ androidx.slidingpanelayout..slidingpanelayout=AndroidX.slidingPaneLayout
 androidx.sqlite..sqlite-framework=AndroidX.sqliteFramework
 androidx.sqlite..sqlite-ktx=AndroidX.sqliteKtx
 androidx.sqlite..sqlite=AndroidX.sqlite
+androidx.startup..startup-runtime=AndroidX.startup.runtime
 androidx.swiperefreshlayout..swiperefreshlayout=AndroidX.swipeRefreshLayout
 androidx.test..core-ktx=AndroidX.test.coreKtx
 androidx.test..core=AndroidX.test.core
