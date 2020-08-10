@@ -166,6 +166,9 @@ object AndroidX {
 
     const val textClassifier = "androidx.textclassifier:textclassifier:_"
 
+    const val tracing = "androidx.tracing:tracing:_"
+    const val tracingKtx = "androidx.tracing:tracing-ktx:_"
+
     const val transition = "androidx.transition:transition:_"
 
     const val tvProvider = "androidx.tvprovider:tvprovider:_"
