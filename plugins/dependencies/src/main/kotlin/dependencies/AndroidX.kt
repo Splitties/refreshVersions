@@ -182,6 +182,7 @@ object AndroidX {
 
     const val vectorDrawable = "androidx.vectordrawable:vectordrawable:_"
     const val vectorDrawableAnimated = "androidx.vectordrawable:vectordrawable-animated:_"
+    const val vectorDrawableSeekable = "androidx.vectordrawable:vectordrawable-seekable:_"
 
     const val versionedParcelable = "androidx.versionedparcelable:versionedparcelable:_"
 

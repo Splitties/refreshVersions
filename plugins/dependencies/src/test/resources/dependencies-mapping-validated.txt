@@ -189,6 +189,7 @@ androidx.tvprovider..tvprovider=AndroidX.tvProvider
 androidx.ui..ui-test=AndroidX.ui.test
 androidx.ui..ui-tooling=AndroidX.ui.tooling
 androidx.vectordrawable..vectordrawable-animated=AndroidX.vectorDrawableAnimated
+androidx.vectordrawable..vectordrawable-seekable=AndroidX.vectorDrawableSeekable
 androidx.vectordrawable..vectordrawable=AndroidX.vectorDrawable
 androidx.versionedparcelable..versionedparcelable=AndroidX.versionedParcelable
 androidx.viewpager..viewpager=AndroidX.viewPager

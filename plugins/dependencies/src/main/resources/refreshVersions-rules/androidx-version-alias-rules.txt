@@ -19,11 +19,11 @@ androidx.core:core-animation(-*)
 androidx.dynamicanimation:dynamicanimation-ktx
 ^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^
 
-androidx.gaming.gaming-frame-pacing(-*)
-^^^^^^^^.^^^^^^       ^^^^^^^^^^^^^
+androidx.gaming:gaming-frame-pacing(-*)
+^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^
 
-androidx.gaming.gaming-performance-tuner(-*)
-^^^^^^^^.^^^^^^       ^^^^^^^^^^^^^^^^^^
+androidx.gaming:gaming-performance-tuner(-*)
+^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^^^^
 
 androidx.media:media-widget(-*)
 ^^^^^^^^.      ^^^^^^^^^^^^
@@ -45,3 +45,12 @@ androidx.test.services(-*) // Same version as the rest of androidx.test.
 
 androidx.test.espresso.idling(-*) // Same version as other androidx.test.espresso artifacts.
 ^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.vectordrawable:vectordrawable
+^^^^^^^^.               ^^^^^^^^^^^^^^
+
+androidx.vectordrawable:vectordrawable-animated
+^^^^^^^^.               ^^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.vectordrawable:vectordrawable-seekable
+^^^^^^^^.               ^^^^^^^^^^^^^^^^^^^^^^^
