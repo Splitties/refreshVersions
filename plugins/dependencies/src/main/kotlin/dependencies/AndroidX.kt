@@ -389,6 +389,7 @@ object AndroidX {
         const val core = "$artifactPrefix-core:_"
         const val camera2 = "$artifactPrefix-camera2:_"
         const val extensions = "$artifactPrefix-extensions:_"
+        const val lifecycle = "$artifactPrefix-lifecycle:_"
         const val view = "$artifactPrefix-view:_"
     }
 

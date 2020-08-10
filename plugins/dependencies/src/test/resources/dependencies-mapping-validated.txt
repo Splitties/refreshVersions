@@ -17,6 +17,7 @@ androidx.browser..browser=AndroidX.browser
 androidx.camera..camera-camera2=AndroidX.camera.camera2
 androidx.camera..camera-core=AndroidX.camera.core
 androidx.camera..camera-extensions=AndroidX.camera.extensions
+androidx.camera..camera-lifecycle=AndroidX.camera.lifecycle
 androidx.camera..camera-view=AndroidX.camera.view
 androidx.car..car-cluster=AndroidX.carCluster
 androidx.car..car=AndroidX.car
