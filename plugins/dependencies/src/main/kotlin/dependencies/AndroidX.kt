@@ -203,7 +203,6 @@ object AndroidX {
         const val service = "$artifactPrefix-service:_"
         const val viewModelSavedState = "$artifactPrefix-viewmodel-savedstate:_"
 
-        const val extensions = "$artifactPrefix-extensions:_"
         const val runtime = "$artifactPrefix-runtime:_"
         const val viewModel = "$artifactPrefix-viewmodel:_"
         const val liveData = "$artifactPrefix-livedata:_"
@@ -216,6 +215,9 @@ object AndroidX {
 
         const val reactiveStreams = "$artifactPrefix-reactivestreams:_"
         const val reactiveStreamsKtx = "$artifactPrefix-reactivestreams-ktx:_"
+
+        @Deprecated("Replaced by more specific artifacts. Last available version is 2.2.0")
+        const val extensions = "$artifactPrefix-extensions:_"
     }
 
     object Security {
