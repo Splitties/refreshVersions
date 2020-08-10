@@ -224,6 +224,7 @@ object AndroidX {
         private const val artifactPrefix = "androidx.security:security"
 
         const val crypto = "$artifactPrefix-crypto:_"
+        const val cryptoKtx = "$artifactPrefix-crypto-ktx:_"
     }
 
     object Room {
