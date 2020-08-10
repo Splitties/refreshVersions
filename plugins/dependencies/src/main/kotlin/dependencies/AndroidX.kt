@@ -88,6 +88,8 @@ object AndroidX {
     const val fragment = "androidx.fragment:fragment:_"
     const val fragmentTesting = "androidx.fragment:fragment-testing:_"
 
+    val gaming = Gaming
+
     const val gridLayout = "androidx.gridlayout:gridlayout:_"
 
     const val heifWriter = "androidx.heifwriter:heifwriter:_"
@@ -406,6 +408,14 @@ object AndroidX {
 
         const val feedback = "$artifactPrefix-feedback:_"
         const val feedbackTesting = "$artifactPrefix-feedback-testing:_"
+    }
+
+    object Gaming {
+        private const val artifactPrefix = "androidx.gaming:gaming"
+
+        const val framePacing = "$artifactPrefix-frame-pacing:_"
+        const val performanceTuner = "$artifactPrefix-performance-tuner:_"
+
     }
 
     object Slice {

@@ -16,6 +16,12 @@ androidx.core:core-role(-*)
 androidx.dynamicanimation:dynamicanimation-ktx
 ^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^
 
+androidx.gaming.gaming-frame-pacing(-*)
+^^^^^^^^.^^^^^^       ^^^^^^^^^^^^^
+
+androidx.gaming.gaming-performance-tuner(-*)
+^^^^^^^^.^^^^^^       ^^^^^^^^^^^^^^^^^^
+
 androidx.media:media-widget(-*)
 ^^^^^^^^.      ^^^^^^^^^^^^
 
