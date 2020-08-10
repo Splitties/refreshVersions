@@ -16,14 +16,12 @@ buildscript {
         maven { url = "https://dl.bintray.com/jmfayard/maven" }
     }
     dependencies {
-        dependencies.classpath "de.fayard.refreshVersions:refreshVersions:0.9.5-SNAPSHOT"
-
-        /*classpath("de.fayard.refreshVersions:refreshVersions") {
+        classpath("de.fayard.refreshVersions:refreshVersions") {
             version {
                 final File versionFile = new File(rootDir.parentFile, "plugins/version.txt")
                 strictly(versionFile.readLines().first())
             }
-        }*/
+        }
     }
 }
 
