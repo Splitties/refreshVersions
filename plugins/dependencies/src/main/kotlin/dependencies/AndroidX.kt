@@ -196,6 +196,8 @@ object AndroidX {
 
     val work = Work
 
+    val window = Window
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Definition of nested objects below.  ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,6 +233,13 @@ object AndroidX {
 
     object Startup {
         const val runtime = "androidx.startup:startup-runtime:_"
+    }
+
+    object Window {
+        private const val artifactPrefix = "androidx.window:window"
+
+        const val core = "$artifactPrefix:_"
+        const val extensions = "$artifactPrefix-extensions:_"
     }
 
     object Security {
