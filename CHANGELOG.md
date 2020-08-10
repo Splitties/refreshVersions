@@ -10,6 +10,7 @@ paving the way for the upcoming 1.0 release.
 
 ### New features
 
+- Self update discovery. **RefreshVersions will check for its own updates**, and add available comments in the `settings.gradle[.kts]` file if needed for easy upgrade. This allows you to get future improvements conveniently.
 - Support for `buildscript` dependencies. It now works just like regular dependencies.
 - First class support for `buildSrc`
 - Support maven repositories with basic authentication (aka. credentials with username and password)
@@ -17,7 +18,15 @@ paving the way for the upcoming 1.0 release.
 ### New dependency constants
 
 - [COIL](https://coil-kt.github.io/coil/), a **Co**routine **I**mage **L**oader for Android.
-
+- Square:
+  - LeakCanary
+  - KotlinPoet
+  - Wire
+  - SqlDelight
+  - Moshi
+  - Picasso
+  - Okio
+- KoTest (in the `Testing` object)
 
 ### Changes
 - Make the `refreshVersions` task cancellable during network requests.
