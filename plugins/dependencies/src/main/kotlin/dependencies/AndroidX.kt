@@ -61,9 +61,7 @@ object AndroidX {
 
     const val coordinatorLayout = "androidx.coordinatorlayout:coordinatorlayout:_"
 
-    const val coreKtx = "androidx.core:core-ktx:_"
-    const val core = "androidx.core:core:_"
-    const val coreRole = "androidx.core:core-role:_"
+    val core = Core
 
     const val cursorAdapter = "androidx.cursoradapter:cursoradapter:_"
 
@@ -201,6 +199,17 @@ object AndroidX {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Definition of nested objects below.  ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    object Core {
+        private const val artifactPrefix = "androidx.core:core"
+
+        const val ktx = "$artifactPrefix-ktx:_"
+        const val core = "$artifactPrefix:_"
+        const val role = "$artifactPrefix-role:_"
+
+        const val animation = "$artifactPrefix-animation:_"
+        const val animationTesting = "$artifactPrefix-animation-testing:_"
+    }
 
     object Lifecycle {
         private const val artifactPrefix = "androidx.lifecycle:lifecycle"

@@ -13,6 +13,9 @@ androidx.car:car-cluster(-*)
 androidx.core:core-role(-*)
 ^^^^^^^^.     ^^^^^^^^^
 
+androidx.core:core-animation(-*)
+^^^^^^^^.     ^^^^^^^^^^^^^^
+
 androidx.dynamicanimation:dynamicanimation-ktx
 ^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^
 
