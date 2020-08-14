@@ -9,6 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.invoke
+import java.net.MalformedURLException
+import java.net.URI
 import java.net.URL
 
 internal class VersionCandidate(val stabilityLevel: StabilityLevel, val version: Version)
@@ -55,9 +57,13 @@ private suspend fun retrieveAllVersions(
 ): List<Version> = Dispatchers.Default {
     val versionsAsync = repositories.map { repo ->
         async(Dispatchers.IO) {
-            val url = URL(repo.metadataUrlForArtifact(group = group, name = name))
+            val uri = URI(repo.metadataUrlForArtifact(group = group, name = name))
             runCatching {
-                url.readText() //TODO: Replace with cancellable network I/O
+                try {
+                    uri.toURL().readText()
+                } catch (e: MalformedURLException) {
+                    null
+                }
             }.getOrNull()?.let { xml ->
                 parseVersionsFromMavenMetaData(xml)
             } ?: emptyList()
