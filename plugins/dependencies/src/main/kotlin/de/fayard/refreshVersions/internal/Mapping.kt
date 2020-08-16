@@ -41,7 +41,7 @@ internal data class DependencyMapping(
 }
 
 internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = false): List<DependencyMapping> {
-    return listOf(
+    return sequenceOf(
         AndroidX,
         Google,
         JakeWharton,
@@ -56,9 +56,10 @@ internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = 
     ).flatMap { objectInstance ->
         getArtifactNameToConstantMappingFromObject(
             objectInstance,
-            excludeBomDependencies = excludeBomDependencies
+            excludeBomDependencies = excludeBomDependencies,
+            isTopLevelObject = true
         )
-    }.sortedBy { it.toString() }
+    }.sortedBy { it.toString() }.toList()
 }
 
 internal fun getArtifactsFromDependenciesObject(objectInstance: Any): List<ModuleIdentifier> {
@@ -70,7 +71,7 @@ internal fun getArtifactsFromDependenciesObject(objectInstance: Any): List<Modul
             override fun getGroup(): String = it.group
             override fun getName(): String = it.artifact
         }
-    }
+    }.toList()
 }
 
 private fun getArtifactNameToConstantMappingFromObject(
@@ -78,10 +79,12 @@ private fun getArtifactNameToConstantMappingFromObject(
     prefix: String = with(objectInstance::class) {
         if (isCompanion) qualifiedName!!.removeSuffix(".Companion") else qualifiedName!!
     },
-    excludeBomDependencies: Boolean = false
-): List<DependencyMapping> {
+    excludeBomDependencies: Boolean = false,
+    isTopLevelObject: Boolean = false
+): Sequence<DependencyMapping> {
     val objectClass = objectInstance::class
-    return objectClass.memberProperties.filter { kProperty ->
+
+    val mappingOfNestedObjects = objectClass.memberProperties.asSequence().filter { kProperty ->
         @OptIn(ExperimentalStdlibApi::class)
         kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType != typeOf<String>()
     }.flatMap { kProperty ->
@@ -92,9 +95,11 @@ private fun getArtifactNameToConstantMappingFromObject(
             prefix = "$prefix.${kProperty.name}",
             excludeBomDependencies = excludeBomDependencies
         )
-    } + objectClass.memberProperties.asSequence().filter { kProperty ->
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    val currentObjectDependencyNotations: Sequence<Pair<String, String>> = objectClass.memberProperties.asSequence().filter { kProperty ->
         val returnType = kProperty.returnType
-        @OptIn(ExperimentalStdlibApi::class)
         kProperty.visibility == KVisibility.PUBLIC &&
                 (returnType == typeOf<String>() || returnType.isSubtypeOf(typeOf<DependencyNotationAndGroup>()))
     }.mapNotNull { kProperty ->
@@ -113,6 +118,14 @@ private fun getArtifactNameToConstantMappingFromObject(
                 javaField!!.get(objectInstance).toString()
             }
         }
+        kProperty.name to dependencyNotation
+    }
+
+    val dependencyNotations = if (isTopLevelObject && objectInstance is DependencyNotationAndGroup) {
+        currentObjectDependencyNotations + (objectClass.simpleName to objectInstance.backingString)
+    } else currentObjectDependencyNotations
+
+    val currentObjectDependencyMapping = dependencyNotations.mapNotNull { (propertyName, dependencyNotation) ->
         val artifactName = dependencyNotation.let { value ->
             val columnCount = value.count { it == ':' }
             if (columnCount < if (excludeBomDependencies) 2 else 1) return@mapNotNull null
@@ -121,7 +134,7 @@ private fun getArtifactNameToConstantMappingFromObject(
                 value.substringBeforeLast(':') // Before version delimiter.
             } else value
         }
-        val constantName = "$prefix.${kProperty.name}"
+        val constantName = "$prefix.$propertyName"
         val group = artifactName.substringBefore(':')
         val name = artifactName.substringAfter(':')
         DependencyMapping(
@@ -130,4 +143,6 @@ private fun getArtifactNameToConstantMappingFromObject(
             constantName = constantName
         )
     }
+
+    return mappingOfNestedObjects + currentObjectDependencyMapping
 }
