@@ -4,6 +4,7 @@ import Ktor
 import Splitties
 import de.fayard.refreshVersions.internal.getArtifactsFromDependenciesObject
 import dependencies.COIL
+import dependencies.DependencyNotationAndGroup
 import org.gradle.api.artifacts.ModuleIdentifier
 
 data class VersionKeyWithModules(
@@ -55,7 +56,7 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.constraintlayout", dependency = AndroidX.constraintLayoutSolver),
     versionKeyWithModules(expected = "androidx.contentpager", dependency = AndroidX.contentPager),
     versionKeyWithModules(expected = "androidx.coordinatorlayout", dependency = AndroidX.coordinatorLayout),
-    versionKeyWithModules(expected = "androidx.core", dependency = AndroidX.core.core),
+    versionKeyWithModules(expected = "androidx.core", dependency = AndroidX.core),
     versionKeyWithModules(expected = "androidx.core", dependency = AndroidX.core.ktx),
     versionKeyWithModules(expected = "androidx.core-role", dependency = AndroidX.core.role),
     versionKeyWithModules(expected = "androidx.core-animation", dependency = AndroidX.core.animation),
@@ -167,6 +168,13 @@ private fun versionKeyWithModules(expected: String, dependency: String): Version
     return VersionKeyWithModules(
         expectedVersionKey = expected,
         moduleIdentifiers = listOf(moduleIdentifier(dependency))
+    )
+}
+
+private fun versionKeyWithModules(expected: String, dependency: DependencyNotationAndGroup): VersionKeyWithModules {
+    return VersionKeyWithModules(
+        expectedVersionKey = expected,
+        moduleIdentifiers = listOf(moduleIdentifier(dependency.backingString))
     )
 }
 

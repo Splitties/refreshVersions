@@ -11,9 +11,12 @@ import Splitties
 import Square
 import Testing
 import dependencies.COIL
+import dependencies.DependencyNotationAndGroup
 import org.gradle.api.artifacts.ModuleIdentifier
+import java.lang.reflect.Field
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KVisibility
+import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 import kotlin.reflect.typeOf
@@ -90,15 +93,27 @@ private fun getArtifactNameToConstantMappingFromObject(
             excludeBomDependencies = excludeBomDependencies
         )
     } + objectClass.memberProperties.asSequence().filter { kProperty ->
+        val returnType = kProperty.returnType
         @OptIn(ExperimentalStdlibApi::class)
-        kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType == typeOf<String>()
+        kProperty.visibility == KVisibility.PUBLIC &&
+                (returnType == typeOf<String>() || returnType.isSubtypeOf(typeOf<DependencyNotationAndGroup>()))
     }.mapNotNull { kProperty ->
-        val artifactName = if (kProperty.isConst) {
-            kProperty.javaField!!.get(null).toString()
-        } else {
-            @Suppress("unchecked_cast")
-            (kProperty as KProperty1<Any?, String>).get(objectInstance)
-        }.let { value ->
+        val javaField: Field? = kProperty.javaField
+
+        @OptIn(ExperimentalStdlibApi::class)
+        @Suppress("unchecked_cast")
+        val dependencyNotation = when {
+            kProperty.returnType.isSubtypeOf(typeOf<DependencyNotationAndGroup>()) -> {
+                (kProperty as KProperty1<Any?, DependencyNotationAndGroup>).get(objectInstance).backingString
+            }
+            kProperty.isConst -> javaField!!.get(null).toString()
+            else -> try {
+                (kProperty as KProperty1<Any?, String>).get(objectInstance)
+            } catch (e: IllegalArgumentException) {
+                javaField!!.get(objectInstance).toString()
+            }
+        }
+        val artifactName = dependencyNotation.let { value ->
             val columnCount = value.count { it == ':' }
             if (columnCount < if (excludeBomDependencies) 2 else 1) return@mapNotNull null
             val hasVersion = columnCount == 2

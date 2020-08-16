@@ -1,5 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import dependencies.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 
 /**
@@ -201,15 +202,13 @@ object AndroidX {
     // Definition of nested objects below.  ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    object Core {
-        private const val artifactPrefix = "androidx.core:core"
+    object Core : DependencyNotationAndGroup(group = "androidx.core", name = "core") {
 
-        const val ktx = "$artifactPrefix-ktx:_"
-        const val core = "$artifactPrefix:_"
-        const val role = "$artifactPrefix-role:_"
+        @JvmField val ktx = "$artifactPrefix-ktx:_"
+        @JvmField val role = "$artifactPrefix-role:_"
 
-        const val animation = "$artifactPrefix-animation:_"
-        const val animationTesting = "$artifactPrefix-animation-testing:_"
+        @JvmField val animation = "$artifactPrefix-animation:_"
+        @JvmField val animationTesting = "$artifactPrefix-animation-testing:_"
     }
 
     object Lifecycle {
