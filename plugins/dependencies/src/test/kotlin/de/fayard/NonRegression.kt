@@ -2,6 +2,8 @@ package de.fayard
 
 import de.fayard.refreshVersions.internal.DependencyMapping
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
+import io.kotlintest.fail
+import io.kotlintest.matchers.boolean.shouldBeFalse
 import io.kotlintest.matchers.haveSize
 import io.kotlintest.matchers.withClue
 import io.kotlintest.should
@@ -28,6 +30,14 @@ class NonRegression: FreeSpec({
         receivedProperties.deleteOnExit()
     }
 
+    "Dependencies should not be in the `dependencies` package" {
+        getArtifactNameToConstantMapping().forEach {
+            if (it.constantName.startsWith("dependencies.")) {
+                fail("This dependency should not be in the dependencies package: ${it.constantName}")
+            }
+            it.constantName.startsWith("dependencies.").shouldBeFalse()
+        }
+    }
 
 })
 

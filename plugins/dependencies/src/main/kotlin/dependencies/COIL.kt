@@ -1,5 +1,3 @@
-package dependencies
-
 /**
  * COIL stands for **Co**routine **I**mage **L**oader.
  *

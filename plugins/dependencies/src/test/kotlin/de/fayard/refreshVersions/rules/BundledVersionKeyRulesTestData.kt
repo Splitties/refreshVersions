@@ -1,9 +1,12 @@
 package de.fayard.refreshVersions.rules
 
+import AndroidX
+import COIL
+import KotlinX
 import Ktor
 import Splitties
+import Testing
 import de.fayard.refreshVersions.internal.getArtifactsFromDependenciesObject
-import dependencies.COIL
 import dependencies.DependencyNotationAndGroup
 import org.gradle.api.artifacts.ModuleIdentifier
 

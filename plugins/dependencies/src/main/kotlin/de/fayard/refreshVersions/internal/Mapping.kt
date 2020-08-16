@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.internal
 
 import AndroidX
+import COIL
 import Firebase
 import Google
 import JakeWharton
@@ -10,7 +11,6 @@ import Ktor
 import Splitties
 import Square
 import Testing
-import dependencies.COIL
 import dependencies.DependencyNotationAndGroup
 import org.gradle.api.artifacts.ModuleIdentifier
 import java.lang.reflect.Field
