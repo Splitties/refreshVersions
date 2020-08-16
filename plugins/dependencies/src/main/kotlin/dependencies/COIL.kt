@@ -11,6 +11,7 @@ import org.gradle.api.Incubating
  *
  * GitHub Page: [coil-kt/coil](https://github.com/coil-kt/coil/)
  */
+@Incubating
 object COIL {
     private const val artifactPrefix = "io.coil-kt:coil"
 
