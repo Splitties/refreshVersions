@@ -14,6 +14,7 @@ import Testing
 import dependencies.DependencyNotationAndGroup
 import org.gradle.api.artifacts.ModuleIdentifier
 import java.lang.reflect.Field
+import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.isSubtypeOf
@@ -98,34 +99,35 @@ private fun getArtifactNameToConstantMappingFromObject(
     }
 
     @OptIn(ExperimentalStdlibApi::class)
-    val currentObjectDependencyNotations: Sequence<Pair<String, String>> = objectClass.memberProperties.asSequence().filter { kProperty ->
-        val returnType = kProperty.returnType
-        kProperty.visibility == KVisibility.PUBLIC &&
-                (returnType == typeOf<String>() || returnType.isSubtypeOf(typeOf<DependencyNotationAndGroup>()))
-    }.mapNotNull { kProperty ->
-        val javaField: Field? = kProperty.javaField
+    val currentObjectDependencyNotations: Sequence<Pair<KProperty<*>?, String>> =
+        objectClass.memberProperties.asSequence().filter { kProperty ->
+            val returnType = kProperty.returnType
+            kProperty.visibility == KVisibility.PUBLIC &&
+                    (returnType == typeOf<String>() || returnType.isSubtypeOf(typeOf<DependencyNotationAndGroup>()))
+        }.mapNotNull { kProperty ->
+            val javaField: Field? = kProperty.javaField
 
-        @OptIn(ExperimentalStdlibApi::class)
-        @Suppress("unchecked_cast")
-        val dependencyNotation = when {
-            kProperty.returnType.isSubtypeOf(typeOf<DependencyNotationAndGroup>()) -> {
-                (kProperty as KProperty1<Any?, DependencyNotationAndGroup>).get(objectInstance).backingString
+            @OptIn(ExperimentalStdlibApi::class)
+            @Suppress("unchecked_cast")
+            val dependencyNotation = when {
+                kProperty.returnType.isSubtypeOf(typeOf<DependencyNotationAndGroup>()) -> {
+                    (kProperty as KProperty1<Any?, DependencyNotationAndGroup>).get(objectInstance).backingString
+                }
+                kProperty.isConst -> javaField!!.get(null).toString()
+                else -> try {
+                    (kProperty as KProperty1<Any?, String>).get(objectInstance)
+                } catch (e: IllegalArgumentException) {
+                    javaField!!.get(objectInstance).toString()
+                }
             }
-            kProperty.isConst -> javaField!!.get(null).toString()
-            else -> try {
-                (kProperty as KProperty1<Any?, String>).get(objectInstance)
-            } catch (e: IllegalArgumentException) {
-                javaField!!.get(objectInstance).toString()
-            }
+            kProperty to dependencyNotation
         }
-        kProperty.name to dependencyNotation
-    }
 
     val dependencyNotations = if (isTopLevelObject && objectInstance is DependencyNotationAndGroup) {
-        currentObjectDependencyNotations + (objectClass.simpleName to objectInstance.backingString)
+        currentObjectDependencyNotations + (null to objectInstance.backingString)
     } else currentObjectDependencyNotations
 
-    val currentObjectDependencyMapping = dependencyNotations.mapNotNull { (propertyName, dependencyNotation) ->
+    val currentObjectDependencyMapping = dependencyNotations.mapNotNull { (kProperty, dependencyNotation) ->
         val artifactName = dependencyNotation.let { value ->
             val columnCount = value.count { it == ':' }
             if (columnCount < if (excludeBomDependencies) 2 else 1) return@mapNotNull null
@@ -134,7 +136,11 @@ private fun getArtifactNameToConstantMappingFromObject(
                 value.substringBeforeLast(':') // Before version delimiter.
             } else value
         }
-        val constantName = "$prefix.$propertyName"
+        val constantName = if (kProperty == null) {
+            objectClass.simpleName!!
+        } else {
+            "$prefix.${kProperty.name}"
+        }
         val group = artifactName.substringBefore(':')
         val name = artifactName.substringAfter(':')
         DependencyMapping(
