@@ -1,3 +1,7 @@
+@file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
+
+import org.gradle.api.Incubating
+
 /**
  * COIL stands for **Co**routine **I**mage **L**oader.
  *
