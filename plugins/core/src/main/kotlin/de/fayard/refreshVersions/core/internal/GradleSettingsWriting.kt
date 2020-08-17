@@ -47,12 +47,20 @@ private fun getSettingsWithSelfUpdates(
 
     val currentVersion = selfUpdates.currentVersion
 
-    val expectedDependencyNotation = "de.fayard.refreshVersions:refreshVersions:$currentVersion"
-
-    val dependencyNotationIndex = initialContent.indexOf(expectedDependencyNotation).also {
-        if (it == -1) {
-            logError("Didn't find expected refreshVersions dependency declaration in $settingsFilename. Skipping.")
-            return initialContent
+    val dependencyNotationIndex: Int = run {
+        val expectedDependencyNotation = "de.fayard.refreshVersions:refreshVersions:$currentVersion"
+        initialContent.indexOf(expectedDependencyNotation).let {
+            if (it != -1) it else {
+                @Suppress("name_shadowing")
+                val expectedDependencyNotation = "de.fayard.refreshVersions:refreshVersions-core:$currentVersion"
+                initialContent.indexOf(expectedDependencyNotation).also {
+                    if (it == -1) {
+                        logError("Didn't find expected refreshVersions dependency declaration in " +
+                                "$settingsFilename. Skipping.")
+                        return initialContent
+                    }
+                }
+            }
         }
     }
 
