@@ -82,7 +82,7 @@ open class RefreshVersionsPropertiesTask : DefaultTask() {
                         currentVersion = resolvedVersion ?: versionCandidates.let {
                             if (it.isEmpty()) throw IllegalStateException(
                                 "Unable to find a version candidate for the following artifact:\n" +
-                                    "$group:$name\n" +
+                                    "$group:${dependency.name}\n" +
                                     "Please, check this artifact exists in the configured repositories."
                             )
                             it.first().version.value
