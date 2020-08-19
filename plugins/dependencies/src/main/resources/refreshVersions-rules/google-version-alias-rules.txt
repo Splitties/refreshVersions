@@ -10,6 +10,9 @@ com.google.android.material:material
 com.google.android.wearable:wearable
     ^^^^^^^^^^^^^^^^^^^^^^^
 
+com.google.android.support:wearable
+    ^^^^^^^^^^^^^^.        ^^^^^^^^
+
 com.google.android.gms:play-services-*
     ^^^^^^.^^^^^^^.    ^^^^^^^^^^^^^^^
 
