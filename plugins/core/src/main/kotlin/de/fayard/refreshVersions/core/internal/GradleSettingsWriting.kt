@@ -3,31 +3,42 @@ package de.fayard.refreshVersions.core.internal
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import org.gradle.api.Project
 import org.gradle.api.logging.Logger
+import java.io.File
 
 internal fun Project.updateGradleSettings(
     selfUpdates: DependencyWithVersionCandidates
 ) {
+    val isKotlinDsl: Boolean
     val settingsFile = file("settings.gradle.kts").let { kotlinDslSettings ->
-        if (kotlinDslSettings.exists()) kotlinDslSettings else {
-            file("settings.gradle").also { check(it.exists()) }
+        if (kotlinDslSettings.exists()) kotlinDslSettings.also { isKotlinDsl = true } else {
+            file("settings.gradle").also {
+                check(it.exists())
+                isKotlinDsl = false
+            }
         }
     }
 
-    val initialContent = settingsFile.readText()
-
     val newContent = getSettingsWithSelfUpdates(
         logger = logger,
-        settingsFilename = settingsFile.name,
-        initialContent = initialContent,
+        settingsFile = settingsFile,
+        initialContent = settingsFile.readText(),
         selfUpdates = selfUpdates
-    )
+    ).let { text ->
+        getSettingsWithMigrationCall(
+            logger = logger,
+            settingsFile = settingsFile,
+            initialContent = text,
+            isKotlinDsl = isKotlinDsl,
+            selfUpdates = selfUpdates
+        )
+    }
 
     settingsFile.writeText(newContent)
 }
 
 private fun getSettingsWithSelfUpdates(
     logger: Logger,
-    settingsFilename: String,
+    settingsFile: File,
     initialContent: String,
     selfUpdates: DependencyWithVersionCandidates
 ): String {
@@ -36,6 +47,8 @@ private fun getSettingsWithSelfUpdates(
         return initialContent
     }
 
+    val settingsFilename = settingsFile.name
+
     val logMarker = RefreshVersionsCorePlugin.LogMarkers.default
 
     logger.warn(
@@ -43,7 +56,7 @@ private fun getSettingsWithSelfUpdates(
         "A new version of refreshVersions is available. Open the $settingsFilename file to apply it."
     )
 
-    fun logError(message: String) = logger.error(logMarker, message)
+    fun logError(message: String) = logger.error(logMarker, "e: ${settingsFile.path}: $message")
 
     val currentVersion = selfUpdates.currentVersion
 
@@ -53,10 +66,9 @@ private fun getSettingsWithSelfUpdates(
             if (it != -1) it else {
                 @Suppress("name_shadowing")
                 val expectedDependencyNotation = "de.fayard.refreshVersions:refreshVersions-core:$currentVersion"
-                initialContent.indexOf(expectedDependencyNotation).also {
-                    if (it == -1) {
-                        logError("Didn't find expected refreshVersions dependency declaration in " +
-                                "$settingsFilename. Skipping.")
+                initialContent.indexOf(expectedDependencyNotation).also { i ->
+                    if (i == -1) {
+                        logError("Didn't find expected refreshVersions dependency declaration. Skipping.")
                         return initialContent
                     }
                 }
@@ -122,5 +134,112 @@ private fun getSettingsWithSelfUpdates(
             appendln(declarationLine.substringAfter(currentVersion))
         }
         append(initialContent.substring(startIndex = indexAfterPreviousAvailableComments))
+    }
+}
+
+private fun getSettingsWithMigrationCall(
+    logger: Logger,
+    settingsFile: File,
+    isKotlinDsl: Boolean,
+    initialContent: String,
+    selfUpdates: DependencyWithVersionCandidates
+): String {
+
+    if (selfUpdates.versionsCandidates.isEmpty()) {
+        return initialContent
+    }
+
+    val logMarker = RefreshVersionsCorePlugin.LogMarkers.default
+
+    val currentVersion = selfUpdates.currentVersion
+
+    class ExpectedValues(
+        bootstrapPackageName: String = "de.fayard.refreshVersions",
+        migrationPackageName: String = bootstrapPackageName,
+        bootstrapSymbol: String,
+        migrationCallSymbol: String
+    ) {
+        val bootstrapImport = "import $bootstrapPackageName.${bootstrapSymbol.substringBefore('.')}"
+        val bootstrapText = "\n$bootstrapSymbol("
+
+        val migrationCallImport = "import $migrationPackageName.${migrationCallSymbol.substringBefore('.')}"
+        val migrationCallText = "\n$migrationCallSymbol("
+    }
+
+    val expectedValues = ExpectedValues(
+        bootstrapSymbol = when {
+            isKotlinDsl -> "bootstrapRefreshVersions"
+            else -> "RefreshVersionsSetup.bootstrap"
+        },
+        migrationCallSymbol = when {
+            isKotlinDsl -> "migrateRefreshVersionsIfNeeded"
+            else -> "RefreshVersionsMigration.migrateIfNeeded"
+        }
+    )
+
+    fun logError(message: String) = logger.error(logMarker, "e: ${settingsFile.path}: $message")
+
+    val bootstrapImportIndex = initialContent.indexOf(expectedValues.bootstrapImport).also { i ->
+        if (i == -1) {
+            logError("Didn't find expected import for refreshVersions bootstrap.")
+            return initialContent
+        }
+    }
+
+    val hasMigrationImport = initialContent.indexOf(expectedValues.migrationCallImport) != -1
+
+    val bootstrapIndex = initialContent.indexOf(expectedValues.bootstrapText).also { i ->
+        if (i == -1) {
+            logError("Didn't find expected refreshVersions bootstrap.")
+            return initialContent
+        }
+    }
+    val migrationCallIndex = initialContent.indexOf(expectedValues.migrationCallText)
+
+    val hasMigrationCall = migrationCallIndex != -1
+
+    val startIndexForMigrationCall: Int = when {
+        hasMigrationCall -> migrationCallIndex.also { i ->
+            check(i < bootstrapIndex) { "refreshVersions' migration call must be before bootstrap" }
+        }
+        else -> bootstrapIndex
+    }
+
+    return buildString {
+        if (hasMigrationImport) {
+            append(initialContent.substring(startIndex = 0, endIndex = startIndexForMigrationCall))
+        } else {
+            val bootstrapEndOfLineIndex = initialContent.indexOf(
+                char = '\n',
+                startIndex = bootstrapImportIndex
+            ).also { i -> check(i != -1) { "Didn't find expected end of line after import." } }
+
+            appendln(initialContent.substring(startIndex = 0, endIndex = bootstrapEndOfLineIndex))
+            append(expectedValues.migrationCallImport)
+            append(
+                initialContent.substring(
+                    startIndex = bootstrapEndOfLineIndex,
+                    endIndex = startIndexForMigrationCall
+                )
+            )
+        }
+
+        val migrationCallComment =
+            "Will be automatically removed by refreshVersions when upgraded to the latest version."
+
+        append("""${expectedValues.migrationCallText}"$currentVersion") // $migrationCallComment""")
+
+        if (hasMigrationCall) {
+            val previousMigrationCallEndOfLineIndex = initialContent.indexOf(
+                char = '\n',
+                startIndex = migrationCallIndex + 1
+            ).also { i ->
+                check(i != -1) { "Didn't find expected end of line after previous migration call." }
+            }
+            append(initialContent.substring(startIndex = previousMigrationCallEndOfLineIndex))
+        } else {
+            appendln()
+            append(initialContent.substring(startIndex = bootstrapIndex))
+        }
     }
 }

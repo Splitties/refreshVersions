@@ -56,9 +56,7 @@ object RefreshVersionsConfigHolder {
         .build()
 
     internal fun initializedUsedVersion(settings: Settings) {
-        currentVersion = settings.buildscript.configurations.flatMap { it.dependencies }.single {
-            it.group == "de.fayard.refreshVersions" && it.name == "refreshVersions"
-        }.version!!
+        currentVersion = settings.currentVersionOfRefreshVersions()
     }
 
     internal fun initialize(
