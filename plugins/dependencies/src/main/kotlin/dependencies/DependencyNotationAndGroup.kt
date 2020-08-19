@@ -9,7 +9,7 @@ abstract class DependencyNotationAndGroup(
 
     internal val backingString = "$artifactPrefix:_"
     override val length get() = backingString.length
-    override fun get(index: Int) = backingString.get(index)
+    override fun get(index: Int) = backingString[index]
 
     override fun subSequence(
         startIndex: Int,
