@@ -1,5 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import dependencies.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 
 @Incubating
@@ -126,20 +127,18 @@ object Google {
         }
     }
 
-    object Dagger {
+    object Dagger : DependencyNotationAndGroup(group = "com.google.dagger", name = "dagger") {
         private const val group = "com.google.dagger"
-        private const val artifactPrefix = "$group:dagger"
 
-        const val dagger = "$artifactPrefix:_"
-        const val compiler = "$artifactPrefix-compiler:_"
+        @JvmField val compiler = "$artifactPrefix-compiler:_"
 
         val hilt = Hilt
 
         val grpc = Grpc
 
-        const val spi = "$artifactPrefix-spi:_"
-        const val producers = "$artifactPrefix-producers:_"
-        const val gwt = "$artifactPrefix-gwt:_"
+        @JvmField val spi = "$artifactPrefix-spi:_"
+        @JvmField val producers = "$artifactPrefix-producers:_"
+        @JvmField val gwt = "$artifactPrefix-gwt:_"
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")
         @Suppress("deprecation")
@@ -148,34 +147,33 @@ object Google {
         object Hilt {
             val android = Android
 
-            object Android {
-                private const val artifactPrefix = "$group:hilt-android"
+            object Android : DependencyNotationAndGroup(group = group, name = "hilt-android") {
 
-                const val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
+                @JvmField val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
 
-                const val core = "$artifactPrefix:_"
+                @JvmField val compiler = "$artifactPrefix-compiler:_"
 
-                const val compiler = "$artifactPrefix-compiler:_"
-
-                const val testing = "$artifactPrefix-testing:_"
+                @JvmField val testing = "$artifactPrefix-testing:_"
             }
         }
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")
-        object Android {
-            const val core = "$artifactPrefix-android:_"
-            const val processor = "$artifactPrefix-android-processor:_"
+        object Android : DependencyNotationAndGroup(group = group, name = "dagger-android") {
+            @JvmField val processor = "$artifactPrefix-processor:_"
 
             /**
              * ⚠️ Requires jetifier to be enabled.
              */
-            const val support = "$artifactPrefix-android-support:_"
+            @JvmField val support = "$artifactPrefix-support:_"
         }
 
         object Grpc {
-            const val server = "$artifactPrefix-grpc-server:_"
-            const val serverProcessor = "$artifactPrefix-grpc-server-processor:_"
-            const val serverAnnotations = "$artifactPrefix-grpc-server-annotations:_"
+            val server = Server
+
+            object Server : DependencyNotationAndGroup(group = group, name = "dagger-grpc-server") {
+                @JvmField val processor = "$artifactPrefix-processor:_"
+                @JvmField val annotations = "$artifactPrefix-annotations:_"
+            }
         }
     }
 }
