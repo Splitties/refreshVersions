@@ -1,5 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import dependencies.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 
 @Incubating
@@ -102,12 +103,10 @@ object Square {
         }
     }
 
-    object Moshi {
-        private const val group = "com.squareup.moshi"
-
-        const val javaReflect = "$group:moshi:_"
-        const val kotlinReflect = "$group:moshi-kotlin:_"
-        const val kotlinCodegen = "$group:moshi-kotlin-codegen:_"
+    object Moshi : DependencyNotationAndGroup(group = "com.squareup.moshi", name = "moshi") {
+        @JvmField val kotlinReflect = "$artifactPrefix-kotlin:_"
+        @JvmField val kotlinCodegen = "$artifactPrefix-kotlin-codegen:_"
+        @JvmField val javaReflect = backingString
     }
 
     object Wire {

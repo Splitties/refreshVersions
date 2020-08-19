@@ -467,6 +467,7 @@ com.squareup.leakcanary..shark-hprof=Square.leakCanary.shark.hprof
 com.squareup.leakcanary..shark=Square.leakCanary.shark.shark
 com.squareup.moshi..moshi-kotlin-codegen=Square.moshi.kotlinCodegen
 com.squareup.moshi..moshi-kotlin=Square.moshi.kotlinReflect
+com.squareup.moshi..moshi=Square.moshi
 com.squareup.moshi..moshi=Square.moshi.javaReflect
 com.squareup.okhttp3..logging-interceptor=Square.okHttp3.loggingInterceptor
 com.squareup.okhttp3..mockwebserver=Square.okHttp3.mockWebServer
