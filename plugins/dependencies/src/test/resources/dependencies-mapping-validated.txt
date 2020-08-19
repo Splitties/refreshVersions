@@ -476,6 +476,7 @@ com.squareup.picasso..picasso-pollexor=Square.picasso.pollexor
 com.squareup.picasso..picasso=Square.picasso.picasso
 com.squareup.retrofit2..adapter-java8=Square.retrofit2.adapter.java8
 com.squareup.retrofit2..adapter-rxjava2=Square.retrofit2.adapter.rxJava2
+com.squareup.retrofit2..adapter-rxjava3=Square.retrofit2.adapter.rxJava3
 com.squareup.retrofit2..adapter-rxjava=Square.retrofit2.adapter.rxJava1
 com.squareup.retrofit2..converter-gson=Square.retrofit2.converter.gson
 com.squareup.retrofit2..converter-jackson=Square.retrofit2.converter.jackson

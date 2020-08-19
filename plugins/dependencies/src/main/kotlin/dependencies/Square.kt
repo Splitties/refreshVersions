@@ -79,6 +79,7 @@ object Square {
             const val java8 = "$group:adapter-java8:_"
             const val rxJava1 = "$group:adapter-rxjava:_"
             const val rxJava2 = "$group:adapter-rxjava2:_"
+            const val rxJava3 = "$group:adapter-rxjava3:_"
         }
     }
 
