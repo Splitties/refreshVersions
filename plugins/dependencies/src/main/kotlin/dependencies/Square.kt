@@ -76,9 +76,9 @@ object Square {
         }
 
         object Adapter {
-            const val retrofitJava8 = "$group:adapter-java8:_"
-            const val retrofitRxJava1 = "$group:adapter-rxjava:_"
-            const val retrofitRxJava2 = "$group:adapter-rxjava2:_"
+            const val java8 = "$group:adapter-java8:_"
+            const val rxJava1 = "$group:adapter-rxjava:_"
+            const val rxJava2 = "$group:adapter-rxjava2:_"
         }
     }
 
