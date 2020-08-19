@@ -31,22 +31,21 @@ object Ktor {
 
     private const val group = "io.ktor"
     private const val artifactBase = "$group:ktor"
-    private const val native = "native"
 
-    const val http = "$artifactBase-http-$native:_"
+    const val http = "$artifactBase-http:_"
 
-    const val httpCio = "$artifactBase-http-cio-$native:_"
+    const val httpCio = "$artifactBase-http-cio:_"
 
-    const val io = "$artifactBase-io-$native:_"
+    const val io = "$artifactBase-io:_"
 
-    const val testDispatcher = "$artifactBase-test-dispatcher-$native:_"
+    const val testDispatcher = "$artifactBase-test-dispatcher:_"
 
-    const val utils = "$artifactBase-utils-$native:_"
+    const val utils = "$artifactBase-utils:_"
 
     object Client {
         private const val artifactPrefix = "$artifactBase-client"
 
-        const val core = "$artifactPrefix-core-$native:_"
+        const val core = "$artifactPrefix-core:_"
 
         /**
          * As of ktor 1.3.0, this is experimental and supports JVM only.
@@ -73,27 +72,27 @@ object Ktor {
         /** Supports JVM only because Apache dependency is JVM only. */
         const val apache = "$artifactPrefix-apache:_"
 
-        const val auth = "$artifactPrefix-auth-$native:_"
+        const val auth = "$artifactPrefix-auth:_"
 
-        const val authBasic = "$artifactPrefix-auth-basic-$native:_"
+        const val authBasic = "$artifactPrefix-auth-basic:_"
 
-        const val json = "$artifactPrefix-json-$native:_"
+        const val json = "$artifactPrefix-json:_"
 
 
         /** Supports JVM only. */
         const val jsonTests = "$artifactPrefix-json-tests:_"
 
-        const val encoding = "$artifactPrefix-encoding-$native:_"
+        const val encoding = "$artifactPrefix-encoding:_"
 
-        const val logging = "$artifactPrefix-logging-$native:_"
+        const val logging = "$artifactPrefix-logging:_"
 
-        const val mock = "$artifactPrefix-mock-$native:_"
+        const val mock = "$artifactPrefix-mock:_"
 
-        const val serialization = "$artifactPrefix-serialization-$native:_"
+        const val serialization = "$artifactPrefix-serialization:_"
 
-        const val tests = "$artifactPrefix-tests-$native:_"
+        const val tests = "$artifactPrefix-tests:_"
 
-        const val websockets = "$artifactPrefix-websockets-$native:_"
+        const val websockets = "$artifactPrefix-websockets:_"
 
         @Deprecated("Use OkHttp or cio", ReplaceWith("okHttp"), DeprecationLevel.ERROR)
         const val android = "$artifactPrefix-android:_"
