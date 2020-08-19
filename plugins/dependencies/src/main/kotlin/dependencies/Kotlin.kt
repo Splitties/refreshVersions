@@ -1,5 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import dependencies.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 
 @Incubating
@@ -8,12 +9,11 @@ object Kotlin {
     val stdlib = Stdlib
     val test = Test
 
-    object Stdlib {
-        const val base = "org.jetbrains.kotlin:kotlin-stdlib:_"
-        const val jdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:_"
-        const val jdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:_"
-        const val js = "org.jetbrains.kotlin:kotlin-stdlib-js:_"
-        const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:_"
+    object Stdlib : DependencyNotationAndGroup(group = "org.jetbrains.kotlin", name = "kotlin-stdlib") {
+        @JvmField val jdk7 = "$artifactPrefix-jdk7:_"
+        @JvmField val jdk8 = "$artifactPrefix-jdk8:_"
+        @JvmField val js = "$artifactPrefix-js:_"
+        @JvmField val common = "$artifactPrefix-common:_"
     }
 
     object Test {
