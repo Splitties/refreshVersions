@@ -1,8 +1,8 @@
 package dependencies
 
 abstract class DependencyNotationAndGroup(
-    private val group: String,
-    private val name: String
+    group: String,
+    name: String
 ) : CharSequence {
 
     protected val artifactPrefix = "$group:$name"
