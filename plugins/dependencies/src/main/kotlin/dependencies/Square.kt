@@ -34,6 +34,8 @@ object Square {
      * [Change Log](https://square.github.io/kotlinpoet/changelog/)
      *
      * GitHub page: [square/kotlinpoet](https://github.com/square/kotlinpoet)
+     *
+     * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet/)
      */
     val kotlinPoet = KotlinPoet
 
@@ -147,22 +149,19 @@ object Square {
          */
         const val plumber = "$group:plumber-android:_"
 
+        /**
+         * [API reference](https://square.github.io/leakcanary/api/leakcanary-object-watcher/leakcanary/)
+         */
         val objectWatcher = ObjectWatcher
 
-        object ObjectWatcher {
-            private const val artifactPrefix = "$group:leakcanary-object-watcher"
+        object ObjectWatcher : DependencyNotationAndGroup(group = group, name = "leakcanary-object-watcher") {
 
             /**
              * [Code recipe](https://square.github.io/leakcanary/recipes/#counting-retained-instances-in-release-builds)
              *
              * [API reference](https://square.github.io/leakcanary/api/leakcanary-object-watcher-android/leakcanary/)
              */
-            const val android = "$artifactPrefix-android:_"
-
-            /**
-             * [API reference](https://square.github.io/leakcanary/api/leakcanary-object-watcher/leakcanary/)
-             */
-            const val core = "$artifactPrefix:_"
+            @JvmField val android = "$artifactPrefix-android:_"
         }
 
         /**
@@ -171,74 +170,59 @@ object Square {
          * [Official documentation](https://square.github.io/leakcanary/shark/)
          *
          * [Announcement blog post](https://developer.squareup.com/blog/announcing-shark-smart-heap-analysis-reports-for-kotlin/)
+         *
+         * [API reference](https://square.github.io/leakcanary/api/shark/shark/)
+         *
+         * [Logging API reference](https://square.github.io/leakcanary/api/shark-log/shark/)
          */
         val shark = Shark
 
-        object Shark {
-            private const val artifactPrefix = "$group:shark"
+        object Shark : DependencyNotationAndGroup(group = group, name = "shark") {
 
             /**
              * [API reference](https://square.github.io/leakcanary/api/shark-hprof/shark/)
              */
-            const val hprof = "$artifactPrefix-hprof:_"
+            @JvmField val hprof = "$artifactPrefix-hprof:_"
 
             /**
              * [API reference](https://square.github.io/leakcanary/api/shark-graph/shark/)
              */
-            const val graph = "$artifactPrefix-graph:_"
-
-            /**
-             * [API reference](https://square.github.io/leakcanary/api/shark/shark/)
-             *
-             * [Logging API reference](https://square.github.io/leakcanary/api/shark-log/shark/)
-             */
-            const val shark = "$artifactPrefix:_"
+            @JvmField val graph = "$artifactPrefix-graph:_"
 
             /**
              * [API reference](https://square.github.io/leakcanary/api/shark-android/shark/)
              */
-            const val android = "$artifactPrefix-android:_"
+            @JvmField val android = "$artifactPrefix-android:_"
 
             /**
              * [Official documentation](https://square.github.io/leakcanary/shark/#shark-cli)
              */
-            const val cli = "$artifactPrefix-cli:_"
+            @JvmField val cli = "$artifactPrefix-cli:_"
         }
     }
 
-    object KotlinPoet {
-        private const val artifactPrefix = "com.squareup:kotlinpoet"
-
-        /**
-         * [Official webpage](https://square.github.io/kotlinpoet/)
-         *
-         * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet/)
-         */
-        const val kotlinPoet = "$artifactPrefix:_"
+    object KotlinPoet : DependencyNotationAndGroup(group = "com.squareup", name = "kotlinpoet") {
 
         /**
          * [Official webpage](https://square.github.io/kotlinpoet/kotlinpoet_metadata/)
          *
          * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet-metadata/com.squareup.kotlinpoet.metadata/)
          */
-        const val metadata = "$artifactPrefix-metadata:_"
+        @JvmField val metadata = "$artifactPrefix-metadata:_"
 
         /**
          * [Official webpage](https://square.github.io/kotlinpoet/kotlinpoet_metadata_specs/)
          *
          * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet-metadata-specs/com.squareup.kotlinpoet.metadata.specs/)
          */
-        const val metadataSpecs = "$artifactPrefix-metadata-specs:_"
+        @JvmField val metadataSpecs = "$artifactPrefix-metadata-specs:_"
     }
 
-    object Picasso {
-        private const val group = "com.squareup.picasso"
-
-        const val picasso = "$group:picasso:_"
+    object Picasso : DependencyNotationAndGroup(group = "com.squareup.picasso", name = "picasso") {
 
         /**
          * [Documentation page](https://github.com/square/picasso/blob/master/picasso-pollexor/README.md)
          */
-        const val pollexor = "$group:picasso-pollexor:_"
+        @JvmField val pollexor = "$artifactPrefix-pollexor:_"
     }
 }
