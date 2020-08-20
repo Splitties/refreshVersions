@@ -2,6 +2,8 @@
 
 object CashApp {
 
+    val sqlDelight = Square.sqlDelight
+
     /**
      * Turbine is a small testing library for kotlinx.coroutines [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/).
      *
