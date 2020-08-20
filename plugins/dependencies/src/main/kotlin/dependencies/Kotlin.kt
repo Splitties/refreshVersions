@@ -17,13 +17,15 @@ object Kotlin {
     }
 
     object Test {
-        const val annotationsCommon = "org.jetbrains.kotlin:kotlin-test-annotations-common:_"
-        const val common = "org.jetbrains.kotlin:kotlin-test-common:_"
-        const val js = "org.jetbrains.kotlin:kotlin-test-js:_"
-        const val jsRunner = "org.jetbrains.kotlin:kotlin-test-js-runner:_"
+        private const val artifactPrefix = "org.jetbrains.kotlin:kotlin-test"
 
-        const val junit = "org.jetbrains.kotlin:kotlin-test-junit:_"
-        const val junit5 = "org.jetbrains.kotlin:kotlin-test-junit5:_"
-        const val testng = "org.jetbrains.kotlin:kotlin-test-testng:_"
+        const val annotationsCommon = "$artifactPrefix-annotations-common:_"
+        const val common = "$artifactPrefix-common:_"
+        const val js = "$artifactPrefix-js:_"
+        const val jsRunner = "$artifactPrefix-js-runner:_"
+
+        const val junit = "$artifactPrefix-junit:_"
+        const val junit5 = "$artifactPrefix-junit5:_"
+        const val testng = "$artifactPrefix-testng:_"
     }
 }
