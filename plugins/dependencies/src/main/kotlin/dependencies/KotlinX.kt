@@ -15,9 +15,12 @@ object KotlinX {
         private const val artifactPrefix = "$artifactBase-coroutines"
 
         const val core = "$artifactPrefix-core:$version"
-        const val coreCommon = "$artifactPrefix-core-common:$version"
-        const val coreNative = "$artifactPrefix-core-native:$version"
         const val coreJs = "$artifactPrefix-core-js:$version"
+
+        @Deprecated("No longer published since version 1.3.9. Use core instead.")
+        const val coreCommon = "$artifactPrefix-core-common:$version"
+        @Deprecated("No longer published since version 1.3.9. Use core instead.")
+        const val coreNative = "$artifactPrefix-core-native:$version"
 
         const val android = "$artifactPrefix-android:$version"
         const val javaFx = "$artifactPrefix-javafx:$version"
