@@ -37,13 +37,27 @@ object KotlinX {
     }
 
     object Serialization {
-        private const val version = "_"
         private const val artifactPrefix = "$artifactBase-serialization"
 
-        const val runtime = "$artifactPrefix-runtime:$version"
-        const val runtimeJs = "$artifactPrefix-runtime-js:$version"
-        const val runtimeCommon = "$artifactPrefix-runtime-common:$version"
-        const val runtimeNative = "$artifactPrefix-runtime-native:$version"
+        const val core = "$artifactPrefix-core:_"
+        const val protobuf = "$artifactPrefix-protobuf:_"
+        const val cbor = "$artifactPrefix-cbor:_"
+        const val properties = "$artifactPrefix-properties:_"
+        //TODO: Add hocon artifact once documented.
+
+        //region Pre v1.0.0 deprecated artifacts.
+        @Deprecated("Use core instead and upgrade to version 1.0.0-RC or newer")
+        const val runtime = "$artifactPrefix-runtime:_"
+
+        @Deprecated("No longer needed")
+        const val runtimeJs = "$artifactPrefix-runtime-js:_"
+
+        @Deprecated("No longer needed")
+        const val runtimeCommon = "$artifactPrefix-runtime-common:_"
+
+        @Deprecated("No longer needed")
+        const val runtimeNative = "$artifactPrefix-runtime-native:_"
+        //endregion
     }
 
     object Collections {
