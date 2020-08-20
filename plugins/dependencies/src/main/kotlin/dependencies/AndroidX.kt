@@ -359,12 +359,9 @@ object AndroidX {
             @JvmField val util = "$artifactPrefix-util:_"
         }
 
-        object Foundation {
-            private const val artifactPrefix = "$groupPrefix.foundation:foundation"
-
-            const val foundation = "$artifactPrefix:_"
-            const val layout = "$artifactPrefix-layout:_"
-            const val text = "$artifactPrefix-text:_"
+        object Foundation : DependencyNotationAndGroup(group = "$groupPrefix.foundation", name = "foundation") {
+            @JvmField val layout = "$artifactPrefix-layout:_"
+            @JvmField val text = "$artifactPrefix-text:_"
         }
 
         object Material {
