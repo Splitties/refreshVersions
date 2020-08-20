@@ -348,18 +348,15 @@ object AndroidX {
             @JvmField val core = "$artifactPrefix-core:_"
         }
 
-        object Ui {
-            private const val artifactPrefix = "$groupPrefix.ui:ui"
+        object Ui : DependencyNotationAndGroup(group = "$groupPrefix.ui", name = "ui") {
+            @JvmField val geometry = "$artifactPrefix-geometry:_"
+            @JvmField val graphics = "$artifactPrefix-graphics:_"
 
-            const val ui = "$artifactPrefix:_"
-            const val geometry = "$artifactPrefix-geometry:_"
-            const val graphics = "$artifactPrefix-graphics:_"
+            @JvmField val text = "$artifactPrefix-text:_"
+            @JvmField val textAndroid = "$artifactPrefix-text-android:_"
 
-            const val text = "$artifactPrefix-text:_"
-            const val textAndroid = "$artifactPrefix-text-android:_"
-
-            const val unit = "$artifactPrefix-unit:_"
-            const val util = "$artifactPrefix-util:_"
+            @JvmField val unit = "$artifactPrefix-unit:_"
+            @JvmField val util = "$artifactPrefix-util:_"
         }
 
         object Foundation {
