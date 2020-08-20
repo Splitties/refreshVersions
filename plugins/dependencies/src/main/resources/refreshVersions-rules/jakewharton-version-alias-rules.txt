@@ -12,3 +12,6 @@ com.jakewharton.confundus:confundus-gradle
 
 com.jakewharton.wormhole:wormhole-gradle
     ^^^^^^^^^^^^^^^^^^^^
+
+com.jakewharton.moshi:shimo
+    ^^^^^^^^^^^^^^^^^.^^^^^

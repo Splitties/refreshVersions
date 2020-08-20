@@ -17,6 +17,7 @@ object JakeWharton {
     const val timber = "com.jakewharton.timber:timber:_"
 
     val retrofit2 = Retrofit2
+    val moshi = Moshi
 
     /**
      * A Kotlin DSL and Java/Kotlin builder API for constructing HTML-like tables which can be rendered to text.
@@ -53,5 +54,16 @@ object JakeWharton {
              */
             const val kotlinxSerialization = "$artifactPrefix-kotlinx-serialization-converter:_"
         }
+    }
+
+    object Moshi {
+
+        /**
+         * Shimo is a `JsonAdapter.Factory` for [Square.moshi] which randomizes the order of keys
+         * when serializing objects to JSON and when deserializing objects from JSON.
+         *
+         * GitHub page: [JakeWharton/shimo](https://github.com/JakeWharton/shimo)
+         */
+        const val shimo = "com.jakewharton.moshi:shimo:_"
     }
 }

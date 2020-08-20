@@ -400,6 +400,7 @@ com.google.firebase..perf-plugin=Firebase.performanceMonitoringGradlePlugin
 com.google.firebase..perf-plugin=Google.firebase.performanceMonitoringGradlePlugin
 com.google.gms..google-services=Google.playServicesGradlePlugin
 com.jakewharton.confundus..confundus-gradle=JakeWharton.confundusGradlePlugin
+com.jakewharton.moshi..shimo=JakeWharton.moshi.shimo
 com.jakewharton.picnic..picnic=JakeWharton.picnic
 com.jakewharton.retrofit..retrofit2-kotlinx-serialization-converter=JakeWharton.retrofit2.converter.kotlinxSerialization
 com.jakewharton.timber..timber=JakeWharton.timber
