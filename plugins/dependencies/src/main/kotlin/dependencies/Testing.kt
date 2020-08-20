@@ -4,6 +4,7 @@
 
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import dependencies.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 
 @Incubating
@@ -38,14 +39,11 @@ object Testing {
      *
      * Official website: [junit.org/junit5](https://junit.org/junit5/)
      */
-    object JunitJupiter {
-        private const val artifactPrefix = "org.junit.jupiter:junit-jupiter"
-
-        const val junitJupiter = "$artifactPrefix:_"
-        const val api = "$artifactPrefix-api:_"
-        const val engine = "$artifactPrefix-engine:_"
-        const val params = "$artifactPrefix-params:_"
-        const val migrationSupport = "$artifactPrefix-migrationsupport:_"
+    object JunitJupiter : DependencyNotationAndGroup(group = "org.junit.jupiter", name = "junit-jupiter") {
+        @JvmField val api = "$artifactPrefix-api:_"
+        @JvmField val engine = "$artifactPrefix-engine:_"
+        @JvmField val params = "$artifactPrefix-params:_"
+        @JvmField val migrationSupport = "$artifactPrefix-migrationsupport:_"
     }
 
     /**
@@ -176,12 +174,9 @@ object Testing {
      *
      * GitHub page: [mockk/mockk](https://github.com/mockk/mockk).
      */
-    object MockK {
-        private const val artifactBase = "io.mockk:mockk"
-
-        const val mockK = "$artifactBase:_"
-        const val android = "$artifactBase-android:_"
-        const val common = "$artifactBase-common:_"
+    object MockK : DependencyNotationAndGroup(group = "io.mockk", name = "mockk") {
+        @JvmField val android = "$artifactPrefix-android:_"
+        @JvmField val common = "$artifactPrefix-common:_"
     }
 
     /**
