@@ -501,6 +501,7 @@ object AndroidX {
         private const val artifactPrefix = "androidx.concurrent:concurrent"
 
         const val futures = "$artifactPrefix-futures:_"
+        const val futuresKtx = "$artifactPrefix-futures-ktx:_"
     }
 
     object ArchCore {

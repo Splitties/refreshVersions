@@ -45,6 +45,7 @@ androidx.compose.ui..ui-text=AndroidX.compose.ui.text
 androidx.compose.ui..ui-unit=AndroidX.compose.ui.unit
 androidx.compose.ui..ui-util=AndroidX.compose.ui.util
 androidx.compose.ui..ui=AndroidX.compose.ui
+androidx.concurrent..concurrent-futures-ktx=AndroidX.concurrent.futuresKtx
 androidx.concurrent..concurrent-futures=AndroidX.concurrent.futures
 androidx.constraintlayout..constraintlayout-solver=AndroidX.constraintLayoutSolver
 androidx.constraintlayout..constraintlayout=AndroidX.constraintLayout
