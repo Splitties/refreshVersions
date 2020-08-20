@@ -403,6 +403,7 @@ com.jakewharton.confundus..confundus-gradle=JakeWharton.confundusGradlePlugin
 com.jakewharton.picnic..picnic=JakeWharton.picnic
 com.jakewharton.retrofit..retrofit2-kotlinx-serialization-converter=JakeWharton.retrofit2.converter.kotlinxSerialization
 com.jakewharton.timber..timber=JakeWharton.timber
+com.jakewharton.wormhole..wormhole-gradle=JakeWharton.wormholeGradlePlugin
 com.louiscad.splitties..splitties-activities=Splitties.activities
 com.louiscad.splitties..splitties-alertdialog-appcompat-coroutines=Splitties.alertdialogAppcompatCoroutines
 com.louiscad.splitties..splitties-alertdialog-appcompat=Splitties.alertdialogAppcompat

@@ -32,6 +32,13 @@ object JakeWharton {
      */
     const val confundusGradlePlugin = "com.jakewharton.confundus:confundus-gradle:_"
 
+    /**
+     * A time-traveling bytecode rewriter which adds future APIs to `android.jar` which can be desugared to all API levels by D8 and R8.
+     *
+     * GitHub page: [JakeWharton/wormhole](https://github.com/JakeWharton/wormhole)
+     */
+    const val wormholeGradlePlugin = "com.jakewharton.wormhole:wormhole-gradle:_"
+
     object Retrofit2 {
         private const val artifactPrefix = "com.jakewharton.retrofit:retrofit2"
 
