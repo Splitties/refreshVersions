@@ -17,6 +17,8 @@ object Google {
     object Android {
         private const val artifactBase = "com.google.android"
 
+        const val browserHelper = "com.google.androidbrowserhelper:androidbrowserhelper:_"
+
         const val material = "$artifactBase.material:material:_"
 
         private const val wearOsVersion = "_"

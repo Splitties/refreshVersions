@@ -21,3 +21,6 @@ com.google.dagger:dagger(-*)
 
 com.google.dagger:hilt-android(-*)
     ^^^^^^.^^^^^^.^^^^
+
+com.google.androidbrowserhelper:androidbrowserhelper
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -231,6 +231,7 @@ com.google.android.play..core-ktx=Google.android.play.coreKtx
 com.google.android.play..core=Google.android.play.core
 com.google.android.support..wearable=Google.android.supportWearable
 com.google.android.wearable..wearable=Google.android.wearable
+com.google.androidbrowserhelper..androidbrowserhelper=Google.android.browserHelper
 com.google.ar..core=Google.ar.core
 com.google.ar.sceneform..animation=Google.ar.sceneform.animation
 com.google.ar.sceneform..assets=Google.ar.sceneform.assets
