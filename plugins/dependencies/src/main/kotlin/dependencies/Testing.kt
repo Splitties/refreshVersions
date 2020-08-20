@@ -187,12 +187,13 @@ object Testing {
      * GitHub page: [mockito/mockito](https://github.com/mockito/mockito).
      */
     object Mockito {
+        private const val artifactPrefix = "org.mockito:mockito"
 
-        const val core = "org.mockito:mockito-core:_"
-        const val android = "org.mockito:mockito-android:_"
-        const val inline = "org.mockito:mockito-inline:_"
-        const val errorProne = "org.mockito:mockito-errorprone:_"
-        const val junitJupiter = "org.mockito:mockito-junit-jupiter:_"
+        const val core = "$artifactPrefix-core:_"
+        const val android = "$artifactPrefix-android:_"
+        const val inline = "$artifactPrefix-inline:_"
+        const val errorProne = "$artifactPrefix-errorprone:_"
+        const val junitJupiter = "$artifactPrefix-junit-jupiter:_"
 
         /**
          * Using Mockito with Kotlin
