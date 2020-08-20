@@ -331,6 +331,7 @@ object AndroidX {
         val animation = Animation
         val ui = Ui
         val foundation = Foundation
+        val material = Material
 
         @Incubating
         const val compiler = "androidx.compose:compose-compiler:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
@@ -364,16 +365,13 @@ object AndroidX {
             @JvmField val text = "$artifactPrefix-text:_"
         }
 
-        object Material {
-            private const val artifactPrefix = "$groupPrefix.material:material"
-
-            const val material = "$artifactPrefix:_"
+        object Material : DependencyNotationAndGroup(group = "$groupPrefix.material", name = "material") {
 
             val icons = Icons
 
             object Icons {
-                const val core = "$artifactPrefix-icons-core:_"
-                const val extended = "$artifactPrefix-icons-extended:_"
+                @JvmField val core = "$artifactPrefix-icons-core:_"
+                @JvmField val extended = "$artifactPrefix-icons-extended:_"
             }
         }
     }
