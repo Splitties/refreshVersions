@@ -1,0 +1,8 @@
+com.jakewharton.timber:timber
+    ^^^^^^^^^^^^^^^^^^
+
+com.jakewharton.picnic:picnic
+    ^^^^^^^^^^^^^^^^^^
+
+com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter
+    ^^^^^^^^^^^.         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
