@@ -345,7 +345,7 @@ object AndroidX {
         }
 
         object Animation : DependencyNotationAndGroup(group = "$groupPrefix.animation", name = "animation") {
-            @JvmField val animationCore = "$artifactPrefix-core:_"
+            @JvmField val core = "$artifactPrefix-core:_"
         }
 
         object Ui {
