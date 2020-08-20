@@ -12,6 +12,8 @@ object KotlinX {
 
     private const val artifactBase = "org.jetbrains.kotlinx:kotlinx"
 
+    const val nodeJs = "$artifactBase-nodejs:_"
+
     object Coroutines {
         private const val artifactPrefix = "$artifactBase-coroutines"
 
