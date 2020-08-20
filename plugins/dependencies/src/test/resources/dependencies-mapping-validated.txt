@@ -619,6 +619,7 @@ org.jetbrains.kotlinx..kotlinx-coroutines-debug=KotlinX.coroutines.debug
 org.jetbrains.kotlinx..kotlinx-coroutines-guava=KotlinX.coroutines.guava
 org.jetbrains.kotlinx..kotlinx-coroutines-javafx=KotlinX.coroutines.javaFx
 org.jetbrains.kotlinx..kotlinx-coroutines-jdk8=KotlinX.coroutines.jdk8
+org.jetbrains.kotlinx..kotlinx-coroutines-jdk9=KotlinX.coroutines.jdk9
 org.jetbrains.kotlinx..kotlinx-coroutines-play-services=KotlinX.coroutines.playServices
 org.jetbrains.kotlinx..kotlinx-coroutines-reactive=KotlinX.coroutines.reactive
 org.jetbrains.kotlinx..kotlinx-coroutines-reactor=KotlinX.coroutines.reactor

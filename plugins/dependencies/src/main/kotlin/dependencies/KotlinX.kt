@@ -28,6 +28,7 @@ object KotlinX {
 
         const val playServices = "$artifactPrefix-play-services:$version"
         const val jdk8 = "$artifactPrefix-jdk8:$version"
+        const val jdk9 = "$artifactPrefix-jdk9:$version"
         const val slf4j = "$artifactPrefix-slf4j:$version"
         const val guava = "$artifactPrefix-guava:$version"
 
