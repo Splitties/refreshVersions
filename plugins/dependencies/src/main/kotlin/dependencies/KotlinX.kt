@@ -8,6 +8,7 @@ object KotlinX {
     val serialization = Serialization
     val collections = Collections
     val html = Html
+    val io = Io
 
     private const val artifactBase = "org.jetbrains.kotlinx:kotlinx"
 
@@ -78,5 +79,11 @@ object KotlinX {
 
         const val jvm = "$artifactPrefix-jvm:_"
         const val js = "$artifactPrefix-js:_"
+    }
+
+    object Io {
+        private const val artifactPrefix = "$artifactBase-io"
+
+        const val jvm = "$artifactPrefix-jvm:_"
     }
 }

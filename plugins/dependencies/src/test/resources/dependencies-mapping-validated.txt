@@ -630,6 +630,7 @@ org.jetbrains.kotlinx..kotlinx-coroutines-swing=KotlinX.coroutines.swing
 org.jetbrains.kotlinx..kotlinx-coroutines-test=KotlinX.coroutines.test
 org.jetbrains.kotlinx..kotlinx-html-js=KotlinX.html.js
 org.jetbrains.kotlinx..kotlinx-html-jvm=KotlinX.html.jvm
+org.jetbrains.kotlinx..kotlinx-io-jvm=KotlinX.io.jvm
 org.jetbrains.kotlinx..kotlinx-serialization-cbor=KotlinX.serialization.cbor
 org.jetbrains.kotlinx..kotlinx-serialization-core=KotlinX.serialization.core
 org.jetbrains.kotlinx..kotlinx-serialization-properties=KotlinX.serialization.properties
