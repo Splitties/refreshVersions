@@ -640,6 +640,7 @@ org.jetbrains.kotlinx..kotlinx-serialization-runtime-common=KotlinX.serializatio
 org.jetbrains.kotlinx..kotlinx-serialization-runtime-js=KotlinX.serialization.runtimeJs
 org.jetbrains.kotlinx..kotlinx-serialization-runtime-native=KotlinX.serialization.runtimeNative
 org.jetbrains.kotlinx..kotlinx-serialization-runtime=KotlinX.serialization.runtime
+org.jetbrains.kotlinx..kotlinx.reflect.lite=KotlinX.reflect.lite
 org.junit.jupiter..junit-jupiter-api=Testing.junit.api
 org.junit.jupiter..junit-jupiter-engine=Testing.junit.engine
 org.junit.jupiter..junit-jupiter-migrationsupport=Testing.junit.migrationSupport

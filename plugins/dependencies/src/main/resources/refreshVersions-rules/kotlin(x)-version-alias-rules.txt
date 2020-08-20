@@ -6,3 +6,6 @@ org.jetbrains.kotlinx:kotlinx-???(-*)
 
 org.jetbrains.kotlinx:kotlinx-collections-immutable(-*)
               ^^^^^^^.        ^^^^^^^^^^^.^^^^^^^^^
+
+org.jetbrains.kotlinx:kotlinx.reflect.lite
+              ^^^^^^^.        ^^^^^^^^^^^^

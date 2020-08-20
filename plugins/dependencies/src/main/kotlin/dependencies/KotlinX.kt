@@ -14,6 +14,8 @@ object KotlinX {
 
     const val nodeJs = "$artifactBase-nodejs:_"
 
+    val reflect = Reflect
+
     object Coroutines {
         private const val artifactPrefix = "$artifactBase-coroutines"
 
@@ -87,5 +89,9 @@ object KotlinX {
         private const val artifactPrefix = "$artifactBase-io"
 
         const val jvm = "$artifactPrefix-jvm:_"
+    }
+
+    object Reflect {
+        const val lite = "$artifactBase.reflect.lite:_"
     }
 }
