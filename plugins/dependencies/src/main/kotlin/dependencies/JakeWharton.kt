@@ -12,6 +12,8 @@ object JakeWharton {
 
     val retrofit2 = Retrofit2
 
+    const val picnic = "com.jakewharton.picnic:picnic:_"
+
     object Retrofit2 {
         private const val artifactPrefix = "com.jakewharton.retrofit:retrofit2"
 
