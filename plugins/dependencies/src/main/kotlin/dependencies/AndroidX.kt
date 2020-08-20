@@ -335,15 +335,13 @@ object AndroidX {
         @Incubating
         const val compiler = "androidx.compose:compose-compiler:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
 
-        object Runtime {
-            private const val artifactPrefix = "$groupPrefix.runtime:runtime"
+        object Runtime : DependencyNotationAndGroup(group = "$groupPrefix.runtime", name = "runtime") {
 
-            const val dispatch = "$artifactPrefix-dispatch:_"
-            const val runtime = "$artifactPrefix:_"
-            const val savedInstanceState = "$artifactPrefix-saved-instance-state:_"
+            @JvmField val dispatch = "$artifactPrefix-dispatch:_"
+            @JvmField val savedInstanceState = "$artifactPrefix-saved-instance-state:_"
 
-            const val liveData = "$artifactPrefix-livedata:_"
-            const val rxJava2 = "$artifactPrefix-rxjava2:_"
+            @JvmField val liveData = "$artifactPrefix-livedata:_"
+            @JvmField val rxJava2 = "$artifactPrefix-rxjava2:_"
         }
 
         object Animation {
