@@ -344,11 +344,8 @@ object AndroidX {
             @JvmField val rxJava2 = "$artifactPrefix-rxjava2:_"
         }
 
-        object Animation {
-            private const val artifactPrefix = "$groupPrefix.animation:animation"
-
-            const val animation = "$artifactPrefix:_"
-            const val animationCore = "$artifactPrefix-core:_"
+        object Animation : DependencyNotationAndGroup(group = "$groupPrefix.animation", name = "animation") {
+            @JvmField val animationCore = "$artifactPrefix-core:_"
         }
 
         object Ui {
