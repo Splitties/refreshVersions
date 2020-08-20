@@ -208,6 +208,7 @@ androidx.work..work-runtime-ktx=AndroidX.work.runtimeKtx
 androidx.work..work-runtime=AndroidX.work.runtime
 androidx.work..work-rxjava2=AndroidX.work.rxJava2
 androidx.work..work-testing=AndroidX.work.testing
+app.cash.turbine..turbine=CashApp.turbine
 com.google.android.gms..play-services-analytics=Google.android.playServices.analytics
 com.google.android.gms..play-services-auth=Google.android.playServices.auth
 com.google.android.gms..play-services-awareness=Google.android.playServices.awareness

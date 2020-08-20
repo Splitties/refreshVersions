@@ -2,6 +2,7 @@ package de.fayard.refreshVersions.internal
 
 import AndroidX
 import COIL
+import CashApp
 import Firebase
 import Google
 import JakeWharton
@@ -44,6 +45,7 @@ internal data class DependencyMapping(
 internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = false): List<DependencyMapping> {
     return sequenceOf(
         AndroidX,
+        CashApp,
         Google,
         JakeWharton,
         Firebase,
