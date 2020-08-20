@@ -253,6 +253,8 @@ object AndroidX {
 
         const val crypto = "$artifactPrefix-crypto:_"
         const val cryptoKtx = "$artifactPrefix-crypto-ktx:_"
+
+        const val identityCredential = "$artifactPrefix-identity-credential:_"
     }
 
     object Room {

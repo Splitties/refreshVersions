@@ -109,7 +109,15 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.remotecallback", dependency = AndroidX.remoteCallbackProcessor),
     versionKeyWithModules(expected = "androidx.room", dependenciesObject = AndroidX.room),
     versionKeyWithModules(expected = "androidx.savedstate", dependency = AndroidX.savedState),
-    versionKeyWithModules(expected = "androidx.security", dependenciesObject = AndroidX.security),
+    versionKeyWithModules(
+        expected = "androidx.security",
+        dependenciesObject = AndroidX.security,
+        excludes = listOf(AndroidX.security.identityCredential)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.security-identity-credential",
+        dependency = AndroidX.security.identityCredential
+    ),
     versionKeyWithModules(expected = "androidx.sharetarget", dependency = AndroidX.shareTarget),
     versionKeyWithModules(
         expected = "androidx.slice",

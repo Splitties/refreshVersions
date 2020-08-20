@@ -28,6 +28,9 @@ androidx.gaming:gaming-performance-tuner(-*)
 androidx.media:media-widget(-*)
 ^^^^^^^^.      ^^^^^^^^^^^^
 
+androidx.security:security-identity-credential
+^^^^^^^^.         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 androidx.slice:slice-builders-ktx
 ^^^^^^^^.      ^^^^^^^^^^^^^^^^^^
 

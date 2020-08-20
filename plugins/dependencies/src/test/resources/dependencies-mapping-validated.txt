@@ -152,6 +152,7 @@ androidx.room..room-testing=AndroidX.room.testing
 androidx.savedstate..savedstate=AndroidX.savedState
 androidx.security..security-crypto-ktx=AndroidX.security.cryptoKtx
 androidx.security..security-crypto=AndroidX.security.crypto
+androidx.security..security-identity-credential=AndroidX.security.identityCredential
 androidx.sharetarget..sharetarget=AndroidX.shareTarget
 androidx.slice..slice-builders-ktx=AndroidX.slice.buildersKtx
 androidx.slice..slice-builders=AndroidX.slice.builders
