@@ -34,6 +34,7 @@ object KotlinX {
         const val reactive = "$artifactPrefix-reactive:$version"
         const val reactor = "$artifactPrefix-reactor:$version"
         const val rx2 = "$artifactPrefix-rx2:$version"
+        const val rx3 = "$artifactPrefix-rx3:$version"
 
         const val debug = "$artifactPrefix-debug:$version"
         const val test = "$artifactPrefix-test:$version"
