@@ -7,6 +7,7 @@ object KotlinX {
     val coroutines = Coroutines
     val serialization = Serialization
     val collections = Collections
+    val html = Html
 
     private const val artifactBase = "org.jetbrains.kotlinx:kotlinx"
 
@@ -70,5 +71,12 @@ object KotlinX {
         const val immutable = "$immutableArtifactPrefix:_"
 
         const val immutableJvmOnly = "$immutableArtifactPrefix-jvm:_"
+    }
+
+    object Html {
+        private const val artifactPrefix = "$artifactBase-html"
+
+        const val jvm = "$artifactPrefix-jvm:_"
+        const val js = "$artifactPrefix-js:_"
     }
 }
