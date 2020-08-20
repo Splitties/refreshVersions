@@ -244,11 +244,8 @@ object AndroidX {
         const val runtime = "androidx.startup:startup-runtime:_"
     }
 
-    object Window {
-        private const val artifactPrefix = "androidx.window:window"
-
-        const val core = "$artifactPrefix:_"
-        const val extensions = "$artifactPrefix-extensions:_"
+    object Window : DependencyNotationAndGroup(group = "androidx.window", name = "window") {
+        @JvmField val extensions = "$artifactPrefix-extensions:_"
     }
 
     object Security {
