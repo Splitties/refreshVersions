@@ -25,6 +25,13 @@ object JakeWharton {
      */
     const val picnic = "com.jakewharton.picnic:picnic:_"
 
+    /**
+     * A Kotlin compiler plugin which brings Kotlin/JS's `unsafeCast` to Kotlin/JVM.
+     *
+     * GitHub page: [JakeWharton/confundus](https://github.com/JakeWharton/confundus)
+     */
+    const val confundusGradlePlugin = "com.jakewharton.confundus:confundus-gradle:_"
+
     object Retrofit2 {
         private const val artifactPrefix = "com.jakewharton.retrofit:retrofit2"
 
