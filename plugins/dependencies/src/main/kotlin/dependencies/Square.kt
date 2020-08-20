@@ -112,9 +112,16 @@ object Square {
     }
 
     object Wire {
-        private const val group = "com.squareup.wire"
+        private const val artifactPrefix = "com.squareup.wire:wire"
 
-        const val runtime = "$group:wire-runtime:_"
+        const val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
+
+        const val runtime = "$artifactPrefix-runtime:_"
+        val grpc = Grpc
+
+        object Grpc {
+            const val client = "$artifactPrefix-grpc-client:_"
+        }
     }
 
     object LeakCanary {
