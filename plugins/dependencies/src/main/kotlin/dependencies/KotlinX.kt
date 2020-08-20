@@ -11,34 +11,33 @@ object KotlinX {
     private const val artifactBase = "org.jetbrains.kotlinx:kotlinx"
 
     object Coroutines {
-        private const val version = "_"
         private const val artifactPrefix = "$artifactBase-coroutines"
 
-        const val core = "$artifactPrefix-core:$version"
-        const val coreJs = "$artifactPrefix-core-js:$version"
+        const val core = "$artifactPrefix-core:_"
+        const val coreJs = "$artifactPrefix-core-js:_"
 
         @Deprecated("No longer published since version 1.3.9. Use core instead.")
-        const val coreCommon = "$artifactPrefix-core-common:$version"
+        const val coreCommon = "$artifactPrefix-core-common:_"
         @Deprecated("No longer published since version 1.3.9. Use core instead.")
-        const val coreNative = "$artifactPrefix-core-native:$version"
+        const val coreNative = "$artifactPrefix-core-native:_"
 
-        const val android = "$artifactPrefix-android:$version"
-        const val javaFx = "$artifactPrefix-javafx:$version"
-        const val swing = "$artifactPrefix-swing:$version"
+        const val android = "$artifactPrefix-android:_"
+        const val javaFx = "$artifactPrefix-javafx:_"
+        const val swing = "$artifactPrefix-swing:_"
 
-        const val playServices = "$artifactPrefix-play-services:$version"
-        const val jdk8 = "$artifactPrefix-jdk8:$version"
-        const val jdk9 = "$artifactPrefix-jdk9:$version"
-        const val slf4j = "$artifactPrefix-slf4j:$version"
-        const val guava = "$artifactPrefix-guava:$version"
+        const val playServices = "$artifactPrefix-play-services:_"
+        const val jdk8 = "$artifactPrefix-jdk8:_"
+        const val jdk9 = "$artifactPrefix-jdk9:_"
+        const val slf4j = "$artifactPrefix-slf4j:_"
+        const val guava = "$artifactPrefix-guava:_"
 
-        const val reactive = "$artifactPrefix-reactive:$version"
-        const val reactor = "$artifactPrefix-reactor:$version"
-        const val rx2 = "$artifactPrefix-rx2:$version"
-        const val rx3 = "$artifactPrefix-rx3:$version"
+        const val reactive = "$artifactPrefix-reactive:_"
+        const val reactor = "$artifactPrefix-reactor:_"
+        const val rx2 = "$artifactPrefix-rx2:_"
+        const val rx3 = "$artifactPrefix-rx3:_"
 
-        const val debug = "$artifactPrefix-debug:$version"
-        const val test = "$artifactPrefix-test:$version"
+        const val debug = "$artifactPrefix-debug:_"
+        const val test = "$artifactPrefix-test:_"
     }
 
     object Serialization {
