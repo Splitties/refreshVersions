@@ -56,7 +56,7 @@ private fun getSettingsWithSelfUpdates(
         "A new version of refreshVersions is available. Open the $settingsFilename file to apply it."
     )
 
-    fun logError(message: String) = logger.error(logMarker, "e: ${settingsFile.path}: $message")
+    fun logError(message: String) = logger.error(logMarker, "e: ${settingsFile.path}:\n$message")
 
     val currentVersion = selfUpdates.currentVersion
 
@@ -177,7 +177,7 @@ private fun getSettingsWithMigrationCall(
         }
     )
 
-    fun logError(message: String) = logger.error(logMarker, "e: ${settingsFile.path}: $message")
+    fun logError(message: String) = logger.error(logMarker, "e: ${settingsFile.path}:\n$message")
 
     val bootstrapImportIndex = initialContent.indexOf(expectedValues.bootstrapImport).also { i ->
         if (i == -1) {
