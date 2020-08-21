@@ -18,11 +18,19 @@ internal operator fun DependencyVersionsFetcher.Companion.invoke(
         httpClient = httpClient,
         moduleId = ModuleId(group, name),
         repoUrl = repository.url.toString().let { if (it.endsWith('/')) it else "$it/" },
-        repoAuthorization = repository.credentials.username?.let { username ->
-            Credentials.basic(
-                username = username,
-                password = repository.credentials.password ?: return@let null
-            )
+        repoAuthorization = when (repository.name) {
+            "MavenLocal" -> null // MavenLocal never needs authorization.
+            // Getting credentials on mavenLocal results in insanely
+            // hard to  diagnose error that happens later with an unrelated stacktrace.
+            // See this issue: https://github.com/jmfayard/refreshVersions/issues/222
+            // The error message would be the following:
+            // "Authentication scheme 'all'(Authentication) is not supported by protocol 'file'"
+            else -> repository.credentials.username?.let { username ->
+                Credentials.basic(
+                    username = username,
+                    password = repository.credentials.password ?: return@let null
+                )
+            }
         }
     )
 }
