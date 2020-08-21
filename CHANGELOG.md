@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-<!--## Version 0.9.5 (2020-07-13)-->
+<!--## Version 0.9.5 (2020-08-??)-->
 ## [Unreleased]
 
 This is a major release that brings surface-level and internal changes,
@@ -14,9 +14,27 @@ paving the way for the upcoming 1.0 release.
 - Support for `buildscript` dependencies. It now works just like regular dependencies.
 - First class support for `buildSrc`
 - Support maven repositories with basic authentication (aka. credentials with username and password)
+- Going forward, **refreshVersions will be able to auto-migrate** any breaking changes a new version would introduce in your `versions.properties`, `build.gradle` and `build.gradle.kts` files in. This version of refreshVersions integrates the facility to
+let future versions of refreshVersions that migration is needed, and from which version. This is a very important change that ensures you can keep your projects updated with the least effort possible.
 
 ### New dependency constants
 
+- Kotlin.stdlib (for the base version of the stdlib)
+- KotlinX:
+  - html
+  - Coroutines:
+    - reactive
+    - reactor
+    - rx2
+    - rx3
+  - Serialization:
+    - core (replaces runtime artifacts since 1.0.0-RC)
+    - protobuf
+    - cbor
+    - properties
+  - io
+  - reflect.lite
+  - nodeJs
 - [COIL](https://coil-kt.github.io/coil/), a **Co**routine **I**mage **L**oader for Android.
 - Square:
   - LeakCanary
@@ -25,8 +43,54 @@ paving the way for the upcoming 1.0 release.
   - SqlDelight
   - Moshi
   - Picasso
-  - Okio
+  - okio
+  - Retrofit2:
+    - Adapter:
+      - java8   (renamed from retrofitJava8)
+      - rxJava1 (renamed from retrofitRxJava1)
+      - rxJava2 (renamed from retrofitRxJava2)
+      - rxJava3
 - KoTest (in the `Testing` object)
+- CashApp:
+  - sqlDelight (alias to Square.sqlDelight)
+  - turbine
+  - Copper
+- Google:
+  - Dagger (including hilt for Android)
+  - Android:
+    - browserHelper
+- JakeWharton:
+  - picnic
+  - wormholeGradlePlugin
+  - confundusGradlePlugin
+  - moshi.shimo
+- AndroidX:
+  - Gaming
+  - Hilt
+  - startup
+  - tracing
+  - vectorDrawableSeekable
+  - Window
+  - Core:
+    - animation
+    - animationTesting
+  - Security:
+    - cryptoKtx
+    - identityCredential
+  - Compose:
+    - Runtime:
+      - dispatch
+      - savedInstance
+      - liveData
+      - rxJava2
+    - Animation
+    - Ui
+    - Foundation
+    - Material
+  - Media2:
+    - lifecycle
+  - Concurrent:
+    - futuresKtx
 
 ### Changes
 - Make the `refreshVersions` task cancellable during network requests.
