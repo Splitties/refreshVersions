@@ -13,6 +13,8 @@ buildscript {
 
 plugins {
     kotlin("jvm")
+    id("org.gradle.hello-world")
+    //id("io.gitlab.arturbosch.detekt") apply false
 }
 
 group = "de.fayard"
@@ -47,6 +49,7 @@ dependencies {
 
     api("org.apache.poi:poi:_")
     api("org.apache.poi:poi-ooxml:_")
+    //detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:_")
 }
 
 tasks.register("run", JavaExec::class.java) {

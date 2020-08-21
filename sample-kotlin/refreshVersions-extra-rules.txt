@@ -1,2 +1,4 @@
 org.apache.poi:poi(-*)
     ^^^^^^.^^^
+io.gitlab.arturbosch.detekt:detekt(-*)
+                     ^^^^^^
