@@ -136,13 +136,20 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
             "README.adoc",
             "docs/Setting-up.adoc"
         ).forEach { relativePath ->
-            runUntilSuccessWithErrorPrintingOrCancel {
+            do {
                 requestManualAction(
-                    instructions = "Update the `$relativePath` file with the new version," +
+                    instructions = "Update the `$relativePath` file with the new version (if needed)," +
                             " and any other changes needed for this release."
                 )
-                dir.resolve(relativePath).checkChanged()
-            }
+                if (git.didFileChange(dir.resolve(relativePath))) {
+                    break
+                }
+                if (askIfYes(
+                        yesNoQuestion = "Are you sure the $relativePath file doesn't need to be updated?"
+                    )) {
+                    break
+                }
+            } while (true)
         }.also {
             if (askIfYes(
                     yesNoQuestion = "Apart from the changelog, is there other files that " +
