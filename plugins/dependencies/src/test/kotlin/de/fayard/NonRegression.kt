@@ -2,12 +2,12 @@ package de.fayard
 
 import de.fayard.refreshVersions.internal.DependencyMapping
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
-import io.kotlintest.fail
-import io.kotlintest.matchers.boolean.shouldBeFalse
-import io.kotlintest.matchers.haveSize
-import io.kotlintest.matchers.withClue
-import io.kotlintest.should
-import io.kotlintest.specs.FreeSpec
+import io.kotest.assertions.fail
+import io.kotest.assertions.withClue
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.collections.haveSize
+import io.kotest.matchers.should
 import java.io.File
 
 val testResources: File = File(".").absoluteFile.resolve("src/test/resources")
