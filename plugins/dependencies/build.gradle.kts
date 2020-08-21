@@ -13,7 +13,7 @@ gradlePlugin {
             id = "de.fayard.refreshVersions"
             displayName = "Typesafe Gradle Dependencies"
             description = "Common Gradle dependencies - See gradle refreshVersions"
-            implementationClass = "de.fayard.dependencies.DependenciesPlugin"
+            implementationClass = "de.fayard.refreshVersions.RefreshVersionsPlugin"
         }
     }
 }
