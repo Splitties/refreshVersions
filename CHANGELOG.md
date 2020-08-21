@@ -1,7 +1,6 @@
 # Change log for refreshVersions
 
-<!--## Version 0.9.5 (2020-08-??)-->
-## [Unreleased]
+## Version 0.9.5 (2020-08-21)
 
 This is a **major release** that brings surface-level and internal changes, paving the way for the upcoming 1.0 release.
 
