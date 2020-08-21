@@ -105,6 +105,7 @@ let future versions of refreshVersions that migration is needed, and from which 
 ### Fixes
 - Version sorting would crash if a version had a long number in it. This has now been fixed, any length of digit sequence is now supported in versions.
 - Fix maven coordinates of several dependency constants
+- Don't crash on repositories that are not https or file or have non password credentials.
 
 ## Previous releases
 
