@@ -6,7 +6,7 @@
 
 @file:Repository("https://dl.bintray.com/louiscad/maven")
 //@file:Repository("file:///Users/louiscad/.m2/repository")
-@file:DependsOn("com.louiscad.incubator:lib-publishing-helpers:0.1.2")
+@file:DependsOn("com.louiscad.incubator:lib-publishing-helpers:0.1.3")
 
 import java.io.File
 import Releasing_main.ReleaseStep.*
