@@ -1,11 +1,19 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
+import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import org.gradle.api.Project
 import org.gradle.api.logging.Logger
 import java.io.File
 
-internal fun Project.updateGradleSettings(
+internal fun Project.updateGradleSettingsIncludingForBuildSrc(
+    selfUpdates: DependencyWithVersionCandidates
+) {
+    updateGradleSettings(selfUpdates)
+    RefreshVersionsConfigHolder.buildSrc?.updateGradleSettings(selfUpdates)
+}
+
+private fun Project.updateGradleSettings(
     selfUpdates: DependencyWithVersionCandidates
 ) {
     val isKotlinDsl: Boolean
@@ -27,6 +35,7 @@ internal fun Project.updateGradleSettings(
         getSettingsWithMigrationCall(
             logger = logger,
             settingsFile = settingsFile,
+            isBuildSrc = isBuildSrc,
             initialContent = text,
             isKotlinDsl = isKotlinDsl,
             selfUpdates = selfUpdates
@@ -140,6 +149,7 @@ private fun getSettingsWithSelfUpdates(
 private fun getSettingsWithMigrationCall(
     logger: Logger,
     settingsFile: File,
+    isBuildSrc: Boolean,
     isKotlinDsl: Boolean,
     initialContent: String,
     selfUpdates: DependencyWithVersionCandidates
@@ -168,8 +178,14 @@ private fun getSettingsWithMigrationCall(
 
     val expectedValues = ExpectedValues(
         bootstrapSymbol = when {
-            isKotlinDsl -> "bootstrapRefreshVersions"
-            else -> "RefreshVersionsSetup.bootstrap"
+            isBuildSrc -> when {
+                isKotlinDsl -> "bootstrapRefreshVersionsForBuildSrc"
+                else -> "RefreshVersionsSetup.bootstrapForBuildSrc"
+            }
+            else -> when {
+                isKotlinDsl -> "bootstrapRefreshVersions"
+                else -> "RefreshVersionsSetup.bootstrap"
+            }
         },
         migrationCallSymbol = when {
             isKotlinDsl -> "migrateRefreshVersionsIfNeeded"

@@ -24,7 +24,7 @@ open class RefreshVersionsTask : DefaultTask() {
             )
         }
         project.rootProject.updateVersionsProperties(result.dependenciesWithVersionsCandidates)
-        project.rootProject.updateGradleSettings(result.selfUpdates)
+        project.rootProject.updateGradleSettingsIncludingForBuildSrc(result.selfUpdates)
 
         warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
         warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
