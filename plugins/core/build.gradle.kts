@@ -41,7 +41,7 @@ dependencies {
     testImplementation(Square.okHttp3.loggingInterceptor)
     testImplementation(platform(notation = "org.junit:junit-bom:_"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:_")
+    testImplementation(Testing.kotest.runner.junit5)
 
     testFixturesApi(Square.okHttp3.okHttp)
     testFixturesApi(Square.okHttp3.loggingInterceptor)

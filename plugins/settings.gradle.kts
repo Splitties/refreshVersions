@@ -1,11 +1,18 @@
-import de.fayard.dependencies.bootstrapRefreshVersionsAndDependencies
+import de.fayard.refreshVersions.bootstrapRefreshVersions
+import de.fayard.refreshVersions.migrateRefreshVersionsIfNeeded
 
 buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard:dependencies:0.5.8")
+    repositories {
+        maven(url = "https://dl.bintray.com/jmfayard/maven")
+        gradlePluginPortal()
+    }
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.5-dev-013")
+////                                                      # available:0.9.5-dev-015")
 }
 
-bootstrapRefreshVersionsAndDependencies()
+migrateRefreshVersionsIfNeeded("0.9.5-dev-013") // Will be automatically removed by refreshVersions when upgraded to the latest version.
+
+bootstrapRefreshVersions()
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")

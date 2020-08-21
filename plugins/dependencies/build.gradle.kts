@@ -29,7 +29,7 @@ publishing {
 }
 
 dependencies {
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:_")
+    testImplementation(Testing.kotest.runner.junit5)
 
     testImplementation(platform(notation = "org.junit:junit-bom:_"))
     testImplementation("org.junit.jupiter:junit-jupiter")
@@ -41,7 +41,7 @@ dependencies {
 
     implementation(gradleKotlinDsl())
     api(project(":refreshVersions-core"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:_")
+    implementation(KotlinX.coroutines.core)
 }
 
 
