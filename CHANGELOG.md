@@ -3,8 +3,7 @@
 <!--## Version 0.9.5 (2020-08-??)-->
 ## [Unreleased]
 
-This is a major release that brings surface-level and internal changes,
-paving the way for the upcoming 1.0 release.
+This is a **major release** that brings surface-level and internal changes, paving the way for the upcoming 1.0 release.
 
 **The plugin setup/bootstrap has changed**, so check out the updated documentation in [Setting-up.adoc](docs/Setting-up.adoc).
 
@@ -91,6 +90,26 @@ let future versions of refreshVersions that migration is needed, and from which 
     - lifecycle
   - Concurrent:
     - futuresKtx
+    
+### Dependency constants renamed
+
+Several dependencies constants have been renamed in this release (compared to version 0.9.4).
+
+If you were using one of the following, you'll need to migrate these usages.
+
+We recommend to **use "Replace in Path"** in IntelliJ or Android Studio, filtering for the `*.gradle.kts` or `*.gradle` file extensions to do these replacements with ease.
+
+_Note that for future versions, refreshVersions will be able to do this automatically._
+
+Here's the list of renamed dependency constants:
+
+- `AndroidX.coreKtx` -> `AndroidX.core.ktx`
+- `AndroidX.coreRole` -> `AndroidX.core.role`
+- `Square.retrofit2.adapter.retrofitJava8` -> `Square.retrofit2.adapter.java8`
+- `Square.retrofit2.adapter.retrofitRxJava1` -> `Square.retrofit2.adapter.rxJava1`
+- `Square.retrofit2.adapter.retrofitRxJava2` -> `Square.retrofit2.adapter.rxJava2`
+- `Testing.junit.junitJupiter` -> `Testing.junit`
+- `Testing.mockK.mockK` -> `Testing.mockK`
 
 ### Changes
 - Make the `refreshVersions` task cancellable during network requests.
@@ -101,11 +120,13 @@ let future versions of refreshVersions that migration is needed, and from which 
 - An error is reported if a dependency wasn't found in any of the configured repositories.
 - All the searched repositories are now listed if a dependency wasn't found in any of them.
 - Only declared repositories are now looked up. (Before, refreshVersions would search all dependencies in all repositories of all modules and their buildscript, regardless of which module was declaring them.)
+- Dependency constants in `Ktor` no longer uses the `native` suffixed artifacts (because Kotlin 1.4 drops them, as the main ones become multiplatform)
 
 ### Fixes
 - Version sorting would crash if a version had a long number in it. This has now been fixed, any length of digit sequence is now supported in versions.
 - Fix maven coordinates of several dependency constants
 - Don't crash on repositories that are not https or file or have non password credentials.
+- The `AndroidX.test.ext.jankTestHelper` constant and few other ones in `Firebase.mlKit` had wrong maven coordinates. This has been fixed, and tests have been added to prevent it from happening again on any dependency constant we provide.
 
 ## Previous releases
 
