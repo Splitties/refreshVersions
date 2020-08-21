@@ -1,0 +1,59 @@
+androidx.*:*
+^^^^^^^^^^
+
+androidx.camera:camera-extensions(-*)
+^^^^^^^^.       ^^^^^^.^^^^^^^^^^
+
+androidx.camera:camera-view(-*)
+^^^^^^^^.       ^^^^^^.^^^^
+
+androidx.car:car-cluster(-*)
+^^^^^^^^.    ^^^^^^^^^^^
+
+androidx.core:core-role(-*)
+^^^^^^^^.     ^^^^^^^^^
+
+androidx.core:core-animation(-*)
+^^^^^^^^.     ^^^^^^^^^^^^^^
+
+androidx.dynamicanimation:dynamicanimation-ktx
+^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^
+
+androidx.gaming:gaming-frame-pacing(-*)
+^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^
+
+androidx.gaming:gaming-performance-tuner(-*)
+^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.media:media-widget(-*)
+^^^^^^^^.      ^^^^^^^^^^^^
+
+androidx.security:security-identity-credential
+^^^^^^^^.         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.slice:slice-builders-ktx
+^^^^^^^^.      ^^^^^^^^^^^^^^^^^^
+
+androidx.test:core(-*) // Rest of androidx.test share the same version.
+^^^^^^^^^^^^^.^^^^
+
+androidx.test.ext:junit(-*)
+^^^^^^^^^^^^^^^^^.^^^^^
+
+androidx.test.ext:truth(-*) // Same version as the rest of androidx.test.
+^^^^^^^^^^^^^
+
+androidx.test.services(-*) // Same version as the rest of androidx.test.
+^^^^^^^^^^^^^
+
+androidx.test.espresso.idling(-*) // Same version as other androidx.test.espresso artifacts.
+^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.vectordrawable:vectordrawable
+^^^^^^^^.               ^^^^^^^^^^^^^^
+
+androidx.vectordrawable:vectordrawable-animated
+^^^^^^^^.               ^^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.vectordrawable:vectordrawable-seekable
+^^^^^^^^.               ^^^^^^^^^^^^^^^^^^^^^^^

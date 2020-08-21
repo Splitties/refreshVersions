@@ -33,8 +33,9 @@ fun DependencyHandler.testImplementations(deps: List<String>) =
 
 dependencies {
     implementations(listOf(AndroidX.browser, AndroidX.cardView))
+    implementation(AndroidX.core)
     testImplementations(listOf(KotlinX.coroutines.core, KotlinX.coroutines.coreCommon))
-    testImplementations(listOf(Testing.kotlinTest.runner.jvm, Testing.kotlinTest.extensions.extensions))
+    testImplementation(Testing.kotest.runner.junit4)
     testImplementation("junit:junit:4.12")
     implementation("com.google.guava:guava:15.0")
     implementation("com.google.inject:guice:2.0")
@@ -44,6 +45,8 @@ dependencies {
     implementation("org.mongodb:mongo-java-driver:3.11.0")
     implementation(kotlin("script-runtime"))
 
+    api("org.apache.poi:poi:_")
+    api("org.apache.poi:poi-ooxml:_")
 }
 
 tasks.register("run", JavaExec::class.java) {

@@ -1,0 +1,8 @@
+com.louiscad.splitties:splitties-*
+             ^^^^^^^^^
+
+io.ktor:*
+   ^^^^
+
+io.coil-kt:coil(-*)
+   ^^^^^^^

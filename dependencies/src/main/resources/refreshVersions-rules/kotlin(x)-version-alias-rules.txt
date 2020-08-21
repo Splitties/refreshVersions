@@ -1,8 +1,0 @@
-org.jetbrains.kotlin:kotlin-*
-              ^^^^^^
-
-org.jetbrains.kotlinx:kotlinx-???(-*)
-              ^^^^^^^.        ^^^
-
-org.jetbrains.kotlinx:kotlinx-collections-immutable(-*)
-              ^^^^^^^.        ^^^^^^^^^^^.^^^^^^^^^

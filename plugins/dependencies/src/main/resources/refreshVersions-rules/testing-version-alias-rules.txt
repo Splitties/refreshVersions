@@ -1,0 +1,11 @@
+junit:junit
+^^^^^.^^^^^ // Allow to add digits/numbers in artifact rules if not too complicated
+
+org.junit:*
+    ^^^^^
+
+io.kotest:*
+   ^^^^^^
+
+org.robolectric:*
+    ^^^^^^^^^^^

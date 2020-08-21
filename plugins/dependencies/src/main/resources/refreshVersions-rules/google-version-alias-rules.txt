@@ -1,0 +1,26 @@
+com.google.firebase:firebase-bom
+                    ^^^^^^^^^^^^
+
+com.google.firebase:firebase-*
+                    ^^^^^^^^^^
+
+com.google.android.material:material
+    ^^^^^^^^^^^^^^^^^^^^^^^
+
+com.google.android.wearable:wearable
+    ^^^^^^^^^^^^^^^^^^^^^^^
+
+com.google.android.support:wearable
+    ^^^^^^^^^^^^^^.        ^^^^^^^^
+
+com.google.android.gms:play-services-*
+    ^^^^^^.^^^^^^^.    ^^^^^^^^^^^^^^^
+
+com.google.dagger:dagger(-*)
+    ^^^^^^.^^^^^^
+
+com.google.dagger:hilt-android(-*)
+    ^^^^^^.^^^^^^.^^^^
+
+com.google.androidbrowserhelper:androidbrowserhelper
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^

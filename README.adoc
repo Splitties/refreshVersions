@@ -1,35 +1,27 @@
-// plugin.de.fayard.buildSrcVersions (aka buildSrcVersions)
-:gradle_version: 6.2.1
-:repo: jmfayard/buildSrcVersions
-:branch: 26-buildSrcVersions
+// plugin.de.fayard.refreshVersions (aka refreshVersions)
+:ext-relative: {outfilesuffix}
+:sectanchors:
+:repo: jmfayard/refreshVersions
 :github: https://github.com/{repo}
-:plugin_issues: https://github.com/gradle/kotlin-dsl/issues?utf8=%E2%9C%93&q=author%3Ajmfayard+
 :plugin_gradle_portal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
 :contributors_badge: image:https://www.codetriage.com/jmfayard/buildsrcversions/badges/users.svg["Code Triage",link="https://www.codetriage.com/jmfayard/buildsrcversions"]
 :gradle_kotlin_dsl:	https://github.com/gradle/kotlin-dsl
 :slack_url: https://app.slack.com/client/T09229ZC6/CP5659EL9
 :slack_image: https://img.shields.io/static/v1?label=kotlinlang&message=gradle-refresh-versions&color=brightgreen&logo=slack
 :slack_badge: image:{slack_image}["Kotlinlang Slack", link="{slack_url}"]
-:gradle_guide_new:	https://guides.gradle.org/creating-new-gradle-builds
-:gradle_guide_buildlogic:	https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
-:medium_puzzle: https://blog.kotlin-academy.com/gradle-kotlin-the-missing-piece-of-the-puzzle-7528a85f0d2c
-:medium_protips: https://proandroiddev.com/android-studio-pro-tips-for-working-with-gradle-8a7aa61a8cc4
-:medium_mvp: https://dev.to/jmfayard/the-minimum-viable-pull-request-5e7p
-:devto_readme: https://dev.to/jmfayard/how-to-write-a-good-readme-discuss-4hkl
-:issues: https://github.com/jmfayard/buildSrcVersions/issues
-:master: https://github.com/jmfayard/buildSrcVersions/blob/master
+:gradle_guide_new: https://guides.gradle.org/creating-new-gradle-builds
+:gradle_guide_buildlogic: https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/
+:issues: https://github.com/jmfayard/refreshVersions/issues
+:master: https://github.com/jmfayard/refreshVersions/blob/master
 :badge_mit: image:https://img.shields.io/github/license/mashape/apistatus.svg["GitHub",link="{github}/blob/master/LICENSE.txt"]
 :image_refreshVersions_version: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg
-:image_dependencies_version: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/dependencies/de.fayard.dependencies.gradle.plugin/maven-metadata.xml.svg
-:badge_refreshVersions_version: image:{image_refreshVersions_version}?label=refreshVersions["refreshVersions latest release on Gradle plugin portal",link="https://plugins.gradle.org/plugin/de.fayard.refreshVersions"]
-:badge_dependencies_version: image:{image_dependencies_version}?label=dependencies["dependencies plugin latest release on Gradle plugin portal",link="https://plugins.gradle.org/plugin/de.fayard.dependencies"]
-:ext-relative: {outfilesuffix}
+:badge_refreshVersions_version: image:{image_refreshVersions_version}?label=refreshVersions["refreshVersions latest release on Gradle plugin portal",link="{plugin_gradle_portal}"]
 
 = refreshVersions
 
 *End the dependency hell in minutes.*
 
-{badge_refreshVersions_version} {badge_dependencies_version} {slack_badge} {contributors_badge} {badge_mit}
+{badge_refreshVersions_version} {slack_badge} {contributors_badge} {badge_mit}
 
 == What
 
@@ -43,8 +35,9 @@ The `refreshVersions` plugin targets *all kinds of Gradle projects*, including t
 The `refreshVersions` Gradle plugin brings the following benefits:
 
 1. *Centralizes dependencies versions* (very useful in multi-module projects)
-2. *Shows available updates in seconds*
-3. *Allows applying the available updates with minimal effort*
+2. *Shows available updates* _in seconds_
+3. *Allows applying the available updates* _with minimal effort_
+4. *Brings autocomplete for select dependencies* (you can add yours too)
 
 == Why (the problem this project solves)
 
@@ -60,7 +53,7 @@ Also, some library vendors like Google are publishing artifacts with different v
 about 70 different families with different versions overall.
 
 We saw this made developers to update the dependencies less and less often, effectively
-leading to legacy accumulation, or even projects abandon.
+leading to legacy accumulation (a form of technical debt), or even projects abandon.
 
 We firmly believe the *modularization benefits should not be hindered by these drawbacks*.
 That's how refreshVersions was born.
@@ -70,68 +63,14 @@ updates be as quick as possible through the whole codebase, and we want to remov
 error factor in dependencies declaration and update.
 That's exactly what `refreshVersions` can already do today in your project.
 
-== Usage
-=== Adding to an existing project
+== How
 
-_Note: Only Gradle 6+ is supported at the moment, because it allows for simpler setup._
+link:docs/Setting-up{ext-relative}[The short Setting-up guide is here].
 
-_Updating Gradle is usually a good idea. You get fewer bugs, more features and more build speed, and it's as simple as this:_
+Once setup, you just need to run the `refreshVersions` Gradle task
+and apply the updates you want in the `versions.properties` file.
 
-`$ ./gradlew wrapper --gradle-version {gradle_version}`
-
-==== Step 1: Adding the plugin
-
-Add the following snippet in your project's root `settings.gradle(.kts)` file:
-
-[source,kts,subs=attributes]
-----
-// settings.gradle.kts
-import de.fayard.dependencies.bootstrapRefreshVersionsAndDependencies
-
-// Here you might have some pluginManagement block:
-pluginManagement {
-    //...
-}
-
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard:dependencies:0.5.7")
-}
-
-bootstrapRefreshVersionsAndDependencies()
-----
-
-==== Step 2: Migrating the dependencies versions declaration place
-
-Run the following command on the root project:
-
-`./gradlew migrateToRefreshVersionsDependenciesConstants --console=plain`
-
-This Gradle task is interactive.
-It will walk you through every module of your Gradle project, assisting you in replacing every hardcoded dependency version by the
-version placeholder (`_`) and an entry in the `versions.properties` file, for every configuration.
-
-_Note that while this Gradle task cannot break your build, it is experimental.
-We are aware its UX can be improved, and we have plans to work on it before the 1.0 release._
-
-=== Find available updates (aka. refreshVersions)
-
-Run the `refreshVersions` gradle task on the root project:
-
-`./gradlew refreshVersions`
-
-_(It usually takes less than 10 seconds to execute on relatively big projects.)_
-
-Open the `versions.properties` file and see the available updates added as comments.
-
-=== Apply updates
-
-Applying updates is done in the `versions.properties` file.
-
-1. Put the caret before or after the `=` symbol on the available update line.
-2. Hold shift to start text selection, press the up arrow key and release shift.
-3. Press the backspace/delete key.
-4. If you're in an IDE, sync Gradle changes to see new dependencies versions.
+The link:docs/Usage{ext-relative}[full usage guide (with screenshots) is here].
 
 == Bonus: tips for your Gradle projects
 
@@ -153,7 +92,7 @@ To get the future tips and informative articles, you can follow me on https://de
 
 Questions? {issues}[Look at the existing issues], then ask your own.
 
-For special requests (not issues), you can also reach us out on Kotlin's Slack
+For special requests (not issues), you can also reach us out on https://slack.kotl.in[Kotlin's Slack] in the {slack_url}[#gradle-refresh-versions] channel.
 
 == Release notes
 
