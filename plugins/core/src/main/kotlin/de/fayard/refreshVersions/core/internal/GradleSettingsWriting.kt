@@ -16,6 +16,12 @@ internal fun Project.updateGradleSettingsIncludingForBuildSrc(
 private fun Project.updateGradleSettings(
     selfUpdates: DependencyWithVersionCandidates
 ) {
+
+    if (selfUpdates.versionsCandidates.isEmpty()) {
+        return // Because we only deal with self-updates for now.
+        // Remove that quick exit condition when/if we support showing updates from settings.gradle[.kts].
+    }
+
     val isKotlinDsl: Boolean
     val settingsFile = file("settings.gradle.kts").let { kotlinDslSettings ->
         if (kotlinDslSettings.exists()) kotlinDslSettings.also { isKotlinDsl = true } else {
@@ -29,6 +35,7 @@ private fun Project.updateGradleSettings(
     val newContent = getSettingsWithSelfUpdates(
         logger = logger,
         settingsFile = settingsFile,
+        isBuildSrc = isBuildSrc,
         initialContent = settingsFile.readText(),
         selfUpdates = selfUpdates
     ).let { text ->
@@ -48,6 +55,7 @@ private fun Project.updateGradleSettings(
 private fun getSettingsWithSelfUpdates(
     logger: Logger,
     settingsFile: File,
+    isBuildSrc: Boolean,
     initialContent: String,
     selfUpdates: DependencyWithVersionCandidates
 ): String {
@@ -56,16 +64,17 @@ private fun getSettingsWithSelfUpdates(
         return initialContent
     }
 
-    val settingsFilename = settingsFile.name
+    val settingsFilenameToDisplay = settingsFile.name.let {
+        if (isBuildSrc) "buildSrc/$it" else it
+    }
 
     val logMarker = RefreshVersionsCorePlugin.LogMarkers.default
 
-    logger.warn(
-        logMarker,
-        "A new version of refreshVersions is available. Open the $settingsFilename file to apply it."
-    )
-
+    fun logWarning(message: String) = logger.warn(logMarker, "w: ${settingsFile.path}:\n$message")
     fun logError(message: String) = logger.error(logMarker, "e: ${settingsFile.path}:\n$message")
+
+    logWarning("A new version of refreshVersions is available.\n" +
+            "Open the $settingsFilenameToDisplay file to apply the update.")
 
     val currentVersion = selfUpdates.currentVersion
 
