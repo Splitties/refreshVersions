@@ -47,7 +47,7 @@ dependencies {
 
     testImplementation(Testing.junit.api)
     testImplementation(Testing.junit.engine)
-    testImplementation(Testing.junit.junitJupiter)
+    testImplementation(Testing.junit)
     testImplementation(Testing.junit.params)
     testImplementation(Testing.kotest.assertions.core)
     testImplementation(Testing.kotest.assertions.json)
@@ -61,7 +61,7 @@ dependencies {
     testImplementation(Testing.kotest.property)
     testImplementation(Testing.kotest.runner.junit4)
     testImplementation(Testing.mockK.common)
-    testImplementation(Testing.mockK.mockK)
+    testImplementation(Testing.mockK)
     testImplementation(Testing.mockito.core)
     testImplementation(Testing.mockito.errorProne)
     testImplementation(Testing.mockito.junitJupiter)
