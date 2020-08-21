@@ -15,7 +15,7 @@ object Publishing {
 fun PublishingExtension.setupAllPublications(project: Project) {
     val mavenPublications = publications.withType<MavenPublication>()
     mavenPublications.configureEach { setupPom() }
-    if (project.isDevVersion) setupDevPublishRepo(project)
+    if (project.isSnapshot.not()) setupDevPublishRepo(project)
     project.registerPublishingTask()
     project.tasks.named("publishPlugins").configure {
         doFirst {
