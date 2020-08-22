@@ -98,6 +98,14 @@ For special requests (not issues), you can also reach us out on https://slack.ko
 
 See the link:CHANGELOG.md[CHANGELOG.md] file.
 
+== Funding
+
+This project has sponsors that help the maintainers dedicate more time to this project and keep it updated.
+
+Thanks a lot to them!
+
+link:SPONSORS.md[You can see them all here.] Feel free to join them in supporting this project!
+
 == Contributing
 
 - This project is licensed under the MIT License. See link:LICENSE.txt[LICENSE.txt]
