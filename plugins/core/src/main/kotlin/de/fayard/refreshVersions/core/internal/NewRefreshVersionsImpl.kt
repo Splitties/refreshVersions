@@ -57,7 +57,7 @@ internal suspend fun lookupVersionCandidates(
             val resolvedVersion = resolveVersion(
                 properties = versionProperties,
                 key = getVersionPropertyName(moduleId, versionKeyReader)
-            ) ?: error("Couldn't resolve version for $moduleId")
+            ) ?: "_"
             async {
                 DependencyWithVersionCandidates(
                     moduleId = moduleId,
