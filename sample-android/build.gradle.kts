@@ -1,10 +1,19 @@
-import de.fayard.OrderBy
-
-plugins {
-    id("de.fayard.refreshVersions")
-    `build-scan`
-}
 group = "de.fayard"
+
+buildscript {
+
+  repositories {
+    mavenCentral()
+    google()
+    jcenter()
+  }
+
+  dependencies {
+    classpath("com.android.tools.build:gradle:_")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:_")
+  }
+}
+
 
 subprojects {
     repositories {
@@ -12,13 +21,6 @@ subprojects {
         jcenter()
         mavenCentral()
     }
-}
-
-refreshVersions {
-    // See configuration options at https://github.com/jmfayard/buildSrcVersions/issues/53
-    orderBy = OrderBy.GROUP_AND_ALPHABETICAL
-    propertiesFile = "versions.properties"
-    //alignVersionsForGroups = listOf()
 }
 
 tasks.register<DefaultTask>("hello") {
