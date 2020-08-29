@@ -1,9 +1,11 @@
 package dependencies
 
+import org.gradle.kotlin.dsl.IsNotADependency
+
 abstract class DependencyNotationAndGroup(
     group: String,
     name: String
-) : CharSequence {
+) : CharSequence, IsNotADependency {
 
     protected val artifactPrefix = "$group:$name"
 
