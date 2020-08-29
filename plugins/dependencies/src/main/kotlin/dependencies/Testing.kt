@@ -17,14 +17,59 @@ object Testing {
      */
     const val junit4 = "junit:junit:_"
 
+    /**
+     * JUnit 5 - The new major version of the programmer-friendly testing framework for Java
+     *
+     * - [GitHub](https://github.com/junit-team/junit5)
+     * - [https://junit.org/junit5/ - Official website](https://junit.org/junit5/)
+     * - [User Guide](https://junit.org/junit5/docs/current/user-guide/)
+     * - [JavaDoc](https://junit.org/junit5/docs/current/api/)
+     * - [Release Notes](https://junit.org/junit5/docs/current/release-notes/)
+     */
     val junit = JunitJupiter
-    
+
+    /***
+     * kotest/kotest -  Powerful, elegant and flexible test framework for Kotlin
+     *
+     * - [GitHub](https://github.com/kotest/kotest)
+     * - [Getting Started](https://github.com/kotest/kotest/blob/master/doc/reference.md#getting-started)
+     * - [Full Documentation](https://github.com/kotest/kotest/blob/master/doc/reference.md#getting-started)
+     * - [CHANGELOG](https://github.com/kotest/kotest/blob/master/CHANGELOG.md)
+     */
     val kotest = Kotest
 
+    /**
+     *  spekframework/spek -  A specification framework for Kotlin
+     *
+     * - [GitHub](https://github.com/spekframework/spek)
+     * - [https://www.spekframework.org/ - Documentation](https://www.spekframework.org/)
+     */
     val spek = Spek
+
+    /**
+     * robfletcher/strikt - An assertion library for Kotlin
+     *
+     * - [GitHub](https://github.com/robfletcher/strikt)
+     * - [https://strikt.io/ - Documentation and API docs](https://strikt.io/)
+     */
     val strikt = Strikt
 
+    /**
+     * mockk/mockk  - mocking library for Kotlin
+
+     * - [GitHub](https://github.com/mockk/mockk)
+     * - [https://mockk.io - Official Website](https://mockk.io/#kotlin-academy-articles-)
+     */
     val mockK = MockK
+
+    /**
+     * mockito/mockito - Most popular Mocking framework for unit tests written in Java
+     *
+     * - [GitHub](https://github.com/mockito/mockito)
+     * - [https://site.mockito.org/ - API and documentation](https://site.mockito.org/)
+     * - [releases](https://github.com/mockito/mockito/releases)
+     * - [Using Mockito with Kotlin](https://github.com/nhaarman/mockito-kotlin)
+     */
     val mockito = Mockito
 
     /**
@@ -61,7 +106,7 @@ object Testing {
 
         const val core = "$artifactBase-core:_"
         const val property = "$artifactBase-property:_"
-        const val propertyArrow = "$artifactBase-property-arrow:_"    
+        const val propertyArrow = "$artifactBase-property-arrow:_"
 
         object Runner {
             private const val artifactPrefix = "$artifactBase-runner"
@@ -89,7 +134,7 @@ object Testing {
 
         object Assertions {
             private const val artifactPrefix = "$artifactBase-assertions"
-            
+
             const val core = "$artifactPrefix-core:_"
             const val ktor = "$artifactPrefix-ktor:_"
             const val json = "$artifactPrefix-json:_"
@@ -100,8 +145,8 @@ object Testing {
             const val sql = "$artifactPrefix-sql:_"
             const val compiler = "$artifactPrefix-compiler:_"
         }
-    }    
-    
+    }
+
     /**
      * A specification framework for Kotlin
      *

@@ -6,10 +6,51 @@ import org.gradle.api.Incubating
 @Incubating
 object Square {
 
+    /**
+     * OkHttp - Square's meticulous HTTP client for Java and Kotlin
+     * - [Website and documentation](https://square.github.io/okhttp/)
+     * - [GitHub](https://github.com/square/okhttp)
+     * - [CHANGELOG](https://github.com/square/okhttp/blob/master/CHANGELOG.md)
+     *
+     */
     val okHttp3 = OkHttp3
+
+    /**
+     * Retrofit - A type-safe HTTP client for Android and the JVM
+     *
+     * - [Website](https://square.github.io/retrofit/)
+     * - [GitHub square/retrofit](https://github.com/square/retrofit)
+     * - [CHANGELOG](https://github.com/square/retrofit/blob/master/CHANGELOG.md)
+     * - [Consuming APIs with Retrofit | CodePath Android Cliffnotes](https://guides.codepath.com/android/Consuming-APIs-with-Retrofit#references)
+     */
     val retrofit2 = Retrofit2
+
+
+    /**
+     * SQLDelight - Generates typesafe Kotlin APIs from SQL
+     *
+     * - [Official Website - API and documentation](https://cashapp.github.io/sqldelight/)
+     * - [cashapp/sqldelight: GitHub](https://github.com/cashapp/sqldelight)
+     * - [CHANGELOG](https://github.com/cashapp/sqldelight/blob/master/CHANGELOG.md)
+     */
     val sqlDelight = SqlDelight
+
+    /**
+     * Moshi - A modern JSON library for Kotlin and Java.
+     *
+     * - [square/moshi: GitHub](https://github.com/square/moshi)
+     * - [JavaDoc](https://square.github.io/moshi/1.x/moshi/)
+     */
     val moshi = Moshi
+
+    /**
+     * Wire -  gRPC and protocol buffers for Android, Kotlin, and Java.
+     *
+     * - [Official Website](https://square.github.io/wire/)
+     * - [GitHub](https://github.com/square/wire)
+     * - [CHANGELOG](https://github.com/square/wire/blob/master/CHANGELOG.md)
+     * - [Google Protocol Buffers](https://developers.google.com/protocol-buffers/docs/overview)
+     */
     val wire = Wire
 
     /**
@@ -48,6 +89,13 @@ object Square {
      */
     val picasso = Picasso
 
+    /**
+     * square/okio -  A modern I/O library for Android, Kotlin, and Java.
+     *
+     * - [GitHub](https://github.com/square/okio)
+     * - [Official Website - Documentation and API](https://square.github.io/okio/)
+     * - [CHANGELOG](https://github.com/square/okio/blob/master/CHANGELOG.md)
+     */
     const val okio = "com.squareup.okio:okio:_"
 
     object OkHttp3 {
