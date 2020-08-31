@@ -5,6 +5,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object JakeWharton {
@@ -45,7 +46,7 @@ object JakeWharton {
 
         val converter = Converter
 
-        object Converter {
+        object Converter: IsNotADependency {
 
             /**
              * A Retrofit 2 `Converter.Factory` for [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/).
@@ -56,7 +57,7 @@ object JakeWharton {
         }
     }
 
-    object Moshi {
+    object Moshi: IsNotADependency {
 
         /**
          * Shimo is a `JsonAdapter.Factory` for [Square.moshi] which randomizes the order of keys

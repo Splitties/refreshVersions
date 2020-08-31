@@ -1,6 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused", "MemberVisibilityCanBePrivate")
 
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
  * [Complete KDoc here](https://api.ktor.io/latest/).
@@ -42,7 +43,7 @@ object Ktor {
 
     const val utils = "$artifactBase-utils:_"
 
-    object Client {
+    object Client: IsNotADependency {
         private const val artifactPrefix = "$artifactBase-client"
 
         const val core = "$artifactPrefix-core:_"
@@ -98,7 +99,7 @@ object Ktor {
         const val android = "$artifactPrefix-android:_"
     }
 
-    object Features {
+    object Features: IsNotADependency {
         /** As of ktor 1.3.0, supports JVM only. */
         const val auth = "$artifactBase-auth:_"
 
@@ -185,7 +186,7 @@ object Ktor {
     /**
      * As of ktor 1.3.0, ktor server artifacts support only the JVM.
      */
-    object Server {
+    object Server: IsNotADependency {
         private const val artifactPrefix = "$artifactBase-server"
 
         /**
@@ -219,7 +220,7 @@ object Ktor {
         const val testHost = "$artifactPrefix-test-host:_"
     }
 
-    object Network {
+    object Network: IsNotADependency {
         private const val artifactPrefix = "$artifactBase-network"
 
         /**

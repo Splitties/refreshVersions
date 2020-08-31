@@ -1,6 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object Splitties {
@@ -8,7 +9,7 @@ object Splitties {
 
     private const val artifactPrefix = "com.louiscad.splitties:splitties"
 
-    object Packs {
+    object Packs: IsNotADependency {
         const val androidBase = "$artifactPrefix-fun-pack-android-base:_"
         const val androidBaseWithViewsDsl = "$artifactPrefix-fun-pack-android-base-with-views-dsl:_"
         const val appCompat = "$artifactPrefix-fun-pack-android-appcompat:_"

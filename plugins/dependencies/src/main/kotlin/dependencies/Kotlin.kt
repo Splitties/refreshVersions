@@ -2,6 +2,7 @@
 
 import dependencies.DependencyNotationAndGroup
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object Kotlin {
@@ -16,7 +17,7 @@ object Kotlin {
         @JvmField val common = "$artifactPrefix-common:_"
     }
 
-    object Test {
+    object Test: IsNotADependency {
         private const val artifactPrefix = "org.jetbrains.kotlin:kotlin-test"
 
         const val annotationsCommon = "$artifactPrefix-annotations-common:_"

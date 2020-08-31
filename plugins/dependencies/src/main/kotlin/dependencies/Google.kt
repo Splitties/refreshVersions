@@ -2,6 +2,7 @@
 
 import dependencies.DependencyNotationAndGroup
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object Google {
@@ -14,7 +15,7 @@ object Google {
 
     val dagger = Dagger
 
-    object Android {
+    object Android: IsNotADependency {
         private const val artifactBase = "com.google.android"
 
         const val browserHelper = "com.google.androidbrowserhelper:androidbrowserhelper:_"
@@ -29,7 +30,7 @@ object Google {
         val playServices = PlayServices
         val play = Play
 
-        object PlayServices {
+        object PlayServices: IsNotADependency {
             private const val artifactPrefix = "$artifactBase.gms:play-services"
 
             /** Google Account Login */
@@ -93,7 +94,7 @@ object Google {
             const val wearOS = "$artifactPrefix-wearable:_"
         }
 
-        object Play {
+        object Play: IsNotADependency {
             private const val group = "$artifactBase.play"
 
             const val core = "$group:core:_"
@@ -101,7 +102,7 @@ object Google {
         }
     }
 
-    object Ar {
+    object Ar: IsNotADependency {
         private const val baseArtifact = "com.google.ar"
 
         /**
@@ -114,7 +115,7 @@ object Google {
          */
         val sceneform = Sceneform
 
-        object Sceneform {
+        object Sceneform: IsNotADependency {
             private const val artifactPrefix = "$baseArtifact.sceneform"
 
             const val animation = "$artifactPrefix:animation:_"
@@ -146,7 +147,7 @@ object Google {
         @Suppress("deprecation")
         val android = Android
 
-        object Hilt {
+        object Hilt: IsNotADependency {
             val android = Android
 
             object Android : DependencyNotationAndGroup(group = group, name = "hilt-android") {
@@ -169,7 +170,7 @@ object Google {
             @JvmField val support = "$artifactPrefix-support:_"
         }
 
-        object Grpc {
+        object Grpc: IsNotADependency {
             val server = Server
 
             object Server : DependencyNotationAndGroup(group = group, name = "dagger-grpc-server") {
