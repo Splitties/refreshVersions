@@ -2,6 +2,7 @@
 
 import dependencies.DependencyNotationAndGroup
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
  * Check changes from the latest AndroidX versions on
@@ -211,7 +212,7 @@ object AndroidX {
         @JvmField val animationTesting = "$artifactPrefix-animation-testing:_"
     }
 
-    object Lifecycle {
+    object Lifecycle: IsNotADependency {
         private const val artifactPrefix = "androidx.lifecycle:lifecycle"
 
         const val runtimeKtx = "$artifactPrefix-runtime-ktx:_"
@@ -240,7 +241,7 @@ object AndroidX {
         const val extensions = "$artifactPrefix-extensions:_"
     }
 
-    object Startup {
+    object Startup: IsNotADependency {
         const val runtime = "androidx.startup:startup-runtime:_"
     }
 
@@ -248,7 +249,7 @@ object AndroidX {
         @JvmField val extensions = "$artifactPrefix-extensions:_"
     }
 
-    object Security {
+    object Security: IsNotADependency {
         private const val artifactPrefix = "androidx.security:security"
 
         const val crypto = "$artifactPrefix-crypto:_"
@@ -257,7 +258,7 @@ object AndroidX {
         const val identityCredential = "$artifactPrefix-identity-credential:_"
     }
 
-    object Room {
+    object Room: IsNotADependency {
         private const val artifactPrefix = "androidx.room:room"
 
         const val ktx = "$artifactPrefix-ktx:_"
@@ -273,7 +274,7 @@ object AndroidX {
         const val rxJava2 = "$artifactPrefix-rxjava2:_"
     }
 
-    object Paging {
+    object Paging: IsNotADependency {
         private const val artifactPrefix = "androidx.paging:paging"
 
         const val commonKtx = "$artifactPrefix-common-ktx:_"
@@ -287,7 +288,7 @@ object AndroidX {
         const val rxJava2 = "$artifactPrefix-rxjava2:_"
     }
 
-    object Work {
+    object Work: IsNotADependency {
         const val runtimeKtx = "androidx.work:work-runtime-ktx:_"
 
         const val gcm = "androidx.work:work-gcm:_"
@@ -298,7 +299,7 @@ object AndroidX {
         const val rxJava2 = "androidx.work:work-rxjava2:_"
     }
 
-    object Navigation {
+    object Navigation: IsNotADependency {
         private const val artifactPrefix = "androidx.navigation:navigation"
 
         const val fragmentKtx = "$artifactPrefix-fragment-ktx:_"
@@ -320,13 +321,13 @@ object AndroidX {
     }
 
     @Incubating
-    object Ui {
+    object Ui: IsNotADependency {
         const val test = "androidx.ui:ui-test:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
         const val tooling = "androidx.ui:ui-tooling:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
     }
 
     @Incubating
-    object Compose {
+    object Compose: IsNotADependency {
         private const val groupPrefix = "androidx.compose"
 
         val runtime = Runtime
@@ -371,14 +372,14 @@ object AndroidX {
 
             val icons = Icons
 
-            object Icons {
+            object Icons: IsNotADependency {
                 @JvmField val core = "$artifactPrefix-icons-core:_"
                 @JvmField val extended = "$artifactPrefix-icons-extended:_"
             }
         }
     }
 
-    object Media2 {
+    object Media2: IsNotADependency {
         private const val artifactPrefix = "androidx.media2:media2"
 
         const val session = "$artifactPrefix-session:_"
@@ -389,7 +390,7 @@ object AndroidX {
         const val common = "$artifactPrefix-common:_"
     }
 
-    object Camera {
+    object Camera: IsNotADependency {
         private const val artifactPrefix = "androidx.camera:camera"
 
         const val core = "$artifactPrefix-core:_"
@@ -399,7 +400,7 @@ object AndroidX {
         const val view = "$artifactPrefix-view:_"
     }
 
-    object Hilt {
+    object Hilt: IsNotADependency {
         private const val artifactPrefix = "androidx.hilt:hilt"
 
         const val lifecycleViewModel = "$artifactPrefix-lifecycle-viewmodel:_"
@@ -407,14 +408,14 @@ object AndroidX {
         const val compiler = "$artifactPrefix-compiler:_"
     }
 
-    object Enterprise {
+    object Enterprise: IsNotADependency {
         private const val artifactPrefix = "androidx.enterprise:enterprise"
 
         const val feedback = "$artifactPrefix-feedback:_"
         const val feedbackTesting = "$artifactPrefix-feedback-testing:_"
     }
 
-    object Gaming {
+    object Gaming: IsNotADependency {
         private const val artifactPrefix = "androidx.gaming:gaming"
 
         const val framePacing = "$artifactPrefix-frame-pacing:_"
@@ -422,7 +423,7 @@ object AndroidX {
 
     }
 
-    object Slice {
+    object Slice: IsNotADependency {
         private const val artifactPrefix = "androidx.slice:slice"
 
         const val buildersKtx = "$artifactPrefix-builders-ktx:_"
@@ -432,7 +433,7 @@ object AndroidX {
         const val view = "$artifactPrefix-view:_"
     }
 
-    object Benchmark {
+    object Benchmark: IsNotADependency {
         private const val artifactPrefix = "androidx.benchmark:benchmark"
 
         const val junit4 = "$artifactPrefix-junit4:_"
@@ -442,7 +443,7 @@ object AndroidX {
         const val common = "$artifactPrefix-common:_"
     }
 
-    object Test {
+    object Test: IsNotADependency {
         private const val coreVersion = "_"
         private const val group = "androidx.test"
 
@@ -459,7 +460,7 @@ object AndroidX {
 
         val ext = Ext
 
-        object Ext {
+        object Ext: IsNotADependency {
             private const val extGroup = "androidx.test.ext"
             private const val extJunitVersion = "_"
 
@@ -474,7 +475,7 @@ object AndroidX {
         const val jankTestHelper = "$group.janktesthelper:janktesthelper:_"
         const val uiAutomator = "$group.uiautomator:uiautomator:_"
 
-        object Espresso {
+        object Espresso: IsNotADependency {
             private const val group = "androidx.test.espresso"
             private const val artifactPrefix = "$group:espresso"
 
@@ -488,7 +489,7 @@ object AndroidX {
             const val remote = "$artifactPrefix-remote:_"
             const val web = "$artifactPrefix-web:_"
 
-            object Idling {
+            object Idling: IsNotADependency {
                 private const val artifactPrefix = "$group.idling:idling"
 
                 const val concurrent = "$artifactPrefix-concurrent:_"
@@ -497,14 +498,14 @@ object AndroidX {
         }
     }
 
-    object Concurrent {
+    object Concurrent: IsNotADependency {
         private const val artifactPrefix = "androidx.concurrent:concurrent"
 
         const val futures = "$artifactPrefix-futures:_"
         const val futuresKtx = "$artifactPrefix-futures-ktx:_"
     }
 
-    object ArchCore {
+    object ArchCore: IsNotADependency {
         private const val artifactPrefix = "androidx.arch.core:core"
 
         const val common = "$artifactPrefix-common:_"
@@ -512,7 +513,7 @@ object AndroidX {
         const val testing = "$artifactPrefix-testing:_"
     }
 
-    object Legacy {
+    object Legacy: IsNotADependency {
         private const val artifactPrefix = "androidx.legacy:legacy"
 
         const val preferenceV14 = "$artifactPrefix-preference-v14:_"

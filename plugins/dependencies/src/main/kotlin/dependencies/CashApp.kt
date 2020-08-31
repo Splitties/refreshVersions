@@ -1,5 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import org.gradle.kotlin.dsl.IsNotADependency
+
 object CashApp {
 
     val sqlDelight = Square.sqlDelight
@@ -20,7 +22,7 @@ object CashApp {
      */
     val copper = Copper
 
-    object Copper {
+    object Copper: IsNotADependency {
         private const val artifactPrefix = "app.cash.copper:copper"
 
         const val flow = "$artifactPrefix-flow:_"
