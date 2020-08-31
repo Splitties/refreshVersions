@@ -1,5 +1,8 @@
 package de.fayard.refreshVersions.core
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import de.fayard.refreshVersions.core.internal.GradleUpdateChecker
 import testutils.getVersionCandidates
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
@@ -9,6 +12,13 @@ import org.junit.jupiter.api.Test
 import testutils.disabledBecauseIsAnExperiment
 
 class MavenDependencyVersionsFetchingTest {
+
+    @Test
+    fun fetchGradleVersion() = runBlocking {
+        val checker = GradleUpdateChecker(defaultHttpClient, defaultMoshi)
+        println(checker.fetchGradlleCurrentVersion())
+    }
+
 
     @Test
     @Disabled(disabledBecauseIsAnExperiment)
@@ -41,6 +51,11 @@ class MavenDependencyVersionsFetchingTest {
     )
 
     private val defaultHttpClient by lazy { createTestHttpClient() }
+
+    private val defaultMoshi : Moshi=
+        Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
 
     private fun createTestHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()

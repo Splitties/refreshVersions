@@ -1,5 +1,7 @@
 package de.fayard.refreshVersions.core.internal
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import okhttp3.OkHttpClient
@@ -54,6 +56,11 @@ object RefreshVersionsConfigHolder {
             }).setLevel(HttpLoggingInterceptor.Level.BASIC)
         )
         .build()
+
+    internal val moshi : Moshi =
+        Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
 
     internal fun initializedUsedVersion(settings: Settings) {
         currentVersion = settings.currentVersionOfRefreshVersions()

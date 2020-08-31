@@ -6,6 +6,7 @@ import kotlinx.coroutines.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.tasks.TaskAction
+import org.gradle.util.GradleVersion
 
 open class RefreshVersionsTask : DefaultTask() {
 
@@ -28,6 +29,21 @@ open class RefreshVersionsTask : DefaultTask() {
 
         warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
         warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
+        warnAboutGradleUpdateAvailableIfAny()
+    }
+
+    private fun warnAboutGradleUpdateAvailableIfAny() = runBlocking {
+        val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient, RefreshVersionsConfigHolder.moshi)
+        val version = checker.fetchGradlleCurrentVersion() ?: return@runBlocking
+        if (GradleVersion.version(version.version) > GradleVersion.current()) {
+            println("""
+                |
+                |> Checking Gradle's version
+                |You are currently running Gradle ${GradleVersion.current().version}
+                |To update to the current stable versions, run
+                |${'$'} ./gradlew wrapper --gradle-version ${version.version}
+            """.trimMargin())
+        }
     }
 
     private fun warnAboutDynamicVersionsIfAny(dependenciesWithDynamicVersions: List<Dependency>) {
