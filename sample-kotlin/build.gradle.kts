@@ -13,6 +13,8 @@ buildscript {
 
 plugins {
     kotlin("jvm")
+    id("de.fayard.refreshVersions-core")
+    id("de.fayard.refreshVersions")
 }
 
 group = "de.fayard"

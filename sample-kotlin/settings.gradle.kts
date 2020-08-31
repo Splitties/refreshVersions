@@ -1,4 +1,3 @@
-import de.fayard.refreshVersions.bootstrapRefreshVersions
 
 pluginManagement {
     repositories {
@@ -7,32 +6,17 @@ pluginManagement {
         maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
         maven(url = "https://dl.bintray.com/jmfayard/maven")
     }
-}
-
-buildscript {
-    repositories {
-        mavenLocal()
-        gradlePluginPortal()
-        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
-        maven(url = "https://dl.bintray.com/jmfayard/maven")
-    }
-
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions") {
-        version {
-            val versionFile = rootDir.parentFile.resolve("plugins/version.txt")
-            strictly(versionFile.readLines().first())
-        }
+    val refreshVersionsVersion = File("../plugins/version.txt").readLines().first()
+    plugins {
+        id("de.fayard.refreshVersions.settings").version(refreshVersionsVersion)
+        id("de.fayard.refreshVersions.core").version(refreshVersionsVersion)
+        id("de.fayard.refreshVersions").version(refreshVersionsVersion)
     }
 }
-
-bootstrapRefreshVersions(
-    extraArtifactVersionKeyRules = listOf(
-        file("refreshVersions-extra-rules.txt").readText()
-    )
-)
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")
+    id("de.fayard.refreshVersions.settings")
 }
 
 gradleEnterprise {

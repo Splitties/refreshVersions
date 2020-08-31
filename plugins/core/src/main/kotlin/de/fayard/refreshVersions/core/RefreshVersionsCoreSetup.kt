@@ -6,9 +6,21 @@ import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.resolveVersion
 import de.fayard.refreshVersions.core.internal.setupVersionPlaceholdersResolving
+import org.gradle.api.Plugin
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.apply
 import java.io.File
+
+open class RefreshVersionsSetupPlugin : Plugin<Settings> {
+    override fun apply(target: Settings) {
+        if (target.rootDir.name == "buildSrc") {
+            target.bootstrapRefreshVersionsCoreForBuildSrc()
+        } else {
+            target.bootstrapRefreshVersionsCore()
+        }
+    }
+}
+
 
 /**
  * Boostrap refreshVersions-core **only** (excludes dependencies constants and version key rules).

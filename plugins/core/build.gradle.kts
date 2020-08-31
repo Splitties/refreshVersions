@@ -17,6 +17,14 @@ gradlePlugin {
             implementationClass = "de.fayard.refreshVersions.core.RefreshVersionsCorePlugin"
         }
     }
+    plugins {
+        create("refreshVersions.settings") {
+            id = "de.fayard.refreshVersions.settings"
+            displayName = "./gradlew refreshVersions"
+            description = "Painless dependencies management"
+            implementationClass = "de.fayard.refreshVersions.core.RefreshVersionsSetupPlugin"
+        }
+    }
 }
 
 pluginBundle {
