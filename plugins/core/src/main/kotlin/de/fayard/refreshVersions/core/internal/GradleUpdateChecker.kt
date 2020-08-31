@@ -11,7 +11,7 @@ internal class GradleUpdateChecker(
 ) {
     val API_URL = "https://services.gradle.org/versions/current"
 
-    suspend fun fetchGradlleCurrentVersion(): GradleCurrentVersion? {
+    suspend fun fetchGradleCurrentVersion(): GradleCurrentVersion? {
         val request = Request.Builder().url(API_URL).build()
         return httpClient.newCall(request).await().use { response ->
             if (response.isSuccessful) {

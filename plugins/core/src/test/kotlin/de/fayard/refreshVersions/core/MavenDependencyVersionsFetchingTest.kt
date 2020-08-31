@@ -16,7 +16,7 @@ class MavenDependencyVersionsFetchingTest {
     @Test
     fun fetchGradleVersion() = runBlocking {
         val checker = GradleUpdateChecker(defaultHttpClient, defaultMoshi)
-        println(checker.fetchGradlleCurrentVersion())
+        println(checker.fetchGradleCurrentVersion())
     }
 
 
