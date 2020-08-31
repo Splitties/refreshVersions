@@ -7,8 +7,10 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 
 /**
  * Marker interface that prevents the user to add a wrong dependency like
- *     implementation(AndroidX.core)
- * Since AndroidX.core IsNotADependency, the IDE will show a warning
+ *
+ *     implementation(Testing.kotest)
+ *                   ^^^^^^^^^^^^^^^
+ *                   IDE: This is not a valid dependency notation but a group of dependency notations
  */
 interface IsNotADependency
 
