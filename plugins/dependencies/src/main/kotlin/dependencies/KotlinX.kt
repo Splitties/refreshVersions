@@ -1,6 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object KotlinX {
@@ -16,7 +17,7 @@ object KotlinX {
 
     val reflect = Reflect
 
-    object Coroutines {
+    object Coroutines: IsNotADependency {
         private const val artifactPrefix = "$artifactBase-coroutines"
 
         const val core = "$artifactPrefix-core:_"
@@ -46,7 +47,7 @@ object KotlinX {
         const val test = "$artifactPrefix-test:_"
     }
 
-    object Serialization {
+    object Serialization: IsNotADependency {
         private const val artifactPrefix = "$artifactBase-serialization"
 
         const val core = "$artifactPrefix-core:_"
@@ -70,7 +71,7 @@ object KotlinX {
         //endregion
     }
 
-    object Collections {
+    object Collections: IsNotADependency {
         private const val immutableArtifactPrefix = "$artifactBase-collections-immutable"
 
         const val immutable = "$immutableArtifactPrefix:_"
@@ -78,20 +79,20 @@ object KotlinX {
         const val immutableJvmOnly = "$immutableArtifactPrefix-jvm:_"
     }
 
-    object Html {
+    object Html: IsNotADependency {
         private const val artifactPrefix = "$artifactBase-html"
 
         const val jvm = "$artifactPrefix-jvm:_"
         const val js = "$artifactPrefix-js:_"
     }
 
-    object Io {
+    object Io: IsNotADependency {
         private const val artifactPrefix = "$artifactBase-io"
 
         const val jvm = "$artifactPrefix-jvm:_"
     }
 
-    object Reflect {
+    object Reflect: IsNotADependency {
         const val lite = "$artifactBase.reflect.lite:_"
     }
 }

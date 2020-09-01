@@ -2,6 +2,7 @@
 
 import dependencies.DependencyNotationAndGroup
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object Square {
@@ -98,14 +99,14 @@ object Square {
      */
     const val okio = "com.squareup.okio:okio:_"
 
-    object OkHttp3 {
+    object OkHttp3: IsNotADependency {
         private const val group = "com.squareup.okhttp3"
         const val okHttp = "$group:okhttp:_"
         const val loggingInterceptor = "$group:logging-interceptor:_"
         const val mockWebServer = "$group:mockwebserver:_"
     }
 
-    object Retrofit2 {
+    object Retrofit2: IsNotADependency {
         private const val group = "com.squareup.retrofit2"
 
         const val retrofit = "$group:retrofit:_"
@@ -114,7 +115,7 @@ object Square {
         val converter = Converter
         val adapter = Adapter
 
-        object Converter {
+        object Converter: IsNotADependency {
             private const val artifactPrefix = "$group:converter"
 
             const val scalars = "$artifactPrefix-scalars:_"
@@ -126,7 +127,7 @@ object Square {
             const val simpleXml = "$artifactPrefix-simplexml:_"
         }
 
-        object Adapter {
+        object Adapter: IsNotADependency {
             const val java8 = "$group:adapter-java8:_"
             const val rxJava1 = "$group:adapter-rxjava:_"
             const val rxJava2 = "$group:adapter-rxjava2:_"
@@ -134,7 +135,7 @@ object Square {
         }
     }
 
-    object SqlDelight {
+    object SqlDelight: IsNotADependency {
         private const val group = "com.squareup.sqldelight"
 
         const val gradlePlugin = "$group:gradle-plugin:_"
@@ -143,7 +144,7 @@ object Square {
 
         const val coroutinesExtensions = "$group:coroutines-extensions"
 
-        object Drivers {
+        object Drivers: IsNotADependency {
             const val android = "$group:android-driver:_"
 
             const val jdbc = "$group:jdbc-driver:_"
@@ -159,7 +160,7 @@ object Square {
         @JvmField val javaReflect = backingString
     }
 
-    object Wire {
+    object Wire: IsNotADependency {
         private const val artifactPrefix = "com.squareup.wire:wire"
 
         const val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
@@ -167,12 +168,12 @@ object Square {
         const val runtime = "$artifactPrefix-runtime:_"
         val grpc = Grpc
 
-        object Grpc {
+        object Grpc: IsNotADependency {
             const val client = "$artifactPrefix-grpc-client:_"
         }
     }
 
-    object LeakCanary {
+    object LeakCanary: IsNotADependency {
         private const val group = "com.squareup.leakcanary"
 
         /**

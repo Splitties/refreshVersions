@@ -6,6 +6,7 @@
 
 import dependencies.DependencyNotationAndGroup
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object Testing {
@@ -96,7 +97,7 @@ object Testing {
      *
      * GitHub page: [kotest/kotest](https://github.com/kotest/kotest)
      */
-    object Kotest {
+    object Kotest: IsNotADependency {
         private const val artifactBase = "io.kotest:kotest"
 
         val runner = Runner
@@ -108,20 +109,20 @@ object Testing {
         const val property = "$artifactBase-property:_"
         const val propertyArrow = "$artifactBase-property-arrow:_"
 
-        object Runner {
+        object Runner: IsNotADependency {
             private const val artifactPrefix = "$artifactBase-runner"
 
             const val junit4 = "$artifactPrefix-junit4:_"
             const val junit5 = "$artifactPrefix-junit5:_"
         }
 
-        object Plugins {
+        object Plugins: IsNotADependency {
             private const val artifactPrefix = "$artifactBase-plugins"
 
             const val piTest = "$artifactPrefix-pitest:_"
         }
 
-        object Extensions {
+        object Extensions: IsNotADependency {
             private const val artifactPrefix = "$artifactBase-extensions"
 
             const val spring = "$artifactPrefix-spring:_"
@@ -132,7 +133,7 @@ object Testing {
             const val mockServer = "$artifactPrefix-mockserver:_"
         }
 
-        object Assertions {
+        object Assertions: IsNotADependency {
             private const val artifactPrefix = "$artifactBase-assertions"
 
             const val core = "$artifactPrefix-core:_"
@@ -153,14 +154,14 @@ object Testing {
      * Official website :[spekframework.org](https://www.spekframework.org)
      * GitHub page: [spekframework/spek](https://github.com/spekframework/spek/)
      */
-    object Spek {
+    object Spek: IsNotADependency {
         private const val artifactBase = "org.spekframework.spek2:spek"
 
         val dsl = Dsl
         val runner = Runner
         val runtime = Runtime
 
-        object Dsl {
+        object Dsl: IsNotADependency {
             private const val artifactPrefix = "$artifactBase-dsl"
 
             const val jvm = "$artifactPrefix-jvm:_"
@@ -169,7 +170,7 @@ object Testing {
 
             val native = Native
 
-            object Native {
+            object Native: IsNotADependency {
                 private const val prefix = "$artifactPrefix-native"
                 const val linux = "$prefix-linux:_"
                 const val macos = "$prefix-macos:_"
@@ -177,13 +178,13 @@ object Testing {
             }
         }
 
-        object Runner {
+        object Runner: IsNotADependency {
             private const val artifactPrefix = "$artifactBase-runner"
 
             const val junit5 = "$artifactPrefix-junit5:_"
         }
 
-        object Runtime {
+        object Runtime: IsNotADependency {
             private const val artifactPrefix = "$artifactBase-runtime"
 
             const val jvm = "$artifactPrefix-jvm:_"
@@ -198,7 +199,7 @@ object Testing {
      *
      * GitHub page: [robfletcher/strikt](https://github.com/robfletcher/strikt)
      */
-    object Strikt {
+    object Strikt: IsNotADependency {
         private const val artifactPrefix = "io.strikt:strikt"
 
         const val bom = "$artifactPrefix-bom:_"
@@ -231,7 +232,7 @@ object Testing {
      *
      * GitHub page: [mockito/mockito](https://github.com/mockito/mockito).
      */
-    object Mockito {
+    object Mockito: IsNotADependency {
         private const val artifactPrefix = "org.mockito:mockito"
 
         const val core = "$artifactPrefix-core:_"
