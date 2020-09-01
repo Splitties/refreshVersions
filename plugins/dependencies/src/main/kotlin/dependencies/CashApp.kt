@@ -4,6 +4,13 @@ import org.gradle.kotlin.dsl.IsNotADependency
 
 object CashApp {
 
+    /**
+     * SQLDelight - Generates typesafe Kotlin APIs from SQL
+     *
+     * - [Official Website - API and documentation](https://cashapp.github.io/sqldelight/)
+     * - [cashapp/sqldelight: GitHub](https://github.com/cashapp/sqldelight)
+     * - [CHANGELOG](https://github.com/cashapp/sqldelight/blob/master/CHANGELOG.md)
+     */
     val sqlDelight = Square.sqlDelight
 
     /**

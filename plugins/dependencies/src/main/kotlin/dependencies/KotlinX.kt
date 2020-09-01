@@ -5,16 +5,68 @@ import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object KotlinX {
+    /**
+     * kotlin/kotlinx.coroutines - Asynchronous programming and more
+     *
+     * - [Coroutines Guide](https://kotlinlang.org/docs/reference/coroutines/coroutines-guide.html)
+     * - [GitHub kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+     * - [Changelog](https://github.com/Kotlin/kotlinx.coroutines/releases)
+     * - [Kotlin coroutines on Android](https://developer.android.com/kotlin/coroutines)
+     */
     val coroutines = Coroutines
+
+    /**
+     * Kotlin/kotlinx.serialization : Kotlin multiplatform / multi-format serialization
+     *
+     * - [GitHub](https://github.com/Kotlin/kotlinx.serialization)
+     * - [Kotlin Serialization Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md)
+     * - [CHANGELOG](https://github.com/Kotlin/kotlinx.serialization/blob/master/CHANGELOG.md)
+     */
     val serialization = Serialization
+
+    /**
+     * Kotlin/kotlinx.collections.immutables - Immutable persistent collections for Kotlin
+     *
+     * - [GitHub](https://github.com/Kotlin/kotlinx.collections.immutable)
+     * - [Changelog](https://github.com/Kotlin/kotlinx.collections.immutable/blob/master/CHANGELOG.md)
+     * - [Library API proposal](https://github.com/Kotlin/kotlinx.collections.immutable/blob/master/proposal.md)
+     */
     val collections = Collections
+
+    /**
+     * Kotlin/kotlinx.html Kotlin DSL for HTML
+     *
+     * - [GitHub](https://github.com/Kotlin/kotlinx.html)
+     * - [Wiki](https://github.com/kotlin/kotlinx.html/wiki)
+     * - [releases](https://github.com/Kotlin/kotlinx.html/releases)
+     */
     val html = Html
+
+    /**
+     * Kotlin/kotlinx-io : Kotlin multiplatform I/O library
+     *
+     * - [GitHub](https://github.com/Kotlin/kotlinx-io)
+     * - [Changelog](https://github.com/Kotlin/kotlinx-io/blob/master/CHANGELOG.md)
+     */
     val io = Io
 
     private const val artifactBase = "org.jetbrains.kotlinx:kotlinx"
 
+    /**
+     * Kotlin/kotlinx-nodejs : Kotlin external declarations for using the Node.js API from Kotlin code targeting JavaScript
+     *
+     * - [GitHub](https://github.com/Kotlin/kotlinx-nodejs)
+     * - [Kotlin/JS Overview](https://kotlinlang.org/docs/reference/js-overview.html)
+     */
     const val nodeJs = "$artifactBase-nodejs:_"
 
+    /**
+     * Kotlin/kotlinx.reflect.lite - Lightweight library allowing to introspect basic stuff about Kotlin symbols
+     *
+     * - [GitHub](https://github.com/Kotlin/kotlinx.reflect.lite)
+     * - https://kotlinlang.org/docs/reference/reflection.html
+     * - https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/
+     */
     val reflect = Reflect
 
     object Coroutines: IsNotADependency {

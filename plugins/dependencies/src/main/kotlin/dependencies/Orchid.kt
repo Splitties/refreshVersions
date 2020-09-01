@@ -4,6 +4,13 @@ import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
+/**
+ * orchidhq/Orchid - Build and deploy beautiful documentation sites that grow with you
+ * - [GitHub](https://github.com/orchidhq/Orchid)
+ * - [QuickStart & Documentation](https://orchid.run/wiki/user-manual/getting-started/quickstart)
+ * - https://orchid.run/plugins - Orchid plugins
+ * - [Orchid themes](https://orchid.run/themes)
+ */
 object Orchid {
 
     private const val groupId = "io.github.javaeden.orchid"
@@ -11,6 +18,9 @@ object Orchid {
     const val core = "$groupId:OrchidCore:_"
     const val test = "$groupId:OrchidTest:_"
 
+    /**
+     * https://orchid.run/plugins - Orchid plugins
+     */
     val plugins = Plugins
     object Plugins: IsNotADependency {
         const val changelog         = "$groupId:OrchidChangelog:_"
@@ -42,6 +52,9 @@ object Orchid {
         const val netlify           = "$groupId:OrchidNetlify:_"
     }
 
+    /**
+     * [Orchid themes](https://orchid.run/themes)
+     */
     val themes = Themes
     object Themes: IsNotADependency {
         const val bsDoc           = "$groupId:OrchidBsDoc:_"
