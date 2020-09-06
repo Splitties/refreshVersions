@@ -42,6 +42,7 @@ dependencies {
     implementation(gradleKotlinDsl())
     api(project(":refreshVersions-core"))
     implementation(KotlinX.coroutines.core)
+    implementation(Square.kotlinPoet)
 }
 
 
