@@ -41,7 +41,7 @@ object JakeWharton {
      */
     const val wormholeGradlePlugin = "com.jakewharton.wormhole:wormhole-gradle:_"
 
-    object Retrofit2 {
+    object Retrofit2 : IsNotADependency {
         private const val artifactPrefix = "com.jakewharton.retrofit:retrofit2"
 
         val converter = Converter
