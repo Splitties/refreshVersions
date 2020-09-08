@@ -75,17 +75,17 @@ interface Firebase {
     val remoteConfig: String
     val remoteConfigKtx: String
 
-    interface MlKit {
+    interface MlKit : IsNotADependency {
         val vision: String
         val naturalLanguage: String
         val models: Models
 
-        interface Models {
+        interface Models : IsNotADependency {
             val vision: Vision
             val naturalLanguage: NaturalLanguage
             val custom: String
 
-            interface Vision {
+            interface Vision : IsNotADependency {
                 val imageLabelling: String
                 val objectDetectionAndTracking: String
                 val faceDetection: String
@@ -93,7 +93,7 @@ interface Firebase {
                 val autoMl: String
             }
 
-            interface NaturalLanguage {
+            interface NaturalLanguage : IsNotADependency {
                 val languageIdentification: String
                 val translate: String
                 val smartReply: String
@@ -126,14 +126,14 @@ internal class FirebaseImpl(isBom: Boolean) : Firebase, IsNotADependency {
     override val inAppMessagingDisplay = "$artifactPrefix-inappmessaging-display$suffix"
     override val inAppMessagingDisplayKtx = "$artifactPrefix-inappmessaging-display-ktx$suffix"
 
-    override val mlKit: Firebase.MlKit = object : Firebase.MlKit, IsNotADependency {
+    override val mlKit: Firebase.MlKit = object : Firebase.MlKit {
         private val mlArtifactPrefix = "$artifactPrefix-ml"
         override val vision = "$mlArtifactPrefix-vision$suffix"
         override val naturalLanguage = "$mlArtifactPrefix-natural-language$suffix"
 
-        override val models: Firebase.MlKit.Models = object : Firebase.MlKit.Models, IsNotADependency {
+        override val models: Firebase.MlKit.Models = object : Firebase.MlKit.Models {
 
-            override val vision: Firebase.MlKit.Models.Vision = object : Firebase.MlKit.Models.Vision, IsNotADependency {
+            override val vision: Firebase.MlKit.Models.Vision = object : Firebase.MlKit.Models.Vision {
                 private val artifactPrefix = "$mlArtifactPrefix-vision"
 
                 override val imageLabelling = "$artifactPrefix-image-label-model$suffix"
@@ -142,7 +142,7 @@ internal class FirebaseImpl(isBom: Boolean) : Firebase, IsNotADependency {
                 override val barcodeScanning = "$artifactPrefix-barcode-model$suffix"
                 override val autoMl = "$artifactPrefix-automl$suffix"
             }
-            override val naturalLanguage: Firebase.MlKit.Models.NaturalLanguage = object : Firebase.MlKit.Models.NaturalLanguage, IsNotADependency {
+            override val naturalLanguage: Firebase.MlKit.Models.NaturalLanguage = object : Firebase.MlKit.Models.NaturalLanguage {
                 private val artifactPrefix = "$mlArtifactPrefix-natural-language"
 
                 override val languageIdentification = "$artifactPrefix-language-id-model$suffix"
