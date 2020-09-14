@@ -18,14 +18,80 @@ object Testing {
      */
     const val junit4 = "junit:junit:_"
 
+    /**
+     * JUnit 5: The new major version of the programmer-friendly testing framework for Java
+     *
+     * Official website: [junit.org/junit5](https://junit.org/junit5/)
+     *
+     * [User Guide](https://junit.org/junit5/docs/current/user-guide/)
+     *
+     * [Release Notes](https://junit.org/junit5/docs/current/release-notes/)
+     *
+     * GitHub page: [junit-team/junit5](https://github.com/junit-team/junit5)
+     *
+     * [API reference (JavaDoc)](https://junit.org/junit5/docs/current/api/)
+     */
     val junit = JunitJupiter
 
+    /**
+     * Powerful, elegant and flexible test framework for Kotlin
+     *
+     * Official website: [kotest.io](https://kotest.io/)
+     *
+     * [Change log](https://kotest.io/changelog/)
+     *
+     * GitHub page: [kotest/kotest](https://github.com/kotest/kotest)
+     */
     val kotest = Kotest
 
+    /**
+     * A specification framework for Kotlin
+     *
+     * Official website: [spekframework.org](https://www.spekframework.org/)
+     *
+     * GitHub page: [spekframework/spek](https://github.com/spekframework/spek)
+     *
+     * [GitHub releases](https://github.com/spekframework/spek/releases)
+     */
     val spek = Spek
+
+    /**
+     * Strikt is an assertion library for Kotlin intended for use with a test runner such as JUnit or Spek.
+     *
+     * Official website: [strikt.io](https://strikt.io/)
+     *
+     * [Change log](https://strikt.io/changelog/)
+     *
+     * [GitHub releases](https://github.com/robfletcher/strikt/releases)
+     *
+     * GitHub page: [robfletcher/strikt](https://github.com/robfletcher/strikt)
+     */
     val strikt = Strikt
 
+    /**
+     * Mocking library for Kotlin.
+     *
+     * Official Website: [mockk.io](https://mockk.io/)
+     *
+     * [GitHub releases](https://github.com/mockk/mockk/releases)
+     *
+     * GitHub page: [mockk/mockk](https://github.com/mockk/mockk)
+     */
     val mockK = MockK
+
+    /**
+     * Most popular Mocking framework for unit tests written in Java
+     *
+     * Official website: [mockito.org](https://site.mockito.org/)
+     *
+     * [Changelog for versions 3.x](https://github.com/mockito/mockito/blob/release/3.x/doc/release-notes/official.md)
+     *
+     * [GitHub releases](https://github.com/mockito/mockito/releases)
+     *
+     * [Using Mockito with Kotlin](https://github.com/nhaarman/mockito-kotlin) (third party project)
+     *
+     * GitHub page: [mockito/mockito](https://github.com/mockito/mockito)
+     */
     val mockito = Mockito
 
     /**
@@ -36,9 +102,17 @@ object Testing {
     const val roboElectric = "org.robolectric:robolectric:_"
 
     /**
-     * The new major version of the programmer-friendly testing framework for Java
+     * JUnit 5: The new major version of the programmer-friendly testing framework for Java
      *
      * Official website: [junit.org/junit5](https://junit.org/junit5/)
+     *
+     * [User Guide](https://junit.org/junit5/docs/current/user-guide/)
+     *
+     * [Release Notes](https://junit.org/junit5/docs/current/release-notes/)
+     *
+     * GitHub page: [junit-team/junit5](https://github.com/junit-team/junit5)
+     *
+     * [API reference (JavaDoc)](https://junit.org/junit5/docs/current/api/)
      */
     object JunitJupiter : DependencyNotationAndGroup(group = "org.junit.jupiter", name = "junit-jupiter") {
         @JvmField val api = "$artifactPrefix-api:_"
@@ -50,9 +124,13 @@ object Testing {
     /**
      * Powerful, elegant and flexible test framework for Kotlin
      *
+     * Official website: [kotest.io](https://kotest.io/)
+     *
+     * [Change log](https://kotest.io/changelog/)
+     *
      * GitHub page: [kotest/kotest](https://github.com/kotest/kotest)
      */
-    object Kotest: IsNotADependency {
+    object Kotest : IsNotADependency {
         private const val artifactBase = "io.kotest:kotest"
 
         val runner = Runner
@@ -64,20 +142,20 @@ object Testing {
         const val property = "$artifactBase-property:_"
         const val propertyArrow = "$artifactBase-property-arrow:_"
 
-        object Runner: IsNotADependency {
+        object Runner : IsNotADependency {
             private const val artifactPrefix = "$artifactBase-runner"
 
             const val junit4 = "$artifactPrefix-junit4:_"
             const val junit5 = "$artifactPrefix-junit5:_"
         }
 
-        object Plugins: IsNotADependency {
+        object Plugins : IsNotADependency {
             private const val artifactPrefix = "$artifactBase-plugins"
 
             const val piTest = "$artifactPrefix-pitest:_"
         }
 
-        object Extensions: IsNotADependency {
+        object Extensions : IsNotADependency {
             private const val artifactPrefix = "$artifactBase-extensions"
 
             const val spring = "$artifactPrefix-spring:_"
@@ -88,7 +166,7 @@ object Testing {
             const val mockServer = "$artifactPrefix-mockserver:_"
         }
 
-        object Assertions: IsNotADependency {
+        object Assertions : IsNotADependency {
             private const val artifactPrefix = "$artifactBase-assertions"
 
             const val core = "$artifactPrefix-core:_"
@@ -106,17 +184,20 @@ object Testing {
     /**
      * A specification framework for Kotlin
      *
-     * Official website :[spekframework.org](https://www.spekframework.org)
-     * GitHub page: [spekframework/spek](https://github.com/spekframework/spek/)
+     * Official website: [spekframework.org](https://www.spekframework.org/)
+     *
+     * GitHub page: [spekframework/spek](https://github.com/spekframework/spek)
+     *
+     * [GitHub releases](https://github.com/spekframework/spek/releases)
      */
-    object Spek: IsNotADependency {
+    object Spek : IsNotADependency {
         private const val artifactBase = "org.spekframework.spek2:spek"
 
         val dsl = Dsl
         val runner = Runner
         val runtime = Runtime
 
-        object Dsl: IsNotADependency {
+        object Dsl : IsNotADependency {
             private const val artifactPrefix = "$artifactBase-dsl"
 
             const val jvm = "$artifactPrefix-jvm:_"
@@ -125,7 +206,7 @@ object Testing {
 
             val native = Native
 
-            object Native: IsNotADependency {
+            object Native : IsNotADependency {
                 private const val prefix = "$artifactPrefix-native"
                 const val linux = "$prefix-linux:_"
                 const val macos = "$prefix-macos:_"
@@ -133,13 +214,13 @@ object Testing {
             }
         }
 
-        object Runner: IsNotADependency {
+        object Runner : IsNotADependency {
             private const val artifactPrefix = "$artifactBase-runner"
 
             const val junit5 = "$artifactPrefix-junit5:_"
         }
 
-        object Runtime: IsNotADependency {
+        object Runtime : IsNotADependency {
             private const val artifactPrefix = "$artifactBase-runtime"
 
             const val jvm = "$artifactPrefix-jvm:_"
@@ -154,7 +235,7 @@ object Testing {
      *
      * GitHub page: [robfletcher/strikt](https://github.com/robfletcher/strikt)
      */
-    object Strikt: IsNotADependency {
+    object Strikt : IsNotADependency {
         private const val artifactPrefix = "io.strikt:strikt"
 
         const val bom = "$artifactPrefix-bom:_"
@@ -181,13 +262,19 @@ object Testing {
     }
 
     /**
-     * Tasty mocking framework for unit tests in Java
+     * Most popular Mocking framework for unit tests written in Java
      *
-     * Official website: [site.mockito.org](https://site.mockito.org)
+     * Official website: [mockito.org](https://site.mockito.org/)
      *
-     * GitHub page: [mockito/mockito](https://github.com/mockito/mockito).
+     * [Changelog for versions 3.x](https://github.com/mockito/mockito/blob/release/3.x/doc/release-notes/official.md)
+     *
+     * [GitHub releases](https://github.com/mockito/mockito/releases)
+     *
+     * [Using Mockito with Kotlin](https://github.com/nhaarman/mockito-kotlin) (third party project)
+     *
+     * GitHub page: [mockito/mockito](https://github.com/mockito/mockito)
      */
-    object Mockito: IsNotADependency {
+    object Mockito : IsNotADependency {
         private const val artifactPrefix = "org.mockito:mockito"
 
         const val core = "$artifactPrefix-core:_"

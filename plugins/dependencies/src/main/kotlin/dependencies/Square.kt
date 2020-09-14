@@ -7,10 +7,64 @@ import org.gradle.kotlin.dsl.IsNotADependency
 @Incubating
 object Square {
 
+    /**
+     * Square's meticulous HTTP client for Java and Kotlin.
+     *
+     * Official website: [square.github.io/okhttp](https://square.github.io/okhttp/)
+     *
+     * [Change log](https://square.github.io/okhttp/changelog/)
+     *
+     * GitHub page: [square/okhttp](https://github.com/square/okhttp)
+     */
     val okHttp3 = OkHttp3
+
+    /**
+     * A type-safe HTTP client for Android and the JVM.
+     *
+     * Official website: [square.github.io/retrofit](https://square.github.io/retrofit/)
+     *
+     * [Change log](https://github.com/square/retrofit/blob/master/CHANGELOG.md)
+     *
+     * GitHub page: [square/retrofit](https://github.com/square/retrofit)
+     *
+     * [Javadoc](https://square.github.io/retrofit/2.x/retrofit/)
+     */
     val retrofit2 = Retrofit2
+
+
+    /**
+     * SQLDelight generates typesafe kotlin APIs from your SQL statements.
+     *
+     * Official Website: [cashapp.github.io/sqldelight](https://cashapp.github.io/sqldelight/)
+     *
+     * [Change log](https://cashapp.github.io/sqldelight/changelog/)
+     *
+     * GitHub page: [cashapp/sqldelight](https://github.com/cashapp/sqldelight)
+     */
     val sqlDelight = SqlDelight
+
+    /**
+     * A modern JSON library for Kotlin and Java.
+     *
+     * [Change log](https://github.com/square/moshi/blob/master/CHANGELOG.md)
+     *
+     * GitHub page: [square/moshi](https://github.com/square/moshi)
+     *
+     * [Javadoc](https://square.github.io/moshi/1.x/moshi/)
+     */
     val moshi = Moshi
+
+    /**
+     * gRPC and protocol buffers for Android, Kotlin, and Java.
+     *
+     * Official Website: [square.github.io/wire](https://square.github.io/wire/)
+     *
+     * [Change log](https://square.github.io/wire/changelog/)
+     *
+     * GitHub page: [square/wire](https://github.com/square/wire)
+     *
+     * [Google's Protocol Buffers (aka. protobuf)](https://developers.google.com/protocol-buffers)
+     */
     val wire = Wire
 
     /**
@@ -41,6 +95,8 @@ object Square {
     val kotlinPoet = KotlinPoet
 
     /**
+     * A powerful image downloading and caching library for Android.
+     *
      * Official website: [square.github.io/picasso](https://square.github.io/picasso/)
      *
      * [Change log](https://github.com/square/picasso/blob/master/CHANGELOG.md)
@@ -49,16 +105,25 @@ object Square {
      */
     val picasso = Picasso
 
+    /**
+     * A modern I/O library for Kotlin Multiplatform (JVM/Android, Linux, iOS, macOS, JS) and Java.
+     *
+     * Official website: [square.github.io/okio](https://square.github.io/okio/)
+     *
+     * [Change log](https://square.github.io/okio/changelog/)
+     *
+     * GitHub page: [square/okio](https://github.com/square/okio)
+     */
     const val okio = "com.squareup.okio:okio:_"
 
-    object OkHttp3: IsNotADependency {
+    object OkHttp3 : IsNotADependency {
         private const val group = "com.squareup.okhttp3"
         const val okHttp = "$group:okhttp:_"
         const val loggingInterceptor = "$group:logging-interceptor:_"
         const val mockWebServer = "$group:mockwebserver:_"
     }
 
-    object Retrofit2: IsNotADependency {
+    object Retrofit2 : IsNotADependency {
         private const val group = "com.squareup.retrofit2"
 
         const val retrofit = "$group:retrofit:_"
@@ -67,7 +132,7 @@ object Square {
         val converter = Converter
         val adapter = Adapter
 
-        object Converter: IsNotADependency {
+        object Converter : IsNotADependency {
             private const val artifactPrefix = "$group:converter"
 
             const val scalars = "$artifactPrefix-scalars:_"
@@ -79,7 +144,7 @@ object Square {
             const val simpleXml = "$artifactPrefix-simplexml:_"
         }
 
-        object Adapter: IsNotADependency {
+        object Adapter : IsNotADependency {
             const val java8 = "$group:adapter-java8:_"
             const val rxJava1 = "$group:adapter-rxjava:_"
             const val rxJava2 = "$group:adapter-rxjava2:_"
@@ -87,7 +152,7 @@ object Square {
         }
     }
 
-    object SqlDelight: IsNotADependency {
+    object SqlDelight : IsNotADependency {
         private const val group = "com.squareup.sqldelight"
 
         const val gradlePlugin = "$group:gradle-plugin:_"
@@ -96,7 +161,7 @@ object Square {
 
         const val coroutinesExtensions = "$group:coroutines-extensions"
 
-        object Drivers: IsNotADependency {
+        object Drivers : IsNotADependency {
             const val android = "$group:android-driver:_"
 
             const val jdbc = "$group:jdbc-driver:_"
@@ -112,7 +177,7 @@ object Square {
         @JvmField val javaReflect = backingString
     }
 
-    object Wire: IsNotADependency {
+    object Wire : IsNotADependency {
         private const val artifactPrefix = "com.squareup.wire:wire"
 
         const val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
@@ -120,12 +185,12 @@ object Square {
         const val runtime = "$artifactPrefix-runtime:_"
         val grpc = Grpc
 
-        object Grpc: IsNotADependency {
+        object Grpc : IsNotADependency {
             const val client = "$artifactPrefix-grpc-client:_"
         }
     }
 
-    object LeakCanary: IsNotADependency {
+    object LeakCanary : IsNotADependency {
         private const val group = "com.squareup.leakcanary"
 
         /**
