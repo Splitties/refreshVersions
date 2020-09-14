@@ -5,16 +5,20 @@ import org.gradle.kotlin.dsl.IsNotADependency
 object CashApp {
 
     /**
-     * SQLDelight - Generates typesafe Kotlin APIs from SQL
+     * SQLDelight generates typesafe kotlin APIs from your SQL statements.
      *
-     * - [Official Website - API and documentation](https://cashapp.github.io/sqldelight/)
-     * - [cashapp/sqldelight: GitHub](https://github.com/cashapp/sqldelight)
-     * - [CHANGELOG](https://github.com/cashapp/sqldelight/blob/master/CHANGELOG.md)
+     * Official Website: [cashapp.github.io/sqldelight](https://cashapp.github.io/sqldelight/)
+     *
+     * [Change log](https://cashapp.github.io/sqldelight/changelog/)
+     *
+     * GitHub page: [cashapp/sqldelight](https://github.com/cashapp/sqldelight)
      */
     val sqlDelight = Square.sqlDelight
 
     /**
      * Turbine is a small testing library for kotlinx.coroutines [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/).
+     *
+     * [GitHub releases](https://github.com/cashapp/turbine/releases)
      *
      * GitHub page: [cashapp/turbine](https://github.com/cashapp/turbine)
      */
@@ -29,7 +33,7 @@ object CashApp {
      */
     val copper = Copper
 
-    object Copper: IsNotADependency {
+    object Copper : IsNotADependency {
         private const val artifactPrefix = "app.cash.copper:copper"
 
         const val flow = "$artifactPrefix-flow:_"

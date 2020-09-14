@@ -5,11 +5,17 @@ import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 /**
- * orchidhq/Orchid - Build and deploy beautiful documentation sites that grow with you
- * - [GitHub](https://github.com/orchidhq/Orchid)
- * - [QuickStart & Documentation](https://orchid.run/wiki/user-manual/getting-started/quickstart)
- * - https://orchid.run/plugins - Orchid plugins
- * - [Orchid themes](https://orchid.run/themes)
+ * Build and deploy beautiful documentation sites that grow with you.
+ *
+ * Official website: [orchid.run](https://orchid.run/)
+ *
+ * [Documentation](https://orchid.run/wiki/user-manual/getting-started)
+ *
+ * [Quick-Start](https://orchid.run/wiki/user-manual/getting-started/quickstart)
+ *
+ * [GitHub releases](https://github.com/orchidhq/Orchid/releases)
+ *
+ * GitHub page: [orchidhq/Orchid](https://github.com/orchidhq/Orchid)
  */
 object Orchid {
 
@@ -19,10 +25,10 @@ object Orchid {
     const val test = "$groupId:OrchidTest:_"
 
     /**
-     * https://orchid.run/plugins - Orchid plugins
+     * Official webpage: [orchid.run/plugins](https://orchid.run/plugins)
      */
     val plugins = Plugins
-    object Plugins: IsNotADependency {
+    object Plugins : IsNotADependency {
         const val changelog         = "$groupId:OrchidChangelog:_"
         const val forms             = "$groupId:OrchidForms:_"
         const val groovydoc         = "$groupId:OrchidGroovydoc:_"
@@ -53,10 +59,10 @@ object Orchid {
     }
 
     /**
-     * [Orchid themes](https://orchid.run/themes)
+     * Official webpage: [orchid.run/themes](https://orchid.run/themes)
      */
     val themes = Themes
-    object Themes: IsNotADependency {
+    object Themes : IsNotADependency {
         const val bsDoc           = "$groupId:OrchidBsDoc:_"
         const val copper          = "$groupId:OrchidCopper:_"
         const val editorial       = "$groupId:OrchidEditorial:_"
@@ -64,7 +70,7 @@ object Orchid {
     }
 
     val bundles = Bundles
-    object Bundles: IsNotADependency {
+    object Bundles : IsNotADependency {
         const val all          = "$groupId:OrchidAll:_"
         const val blog         = "$groupId:OrchidBlog:_"
         const val docs         = "$groupId:OrchidDocs:_"
