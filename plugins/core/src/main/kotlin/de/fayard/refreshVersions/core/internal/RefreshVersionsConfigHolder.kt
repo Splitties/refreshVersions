@@ -23,8 +23,7 @@ object RefreshVersionsConfigHolder {
     internal lateinit var currentVersion: String
         private set
 
-    internal lateinit var settings: Settings
-        private set
+    internal val settings: Settings get() = checkNotNull(_settings)
 
     fun readVersionProperties(): Map<String, String> {
         @Suppress("unchecked_cast")
@@ -65,7 +64,10 @@ object RefreshVersionsConfigHolder {
         versionsPropertiesFile: File
     ) {
         require(settings.isBuildSrc.not())
-        this.settings = settings
+        settings.gradle.buildFinished {
+            clearStaticState()
+        }
+        _settings = settings
 
         _versionsPropertiesFile = versionsPropertiesFile.also {
             it.createNewFile() // Creates the file if it doesn't exist yet
@@ -96,8 +98,22 @@ object RefreshVersionsConfigHolder {
                     e
                 )
             }
+            settings.gradle.buildFinished {
+                clearStaticState()
+            }
         }
     }
+
+    private fun clearStaticState() {
+        // Clearing static state is needed because Gradle holds onto previous builds, yet,
+        // duplicates static state.
+        // We need to beware of never retaining Gradle objects.
+        // This must be called in gradle.buildFinished { }.
+        UsedPluginsHolder.clear()
+        buildSrcGradle = null
+        _settings = null
+    }
+    private var _settings: Settings? = null
 
     private lateinit var artifactVersionKeyRules: List<String>
 
