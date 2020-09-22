@@ -124,6 +124,7 @@ object KotlinX {
         private const val artifactPrefix = "$artifactBase-serialization"
 
         const val core = "$artifactPrefix-core:_"
+        const val json = "$artifactPrefix-json:_"
         const val protobuf = "$artifactPrefix-protobuf:_"
         const val cbor = "$artifactPrefix-cbor:_"
         const val properties = "$artifactPrefix-properties:_"
