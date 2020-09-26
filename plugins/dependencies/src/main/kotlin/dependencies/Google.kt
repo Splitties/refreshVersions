@@ -28,6 +28,15 @@ object Google {
 
         const val material = "$artifactBase.material:material:_"
 
+        /**
+         * MDC-Android Compose Theme Adapter
+         *
+         * [Official website here](https://material-components.github.io/material-components-android-compose-theme-adapter/)
+         * GitHub page: [material-components/material-components-android-compose-theme-adapter](https://github.com/material-components/material-components-android-compose-theme-adapter)
+         * [GitHub releases here](https://github.com/material-components/material-components-android-compose-theme-adapter/releases)
+         */
+        const val materialComposeThemeAdapter = "$artifactBase.material:compose-theme-adapte:_"
+
         private const val wearOsVersion = "_"
 
         const val wearable = "$artifactBase.wearable:wearable:$wearOsVersion"
