@@ -5,9 +5,10 @@ import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object Splitties {
-    val pack = Packs
 
     private const val artifactPrefix = "com.louiscad.splitties:splitties"
+
+    val pack = Packs
 
     object Packs : IsNotADependency {
         const val androidBase = "$artifactPrefix-fun-pack-android-base:_"

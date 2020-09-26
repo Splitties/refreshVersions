@@ -6,6 +6,19 @@ import org.gradle.kotlin.dsl.IsNotADependency
 @Incubating
 object KotlinX {
 
+    private const val artifactBase = "org.jetbrains.kotlinx:kotlinx"
+
+    /**
+     * Kotlin external declarations for using the Node.js API from Kotlin code targeting JavaScript.
+     *
+     * Kotlin/JS Overview: [kotl.in/js](https://kotl.in/js)
+     *
+     * [Change log](https://github.com/Kotlin/kotlinx-nodejs/blob/master/CHANGELOG.md)
+     *
+     * GitHub page: [Kotlin/kotlinx-nodejs](https://github.com/Kotlin/kotlinx-nodejs)
+     */
+    const val nodeJs = "$artifactBase-nodejs:_"
+
     /**
      * Library support for Kotlin coroutines.
      *
@@ -24,70 +37,6 @@ object KotlinX {
      * GitHub page: [Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
      */
     val coroutines = Coroutines
-
-    /**
-     * Kotlin multiplatform / multi-format serialization.
-     *
-     * [Page on Kotlin's website](https://kotlinlang.org/docs/reference/serialization.html)
-     *
-     * [Kotlin Serialization Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md)
-     *
-     * [Change log](https://github.com/Kotlin/kotlinx.serialization/blob/master/CHANGELOG.md)
-     *
-     * GitHub page: [Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
-     */
-    val serialization = Serialization
-
-    val collections = Collections
-
-    /**
-     * Kotlin DSL for HTML.
-     *
-     * [Wiki](https://github.com/kotlin/kotlinx.html/wiki)
-     *
-     * [GitHub releases](https://github.com/Kotlin/kotlinx.html/releases)
-     *
-     * GitHub page: [Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
-     */
-    val html = Html
-
-    /**
-     * Kotlin multiplatform I/O library. (Experimental as of 2020-09-14)
-     *
-     * [Change log](https://github.com/Kotlin/kotlinx-io/blob/master/CHANGELOG.md)
-     *
-     * GitHub page: [Kotlin/kotlinx-io](https://github.com/Kotlin/kotlinx-io)
-     */
-    val io = Io
-
-    private const val artifactBase = "org.jetbrains.kotlinx:kotlinx"
-
-    /**
-     * Kotlin external declarations for using the Node.js API from Kotlin code targeting JavaScript.
-     *
-     * Kotlin/JS Overview: [kotl.in/js](https://kotl.in/js)
-     *
-     * [Change log](https://github.com/Kotlin/kotlinx-nodejs/blob/master/CHANGELOG.md)
-     *
-     * GitHub page: [Kotlin/kotlinx-nodejs](https://github.com/Kotlin/kotlinx-nodejs)
-     */
-    const val nodeJs = "$artifactBase-nodejs:_"
-
-    /**
-     * Lightweight library allowing to introspect basic stuff about Kotlin symbols.
-     *
-     * _As of version 1.0, it only supports getting names of parameters and the nullability of
-     * their types._
-     *
-     * [Documentation (of full reflection)](https://kotlinlang.org/docs/reference/reflection.html)
-     *
-     * [API reference (of full reflection)](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/)
-     *
-     * [Change log](https://github.com/Kotlin/kotlinx-nodejs/blob/master/CHANGELOG.md)
-     *
-     * GitHub page: [Kotlin/kotlinx.reflect.lite](https://github.com/Kotlin/kotlinx.reflect.lite)
-     */
-    val reflect = Reflect
 
     object Coroutines : IsNotADependency {
         private const val artifactPrefix = "$artifactBase-coroutines"
@@ -120,6 +69,19 @@ object KotlinX {
         const val test = "$artifactPrefix-test:_"
     }
 
+    /**
+     * Kotlin multiplatform / multi-format serialization.
+     *
+     * [Page on Kotlin's website](https://kotlinlang.org/docs/reference/serialization.html)
+     *
+     * [Kotlin Serialization Guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serialization-guide.md)
+     *
+     * [Change log](https://github.com/Kotlin/kotlinx.serialization/blob/master/CHANGELOG.md)
+     *
+     * GitHub page: [Kotlin/kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+     */
+    val serialization = Serialization
+
     object Serialization : IsNotADependency {
         private const val artifactPrefix = "$artifactBase-serialization"
 
@@ -144,6 +106,8 @@ object KotlinX {
         const val runtimeNative = "$artifactPrefix-runtime-native:_"
         //endregion
     }
+
+    val collections = Collections
 
     object Collections : IsNotADependency {
         private const val immutableArtifactPrefix = "$artifactBase-collections-immutable"
@@ -171,6 +135,17 @@ object KotlinX {
         const val immutableJvmOnly = "$immutableArtifactPrefix-jvm:_"
     }
 
+    /**
+     * Kotlin DSL for HTML.
+     *
+     * [Wiki](https://github.com/kotlin/kotlinx.html/wiki)
+     *
+     * [GitHub releases](https://github.com/Kotlin/kotlinx.html/releases)
+     *
+     * GitHub page: [Kotlin/kotlinx.html](https://github.com/Kotlin/kotlinx.html)
+     */
+    val html = Html
+
     object Html : IsNotADependency {
         private const val artifactPrefix = "$artifactBase-html"
 
@@ -178,11 +153,36 @@ object KotlinX {
         const val js = "$artifactPrefix-js:_"
     }
 
+    /**
+     * Kotlin multiplatform I/O library. (Experimental as of 2020-09-14)
+     *
+     * [Change log](https://github.com/Kotlin/kotlinx-io/blob/master/CHANGELOG.md)
+     *
+     * GitHub page: [Kotlin/kotlinx-io](https://github.com/Kotlin/kotlinx-io)
+     */
+    val io = Io
+
     object Io : IsNotADependency {
         private const val artifactPrefix = "$artifactBase-io"
 
         const val jvm = "$artifactPrefix-jvm:_"
     }
+
+    /**
+     * Lightweight library allowing to introspect basic stuff about Kotlin symbols.
+     *
+     * _As of version 1.0, it only supports getting names of parameters and the nullability of
+     * their types._
+     *
+     * [Documentation (of full reflection)](https://kotlinlang.org/docs/reference/reflection.html)
+     *
+     * [API reference (of full reflection)](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/)
+     *
+     * [Change log](https://github.com/Kotlin/kotlinx-nodejs/blob/master/CHANGELOG.md)
+     *
+     * GitHub page: [Kotlin/kotlinx.reflect.lite](https://github.com/Kotlin/kotlinx.reflect.lite)
+     */
+    val reflect = Reflect
 
     object Reflect : IsNotADependency {
         const val lite = "$artifactBase.reflect.lite:_"

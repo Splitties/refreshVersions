@@ -65,8 +65,6 @@ interface Firebase {
     val inAppMessagingDisplay: String
     val inAppMessagingDisplayKtx: String
 
-    val mlKit: MlKit
-
     val performanceMonitoring: String
 
     val realtimeDatabase: String
@@ -75,15 +73,18 @@ interface Firebase {
     val remoteConfig: String
     val remoteConfigKtx: String
 
+    val mlKit: MlKit
+
     interface MlKit : IsNotADependency {
         val vision: String
         val naturalLanguage: String
+
         val models: Models
 
         interface Models : IsNotADependency {
-            val vision: Vision
-            val naturalLanguage: NaturalLanguage
             val custom: String
+
+            val vision: Vision
 
             interface Vision : IsNotADependency {
                 val imageLabelling: String
@@ -92,6 +93,8 @@ interface Firebase {
                 val barcodeScanning: String
                 val autoMl: String
             }
+
+            val naturalLanguage: NaturalLanguage
 
             interface NaturalLanguage : IsNotADependency {
                 val languageIdentification: String

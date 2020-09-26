@@ -6,13 +6,19 @@ import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object Kotlin {
-
     /**
      * Kotlin Standard Library
      *
      * [API reference](https://kotlinlang.org/api/latest/jvm/stdlib/)
      */
     val stdlib = Stdlib
+
+    object Stdlib : DependencyNotationAndGroup(group = "org.jetbrains.kotlin", name = "kotlin-stdlib") {
+        @JvmField val jdk7 = "$artifactPrefix-jdk7:_"
+        @JvmField val jdk8 = "$artifactPrefix-jdk8:_"
+        @JvmField val js = "$artifactPrefix-js:_"
+        @JvmField val common = "$artifactPrefix-common:_"
+    }
 
     /**
      * The `kotlin.test` library provides annotations to mark test functions,
@@ -22,13 +28,6 @@ object Kotlin {
      * [Documentation and API reference](https://kotlinlang.org/api/latest/kotlin.test/)
      */
     val test = Test
-
-    object Stdlib : DependencyNotationAndGroup(group = "org.jetbrains.kotlin", name = "kotlin-stdlib") {
-        @JvmField val jdk7 = "$artifactPrefix-jdk7:_"
-        @JvmField val jdk8 = "$artifactPrefix-jdk8:_"
-        @JvmField val js = "$artifactPrefix-js:_"
-        @JvmField val common = "$artifactPrefix-common:_"
-    }
 
     object Test : IsNotADependency {
         private const val artifactPrefix = "org.jetbrains.kotlin:kotlin-test"

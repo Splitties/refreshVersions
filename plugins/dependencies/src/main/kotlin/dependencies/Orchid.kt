@@ -28,6 +28,7 @@ object Orchid {
      * Official webpage: [orchid.run/plugins](https://orchid.run/plugins)
      */
     val plugins = Plugins
+
     object Plugins : IsNotADependency {
         const val changelog         = "$groupId:OrchidChangelog:_"
         const val forms             = "$groupId:OrchidForms:_"
@@ -62,6 +63,7 @@ object Orchid {
      * Official webpage: [orchid.run/themes](https://orchid.run/themes)
      */
     val themes = Themes
+
     object Themes : IsNotADependency {
         const val bsDoc           = "$groupId:OrchidBsDoc:_"
         const val copper          = "$groupId:OrchidCopper:_"
@@ -70,6 +72,7 @@ object Orchid {
     }
 
     val bundles = Bundles
+
     object Bundles : IsNotADependency {
         const val all          = "$groupId:OrchidAll:_"
         const val blog         = "$groupId:OrchidBlog:_"

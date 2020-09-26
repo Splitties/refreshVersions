@@ -20,16 +20,6 @@ import org.gradle.kotlin.dsl.IsNotADependency
 @Incubating
 object Ktor {
 
-    val client = Client
-
-    /**
-     * As of ktor 1.3.0, ktor server artifacts support only the JVM.
-     */
-    val server = Server
-
-    val features = Features
-    val network = Network
-
     private const val group = "io.ktor"
     private const val artifactBase = "$group:ktor"
 
@@ -42,6 +32,8 @@ object Ktor {
     const val testDispatcher = "$artifactBase-test-dispatcher:_"
 
     const val utils = "$artifactBase-utils:_"
+
+    val client = Client
 
     object Client: IsNotADependency {
         private const val artifactPrefix = "$artifactBase-client"
@@ -98,6 +90,8 @@ object Ktor {
         @Deprecated("Use OkHttp or cio", ReplaceWith("okHttp"), DeprecationLevel.ERROR)
         const val android = "$artifactPrefix-android:_"
     }
+
+    val features = Features
 
     object Features: IsNotADependency {
         /** As of ktor 1.3.0, supports JVM only. */
@@ -186,6 +180,8 @@ object Ktor {
     /**
      * As of ktor 1.3.0, ktor server artifacts support only the JVM.
      */
+    val server = Server
+
     object Server: IsNotADependency {
         private const val artifactPrefix = "$artifactBase-server"
 
@@ -219,6 +215,8 @@ object Ktor {
          */
         const val testHost = "$artifactPrefix-test-host:_"
     }
+
+    val network = Network
 
     object Network: IsNotADependency {
         private const val artifactPrefix = "$artifactBase-network"

@@ -17,9 +17,6 @@ object JakeWharton {
      */
     const val timber = "com.jakewharton.timber:timber:_"
 
-    val retrofit2 = Retrofit2
-    val moshi = Moshi
-
     /**
      * A Kotlin DSL and Java/Kotlin builder API for constructing HTML-like tables which can be rendered to text.
      *
@@ -41,6 +38,13 @@ object JakeWharton {
      */
     const val wormholeGradlePlugin = "com.jakewharton.wormhole:wormhole-gradle:_"
 
+    /**
+     * A type-safe HTTP client for Android and the JVM
+     *
+     * GitHub page: [square/retrofit](https://github.com/square/retrofit)
+     */
+    val retrofit2 = Retrofit2
+
     object Retrofit2 : IsNotADependency {
         private const val artifactPrefix = "com.jakewharton.retrofit:retrofit2"
 
@@ -56,6 +60,8 @@ object JakeWharton {
             const val kotlinxSerialization = "$artifactPrefix-kotlinx-serialization-converter:_"
         }
     }
+
+    val moshi = Moshi
 
     object Moshi: IsNotADependency {
 
