@@ -35,7 +35,7 @@ object Google {
          * GitHub page: [material-components/material-components-android-compose-theme-adapter](https://github.com/material-components/material-components-android-compose-theme-adapter)
          * [GitHub releases here](https://github.com/material-components/material-components-android-compose-theme-adapter/releases)
          */
-        const val materialComposeThemeAdapter = "$artifactBase.material:compose-theme-adapte:_"
+        const val materialComposeThemeAdapter = "$artifactBase.material:compose-theme-adapter:_"
 
         private const val wearOsVersion = "_"
 

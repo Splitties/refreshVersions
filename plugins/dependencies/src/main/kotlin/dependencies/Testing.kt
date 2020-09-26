@@ -64,7 +64,12 @@ object Testing {
         private const val artifactBase = "io.kotest:kotest"
 
 
+        @Deprecated(message = "Replaced by kotest-framework-engine in 4.2")
         const val core = "$artifactBase-core:_"
+
+        const val frameworkEngine = "$artifactBase-framework-engine:_"
+        const val frameworkEngineJs = "$artifactBase-framework-engine-js:_"
+
         const val property = "$artifactBase-property:_"
         const val propertyArrow = "$artifactBase-property-arrow:_"
 
@@ -75,6 +80,7 @@ object Testing {
 
             const val junit4 = "$artifactPrefix-junit4:_"
             const val junit5 = "$artifactPrefix-junit5:_"
+            const val junit5Jvm = "$artifactPrefix-junit5-jvm:_"
         }
 
         val plugins = Plugins
