@@ -40,7 +40,7 @@ open class RefreshVersionsTask : DefaultTask() {
                 |
                 |> Checking Gradle's version
                 |You are currently running Gradle ${GradleVersion.current().version}
-                |To update to the current stable versions, run
+                |To update to the current stable version, run
                 |${'$'} ./gradlew wrapper --gradle-version ${version.version}
             """.trimMargin())
         }
