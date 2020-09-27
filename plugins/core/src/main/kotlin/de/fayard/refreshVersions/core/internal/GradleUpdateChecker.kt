@@ -1,15 +1,17 @@
 package de.fayard.refreshVersions.core.internal
 
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import de.fayard.refreshVersions.core.extensions.okhttp.await
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-internal class GradleUpdateChecker(
-    val httpClient: OkHttpClient,
-    val moshi: Moshi
-) {
+internal class GradleUpdateChecker(val httpClient: OkHttpClient) {
     val API_URL = "https://services.gradle.org/versions/current"
+
+    private val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
 
     suspend fun fetchGradleCurrentVersion(): GradleCurrentVersion? {
         val request = Request.Builder().url(API_URL).build()

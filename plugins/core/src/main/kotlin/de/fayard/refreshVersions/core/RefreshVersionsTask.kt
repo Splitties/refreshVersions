@@ -33,7 +33,7 @@ open class RefreshVersionsTask : DefaultTask() {
     }
 
     private fun warnAboutGradleUpdateAvailableIfAny() = runBlocking {
-        val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient, RefreshVersionsConfigHolder.moshi)
+        val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient)
         val version = checker.fetchGradleCurrentVersion() ?: return@runBlocking
         if (GradleVersion.version(version.version) > GradleVersion.current()) {
             println("""
