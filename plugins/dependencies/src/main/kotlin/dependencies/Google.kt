@@ -7,13 +7,19 @@ import org.gradle.kotlin.dsl.IsNotADependency
 @Incubating
 object Google {
 
-    val android = Android
-    val ar = Ar
-    val firebase get() = Firebase
-
     const val playServicesGradlePlugin = "com.google.gms:google-services:_"
 
-    val dagger = Dagger
+    /**
+     * Firebase Android libraries.
+     *
+     * We recommend **reading the official Firebase documention** before using it as **the setup is more than
+     * just adding the dependency.**
+     *
+     * See available libraries with link to their docs [here](https://firebase.google.com/docs/android/setup#available-libraries).
+     */
+    val firebase get() = Firebase
+
+    val android = Android
 
     object Android: IsNotADependency {
         private const val artifactBase = "com.google.android"
@@ -28,7 +34,6 @@ object Google {
         const val supportWearable = "$artifactBase.support:wearable:$wearOsVersion"
 
         val playServices = PlayServices
-        val play = Play
 
         object PlayServices: IsNotADependency {
             private const val artifactPrefix = "$artifactBase.gms:play-services"
@@ -94,6 +99,8 @@ object Google {
             const val wearOS = "$artifactPrefix-wearable:_"
         }
 
+        val play = Play
+
         object Play: IsNotADependency {
             private const val group = "$artifactBase.play"
 
@@ -101,6 +108,14 @@ object Google {
             const val coreKtx = "$group:core-ktx:_"
         }
     }
+
+    /***
+     * With ARCore, build new augmented reality experiences that seamlessly blend the digital and physical worlds.
+     *
+     * [Official doc here](https://developers.google.com/ar)
+     * [Android guide here](https://developers.google.com/ar/develop/java/quickstart).
+     */
+    val ar = Ar
 
     object Ar: IsNotADependency {
         private const val baseArtifact = "com.google.ar"
@@ -130,22 +145,25 @@ object Google {
         }
     }
 
+    /**
+     * A fast dependency injector for Android and Java.
+     *
+     * [User documentation here](https://dagger.dev/dev-guide/)
+     * [Dagger API here](https://dagger.dev/api/latest/)
+     * GitHub page: [google/dagger](https://github.com/google/dagger)
+     */
+    val dagger = Dagger
+
     object Dagger : DependencyNotationAndGroup(group = "com.google.dagger", name = "dagger") {
         private const val group = "com.google.dagger"
 
         @JvmField val compiler = "$artifactPrefix-compiler:_"
 
-        val hilt = Hilt
-
-        val grpc = Grpc
-
         @JvmField val spi = "$artifactPrefix-spi:_"
         @JvmField val producers = "$artifactPrefix-producers:_"
         @JvmField val gwt = "$artifactPrefix-gwt:_"
 
-        @Deprecated("Consider migrating to Google.dagger.hilt.android")
-        @Suppress("deprecation")
-        val android = Android
+        val hilt = Hilt
 
         object Hilt: IsNotADependency {
             val android = Android
@@ -161,6 +179,10 @@ object Google {
         }
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")
+        @Suppress("deprecation")
+        val android = Android
+
+        @Deprecated("Consider migrating to Google.dagger.hilt.android")
         object Android : DependencyNotationAndGroup(group = group, name = "dagger-android") {
             @JvmField val processor = "$artifactPrefix-processor:_"
 
@@ -169,6 +191,8 @@ object Google {
              */
             @JvmField val support = "$artifactPrefix-support:_"
         }
+
+        val grpc = Grpc
 
         object Grpc: IsNotADependency {
             val server = Server
