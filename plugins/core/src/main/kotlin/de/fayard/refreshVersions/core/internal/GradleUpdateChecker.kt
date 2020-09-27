@@ -5,6 +5,8 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import de.fayard.refreshVersions.core.extensions.okhttp.await
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import retrofit2.HttpException
+import retrofit2.Response
 
 internal class GradleUpdateChecker(val httpClient: OkHttpClient) {
     val API_URL = "https://services.gradle.org/versions/current"
@@ -19,9 +21,7 @@ internal class GradleUpdateChecker(val httpClient: OkHttpClient) {
             if (response.isSuccessful) {
                 moshi.adapter(GradleCurrentVersion::class.java)
                     .fromJson(response.body!!.source())
-            } else {
-                null
-            }
+            } else throw HttpException(Response.error<Any?>(response.code, response.body!!))
         }
     }
 }
