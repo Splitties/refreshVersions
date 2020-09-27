@@ -52,11 +52,6 @@ class MavenDependencyVersionsFetchingTest {
 
     private val defaultHttpClient by lazy { createTestHttpClient() }
 
-    private val defaultMoshi : Moshi=
-        Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-
     private fun createTestHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor())
