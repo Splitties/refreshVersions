@@ -66,10 +66,11 @@ object RefreshVersionsConfigHolder {
             .build()
     }
 
-    internal val moshi : Moshi =
+    internal val moshi: Moshi by resettableDelegates.Lazy {
         Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
+    }
 
     internal fun initializedUsedVersion(settings: Settings) {
         currentVersion = settings.currentVersionOfRefreshVersions()
