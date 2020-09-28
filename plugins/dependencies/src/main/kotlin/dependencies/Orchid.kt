@@ -1,8 +1,22 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
+/**
+ * Build and deploy beautiful documentation sites that grow with you.
+ *
+ * Official website: [orchid.run](https://orchid.run/)
+ *
+ * [Documentation](https://orchid.run/wiki/user-manual/getting-started)
+ *
+ * [Quick-Start](https://orchid.run/wiki/user-manual/getting-started/quickstart)
+ *
+ * [GitHub releases](https://github.com/orchidhq/Orchid/releases)
+ *
+ * GitHub page: [orchidhq/Orchid](https://github.com/orchidhq/Orchid)
+ */
 object Orchid {
 
     private const val groupId = "io.github.javaeden.orchid"
@@ -10,8 +24,12 @@ object Orchid {
     const val core = "$groupId:OrchidCore:_"
     const val test = "$groupId:OrchidTest:_"
 
+    /**
+     * Official webpage: [orchid.run/plugins](https://orchid.run/plugins)
+     */
     val plugins = Plugins
-    object Plugins {
+
+    object Plugins : IsNotADependency {
         const val changelog         = "$groupId:OrchidChangelog:_"
         const val forms             = "$groupId:OrchidForms:_"
         const val groovydoc         = "$groupId:OrchidGroovydoc:_"
@@ -41,8 +59,12 @@ object Orchid {
         const val netlify           = "$groupId:OrchidNetlify:_"
     }
 
+    /**
+     * Official webpage: [orchid.run/themes](https://orchid.run/themes)
+     */
     val themes = Themes
-    object Themes {
+
+    object Themes : IsNotADependency {
         const val bsDoc           = "$groupId:OrchidBsDoc:_"
         const val copper          = "$groupId:OrchidCopper:_"
         const val editorial       = "$groupId:OrchidEditorial:_"
@@ -50,7 +72,8 @@ object Orchid {
     }
 
     val bundles = Bundles
-    object Bundles {
+
+    object Bundles : IsNotADependency {
         const val all          = "$groupId:OrchidAll:_"
         const val blog         = "$groupId:OrchidBlog:_"
         const val docs         = "$groupId:OrchidDocs:_"

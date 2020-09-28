@@ -6,10 +6,6 @@ import org.gradle.api.internal.artifacts.dependencies.AbstractDependency
 
 internal object UsedPluginsHolder {
 
-    fun clear() {
-        usedPluginDependencies.clear()
-    }
-
     fun noteUsedPluginDependency(
         dependencyNotation: String,
         repositories: ArtifactRepositoryContainer
@@ -35,7 +31,9 @@ internal object UsedPluginsHolder {
         val repositories: ArtifactRepositoryContainer
     )
 
-    private val usedPluginDependencies = mutableListOf<UsedPluginDependency>()
+    private val usedPluginDependencies by RefreshVersionsConfigHolder.resettableDelegates.Lazy {
+        mutableListOf<UsedPluginDependency>()
+    }
 
     private class ConfigurationLessDependency(val dependencyNotation: String) : AbstractDependency() {
 

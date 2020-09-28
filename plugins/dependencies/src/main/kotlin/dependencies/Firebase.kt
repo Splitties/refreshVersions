@@ -1,6 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "ObjectPropertyName", "SpellCheckingInspection")
 
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
  * Firebase Android libraries.
@@ -64,8 +65,6 @@ interface Firebase {
     val inAppMessagingDisplay: String
     val inAppMessagingDisplayKtx: String
 
-    val mlKit: MlKit
-
     val performanceMonitoring: String
 
     val realtimeDatabase: String
@@ -74,17 +73,20 @@ interface Firebase {
     val remoteConfig: String
     val remoteConfigKtx: String
 
-    interface MlKit {
+    val mlKit: MlKit
+
+    interface MlKit : IsNotADependency {
         val vision: String
         val naturalLanguage: String
+
         val models: Models
 
-        interface Models {
-            val vision: Vision
-            val naturalLanguage: NaturalLanguage
+        interface Models : IsNotADependency {
             val custom: String
 
-            interface Vision {
+            val vision: Vision
+
+            interface Vision : IsNotADependency {
                 val imageLabelling: String
                 val objectDetectionAndTracking: String
                 val faceDetection: String
@@ -92,7 +94,9 @@ interface Firebase {
                 val autoMl: String
             }
 
-            interface NaturalLanguage {
+            val naturalLanguage: NaturalLanguage
+
+            interface NaturalLanguage : IsNotADependency {
                 val languageIdentification: String
                 val translate: String
                 val smartReply: String
@@ -101,7 +105,7 @@ interface Firebase {
     }
 }
 
-internal class FirebaseImpl(isBom: Boolean) : Firebase {
+internal class FirebaseImpl(isBom: Boolean) : Firebase, IsNotADependency {
 
     private val suffix = if (isBom) "" else ":_"
     private val artifactPrefix = "com.google.firebase:firebase"
@@ -129,7 +133,9 @@ internal class FirebaseImpl(isBom: Boolean) : Firebase {
         private val mlArtifactPrefix = "$artifactPrefix-ml"
         override val vision = "$mlArtifactPrefix-vision$suffix"
         override val naturalLanguage = "$mlArtifactPrefix-natural-language$suffix"
+
         override val models: Firebase.MlKit.Models = object : Firebase.MlKit.Models {
+
             override val vision: Firebase.MlKit.Models.Vision = object : Firebase.MlKit.Models.Vision {
                 private val artifactPrefix = "$mlArtifactPrefix-vision"
 

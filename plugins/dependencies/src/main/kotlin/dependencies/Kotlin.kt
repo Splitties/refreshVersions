@@ -2,12 +2,16 @@
 
 import dependencies.DependencyNotationAndGroup
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object Kotlin {
-
+    /**
+     * Kotlin Standard Library
+     *
+     * [API reference](https://kotlinlang.org/api/latest/jvm/stdlib/)
+     */
     val stdlib = Stdlib
-    val test = Test
 
     object Stdlib : DependencyNotationAndGroup(group = "org.jetbrains.kotlin", name = "kotlin-stdlib") {
         @JvmField val jdk7 = "$artifactPrefix-jdk7:_"
@@ -16,7 +20,16 @@ object Kotlin {
         @JvmField val common = "$artifactPrefix-common:_"
     }
 
-    object Test {
+    /**
+     * The `kotlin.test` library provides annotations to mark test functions,
+     * and a set of utility functions for performing assertions in tests,
+     * independently of the test framework being used.
+     *
+     * [Documentation and API reference](https://kotlinlang.org/api/latest/kotlin.test/)
+     */
+    val test = Test
+
+    object Test : IsNotADependency {
         private const val artifactPrefix = "org.jetbrains.kotlin:kotlin-test"
 
         const val annotationsCommon = "$artifactPrefix-annotations-common:_"

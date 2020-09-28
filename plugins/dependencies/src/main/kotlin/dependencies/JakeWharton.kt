@@ -5,6 +5,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object JakeWharton {
@@ -15,9 +16,6 @@ object JakeWharton {
      * GitHub page: [JakeWharton/timber](https://github.com/JakeWharton/timber)
      */
     const val timber = "com.jakewharton.timber:timber:_"
-
-    val retrofit2 = Retrofit2
-    val moshi = Moshi
 
     /**
      * A Kotlin DSL and Java/Kotlin builder API for constructing HTML-like tables which can be rendered to text.
@@ -40,12 +38,19 @@ object JakeWharton {
      */
     const val wormholeGradlePlugin = "com.jakewharton.wormhole:wormhole-gradle:_"
 
-    object Retrofit2 {
+    /**
+     * A type-safe HTTP client for Android and the JVM
+     *
+     * GitHub page: [square/retrofit](https://github.com/square/retrofit)
+     */
+    val retrofit2 = Retrofit2
+
+    object Retrofit2 : IsNotADependency {
         private const val artifactPrefix = "com.jakewharton.retrofit:retrofit2"
 
         val converter = Converter
 
-        object Converter {
+        object Converter: IsNotADependency {
 
             /**
              * A Retrofit 2 `Converter.Factory` for [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/).
@@ -56,7 +61,9 @@ object JakeWharton {
         }
     }
 
-    object Moshi {
+    val moshi = Moshi
+
+    object Moshi: IsNotADependency {
 
         /**
          * Shimo is a `JsonAdapter.Factory` for [Square.moshi] which randomizes the order of keys

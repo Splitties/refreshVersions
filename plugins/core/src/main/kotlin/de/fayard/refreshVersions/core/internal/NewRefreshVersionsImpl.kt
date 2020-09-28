@@ -14,6 +14,7 @@ import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.initialization.Settings
+import org.gradle.util.GradleVersion
 
 internal suspend fun lookupVersionCandidates(
     httpClient: OkHttpClient,
@@ -93,12 +94,35 @@ internal suspend fun lookupVersionCandidates(
             )
         }
 
+        val gradleUpdatesAsync = async {
+            val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient)
+            val currentGradleVersion = GradleVersion.current()
+            GradleUpdateChecker.VersionType.values().filterNot {
+                it == GradleUpdateChecker.VersionType.All
+            }.let { types ->
+                when {
+                    currentGradleVersion.isSnapshot -> types
+                    else -> types.filterNot {
+                        it == GradleUpdateChecker.VersionType.ReleaseNightly ||
+                                it == GradleUpdateChecker.VersionType.Nightly
+                    }
+                }
+            }.map { type ->
+                async {
+                    checker.fetchGradleVersion(type).map { GradleVersion.version(it.version) }
+                }
+            }.awaitAll().flatten().filter {
+                it > currentGradleVersion
+            }.sorted().map { Version(it.version) }
+        }
+
         val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
 
         return@coroutineScope VersionCandidatesLookupResult(
             dependenciesWithVersionsCandidates = dependenciesWithVersionCandidates,
             dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
             dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
+            gradleUpdates = gradleUpdatesAsync.await(),
             selfUpdates = selfUpdateAsync.await()
         )
         TODO("Check version candidates for the same key are the same, or warn the user with actionable details")

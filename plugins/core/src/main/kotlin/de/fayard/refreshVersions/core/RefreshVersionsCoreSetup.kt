@@ -47,7 +47,6 @@ fun Settings.bootstrapRefreshVersionsCore(
                 "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
                 "or RefreshVersionsCoreSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
     }
-    UsedPluginsHolder.clear()
     RefreshVersionsConfigHolder.initialize(
         settings = settings,
         artifactVersionKeyRules = artifactVersionKeyRules,
