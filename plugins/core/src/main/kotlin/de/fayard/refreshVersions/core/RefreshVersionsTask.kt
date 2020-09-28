@@ -6,6 +6,7 @@ import kotlinx.coroutines.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.tasks.TaskAction
+import org.gradle.util.GradleVersion
 
 open class RefreshVersionsTask : DefaultTask() {
 
@@ -15,19 +16,44 @@ open class RefreshVersionsTask : DefaultTask() {
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
 
-        val result: VersionCandidatesLookupResult = runBlocking {
-            lookupVersionCandidates(
-                httpClient = RefreshVersionsConfigHolder.httpClient,
-                project = project,
-                versionProperties = RefreshVersionsConfigHolder.readVersionProperties(),
-                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-            )
-        }
-        project.rootProject.updateVersionsProperties(result.dependenciesWithVersionsCandidates)
-        project.rootProject.updateGradleSettingsIncludingForBuildSrc(result.selfUpdates)
+        runBlocking {
+            val versionsLookupResultAsync = async {
+                lookupVersionCandidates(
+                    httpClient = RefreshVersionsConfigHolder.httpClient,
+                    project = project,
+                    versionProperties = RefreshVersionsConfigHolder.readVersionProperties(),
+                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+                )
+            }
+            val result = versionsLookupResultAsync.await()
+            project.rootProject.updateVersionsProperties(result.dependenciesWithVersionsCandidates)
+            project.rootProject.updateGradleSettingsIncludingForBuildSrc(result.selfUpdates)
 
-        warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
-        warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
+            warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
+            warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
+            warnAboutGradleUpdateAvailableIfAny(result.gradleUpdates)
+        }
+    }
+
+    private fun warnAboutGradleUpdateAvailableIfAny(gradleUpdates: List<Version>) {
+        if (gradleUpdates.isEmpty()) return
+        val currentGradleVersion = GradleVersion.current()
+        val message = buildString {
+            appendln("The Gradle version used in this project is not up to date.")
+            append("To update from version ${currentGradleVersion.version}, run ")
+            if (gradleUpdates.size == 1) {
+                appendln("this command:")
+            } else {
+                appendln("one of these commands:")
+            }
+            gradleUpdates.forEach { version ->
+                appendln("./gradlew wrapper --gradle-version ${version.value}")
+            }
+            appendln()
+            appendln("Be sure to read the migration guides to have a smooth upgrade process.")
+            appendln("Note that you can replace with a specific intermediate version if needed.")
+        }
+        logger.warn(message)
     }
 
     private fun warnAboutDynamicVersionsIfAny(dependenciesWithDynamicVersions: List<Dependency>) {

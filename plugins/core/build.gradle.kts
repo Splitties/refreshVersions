@@ -37,6 +37,7 @@ dependencies {
     implementation(Square.retrofit2.retrofit) {
         because("It has ready to use HttpException class")
     }
+    implementation(Square.moshi.kotlinReflect)
 
     testImplementation(Square.okHttp3.loggingInterceptor)
     testImplementation(platform(notation = "org.junit:junit-bom:_"))
