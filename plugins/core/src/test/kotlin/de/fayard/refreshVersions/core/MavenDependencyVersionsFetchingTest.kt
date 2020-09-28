@@ -1,22 +1,27 @@
 package de.fayard.refreshVersions.core
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import de.fayard.refreshVersions.core.internal.GradleUpdateChecker
-import testutils.getVersionCandidates
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import testutils.disabledBecauseIsAnExperiment
+import testutils.getVersionCandidates
 
 class MavenDependencyVersionsFetchingTest {
 
     @Test
     fun fetchGradleVersion() = runBlocking {
         val checker = GradleUpdateChecker(defaultHttpClient)
-        println(checker.fetchGradleCurrentVersion())
+        GradleUpdateChecker.VersionType.values().filterNot {
+            it == GradleUpdateChecker.VersionType.All // Filtered out because quite slow and unused for now.
+        }.forEach { versionType ->
+            launch {
+                println(checker.fetchGradleVersion(versionType))
+            }
+        }
     }
 
 

@@ -16,34 +16,44 @@ open class RefreshVersionsTask : DefaultTask() {
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
 
-        val result: VersionCandidatesLookupResult = runBlocking {
-            lookupVersionCandidates(
-                httpClient = RefreshVersionsConfigHolder.httpClient,
-                project = project,
-                versionProperties = RefreshVersionsConfigHolder.readVersionProperties(),
-                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-            )
-        }
-        project.rootProject.updateVersionsProperties(result.dependenciesWithVersionsCandidates)
-        project.rootProject.updateGradleSettingsIncludingForBuildSrc(result.selfUpdates)
+        runBlocking {
+            val versionsLookupResultAsync = async {
+                lookupVersionCandidates(
+                    httpClient = RefreshVersionsConfigHolder.httpClient,
+                    project = project,
+                    versionProperties = RefreshVersionsConfigHolder.readVersionProperties(),
+                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+                )
+            }
+            val result = versionsLookupResultAsync.await()
+            project.rootProject.updateVersionsProperties(result.dependenciesWithVersionsCandidates)
+            project.rootProject.updateGradleSettingsIncludingForBuildSrc(result.selfUpdates)
 
-        warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
-        warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
-        warnAboutGradleUpdateAvailableIfAny()
+            warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
+            warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
+            warnAboutGradleUpdateAvailableIfAny(result.gradleUpdates)
+        }
     }
 
-    private fun warnAboutGradleUpdateAvailableIfAny() = runBlocking {
-        val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient)
-        val version = checker.fetchGradleCurrentVersion() ?: return@runBlocking
-        if (GradleVersion.version(version.version) > GradleVersion.current()) {
-            println("""
-                |
-                |> Checking Gradle's version
-                |You are currently running Gradle ${GradleVersion.current().version}
-                |To update to the current stable version, run
-                |${'$'} ./gradlew wrapper --gradle-version ${version.version}
-            """.trimMargin())
+    private fun warnAboutGradleUpdateAvailableIfAny(gradleUpdates: List<Version>) {
+        if (gradleUpdates.isEmpty()) return
+        val currentGradleVersion = GradleVersion.current()
+        val message = buildString {
+            appendln("The Gradle version used in this project is not up to date.")
+            append("To update from version ${currentGradleVersion.version}, run ")
+            if (gradleUpdates.size == 1) {
+                appendln("this command:")
+            } else {
+                appendln("one of these commands:")
+            }
+            gradleUpdates.forEach { version ->
+                appendln("./gradlew wrapper --gradle-version ${version.value}")
+            }
+            appendln()
+            appendln("Be sure to read the migration guides to have a smooth upgrade process.")
+            appendln("Note that you can replace with a specific intermediate version if needed.")
         }
+        logger.warn(message)
     }
 
     private fun warnAboutDynamicVersionsIfAny(dependenciesWithDynamicVersions: List<Dependency>) {
