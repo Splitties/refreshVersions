@@ -76,29 +76,55 @@ interface Firebase {
     val mlKit: MlKit
 
     interface MlKit : IsNotADependency {
+        private companion object {
+            const val deprecationMessage = "Use ML Kit instead. " +
+                    "Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit. " +
+                    "See migration page: https://developers.google.com/ml-kit/migration/android"
+        }
+
+        @Deprecated(deprecationMessage)
         val vision: String
+
+        @Deprecated(deprecationMessage)
         val naturalLanguage: String
 
         val models: Models
 
         interface Models : IsNotADependency {
-            val custom: String
 
+            val custom: String // This is the only Firebase ML Kit artifact not deprecated on 2020-08-14
+
+            @Deprecated(deprecationMessage)
             val vision: Vision
 
             interface Vision : IsNotADependency {
+                @Deprecated(deprecationMessage)
                 val imageLabelling: String
+
+                @Deprecated(deprecationMessage)
                 val objectDetectionAndTracking: String
+
+                @Deprecated(deprecationMessage)
                 val faceDetection: String
+
+                @Deprecated(deprecationMessage)
                 val barcodeScanning: String
+
+                @Deprecated(deprecationMessage)
                 val autoMl: String
             }
 
+            @Deprecated(deprecationMessage)
             val naturalLanguage: NaturalLanguage
 
             interface NaturalLanguage : IsNotADependency {
+                @Deprecated(deprecationMessage)
                 val languageIdentification: String
+
+                @Deprecated(deprecationMessage)
                 val translate: String
+
+                @Deprecated(deprecationMessage)
                 val smartReply: String
             }
         }
@@ -129,6 +155,7 @@ internal class FirebaseImpl(isBom: Boolean) : Firebase, IsNotADependency {
     override val inAppMessagingDisplay = "$artifactPrefix-inappmessaging-display$suffix"
     override val inAppMessagingDisplayKtx = "$artifactPrefix-inappmessaging-display-ktx$suffix"
 
+    @Suppress("OverridingDeprecatedMember")
     override val mlKit: Firebase.MlKit = object : Firebase.MlKit {
         private val mlArtifactPrefix = "$artifactPrefix-ml"
         override val vision = "$mlArtifactPrefix-vision$suffix"
@@ -145,13 +172,14 @@ internal class FirebaseImpl(isBom: Boolean) : Firebase, IsNotADependency {
                 override val barcodeScanning = "$artifactPrefix-barcode-model$suffix"
                 override val autoMl = "$artifactPrefix-automl$suffix"
             }
-            override val naturalLanguage: Firebase.MlKit.Models.NaturalLanguage = object : Firebase.MlKit.Models.NaturalLanguage {
-                private val artifactPrefix = "$mlArtifactPrefix-natural-language"
+            override val naturalLanguage: Firebase.MlKit.Models.NaturalLanguage =
+                object : Firebase.MlKit.Models.NaturalLanguage {
+                    private val artifactPrefix = "$mlArtifactPrefix-natural-language"
 
-                override val languageIdentification = "$artifactPrefix-language-id-model$suffix"
-                override val translate = "$artifactPrefix-translate-model$suffix"
-                override val smartReply = "$artifactPrefix-smart-reply-model$suffix"
-            }
+                    override val languageIdentification = "$artifactPrefix-language-id-model$suffix"
+                    override val translate = "$artifactPrefix-translate-model$suffix"
+                    override val smartReply = "$artifactPrefix-smart-reply-model$suffix"
+                }
 
             override val custom: String = "$mlArtifactPrefix-model-interpreter$suffix"
         }

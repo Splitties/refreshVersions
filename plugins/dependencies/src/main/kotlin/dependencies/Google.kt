@@ -21,7 +21,7 @@ object Google {
 
     val android = Android
 
-    object Android: IsNotADependency {
+    object Android : IsNotADependency {
         private const val artifactBase = "com.google.android"
 
         const val browserHelper = "com.google.androidbrowserhelper:androidbrowserhelper:_"
@@ -35,7 +35,7 @@ object Google {
 
         val playServices = PlayServices
 
-        object PlayServices: IsNotADependency {
+        object PlayServices : IsNotADependency {
             private const val artifactPrefix = "$artifactBase.gms:play-services"
 
             /** Google Account Login */
@@ -97,11 +97,56 @@ object Google {
 
             /** Wear OS by Google */
             const val wearOS = "$artifactPrefix-wearable:_"
+
+            val mlKit = MlKit
+
+            object MlKit : IsNotADependency {
+                private const val prefix = "$artifactPrefix-mlkit"
+
+
+                val vision = Vision
+
+                object Vision {
+
+                    @RequiresOptIn(
+                        message = "This library has a know issue on some/many devices where it'll never work. " +
+                                "Use the bundled version to avoid that issue: Google.mlKit.vision.barcodeScanning " +
+                                "(costs 2MB in the app but should work)" +
+                                "See the issue reported back in 2018 here: https://issuetracker.google.com/issues/80454351"
+                    )
+                    annotation class PlayServicesBarcodeScanningUnreliableOnSomeDevices
+
+                    /**
+                     * **WARNING**:
+                     *
+                     * This library has a know issue on some/many devices where it'll never work.
+                     * Use the bundled version to avoid that issue: [Google.MlKit.Vision.barcodeScanning]
+                     * (costs 2MB in the app but should work)See the issue reported back in 2018 here: https://issuetracker.google.com/issues/80454351
+                     */
+                    @PlayServicesBarcodeScanningUnreliableOnSomeDevices
+                    const val barcodeScanning = "$prefix-barcode-scanning:_"
+
+                    /**
+                     * Unbundled version of [Google.MlKit.Vision.faceDetection]
+                     */
+                    const val faceDetection = "$prefix-face-detection:_"
+
+                    /**
+                     * Unbundled version of [Google.MlKit.Vision.imageLabeling]
+                     */
+                    const val imageLabeling = "$prefix-image-labeling:_"
+
+                    /**
+                     * [Overview](https://developers.google.com/ml-kit/vision/text-recognition)
+                     */
+                    const val textRecognition = "$prefix-text-recognition:_"
+                }
+            }
         }
 
         val play = Play
 
-        object Play: IsNotADependency {
+        object Play : IsNotADependency {
             private const val group = "$artifactBase.play"
 
             const val core = "$group:core:_"
@@ -117,7 +162,7 @@ object Google {
      */
     val ar = Ar
 
-    object Ar: IsNotADependency {
+    object Ar : IsNotADependency {
         private const val baseArtifact = "com.google.ar"
 
         /**
@@ -130,7 +175,7 @@ object Google {
          */
         val sceneform = Sceneform
 
-        object Sceneform: IsNotADependency {
+        object Sceneform : IsNotADependency {
             private const val artifactPrefix = "$baseArtifact.sceneform"
 
             const val animation = "$artifactPrefix:animation:_"
@@ -165,7 +210,7 @@ object Google {
 
         val hilt = Hilt
 
-        object Hilt: IsNotADependency {
+        object Hilt : IsNotADependency {
             val android = Android
 
             object Android : DependencyNotationAndGroup(group = group, name = "hilt-android") {
@@ -194,13 +239,117 @@ object Google {
 
         val grpc = Grpc
 
-        object Grpc: IsNotADependency {
+        object Grpc : IsNotADependency {
             val server = Server
 
             object Server : DependencyNotationAndGroup(group = group, name = "dagger-grpc-server") {
                 @JvmField val processor = "$artifactPrefix-processor:_"
                 @JvmField val annotations = "$artifactPrefix-annotations:_"
             }
+        }
+    }
+
+    /**
+     * Machine learning for mobile developers
+     *
+     * Official website: [developers.google.com/ml-kit](https://developers.google.com/ml-kit)
+     *
+     * These artifacts have bundled models.
+     */
+    val mlKit = MlKit
+
+    object MlKit : IsNotADependency {
+        private const val group = "com.google.mlkit"
+
+        val vision = Vision
+
+        object Vision : IsNotADependency {
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/vision/barcode-scanning)
+             *
+             * If
+             */
+            const val barcodeScanning = "$group:barcode-scanning:_"
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/vision/digital-ink-recognition)
+             */
+            const val digitalInkRecognition = "$group:digital-ink-recognition:_"
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/vision/face-detection)
+             */
+            const val faceDetection = "$group:face-detection:_"
+
+            /**
+             * Add downloading of the models instead of having to bundle them in the app for [ImageLabeling.autoMl].
+             *
+             * [Official documentation](https://firebase.google.com/docs/ml/android/label-images-with-automl)
+             */
+            const val linkFirebase = "$group:linkfirebase:_"
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/vision/image-labeling)
+             */
+            val imageLabeling = ImageLabeling
+
+            object ImageLabeling : DependencyNotationAndGroup(group = group, name = "image-labeling") {
+
+                /**
+                 * [ML Kit documentation](https://developers.google.com/ml-kit/vision/image-labeling/automl/android)
+                 *
+                 * [Firebase documentation](https://firebase.google.com/docs/ml/android/label-images-with-automl)
+                 */
+                @JvmField val autoMl = "$artifactPrefix-automl:_"
+
+                /**
+                 * [Official documentation](https://developers.google.com/ml-kit/vision/image-labeling/custom-models/android)
+                 */
+                @JvmField val custom = "$artifactPrefix-custom:_"
+            }
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/vision/object-detection)
+             */
+            val objectDetection = ObjectDetection
+
+            object ObjectDetection : DependencyNotationAndGroup(group = group, name = "object-detection") {
+
+                /**
+                 * [Official documentation](https://developers.google.com/ml-kit/vision/object-detection/custom-models/android)
+                 */
+                @JvmField val custom = "$artifactPrefix-custom:_"
+            }
+
+            /**
+             * [Official documentation](https://developers.google.com/ml-kit/vision/pose-detection)
+             */
+            val poseDetection = PoseDetection
+
+            object PoseDetection : DependencyNotationAndGroup(group = group, name = "pose-detection") {
+                @JvmField val accurate = "$artifactPrefix-accurate:_"
+            }
+        }
+
+        val naturalLanguage = NaturalLanguage
+
+        object NaturalLanguage : IsNotADependency {
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/language/identification)
+             */
+            const val languageIdentification = "$group:language-id:_"
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/language/translation)
+             */
+            const val translate = "$group:translate:_"
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/language/smart-reply)
+             */
+            const val smartReply = "$group:smart-reply:_"
         }
     }
 }
