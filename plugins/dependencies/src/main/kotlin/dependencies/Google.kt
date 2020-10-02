@@ -109,17 +109,23 @@ object Google {
                 object Vision {
 
                     /**
-                     * @see Google.MlKit.Vision.barcodeScanning
+                     * Unbundled version of [Google.MlKit.Vision.barcodeScanning]
+                     *
+                     * [Overview](https://developers.google.com/ml-kit/vision/barcode-scanning)
                      */
                     const val barcodeScanning = "$prefix-barcode-scanning:_"
 
                     /**
                      * Unbundled version of [Google.MlKit.Vision.faceDetection]
+                     *
+                     * [Overview](https://developers.google.com/ml-kit/vision/face-detection)
                      */
                     const val faceDetection = "$prefix-face-detection:_"
 
                     /**
                      * Unbundled version of [Google.MlKit.Vision.imageLabeling]
+                     *
+                     * [Overview](https://developers.google.com/ml-kit/vision/image-labeling)
                      */
                     const val imageLabeling = "$prefix-image-labeling:_"
 
@@ -253,9 +259,9 @@ object Google {
         object Vision : IsNotADependency {
 
             /**
-             * [Overview](https://developers.google.com/ml-kit/vision/barcode-scanning)
+             * Bundled version of [Google.Android.PlayServices.MlKit.Vision.barcodeScanning]
              *
-             * @see Google.Android.PlayServices.MlKit.Vision.barcodeScanning
+             * [Overview](https://developers.google.com/ml-kit/vision/barcode-scanning)
              */
             const val barcodeScanning = "$group:barcode-scanning:_"
 
@@ -265,9 +271,9 @@ object Google {
             const val digitalInkRecognition = "$group:digital-ink-recognition:_"
 
             /**
-             * [Overview](https://developers.google.com/ml-kit/vision/face-detection)
+             * Bundled version of [Google.Android.PlayServices.MlKit.Vision.faceDetection]
              *
-             * @see Google.Android.PlayServices.MlKit.Vision.faceDetection
+             * [Overview](https://developers.google.com/ml-kit/vision/face-detection)
              */
             const val faceDetection = "$group:face-detection:_"
 
@@ -279,9 +285,9 @@ object Google {
             const val linkFirebase = "$group:linkfirebase:_"
 
             /**
-             * [Overview](https://developers.google.com/ml-kit/vision/image-labeling)
+             * Bundled version of [Google.Android.PlayServices.MlKit.Vision.imageLabeling]
              *
-             * @see Google.Android.PlayServices.MlKit.Vision.imageLabeling
+             * [Overview](https://developers.google.com/ml-kit/vision/image-labeling)
              */
             val imageLabeling = ImageLabeling
 
