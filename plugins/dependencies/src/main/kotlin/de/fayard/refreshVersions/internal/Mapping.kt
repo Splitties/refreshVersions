@@ -21,6 +21,7 @@ import kotlin.reflect.KVisibility
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
+import kotlin.reflect.jvm.javaType
 import kotlin.reflect.typeOf
 
 internal data class DependencyMapping(
@@ -89,7 +90,10 @@ private fun getArtifactNameToConstantMappingFromObject(
 
     val mappingOfNestedObjects = objectClass.memberProperties.asSequence().filter { kProperty ->
         @OptIn(ExperimentalStdlibApi::class)
-        kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType != typeOf<String>()
+        kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType.let {
+            // Filter out dependency constants and redirection properties.
+            it != typeOf<String>() && it.javaType != java.lang.Void::class.java
+        }
     }.flatMap { kProperty ->
         @Suppress("unchecked_cast")
         val nestedObjectInstance = (kProperty as KProperty1<Any?, Any>).get(objectInstance)
@@ -103,9 +107,10 @@ private fun getArtifactNameToConstantMappingFromObject(
     @OptIn(ExperimentalStdlibApi::class)
     val currentObjectDependencyNotations: Sequence<Pair<KProperty<*>?, String>> =
         objectClass.memberProperties.asSequence().filter { kProperty ->
-            val returnType = kProperty.returnType
-            kProperty.visibility == KVisibility.PUBLIC &&
-                    (returnType == typeOf<String>() || returnType.isSubtypeOf(typeOf<DependencyNotationAndGroup>()))
+            kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType.let {
+                (it == typeOf<String>() || it.isSubtypeOf(typeOf<DependencyNotationAndGroup>())) &&
+                        it.javaType != java.lang.Void::class.java // Filter out redirection properties.
+            }
         }.mapNotNull { kProperty ->
             val javaField: Field? = kProperty.javaField
 

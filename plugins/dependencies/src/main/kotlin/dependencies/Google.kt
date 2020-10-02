@@ -327,6 +327,16 @@ object Google {
             object PoseDetection : DependencyNotationAndGroup(group = group, name = "pose-detection") {
                 @JvmField val accurate = "$artifactPrefix-accurate:_"
             }
+
+            @Deprecated(
+                message = "There's no bundled version of ML Kit text recognition. Use the Play Services based one.",
+                level = DeprecationLevel.ERROR,
+                replaceWith = ReplaceWith("Google.android.playServices.mlKit.vision.textRecognition")
+            )
+            val textRecognition: Nothing
+                get() = throw UnsupportedOperationException(
+                    "Use Google.android.playServices.mlKit.vision.textRecognition instead."
+                )
         }
 
         val naturalLanguage = NaturalLanguage
