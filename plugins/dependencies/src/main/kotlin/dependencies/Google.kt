@@ -108,22 +108,9 @@ object Google {
 
                 object Vision {
 
-                    @RequiresOptIn(
-                        message = "This library has a know issue on some/many devices where it'll never work. " +
-                                "Use the bundled version to avoid that issue: Google.mlKit.vision.barcodeScanning " +
-                                "(costs 2MB in the app but should work)" +
-                                "See the issue reported back in 2018 here: https://issuetracker.google.com/issues/80454351"
-                    )
-                    annotation class PlayServicesBarcodeScanningUnreliableOnSomeDevices
-
                     /**
-                     * **WARNING**:
-                     *
-                     * This library has a know issue on some/many devices where it'll never work.
-                     * Use the bundled version to avoid that issue: [Google.MlKit.Vision.barcodeScanning]
-                     * (costs 2MB in the app but should work)See the issue reported back in 2018 here: https://issuetracker.google.com/issues/80454351
+                     * @see Google.MlKit.Vision.barcodeScanning
                      */
-                    @PlayServicesBarcodeScanningUnreliableOnSomeDevices
                     const val barcodeScanning = "$prefix-barcode-scanning:_"
 
                     /**
