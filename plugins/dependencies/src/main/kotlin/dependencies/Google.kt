@@ -255,7 +255,7 @@ object Google {
             /**
              * [Overview](https://developers.google.com/ml-kit/vision/barcode-scanning)
              *
-             * If
+             * @see Google.Android.PlayServices.MlKit.Vision.barcodeScanning
              */
             const val barcodeScanning = "$group:barcode-scanning:_"
 
@@ -266,6 +266,8 @@ object Google {
 
             /**
              * [Overview](https://developers.google.com/ml-kit/vision/face-detection)
+             *
+             * @see Google.Android.PlayServices.MlKit.Vision.faceDetection
              */
             const val faceDetection = "$group:face-detection:_"
 
@@ -278,6 +280,8 @@ object Google {
 
             /**
              * [Overview](https://developers.google.com/ml-kit/vision/image-labeling)
+             *
+             * @see Google.Android.PlayServices.MlKit.Vision.imageLabeling
              */
             val imageLabeling = ImageLabeling
 
