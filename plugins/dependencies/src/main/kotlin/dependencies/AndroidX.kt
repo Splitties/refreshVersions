@@ -336,7 +336,7 @@ object AndroidX {
         val material = Material
 
         @Incubating
-        const val compiler = "androidx.compose:compose-compiler:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
+        const val compiler = "androidx.compose.compiler:compiler:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
 
         object Runtime : DependencyNotationAndGroup(group = "$groupPrefix.runtime", name = "runtime") {
 
