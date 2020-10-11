@@ -1,4 +1,4 @@
-## Contributing
+# Contributing guidelines
 
 Thank you for considering a contribution! 
 
@@ -8,77 +8,73 @@ This guide explains how to:
 - find the documentation to work on a Gradle plugin
 - work on the code base and test your changes
 
+## Submitting issues
+
+TK
+
+## Submitting PRs
+
 ### Before you start
 
-- Check out the parent plugin: [ben-manes/gradle-versions-plugin](https://github.com/ben-manes/gradle-versions-plugin). Your feature request or bug report may be better adressed at this level.
-- Check out the [existing issues](https://github.com/jmfayard/buildSrcVersions/issues). 
-- Explain your use case and start the discussion before your submit a pull-request
+#### Let us know about your upcoming contribution
 
+TK
 
-## Writing a Gradle plugin
+### Setting up the project in your IDE
+
+#### Get the right IDE
+
+We recommend using the most recent version of IntelliJ IDEA to contribute to this project (consider 2020.2 or newer).
+
+#### Prepare your fork
+
+1. Fork this project from GitHub if not already done.
+2. Clone your fork locally.
+3. Checkout the `develop` branch.
+4. If your fork is not fresh, ensure its `develop` branch is up to date with upstream:
+    1. Run the `git fetch upstream` command.
+    2. Run the `git merge upstream/develop` command.
+5. Create a new branch based on `develop` with a name describing what it is about.
+
+#### Import the "plugins" Gradle project
+
+1. Locate the `plugins/settings.gradle.kts` file in the "Project" tool window.
+2. Right-click on it to open the contextual menu.
+3. Select "Import Gradle Project".
+
+#### Publish the current version locally
+
+This step is required for the samples to work afterwards and enable you to test your changes.
+
+1. Ensure the version in the `plugins/version.txt` file ends with `-SNAPSHOT` to avoid overlapping a published version.
+2. In the "Gradle" tool window, or from the terminal, run the `publishToAppropriateRepo` task.
+
+#### Import the samples to test the changes
+
+You can do the same for the projects you to test your changes:
+
+### Testing changes locally
+
+#### Publishing
+
+TK
+
+#### Using the local version in your project
+
+The samples are useful to test quickly how the plugin behaves, but sometimes it's best to test it into a real project.
+
+TK
+
+## Contributing specific parts
+
+TK
+
+## Extra resources
+
+### Writing a Gradle plugin
 
 If you have never worked on a Gradle plugin before, have a glimpse at the following guides
 
 - [Designing Gradle plugins](https://guides.gradle.org/designing-gradle-plugins/)
 - [Implementing Gradle plugins](https://guides.gradle.org/implementing-gradle-plugins/)
 - [Testing Gradle plugins](https://guides.gradle.org/testing-gradle-plugins/)
-
-https://github.com/gradle-guides/gradle-site-plugin is a wonderful Gradle plugin sample demonstrating established techniques and practices for plugin development as described in the following guides:
-                                                                     
-
-### Workflow for this project
-   
-Start IntelliJ IDEA 2018.3+  
-
-Open in IntelliJ the project from the folder `composite` (composite/build.gradle). 
-
-From the `Gradle` tool window, run the tasks `checkAll` 
-
-![image](https://user-images.githubusercontent.com/459464/51464714-8662c380-1d66-11e9-87f7-2ac45d4ff620.png)
-
-
-## Tasks 
-
-The `composite` module defines a number of custom tasks to simplify the workflow
-
-```
-$ pwd
-buildSrcVersions/composite   
-
-$ ./gradlew tasks --group=custom -q
-Custom tasks
-------------
-checkAll - Run all checks
-hello - Minimal task that do nothing. Useful to debug a failing build
-pluginTests - Run plugin unit tests
-publishLocally - Publish the plugin locally
-publishPlugins - Publishes this plugin to the Gradle Plugin portal.
-updateGradle - Update Gradle in all modules
-wrapper - Update Gradle with ./gradlew wrapper
-
-```
-
-
-### Publishing the plugin locally
-
-The samples are useful to test quickly how the plugin behaves, but sometimes it's best to test it into a real project. 
-
-This is as easy as editing your `Settings`:
-
-```
-// MY_PROJECT/settings.gradle(.kts)
-pluginManagement {
-    repositories {
-        mavenLocal()
-        gradlePluginPortal()
-    }
-}
-//rootProject.name = "MY_PROJECT"
-```
-
-The workflow is then:
-
-- change something inside the plugin
-- Run either the task `:publishLocally` from `composite`
-- ... or the task `:publishToMavenLocal` from `plugin`
-- Then run `:refreshVersions` or `:buildSrcVersions` inside `MY_PROJECT`
