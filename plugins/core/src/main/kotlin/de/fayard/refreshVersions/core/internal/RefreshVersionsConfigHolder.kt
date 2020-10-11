@@ -115,6 +115,7 @@ object RefreshVersionsConfigHolder {
     }
 
     private fun clearStaticState() {
+        httpClient.dispatcher.executorService.shutdown()
         resettableDelegates.reset()
         // Clearing static state is needed because Gradle holds onto previous builds, yet,
         // duplicates static state.
