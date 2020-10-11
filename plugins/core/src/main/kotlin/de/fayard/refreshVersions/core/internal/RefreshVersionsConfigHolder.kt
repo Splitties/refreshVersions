@@ -90,12 +90,15 @@ object RefreshVersionsConfigHolder {
         require(settings.isBuildSrc)
         buildSrcGradle = settings.gradle
 
-        // There's a bug in the IntelliJ Platform (as of 2020.1) where the buildSrc will be built
-        // a second time as a standalone project after running initially properly after host project
-        // settings evaluation. To workaround this issue, we persist the configuration and attempt
-        // restoring it if needed, to not fail the second build (since it'd display errors, and
+        // The buildSrc will be built a second time as a standalone project by IntelliJ or
+        // Android Studio after running initially properly after host project settings evaluation.
+        // To workaround this, we persist the configuration and attempt restoring it if needed,
+        // to not fail the second build (since it'd display errors, and
         // prevent from seeing resolved dependencies in buildSrc sources in the IDE).
-        //TODO: Report this bug on https://youtrack.jetbrains.com
+        //
+        // Should the IDE really build the buildSrc as a standalone mode when not explicitly
+        // requested?
+        // Might be worth opening an issue on https://youtrack.jetbrains.com to find out.
         if (versionKeyReaderDelegate.isInitialized) {
             persistInitData(settings)
         } else {
