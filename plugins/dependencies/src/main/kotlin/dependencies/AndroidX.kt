@@ -309,7 +309,7 @@ object AndroidX {
         private const val groupPrefix = "androidx.compose"
 
         @Incubating
-        const val compiler = "androidx.compose:compose-compiler:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
+        const val compiler = "androidx.compose.compiler:compiler:_"
 
         val runtime = Runtime
 
