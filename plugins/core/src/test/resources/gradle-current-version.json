@@ -1,0 +1,15 @@
+{
+    "version" : "6.6.1",
+    "buildTime" : "20200825162912+0000",
+    "current" : true,
+    "snapshot" : false,
+    "nightly" : false,
+    "releaseNightly" : false,
+    "activeRc" : false,
+    "rcFor" : "",
+    "milestoneFor" : "",
+    "broken" : false,
+    "downloadUrl" : "https://services.gradle.org/distributions/gradle-6.6.1-bin.zip",
+    "checksumUrl" : "https://services.gradle.org/distributions/gradle-6.6.1-bin.zip.sha256",
+    "wrapperChecksumUrl" : "https://services.gradle.org/distributions/gradle-6.6.1-wrapper.jar.sha256"
+}
