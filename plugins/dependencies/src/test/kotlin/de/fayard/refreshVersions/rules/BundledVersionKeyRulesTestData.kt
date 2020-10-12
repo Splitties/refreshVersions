@@ -50,7 +50,7 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.collection", dependency = AndroidX.collection),
     versionKeyWithModules(expected = "androidx.collection", dependency = AndroidX.collectionKtx),
     versionKeyWithModules(expected = "androidx.compose.animation", dependenciesObject = AndroidX.compose.animation),
-    versionKeyWithModules(expected = "androidx.compose", dependency = AndroidX.compose.compiler),
+    versionKeyWithModules(expected = "androidx.compose.compiler", dependency = AndroidX.compose.compiler),
     versionKeyWithModules(expected = "androidx.compose.foundation", dependenciesObject = AndroidX.compose.foundation),
     versionKeyWithModules(expected = "androidx.compose.runtime", dependenciesObject = AndroidX.compose.runtime),
     versionKeyWithModules(expected = "androidx.compose.ui", dependenciesObject = AndroidX.compose.ui),
