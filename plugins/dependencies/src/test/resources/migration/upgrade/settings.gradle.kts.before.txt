@@ -9,8 +9,9 @@ buildscript {
     dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.6-dev-003")
 }
 
-bootstrapRefreshVersions()
 migrateRefreshVersionsIfNeeded("0.9.5")
+
+bootstrapRefreshVersions()
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")
