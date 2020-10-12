@@ -1,12 +1,11 @@
 import de.fayard.refreshVersions.bootstrapRefreshVersions
-import de.fayard.refreshVersions.migrateRefreshVersionsIfNeeded
 
 buildscript {
     repositories {
         maven(url = "https://dl.bintray.com/jmfayard/maven")
         gradlePluginPortal()
     }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.6-dev-003")
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.6-dev-006")
 }
 
 bootstrapRefreshVersions()

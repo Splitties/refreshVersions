@@ -10,8 +10,4 @@ val AuthenticationSupported.passwordCredentials: PasswordCredentials?
     get() = runCatching {
         // We use runCatching to avoid crashing the build if the internal APIs change.
         (this as AuthenticationSupportedInternal?)?.configuredCredentials as? PasswordCredentials
-    }.onFailure {
-        it.printStackTrace()
-        println("Unable to get configuredCredentials. Please open an issue in refreshVersions on GitHub, " +
-                "or vote for any existing one.")
     }.getOrNull()
