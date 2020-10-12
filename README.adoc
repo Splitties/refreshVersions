@@ -88,7 +88,7 @@ To get the future tips and informative articles, you can follow me on https://de
 - https://github.com/jmfayard[Jean-Michel Fayard]
 - https://github.com/LouisCAD[Louis CAD]
 
-== FAQ
+== FAQ ❓
 
 Questions? {issues}[Look at the existing issues], then ask your own.
 
@@ -97,6 +97,14 @@ For special requests (not issues), you can also reach us out on https://slack.ko
 == Release notes
 
 See the link:CHANGELOG.md[CHANGELOG.md] file.
+
+== Funding ❤️
+
+This project has sponsors that help the maintainers dedicate more time to this project and keep it updated.
+
+Thanks a lot to them! ❤️❤️
+
+link:SPONSORS.md[You can see them all here. 👀] Feel free to join them in supporting this project! 💪
 
 == Contributing
 
