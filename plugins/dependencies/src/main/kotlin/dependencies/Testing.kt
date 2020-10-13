@@ -67,6 +67,7 @@ object Testing {
         const val core = "$artifactBase-core:_"
         const val property = "$artifactBase-property:_"
         const val propertyArrow = "$artifactBase-property-arrow:_"
+        const val propertyKotlinxDateTime = "$artifactPrefix-property-datetime:_"
 
         val runner = Runner
 
@@ -112,6 +113,7 @@ object Testing {
             const val klock = "$artifactPrefix-klock:_"
             const val sql = "$artifactPrefix-sql:_"
             const val compiler = "$artifactPrefix-compiler:_"
+            const val kotlinxDateTime = "$artifactPrefix-kotlinx-time:_"
         }
     }
 
