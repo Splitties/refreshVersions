@@ -14,8 +14,12 @@ object Kodein {
      * - GitHub page: [Kodein-Framework/Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI)
      * - [GitHub Releases here](https://github.com/Kodein-Framework/Kodein-DI/releases)
      */
-    val di = DI(usePlatformConstraints = true)
-    val `di-no-bom` = DI(usePlatformConstraints = false)
+    private var useBom = false
+    fun useBom(): String {
+        useBom = true
+        return "org.kodein.di:kodein-bom:_"
+    }
+    val di by lazy { DI(useBom) }
 
     class DI(usePlatformConstraints: Boolean) : DependencyGroup(
         group = "org.kodein.di",
