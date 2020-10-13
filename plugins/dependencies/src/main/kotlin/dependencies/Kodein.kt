@@ -14,10 +14,12 @@ object Kodein {
      * - GitHub page: [Kodein-Framework/Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI)
      * - [GitHub Releases here](https://github.com/Kodein-Framework/Kodein-DI/releases)
      */
-    val di = DI
+    val di = DI(usePlatformConstraints = true)
+    val `di-no-bom` = DI(usePlatformConstraints = false)
 
-    object DI : DependencyGroup(
+    class DI(usePlatformConstraints: Boolean) : DependencyGroup(
         group = "org.kodein.di",
+        usePlatformConstraints = usePlatformConstraints,
         rule = PrefixRule(versionKey = "version.kodein.di", prefix = "org.kodein.di:kodein-di")
     ) {
         val androidCore = module("kodein-di-framework-android-core")
@@ -41,7 +43,6 @@ open class DependencyGroup(
     init {
         if (rule != null) Rule.ALL_RULES.add(rule)
     }
-
 
     fun module(module: String): String {
         assert(module.trim() == module)
