@@ -1,0 +1,51 @@
+site_name: gradle refreshVersions
+site_url: https://jmfayard.github.io/refreshVersions/
+repo_name: refreshVersions
+repo_url: https://github.com/jmfayard/refreshVersions
+site_description: "Dependency Management: from Hell to Paradise"
+site_author: jmfayard LouisCAD
+remote_branch: gh-pages
+edit_uri: ""
+
+copyright: 'Copyright &copy; 2020 jmfayard'
+
+theme:
+  name: 'material'
+## TODO: we need a logo
+#  favicon: images/icon-square.png
+#  logo: images/icon-square.png
+  palette:
+    primary: 'teal'
+    accent: 'white'
+
+extra_css:
+  - 'app.css'
+
+markdown_extensions:
+  - smarty
+  - codehilite:
+      guess_lang: false
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tilde
+  - pymdownx.tabbed
+  - tables
+
+nav:
+  - 'Overview': index.md
+  - 'Setup': setup.md
+  - 'Migration': migration.md
+  - 'Usage': usage.md
+  - 'Change Log': CHANGELOG.md
+  - 'Contributing': CONTRIBUTING.md
+  - 'Code of Conduct': code_of_conduct.md
+
