@@ -1,3 +1,6 @@
+# pip install -r docs/requirements.txt
+# mkdocs serve
+
 site_name: gradle refreshVersions
 site_url: https://jmfayard.github.io/refreshVersions/
 repo_name: refreshVersions
@@ -5,7 +8,13 @@ repo_url: https://github.com/jmfayard/refreshVersions
 site_description: "Dependency Management: from Hell to Paradise"
 site_author: jmfayard LouisCAD
 remote_branch: gh-pages
-edit_uri: ""
+#edit_uri: ""
+
+extra:
+  version:
+    gradle: 6.6.1
+    refreshVersions: '0.9.6'
+    refreshVersionsDev: '0.9.6-dev-007'
 
 copyright: 'Copyright &copy; 2020 jmfayard'
 
@@ -45,7 +54,11 @@ nav:
   - 'Setup': setup.md
   - 'Migration': migration.md
   - 'Usage': usage.md
+  - 'Common Errors': faq.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing': CONTRIBUTING.md
   - 'Code of Conduct': code_of_conduct.md
 
+plugins:
+    - search
+    - markdownextradata: {}

@@ -2,7 +2,7 @@
 
 Whenever you are about to post or commit, ask yourself "Would an idiot do that?"
 
-And if they would, do not do that thing. 
+And if they would, do not do that thing.
 
 https://youtu.be/KFwUcEwD4l4
 

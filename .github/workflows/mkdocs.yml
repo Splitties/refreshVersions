@@ -13,5 +13,5 @@ jobs:
         with:
           python-version: 3.x
       - run: sh docs/before-publish.sh
-      - run: pip install mkdocs-material
+      - run: pip install -r docs/requirements.txt
       - run: mkdocs gh-deploy --force
