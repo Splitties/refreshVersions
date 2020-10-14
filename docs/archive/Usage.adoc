@@ -1,4 +1,4 @@
-:imagesdir: screenshots-usage
+:imagesdir: img
 :sectanchors:
 
 = Usage
