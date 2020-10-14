@@ -9,7 +9,7 @@ assignees: ''
 
 **Checklist**
 
-- [ ] I tried to reproduce the bug within `sample-kotlin` or another of the samples
+- [ ] I tried to reproduce the bug in my fork of the [Kotlin Libraries Playground](https://github.com/LouisCAD/kotlin-libraries-playground), or in one of the sample in this repository
 - [ ] I have run with `$ ./gradlew --scan refreshVersions` to [provide a Build Scan URL](https://dev.to/jmfayard/the-one-gradle-trick-that-supersedes-all-the-others-5bpg)
 
 **Describe the bug**
