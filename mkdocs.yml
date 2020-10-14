@@ -52,9 +52,9 @@ markdown_extensions:
 nav:
   - 'Overview': index.md
   - 'Setup': setup.md
-  - 'Migration': migration.md
-  - 'Updating Dependencies': updating-dependencies.md
   - 'Adding Dependencies': adding-dependencies.md
+  - 'Updating Dependencies': updating-dependencies.md
+  - 'Migration': migration.md
   - 'Common Errors': faq.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing': CONTRIBUTING.md
