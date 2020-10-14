@@ -61,5 +61,5 @@ nav:
   - 'Code of Conduct': code_of_conduct.md
 
 plugins:
-    - search
-    - markdownextradata: {}
+  - search
+  - markdownextradata: {}

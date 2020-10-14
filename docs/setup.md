@@ -1,12 +1,25 @@
+This guide will help you setting up refreshVersions in a Gradle project.
+
+## Try it out with zero setup!
+
+The simplest way to try out gradle refreshVersions is with our official sample, the Kotlin libraries Playground!
+
+Everything is pre-configured here, so just open the project in IntelliJ and start adding and upgrading dependencies.
+
+[![](img/kotlin-libraries-playground.png)](https://github.com/LouisCAD/kotlin-libraries-playground#readme)
+
+**https://github.com/LouisCAD/kotlin-libraries-playground**
+
+*Warning: You may also learn a ton of things about Kotlin libraries in the process!*
+
+## Setup
+
 [![](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg?label=refreshVersions)](https://plugins.gradle.org/plugin/de.fayard.refreshVersions)
 ![Gradle Version](https://img.shields.io/endpoint?url=https%3A%2F%2Fgradle-latest-version-8xb9v8uk09jm.runkit.sh%2F)
 
 
-This guide will help you setting up refreshVersions in a Gradle project.
 
-# Setting up
-
-## Update Gradle
+### Update Gradle
 
 Only Gradle 6+ is supported at the moment, because there were a lot of changes in dependencies management in Gradle 6. It also allows for a simpler setup for plugins for example.
 
@@ -18,8 +31,6 @@ This how you update:
 `$ ./gradlew wrapper --gradle-version {{version.gradle}}`
 
 Note that if you are on Android, you need to update the Android Gradle Plugin to its latest stable version at the same time.
-
-## Bootstrap in root project
 
 ### Gradle's Settings file
 
