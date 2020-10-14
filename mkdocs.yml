@@ -53,7 +53,8 @@ nav:
   - 'Overview': index.md
   - 'Setup': setup.md
   - 'Migration': migration.md
-  - 'Usage': usage.md
+  - 'Updating Dependencies': updating-dependencies.md
+  - 'Adding Dependencies': adding-dependencies.md
   - 'Common Errors': faq.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing': CONTRIBUTING.md
