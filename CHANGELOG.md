@@ -28,7 +28,7 @@ Firebase ML Kit has been rebranded to Google ML Kit along with API and feature c
 
 This is a **major release** that brings surface-level and internal changes, paving the way for the upcoming 1.0 release.
 
-**The plugin setup/bootstrap has changed**, so check out the updated documentation in [Setting-up.adoc](docs/Setting-up.adoc).
+**The plugin setup/bootstrap has changed**, so check out the updated documentation in [Setup](https://jmfayard.github.io/refreshVersions/setup/).
 
 ### New features
 
@@ -113,7 +113,7 @@ let future versions of refreshVersions that migration is needed, and from which 
     - lifecycle
   - Concurrent:
     - futuresKtx
-    
+
 ### Dependency constants renamed
 
 Several dependencies constants have been renamed in this release (compared to version 0.9.4).
