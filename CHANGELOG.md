@@ -1,5 +1,14 @@
 # Change log for refreshVersions
 
+<!--## Version 0.9.7 (2020-10-15)-->
+## [Unreleased]
+
+### Fixes
+
+- Running the `refreshVersions` task twice or more would fail with "executor rejected" as an error message, until the Gradle daemon is killed. This has now been fixed. (Issue #263)
+- The `refreshVersions` task was failing after the latest Gradle release candidate was superseded by the stable release because the API would return an empty JSON object after this, which we didn't expect.
+- (Minor) We fixed a typo in a diagnostic task name (`refreshVersionsDependenciesMapping`)
+
 ## Version 0.9.6 (2020-10-12)
 
 ### Fixes
