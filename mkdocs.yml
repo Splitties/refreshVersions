@@ -5,7 +5,7 @@ site_name: gradle refreshVersions
 site_url: https://jmfayard.github.io/refreshVersions/
 repo_name: refreshVersions
 repo_url: https://github.com/jmfayard/refreshVersions
-site_description: "Dependency Management: from Hell to Paradise"
+site_description: "Life is too short to google for dependencies and versions"
 site_author: jmfayard LouisCAD
 remote_branch: gh-pages
 #edit_uri: ""
@@ -20,7 +20,7 @@ extra:
     gradlePluginPortal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
-    gradle: 6.6.1
+    gradle: 6.7
     refreshVersions: '0.9.6'
     refreshVersionsDev: '0.9.6-dev-007'
   badge:
