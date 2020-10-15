@@ -13,8 +13,8 @@ remote_branch: gh-pages
 extra:
   version:
     gradle: 6.6.1
-    refreshVersions: '0.9.6'
-    refreshVersionsDev: '0.9.6-dev-007'
+    refreshVersions: '0.9.7'
+    refreshVersionsDev: '0.9.7-dev-001'
 
 copyright: 'Copyright &copy; 2020 jmfayard'
 
