@@ -134,7 +134,7 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
     `Request doc update confirmation` -> {
         arrayOf(
             "README.adoc",
-            "docs/Setting-up.adoc"
+            "mkdocs.yml",
         ).forEach { relativePath ->
             do {
                 requestManualAction(
