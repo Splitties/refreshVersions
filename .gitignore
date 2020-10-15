@@ -7,4 +7,7 @@ build/
 *.iml
 local.properties
 .gradle
+site/
+docs/CHANGELOG.md
+docs/CONTRIBUTING.md
 
