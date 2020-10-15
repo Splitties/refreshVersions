@@ -28,7 +28,7 @@ Here's an example of how it looks like in the IDE:
 ![](img/dependencies_constants_autocomplete_2.png)
 
 
-You can see [all the dependency objects in this directory](https://github.com/jmfayard/refreshVersions/tree/master/plugins/dependencies/src/main/kotlin/dependencies).
+You can see [all the dependency objects in this directory]({{link.master}}/plugins/dependencies/src/main/kotlin/dependencies).
 
 ### Wait, what version are those dependencies using?
 
@@ -105,7 +105,7 @@ object Libs {
 
 Because this file used the placeholder version `_`, it is compatible with gradle refreshVersions!
 
-**This feature is not done yet, if you think we should prioritze it, please follow the issue https://github.com/jmfayard/refreshVersions/issues/235**
+**This feature is not done yet, if you think we should prioritze it, please follow the issue {{link.issues}}/235**
 
 
 ## Package Search from JetBrains
@@ -131,7 +131,7 @@ ext.libraries = [ // Groovy map literal
     junit: "junit:junit:4.10"
 ]
 
-// MODULE/libraries.gradle
+// MODULE/build.gradle
 apply(from = "../libraries.gradle")
 
 dependencies {

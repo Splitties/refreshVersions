@@ -11,10 +11,23 @@ remote_branch: gh-pages
 #edit_uri: ""
 
 extra:
+  link:
+    playground: https://github.com/LouisCAD/kotlin-libraries-playground
+    site: https://jmfayard.github.io/refreshVersions
+    github: https://github.com/jmfayard/refreshVersions
+    master: https://github.com/jmfayard/refreshVersions/blob/master
+    issues: https://github.com/jmfayard/refreshVersions/issues
+    gradlePluginPortal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
+    slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
     gradle: 6.6.1
     refreshVersions: '0.9.6'
     refreshVersionsDev: '0.9.6-dev-007'
+  badge:
+    mit: https://img.shields.io/github/license/mashape/apistatus.svg
+    slack: https://img.shields.io/static/v1?label=kotlinlang&message=gradle-refresh-versions&color=brightgreen&logo=slack
+    refreshVersions: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg?label=refreshVersions
+    pr: https://img.shields.io/github/issues-pr-raw/jmfayard/refreshVersions
 
 copyright: 'Copyright &copy; 2020 jmfayard'
 

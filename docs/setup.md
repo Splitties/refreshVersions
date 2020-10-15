@@ -1,17 +1,5 @@
 This guide will help you setting up refreshVersions in a Gradle project.
 
-## Try it out with zero setup!
-
-The simplest way to try out gradle refreshVersions is with our official sample, the Kotlin libraries Playground!
-
-Everything is pre-configured here, so just open the project in IntelliJ and start adding and upgrading dependencies.
-
-[![](img/kotlin-libraries-playground.png)](https://github.com/LouisCAD/kotlin-libraries-playground#readme)
-
-**https://github.com/LouisCAD/kotlin-libraries-playground**
-
-*Warning: You may also learn a ton of things about Kotlin libraries in the process!*
-
 ## Setup
 
 [![](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg?label=refreshVersions)](https://plugins.gradle.org/plugin/de.fayard.refreshVersions)
@@ -118,13 +106,13 @@ I you use the **buildSrc** module, you probably want to use refreshVersions ther
 ### If you have a composite / included build
 
 Included builds are not supported yet. If you need/want this feature,
-please vote with a 👍 on [this issue](https://github.com/jmfayard/refreshVersions/issues/205) to
+please vote with a 👍 on [this issue]({{link.issues}}/205) to
 help us prioritize.
 
 ### Using a development version
 
 To use a development version, you need to find the published development versions by searching in the
-[recent commits on the develop branch](https://github.com/jmfayard/refreshVersions/commits/develop)
+[recent commits on the develop branch]({{link.github}}/commits/develop)
 
 You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven`
 
