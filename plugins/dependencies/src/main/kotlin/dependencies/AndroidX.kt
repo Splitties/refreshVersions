@@ -228,6 +228,7 @@ object AndroidX {
         private const val artifactPrefix = "androidx.room:room"
 
         const val ktx = "$artifactPrefix-ktx:_"
+        @Incubating
         const val coroutines = "$artifactPrefix-coroutines:2.1.0-alpha04"
         const val compiler = "$artifactPrefix-compiler:_"
         const val testing = "$artifactPrefix-testing:_"
