@@ -21,8 +21,8 @@ extra:
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
     gradle: 6.7
-    refreshVersions: '0.9.6'
-    refreshVersionsDev: '0.9.6-dev-007'
+    refreshVersions: '0.9.7'
+    refreshVersionsDev: '0.9.7-dev-001'
   badge:
     mit: https://img.shields.io/github/license/mashape/apistatus.svg
     slack: https://img.shields.io/static/v1?label=kotlinlang&message=gradle-refresh-versions&color=brightgreen&logo=slack
