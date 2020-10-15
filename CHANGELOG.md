@@ -1,7 +1,6 @@
 # Change log for refreshVersions
 
-<!--## Version 0.9.7 (2020-10-15)-->
-## [Unreleased]
+## Version 0.9.7 (2020-10-16)
 
 ### Fixes
 
