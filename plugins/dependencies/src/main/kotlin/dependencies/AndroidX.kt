@@ -228,6 +228,9 @@ object AndroidX {
         private const val artifactPrefix = "androidx.room:room"
 
         const val ktx = "$artifactPrefix-ktx:_"
+
+        @Deprecated("Replaced by Room KTX", ReplaceWith("ktx"))
+        const val coroutines = "$artifactPrefix-coroutines:_"
         const val compiler = "$artifactPrefix-compiler:_"
         const val testing = "$artifactPrefix-testing:_"
 
