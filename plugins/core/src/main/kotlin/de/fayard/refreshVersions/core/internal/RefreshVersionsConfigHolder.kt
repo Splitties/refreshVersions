@@ -15,15 +15,22 @@ import java.util.Properties
 @InternalRefreshVersionsApi
 object RefreshVersionsConfigHolder {
 
-    val versionKeyReader: ArtifactVersionKeyReader get() = _artifactVersionKeyReader
-    val versionsPropertiesFile: File get() = _versionsPropertiesFile
+    internal val resettableDelegates = ResettableDelegates()
+
+    private val versionKeyReaderDelegate = resettableDelegates.LateInit<ArtifactVersionKeyReader>()
+
+    var versionKeyReader: ArtifactVersionKeyReader by versionKeyReaderDelegate
+        private set
+
+    var versionsPropertiesFile: File by resettableDelegates.LateInit()
+        private set
 
     val buildSrc: Project? get() = buildSrcGradle?.rootProject
 
-    internal lateinit var currentVersion: String
+    internal var currentVersion: String by resettableDelegates.LateInit()
         private set
 
-    internal lateinit var settings: Settings
+    internal var settings: Settings by resettableDelegates.LateInit()
         private set
 
     fun readVersionProperties(): Map<String, String> {
@@ -44,16 +51,18 @@ object RefreshVersionsConfigHolder {
         sortingMode = VersionCandidatesResultMode.SortingMode.ByVersion
     )
 
-    internal val httpClient = OkHttpClient.Builder()
-        .addInterceptor(OkHttpFileUrlHandler)
-        .addInterceptor( //TODO: Allow disabling/configuring logging.
-            HttpLoggingInterceptor(logger = object : HttpLoggingInterceptor.Logger {
-                override fun log(message: String) {
-                    println(message)
-                }
-            }).setLevel(HttpLoggingInterceptor.Level.BASIC)
-        )
-        .build()
+    internal val httpClient: OkHttpClient by resettableDelegates.Lazy {
+        OkHttpClient.Builder()
+            .addInterceptor(OkHttpFileUrlHandler)
+            .addInterceptor( //TODO: Allow disabling/configuring logging.
+                HttpLoggingInterceptor(logger = object : HttpLoggingInterceptor.Logger {
+                    override fun log(message: String) {
+                        println(message)
+                    }
+                }).setLevel(HttpLoggingInterceptor.Level.BASIC)
+            )
+            .build()
+    }
 
     internal fun initializedUsedVersion(settings: Settings) {
         currentVersion = settings.currentVersionOfRefreshVersions()
@@ -65,26 +74,32 @@ object RefreshVersionsConfigHolder {
         versionsPropertiesFile: File
     ) {
         require(settings.isBuildSrc.not())
+        settings.gradle.buildFinished {
+            clearStaticState()
+        }
         this.settings = settings
 
-        _versionsPropertiesFile = versionsPropertiesFile.also {
+        this.versionsPropertiesFile = versionsPropertiesFile.also {
             it.createNewFile() // Creates the file if it doesn't exist yet
         }
         this.artifactVersionKeyRules = artifactVersionKeyRules
-        _artifactVersionKeyReader = ArtifactVersionKeyReader.fromRules(filesContent = artifactVersionKeyRules)
+        versionKeyReader = ArtifactVersionKeyReader.fromRules(filesContent = artifactVersionKeyRules)
     }
 
     internal fun initializeBuildSrc(settings: Settings) {
         require(settings.isBuildSrc)
         buildSrcGradle = settings.gradle
 
-        // There's a bug in the IntelliJ Platform (as of 2020.1) where the buildSrc will be built
-        // a second time as a standalone project after running initially properly after host project
-        // settings evaluation. To workaround this issue, we persist the configuration and attempt
-        // restoring it if needed, to not fail the second build (since it'd display errors, and
+        // The buildSrc will be built a second time as a standalone project by IntelliJ or
+        // Android Studio after running initially properly after host project settings evaluation.
+        // To workaround this, we persist the configuration and attempt restoring it if needed,
+        // to not fail the second build (since it'd display errors, and
         // prevent from seeing resolved dependencies in buildSrc sources in the IDE).
-        //TODO: Report this bug on https://youtrack.jetbrains.com
-        if (::_artifactVersionKeyReader.isInitialized) {
+        //
+        // Should the IDE really build the buildSrc as a standalone mode when not explicitly
+        // requested?
+        // Might be worth opening an issue on https://youtrack.jetbrains.com to find out.
+        if (versionKeyReaderDelegate.isInitialized) {
             persistInitData(settings)
         } else {
             runCatching {
@@ -96,24 +111,30 @@ object RefreshVersionsConfigHolder {
                     e
                 )
             }
+            settings.gradle.buildFinished {
+                clearStaticState()
+            }
         }
     }
 
-    private lateinit var artifactVersionKeyRules: List<String>
+    private fun clearStaticState() {
+        httpClient.dispatcher.executorService.shutdown()
+        resettableDelegates.reset()
+        // Clearing static state is needed because Gradle holds onto previous builds, yet,
+        // duplicates static state.
+        // We need to beware of never retaining Gradle objects.
+        // This must be called in gradle.buildFinished { }.
+    }
 
-    @Suppress("ObjectPropertyName")
-    private lateinit var _artifactVersionKeyReader: ArtifactVersionKeyReader
+    private var artifactVersionKeyRules: List<String> by resettableDelegates.LateInit()
 
-    @Suppress("ObjectPropertyName")
-    private lateinit var _versionsPropertiesFile: File
-
-    private var buildSrcGradle: Gradle? = null
+    private var buildSrcGradle: Gradle? by resettableDelegates.NullableDelegate()
 
 
     private fun persistInitData(settings: Settings) {
-        check(::_versionsPropertiesFile.isInitialized)
-        check(::artifactVersionKeyRules.isInitialized)
-        check(::_artifactVersionKeyReader.isInitialized)
+        versionsPropertiesFile // Check it is initialized by accessing it.
+        artifactVersionKeyRules // Check it is initialized by accessing it.
+        versionKeyReader // Check it is initialized by accessing it.
 
         settings.artifactVersionKeyRulesFile.let { file ->
             if (file.exists().not()) {
@@ -130,13 +151,13 @@ object RefreshVersionsConfigHolder {
                 file.createNewFile()
             }
             ObjectOutputStream(file.outputStream()).use {
-                it.writeObject(_versionsPropertiesFile)
+                it.writeObject(versionsPropertiesFile)
             }
         }
     }
 
     private fun restorePersistedInitData(settings: Settings) {
-        _versionsPropertiesFile = settings.versionsPropertiesFileFile.let { file ->
+        versionsPropertiesFile = settings.versionsPropertiesFileFile.let { file ->
             ObjectInputStream(file.inputStream()).use { it.readObject() as File }
         }
         artifactVersionKeyRules = settings.artifactVersionKeyRulesFile.let { file ->
@@ -145,7 +166,7 @@ object RefreshVersionsConfigHolder {
                 (it.readObject() as Array<String>).asList()
             }
         }
-        _artifactVersionKeyReader = ArtifactVersionKeyReader.fromRules(filesContent = artifactVersionKeyRules)
+        versionKeyReader = ArtifactVersionKeyReader.fromRules(filesContent = artifactVersionKeyRules)
     }
 
     private val Settings.artifactVersionKeyRulesFile: File

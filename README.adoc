@@ -65,12 +65,15 @@ That's exactly what `refreshVersions` can already do today in your project.
 
 == How
 
-link:docs/Setting-up{ext-relative}[The short Setting-up guide is here].
+https://jmfayard.github.io/refreshVersions/setup/[The short Setting-up guide is here].
 
 Once setup, you just need to run the `refreshVersions` Gradle task
 and apply the updates you want in the `versions.properties` file.
 
-The link:docs/Usage{ext-relative}[full usage guide (with screenshots) is here].
+You can read more on the website, we have guides with screenshots:
+
+- https://jmfayard.github.io/refreshVersions/adding-dependencies/[Adding dependencies]
+- https://jmfayard.github.io/refreshVersions/updating-dependencies/[Updating dependencies]
 
 == Bonus: tips for your Gradle projects
 
@@ -88,7 +91,7 @@ To get the future tips and informative articles, you can follow me on https://de
 - https://github.com/jmfayard[Jean-Michel Fayard]
 - https://github.com/LouisCAD[Louis CAD]
 
-== FAQ
+== FAQ ❓
 
 Questions? {issues}[Look at the existing issues], then ask your own.
 
@@ -97,6 +100,14 @@ For special requests (not issues), you can also reach us out on https://slack.ko
 == Release notes
 
 See the link:CHANGELOG.md[CHANGELOG.md] file.
+
+== Funding ❤️
+
+This project has sponsors that help the maintainers dedicate more time to this project and keep it updated.
+
+Thanks a lot to them! ❤️❤️
+
+link:SPONSORS.md[You can see them all here. 👀] Feel free to join them in supporting this project! 💪
 
 == Contributing
 

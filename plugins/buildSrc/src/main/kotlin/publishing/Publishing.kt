@@ -31,15 +31,20 @@ fun PublishingExtension.setupAllPublications(project: Project) {
 
 private fun Project.registerPublishingTask() {
     require(project != rootProject)
+
+    val publishTaskName = when {
+        isSnapshot -> "publishToMavenLocal"
+        else -> "publishAllPublicationsToBintrayRepository"
+    }
+    val publishTask = tasks.named(publishTaskName)
+
+    publishTask.configure { dependsOn("validatePlugins") }
+
     tasks.register("publishToAppropriateRepo") {
         group = "publishing"
         description = "Publishes the Gradle plugin to the appropriate repository, depending on the version."
-        if (isSnapshot) {
-            dependsOn("publishToMavenLocal")
-        } else {
-            dependsOn("publishAllPublicationsToBintrayRepository")
-            if (isDevVersion.not()) dependsOn("publishPlugins")
-        }
+        dependsOn(publishTask)
+        if (isSnapshot.not() && isDevVersion.not()) dependsOn("publishPlugins")
     }
 }
 
@@ -55,9 +60,9 @@ private fun PublishingExtension.setupDevPublishRepo(project: Project) {
             val bintrayPackageName = "de.fayard.refreshVersions"
             setUrl(
                 "https://api.bintray.com/maven/" +
-                    "$bintrayUsername/$bintrayRepoName/$bintrayPackageName/;" +
-                    "publish=1;" +
-                    "override=1"
+                        "$bintrayUsername/$bintrayRepoName/$bintrayPackageName/;" +
+                        "publish=1;" +
+                        "override=1"
             )
             credentials {
                 username = project.propertyOrEnv("bintray_user")

@@ -1,10 +1,42 @@
 # Change log for refreshVersions
 
+## Version 0.9.7 (2020-10-16)
+
+### Fixes
+
+- Running the `refreshVersions` task twice or more would fail with "executor rejected" as an error message, until the Gradle daemon is killed. This has now been fixed. (Issue #263)
+- The `refreshVersions` task was failing after the latest Gradle release candidate was superseded by the stable release because the API would return an empty JSON object after this, which we didn't expect.
+- (Minor) We fixed a typo in a diagnostic task name (`refreshVersionsDependenciesMapping`)
+
+## Version 0.9.6 (2020-10-12)
+
+### Fixes
+
+- This release **fixes a major memory leak** that would make Gradle Daemons unusable after several builds (or Gradle syncs/imports). _We are very sorry for that issue, and the annoyance it might have caused. We experienced it too as users, and that's why we are bringing the fix now._ We **took the necessary measures to avoid future recurrence** of such memory leaks.
+- Fix of a bug that'd make the first Gradle sync  after adding a dependency fail.
+
+### Breaking change
+- If you were using Jetpack Compose, the compiler dependency had its maven coordinates changed in version 1.0.0-alpha04. We updated the `AndroidX.compose.compiler` dependency constant, which means it now works only for Compose 1.0.0-alpha04 and more future versions.
+
+### New dependency constants
+
+- Google.android.playServices.mlKit
+- Google.mlKit
+- KotlinX.serialization.json
+
+### Deprecated
+
+Firebase ML Kit has been rebranded to Google ML Kit along with API and feature changes [since 2020-08-14 update](https://firebase.google.com/support/release-notes/android#2020-08-14), so we deprecated the `Firebase.mlKit` dependencies and introduced new ones in `Google.android.playServices.mlKit` and `Google.mlKit`.
+
+### New features
+
+- refreshVersions will now warn you when Gradle is not up to date, and will give you the commands to run to update it for you to copy/paste and run. It works if you're using a release candidate, and also if you're using a nightly version!
+
 ## Version 0.9.5 (2020-08-21)
 
 This is a **major release** that brings surface-level and internal changes, paving the way for the upcoming 1.0 release.
 
-**The plugin setup/bootstrap has changed**, so check out the updated documentation in [Setting-up.adoc](docs/Setting-up.adoc).
+**The plugin setup/bootstrap has changed**, so check out the updated documentation in [Setup](https://jmfayard.github.io/refreshVersions/setup/).
 
 ### New features
 
@@ -89,7 +121,7 @@ let future versions of refreshVersions that migration is needed, and from which 
     - lifecycle
   - Concurrent:
     - futuresKtx
-    
+
 ### Dependency constants renamed
 
 Several dependencies constants have been renamed in this release (compared to version 0.9.4).
