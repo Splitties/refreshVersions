@@ -8,6 +8,8 @@ import de.fayard.refreshVersions.core.internal.resolveVersion
 import de.fayard.refreshVersions.core.internal.setupVersionPlaceholdersResolving
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.apply
+import org.gradle.tooling.UnsupportedVersionException
+import org.gradle.util.GradleVersion
 import java.io.File
 
 /**
@@ -42,6 +44,10 @@ fun Settings.bootstrapRefreshVersionsCore(
     artifactVersionKeyRules: List<String> = emptyList(),
     versionsPropertiesFile: File = rootDir.resolve("versions.properties")
 ) {
+    val supportedGradleVersion = "6.3" // 6.2 fail with this error: https://gradle.com/s/shp7hbtd3i3ii
+    if (GradleVersion.current() < GradleVersion.version(supportedGradleVersion)) {
+        throw UnsupportedVersionException("""The plugin "de.fayard.refreshVersions" only works with Gradle $supportedGradleVersion and above.""")
+    }
     require(settings.isBuildSrc.not()) {
         "This bootstrap is only for the root project. For buildSrc, please call " +
                 "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
