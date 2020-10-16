@@ -12,6 +12,13 @@ data class Dependency(
     fun groupModuleVersion() = "$group:$module:$version"
     fun groupModuleUnderscore() = "$group:$module:_"
     fun groupModule() = "$group:$module"
+    fun versionName(mode: VersionMode) : String = PluginConfig.escapeLibsKt(
+        when (mode) {
+            VersionMode.MODULE -> module
+            VersionMode.GROUP -> group
+            VersionMode.GROUP_MODULE -> "${group}_$module"
+        })
+
     override fun toString() = groupModuleVersion()
 }
 
@@ -48,7 +55,6 @@ fun kotlinpoet(
             )
         }
 
-
     val Libs = TypeSpec.objectBuilder("Libs")
         .addKdoc(PluginConfig.KDOC_LIBS)
         .addProperties(libsProperties)
@@ -64,16 +70,6 @@ fun kotlinpoet(
 
 }
 
-fun List<Dependency>.sortedBeautifullyBy(
-    selection: (Dependency) -> String?
-): List<Dependency> {
-    return this.filterNot { selection(it) == null }
-        .sortedBy { selection(it)!! }
-}
-
-
-
-
 fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): Deps {
     val dependencies = this
 
@@ -86,28 +82,12 @@ fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): Deps {
         Pair(d, mode)
     }.toMutableMap()
 
-    val names = dependencies.associate { d: Dependency ->
-        val name = PluginConfig.escapeLibsKt(
-            when (modes[d]!!) {
-                VersionMode.MODULE -> d.module
-                VersionMode.GROUP -> d.group
-                VersionMode.GROUP_MODULE -> "${d.group}_${d.module}"
-            }
-        )
-        Pair(d, name)
+    val versionNames = dependencies.associate { d: Dependency ->
+        Pair(d, d.versionName(modes[d]!!))
     }
-
-    // findCommonVersion
-    val map = groupBy { d: Dependency -> d.group }
-    for (deps in map.values) {
-        val sameVersions = deps.map { it.version }.distinct().size == 1
-        val hasVirtualGroup = deps.any { it.group != it.group }
-        if (sameVersions && (hasVirtualGroup || deps.size > 1)) {
-            deps.forEach { d -> modes[d] = VersionMode.GROUP }
-        }
-    }
-
-    return Deps(dependencies.sortedBeautifullyBy { it.groupModule() }, modes, names)
+    val sortedDependencies = dependencies
+        .sortedBy { d : Dependency -> d.groupModule() }
+    return Deps(sortedDependencies, modes, versionNames)
 }
 
 
