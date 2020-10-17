@@ -99,9 +99,8 @@ Read more: [Adding Dependencies](https://jmfayard.github.io/refreshVersions/addi
 
 ## Requirements
 
-- Gradle 6, the more recent version the better
-- Groovy or Kotlin DSL
-- IntelliJ IDEA & Android Studio
+- Gradle 6.3+
+- IntelliJ IDEA or Android Studio
 
 
 ## Try it out with zero setup!
