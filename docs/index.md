@@ -15,7 +15,7 @@ contains more than 200 different dependencies, grouped in 70 group of dependenci
 
 Both trends come with great technical benefits.
 
-But they also make it much more tedious to find where to add and update your dependencies in all those `build.gradle[.kts]` files!
+However, they also make it much more tedious to find where to add and update your dependencies in all those `build.gradle[.kts]` files!
 
 Can we have our cake and eat it?
 
