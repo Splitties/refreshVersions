@@ -109,11 +109,11 @@ I you use the **buildSrc** module, you probably want to use refreshVersions ther
     ```
 
 
-### If you have a composite / included build
+### If you have a composite/included build
 
-Included builds are not supported yet. If you need/want this feature,
-please vote with a 👍 on [this issue]({{link.issues}}/205) to
-help us prioritize.
+Sharing used versions with included builds is not supported at the moment.
+
+If you need/want this feature, please vote with a 👍 on [this issue]({{link.issues}}/205), subscribe to it, and tell us about your use case, to help us prioritize.
 
 ### Using a development version
 
