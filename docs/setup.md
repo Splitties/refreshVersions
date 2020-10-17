@@ -14,11 +14,7 @@ Only Gradle 6+ is supported at the moment, because there were a lot of changes i
 Updating Gradle is anyway usually a good idea. You get fewer bugs, more
 features, and faster builds.
 
-Run this command to update:
-
-```shell
-./gradlew wrapper --gradle-version {{version.gradle}}
-```
+Run this command to update: `./gradlew wrapper --gradle-version {{version.gradle}}`
 
 Note that for Android projects, you need to update the Android Gradle Plugin to its latest stable version at the same time.
 
