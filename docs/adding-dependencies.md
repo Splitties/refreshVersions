@@ -119,7 +119,7 @@ Sure, just use the version placeholder (`_`).
 
 An older approach to centralize dependencies is to have a `libraries.gradle` file:
 
-== "libraries.gradle"
+=== "libraries.gradle"
 ```groovy
 ext.libraries = [ // Groovy map literal
     spring_core: "org.springframework:spring-core:3.1",
