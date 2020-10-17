@@ -55,9 +55,8 @@ include(":app") // If the project has modules/subprojects to declare.
 
 Here is how you configure gradle refreshVersions
 
-=== "Kotlin DSL"
+=== "settings.gradle.kts"
     ```kotlin
-    // settings.gradle.kts
     import de.fayard.refreshVersions.bootstrapRefreshVersions
 
     buildscript {
@@ -68,9 +67,8 @@ Here is how you configure gradle refreshVersions
     bootstrapRefreshVersions()
     ```
 
-=== "Groovy DSL"
+=== "settings.gradle"
     ```groovy
-    // settings.gradle
     import de.fayard.refreshVersions.RefreshVersionsSetup
 
     buildscript {
@@ -86,9 +84,8 @@ Here is how you configure gradle refreshVersions
 
 I you use the **buildSrc** module, you probably want to use refreshVersions there as well.
 
-=== "Kotlin DSL"
+=== "buildSrc/settings.gradle.kts"
     ```kotlin
-    // buildSrc/settings.gradle.kts
     import de.fayard.refreshVersions.bootstrapRefreshVersionsForBuildSrc
 
     buildscript {
@@ -99,9 +96,8 @@ I you use the **buildSrc** module, you probably want to use refreshVersions ther
     bootstrapRefreshVersionsForBuildSrc()
     ```
 
-=== "Groovy DSL"
+=== "buildSrc/settings.gradle"
     ```kotlin
-    // buildSrc/settings.gradle
     import de.fayard.refreshVersions.RefreshVersionsSetup
 
     buildscript {
@@ -126,9 +122,8 @@ To use a development version, you need to find the published development version
 
 You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven`
 
-=== "Kotlin"
+=== "settings.gradle.kts"
     ```kotlin
-    // settings.gradle.kts
     import de.fayard.refreshVersions.bootstrapRefreshVersions
 
     buildscript {
@@ -142,9 +137,8 @@ You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven
     bootstrapRefreshVersions()
     ```
 
-=== "Groovy"
+=== "settings.gradle"
     ```groovy
-    // settings.gradle
     import de.fayard.refreshVersions.RefreshVersionsSetup
 
     buildscript {
