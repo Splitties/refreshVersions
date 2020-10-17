@@ -121,6 +121,7 @@ We hope this open source project saves you a lot of time!
 It is maintained by its authors, Jean-Michel Fayard and Louis CAD.
 
 You can **buy us more time** by becoming our sponsors:
+
 - 💝 [Louis CAD GitHub Sponsors page](https://github.com/sponsors/LouisCAD)
 - 💝 [Jean-Michel GitHub Sponsors page](https://github.com/sponsors/jmfayard)
 
