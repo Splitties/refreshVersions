@@ -116,12 +116,15 @@ Everything is pre-configured here, so just open the project in IntelliJ and star
 
 ## Funding ❤️
 
-This project has sponsors that help the maintainers dedicate more time to this project and keep it updated.
+We hope this open source project saves you a lot of time!
 
-Thanks a lot to them! ❤️❤️
+It is maintained by its authors, Jean-Michel Fayard and Louis CAD.
 
-[You can see them all here. 👀]({{link.master}}/SPONSORS.md) Feel free to join them in supporting this project! 💪
+You can **buy us more time** by becoming our sponsors:
+- 💝 [Louis CAD GitHub Sponsors page](https://github.com/sponsors/LouisCAD)
+- 💝 [Jean-Michel GitHub Sponsors page](https://github.com/sponsors/jmfayard)
 
+We're very grateful to you and [our existing sponsors]({{link.master}}/SPONSORS.md), thank you! ❤️❤️
 
 ## Contributing
 
