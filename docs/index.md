@@ -67,13 +67,13 @@ Consider the example below:
 
 ## Auto-magically look up for updates
 
-With this infrastructure being in place, the major feature of **gradle refreshVersions** is, like its name suggests, **it will auto-magically look up for all available updates for your dependencies.**
+With this infrastructure being in place, the major feature of **gradle refreshVersions** is like its name suggests: **It will look up for all available updates of the dependencies used in the project.**
 
-Simply run `$ ./gradlew refreshVersions` and you will see the available updates **as comments**
+Simply run `$ ./gradlew refreshVersions` and you will see the available updates **as comments**:
 
 ![](img/versions.properties_step02.png)
 
-Why as comment? Because while googling manually for available updates is a monkey job that is best done by a computer program, *deciding whether to upgrade* or not is *your* job as a programmer.
+Why as comment? Because while googling manually for available updates is a monkey job that is best done by a computer program, while **deciding whether to upgrade or not is your job** as a programmer.
 
 Read more: [Updating Dependencies]({{link.site}}/updating-dependencies/)
 
