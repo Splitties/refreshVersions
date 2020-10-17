@@ -63,7 +63,7 @@ Consider the example below:
 | plugin with id "com.squareup.sqldelight"      | plugin.com.squareup.sqldelight                |
 
 - gradle refreshVersions works with **an opt-in mechanism.** It only manages dependencies where the version is set to be a placeholder, more specifically the underscore `_`, which, akin to Kotlin, here means that the version is not used, being instead set in the `versions.properties` file.
-- gradle refreshVersions has a systems of **[rules]({{link.master}}/plugins/dependencies/src/main/resources/refreshVersions-rules)** that allows to set all Retrofit dependencies with the same version key `version.retrofit` , keeping things DRY.
+- gradle refreshVersions has a system of **[rules]({{link.master}}/plugins/dependencies/src/main/resources/refreshVersions-rules)** that allows to set all Retrofit dependencies with the same version key `version.retrofit` , keeping things DRY.
 
 ## Auto-magically look up for updates
 
