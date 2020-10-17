@@ -157,6 +157,7 @@ You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven
 You did it! refreshVersions is now properly setup.
 
 Now, you might want to:
+
 - [Migrate/opt-in existing dependency declarations]({{link.site}}/migration), so the `refreshVersions` task can find available updates for you.
 - [Add new dependencies]({link.site}}/adding-dependencies).
 - [Update dependencies]({link.site}}/updating-dependencies).
