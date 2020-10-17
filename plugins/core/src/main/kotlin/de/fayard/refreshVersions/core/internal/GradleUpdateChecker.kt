@@ -42,7 +42,9 @@ internal class GradleUpdateChecker(val httpClient: OkHttpClient) {
                     }
                     else -> {
                         val jsonAdapter = moshi.adapter(GradleVersionModel::class.java)
-                        listOf(jsonAdapter.nonNull().fromJson(response.body!!.source())!!)
+                        runCatching {
+                            listOf(jsonAdapter.nonNull().fromJson(response.body!!.source())!!)
+                        }.getOrDefault(emptyList())
                     }
                 }
             } else throw HttpException(Response.error<Any?>(response.code, response.body!!))

@@ -65,12 +65,15 @@ That's exactly what `refreshVersions` can already do today in your project.
 
 == How
 
-link:docs/Setting-up{ext-relative}[The short Setting-up guide is here].
+https://jmfayard.github.io/refreshVersions/setup/[The short Setting-up guide is here].
 
 Once setup, you just need to run the `refreshVersions` Gradle task
 and apply the updates you want in the `versions.properties` file.
 
-The link:docs/Usage{ext-relative}[full usage guide (with screenshots) is here].
+You can read more on the website, we have guides with screenshots:
+
+- https://jmfayard.github.io/refreshVersions/adding-dependencies/[Adding dependencies]
+- https://jmfayard.github.io/refreshVersions/updating-dependencies/[Updating dependencies]
 
 == Bonus: tips for your Gradle projects
 

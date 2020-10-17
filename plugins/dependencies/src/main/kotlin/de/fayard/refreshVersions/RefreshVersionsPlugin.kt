@@ -38,7 +38,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
         }
 
         project.tasks.registerOrCreate<DefaultTask>(
-            name = "refreshVersionDependenciesMapping"
+            name = "refreshVersionsDependenciesMapping"
         ) {
             group = "help"
             description = "Shows the mapping of Gradle dependencies and their typesafe accessors"
