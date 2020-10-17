@@ -81,7 +81,7 @@ Read more: [Updating Dependencies]({{link.site}}/updating-dependencies/)
 
 The Kotlin Libraries Playground contains about 80 dependencies.
 
-How long would it take to search for all availables updates?
+How long would it take to search for all available updates?
 
 Well, if you do it manually: *enough to hate your life*.
 
