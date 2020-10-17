@@ -48,20 +48,21 @@ Yes to better tooling!
 
 ## No Magic!
 
-Do you wonder how this works?
+You wonder how this works?
 
-No black magic involved, we leverage Gradle's standard API like [ResolutionStrategy](https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.ResolutionStrategy.html#org.gradle.api.artifacts.ResolutionStrategy) for resolving dependencies versions. The rest is just a set of conventions:
+No black magic involved, we leverage Gradle public APIs that are designed to edit declared dependencies (`Configuration.withDependencies`, and `PluginManagement.resolutionStrategy`), and we edit the versions constraints there.
+The rest is just a set of conventions.
 
-| Dependency                                    | Version key                                   |
+Consider the example below:
+
+| Dependency notation                           | Version key                                   |
 |-----------------------------------------------|-----------------------------------------------|
 | org.gradle:gradle-hello-world-plugin:_        | version.org.gradle..gradle-hello-world-plugin |
 | com.squareup.retrofit2:retrofit:_             | version.retrofit                              |
 | com.squareup.retrofit2:retrofit-adapter-xxx:_ | version.retrofit                              |
 | plugin with id "com.squareup.sqldelight"      | plugin.com.squareup.sqldelight                |
 
-Note that:
-
-- gradle refreshVersions works with **an opt-in mechanism.** It only manages dependencies where the version is set to be the placeholder the underscore `_`, which like in Kotlin itself means that the version there is not used, instead it's set in `versions.properties`
+- gradle refreshVersions works with **an opt-in mechanism.** It only manages dependencies where the version is set to be a placeholder, more specifically the underscore `_`, which, akin to Kotlin, here means that the version is not used, being instead set in the `versions.properties` file.
 - gradle refreshVersions has a systems of **[rules]({{link.master}}/plugins/dependencies/src/main/resources/refreshVersions-rules)** that allows to set all Retrofit dependencies with the same version key `version.retrofit` , keeping things DRY.
 
 ## Auto-magically look up for updates
