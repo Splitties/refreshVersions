@@ -12,40 +12,50 @@ This guide will help you setting up refreshVersions in a Gradle project.
 Only Gradle 6+ is supported at the moment, because there were a lot of changes in dependencies management in Gradle 6. It also allows for a simpler setup for plugins for example.
 
 Updating Gradle is anyway usually a good idea. You get fewer bugs, more
-features and more build speed.
+features, and faster builds.
 
-This how you update:
+Run this command to update:
 
-`$ ./gradlew wrapper --gradle-version {{version.gradle}}`
+```shell
+./gradlew wrapper --gradle-version {{version.gradle}}
+```
 
-Note that if you are on Android, you need to update the Android Gradle Plugin to its latest stable version at the same time.
+Note that for Android projects, you need to update the Android Gradle Plugin to its latest stable version at the same time.
 
 ### Gradle's Settings file
 
-A Gradle project has [a Settings file](https://docs.gradle.org/current/userguide/build_lifecycle.html#sec:settings_file) called `settings.gradle`  or `settings.gradle.kts` where you must respect a certain order:
+A Gradle project has [a Settings file](https://docs.gradle.org/current/userguide/build_lifecycle.html#sec:settings_file) called `settings.gradle`  or `settings.gradle.kts` where you must respect a certain order.
+
+The order is:
+1. imports, if any.
+2. The `buildscript` block, if any. (We will use it)
+3. The `pluginManagement` block, if any.
+4. The `plugins` block, if any settings plugins are applied.
+5. Logic for Gradle settings (any other code).
+
+See the example snippet below:
 
 ```kotlin
-import com.example.something
+import com.example.something // Imports at the top, as usual.
 
 buildscript {
-   // see below
+   // We will setup refreshVersions here, see below.
 }
-pluginManagement {
-}
-plugins {
-}
+pluginManagement {} // Optional
+plugins {} // Optional
 
-// see below
+// Then you can have other code after the blocks above,
+// we will bootstrap refreshVersions here.
 
-rootProject.name = "My Project"
-include(":app")
+rootProject.name = "My Project" // Optional, defaults to parent dir's name.
+include(":app") // If the project has modules/subprojects to declare.
 ```
 
 ### Bootstrap refreshVersions
 
 Here is how you configure gradle refreshVersions
 
-=== "Kotlin"
+=== "Kotlin DSL"
     ```kotlin
     // settings.gradle.kts
     import de.fayard.refreshVersions.bootstrapRefreshVersions
@@ -58,7 +68,7 @@ Here is how you configure gradle refreshVersions
     bootstrapRefreshVersions()
     ```
 
-=== "Groovy"
+=== "Groovy DSL"
     ```groovy
     // settings.gradle
     import de.fayard.refreshVersions.RefreshVersionsSetup
@@ -76,7 +86,7 @@ Here is how you configure gradle refreshVersions
 
 I you use the **buildSrc** module, you probably want to use refreshVersions there as well.
 
-=== "Kotlin"
+=== "Kotlin DSL"
     ```kotlin
     // buildSrc/settings.gradle.kts
     import de.fayard.refreshVersions.bootstrapRefreshVersionsForBuildSrc
@@ -89,7 +99,7 @@ I you use the **buildSrc** module, you probably want to use refreshVersions ther
     bootstrapRefreshVersionsForBuildSrc()
     ```
 
-=== "Groovy"
+=== "Groovy DSL"
     ```kotlin
     // buildSrc/settings.gradle
     import de.fayard.refreshVersions.RefreshVersionsSetup
