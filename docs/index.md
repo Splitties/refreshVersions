@@ -41,10 +41,10 @@ Then people try to hack together regular expressions to read or modify those fil
 
 We think this is wrong!
 
-Instead, **gradle refreshVersions** store all the versions in one place in a proper file format:
+Instead, **gradle refreshVersions** stores all the versions in one place in a proper file format:
 Java Properties, like [`gradle.properties`](https://dev.to/jmfayard/configuring-gradle-with-gradle-properties-211k).
-Just like npm's *package.json*, Maven *pom.xml*, this file can be easily read and written by a computer program.
-Yeah to better tooling!
+Just like npm's *package.json*, Maven's *pom.xml*, this file can be easily read and written by a computer program.
+Yes to better tooling!
 
 ## No Magic!
 
