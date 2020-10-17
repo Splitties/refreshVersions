@@ -1,13 +1,6 @@
 This guide will help you setting up refreshVersions in a Gradle project.
 
-## Setup
-
-[![](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg?label=refreshVersions)](https://plugins.gradle.org/plugin/de.fayard.refreshVersions)
-![Gradle Version](https://img.shields.io/endpoint?url=https%3A%2F%2Fgradle-latest-version-8xb9v8uk09jm.runkit.sh%2F)
-
-
-
-### Update Gradle
+## Ensure Gradle is up to date
 
 Only Gradle 6+ is supported at the moment, because there were a lot of changes in dependencies management in Gradle 6. It also allows for a simpler setup for plugins for example.
 
@@ -18,9 +11,11 @@ Run this command to update: `./gradlew wrapper --gradle-version {{version.gradle
 
 Note that for Android projects, you need to update the Android Gradle Plugin to its latest stable version at the same time.
 
-### Gradle's Settings file
+## About Gradle's Settings file
 
-A Gradle project has [a Settings file](https://docs.gradle.org/current/userguide/build_lifecycle.html#sec:settings_file) called `settings.gradle`  or `settings.gradle.kts` where you must respect a certain order.
+For refreshVersions to be able to work for all the dependencies in your project, including for the ones in the `buildscript`'s `classpath`, it needs to be setup in the Gradle settings.
+
+A Gradle project has [a Settings file](https://docs.gradle.org/current/userguide/build_lifecycle.html#sec:settings_file) called `settings.gradle`  or `settings.gradle.kts` where you must respect a certain order (otherwise, the build breaks).
 
 The order is:
 1. imports, if any.
@@ -47,9 +42,9 @@ rootProject.name = "My Project" // Optional, defaults to parent dir's name.
 include(":app") // If the project has modules/subprojects to declare.
 ```
 
-### Bootstrap refreshVersions
+## Bootstrap refreshVersions
 
-Here is how you configure gradle refreshVersions
+Here is how to configure gradle refreshVersions:
 
 === "settings.gradle.kts"
     ```kotlin
@@ -78,7 +73,7 @@ Here is how you configure gradle refreshVersions
 
 ### If you have a buildSrc module
 
-I you use the **buildSrc** module, you probably want to use refreshVersions there as well.
+If you use the **buildSrc** module and have dependencies declared in the `buildSrc/build.gradle[.kts]` file, you probably want to use refreshVersions there as well. For that, an extra special setup is required.
 
 === "buildSrc/settings.gradle.kts"
     ```kotlin
@@ -113,10 +108,10 @@ If you need/want this feature, please vote with a 👍 on [this issue]({{link.is
 
 ### Using a development version
 
-To use a development version, you need to find the published development versions by searching in the
-[recent commits on the develop branch]({{link.github}}/commits/develop)
+To use a development version (for example to test an unreleased new feature), you need to find the published development versions by searching in the
+[recent commits on the develop branch]({{link.github}}/commits/develop).
 
-You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven`
+You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven` as shown below:
 
 === "settings.gradle.kts"
     ```kotlin
@@ -148,7 +143,7 @@ You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven
     RefreshVersionsSetup.bootstrap(settings)
     ```
 
-### Next steps
+## Next steps
 
 You did it! refreshVersions is now properly setup.
 
