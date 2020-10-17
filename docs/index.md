@@ -83,11 +83,11 @@ The [Kotlin Libraries Playground]({link.playground}) contains about 80 dependenc
 
 How long would it take to search for all available updates?
 
-Well, if you do it manually: *enough to hate your life*.
+- Well, if you do it manually: *enough to hate your life*.
+- With the [gradle-versions-plugin](https://github.com/ben-manes/gradle-versions-plugin) it will take about 2 minutes.
+- With refreshVersions, you are done in **10 seconds**!
 
-With the [gradle-versions-plugin](https://github.com/ben-manes/gradle-versions-plugin) it will take about two minutes.
-
-With refreshVersions, you are done in 10 seconds! [See benchmarks here]({{link.playground}}/pull/69)
+[See benchmarks here.]({{link.playground}}/pull/69)
 
 ## Add dependencies quickly!
 
