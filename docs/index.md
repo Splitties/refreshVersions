@@ -1,6 +1,9 @@
 # Gradle refreshVersions
 
-[![]({{badge.refreshVersions}})]({{link.gradlePluginPortal}}) [![]({{badge.slack}})]({{link.slack}}) [![]({{badge.pr}})]({{link.github}}/pulls) [![]({{badge.mit}})]({{link.master}}/LICENSE.txt)
+[![](https://img.shields.io/badge/refreshVersions-v{{version.refreshVersions}}-orange)]({{link.gradlePluginPortal}})
+[![](https://img.shields.io/static/v1?label=kotlinlang&message=gradle-refresh-versions&color=brightgreen&logo=slack)]({{link.slack}})
+[![](https://img.shields.io/github/issues-pr-raw/jmfayard/refreshVersions)]({{link.github}}/pulls)
+[![](https://img.shields.io/github/license/mashape/apistatus.svg)]({{link.master}}/LICENSE.txt)
 
 > Life is too short to google for dependencies and versions
 

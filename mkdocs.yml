@@ -23,11 +23,6 @@ extra:
     gradle: 6.7
     refreshVersions: '0.9.7'
     refreshVersionsDev: '0.9.7-dev-001'
-  badge:
-    mit: https://img.shields.io/github/license/mashape/apistatus.svg
-    slack: https://img.shields.io/static/v1?label=kotlinlang&message=gradle-refresh-versions&color=brightgreen&logo=slack
-    refreshVersions: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg?label=refreshVersions
-    pr: https://img.shields.io/github/issues-pr-raw/jmfayard/refreshVersions
   keyboard_shortcuts:
     find_actions: <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>A</kbd>
 
