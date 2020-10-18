@@ -1,4 +1,5 @@
 # Gradle refreshVersions
+
 [![]({{badge.refreshVersions}})]({{link.gradlePluginPortal}}) [![]({{badge.slack}})]({{link.slack}}) [![]({{badge.pr}})]({{link.github}}/pulls) [![]({{badge.mit}})]({{link.master}}/LICENSE.txt)
 
 > Life is too short to google for dependencies and versions
