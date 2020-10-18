@@ -57,10 +57,10 @@ Consequently, after you have edited it, you need to ensure the IDE gets the chan
 The action to do it have a different name depending on the IDE:
 
 **IntelliJ IDEA:**
-Run the "Reload all Gradle projects" action (via {{keyboard-shortcuts.find-actions}}), or click the refresh arrows in the Gradle tool window
+Run the "Reload all Gradle projects" action (via {{keyboard_shortcuts.find_actions}}), or click the refresh arrows in the Gradle tool window
 
 **Android Studio:**
-Run the "Sync Project with Gradle Files" action (via {{keyboard-shortcuts.find-actions}}), or click the elephant + arrow icon in the toolbar.
+Run the "Sync Project with Gradle Files" action (via {{keyboard_shortcuts.find_actions}}), or click the elephant + arrow icon in the toolbar.
 
 At that point, you probably want to:
 
