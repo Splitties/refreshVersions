@@ -1,3 +1,5 @@
+# Setup
+
 This guide will help you set up refreshVersions in a Gradle project.
 
 ## Ensure Gradle is up to date
