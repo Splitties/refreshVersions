@@ -20,7 +20,7 @@ However, they also make it much more tedious to find where to add and update you
 
 _We saw this make developers update the dependencies less and less often, effectively leading to legacy accumulation (a form of technical debt), or even projects abandon. Yes, that's sad._
 
-Can we have our cake and eat it?
+_**Can we have our cake and eat it?**_
 
 We firmly believe that yes, **we can have the benefits of modularization without the hell of dependency management**.
 
