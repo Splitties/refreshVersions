@@ -111,7 +111,7 @@ If you need/want this feature, please vote with a 👍 on [this issue]({{link.is
 ### Using a development version
 
 To use a development version (for example to test an unreleased new feature), you need to find the published development versions by searching in the
-[recent commits on the develop branch]({{link.github}}/commits/develop).
+[recent commits on the develop branch]({{link.github}}/commits/develop) (they start with "Dev version").
 
 You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven` as shown below:
 
