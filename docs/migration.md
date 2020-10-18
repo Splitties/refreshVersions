@@ -1,6 +1,6 @@
 # Migration
 
-You can migrate existing dependencies, so they use the version placeholder and can have their available updates found by refreshVersions and easily applied.
+You can migrate existing dependencies, so they use the version placeholder in order to have their available updates found by refreshVersions and easily applied.
 
 We provide an **experimental** interactive Gradle task made for migration.
 
