@@ -48,7 +48,7 @@ They will not affect your build, and will serve as a reminder to revisit upgradi
 
 If you want to delete these comments, it's possible too, and it's safe. Running the `refreshVersions` task will bring them back (plus any newer available update).
 
-## 3. Perform a Gradle sync/import
+## 3. Perform a Gradle sync/reload
 
 The file `versions.properties` is part of the Gradle build.
 
