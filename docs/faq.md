@@ -1,3 +1,3 @@
-# Common errors
+# FAQ
 
-TO BE WRITTEN
+TK

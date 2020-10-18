@@ -70,7 +70,7 @@ nav:
   - 'Adding Dependencies': adding-dependencies.md
   - 'Updating Dependencies': updating-dependencies.md
   - 'Migration': migration.md
-  - 'Common Errors': faq.md
+  - 'FAQ': faq.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing':
     - 'Code of Conduct': contributing/code_of_conduct.md

@@ -72,8 +72,8 @@ and apply the updates you want in the `versions.properties` file.
 
 You can read more on the website, we have guides with screenshots:
 
-- https://jmfayard.github.io/refreshVersions/adding-dependencies/[Adding dependencies]
-- https://jmfayard.github.io/refreshVersions/updating-dependencies/[Updating dependencies]
+- https://jmfayard.github.io/refreshVersions/add-dependencies/[Add dependencies]
+- https://jmfayard.github.io/refreshVersions/update-dependencies/[Update dependencies]
 
 == Bonus: tips for your Gradle projects
 
