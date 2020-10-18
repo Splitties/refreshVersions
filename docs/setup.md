@@ -1,65 +1,59 @@
-This guide will help you setting up refreshVersions in a Gradle project.
+# Setup
 
-## Try it out with zero setup!
+This guide will help you set up refreshVersions in a Gradle project.
 
-The simplest way to try out gradle refreshVersions is with our official sample, the Kotlin libraries Playground!
+## Update Gradle (if needed)
 
-Everything is pre-configured here, so just open the project in IntelliJ and start adding and upgrading dependencies.
-
-[![](img/kotlin-libraries-playground.png)](https://github.com/LouisCAD/kotlin-libraries-playground#readme)
-
-**https://github.com/LouisCAD/kotlin-libraries-playground**
-
-*Warning: You may also learn a ton of things about Kotlin libraries in the process!*
-
-## Setup
-
-[![](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg?label=refreshVersions)](https://plugins.gradle.org/plugin/de.fayard.refreshVersions)
-![Gradle Version](https://img.shields.io/endpoint?url=https%3A%2F%2Fgradle-latest-version-8xb9v8uk09jm.runkit.sh%2F)
-
-
-
-### Update Gradle
-
-Only Gradle 6+ is supported at the moment, because there were a lot of changes in dependencies management in Gradle 6. It also allows for a simpler setup for plugins for example.
+Only Gradle 6.3+ is supported at the moment, because there were a lot of changes in dependencies management in Gradle 6, and other compatibility concerns. It also allows for a simpler setup for plugins for example.
 
 Updating Gradle is anyway usually a good idea. You get fewer bugs, more
-features and more build speed.
+features, and faster builds.
 
-This how you update:
+Run this command to update:
 
-`$ ./gradlew wrapper --gradle-version {{version.gradle}}`
-
-Note that if you are on Android, you need to update the Android Gradle Plugin to its latest stable version at the same time.
-
-### Gradle's Settings file
-
-A Gradle project has [a Settings file](https://docs.gradle.org/current/userguide/build_lifecycle.html#sec:settings_file) called `settings.gradle`  or `settings.gradle.kts` where you must respect a certain order:
-
-```kotlin
-import com.example.something
-
-buildscript {
-   // see below
-}
-pluginManagement {
-}
-plugins {
-}
-
-// see below
-
-rootProject.name = "My Project"
-include(":app")
+```shell
+./gradlew wrapper --gradle-version {{version.gradle}}
 ```
 
-### Bootstrap refreshVersions
+Note that for Android projects, you need to update the Android Gradle Plugin to its latest stable version at the same time.
 
-Here is how you configure gradle refreshVersions
+## About Gradle's Settings file
 
-=== "Kotlin"
+For refreshVersions to be able to work for all the dependencies in your project, including for the ones in the `buildscript`'s `classpath`, it needs to be setup in the Gradle settings.
+
+A Gradle project has [a Settings file](https://docs.gradle.org/current/userguide/build_lifecycle.html#sec:settings_file) called `settings.gradle`  or `settings.gradle.kts` where you must respect a certain order (otherwise, the build breaks).
+
+The order is:
+1. imports, if any.
+2. The `buildscript` block, if any. (We will use it)
+3. The `pluginManagement` block, if any.
+4. The `plugins` block, if any settings plugins are applied.
+5. Logic for Gradle settings (any other code).
+
+See the example snippet below:
+
+```kotlin
+import com.example.something // Imports at the top, as usual.
+
+buildscript {
+   // We will setup refreshVersions here, see below.
+}
+pluginManagement {} // Optional
+plugins {} // Optional
+
+// Then you can have other code after the blocks above,
+// we will bootstrap refreshVersions here.
+
+rootProject.name = "My Project" // Optional, defaults to parent dir's name.
+include(":app") // If the project has modules/subprojects to declare.
+```
+
+## Bootstrap refreshVersions
+
+Here is how to configure gradle refreshVersions:
+
+=== "settings.gradle.kts"
     ```kotlin
-    // settings.gradle.kts
     import de.fayard.refreshVersions.bootstrapRefreshVersions
 
     buildscript {
@@ -70,9 +64,8 @@ Here is how you configure gradle refreshVersions
     bootstrapRefreshVersions()
     ```
 
-=== "Groovy"
+=== "settings.gradle"
     ```groovy
-    // settings.gradle
     import de.fayard.refreshVersions.RefreshVersionsSetup
 
     buildscript {
@@ -86,11 +79,10 @@ Here is how you configure gradle refreshVersions
 
 ### If you have a buildSrc module
 
-I you use the **buildSrc** module, you probably want to use refreshVersions there as well.
+If you use the **buildSrc** module and have dependencies declared in the `buildSrc/build.gradle[.kts]` file, you probably want to use refreshVersions there as well. For that, an extra special setup is required.
 
-=== "Kotlin"
+=== "buildSrc/settings.gradle.kts"
     ```kotlin
-    // buildSrc/settings.gradle.kts
     import de.fayard.refreshVersions.bootstrapRefreshVersionsForBuildSrc
 
     buildscript {
@@ -101,9 +93,8 @@ I you use the **buildSrc** module, you probably want to use refreshVersions ther
     bootstrapRefreshVersionsForBuildSrc()
     ```
 
-=== "Groovy"
+=== "buildSrc/settings.gradle"
     ```kotlin
-    // buildSrc/settings.gradle
     import de.fayard.refreshVersions.RefreshVersionsSetup
 
     buildscript {
@@ -115,22 +106,21 @@ I you use the **buildSrc** module, you probably want to use refreshVersions ther
     ```
 
 
-### If you have a composite / included build
+### If you have a composite/included build
 
-Included builds are not supported yet. If you need/want this feature,
-please vote with a 👍 on [this issue](https://github.com/jmfayard/refreshVersions/issues/205) to
-help us prioritize.
+Sharing used versions with included builds is not supported at the moment.
 
-### Using a development version
+If you need/want this feature, please vote with a 👍 on [this issue]({{link.issues}}/205), subscribe to it, and tell us about your use case, to help us prioritize.
 
-To use a development version, you need to find the published development versions by searching in the
-[recent commits on the develop branch](https://github.com/jmfayard/refreshVersions/commits/develop)
+### If you want to use a development version
 
-You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven`
+To use a development version (for example to test an unreleased new feature), you need to find the published development versions by searching in the
+[recent commits on the develop branch]({{link.github}}/commits/develop) (they start with "Dev version").
 
-=== "Kotlin"
+You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven` as shown below:
+
+=== "settings.gradle.kts"
     ```kotlin
-    // settings.gradle.kts
     import de.fayard.refreshVersions.bootstrapRefreshVersions
 
     buildscript {
@@ -144,9 +134,8 @@ You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven
     bootstrapRefreshVersions()
     ```
 
-=== "Groovy"
+=== "settings.gradle"
     ```groovy
-    // settings.gradle
     import de.fayard.refreshVersions.RefreshVersionsSetup
 
     buildscript {
@@ -160,8 +149,12 @@ You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven
     RefreshVersionsSetup.bootstrap(settings)
     ```
 
-### Run $ gradle refreshVersions
+## Next steps
 
-At that point, you should be able to run `$ gradle refreshVersions`
+You did it! refreshVersions is now properly setup.
 
-It won't do much though, because refreshVersions only manage the dependencies you told it to manage. Next we will see how to migrate your project
+Now, you might want to:
+
+- [Migrate/opt-in existing dependency declarations]({{link.site}}/migration), so the `refreshVersions` task can find available updates for you.
+- [Add new dependencies]({link.site}}/add-dependencies).
+- [Update dependencies]({link.site}}/update-dependencies).
