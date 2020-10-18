@@ -21,4 +21,4 @@ That migration task is **safe to use** (except if you have different modules wit
 
 These improvements are planned for the 1.0 release.
 
-You can follow [this issue](({{link.issues}}/169) to track when it is resolved exactly, and you can also vote for it with a 👍.
+You can follow [this issue]({{link.issues}}/169) to track when it is resolved exactly, and you can also vote for it with a 👍.
