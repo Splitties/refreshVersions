@@ -28,6 +28,8 @@ extra:
     slack: https://img.shields.io/static/v1?label=kotlinlang&message=gradle-refresh-versions&color=brightgreen&logo=slack
     refreshVersions: https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/de.fayard/refreshVersions/de.fayard.refreshVersions.gradle.plugin/maven-metadata.xml.svg?label=refreshVersions
     pr: https://img.shields.io/github/issues-pr-raw/jmfayard/refreshVersions
+  keyboard-shortcuts:
+    find-actions: <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>A</kbd>
 
 copyright: 'Copyright &copy; 2020 jmfayard'
 
