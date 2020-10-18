@@ -14,8 +14,10 @@
 
 Gradle multi-module projects are on the rise.
 
-At the same time, library vendors publish very modularized artifacts. On Android for example, the big fat support libraries are dead, and their replacement, `AndroidX`,
+At the same time, library vendors publish very modularized artifacts:
+- On Android, the big fat support libraries are dead, and their replacement, `AndroidX`,
 contains more than 200 different dependencies, grouped in over 70 groups, each having its own version. (AndroidX is only a part of first-party dependencies for Android projects, and third party dependencies can add up.)
+- On the server, many frameworks or library suites offer a high number of artifacts. That applies to Ktor, Spring, http4k and others. Again, that's not even counting third party dependencies.
 
 Both trends come with great technical benefits.
 
