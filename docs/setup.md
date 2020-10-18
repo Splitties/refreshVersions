@@ -2,14 +2,18 @@
 
 This guide will help you set up refreshVersions in a Gradle project.
 
-## Update Gradle
+## Update Gradle (if needed)
 
-Only Gradle 6+ is supported at the moment, because there were a lot of changes in dependencies management in Gradle 6. It also allows for a simpler setup for plugins for example.
+Only Gradle 6.3+ is supported at the moment, because there were a lot of changes in dependencies management in Gradle 6, and other compatibility concerns. It also allows for a simpler setup for plugins for example.
 
 Updating Gradle is anyway usually a good idea. You get fewer bugs, more
 features, and faster builds.
 
-Run this command to update: `./gradlew wrapper --gradle-version {{version.gradle}}`
+Run this command to update:
+
+```shell
+./gradlew wrapper --gradle-version {{version.gradle}}
+```
 
 Note that for Android projects, you need to update the Android Gradle Plugin to its latest stable version at the same time.
 
