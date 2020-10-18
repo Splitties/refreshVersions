@@ -73,10 +73,10 @@ nav:
   - 'Common Errors': faq.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing':
-    - 'Code of Conduct': code_of_conduct.md
-    - 'Improving docs': improving-docs.md
-    - 'Dev environment': CONTRIBUTING.md
-    - 'Dependency notations': dependency-notations-updates.md
+    - 'Code of Conduct': contributing/code_of_conduct.md
+    - 'Improving docs': contributing/improving-docs.md
+    - 'Dev environment': contributing/dev-env.md
+    - 'Dependency notations': contributing/dependency-notations-updates.md
 
 plugins:
   - search
