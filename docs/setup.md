@@ -2,7 +2,7 @@
 
 This guide will help you set up refreshVersions in a Gradle project.
 
-## Ensure Gradle is up to date
+## Update Gradle
 
 Only Gradle 6+ is supported at the moment, because there were a lot of changes in dependencies management in Gradle 6. It also allows for a simpler setup for plugins for example.
 
@@ -108,7 +108,7 @@ Sharing used versions with included builds is not supported at the moment.
 
 If you need/want this feature, please vote with a 👍 on [this issue]({{link.issues}}/205), subscribe to it, and tell us about your use case, to help us prioritize.
 
-### Using a development version
+### If you want to use a development version
 
 To use a development version (for example to test an unreleased new feature), you need to find the published development versions by searching in the
 [recent commits on the develop branch]({{link.github}}/commits/develop) (they start with "Dev version").
@@ -152,5 +152,5 @@ You did it! refreshVersions is now properly setup.
 Now, you might want to:
 
 - [Migrate/opt-in existing dependency declarations]({{link.site}}/migration), so the `refreshVersions` task can find available updates for you.
-- [Add new dependencies]({link.site}}/adding-dependencies).
-- [Update dependencies]({link.site}}/updating-dependencies).
+- [Add new dependencies]({link.site}}/add-dependencies).
+- [Update dependencies]({link.site}}/update-dependencies).

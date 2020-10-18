@@ -1,6 +1,6 @@
-# Updating dependencies
+# Update dependencies
 
-The core feature is gradle refreshVersions is that it will lookup auto-magically for available updates for all the dependencies that it manages.
+The core feature is gradle refreshVersions is that it will lookup automatically for available updates for all the dependencies that it manages.
 
 This is done in three small steps:
 
@@ -61,6 +61,7 @@ Run the "Reload all Gradle projects" action (via {{keyboard_shortcuts.find_actio
 
 **Android Studio:**
 Run the "Sync Project with Gradle Files" action (via {{keyboard_shortcuts.find_actions}}), or click the elephant + arrow icon in the toolbar.
+
 
 At that point, you probably want to:
 

@@ -76,7 +76,7 @@ Simply run `$ ./gradlew refreshVersions` and you will see the available updates 
 
 Why as comment? Because while googling manually for available updates is a monkey job that is best done by a computer program, while **deciding whether to upgrade or not is your job** as a programmer.
 
-Read more: [Updating Dependencies]({{link.site}}/updating-dependencies/)
+Read more: [Update Dependencies]({{link.site}}/update-dependencies/)
 
 ## It's fast!
 
@@ -96,7 +96,7 @@ gradle refreshVersions provides read-to-use organized dependency notations for p
 
 ![](img/dependencies_constants_autocomplete_2.png)
 
-Read more: [Adding Dependencies](https://jmfayard.github.io/refreshVersions/adding-dependencies/)
+Read more: [Add Dependencies](https://jmfayard.github.io/refreshVersions/add-dependencies/)
 
 ## Requirements
 

@@ -1,6 +1,6 @@
-# Adding dependencies
+# Add dependencies
 
-## Built-in dependency notations
+## Use built-in dependency notations
 
 [![](img/screencast.png)](http://www.youtube.com/watch?v=VhYERonB8co "Gradle refreshVersions")
 
@@ -43,7 +43,7 @@ Gradle run).
 It will also put any less stable versions as comments, allowing you to
 quickly upgrade if needed.
 
-## Adding Gradle plugins
+## Add Gradle plugins
 
 This section doesn't apply to plugins that are configured in a
 `buildscript` block (since these have their versions configured like
@@ -82,9 +82,9 @@ As you see, the convention is pretty simple. The key is the id of the plugin, pr
 
 ## Non-built-in dependency notations
 
-### Gradle buildSrcVersions (WIP)
+### Use gradle buildSrcVersions (WIP)
 
-Yet another approach to managing dependencies is to use the **Gradle buildSrc** module, and to auto-magically generate a file `Libs.kt` that contains all the dependencies applied to your build:
+Yet another approach to managing dependencies is to use the **Gradle buildSrc** module, and to automatically generate a file `Libs.kt` that contains all the dependencies applied to your build:
 
 === "buildSrc/src/main/kotlin/Libs.kt"
 ```kotlin
@@ -105,7 +105,7 @@ Because this file used the placeholder version `_`, it is compatible with gradle
 **This feature is not done yet. If you think we should prioritze it, please vote for [this issue]({{link.issues}}/235) with a 👍 and subscribe to it.**
 
 
-### Package Search from JetBrains
+### Use Package Search from JetBrains
 
 JetBrains offers the plugin [**Package Search**](https://plugins.jetbrains.com/plugin/12507-package-search).
 
@@ -117,7 +117,7 @@ Can you use it with refreshVersions?
 
 Sure, just use the version placeholder (`_`).
 
-### The libraries.gradle pattern
+### Use the libraries.gradle pattern
 
 An older approach to centralize dependencies is to have a `libraries.gradle` file:
 
