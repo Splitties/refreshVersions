@@ -11,8 +11,8 @@
 
 Gradle multi-module projects are on the rise.
 
-At the same time, library vendors publish very modularized artifacts. On Android for example, the big fat support libraries are dead, while `AndroidX`
-contains more than 200 different dependencies, grouped in 70 group of dependencies, each having its own version.
+At the same time, library vendors publish very modularized artifacts. On Android for example, the big fat support libraries are dead, and their replacement, `AndroidX`,
+contains more than 200 different dependencies, grouped in over 70 groups, each having its own version. (AndroidX is only a part of first-party dependencies for Android projects, and third party dependencies can add up.)
 
 Both trends come with great technical benefits.
 
@@ -64,7 +64,7 @@ Consider the example below:
 | plugin with id "com.squareup.sqldelight"      | plugin.com.squareup.sqldelight                |
 
 - gradle refreshVersions works with **an opt-in mechanism.** It only manages dependencies where the version is set to be a placeholder, more specifically the underscore `_`, which, akin to Kotlin, here means that the version is not used, being instead set in the `versions.properties` file.
-- gradle refreshVersions has a system of **[rules]({{link.master}}/plugins/dependencies/src/main/resources/refreshVersions-rules)** that allows to set all Retrofit dependencies with the same version key `version.retrofit` , keeping things DRY.
+- gradle refreshVersions has a system of **[rules]({{link.master}}/plugins/dependencies/src/main/resources/refreshVersions-rules)** that here, allows to set all Retrofit dependencies with the same version key `version.retrofit` , keeping things DRY.
 
 ## Auto-magically look up for updates
 
