@@ -6,7 +6,6 @@ on:
     paths:
       - 'plugins/version.txt'
     branches:
-      - master
       - develop
 jobs:
   gradle-plugins-publishing:
