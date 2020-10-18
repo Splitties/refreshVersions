@@ -5,8 +5,8 @@
 [![](img/screencast.png)](http://www.youtube.com/watch?v=VhYERonB8co "Gradle refreshVersions")
 
 
-refreshVersions provides read-to-use organized constants for select
-popular dependencies of the following ecosystems:
+refreshVersions provides read-to-use organized dependency notations for select
+popular libraries of the following ecosystems:
 
 - Kotlin Multiplatform
 - Kotlin/JVM
@@ -31,7 +31,7 @@ You can see [all the dependency objects in this directory]({{link.master}}/plugi
 
 ### Wait, what version are those dependencies using?
 
-All these dependency constants specify their version as the version
+All these dependency notations specify their version as the version
 placeholder (`_`), so refreshVersions can replace them seamlessly with the corresponding
 value defined in the `versions.properties` file, via Gradle APIs.
 
