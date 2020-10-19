@@ -12,6 +12,8 @@ import kotlin.String
  * See https://github.com/jmfayard/refreshVersions
  */
 object Libs {
+    const val clikt: String = "com.github.ajalt.clikt:clikt:_"
+
     const val mockito_kotlin: String = "com.nhaarman.mockitokotlin2:mockito-kotlin:_"
 
     const val okhttp: String = "com.squareup.okhttp3:okhttp:_"
