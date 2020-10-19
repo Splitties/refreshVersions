@@ -5,16 +5,26 @@ site_name: gradle refreshVersions
 site_url: https://jmfayard.github.io/refreshVersions/
 repo_name: refreshVersions
 repo_url: https://github.com/jmfayard/refreshVersions
-site_description: "Dependency Management: from Hell to Paradise"
+site_description: "Life is too short to google for dependencies and versions"
 site_author: jmfayard LouisCAD
 remote_branch: gh-pages
 #edit_uri: ""
 
 extra:
+  link:
+    playground: https://github.com/LouisCAD/kotlin-libraries-playground
+    site: https://jmfayard.github.io/refreshVersions
+    github: https://github.com/jmfayard/refreshVersions
+    master: https://github.com/jmfayard/refreshVersions/blob/master
+    issues: https://github.com/jmfayard/refreshVersions/issues
+    gradlePluginPortal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
+    slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
-    gradle: 6.6.1
+    gradle: 6.7
     refreshVersions: '0.9.7'
     refreshVersionsDev: '0.9.7-dev-001'
+  keyboard_shortcuts:
+    find_actions: <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>A</kbd>
 
 copyright: 'Copyright &copy; 2020 jmfayard'
 
@@ -52,13 +62,16 @@ markdown_extensions:
 nav:
   - 'Overview': index.md
   - 'Setup': setup.md
-  - 'Adding Dependencies': adding-dependencies.md
-  - 'Updating Dependencies': updating-dependencies.md
+  - 'Add Dependencies': add-dependencies.md
+  - 'Update Dependencies': update-dependencies.md
   - 'Migration': migration.md
-  - 'Common Errors': faq.md
+  - 'FAQ': faq.md
   - 'Change Log': CHANGELOG.md
-  - 'Contributing': CONTRIBUTING.md
-  - 'Code of Conduct': code_of_conduct.md
+  - 'Contributing':
+    - 'Code of Conduct': contributing/code_of_conduct.md
+    - 'Improving docs': contributing/improving-docs.md
+    - 'Dev environment': contributing/dev-env.md
+    - 'Dependency notations': contributing/dependency-notations-updates.md
 
 plugins:
   - search
