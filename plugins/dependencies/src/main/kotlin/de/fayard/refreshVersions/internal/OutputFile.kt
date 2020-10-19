@@ -7,8 +7,10 @@ internal enum class OutputFile(var path: String, var existed: Boolean = false, v
     BUILD("buildSrc/build.gradle.kts", alternativePath = "buildSrc/build.gradle"),
     GIT_IGNORE("buildSrc/.gitignore"),
     LIBS("buildSrc/src/main/kotlin/Libs.kt"),
-    VERSIONS("buildSrc/src/main/kotlin/Versions.kt"),
-    GRADLE_PROPERTIES("gradle.properties");
+    VERSIONS_KT("buildSrc/src/main/kotlin/Versions.kt"),
+    GRADLE_PROPERTIES("gradle.properties"),
+    VERSIONS_PROPERTIES("versions.properties")
+    ;
 
     fun fileExists(project: Project) = when {
         project.file(path).exists() -> true
@@ -16,22 +18,26 @@ internal enum class OutputFile(var path: String, var existed: Boolean = false, v
         else -> false
     }
 
-    fun logFileWasModified() {
-        logFileWasModified(path, existed)
+    fun logFileWasModified(delete: Boolean = false) {
+        logFileWasModified(path, existed, delete)
     }
 
     companion object {
 
-        fun logFileWasModified(path: String, existed: Boolean) {
+        fun logFileWasModified(path: String, existed: Boolean, delete: Boolean = false) {
             val ANSI_RESET = "\u001B[0m"
             val ANSI_GREEN = "\u001B[32m"
-
-            val status = if (existed) {
-                "        modified:   "
-            } else {
-                "        new file:   "
+            val ANSI_RED = "\u001B[31m"
+            val color = when {
+                delete -> ANSI_RED
+                else -> ANSI_GREEN
             }
-            println("$ANSI_GREEN$status$path$ANSI_RESET")
+            val status = when {
+                delete  -> "        deleted:    "
+                existed -> "        modified:   "
+                else -> "        new file:   "
+            }
+            println("$color$status$path$ANSI_RESET")
         }
 
     }

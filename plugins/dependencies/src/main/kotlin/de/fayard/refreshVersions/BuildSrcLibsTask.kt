@@ -11,7 +11,7 @@ import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.tasks.TaskAction
 
 @Suppress("UnstableApiUsage")
-open class BuildSrcVersionsTask : DefaultTask() {
+open class BuildSrcLibsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionInitializeBuildSrc() {
@@ -32,8 +32,18 @@ open class BuildSrcVersionsTask : DefaultTask() {
                 OutputFile.logFileWasModified(outputFile.path, outputFile.existed)
             }
         }
+        OutputFile.VERSIONS_KT.run {
+            if (existed) {
+                project.file(path).delete()
+                logFileWasModified(delete = true)
+            }
+        }
     }
 
+    @TaskAction
+    fun initVersionsProperties() {
+        OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
+    }
 
     @TaskAction
     fun taskUpdateLibsKt() {
@@ -51,13 +61,6 @@ open class BuildSrcVersionsTask : DefaultTask() {
 
 
     fun findDependencies(): List<Dependency> {
-        // TODO: should we filter configurations?
-        val knownConfigurations = listOf(
-            "implementation", "api", "compileOnly", "runtimeOnly", "kapt",
-            "testImplementation", "androidTestImplementation", "compileClasspath"
-        )
-
-        println("> findDependencies()")
         val allDependencies = mutableListOf<Dependency>()
         project.allprojects {
             val projectName = name
