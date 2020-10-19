@@ -24,10 +24,6 @@ internal class ResettableDelegates {
         }
 
         private var field: T? = null
-
-        init {
-            associatedDelegates.add(this)
-        }
     }
 
     inner class LateInit<T : Any> : Delegate<T>() {
@@ -48,10 +44,6 @@ internal class ResettableDelegates {
         }
 
         private var field: T? = null
-
-        init {
-            associatedDelegates.add(this)
-        }
     }
 
     inner class Lazy<T : Any>(private val initializer: () -> T) : Delegate<T>() {
@@ -67,8 +59,13 @@ internal class ResettableDelegates {
         }
     }
 
-    abstract class Delegate<T> : ReadOnlyProperty<Any?, T> {
+    abstract inner class Delegate<T> : ReadOnlyProperty<Any?, T> {
         abstract fun Nothing?.reset()
+
+        init {
+            @Suppress("LeakingThis") // Safe in our case where the references are kept private.
+            associatedDelegates.add(this)
+        }
     }
 
     private val associatedDelegates = mutableListOf<Delegate<*>>()
