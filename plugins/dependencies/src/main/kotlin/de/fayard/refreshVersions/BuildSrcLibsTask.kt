@@ -90,8 +90,11 @@ open class BuildSrcLibsTask : DefaultTask() {
                 .flatMap {
                     val configurationName = "$projectName:${it.name}"
                     it.allDependencies.filterIsInstance<ExternalDependency>()
-                        .map {
-                            Dependency(it.group!!, it.name, it.version ?: "none")
+                        .mapNotNull {
+                            when {
+                                it.group == null -> null
+                                else -> Dependency(it.group, it.name, it.version ?: "none")
+                            }
                         }
                 }
         }
