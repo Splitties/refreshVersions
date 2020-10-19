@@ -4,6 +4,11 @@ on:
     branches:
       - master
       - mkdocs
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - 'CHANGELOG.md'
+      # Any additional files/dirs that take part in updating the website must be added here.
 jobs:
   deploy:
     runs-on: ubuntu-latest
