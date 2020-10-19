@@ -67,6 +67,21 @@ internal fun writeWithAddedVersions(
     versionsFile.writeText(newFileContent)
 }
 
+fun writeWithNewEntries(versionsFile: File, newEntries: List<Pair<String, String>>) {
+    val newFileContent = buildString {
+        val existingContent = versionsFile.readText()
+        if (existingContent.isBlank()) {
+            appendln(fileHeader)
+        } else {
+            append(existingContent)
+        }
+        for ((key, value) in newEntries) {
+            append(key) ; append("=") ; append(value) ; append("\n")
+        }
+    }
+    versionsFile.writeText(newFileContent)
+}
+
 private fun StringBuilder.appendVersionWithUpdatesIfAvailable(it: VersionWithUpdateIfAvailable) {
     appendln()
     val paddedKey = it.key.padStart(availableComment.length + 2)
