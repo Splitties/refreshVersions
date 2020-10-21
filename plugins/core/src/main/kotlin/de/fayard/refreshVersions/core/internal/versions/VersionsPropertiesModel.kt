@@ -5,9 +5,18 @@ internal data class VersionsPropertiesModel(
     val generatedByVersion: String,
     val sections: List<Section>
 ) {
+    init {
+        if (preHeaderContent.isNotEmpty()) require(preHeaderContent.endsWith('\n'))
+        preHeaderContent.lineSequence().forEach { if (it.isNotBlank()) it.mustBeACommentLine() }
+    }
+
     sealed class Section {
 
-        data class Comment(val lines: String) : Section()
+        data class Comment(val lines: String) : Section() {
+            init {
+                lines.lineSequence().forEach { it.mustBeACommentLine() }
+            }
+        }
 
         data class VersionEntry(
             val leadingCommentLines: List<String>,
@@ -19,6 +28,18 @@ internal data class VersionsPropertiesModel(
             val metadataLines: List<String> by lazy {
                 leadingCommentLines.mapNotNull {
                     it.substringAfter("## ", missingDelimiterValue = "").ifEmpty { null }
+                }
+            }
+
+            init {
+                leadingCommentLines.forEach { it.mustBeACommentLine() }
+                trailingCommentLines.forEach {
+                    it.mustBeACommentLine()
+                    require(it.startsWith("##").not()) {
+                        "Double hashtags are reserved for available update comments and metadata " +
+                                "(before the version).\n" +
+                                "Problematic line: $it"
+                    }
                 }
             }
         }
@@ -49,6 +70,10 @@ internal data class VersionsPropertiesModel(
             |#### suppress inspection "UnusedProperty" for whole file
             """.trimMargin().also { headerText ->
             assert(headerText.lineSequence().all { it.startsWith(headerLinesPrefix) })
+        }
+
+        private fun String.mustBeACommentLine() {
+            require(startsWith("#")) { "Expected a comment but found random text: $this" }
         }
     }
 }

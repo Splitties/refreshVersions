@@ -6,7 +6,6 @@ import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.
 
 internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)
-    if (preHeaderContent.isNotEmpty()) appendln()
     appendln(VersionsPropertiesModel.versionsPropertiesHeader(version = generatedByVersion))
     appendln()
     val sb = StringBuilder()
@@ -16,7 +15,7 @@ internal fun VersionsPropertiesModel.toText(): String = buildString {
 private fun VersionsPropertiesModel.Section.toText(
     builder: StringBuilder
 ): CharSequence = when (this) {
-    is Comment -> lines
+    is Comment -> builder.apply { clear(); appendln(lines) }
     is VersionEntry -> builder.apply {
         clear()
         leadingCommentLines.forEach { appendln(it) }

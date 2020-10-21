@@ -3,7 +3,17 @@ package de.fayard.refreshVersions.core.internal.versions
 import de.fayard.refreshVersions.core.extensions.text.substringAfterLastLineStartingWith
 import de.fayard.refreshVersions.core.extensions.text.substringBetween
 
-internal fun VersionsPropertiesModel.Companion.readFromText(fileContent: String): VersionsPropertiesModel {
+internal fun VersionsPropertiesModel.Companion.readFromText(
+    fileContent: String
+): VersionsPropertiesModel = try {
+    readFromTextInternal(fileContent)
+} catch (e: IllegalArgumentException) {
+    throw IllegalStateException(e)
+}
+
+private fun VersionsPropertiesModel.Companion.readFromTextInternal(
+    fileContent: String
+): VersionsPropertiesModel {
     val preHeaderContent: String
     val generatedByVersion: String
     val sectionsText: String
@@ -25,7 +35,11 @@ internal fun VersionsPropertiesModel.Companion.readFromText(fileContent: String)
 
             val versionLineIndex = lines.indexOfFirst {
                 versionKeysPrefixes.any { prefix -> it.startsWith(prefix) }
-            }.also { check(it != -1) }
+            }.also {
+                if (it == -1) {
+                    return@map VersionsPropertiesModel.Section.Comment(lines = sectionText)
+                }
+            }
 
             val versionLine = lines[versionLineIndex]
 
@@ -38,14 +52,25 @@ internal fun VersionsPropertiesModel.Companion.readFromText(fileContent: String)
                 toIndex = lines.size
             )
 
-            val (availableUpdatesComments, trailingComments) = remainingLines.partition {
-                it.isAvailableUpdateComment()
+            var availableUpdatesSectionPassed = false
+
+            val (availableUpdatesComments, trailingComments) = remainingLines.partition { line ->
+                line.isAvailableUpdateComment().also { isAvailableUpdateLine ->
+                    if (isAvailableUpdateLine) check(availableUpdatesSectionPassed.not()) {
+                        "Putting custom comments between available updates comments is not supported."
+                    }
+                    availableUpdatesSectionPassed = isAvailableUpdateLine.not()
+                }
             }
+
+            val versionKey = versionLine.substringBefore('=')
 
             VersionsPropertiesModel.Section.VersionEntry(
                 leadingCommentLines = lines.subList(fromIndex = 0, toIndex = versionLineIndex),
-                key = versionLine.substringBefore('='),
-                currentVersion = versionLine.substringAfter('='),
+                key = versionKey,
+                currentVersion = versionLine.substringAfter('=', missingDelimiterValue = "").ifEmpty {
+                    error("Didn't find the value of the version for the following key: $versionKey")
+                },
                 availableUpdates = availableUpdatesComments.map { it.substringAfter('=') },
                 trailingCommentLines = trailingComments
             )
