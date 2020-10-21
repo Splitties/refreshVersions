@@ -35,10 +35,12 @@ See the example snippet below:
 ```kotlin
 import com.example.something // Imports at the top, as usual.
 
+pluginManagement {} // Optional
+
 buildscript {
    // We will setup refreshVersions here, see below.
 }
-pluginManagement {} // Optional
+
 plugins {} // Optional
 
 // Then you can have other code after the blocks above,
@@ -76,6 +78,27 @@ Here is how to configure gradle refreshVersions:
     RefreshVersionsSetup.bootstrap(settings)
     ```
 
+
+### If you upgrade from the plugin buildSrcVersions
+
+Before refreshVersions, [there was the plugin buildSrcVersions](https://dev.to/jmfayard/better-dependency-management-in-android-studio-3-5-with-gradle-buildsrcversions-34e9)
+
+If your project is using it, remove all its configuration from the top `build.gradle[.kts]` file
+
+```diff
+// build.gradle[.kts]
+-plugins {
+-  id("de.fayard.buildSrcVersions") version "0.3.2"
+-}
+
+-buildSrcVersions {
+-     someOption = "somevalue"
+-}
+```
+
+The task `buildSrcVersions` is still available.
+
+Read more: [gradle buildSrcVersions]({link.site}}/gradle-buildsrcversions).
 
 ### If you have a buildSrc module
 
