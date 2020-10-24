@@ -7,6 +7,7 @@ import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.
 internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)
     appendln(VersionsPropertiesModel.versionsPropertiesHeader(version = generatedByVersion))
+    if (sections.isEmpty()) return@buildString
     appendln()
     val sb = StringBuilder()
     sections.joinTo(buffer = this, separator = "\n") { it.toText(sb) }

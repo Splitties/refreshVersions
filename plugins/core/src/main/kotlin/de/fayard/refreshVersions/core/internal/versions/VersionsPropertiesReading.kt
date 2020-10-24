@@ -29,7 +29,7 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
     return VersionsPropertiesModel(
         preHeaderContent = preHeaderContent,
         generatedByVersion = generatedByVersion,
-        sections = sectionsText.trim().splitToSequence("\n\n").map { sectionText ->
+        sections = sectionsText.trim().splitToSequence("\n\n").mapNotNull { sectionText ->
 
             val lines = sectionText.lines().map { it.trim() }
 
@@ -37,7 +37,8 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
                 versionKeysPrefixes.any { prefix -> it.startsWith(prefix) }
             }.also {
                 if (it == -1) {
-                    return@map VersionsPropertiesModel.Section.Comment(lines = sectionText)
+                    if (sectionText.isEmpty()) return@mapNotNull null
+                    return@mapNotNull VersionsPropertiesModel.Section.Comment(lines = sectionText)
                 }
             }
 
