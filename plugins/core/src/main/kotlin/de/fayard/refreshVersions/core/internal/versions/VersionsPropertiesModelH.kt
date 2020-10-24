@@ -3,7 +3,7 @@ package de.fayard.refreshVersions.core.internal.versions
 internal expect class VersionsPropertiesModel {
     val preHeaderContent: String
     val generatedByVersion: String
-    val sections: List<VersionsPropertiesModel.Section>
+    val sections: List<Section>
 
     sealed class Section {
         class Comment : Section {
