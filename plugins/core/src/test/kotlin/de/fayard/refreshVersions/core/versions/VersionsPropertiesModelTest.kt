@@ -4,10 +4,10 @@ import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.readFromText
 import de.fayard.refreshVersions.core.internal.versions.toText
 import de.fayard.refreshVersions.core.testResources
-import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.ints.shouldBePositive
-import io.kotest.matchers.shouldBe
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class VersionsPropertiesModelTest {
 
@@ -21,13 +21,22 @@ class VersionsPropertiesModelTest {
             val inputFile = it.resolve("input.properties")
             val outputFile = it.resolve("output.properties")
             val parsedModel = VersionsPropertiesModel.readFromText(inputFile.readText())
-
-            outputFile.readText() shouldBe parsedModel.toText()
-
+            assertEquals(
+                expected = parsedModel.toText(),
+                actual = outputFile.readText(),
+                message = "Output of model parsed from input should match the expected input!"
+            )
             val reParsedModel = VersionsPropertiesModel.readFromText(parsedModel.toText())
-
-            reParsedModel shouldBe parsedModel
-            reParsedModel.toText() shouldBe parsedModel.toText()
+            assertEquals(
+                expected = parsedModel,
+                actual = reParsedModel,
+                message = "Model shouldn't change after being written and parsed again!"
+            )
+            assertEquals(
+                expected = parsedModel.toText(),
+                actual = reParsedModel.toText(),
+                message = "File content shouldn't change after being parsed and written again!"
+            )
         }
     }
 
@@ -41,10 +50,21 @@ class VersionsPropertiesModelTest {
             val fileContent = it.readText()
             val parsedModel = VersionsPropertiesModel.readFromText(fileContent)
             val reParsedModel = VersionsPropertiesModel.readFromText(parsedModel.toText())
-
-            parsedModel.toText() shouldBe fileContent
-            reParsedModel.toText() shouldBe fileContent
-            reParsedModel shouldBe parsedModel
+            assertEquals(
+                expected = fileContent,
+                actual = parsedModel.toText(),
+                message = "Parsing and writing back should yield the same result!"
+            )
+            assertEquals(
+                expected = parsedModel.toText(),
+                actual = reParsedModel.toText(),
+                message = "File content shouldn't change after being parsed and written again!"
+            )
+            assertEquals(
+                expected = parsedModel,
+                actual = reParsedModel,
+                message = "Model shouldn't change after being written and parsed again!"
+            )
         }
     }
 
@@ -54,10 +74,10 @@ class VersionsPropertiesModelTest {
             it.extension == "properties"
         }.onEach {
             val fileContent = it.readText()
-            shouldThrow<IllegalStateException> {
+            assertFailsWith<IllegalStateException> {
                 VersionsPropertiesModel.readFromText(fileContent)
             }
         }.count()
-        checkedFilesCount.shouldBePositive()
+        assertTrue(checkedFilesCount >= 0, message = "No test files found!")
     }
 }
