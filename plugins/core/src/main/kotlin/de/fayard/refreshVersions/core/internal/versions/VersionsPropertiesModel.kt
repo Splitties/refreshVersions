@@ -1,31 +1,31 @@
 package de.fayard.refreshVersions.core.internal.versions
 
-internal data class VersionsPropertiesModel(
-    val preHeaderContent: String,
-    val generatedByVersion: String,
-    val sections: List<Section>
+internal actual data class VersionsPropertiesModel(
+    actual val preHeaderContent: String,
+    actual val generatedByVersion: String,
+    actual val sections: List<Section>
 ) {
     init {
         if (preHeaderContent.isNotEmpty()) require(preHeaderContent.endsWith('\n'))
         preHeaderContent.lineSequence().forEach { if (it.isNotBlank()) it.mustBeACommentLine() }
     }
 
-    sealed class Section {
+    actual sealed class Section {
 
-        data class Comment(val lines: String) : Section() {
+        actual data class Comment(actual val lines: String) : Section() {
             init {
                 lines.lineSequence().forEach { it.mustBeACommentLine() }
             }
         }
 
-        data class VersionEntry(
-            val leadingCommentLines: List<String>,
-            val key: String,
-            val currentVersion: String,
-            val availableUpdates: List<String>,
-            val trailingCommentLines: List<String>
+        actual data class VersionEntry(
+            actual val leadingCommentLines: List<String>,
+            actual val key: String,
+            actual val currentVersion: String,
+            actual val availableUpdates: List<String>,
+            actual val trailingCommentLines: List<String>
         ) : Section() {
-            val metadataLines: List<String> by lazy {
+            actual val metadataLines: List<String> by lazy {
                 leadingCommentLines.mapNotNull {
                     it.substringAfter("## ", missingDelimiterValue = "").ifEmpty { null }
                 }
@@ -45,7 +45,7 @@ internal data class VersionsPropertiesModel(
         }
     }
 
-    companion object {
+    actual companion object {
 
         /**
          * We use 4 hashtags to simplify parsing as we can have up to 3 contiguous hashtags in the

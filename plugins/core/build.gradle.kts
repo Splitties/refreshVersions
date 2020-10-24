@@ -66,6 +66,7 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xinline-classes",
+        "-Xmulti-platform", // Allow using expect and actual keywords.
         "-Xopt-in=kotlin.RequiresOptIn",
         "-Xopt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
     )
