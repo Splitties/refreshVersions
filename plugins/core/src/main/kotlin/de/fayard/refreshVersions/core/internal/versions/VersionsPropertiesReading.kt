@@ -3,6 +3,13 @@ package de.fayard.refreshVersions.core.internal.versions
 import de.fayard.refreshVersions.core.extensions.sequences.uniqueBy
 import de.fayard.refreshVersions.core.extensions.text.substringAfterLastLineStartingWith
 import de.fayard.refreshVersions.core.extensions.text.substringBetween
+import java.io.File
+
+internal fun VersionsPropertiesModel.Companion.readFrom(
+    versionsPropertiesFile: File
+): VersionsPropertiesModel {
+    return readFromText(versionsPropertiesFile.readText())
+}
 
 internal fun VersionsPropertiesModel.Companion.readFromText(
     fileContent: String

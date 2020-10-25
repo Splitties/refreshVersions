@@ -19,11 +19,11 @@ internal actual data class VersionsPropertiesModel(
         }
 
         actual data class VersionEntry(
-            actual val leadingCommentLines: List<String>,
+            actual val leadingCommentLines: List<String> = emptyList(),
             actual val key: String,
             actual val currentVersion: String,
             actual val availableUpdates: List<String>,
-            actual val trailingCommentLines: List<String>
+            actual val trailingCommentLines: List<String> = emptyList()
         ) : Section() {
             actual val metadataLines: List<String> by lazy {
                 leadingCommentLines.mapNotNull {

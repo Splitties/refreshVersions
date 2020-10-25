@@ -3,6 +3,14 @@ package de.fayard.refreshVersions.core.internal.versions
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.Comment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
+import java.io.File
+
+internal fun VersionsPropertiesModel.writeTo(versionsPropertiesFile: File) {
+    val finalModel = this.copy(
+        generatedByVersion = "0.9.8-SNAPSHOT" //TODO: Get actual version. Use symlink to have it in resources.
+    )
+    versionsPropertiesFile.writeText(finalModel.toText())
+}
 
 internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)

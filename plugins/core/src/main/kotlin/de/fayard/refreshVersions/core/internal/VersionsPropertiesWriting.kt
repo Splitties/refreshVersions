@@ -2,45 +2,40 @@ package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
+import de.fayard.refreshVersions.core.internal.versions.plus
+import de.fayard.refreshVersions.core.internal.versions.readFrom
+import de.fayard.refreshVersions.core.internal.versions.writeTo
 import org.gradle.api.Project
 import java.io.File
 
 internal fun Project.updateVersionsProperties(
     dependenciesWithLastVersion: List<DependencyWithVersionCandidates>
 ) {
-
-    val properties: Map<String, String> = RefreshVersionsConfigHolder.readVersionProperties()
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+    val file = RefreshVersionsConfigHolder.versionsPropertiesFile
 
-    val newFileContent = buildString {
-        appendln(fileHeader)
-        //TODO: Keep comments from user (ours begin with ##, while user's begin with a single #),
-        // property related comments are placed above it. Also keep header and footer comments.
-        val versionsWithUpdatesIfAvailable: List<VersionWithUpdateIfAvailable> = dependenciesWithLastVersion
-            .mapNotNull { (moduleId, currentVersion, versionsCandidates) ->
-                val propertyName = getVersionPropertyName(moduleId.toModuleIdentifier(), versionKeyReader)
-                if (currentVersion.isAVersionAlias()) return@mapNotNull null
-                VersionWithUpdateIfAvailable(
-                    key = propertyName,
-                    currentVersion = currentVersion,
-                    versionsCandidates = versionsCandidates
-                )
-            }
-            .distinctBy { it.key }
-        val versionAliases: List<VersionWithUpdateIfAvailable> = properties.mapNotNull { (k, v) ->
-            v.takeIf { version -> version.isAVersionAlias() }?.let {
-                VersionWithUpdateIfAvailable(
-                    key = k,
-                    currentVersion = v,
-                    versionsCandidates = emptyList()
-                )
+    val model = VersionsPropertiesModel.readFrom(file)
+    val updates = dependenciesWithLastVersion.associateBy { (moduleId, _, _) ->
+        getVersionPropertyName(moduleId.toModuleIdentifier(), versionKeyReader)
+    }
+
+    val newModel = model.copy(
+        sections = model.sections.map { section ->
+            when (section) {
+                is VersionsPropertiesModel.Section.Comment -> section
+                is VersionEntry -> {
+                    if (section.currentVersion.isAVersionAlias()) return@map section
+                    val update = updates[section.key] ?: return@map section
+                    section.copy(
+                        availableUpdates = update.versionsCandidates.map { it.value }
+                    )
+                }
             }
         }
-        (versionsWithUpdatesIfAvailable + versionAliases)
-            .sortedBy { it.key }
-            .forEach { appendVersionWithUpdatesIfAvailable(it) }
-    }
-    RefreshVersionsConfigHolder.versionsPropertiesFile.writeText(newFileContent)
+    )
+    newModel.writeTo(file)
 }
 
 internal fun writeWithAddedVersions(
@@ -48,23 +43,14 @@ internal fun writeWithAddedVersions(
     propertyName: String,
     versionsCandidates: List<Version>
 ) {
-    val newFileContent = buildString {
-        val existingContent = versionsFile.readText()
-        if (existingContent.isBlank()) {
-            appendln(fileHeader)
-        } else {
-            append(existingContent)
-        }
-        //TODO: Add new version in the right order regarding existing version properties
-        appendVersionWithUpdatesIfAvailable(
-            VersionWithUpdateIfAvailable(
-                key = propertyName,
-                currentVersion = versionsCandidates.first().value,
-                versionsCandidates = versionsCandidates.drop(1)
-            )
-        )
-    }
-    versionsFile.writeText(newFileContent)
+    val model = VersionsPropertiesModel.readFrom(versionsFile)
+
+    val newModel = model + VersionEntry(
+        key = propertyName,
+        currentVersion = versionsCandidates.first().value,
+        availableUpdates = versionsCandidates.drop(1).map { it.value }
+    )
+    newModel.writeTo(versionsFile)
 }
 
 private fun StringBuilder.appendVersionWithUpdatesIfAvailable(it: VersionWithUpdateIfAvailable) {
