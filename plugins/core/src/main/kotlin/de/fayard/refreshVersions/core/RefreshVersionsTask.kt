@@ -1,7 +1,8 @@
 package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.*
-import de.fayard.refreshVersions.core.internal.versions.updateVersionsProperties
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
 import kotlinx.coroutines.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
@@ -26,7 +27,7 @@ open class RefreshVersionsTask : DefaultTask() {
                 )
             }
             val result = versionsLookupResultAsync.await()
-            project.rootProject.updateVersionsProperties(result.dependenciesWithVersionsCandidates)
+            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesWithVersionsCandidates)
             project.rootProject.updateGradleSettingsIncludingForBuildSrc(result.selfUpdates)
 
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)

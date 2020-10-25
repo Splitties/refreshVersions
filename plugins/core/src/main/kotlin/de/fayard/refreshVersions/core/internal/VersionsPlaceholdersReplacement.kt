@@ -170,7 +170,6 @@ fun Project.writeCurrentVersionInProperties(
     currentVersion: String
 ) {
     VersionsPropertiesModel.writeWithNewEntry(
-        versionsFile = RefreshVersionsConfigHolder.versionsPropertiesFile,
         propertyName = versionKey,
         versionsCandidates = listOf(Version(currentVersion))
     )
@@ -198,7 +197,6 @@ private fun `Write versions candidates using latest most stable version and get 
         val bestStability = versionCandidates.minBy { it.stabilityLevel }!!.stabilityLevel
         val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
         VersionsPropertiesModel.writeWithNewEntry(
-            versionsFile = versionsPropertiesFile,
             propertyName = propertyName,
             versionsCandidates = versionCandidates.dropWhile { it != versionToUse }
         )

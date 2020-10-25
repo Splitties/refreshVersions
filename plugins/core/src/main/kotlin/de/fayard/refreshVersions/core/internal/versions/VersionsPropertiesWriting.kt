@@ -9,50 +9,47 @@ import de.fayard.refreshVersions.core.internal.isAVersionAlias
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.Comment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
-import org.gradle.api.Project
 import java.io.File
 
-internal fun Project.updateVersionsProperties(
+internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
     dependenciesWithLastVersion: List<DependencyWithVersionCandidates>
 ) {
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-    val file = RefreshVersionsConfigHolder.versionsPropertiesFile
 
-    val model = VersionsPropertiesModel.readFrom(file)
-    val updates = dependenciesWithLastVersion.associateBy { (moduleId, _, _) ->
-        getVersionPropertyName(moduleId.toModuleIdentifier(), versionKeyReader)
+    val candidatesMap = dependenciesWithLastVersion.associateBy {
+        getVersionPropertyName(it.moduleId.toModuleIdentifier(), versionKeyReader)
     }
 
-    val newModel = model.copy(
-        sections = model.sections.map { section ->
-            when (section) {
-                is Comment -> section
-                is VersionEntry -> {
-                    if (section.currentVersion.isAVersionAlias()) return@map section
-                    val update = updates[section.key] ?: return@map section
-                    section.copy(
-                        availableUpdates = update.versionsCandidates.map { it.value }
-                    )
+    update { model ->
+        model.copy(
+            sections = model.sections.map { section ->
+                when (section) {
+                    is Comment -> section
+                    is VersionEntry -> {
+
+                        if (section.currentVersion.isAVersionAlias()) return@map section
+
+                        val versionsCandidates = candidatesMap[section.key]?.versionsCandidates
+                            ?: return@map section
+                        section.copy(availableUpdates = versionsCandidates.map { it.value })
+                    }
                 }
             }
-        }
-    )
-    newModel.writeTo(file)
+        )
+    }
 }
 
 internal fun VersionsPropertiesModel.Companion.writeWithNewEntry(
-    versionsFile: File,
     propertyName: String,
     versionsCandidates: List<Version>
 ) {
-    val model = VersionsPropertiesModel.readFrom(versionsFile)
-
-    val newModel = model + VersionEntry(
-        key = propertyName,
-        currentVersion = versionsCandidates.first().value,
-        availableUpdates = versionsCandidates.drop(1).map { it.value }
-    )
-    newModel.writeTo(versionsFile)
+    VersionsPropertiesModel.update { model ->
+        model + VersionEntry(
+            key = propertyName,
+            currentVersion = versionsCandidates.first().value,
+            availableUpdates = versionsCandidates.drop(1).map { it.value }
+        )
+    }
 }
 
 internal fun VersionsPropertiesModel.writeTo(versionsPropertiesFile: File) {
@@ -61,6 +58,22 @@ internal fun VersionsPropertiesModel.writeTo(versionsPropertiesFile: File) {
     )
     versionsPropertiesFile.writeText(finalModel.toText())
 }
+
+/**
+ * [transform] is crossinline to enforce synchronous execution of (no suspension points).
+ */
+private inline fun VersionsPropertiesModel.Companion.update(
+    versionsPropertiesFile: File = RefreshVersionsConfigHolder.versionsPropertiesFile,
+    crossinline transform : (model: VersionsPropertiesModel) -> VersionsPropertiesModel
+) {
+    require(versionsPropertiesFile.name == "versions.properties")
+    synchronized(updateLock) {
+        val newModel = transform(VersionsPropertiesModel.readFrom(versionsPropertiesFile))
+        newModel.writeTo(versionsPropertiesFile)
+    }
+}
+
+private val updateLock = Any()
 
 internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)
