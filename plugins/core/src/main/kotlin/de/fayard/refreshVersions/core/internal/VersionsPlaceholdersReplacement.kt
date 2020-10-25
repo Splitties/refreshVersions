@@ -6,7 +6,8 @@ import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.isGradlePlugin
 import de.fayard.refreshVersions.core.extensions.gradle.moduleId
 import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
-import de.fayard.refreshVersions.core.internal.versions.writeWithAddedVersions
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.writeWithNewEntry
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
 import org.gradle.api.artifacts.*
@@ -168,7 +169,7 @@ fun Project.writeCurrentVersionInProperties(
     versionKey: String,
     currentVersion: String
 ) {
-    writeWithAddedVersions(
+    VersionsPropertiesModel.writeWithNewEntry(
         versionsFile = RefreshVersionsConfigHolder.versionsPropertiesFile,
         propertyName = versionKey,
         versionsCandidates = listOf(Version(currentVersion))
@@ -196,7 +197,7 @@ private fun `Write versions candidates using latest most stable version and get 
     ).let { versionCandidates ->
         val bestStability = versionCandidates.minBy { it.stabilityLevel }!!.stabilityLevel
         val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
-        writeWithAddedVersions(
+        VersionsPropertiesModel.writeWithNewEntry(
             versionsFile = versionsPropertiesFile,
             propertyName = propertyName,
             versionsCandidates = versionCandidates.dropWhile { it != versionToUse }

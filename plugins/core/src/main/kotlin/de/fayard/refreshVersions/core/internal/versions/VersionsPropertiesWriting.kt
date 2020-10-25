@@ -40,7 +40,7 @@ internal fun Project.updateVersionsProperties(
     newModel.writeTo(file)
 }
 
-internal fun writeWithAddedVersions(
+internal fun VersionsPropertiesModel.Companion.writeWithNewEntry(
     versionsFile: File,
     propertyName: String,
     versionsCandidates: List<Version>
