@@ -1,7 +1,7 @@
 package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.*
-import de.fayard.refreshVersions.core.internal.updateVersionsProperties
+import de.fayard.refreshVersions.core.internal.versions.updateVersionsProperties
 import kotlinx.coroutines.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency

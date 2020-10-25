@@ -6,6 +6,7 @@ import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.isGradlePlugin
 import de.fayard.refreshVersions.core.extensions.gradle.moduleId
 import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
+import de.fayard.refreshVersions.core.internal.versions.writeWithAddedVersions
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
 import org.gradle.api.artifacts.*
