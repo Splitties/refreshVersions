@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core.internal.versions
 
+import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
@@ -54,9 +55,15 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewEntry(
 
 internal fun VersionsPropertiesModel.writeTo(versionsPropertiesFile: File) {
     val finalModel = this.copy(
-        generatedByVersion = "0.9.8-SNAPSHOT" //TODO: Get actual version. Use symlink to have it in resources.
+        generatedByVersion = pluginVersion
     )
     versionsPropertiesFile.writeText(finalModel.toText())
+}
+
+private val pluginVersion by lazy {
+    RefreshVersionsCorePlugin::class.java.getResourceAsStream("/version.txt")
+        .bufferedReader()
+        .useLines { it.first() }
 }
 
 /**
@@ -64,7 +71,7 @@ internal fun VersionsPropertiesModel.writeTo(versionsPropertiesFile: File) {
  */
 private inline fun VersionsPropertiesModel.Companion.update(
     versionsPropertiesFile: File = RefreshVersionsConfigHolder.versionsPropertiesFile,
-    crossinline transform : (model: VersionsPropertiesModel) -> VersionsPropertiesModel
+    crossinline transform: (model: VersionsPropertiesModel) -> VersionsPropertiesModel
 ) {
     require(versionsPropertiesFile.name == "versions.properties")
     synchronized(updateLock) {
