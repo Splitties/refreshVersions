@@ -13,7 +13,6 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.*
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.invocation.Gradle
-import java.io.File
 
 internal const val versionPlaceholder = "_"
 
@@ -144,7 +143,6 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                 }
                 resolveVersion(properties, propertyName)
                     ?: `Write versions candidates using latest most stable version and get it`(
-                        versionsPropertiesFile = RefreshVersionsConfigHolder.versionsPropertiesFile,
                         repositories = repositories,
                         propertyName = propertyName,
                         dependency = dependency
@@ -177,7 +175,6 @@ fun Project.writeCurrentVersionInProperties(
 
 @Suppress("FunctionName")
 private fun `Write versions candidates using latest most stable version and get it`(
-    versionsPropertiesFile: File,
     repositories: ArtifactRepositoryContainer,
     propertyName: String,
     dependency: ExternalDependency
