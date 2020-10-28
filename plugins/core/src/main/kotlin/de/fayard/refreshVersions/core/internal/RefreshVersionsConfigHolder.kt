@@ -2,6 +2,8 @@ package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.readFrom
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.gradle.api.Project
@@ -34,6 +36,7 @@ object RefreshVersionsConfigHolder {
         private set
 
     fun readVersionProperties(): Map<String, String> {
+        VersionsPropertiesModel.readFrom(versionsPropertiesFile) // Check file is correct.
         @Suppress("unchecked_cast")
         return Properties().apply {
             load(versionsPropertiesFile.reader())
