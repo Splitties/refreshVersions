@@ -17,6 +17,10 @@ internal operator fun DependencyVersionsFetcher.Companion.invoke(
     val name = dependency.name
     when (repository.url.scheme) {
         "https", "file" -> Unit // Supported
+        "gcs" -> return MavenDependencyVersionsFetcherGCS(
+            moduleId = ModuleId(group, name),
+            repoUrl = repository.url.toString()
+        )
         "http" -> return null //TODO: Show non fatal error that http is not supported for security reasons.
         else -> return null //TODO: Support more transport protocols. Here's what Gradle supports:
         // https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:supported_transport_protocols
