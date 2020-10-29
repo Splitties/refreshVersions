@@ -32,7 +32,14 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
         sectionsText = fileContent.substringAfter(oldFileHeader)
     } else {
         preHeaderContent = fileContent.substringBefore(headerLinesPrefix)
-        generatedByVersion = fileContent.substringBetween(generatedByLineStart, "\n")
+        try {
+            generatedByVersion = fileContent.substringBetween(generatedByLineStart, "\n")
+        } catch (e: NoSuchElementException) {
+            throw IllegalStateException(
+                "Unable to find the version of refreshVersions that generated the " +
+                        "versions.properties file. Please, revert the removal."
+            )
+        }
         sectionsText = fileContent.substringAfterLastLineStartingWith(headerLinesPrefix)
     }
 
