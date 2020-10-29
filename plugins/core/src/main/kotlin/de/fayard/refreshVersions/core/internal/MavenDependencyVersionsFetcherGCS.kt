@@ -4,21 +4,12 @@ import com.google.auth.oauth2.ServiceAccountCredentials
 import com.google.cloud.storage.Bucket
 import com.google.cloud.storage.StorageException
 import com.google.cloud.storage.StorageOptions
-import de.fayard.refreshVersions.core.DependencyVersionsFetcher
 import de.fayard.refreshVersions.core.ModuleId
-import de.fayard.refreshVersions.core.Version
-import de.fayard.refreshVersions.core.extensions.okhttp.await
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.gradle.api.GradleException
 import org.gradle.caching.BuildCacheException
-import retrofit2.HttpException
-import retrofit2.Response
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
 internal class MavenDependencyVersionsFetcherGCS(
     moduleId: ModuleId,
@@ -60,10 +51,7 @@ internal class MavenDependencyVersionsFetcherGCS(
         val fullPath = listOfNotNull(repoPath, path).joinToString("/", "", "")
         try {
             val blob = bucket.get(fullPath) ?: throw FileNotFoundException("blob $fullPath is missing")
-            val stringContent = blob.getContent().decodeToString()
-
-            System.err.println("returning $stringContent")
-            return stringContent
+            return blob.getContent().decodeToString()
 
         } catch (e: StorageException) {
             // https://github.com/googleapis/google-cloud-java/issues/3402
