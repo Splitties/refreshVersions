@@ -8,7 +8,8 @@ import java.io.File
 internal fun VersionsPropertiesModel.Companion.readFrom(
     versionsPropertiesFile: File
 ): VersionsPropertiesModel {
-    return readFromText(versionsPropertiesFile.readText())
+    val text = synchronized(versionsPropertiesFileLock) { versionsPropertiesFile.readText() }
+    return readFromText(text)
 }
 
 internal fun VersionsPropertiesModel.Companion.readFromText(

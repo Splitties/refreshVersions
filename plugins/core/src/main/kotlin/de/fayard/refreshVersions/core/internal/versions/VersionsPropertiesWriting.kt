@@ -74,13 +74,13 @@ private inline fun VersionsPropertiesModel.Companion.update(
     crossinline transform: (model: VersionsPropertiesModel) -> VersionsPropertiesModel
 ) {
     require(versionsPropertiesFile.name == "versions.properties")
-    synchronized(updateLock) {
+    synchronized(versionsPropertiesFileLock) {
         val newModel = transform(VersionsPropertiesModel.readFrom(versionsPropertiesFile))
         newModel.writeTo(versionsPropertiesFile)
     }
 }
 
-private val updateLock = Any()
+internal val versionsPropertiesFileLock = Any()
 
 internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)

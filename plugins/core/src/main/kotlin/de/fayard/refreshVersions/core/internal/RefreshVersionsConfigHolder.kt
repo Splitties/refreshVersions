@@ -3,6 +3,7 @@ package de.fayard.refreshVersions.core.internal
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
 import de.fayard.refreshVersions.core.internal.versions.readFrom
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -12,7 +13,6 @@ import org.gradle.api.invocation.Gradle
 import java.io.File
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
-import java.util.Properties
 
 @InternalRefreshVersionsApi
 object RefreshVersionsConfigHolder {
@@ -36,11 +36,8 @@ object RefreshVersionsConfigHolder {
         private set
 
     fun readVersionProperties(): Map<String, String> {
-        VersionsPropertiesModel.readFrom(versionsPropertiesFile) // Check file is correct.
-        @Suppress("unchecked_cast")
-        return Properties().apply {
-            load(versionsPropertiesFile.reader())
-        } as Map<String, String>
+        val model = VersionsPropertiesModel.readFrom(versionsPropertiesFile)
+        return model.sections.filterIsInstance<VersionEntry>().associate { it.key to it.currentVersion }
     }
 
     fun allProjects(project: Project): Sequence<Project> {
