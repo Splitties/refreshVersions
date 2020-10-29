@@ -35,7 +35,7 @@ object RefreshVersionsConfigHolder {
     internal var settings: Settings by resettableDelegates.LateInit()
         private set
 
-    fun readVersionProperties(): Map<String, String> {
+    fun readVersionsMap(): Map<String, String> {
         val model = VersionsPropertiesModel.readFrom(versionsPropertiesFile)
         return model.sections.filterIsInstance<VersionEntry>().associate { it.key to it.currentVersion }
     }

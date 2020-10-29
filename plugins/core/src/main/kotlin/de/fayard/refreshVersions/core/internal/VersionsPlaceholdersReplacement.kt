@@ -16,12 +16,12 @@ import org.gradle.api.invocation.Gradle
 
 internal const val versionPlaceholder = "_"
 
-internal fun Gradle.setupVersionPlaceholdersResolving(versionProperties: Map<String, String>) {
+internal fun Gradle.setupVersionPlaceholdersResolving(versionsMap: Map<String, String>) {
 
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-    var properties: Map<String, String> = versionProperties
-    val refreshProperties = { updatedProperties: Map<String, String> ->
-        properties = updatedProperties
+    var currentVersionsMap: Map<String, String> = versionsMap
+    val refreshVersionsMap = { updatedMap: Map<String, String> ->
+        currentVersionsMap = updatedMap
     }
     beforeProject {
         val project: Project = this@beforeProject
@@ -36,8 +36,8 @@ internal fun Gradle.setupVersionPlaceholdersResolving(versionProperties: Map<Str
                 project = project,
                 isFromBuildscript = isFromBuildscript,
                 versionKeyReader = versionKeyReader,
-                initialProperties = properties,
-                refreshProperties = refreshProperties
+                initialVersionsMap = currentVersionsMap,
+                refreshVersionsMap = refreshVersionsMap
             )
         }
 
@@ -110,7 +110,7 @@ internal tailrec fun resolveVersion(
 }
 
 /**
- * Expects the value of a version property (values of the map returned by [RefreshVersionsConfigHolder.readVersionProperties]).
+ * Expects the value of a version property (values of the map returned by [RefreshVersionsConfigHolder.readVersionsMap]).
  */
 internal fun String.isAVersionAlias(): Boolean = startsWith("version.") || startsWith("plugin.")
 
@@ -120,12 +120,12 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
     project: Project,
     isFromBuildscript: Boolean,
     versionKeyReader: ArtifactVersionKeyReader,
-    initialProperties: Map<String, String>,
-    refreshProperties: (updatedProperties: Map<String, String>) -> Unit
+    initialVersionsMap: Map<String, String>,
+    refreshVersionsMap: (updatedMap: Map<String, String>) -> Unit
 ) {
 
     val repositories = if (isFromBuildscript) project.buildscript.repositories else project.repositories
-    var properties = initialProperties
+    var properties = initialVersionsMap
     @Suppress("UnstableApiUsage")
     withDependencies {
         for (dependency in this) {
@@ -137,9 +137,9 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                 properties = properties,
                 key = propertyName
             ) ?: synchronized(lock) {
-                RefreshVersionsConfigHolder.readVersionProperties().let { updatedProperties ->
-                    properties = updatedProperties
-                    refreshProperties(updatedProperties)
+                RefreshVersionsConfigHolder.readVersionsMap().let { updatedMap ->
+                    properties = updatedMap
+                    refreshVersionsMap(updatedMap)
                 }
                 resolveVersion(properties, propertyName)
                     ?: `Write versions candidates using latest most stable version and get it`(
@@ -147,9 +147,9 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                         propertyName = propertyName,
                         dependency = dependency
                     ).also {
-                        RefreshVersionsConfigHolder.readVersionProperties().let { updatedProperties ->
-                            properties = updatedProperties
-                            refreshProperties(updatedProperties)
+                        RefreshVersionsConfigHolder.readVersionsMap().let { updatedMap ->
+                            properties = updatedMap
+                            refreshVersionsMap(updatedMap)
                         }
                     }
             }

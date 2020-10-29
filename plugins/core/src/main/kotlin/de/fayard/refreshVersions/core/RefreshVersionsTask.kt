@@ -22,7 +22,7 @@ open class RefreshVersionsTask : DefaultTask() {
                 lookupVersionCandidates(
                     httpClient = RefreshVersionsConfigHolder.httpClient,
                     project = project,
-                    versionProperties = RefreshVersionsConfigHolder.readVersionProperties(),
+                    versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
                     versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
                 )
             }

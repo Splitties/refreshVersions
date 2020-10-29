@@ -10,12 +10,12 @@ import org.gradle.api.artifacts.ModuleIdentifier
 
 internal fun runConfigurationDependenciesMigration(
     project: Project,
-    versionsProperties: Map<String, String>,
+    versionsMap: Map<String, String>,
     configuration: Configuration
 ) {
     configuration.dependencies.forEach { dependency ->
         if (dependency !is ExternalDependency) return@forEach
-        project.attemptDependencyMigration(versionsProperties, dependency)
+        project.attemptDependencyMigration(versionsMap, dependency)
     }
 }
 
@@ -28,12 +28,12 @@ private fun DependencyMapping.matches(dependency: ExternalDependency): Boolean {
 }
 
 private fun Project.attemptDependencyMigration(
-    versionsProperties: Map<String, String>,
+    versionsMap: Map<String, String>,
     dependency: ExternalDependency
 ) {
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
 
-    if (dependency.hasHardcodedVersion(versionsProperties, versionKeyReader).not()) return
+    if (dependency.hasHardcodedVersion(versionsMap, versionKeyReader).not()) return
     val currentVersion = dependency.version ?: return
 
     val availableDependenciesConstants = artifactNameToConstantMapping.mapNotNull { dependencyMapping ->
