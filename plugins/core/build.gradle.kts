@@ -38,7 +38,7 @@ dependencies {
         because("It has ready to use HttpException class")
     }
     implementation(Square.moshi.kotlinReflect)
-    implementation("com.google.cloud:google-cloud-storage:1.113.2")
+    implementation("com.google.cloud:google-cloud-storage:_")
 
     testImplementation(Square.okHttp3.loggingInterceptor)
     testImplementation(platform(notation = "org.junit:junit-bom:_"))
