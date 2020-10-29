@@ -26,21 +26,29 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
     val preHeaderContent: String
     val generatedByVersion: String
     val sectionsText: String
-    if (fileContent.startsWith(oldFileHeader)) {
-        preHeaderContent = ""
-        generatedByVersion = "0.9.7" // Might be actually older, but it doesn't matter.
-        sectionsText = fileContent.substringAfter(oldFileHeader)
-    } else {
-        preHeaderContent = fileContent.substringBefore(headerLinesPrefix)
-        try {
-            generatedByVersion = fileContent.substringBetween(generatedByLineStart, "\n")
-        } catch (e: NoSuchElementException) {
-            throw IllegalStateException(
-                "Unable to find the version of refreshVersions that generated the " +
-                        "versions.properties file. Please, revert the removal."
-            )
+    when {
+        fileContent.startsWith(oldFileHeader) -> {
+            preHeaderContent = ""
+            generatedByVersion = "0.9.7" // Might be actually older, but it doesn't matter.
+            sectionsText = fileContent.substringAfter(oldFileHeader)
         }
-        sectionsText = fileContent.substringAfterLastLineStartingWith(headerLinesPrefix)
+        fileContent.isBlank() -> {
+            preHeaderContent = ""
+            generatedByVersion = ""
+            sectionsText = ""
+        }
+        else -> {
+            preHeaderContent = fileContent.substringBefore(headerLinesPrefix)
+            try {
+                generatedByVersion = fileContent.substringBetween(generatedByLineStart, "\n")
+            } catch (e: NoSuchElementException) {
+                throw IllegalStateException(
+                    "Unable to find the version of refreshVersions that generated the " +
+                            "versions.properties file. Please, revert the removal."
+                )
+            }
+            sectionsText = fileContent.substringAfterLastLineStartingWith(headerLinesPrefix)
+        }
     }
 
     val sections = mutableListOf<VersionsPropertiesModel.Section>()
