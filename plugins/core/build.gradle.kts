@@ -43,6 +43,8 @@ dependencies {
     testImplementation(platform(notation = "org.junit:junit-bom:_"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation(Testing.kotest.runner.junit5)
+    testImplementation(Kotlin.test.annotationsCommon)
+    testImplementation(Kotlin.test.junit5)
 
     testFixturesApi(Square.okHttp3.okHttp)
     testFixturesApi(Square.okHttp3.loggingInterceptor)
@@ -64,6 +66,7 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xinline-classes",
+        "-Xmulti-platform", // Allow using expect and actual keywords.
         "-Xopt-in=kotlin.RequiresOptIn",
         "-Xopt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
     )
