@@ -1,9 +1,10 @@
-package de.fayard.internal
+package de.fayard.refreshVersions.internal
 
 import com.squareup.kotlinpoet.*
+import de.fayard.internal.PluginConfig
 
 
-data class Dependency(
+internal data class Dependency(
     val group: String = "",
     val module: String = "",
     val version: String = ""
@@ -23,19 +24,19 @@ data class Dependency(
 }
 
 
-class Deps(
+internal class Deps(
     val dependencies: List<Dependency>,
     val modes : Map<Dependency, VersionMode>,
     val names: Map<Dependency, String>
 )
 
 
-enum class VersionMode {
+internal enum class VersionMode {
     GROUP, GROUP_MODULE, MODULE
 }
 
 
-fun kotlinpoet(
+internal fun kotlinpoet(
     deps: Deps
 ): FileSpec {
     val dependencies: List<Dependency> = deps.dependencies
@@ -70,7 +71,7 @@ fun kotlinpoet(
 
 }
 
-fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): Deps {
+internal fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): Deps {
     val dependencies = this
 
     val modes: MutableMap<Dependency, VersionMode> = dependencies.associate { d: Dependency ->
@@ -91,16 +92,11 @@ fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): Deps {
 }
 
 
-fun constStringProperty(name: String, initializer: CodeBlock, kdoc: CodeBlock? = null) =
+internal fun constStringProperty(name: String, initializer: CodeBlock, kdoc: CodeBlock? = null) =
     PropertySpec.builder(name, String::class)
         .addModifiers(KModifier.CONST)
         .initializer(initializer)
         .apply {
             if (kdoc != null) addKdoc(kdoc)
         }.build()
-
-
-fun constStringProperty(name: String, initializer: String, kdoc: CodeBlock? = null) =
-    constStringProperty(name, CodeBlock.of("%S", initializer), kdoc)
-
 

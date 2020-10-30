@@ -1,16 +1,15 @@
 package de.fayard.refreshVersions
 
 import com.squareup.kotlinpoet.FileSpec
-import de.fayard.internal.Dependency
+import de.fayard.refreshVersions.internal.Dependency
 import de.fayard.internal.OutputFile
 import de.fayard.internal.PluginConfig
-import de.fayard.internal.checkModeAndNames
-import de.fayard.internal.kotlinpoet
+import de.fayard.refreshVersions.internal.checkModeAndNames
+import de.fayard.refreshVersions.internal.kotlinpoet
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.versionKeyReader
 import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.hasHardcodedVersion
-import de.fayard.refreshVersions.core.internal.writeWithNewEntries
 import de.fayard.refreshVersions.internal.countDependenciesWithHardcodedVersions
 import de.fayard.refreshVersions.internal.shouldBeIgnored
 import org.gradle.api.DefaultTask
@@ -21,8 +20,6 @@ import org.gradle.api.tasks.TaskAction
 
 @Suppress("UnstableApiUsage")
 open class BuildSrcLibsTask : DefaultTask() {
-
-
 
     @TaskAction
     fun taskActionInitializeBuildSrc() {
@@ -80,7 +77,7 @@ open class BuildSrcLibsTask : DefaultTask() {
     }
 
 
-    fun findDependencies(): List<Dependency> {
+    private fun findDependencies(): List<Dependency> {
         val allDependencies = mutableListOf<Dependency>()
         project.allprojects {
             val projectName = name
