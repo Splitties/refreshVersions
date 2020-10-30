@@ -25,26 +25,26 @@ private val ignoredConfigurationNames = listOf(
 //TODO: Ignore the following dependency: org.jetbrains.kotlin:kotlin-android-extensions-runtime
 
 internal fun Configuration.countDependenciesWithHardcodedVersions(
-    versionsProperties: Map<String, String>,
+    versionsMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader
 ): Int = dependencies.count { dependency ->
-    dependency is ExternalDependency && dependency.hasHardcodedVersion(versionsProperties, versionKeyReader)
+    dependency is ExternalDependency && dependency.hasHardcodedVersion(versionsMap, versionKeyReader)
 }
 
-internal fun Project.countDependenciesWithHardcodedVersions(versionsProperties: Map<String, String>): Int {
+internal fun Project.countDependenciesWithHardcodedVersions(versionsMap: Map<String, String>): Int {
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
     return configurations.sumBy { configuration ->
         if (configuration.shouldBeIgnored()) 0 else {
-            configuration.countDependenciesWithHardcodedVersions(versionsProperties, versionKeyReader)
+            configuration.countDependenciesWithHardcodedVersions(versionsMap, versionKeyReader)
         }
     }
 }
 
 internal fun promptProjectSelection(rootProject: Project): Project? {
     require(rootProject == rootProject.rootProject) { "Expected a rootProject but got $rootProject" }
-    val versionsProperties = RefreshVersionsConfigHolder.readVersionProperties()
+    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
     val projectsWithHardcodedDependenciesVersions: List<Pair<Project, Int>> = rootProject.allprojects.mapNotNull {
-        val hardcodedDependenciesVersionsCount = it.countDependenciesWithHardcodedVersions(versionsProperties)
+        val hardcodedDependenciesVersionsCount = it.countDependenciesWithHardcodedVersions(versionsMap)
         if (hardcodedDependenciesVersionsCount > 0) {
             it to hardcodedDependenciesVersionsCount
         } else null
@@ -61,23 +61,23 @@ internal fun promptProjectSelection(rootProject: Project): Project? {
 }
 
 internal suspend fun runInteractiveMigrationToDependenciesConstants(project: Project) {
-    val versionsProperties = RefreshVersionsConfigHolder.readVersionProperties()
+    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
     while (coroutineContext.isActive) {
-        val selectedConfiguration = project.promptConfigurationSelection(versionsProperties) ?: return
+        val selectedConfiguration = project.promptConfigurationSelection(versionsMap) ?: return
         runConfigurationDependenciesMigration(
             project,
-            versionsProperties,
+            versionsMap,
             selectedConfiguration
         )
     }
 }
 
-private fun Project.promptConfigurationSelection(versionsProperties: Map<String, String>): Configuration? {
+private fun Project.promptConfigurationSelection(versionsMap: Map<String, String>): Configuration? {
     @Suppress("UnstableApiUsage")
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
     val configurationsWithHardcodedDependenciesVersions = configurations.mapNotNull { configuration ->
         if (configuration.shouldBeIgnored()) return@mapNotNull null
-        val count = configuration.countDependenciesWithHardcodedVersions(versionsProperties, versionKeyReader)
+        val count = configuration.countDependenciesWithHardcodedVersions(versionsMap, versionKeyReader)
         return@mapNotNull if (count == 0) null else configuration to count
     }
     val cliGenericUi = CliGenericUi()
