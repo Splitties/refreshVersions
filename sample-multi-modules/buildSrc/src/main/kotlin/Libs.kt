@@ -91,7 +91,7 @@ object Libs {
     const val kotlin_scripting_compiler_embeddable: String =
             "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:_"
 
-    const val kotlin_stdlib: String = "org.jetbrains.kotlin:kotlin-stdlib:_"
+    const val kotlin_stdlib: String = "org.jetbrains.kotlin:kotlin-stdlib"
 
     const val kotlinx_coroutines_core: String = "org.jetbrains.kotlinx:kotlinx-coroutines-core:_"
 
