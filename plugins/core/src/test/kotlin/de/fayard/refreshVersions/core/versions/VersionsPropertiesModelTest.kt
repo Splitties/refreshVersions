@@ -42,11 +42,9 @@ class VersionsPropertiesModelTest {
 
     @Test
     fun `test new format`() {
-        samplesDir.resolve("new-format").listFiles()!!.flatMap {
-            it.listFiles()?.asList() ?: emptyList()
-        }.filter {
+        val checkedFilesCount = samplesDir.resolve("new-format").walkTopDown().filter {
             it.extension == "properties"
-        }.also { check(it.isNotEmpty()) }.forEach {
+        }.onEach {
             val fileContent = it.readText()
             val parsedModel = VersionsPropertiesModel.readFromText(fileContent)
             val reParsedModel = VersionsPropertiesModel.readFromText(parsedModel.toText())
@@ -65,7 +63,18 @@ class VersionsPropertiesModelTest {
                 actual = reParsedModel,
                 message = "Model shouldn't change after being written and parsed again!"
             )
-        }
+        }.count()
+        assertTrue(checkedFilesCount >= 0, message = "No test files found!")
+    }
+
+    @Test
+    fun `test new format parsing`() {
+        val checkedFilesCount = samplesDir.resolve("new-format-parsing-only").walkTopDown().filter {
+            it.extension == "properties"
+        }.onEach {
+            VersionsPropertiesModel.readFromText(it.readText())
+        }.count()
+        assertTrue(checkedFilesCount >= 0, message = "No test files found!")
     }
 
     @Test
