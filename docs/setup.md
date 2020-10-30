@@ -85,6 +85,7 @@ Before refreshVersions, [there was the plugin buildSrcVersions](https://dev.to/j
 
 If your project is using it, remove all its configuration from the top `build.gradle[.kts]` file
 
+=== "build.gradle.kts"
 ```diff
 // build.gradle[.kts]
 -plugins {
@@ -98,7 +99,7 @@ If your project is using it, remove all its configuration from the top `build.gr
 
 The task `buildSrcVersions` is still available.
 
-Read more: [gradle buildSrcVersions]({link.site}}/gradle-buildsrcversions).
+Read more: [gradle buildSrcVersions]({{link.site}}/gradle-buildsrcversions).
 
 ### If you have a buildSrc module
 
@@ -179,5 +180,5 @@ You did it! refreshVersions is now properly setup.
 Now, you might want to:
 
 - [Migrate/opt-in existing dependency declarations]({{link.site}}/migration), so the `refreshVersions` task can find available updates for you.
-- [Add new dependencies]({link.site}}/add-dependencies).
-- [Update dependencies]({link.site}}/update-dependencies).
+- [Add new dependencies]({{link.site}}/add-dependencies).
+- [Update dependencies]({{link.site}}/update-dependencies).

@@ -87,7 +87,7 @@ Read more: [Update Dependencies]({{link.site}}/update-dependencies/)
 
 ## It's fast!
 
-The [Kotlin Libraries Playground]({link.playground}) contains about 80 dependencies, and counting.
+The [Kotlin Libraries Playground]({{link.playground}}) contains about 80 dependencies, and counting.
 
 How long would it take to search for all available updates?
 

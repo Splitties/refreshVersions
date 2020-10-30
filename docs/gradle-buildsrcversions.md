@@ -5,15 +5,16 @@ The `buildSrc` is a Gradle module where you can write Kotlin code like usual (wi
 
 One cool thing you can do with it is to replace those [libraries.gradle files](https://github.com/abbas-oveissi/SearchMovies/blob/607ce1c6f9aa48669ab1b91f8824e9251f2a1fa5/libraries.gradle) we used to write:
 
-
+=== "buildSrc/src/main/kotlin/Libs.kt"
 ```kotlin
-// buildSrc/src/main/kotlin/Libs.kt
 object Libs {
     const val okhttp = "com.squareup.okhttp3:okhttp:" + Versions.okhttp
     const val okio = "com.squareup.okio:okio:" + Versions.okio
 }
+```
 
-// buildSrc/src/main/kotlin/Versions.kt
+=== "buildSrc/src/main/kotlin/Versions.kt"
+```kotlin
 object Versions {
     const val okhttp = "3.12.1"
     const val okio = "2.0.0"
@@ -64,12 +65,14 @@ $ ./gradlew buildSrcLibs
 
 The task generates what you expect:
 
-```
-// versions.properties
+=== "versions.properties"
+```properties
 version.okhttp=3.12.1
 version.okio=2.0.0
+```
 
-// buildSrc/src/main/kotlin/Libs.kt
+=== "buildSrc/src/main/kotlin/Libs.kt"
+```kotlin
 object Libs {
     const val okhttp = "com.squareup.okhttp3:okhttp:_"
     const val okio = "com.squareup.okio:okio:_"
@@ -96,4 +99,4 @@ You can still automatically look for updates, but this is now done with the task
 $ gradle refreshVersions
 ```
 
-Read more: [**Update dependencies**]({link.site}}/update-dependencies).
+Read more: [**Update dependencies**]({{link.site}}/update-dependencies).
