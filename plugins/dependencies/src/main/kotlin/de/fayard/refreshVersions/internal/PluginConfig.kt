@@ -1,16 +1,14 @@
-package de.fayard.internal
-
-import de.fayard.refreshVersions.internal.Dependency
+package de.fayard.refreshVersions.internal
 
 
 @Suppress("unused")
-object PluginConfig {
+internal object PluginConfig {
 
     const val REFRESH_VERSIONS = "refreshVersions"
     const val BUILD_SRC_VERSIONS = "buildSrcVersions"
 
     /** Documentation **/
-    fun issue(number: Int): String = "$refreshVersionsUrl/issues/$number"
+    internal fun issue(number: Int): String = "$refreshVersionsUrl/issues/$number"
 
     val refreshVersionsUrl = "https://github.com/jmfayard/refreshVersions"
 
@@ -59,7 +57,7 @@ object PluginConfig {
         |}
         """.trimMargin()
 
-    fun computeUseFqdnFor(
+    internal fun computeUseFqdnFor(
             dependencies: List<Dependency>,
             configured: List<String>,
             byDefault: List<String> = MEANING_LESS_NAMES
@@ -70,7 +68,7 @@ object PluginConfig {
         return (configured + byDefault + ambiguities + depsFromGroups - groups).distinct().sorted()
     }
 
-    fun escapeLibsKt(name: String): String {
+    internal fun escapeLibsKt(name: String): String {
         val escapedChars = listOf('-', '.', ':')
         return buildString {
             for (c in name) {

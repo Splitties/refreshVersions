@@ -3,13 +3,13 @@ package de.fayard.refreshVersions
 import com.squareup.kotlinpoet.FileSpec
 import de.fayard.refreshVersions.internal.Dependency
 import de.fayard.internal.OutputFile
-import de.fayard.internal.PluginConfig
+import de.fayard.refreshVersions.internal.PluginConfig
 import de.fayard.refreshVersions.internal.checkModeAndNames
 import de.fayard.refreshVersions.internal.kotlinpoet
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
-import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.versionKeyReader
 import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.hasHardcodedVersion
+import de.fayard.refreshVersions.core.internal.versions.writeMissingEntriesInVersionProperties
 import de.fayard.refreshVersions.internal.countDependenciesWithHardcodedVersions
 import de.fayard.refreshVersions.internal.shouldBeIgnored
 import org.gradle.api.DefaultTask
@@ -55,7 +55,7 @@ open class BuildSrcLibsTask : DefaultTask() {
 
         val newEntries = findMissingEntries(configurationsWithHardcodedDependencies)
 
-        writeWithNewEntries(RefreshVersionsConfigHolder.versionsPropertiesFile, newEntries)
+        writeMissingEntriesInVersionProperties(newEntries)
         OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
         Thread.sleep(1000)
     }
@@ -100,39 +100,38 @@ open class BuildSrcLibsTask : DefaultTask() {
 }
 
 internal fun Project.findHardcodedDependencies(): List<Pair<Project, Configuration>> {
-    val versionsProperties = RefreshVersionsConfigHolder.readVersionProperties()
+    val versionsProperties = RefreshVersionsConfigHolder.readVersionsMap()
     val projectsWithHardcodedDependenciesVersions: List<Project> = rootProject.allprojects.filter {
         it.countDependenciesWithHardcodedVersions(versionsProperties) > 0
     }
 
     return projectsWithHardcodedDependenciesVersions.flatMap { project ->
         project.configurations.filterNot { configuration ->
-            configuration.shouldBeIgnored() || 0 == configuration.countDependenciesWithHardcodedVersions(versionsProperties, versionKeyReader)
+            configuration.shouldBeIgnored() || 0 == configuration.countDependenciesWithHardcodedVersions(versionsProperties, RefreshVersionsConfigHolder.versionKeyReader)
         }.map { configuration -> project to configuration }
     }
 }
 
 
-internal fun findMissingEntries(configurations: List<Pair<Project, Configuration>>): List<Pair<String, String>> {
+internal fun findMissingEntries(configurations: List<Pair<Project, Configuration>>): Map<String, ExternalDependency> {
 
-    val versionsProperties = RefreshVersionsConfigHolder.readVersionProperties()
+    val versionsProperties = RefreshVersionsConfigHolder.readVersionsMap()
 
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
 
-    val keysAndVersions = configurations.flatMap { (project, configuration) ->
+    val dependencyMap = configurations.flatMap { (project, configuration) ->
         configuration.dependencies
             .filterIsInstance<ExternalDependency>()
             .filter { it.hasHardcodedVersion(versionsProperties, versionKeyReader) && it.version != null }
             .map { dependency: ExternalDependency ->
                 val versionKey = getVersionPropertyName(dependency.module, versionKeyReader)
-                versionKey to dependency.version!!
+                versionKey to dependency
             }
     }
-    val newEntries = keysAndVersions
+    val newEntries = dependencyMap
         .groupBy({it.first}, {it.second})
         .filter { entry -> entry.key !in versionsProperties }
-        .mapValues { entry -> entry.value.max()!! }
-        .toList()
-        .sortedBy { it.first }
+        .mapValues { entry -> entry.value.maxBy { it.version!! }!! }
+
     return newEntries
 }

@@ -1,7 +1,6 @@
 package de.fayard.refreshVersions.internal
 
 import com.squareup.kotlinpoet.*
-import de.fayard.internal.PluginConfig
 
 
 internal data class Dependency(

@@ -10,7 +10,17 @@ import de.fayard.refreshVersions.core.internal.isAVersionAlias
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.Comment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
+import org.gradle.api.artifacts.ExternalDependency
 import java.io.File
+
+fun writeMissingEntriesInVersionProperties(newEntries: Map<String, ExternalDependency>) {
+    VersionsPropertiesModel.Companion.update { model ->
+        val newSections = newEntries.map { (key, d) ->
+            VersionEntry(emptyList(), key, d.version!!, emptyList(), emptyList())
+        }.sortedBy { it.key }
+        model.copy(sections = model.sections + newSections)
+    }
+}
 
 internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
     dependenciesWithLastVersion: List<DependencyWithVersionCandidates>
