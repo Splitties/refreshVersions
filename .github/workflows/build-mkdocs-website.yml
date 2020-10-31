@@ -1,6 +1,5 @@
 name: Build MkDocs website as artifacts
 on:
-  workflow_dispatch:
   push:
     branches:
       - !master
