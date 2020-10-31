@@ -25,8 +25,8 @@ A Gradle project has [a Settings file](https://docs.gradle.org/current/userguide
 
 The order is:
 1. imports, if any.
-2. The `buildscript` block, if any. (We will use it)
-3. The `pluginManagement` block, if any.
+2. The `pluginManagement` block, if any.
+3. The `buildscript` block, if any. (We will use it)
 4. The `plugins` block, if any settings plugins are applied.
 5. Logic for Gradle settings (any other code).
 
