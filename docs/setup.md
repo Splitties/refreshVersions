@@ -93,7 +93,7 @@ If your project is using it, remove all its configuration from the top `build.gr
 -}
 
 -buildSrcVersions {
--     someOption = "somevalue"
+-    someOption = "somevalue"
 -}
 ```
 
