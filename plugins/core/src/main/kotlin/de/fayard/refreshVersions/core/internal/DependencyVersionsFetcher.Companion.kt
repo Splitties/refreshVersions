@@ -29,7 +29,7 @@ internal operator fun DependencyVersionsFetcher.Companion.invoke(
         )
         "file" -> MavenDependencyVersionsFetcherFile(
             moduleId = ModuleId(group, name),
-            repoUrl = repository.url.toString()
+            repoUrl = repository.url.toString().let { if (it.endsWith('/')) it else "$it/" }
         )
         "gcs" -> MavenDependencyVersionsFetcherGoogleCloudStorage(
             moduleId = ModuleId(group, name),

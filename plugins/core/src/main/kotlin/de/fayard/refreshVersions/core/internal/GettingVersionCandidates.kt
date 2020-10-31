@@ -7,8 +7,6 @@ import de.fayard.refreshVersions.core.internal.VersionCandidatesResultMode.Sorti
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import retrofit2.HttpException
-import java.io.FileNotFoundException
 
 internal suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
     currentVersion: Version,
@@ -69,19 +67,8 @@ private suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
     return coroutineScope {
         map { fetcher ->
             async {
-                runCatching {
-                    fetcher.getAvailableVersions(versionFilter = versionFilter)
-                }.getOrElse { e ->
-                    when {
-                        e is HttpException -> when (e.code()) {
-                            404 -> null // Normal not found result
-                            401 -> null // Returned by some repositories that have optional authentication (like jitpack.io)
-                            else -> throw e
-                        }
-                        e is FileNotFoundException -> null
-                        else -> throw e
-                    }
-                }
+                @Suppress("BlockingMethodInNonBlockingContext") // False positive.
+                fetcher.getAvailableVersionsOrNull(versionFilter = versionFilter)
             }
         }.awaitAll().filterNotNull().also { results ->
             if (results.isEmpty()) throw NoSuchElementException(buildString {

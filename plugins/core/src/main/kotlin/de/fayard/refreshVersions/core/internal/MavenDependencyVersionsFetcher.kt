@@ -13,11 +13,11 @@ internal abstract class MavenDependencyVersionsFetcher(
     moduleId = moduleId,
     repoKey = repoUrl
 ) {
-    abstract suspend fun getMetadata(): String
+    protected abstract suspend fun getXmlMetadataOrNull(): String?
 
-    override suspend fun getAvailableVersions(versionFilter: ((Version) -> Boolean)?): SuccessfulResult {
+    override suspend fun getAvailableVersionsOrNull(versionFilter: ((Version) -> Boolean)?): SuccessfulResult? {
 
-        val xml = getMetadata()
+        val xml = getXmlMetadataOrNull() ?: return null
 
         val allVersions = parseVersionsFromMavenMetaData(xml)
         return SuccessfulResult(
