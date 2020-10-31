@@ -106,14 +106,14 @@ private fun setupRefreshVersions(settings: Settings) {
 
     RefreshVersionsConfigHolder.initializedUsedVersion(settings)
 
-    val versionProperties = RefreshVersionsConfigHolder.readVersionProperties()
+    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
     @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(
         settings = settings,
-        properties = versionProperties
+        properties = versionsMap
     )
 
-    settings.gradle.setupVersionPlaceholdersResolving(versionProperties = versionProperties)
+    settings.gradle.setupVersionPlaceholdersResolving(versionsMap = versionsMap)
 
     settings.gradle.rootProject {
         apply<RefreshVersionsCorePlugin>()

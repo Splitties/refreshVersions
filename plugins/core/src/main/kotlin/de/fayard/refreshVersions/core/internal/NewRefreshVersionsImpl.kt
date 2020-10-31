@@ -19,7 +19,7 @@ import org.gradle.util.GradleVersion
 internal suspend fun lookupVersionCandidates(
     httpClient: OkHttpClient,
     project: Project,
-    versionProperties: Map<String, String>,
+    versionMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader
 ): VersionCandidatesLookupResult {
 
@@ -30,7 +30,7 @@ internal suspend fun lookupVersionCandidates(
     val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
     val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
     val dependencyFilter: (Dependency) -> Boolean = { dependency ->
-        dependency.isManageableVersion(versionProperties, versionKeyReader).also { manageable ->
+        dependency.isManageableVersion(versionMap, versionKeyReader).also { manageable ->
             if (manageable) return@also
             if (dependency.version != null) {
                 // null version means it's expected to be added by a BoM or a plugin, so we ignore them.
@@ -56,7 +56,7 @@ internal suspend fun lookupVersionCandidates(
             it.moduleId
         }.map { (moduleId: ModuleId, versionFetchers: List<DependencyVersionsFetcher>) ->
             val resolvedVersion = resolveVersion(
-                properties = versionProperties,
+                properties = versionMap,
                 key = getVersionPropertyName(moduleId, versionKeyReader)
             ) ?: error("Couldn't resolve version for $moduleId")
             async {

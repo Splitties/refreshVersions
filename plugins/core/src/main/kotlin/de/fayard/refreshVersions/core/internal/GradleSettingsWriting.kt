@@ -2,6 +2,7 @@ package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
 import org.gradle.api.Project
 import org.gradle.api.logging.Logger
 import java.io.File
