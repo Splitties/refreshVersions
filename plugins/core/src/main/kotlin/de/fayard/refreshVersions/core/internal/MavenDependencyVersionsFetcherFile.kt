@@ -11,23 +11,22 @@ internal class MavenDependencyVersionsFetcherFile(
     moduleId = moduleId,
     repoUrl = repoUrl
 ) {
-    private val baseFolder = File(repoUrl)
+    private val repoDir = File(repoUrl.substringAfter("file:"))
 
     init {
         require(repoUrl.endsWith('/'))
     }
 
     override suspend fun getXmlMetadataOrNull(): String? = try {
-        val targetDir = baseFolder.resolve("${moduleId.group!!.replace('.', '/')}/${moduleId.name}")
-        requireNotNull(targetDir.list()) {
-            "Expected a readable directory for the file repository!"
-        }.filter {
+        val targetDir = repoDir.resolve("${moduleId.group!!.replace('.', '/')}/${moduleId.name}")
+        val fileNames: Array<String>? = targetDir.list()
+        fileNames?.filter {
             it.startsWith("maven-metadata") && it.endsWith(".xml")
-        }.also {
+        }?.also {
             check(it.size <= 1) {
                 "Expected only one maven-metadata xml file but got ${it.size} matching files!"
             }
-        }.singleOrNull()?.let { filename ->
+        }?.singleOrNull()?.let { filename ->
             targetDir.resolve(filename).readText()
         }
     } catch (e: FileNotFoundException) {
