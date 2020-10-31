@@ -11,7 +11,7 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
-internal class MavenDependencyVersionsFetcherHTTP(
+internal class MavenDependencyVersionsFetcherHttp(
     private val httpClient: OkHttpClient,
     moduleId: ModuleId,
     repoUrl: String,

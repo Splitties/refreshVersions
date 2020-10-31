@@ -16,7 +16,7 @@ internal operator fun DependencyVersionsFetcher.Companion.invoke(
     val group = dependency.group ?: return null // TODO: Support NPM dependencies from Kotlin/JS
     val name = dependency.name
     return when (repository.url.scheme) {
-        "https" -> MavenDependencyVersionsFetcherHTTP(
+        "https" -> MavenDependencyVersionsFetcherHttp(
             httpClient = httpClient,
             moduleId = ModuleId(group, name),
             repoUrl = repository.url.toString().let { if (it.endsWith('/')) it else "$it/" },
@@ -27,11 +27,11 @@ internal operator fun DependencyVersionsFetcher.Companion.invoke(
                 )
             }
         )
-        "file" -> MavenDependencyVersionsFetcherFILE(
+        "file" -> MavenDependencyVersionsFetcherFile(
             moduleId = ModuleId(group, name),
             repoUrl = repository.url.toString()
         )
-        "gcs" -> MavenDependencyVersionsFetcherGCS(
+        "gcs" -> MavenDependencyVersionsFetcherGoogleCloudStorage(
             moduleId = ModuleId(group, name),
             repoUrl = repository.url.toString()
         )

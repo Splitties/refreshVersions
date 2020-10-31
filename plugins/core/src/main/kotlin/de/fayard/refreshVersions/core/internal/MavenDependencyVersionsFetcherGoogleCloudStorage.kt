@@ -11,7 +11,7 @@ import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
 
-internal class MavenDependencyVersionsFetcherGCS(
+internal class MavenDependencyVersionsFetcherGoogleCloudStorage(
     moduleId: ModuleId,
     repoUrl: String
 ) : MavenDependencyVersionsFetcher(

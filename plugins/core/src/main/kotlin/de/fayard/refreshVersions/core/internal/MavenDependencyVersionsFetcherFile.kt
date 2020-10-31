@@ -3,7 +3,7 @@ package de.fayard.refreshVersions.core.internal
 import de.fayard.refreshVersions.core.ModuleId
 import java.io.File
 
-internal class MavenDependencyVersionsFetcherFILE(
+internal class MavenDependencyVersionsFetcherFile(
     moduleId: ModuleId,
     repoUrl: String
 ) : MavenDependencyVersionsFetcher(
