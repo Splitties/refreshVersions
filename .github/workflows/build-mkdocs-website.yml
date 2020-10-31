@@ -2,6 +2,7 @@ name: Build MkDocs website as artifacts
 on:
   push:
     branches:
+      - *
       - !master
     paths:
       - 'docs/**'
