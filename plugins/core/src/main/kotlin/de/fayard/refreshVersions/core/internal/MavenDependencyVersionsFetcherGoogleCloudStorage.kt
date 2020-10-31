@@ -46,12 +46,11 @@ internal class MavenDependencyVersionsFetcherGoogleCloudStorage(
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     fun getBlob(path: String): String {
         val fullPath = listOfNotNull(repoPath, path).joinToString("/", "", "")
         try {
             val blob = bucket.get(fullPath) ?: throw FileNotFoundException("blob $fullPath is missing")
-            return blob.getContent().decodeToString()
+            return String(blob.getContent())
 
         } catch (e: StorageException) {
             // https://github.com/googleapis/google-cloud-java/issues/3402
