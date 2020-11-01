@@ -62,6 +62,14 @@ kotlin {
     javaComponent.withVariantsFromConfiguration(configurations["testFixturesRuntimeElements"]) { skip() }
 }
 
+val genResources = buildDir.resolve("generated/resources")
+
+sourceSets {
+    main {
+        resources.srcDir(genResources.path)
+    }
+}
+
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += listOf(
@@ -70,6 +78,14 @@ tasks.withType<KotlinCompile> {
         "-Xopt-in=kotlin.RequiresOptIn",
         "-Xopt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
     )
+
+    doFirst {
+        genResources.deleteRecursively()
+        genResources.mkdirs()
+        rootProject.file("version.txt").copyTo(
+            genResources.resolve("version.txt")
+        )
+    }
 }
 
 tasks.withType<Test> {
