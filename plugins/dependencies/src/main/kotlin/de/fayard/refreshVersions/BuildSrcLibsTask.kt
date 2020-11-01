@@ -2,7 +2,7 @@ package de.fayard.refreshVersions
 
 import com.squareup.kotlinpoet.FileSpec
 import de.fayard.refreshVersions.internal.Dependency
-import de.fayard.internal.OutputFile
+import de.fayard.refreshVersions.internal.OutputFile
 import de.fayard.refreshVersions.internal.PluginConfig
 import de.fayard.refreshVersions.internal.checkModeAndNames
 import de.fayard.refreshVersions.internal.kotlinpoet

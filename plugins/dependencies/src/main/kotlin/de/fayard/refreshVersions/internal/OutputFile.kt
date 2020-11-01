@@ -1,4 +1,4 @@
-package de.fayard.internal
+package de.fayard.refreshVersions.internal
 
 import org.gradle.api.Project
 
