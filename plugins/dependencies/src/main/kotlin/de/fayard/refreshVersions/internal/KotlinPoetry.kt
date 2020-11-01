@@ -12,12 +12,13 @@ internal data class Dependency(
     fun groupModuleVersion() = "$group:$module:$version"
     fun groupModuleUnderscore() = "$group:$module:_"
     fun groupModule() = "$group:$module"
-    fun versionName(mode: VersionMode) : String = PluginConfig.escapeLibsKt(
+    fun versionName(mode: VersionMode): String = PluginConfig.escapeLibsKt(
         when (mode) {
             VersionMode.MODULE -> module
             VersionMode.GROUP -> group
             VersionMode.GROUP_MODULE -> "${group}_$module"
-        })
+        }
+    )
 
     override fun toString() = groupModuleVersion()
 }
@@ -25,7 +26,7 @@ internal data class Dependency(
 
 internal class Deps(
     val dependencies: List<Dependency>,
-    val modes : Map<Dependency, VersionMode>,
+    val modes: Map<Dependency, VersionMode>,
     val names: Map<Dependency, String>
 )
 
@@ -85,17 +86,18 @@ internal fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>):
     val versionNames = dependencies.associate { d: Dependency ->
         Pair(d, d.versionName(modes[d]!!))
     }
-    val sortedDependencies = dependencies
-        .sortedBy { d : Dependency -> d.groupModule() }
+    val sortedDependencies = dependencies.sortedBy { d: Dependency -> d.groupModule() }
     return Deps(sortedDependencies, modes, versionNames)
 }
 
 
-internal fun constStringProperty(name: String, initializer: CodeBlock, kdoc: CodeBlock? = null) =
-    PropertySpec.builder(name, String::class)
-        .addModifiers(KModifier.CONST)
-        .initializer(initializer)
-        .apply {
-            if (kdoc != null) addKdoc(kdoc)
-        }.build()
-
+internal fun constStringProperty(
+    name: String,
+    initializer: CodeBlock,
+    kdoc: CodeBlock? = null
+): PropertySpec = PropertySpec.builder(name, String::class)
+    .addModifiers(KModifier.CONST)
+    .initializer(initializer)
+    .apply {
+        if (kdoc != null) addKdoc(kdoc)
+    }.build()
