@@ -156,5 +156,5 @@ You did it! refreshVersions is now properly setup.
 Now, you might want to:
 
 - [Migrate/opt-in existing dependency declarations]({{link.site}}/migration), so the `refreshVersions` task can find available updates for you.
-- [Add new dependencies]({link.site}}/add-dependencies).
-- [Update dependencies]({link.site}}/update-dependencies).
+- [Add new dependencies]({{link.site}}/add-dependencies).
+- [Update dependencies]({{link.site}}/update-dependencies).
