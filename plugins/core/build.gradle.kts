@@ -6,6 +6,7 @@ plugins {
     `java-test-fixtures`
     `maven-publish`
     `kotlin-dsl`
+    `idea`
 }
 
 gradlePlugin {
@@ -62,12 +63,16 @@ kotlin {
     javaComponent.withVariantsFromConfiguration(configurations["testFixturesRuntimeElements"]) { skip() }
 }
 
-val genResources = buildDir.resolve("generated/resources")
+val genResources = buildDir.resolve("generated/refreshVersion/resources")
 
 sourceSets {
     main {
         resources.srcDir(genResources.path)
     }
+}
+
+idea {
+    module.generatedSourceDirs.add(genResources)
 }
 
 tasks.withType<KotlinCompile> {
