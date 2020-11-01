@@ -88,9 +88,8 @@ open class BuildSrcLibsTask : DefaultTask() {
                     val configurationName = "$projectName:${it.name}"
                     it.allDependencies.filterIsInstance<ExternalDependency>()
                         .mapNotNull {
-                            when {
-                                it.group == null -> null
-                                else -> Dependency(it.group, it.name, it.version ?: "none")
+                            it.group?.let { group ->
+                                Dependency(group, it.name, it.version ?: "none")
                             }
                         }
                 }
