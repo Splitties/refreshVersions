@@ -87,7 +87,6 @@ If your project is using it, remove all its configuration from the top `build.gr
 
 === "build.gradle.kts"
 ```diff
-// build.gradle[.kts]
 -plugins {
 -    id("de.fayard.buildSrcVersions") version "0.3.2"
 -}
