@@ -63,12 +63,10 @@ kotlin {
     javaComponent.withVariantsFromConfiguration(configurations["testFixturesRuntimeElements"]) { skip() }
 }
 
-val genResources = buildDir.resolve("generated/refreshVersion/resources")
+val genResources = buildDir.resolve("generated/refreshVersions/resources")
 
-sourceSets {
-    main {
-        resources.srcDir(genResources.path)
-    }
+sourceSets.main {
+    resources.srcDir(genResources.path)
 }
 
 idea {
