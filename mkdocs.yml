@@ -68,7 +68,7 @@ nav:
   - 'Migration': migration.md
   - 'FAQ': faq.md
   - 'Change Log': CHANGELOG.md
-  - 'Contributing': contributing/dev-env.md
+  - 'Contributing':
     - 'Code of Conduct': contributing/code_of_conduct.md
     - 'Improving docs': contributing/improving-docs.md
     - 'Dev environment': contributing/dev-env.md
