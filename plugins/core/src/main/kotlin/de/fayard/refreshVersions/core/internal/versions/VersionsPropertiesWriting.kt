@@ -14,7 +14,7 @@ import org.gradle.api.artifacts.ExternalDependency
 import java.io.File
 
 fun writeMissingEntriesInVersionProperties(newEntries: Map<String, ExternalDependency>) {
-    VersionsPropertiesModel.Companion.update { model ->
+    VersionsPropertiesModel.update { model ->
         val newSections = newEntries.map { (key, d) ->
             VersionEntry(emptyList(), key, d.version!!, emptyList(), emptyList())
         }.sortedBy { it.key }
