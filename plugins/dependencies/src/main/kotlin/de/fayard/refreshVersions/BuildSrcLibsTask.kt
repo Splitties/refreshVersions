@@ -100,14 +100,14 @@ open class BuildSrcLibsTask : DefaultTask() {
 }
 
 internal fun Project.findHardcodedDependencies(): List<Pair<Project, Configuration>> {
-    val versionsProperties = RefreshVersionsConfigHolder.readVersionsMap()
+    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
     val projectsWithHardcodedDependenciesVersions: List<Project> = rootProject.allprojects.filter {
-        it.countDependenciesWithHardcodedVersions(versionsProperties) > 0
+        it.countDependenciesWithHardcodedVersions(versionsMap) > 0
     }
 
     return projectsWithHardcodedDependenciesVersions.flatMap { project ->
         project.configurations.filterNot { configuration ->
-            configuration.shouldBeIgnored() || 0 == configuration.countDependenciesWithHardcodedVersions(versionsProperties, RefreshVersionsConfigHolder.versionKeyReader)
+            configuration.shouldBeIgnored() || 0 == configuration.countDependenciesWithHardcodedVersions(versionsMap, RefreshVersionsConfigHolder.versionKeyReader)
         }.map { configuration -> project to configuration }
     }
 }
