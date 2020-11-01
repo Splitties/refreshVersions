@@ -107,7 +107,10 @@ internal fun Project.findHardcodedDependencies(): List<Pair<Project, Configurati
 
     return projectsWithHardcodedDependenciesVersions.flatMap { project ->
         project.configurations.filterNot { configuration ->
-            configuration.shouldBeIgnored() || 0 == configuration.countDependenciesWithHardcodedVersions(versionsMap, RefreshVersionsConfigHolder.versionKeyReader)
+            configuration.shouldBeIgnored() || 0 == configuration.countDependenciesWithHardcodedVersions(
+                versionsMap = versionsMap,
+                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+            )
         }.map { configuration -> project to configuration }
     }
 }
