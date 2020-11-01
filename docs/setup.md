@@ -38,7 +38,7 @@ import com.example.something // Imports at the top, as usual.
 pluginManagement {} // Optional
 
 buildscript {
-   // We will setup refreshVersions here, see below.
+    // We will setup refreshVersions here, see below.
 }
 
 plugins {} // Optional
