@@ -55,28 +55,28 @@ include(":app") // If the project has modules/subprojects to declare.
 Here is how to configure gradle refreshVersions:
 
 === "settings.gradle.kts"
-    ```kotlin
-    import de.fayard.refreshVersions.bootstrapRefreshVersions
+```kotlin
+import de.fayard.refreshVersions.bootstrapRefreshVersions
 
-    buildscript {
-        repositories { gradlePluginPortal() }
-        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.    refreshVersions}}")
-    }
+buildscript {
+    repositories { gradlePluginPortal() }
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
+}
 
-    bootstrapRefreshVersions()
-    ```
+bootstrapRefreshVersions()
+```
 
 === "settings.gradle"
-    ```groovy
-    import de.fayard.refreshVersions.RefreshVersionsSetup
+```groovy
+import de.fayard.refreshVersions.RefreshVersionsSetup
 
-    buildscript {
-        repositories { gradlePluginPortal() }
-        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.    refreshVersions}}")
-    }
+buildscript {
+    repositories { gradlePluginPortal() }
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
+}
 
-    RefreshVersionsSetup.bootstrap(settings)
-    ```
+RefreshVersionsSetup.bootstrap(settings)
+```
 
 
 ### If you upgrade from the plugin buildSrcVersions
