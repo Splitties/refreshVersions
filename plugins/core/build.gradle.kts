@@ -6,7 +6,7 @@ plugins {
     `java-test-fixtures`
     `maven-publish`
     `kotlin-dsl`
-    `idea`
+    idea
 }
 
 gradlePlugin {
