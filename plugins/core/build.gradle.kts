@@ -6,6 +6,7 @@ plugins {
     `java-test-fixtures`
     `maven-publish`
     `kotlin-dsl`
+    idea
 }
 
 gradlePlugin {
@@ -62,7 +63,26 @@ kotlin {
     javaComponent.withVariantsFromConfiguration(configurations["testFixturesRuntimeElements"]) { skip() }
 }
 
+val genResourcesDir = buildDir.resolve("generated/refreshVersions/resources")
+
+sourceSets.main {
+    resources.srcDir(genResourcesDir.path)
+}
+
+idea {
+    module.generatedSourceDirs.add(genResourcesDir)
+}
+
+val copyVersionFile by tasks.registering {
+    val versionFile = rootProject.file("version.txt")
+    val versionFileCopy = genResourcesDir.resolve("version.txt")
+    inputs.file(versionFile)
+    outputs.file(versionFileCopy)
+    doFirst { versionFile.copyTo(versionFileCopy) }
+}
+
 tasks.withType<KotlinCompile> {
+    dependsOn(copyVersionFile)
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xinline-classes",
