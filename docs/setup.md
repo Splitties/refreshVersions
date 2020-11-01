@@ -106,28 +106,28 @@ Read more: [gradle buildSrcVersions]({{link.site}}/gradle-buildsrcversions).
 If you use the **buildSrc** module and have dependencies declared in the `buildSrc/build.gradle[.kts]` file, you probably want to use refreshVersions there as well. For that, an extra special setup is required.
 
 === "buildSrc/settings.gradle.kts"
-    ```kotlin
-    import de.fayard.refreshVersions.bootstrapRefreshVersionsForBuildSrc
+```kotlin
+import de.fayard.refreshVersions.bootstrapRefreshVersionsForBuildSrc
 
-    buildscript {
-        repositories { gradlePluginPortal() }
-        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.    refreshVersions}}")
-    }
+buildscript {
+    repositories { gradlePluginPortal() }
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
+}
 
-    bootstrapRefreshVersionsForBuildSrc()
-    ```
+bootstrapRefreshVersionsForBuildSrc()
+```
 
 === "buildSrc/settings.gradle"
-    ```kotlin
-    import de.fayard.refreshVersions.RefreshVersionsSetup
+```kotlin
+import de.fayard.refreshVersions.RefreshVersionsSetup
 
-    buildscript {
-        repositories { gradlePluginPortal() }
-        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.    refreshVersions}}")
-    }
+buildscript {
+    repositories { gradlePluginPortal() }
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
+}
 
-    RefreshVersionsSetup.bootstrapForBuildSrc(settings)
-    ```
+RefreshVersionsSetup.bootstrapForBuildSrc(settings)
+```
 
 
 ### If you have a composite/included build
@@ -144,34 +144,34 @@ To use a development version (for example to test an unreleased new feature), yo
 You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven` as shown below:
 
 === "settings.gradle.kts"
-    ```kotlin
-    import de.fayard.refreshVersions.bootstrapRefreshVersions
+```kotlin
+import de.fayard.refreshVersions.bootstrapRefreshVersions
 
-    buildscript {
-        repositories {
-            gradlePluginPortal()
-            maven("https://dl.bintray.com/jmfayard/maven")
-        }
-        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.    refreshVersionsDev}}")
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        maven("https://dl.bintray.com/jmfayard/maven")
     }
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersionsDev}}")
+}
 
-    bootstrapRefreshVersions()
-    ```
+bootstrapRefreshVersions()
+```
 
 === "settings.gradle"
-    ```groovy
-    import de.fayard.refreshVersions.RefreshVersionsSetup
+```groovy
+import de.fayard.refreshVersions.RefreshVersionsSetup
 
-    buildscript {
-        repositories {
-            gradlePluginPortal()
-            maven { url 'https://dl.bintray.com/jmfayard/maven' }
-        }
-        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.    refreshVersionsDev}}")
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        maven { url 'https://dl.bintray.com/jmfayard/maven' }
     }
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersionsDev}}")
+}
 
-    RefreshVersionsSetup.bootstrap(settings)
-    ```
+RefreshVersionsSetup.bootstrap(settings)
+```
 
 ## Next steps
 
