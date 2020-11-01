@@ -118,7 +118,7 @@ bootstrapRefreshVersionsForBuildSrc()
 ```
 
 === "buildSrc/settings.gradle"
-```kotlin
+```groovy
 import de.fayard.refreshVersions.RefreshVersionsSetup
 
 buildscript {
