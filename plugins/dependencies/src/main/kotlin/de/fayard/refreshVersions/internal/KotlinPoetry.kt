@@ -3,7 +3,7 @@ package de.fayard.refreshVersions.internal
 import com.squareup.kotlinpoet.*
 
 
-internal data class Dependency(
+internal data class Library(
     val group: String = "",
     val module: String = "",
     val version: String = ""
@@ -25,8 +25,8 @@ internal data class Dependency(
 
 
 internal class Deps(
-    val dependencies: List<Dependency>,
-    val names: Map<Dependency, String>
+    val libraries: List<Library>,
+    val names: Map<Library, String>
 )
 
 
@@ -38,10 +38,10 @@ internal enum class VersionMode {
 internal fun kotlinpoet(
     deps: Deps
 ): FileSpec {
-    val dependencies: List<Dependency> = deps.dependencies
+    val libraries: List<Library> = deps.libraries
     val indent = "    "
 
-    val libsProperties: List<PropertySpec> = dependencies
+    val libsProperties: List<PropertySpec> = libraries
         .distinctBy { it.groupModule() }
         .map { d ->
             val libValue = when {
@@ -68,10 +68,10 @@ internal fun kotlinpoet(
 
 }
 
-internal fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): Deps {
+internal fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>): Deps {
     val dependencies = this
 
-    val modes: Map<Dependency, VersionMode> =
+    val modes: Map<Library, VersionMode> =
         dependencies.associateWith { d ->
             when {
                 d.module in useFdqnByDefault -> VersionMode.GROUP_MODULE
@@ -81,7 +81,7 @@ internal fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>):
         }.toMutableMap()
 
     val versionNames = dependencies.associateWith { d -> d.versionName(modes.getValue(d)) }
-    val sortedDependencies = dependencies.sortedBy { d: Dependency -> d.groupModule() }
+    val sortedDependencies = dependencies.sortedBy { d: Library -> d.groupModule() }
     return Deps(sortedDependencies, versionNames)
 }
 

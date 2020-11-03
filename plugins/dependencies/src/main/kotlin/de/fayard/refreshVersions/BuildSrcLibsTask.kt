@@ -2,7 +2,7 @@ package de.fayard.refreshVersions
 
 import com.squareup.kotlinpoet.FileSpec
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
-import de.fayard.refreshVersions.internal.Dependency
+import de.fayard.refreshVersions.internal.Library
 import de.fayard.refreshVersions.internal.OutputFile
 import de.fayard.refreshVersions.internal.PluginConfig
 import de.fayard.refreshVersions.internal.checkModeAndNames
@@ -78,8 +78,8 @@ open class BuildSrcLibsTask : DefaultTask() {
         OutputFile.logFileWasModified(OutputFile.LIBS.path, OutputFile.LIBS.existed)
     }
 
-    private fun findDependencies(): List<Dependency> {
-        val allDependencies = mutableListOf<Dependency>()
+    private fun findDependencies(): List<Library> {
+        val allDependencies = mutableListOf<Library>()
         project.allprojects {
             (configurations + buildscript.configurations)
                 .flatMapTo(allDependencies) { configuration ->
@@ -90,7 +90,7 @@ open class BuildSrcLibsTask : DefaultTask() {
                             it.group != null
                         }
                         .map { dependency ->
-                            Dependency(dependency.group, dependency.name, dependency.version ?: "none")
+                            Library(dependency.group, dependency.name, dependency.version ?: "none")
                         }
                 }
         }

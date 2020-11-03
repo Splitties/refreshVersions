@@ -58,13 +58,13 @@ internal object PluginConfig {
         """.trimMargin()
 
     internal fun computeUseFqdnFor(
-        dependencies: List<Dependency>,
+        libraries: List<Library>,
         configured: List<String>,
         byDefault: List<String> = MEANING_LESS_NAMES
     ): List<String> {
         val groups = (configured + byDefault).filter { it.contains(".") }.distinct()
-        val depsFromGroups = dependencies.filter { it.group in groups }.map { it.module }
-        val ambiguities = dependencies.groupBy { it.module }.filter { it.value.size > 1 }.map { it.key }
+        val depsFromGroups = libraries.filter { it.group in groups }.map { it.module }
+        val ambiguities = libraries.groupBy { it.module }.filter { it.value.size > 1 }.map { it.key }
         return (configured + byDefault + ambiguities + depsFromGroups - groups).distinct().sorted()
     }
 
