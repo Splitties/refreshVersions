@@ -26,7 +26,6 @@ internal data class Dependency(
 
 internal class Deps(
     val dependencies: List<Dependency>,
-    val modes: Map<Dependency, VersionMode>,
     val names: Map<Dependency, String>
 )
 
@@ -56,38 +55,34 @@ internal fun kotlinpoet(
             )
         }
 
-    val Libs = TypeSpec.objectBuilder("Libs")
+    val libsTypeSpec = TypeSpec.objectBuilder("Libs")
         .addKdoc(PluginConfig.KDOC_LIBS)
         .addProperties(libsProperties)
         .build()
 
 
-    val LibsFile = FileSpec.builder("", "Libs")
+    return FileSpec.builder("", "Libs")
         .indent(indent)
-        .addType(Libs)
+        .addType(libsTypeSpec)
         .build()
-
-    return LibsFile
 
 }
 
 internal fun List<Dependency>.checkModeAndNames(useFdqnByDefault: List<String>): Deps {
     val dependencies = this
 
-    val modes: MutableMap<Dependency, VersionMode> = dependencies.associate { d: Dependency ->
-        val mode = when {
-            d.module in useFdqnByDefault -> VersionMode.GROUP_MODULE
-            PluginConfig.escapeLibsKt(d.module) in useFdqnByDefault -> VersionMode.GROUP_MODULE
-            else -> VersionMode.MODULE
-        }
-        Pair(d, mode)
-    }.toMutableMap()
+    val modes: Map<Dependency, VersionMode> =
+        dependencies.associateWith { d ->
+            when {
+                d.module in useFdqnByDefault -> VersionMode.GROUP_MODULE
+                PluginConfig.escapeLibsKt(d.module) in useFdqnByDefault -> VersionMode.GROUP_MODULE
+                else -> VersionMode.MODULE
+            }
+        }.toMutableMap()
 
-    val versionNames = dependencies.associate { d: Dependency ->
-        Pair(d, d.versionName(modes[d]!!))
-    }
+    val versionNames = dependencies.associateWith { d -> d.versionName(modes.getValue(d)) }
     val sortedDependencies = dependencies.sortedBy { d: Dependency -> d.groupModule() }
-    return Deps(sortedDependencies, modes, versionNames)
+    return Deps(sortedDependencies, versionNames)
 }
 
 

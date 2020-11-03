@@ -10,7 +10,7 @@ internal object PluginConfig {
     /** Documentation **/
     internal fun issue(number: Int): String = "$refreshVersionsUrl/issues/$number"
 
-    val refreshVersionsUrl = "https://github.com/jmfayard/refreshVersions"
+    const val refreshVersionsUrl = "https://github.com/jmfayard/refreshVersions"
 
     /**
      * We don't want to use meaningless generic libs like Libs.core
@@ -58,9 +58,9 @@ internal object PluginConfig {
         """.trimMargin()
 
     internal fun computeUseFqdnFor(
-            dependencies: List<Dependency>,
-            configured: List<String>,
-            byDefault: List<String> = MEANING_LESS_NAMES
+        dependencies: List<Dependency>,
+        configured: List<String>,
+        byDefault: List<String> = MEANING_LESS_NAMES
     ): List<String> {
         val groups = (configured + byDefault).filter { it.contains(".") }.distinct()
         val depsFromGroups = dependencies.filter { it.group in groups }.map { it.module }

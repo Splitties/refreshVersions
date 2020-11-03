@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions
 
 import com.squareup.kotlinpoet.FileSpec
+import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
 import de.fayard.refreshVersions.internal.Dependency
 import de.fayard.refreshVersions.internal.OutputFile
 import de.fayard.refreshVersions.internal.PluginConfig
@@ -24,7 +25,7 @@ open class BuildSrcLibsTask : DefaultTask() {
     @TaskAction
     fun taskActionInitializeBuildSrc() {
 
-        project.file(OutputFile.OUTPUTDIR.path).also {
+        project.file(OutputFile.OUTPUT_DIR.path).also {
             if (it.isDirectory.not()) it.mkdirs()
         }
         for (output in OutputFile.values()) {
@@ -53,18 +54,19 @@ open class BuildSrcLibsTask : DefaultTask() {
         require(project == project.rootProject) { "Expected a rootProject but got $project" }
         val  configurationsWithHardcodedDependencies = project.findHardcodedDependencies()
 
-        val newEntries = findMissingEntries(configurationsWithHardcodedDependencies)
+        val versionsProperties = RefreshVersionsConfigHolder.readVersionsMap()
+        val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+        val newEntries: Map<String, ExternalDependency> =
+            findMissingEntries(configurationsWithHardcodedDependencies, versionsProperties, versionKeyReader)
 
         writeMissingEntriesInVersionProperties(newEntries)
         OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
         Thread.sleep(1000)
     }
 
-
-
     @TaskAction
     fun taskUpdateLibsKt() {
-        val outputDir = project.file(OutputFile.OUTPUTDIR.path)
+        val outputDir = project.file(OutputFile.OUTPUT_DIR.path)
 
         val allDependencies = findDependencies()
         val resolvedUseFqdn = PluginConfig.computeUseFqdnFor(allDependencies, emptyList(), PluginConfig.MEANING_LESS_NAMES)
@@ -76,21 +78,19 @@ open class BuildSrcLibsTask : DefaultTask() {
         OutputFile.logFileWasModified(OutputFile.LIBS.path, OutputFile.LIBS.existed)
     }
 
-
     private fun findDependencies(): List<Dependency> {
         val allDependencies = mutableListOf<Dependency>()
         project.allprojects {
-            val projectName = name
-            // println("Configurations: " + configurations.map { it.name })
-            allDependencies += (configurations + buildscript.configurations)
-                //.filter { it.name in PluginConfig.knownConfigurations }
-                .flatMap {
-                    val configurationName = "$projectName:${it.name}"
-                    it.allDependencies.filterIsInstance<ExternalDependency>()
-                        .mapNotNull {
-                            it.group?.let { group ->
-                                Dependency(group, it.name, it.version ?: "none")
-                            }
+            (configurations + buildscript.configurations)
+                .flatMapTo(allDependencies) { configuration ->
+                    configuration.allDependencies
+                        .filterIsInstance<ExternalDependency>()
+                        .filter {
+                            @Suppress("SENSELESS_COMPARISON")
+                            it.group != null
+                        }
+                        .map { dependency ->
+                            Dependency(dependency.group, dependency.name, dependency.version ?: "none")
                         }
                 }
         }
@@ -98,7 +98,7 @@ open class BuildSrcLibsTask : DefaultTask() {
     }
 }
 
-internal fun Project.findHardcodedDependencies(): List<Pair<Project, Configuration>> {
+internal fun Project.findHardcodedDependencies(): List<Configuration> {
     val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
     val projectsWithHardcodedDependenciesVersions: List<Project> = rootProject.allprojects.filter {
         it.countDependenciesWithHardcodedVersions(versionsMap) > 0
@@ -110,18 +110,18 @@ internal fun Project.findHardcodedDependencies(): List<Pair<Project, Configurati
                 versionsMap = versionsMap,
                 versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
             )
-        }.map { configuration -> project to configuration }
+        }
     }
 }
 
 
-internal fun findMissingEntries(configurations: List<Pair<Project, Configuration>>): Map<String, ExternalDependency> {
+internal fun findMissingEntries(
+    configurations: List<Configuration>,
+    versionsProperties: Map<String, String>,
+    versionKeyReader: ArtifactVersionKeyReader
+): Map<String, ExternalDependency> {
 
-    val versionsProperties = RefreshVersionsConfigHolder.readVersionsMap()
-
-    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-
-    val dependencyMap = configurations.flatMap { (project, configuration) ->
+    val dependencyMap = configurations.flatMap { configuration ->
         configuration.dependencies
             .filterIsInstance<ExternalDependency>()
             .filter { it.hasHardcodedVersion(versionsProperties, versionKeyReader) && it.version != null }
