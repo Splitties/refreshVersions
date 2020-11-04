@@ -19,7 +19,7 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = "https://builtwithgradle.netlify.com/"
+    website = "https://jmfayard.github.io/refreshVersions"
     vcsUrl = "https://github.com/jmfayard/refreshVersions"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
 }
