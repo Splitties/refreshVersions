@@ -78,7 +78,7 @@ val copyVersionFile by tasks.registering {
     val versionFileCopy = genResourcesDir.resolve("version.txt")
     inputs.file(versionFile)
     outputs.file(versionFileCopy)
-    doFirst { versionFile.copyTo(versionFileCopy) }
+    doFirst { versionFile.copyTo(versionFileCopy, overwrite = true) }
 }
 
 tasks.withType<KotlinCompile> {
