@@ -9,11 +9,12 @@ plugins {
 
 gradlePlugin {
     plugins {
-        create("refreshVersions") {
-            id = "de.fayard.refreshVersions"
-            displayName = "Typesafe Gradle Dependencies"
-            description = "Common Gradle dependencies - See gradle refreshVersions"
-            implementationClass = "de.fayard.refreshVersions.RefreshVersionsPlugin"
+        create("buildSrcLibs") {
+            id = "de.fayard.buildSrcLibs"
+            displayName = "Dependency notation generator & updates"
+            description = "Generates dependency notations constants in buildSrc and " +
+                    "updates the versions with gradle refreshVersions"
+            implementationClass = "de.fayard.buildSrcLibs.BuildSrcLibsPlugin"
         }
     }
 }
@@ -29,6 +30,14 @@ publishing {
 }
 
 dependencies {
+
+    api(project(":refreshVersions-core"))
+    implementation(project(":refreshVersions"))
+
+    implementation(Square.kotlinPoet)
+    implementation(KotlinX.coroutines.core)
+    implementation(gradleKotlinDsl())
+
     testImplementation(Testing.kotest.runner.junit5)
 
     testImplementation(platform(notation = "org.junit:junit-bom:_"))
@@ -38,10 +47,6 @@ dependencies {
     }
 
     testImplementation(testFixtures(project(":refreshVersions-core")))
-
-    implementation(gradleKotlinDsl())
-    api(project(":refreshVersions-core"))
-    implementation(KotlinX.coroutines.core)
 }
 
 

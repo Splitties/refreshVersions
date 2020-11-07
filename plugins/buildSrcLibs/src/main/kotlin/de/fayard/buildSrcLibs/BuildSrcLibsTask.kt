@@ -1,12 +1,12 @@
-package de.fayard.refreshVersions
+package de.fayard.buildSrcLibs
 
 import com.squareup.kotlinpoet.FileSpec
+import de.fayard.buildSrcLibs.internal.Library
+import de.fayard.buildSrcLibs.internal.OutputFile
+import de.fayard.buildSrcLibs.internal.PluginConfig
+import de.fayard.buildSrcLibs.internal.checkModeAndNames
+import de.fayard.buildSrcLibs.internal.kotlinpoet
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
-import de.fayard.refreshVersions.internal.Library
-import de.fayard.refreshVersions.internal.OutputFile
-import de.fayard.refreshVersions.internal.PluginConfig
-import de.fayard.refreshVersions.internal.checkModeAndNames
-import de.fayard.refreshVersions.internal.kotlinpoet
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.hasHardcodedVersion

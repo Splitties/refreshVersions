@@ -3,8 +3,10 @@ package de.fayard.refreshVersions.core.internal.versions
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
-import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
+import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.isAVersionAlias
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.Comment

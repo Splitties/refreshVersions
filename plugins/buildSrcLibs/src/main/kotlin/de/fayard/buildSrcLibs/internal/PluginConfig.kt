@@ -1,4 +1,4 @@
-package de.fayard.refreshVersions.internal
+package de.fayard.buildSrcLibs.internal
 
 
 @Suppress("unused")

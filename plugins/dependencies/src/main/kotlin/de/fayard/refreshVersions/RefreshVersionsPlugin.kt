@@ -45,14 +45,6 @@ open class RefreshVersionsPlugin : Plugin<Project> {
             dependsOn("buildSrcLibs")
         }
 
-        project.tasks.registerOrCreate<BuildSrcLibsTask>(
-            name = "buildSrcLibs"
-        ) {
-            group = "help"
-            description = "Update buildSrc/src/main/kotlin/Libs.kt"
-            outputs.upToDateWhen { false }
-        }
-
         project.tasks.registerOrCreate<DefaultTask>(
             name = "refreshVersionsDependenciesMapping"
         ) {
