@@ -52,12 +52,15 @@ open class BuildSrcLibsTask : DefaultTask() {
     @TaskAction
     fun initVersionsProperties() {
         require(project == project.rootProject) { "Expected a rootProject but got $project" }
-        val  configurationsWithHardcodedDependencies = project.findHardcodedDependencies()
+        val configurationsWithHardcodedDependencies = project.findHardcodedDependencies()
 
-        val versionsProperties = RefreshVersionsConfigHolder.readVersionsMap()
+        val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
         val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-        val newEntries: Map<String, ExternalDependency> =
-            findMissingEntries(configurationsWithHardcodedDependencies, versionsProperties, versionKeyReader)
+        val newEntries: Map<String, ExternalDependency> = findMissingEntries(
+            configurations = configurationsWithHardcodedDependencies,
+            versionsMap = versionsMap,
+            versionKeyReader = versionKeyReader
+        )
 
         writeMissingEntriesInVersionProperties(newEntries)
         OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
@@ -69,7 +72,11 @@ open class BuildSrcLibsTask : DefaultTask() {
         val outputDir = project.file(OutputFile.OUTPUT_DIR.path)
 
         val allDependencies = findDependencies()
-        val resolvedUseFqdn = PluginConfig.computeUseFqdnFor(allDependencies, emptyList(), PluginConfig.MEANING_LESS_NAMES)
+        val resolvedUseFqdn = PluginConfig.computeUseFqdnFor(
+                libraries = allDependencies,
+                configured = emptyList(),
+                byDefault = PluginConfig.MEANING_LESS_NAMES
+            )
         val deps = allDependencies.checkModeAndNames(resolvedUseFqdn)
 
         val libsFile: FileSpec = kotlinpoet(deps)
@@ -117,22 +124,22 @@ internal fun Project.findHardcodedDependencies(): List<Configuration> {
 
 internal fun findMissingEntries(
     configurations: List<Configuration>,
-    versionsProperties: Map<String, String>,
+    versionsMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader
 ): Map<String, ExternalDependency> {
 
     val dependencyMap = configurations.flatMap { configuration ->
         configuration.dependencies
             .filterIsInstance<ExternalDependency>()
-            .filter { it.hasHardcodedVersion(versionsProperties, versionKeyReader) && it.version != null }
+            .filter { it.hasHardcodedVersion(versionsMap, versionKeyReader) && it.version != null }
             .map { dependency: ExternalDependency ->
                 val versionKey = getVersionPropertyName(dependency.module, versionKeyReader)
                 versionKey to dependency
             }
     }
     val newEntries = dependencyMap
-        .groupBy({it.first}, {it.second})
-        .filter { entry -> entry.key !in versionsProperties }
+        .groupBy({ it.first }, { it.second })
+        .filter { entry -> entry.key !in versionsMap }
         .mapValues { entry -> entry.value.maxBy { it.version!! }!! }
 
     return newEntries
