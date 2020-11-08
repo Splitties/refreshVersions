@@ -29,9 +29,6 @@ object RefreshVersionsConfigHolder {
 
     val buildSrc: Project? get() = buildSrcGradle?.rootProject
 
-    internal var currentVersion: String by resettableDelegates.LateInit()
-        private set
-
     internal var settings: Settings by resettableDelegates.LateInit()
         private set
 
@@ -62,10 +59,6 @@ object RefreshVersionsConfigHolder {
                 }).setLevel(HttpLoggingInterceptor.Level.BASIC)
             )
             .build()
-    }
-
-    internal fun initializedUsedVersion(settings: Settings) {
-        currentVersion = settings.currentVersionOfRefreshVersions()
     }
 
     internal fun initialize(

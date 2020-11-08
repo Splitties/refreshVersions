@@ -1,12 +1,17 @@
 package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
+import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import de.fayard.refreshVersions.core.extensions.gradle.registerOrCreate
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.initialization.Settings
+import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.getByType
 
-open class RefreshVersionsPlugin : Plugin<Project> {
+open class RefreshVersionsPlugin : Plugin<Any> {
 
     companion object {
         @JvmStatic
@@ -25,7 +30,33 @@ open class RefreshVersionsPlugin : Plugin<Project> {
     }
 
 
-    override fun apply(project: Project) {
+    override fun apply(target: Any) {
+        when (target) {
+            is Settings -> bootstrap(target)
+            is Project -> applyToProject(target)
+        }
+    }
+
+    private fun bootstrap(settings: Settings) {
+        settings.extensions.create<RefreshVersionsExtension>("refreshVersions")
+
+        if (settings.isBuildSrc) {
+            settings.bootstrapRefreshVersionsCoreForBuildSrc()
+            return
+        }
+        settings.gradle.settingsEvaluated {
+
+            val extension: RefreshVersionsExtension = extensions.getByType()
+
+            bootstrapRefreshVersions(
+                extraArtifactVersionKeyRules = extension.extraArtifactVersionKeyRules,
+                versionsPropertiesFile = extension.versionsPropertiesFile
+                    ?: settings.rootDir.resolve("versions.properties")
+            )
+        }
+    }
+
+    private fun applyToProject(project: Project) {
         if (project != project.rootProject) return // We want the tasks only for the root project
 
         project.tasks.registerOrCreate<RefreshVersionsDependenciesMigrationTask>(
@@ -33,7 +64,7 @@ open class RefreshVersionsPlugin : Plugin<Project> {
         ) {
             group = "help"
             description = "Assists migration from hardcoded dependencies to constants of " +
-                "the refreshVersions dependencies plugin"
+                    "the refreshVersions dependencies plugin"
             finalizedBy("refreshVersions")
         }
 

@@ -82,7 +82,7 @@ internal suspend fun lookupVersionCandidates(
                 }
             ).toList()
 
-            val currentVersion = RefreshVersionsConfigHolder.currentVersion
+            val currentVersion = RefreshVersionsCorePlugin.currentVersion
 
             DependencyWithVersionCandidates(
                 moduleId = moduleId,

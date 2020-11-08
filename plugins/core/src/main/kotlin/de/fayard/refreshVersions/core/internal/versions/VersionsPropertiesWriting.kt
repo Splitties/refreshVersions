@@ -67,15 +67,9 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewEntry(
 
 internal fun VersionsPropertiesModel.writeTo(versionsPropertiesFile: File) {
     val finalModel = this.copy(
-        generatedByVersion = pluginVersion
+        generatedByVersion = RefreshVersionsCorePlugin.currentVersion
     )
     versionsPropertiesFile.writeText(finalModel.toText())
-}
-
-private val pluginVersion by lazy {
-    RefreshVersionsCorePlugin::class.java.getResourceAsStream("/version.txt")
-        .bufferedReader()
-        .useLines { it.first() }
 }
 
 /**
