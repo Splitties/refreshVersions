@@ -40,7 +40,8 @@ import java.io.File
 @JvmName("bootstrap")
 fun Settings.bootstrapRefreshVersionsCore(
     artifactVersionKeyRules: List<String> = emptyList(),
-    versionsPropertiesFile: File = rootDir.resolve("versions.properties")
+    versionsPropertiesFile: File = rootDir.resolve("versions.properties"),
+    pluginResolution: (id: String, String) -> String?
 ) {
     require(settings.isBuildSrc.not()) {
         "This bootstrap is only for the root project. For buildSrc, please call " +
@@ -52,7 +53,10 @@ fun Settings.bootstrapRefreshVersionsCore(
         artifactVersionKeyRules = artifactVersionKeyRules,
         versionsPropertiesFile = versionsPropertiesFile
     )
-    setupRefreshVersions(settings = settings)
+    setupRefreshVersions(
+        settings = settings,
+        pluginResolution = pluginResolution
+    )
 }
 
 /**
@@ -86,7 +90,7 @@ fun Settings.bootstrapRefreshVersionsCore(
 @JvmName("bootstrapForBuildSrc")
 fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
     RefreshVersionsConfigHolder.initializeBuildSrc(this)
-    setupRefreshVersions(settings = settings)
+    setupRefreshVersions(settings = settings, pluginResolution = { _, _ -> null })
 }
 
 /**
@@ -102,7 +106,7 @@ fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
  * This function also sets up the module for the Android and Fabric (Crashlytics) Gradle plugins, so you can avoid the
  * buildscript classpath configuration boilerplate.
  */
-private fun setupRefreshVersions(settings: Settings) {
+private fun setupRefreshVersions(settings: Settings, pluginResolution: (id: String, String) -> String?) {
 
     RefreshVersionsConfigHolder.initializedUsedVersion(settings)
 
@@ -110,7 +114,8 @@ private fun setupRefreshVersions(settings: Settings) {
     @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(
         settings = settings,
-        properties = versionsMap
+        properties = versionsMap,
+        pluginResolution = pluginResolution
     )
 
     settings.gradle.setupVersionPlaceholdersResolving(versionsMap = versionsMap)
@@ -122,7 +127,8 @@ private fun setupRefreshVersions(settings: Settings) {
 
 private fun setupPluginsVersionsResolution(
     settings: Settings,
-    properties: Map<String, String>
+    properties: Map<String, String>,
+    pluginResolution: (id: String, String) -> String?
 ) {
     settings.pluginManagement {
         resolutionStrategy.eachPlugin {
@@ -136,10 +142,22 @@ private fun setupPluginsVersionsResolution(
                 pluginNamespace.startsWith("com.android") -> "plugin.android"
                 else -> "plugin.$pluginId"
             }
+
             val version = resolveVersion(properties, versionKey) ?: return@eachPlugin
+
+            val customNameAndGroup = pluginResolution(pluginId, version)
+
             when {
                 pluginNamespace.startsWith("com.android") -> {
                     val dependencyNotation = "com.android.tools.build:gradle:$version"
+                    UsedPluginsHolder.noteUsedPluginDependency(
+                        dependencyNotation = dependencyNotation,
+                        repositories = repositories
+                    )
+                    useModule(dependencyNotation)
+                }
+                customNameAndGroup != null -> {
+                    val dependencyNotation = "$customNameAndGroup:$version"
                     UsedPluginsHolder.noteUsedPluginDependency(
                         dependencyNotation = dependencyNotation,
                         repositories = repositories

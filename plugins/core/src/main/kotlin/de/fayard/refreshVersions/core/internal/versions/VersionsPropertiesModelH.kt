@@ -4,6 +4,7 @@ internal expect class VersionsPropertiesModel {
     val preHeaderContent: String
     val generatedByVersion: String
     val sections: List<Section>
+    val pluginResolution: (id: String, String) -> String?
 
     sealed class Section {
         class Comment : Section {

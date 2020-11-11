@@ -69,7 +69,8 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
     return VersionsPropertiesModel(
         preHeaderContent = preHeaderContent,
         generatedByVersion = generatedByVersion,
-        sections = sections
+        sections = sections,
+        pluginResolution = { _, _ -> null }
     )
 }
 

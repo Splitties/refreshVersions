@@ -3,7 +3,8 @@ package de.fayard.refreshVersions.core.internal.versions
 internal actual data class VersionsPropertiesModel(
     actual val preHeaderContent: String,
     actual val generatedByVersion: String,
-    actual val sections: List<Section>
+    actual val sections: List<Section>,
+    actual val pluginResolution: (id: String, String) -> String?
 ) {
     init {
         if (preHeaderContent.isNotEmpty()) require(preHeaderContent.endsWith('\n'))
