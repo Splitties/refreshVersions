@@ -40,7 +40,7 @@ import java.io.File
 fun Settings.bootstrapRefreshVersions(
     extraArtifactVersionKeyRules: List<String> = emptyList(),
     versionsPropertiesFile: File = rootDir.resolve("versions.properties"),
-    pluginResolution: (id: String, String) -> String? = { _, _ -> null}
+    pluginResolution: (id: String) -> String? = { null }
 ) {
     require(settings.isBuildSrc.not()) {
         "This bootstrap is only for the root project. For buildSrc, please call " +

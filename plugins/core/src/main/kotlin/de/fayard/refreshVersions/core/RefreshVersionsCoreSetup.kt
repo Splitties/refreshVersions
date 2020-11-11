@@ -41,7 +41,7 @@ import java.io.File
 fun Settings.bootstrapRefreshVersionsCore(
     artifactVersionKeyRules: List<String> = emptyList(),
     versionsPropertiesFile: File = rootDir.resolve("versions.properties"),
-    pluginResolution: (id: String, String) -> String?
+    pluginResolution: (id: String) -> String?
 ) {
     require(settings.isBuildSrc.not()) {
         "This bootstrap is only for the root project. For buildSrc, please call " +
@@ -90,7 +90,7 @@ fun Settings.bootstrapRefreshVersionsCore(
 @JvmName("bootstrapForBuildSrc")
 fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
     RefreshVersionsConfigHolder.initializeBuildSrc(this)
-    setupRefreshVersions(settings = settings, pluginResolution = { _, _ -> null })
+    setupRefreshVersions(settings = settings, pluginResolution = { _ -> null })
 }
 
 /**
@@ -106,7 +106,7 @@ fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
  * This function also sets up the module for the Android and Fabric (Crashlytics) Gradle plugins, so you can avoid the
  * buildscript classpath configuration boilerplate.
  */
-private fun setupRefreshVersions(settings: Settings, pluginResolution: (id: String, String) -> String?) {
+private fun setupRefreshVersions(settings: Settings, pluginResolution: (id: String) -> String?) {
 
     RefreshVersionsConfigHolder.initializedUsedVersion(settings)
 
@@ -128,7 +128,7 @@ private fun setupRefreshVersions(settings: Settings, pluginResolution: (id: Stri
 private fun setupPluginsVersionsResolution(
     settings: Settings,
     properties: Map<String, String>,
-    pluginResolution: (id: String, String) -> String?
+    pluginResolution: (id: String) -> String?
 ) {
     settings.pluginManagement {
         resolutionStrategy.eachPlugin {
@@ -137,15 +137,15 @@ private fun setupPluginsVersionsResolution(
                 return@eachPlugin // Already in the buildscript with a defined version that will be used.
             }
             val pluginNamespace = requested.id.namespace ?: ""
+            val customNameAndGroup = pluginResolution(pluginId)
             val versionKey = when {
                 pluginNamespace.startsWith("org.jetbrains.kotlin") -> "version.kotlin"
                 pluginNamespace.startsWith("com.android") -> "plugin.android"
+                customNameAndGroup != null -> "version." + customNameAndGroup.replace(":", "..")
                 else -> "plugin.$pluginId"
             }
 
             val version = resolveVersion(properties, versionKey) ?: return@eachPlugin
-
-            val customNameAndGroup = pluginResolution(pluginId, version)
 
             when {
                 pluginNamespace.startsWith("com.android") -> {
