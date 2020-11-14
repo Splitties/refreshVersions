@@ -4,6 +4,7 @@ import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import de.fayard.refreshVersions.core.extensions.gradle.registerOrCreate
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -38,6 +39,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     }
 
     private fun bootstrap(settings: Settings) {
+        RefreshVersionsConfigHolder.markSetupViaSettingsPlugin()
         settings.extensions.create<RefreshVersionsExtension>("refreshVersions")
 
         if (settings.isBuildSrc) {

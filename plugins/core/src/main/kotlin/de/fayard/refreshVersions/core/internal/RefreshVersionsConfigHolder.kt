@@ -19,6 +19,13 @@ object RefreshVersionsConfigHolder {
 
     internal val resettableDelegates = ResettableDelegates()
 
+    fun markSetupViaSettingsPlugin() {
+        isSetupViaPlugin = true
+    }
+
+    internal var isSetupViaPlugin = false
+        private set
+
     private val versionKeyReaderDelegate = resettableDelegates.LateInit<ArtifactVersionKeyReader>()
 
     var versionKeyReader: ArtifactVersionKeyReader by versionKeyReaderDelegate

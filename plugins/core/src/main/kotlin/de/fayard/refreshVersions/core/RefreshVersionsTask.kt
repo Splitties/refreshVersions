@@ -28,7 +28,9 @@ open class RefreshVersionsTask : DefaultTask() {
             }
             val result = versionsLookupResultAsync.await()
             VersionsPropertiesModel.writeWithNewVersions(result.dependenciesWithVersionsCandidates)
-            project.rootProject.updateGradleSettingsIncludingForBuildSrc(result.selfUpdates)
+            result.selfUpdatesForLegacyBootstrap?.let {
+                project.rootProject.updateGradleSettingsIncludingForBuildSrc(it)
+            }
 
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
             warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
