@@ -4,7 +4,7 @@ import java.io.File
 
 open class RefreshVersionsExtension {
 
-    val versionsPropertiesFile: File? = null
+    var versionsPropertiesFile: File? = null
     var extraArtifactVersionKeyRules: List<String> = emptyList()
 
     fun extraArtifactVersionKeyRules(file: File) {
