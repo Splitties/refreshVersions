@@ -29,7 +29,7 @@ open class RefreshVersionsTask : DefaultTask() {
                 )
             }
             val result = versionsLookupResultAsync.await()
-            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesWithVersionsCandidates)
+            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
             result.selfUpdatesForLegacyBootstrap?.let {
                 LegacyBootstrapUpdater.updateGradleSettingsWithUpdates(
                     rootProject = project,

@@ -103,7 +103,7 @@ internal suspend fun lookupVersionCandidates(
         val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
 
         return@coroutineScope VersionCandidatesLookupResult(
-            dependenciesWithVersionsCandidates = dependenciesWithVersionCandidates,
+            dependenciesUpdates = dependenciesWithVersionCandidates,
             dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
             dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
             gradleUpdates = gradleUpdatesAsync.await(),
