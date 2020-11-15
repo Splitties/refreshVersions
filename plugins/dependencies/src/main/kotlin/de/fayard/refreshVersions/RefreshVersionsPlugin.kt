@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
@@ -9,6 +10,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.getByType
 
@@ -50,11 +52,18 @@ open class RefreshVersionsPlugin : Plugin<Any> {
 
             val extension: RefreshVersionsExtension = extensions.getByType()
 
-            bootstrapRefreshVersions(
-                extraArtifactVersionKeyRules = extension.extraArtifactVersionKeyRules,
+            bootstrapRefreshVersionsCore(
+                artifactVersionKeyRules = if (extension.extraArtifactVersionKeyRules.isEmpty()) {
+                    artifactVersionKeyRules // Avoid unneeded list copy.
+                } else {
+                    artifactVersionKeyRules + extension.extraArtifactVersionKeyRules
+                },
                 versionsPropertiesFile = extension.versionsPropertiesFile
                     ?: settings.rootDir.resolve("versions.properties")
             )
+            gradle.rootProject {
+                apply<RefreshVersionsPlugin>()
+            }
         }
     }
 

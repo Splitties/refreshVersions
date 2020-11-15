@@ -2,11 +2,10 @@
 
 package de.fayard.refreshVersions
 
-import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
-import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.refreshVersions
 import java.io.File
 
 /**
@@ -46,17 +45,11 @@ fun Settings.bootstrapRefreshVersions(
                 "bootstrapRefreshVersionsForBuildSrc() instead (Kotlin DSL)," +
                 "or RefreshVersionsSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
     }
-    bootstrapRefreshVersionsCore(
-        artifactVersionKeyRules = if (extraArtifactVersionKeyRules.isEmpty()) {
-            RefreshVersionsPlugin.artifactVersionKeyRules // Avoid unneeded list copy.
-        } else {
-            RefreshVersionsPlugin.artifactVersionKeyRules + extraArtifactVersionKeyRules
-        },
-        versionsPropertiesFile = versionsPropertiesFile
-    )
-    gradle.rootProject {
-        apply<RefreshVersionsPlugin>()
+    refreshVersions {
+        this.extraArtifactVersionKeyRules = extraArtifactVersionKeyRules
+        this.versionsPropertiesFile = versionsPropertiesFile
     }
+    apply(plugin = "de.fayard.refreshVersions")
 }
 
 /**
@@ -89,5 +82,6 @@ fun Settings.bootstrapRefreshVersions(
  */
 @JvmName("bootstrapForBuildSrc")
 fun Settings.bootstrapRefreshVersionsForBuildSrc() {
-    bootstrapRefreshVersionsCoreForBuildSrc()
+    require(isBuildSrc)
+    apply(plugin = "de.fayard.refreshVersions")
 }
