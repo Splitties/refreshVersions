@@ -10,7 +10,6 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
-import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.getByType
 
@@ -36,7 +35,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     override fun apply(target: Any) {
         when (target) {
             is Settings -> bootstrap(target)
-            is Project -> applyToProject(target)
+            is Project -> Unit //TODO: Warn about misconfiguration?
         }
     }
 
@@ -62,7 +61,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                     ?: settings.rootDir.resolve("versions.properties")
             )
             gradle.rootProject {
-                apply<RefreshVersionsPlugin>()
+                applyToProject(this)
             }
         }
     }
