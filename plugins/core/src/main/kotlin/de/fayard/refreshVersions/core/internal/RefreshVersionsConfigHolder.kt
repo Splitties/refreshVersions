@@ -127,7 +127,8 @@ object RefreshVersionsConfigHolder {
 
     private var artifactVersionKeyRules: List<String> by resettableDelegates.LateInit()
 
-    private var buildSrcSettings: Settings? by resettableDelegates.NullableDelegate()
+    internal var buildSrcSettings: Settings? by resettableDelegates.NullableDelegate()
+        private set
 
 
     private fun persistInitData(settings: Settings) {

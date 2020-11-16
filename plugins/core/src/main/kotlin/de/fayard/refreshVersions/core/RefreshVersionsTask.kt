@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
 import de.fayard.refreshVersions.core.internal.legacy.LegacyBootstrapUpdater
 import de.fayard.refreshVersions.core.internal.lookupVersionCandidates
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
@@ -29,7 +30,13 @@ open class RefreshVersionsTask : DefaultTask() {
                 )
             }
             val result = versionsLookupResultAsync.await()
+
             VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
+            SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
+                rootProject = project,
+                settingsPluginsUpdates = result.settingsPluginsUpdates,
+                buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
+            )
             result.selfUpdatesForLegacyBootstrap?.let {
                 LegacyBootstrapUpdater.updateGradleSettingsWithUpdates(
                     rootProject = project,

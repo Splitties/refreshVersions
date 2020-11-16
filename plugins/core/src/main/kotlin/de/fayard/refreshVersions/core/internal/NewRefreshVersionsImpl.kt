@@ -73,6 +73,10 @@ internal suspend fun lookupVersionCandidates(
             }
         }
 
+        val settingsPluginsUpdatesAsync = async {
+            SettingsPluginsUpdatesFinder.getSettingsPluginUpdates(httpClient, resultMode)
+        }
+
         val selfUpdateAsync: Deferred<DependencyWithVersionCandidates>? = when {
             RefreshVersionsConfigHolder.isSetupViaPlugin -> null
             else -> async { LegacyBoostrapUpdatesFinder.getSelfUpdates(httpClient, resultMode) }
@@ -106,6 +110,8 @@ internal suspend fun lookupVersionCandidates(
             dependenciesUpdates = dependenciesWithVersionCandidates,
             dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
             dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
+            settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
+            buildSrcSettingsPluginsUpdates = settingsPluginsUpdatesAsync.await().buildSrcSettings,
             gradleUpdates = gradleUpdatesAsync.await(),
             selfUpdatesForLegacyBootstrap = selfUpdateAsync?.await()
         )

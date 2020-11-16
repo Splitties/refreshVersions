@@ -8,5 +8,7 @@ internal class VersionCandidatesLookupResult(
     val dependenciesWithHardcodedVersions: List<Dependency>,
     val dependenciesWithDynamicVersions: List<Dependency>,
     val gradleUpdates: List<Version>,
+    val settingsPluginsUpdates: List<PluginWithVersionCandidates>,
+    val buildSrcSettingsPluginsUpdates: List<PluginWithVersionCandidates>,
     val selfUpdatesForLegacyBootstrap: DependencyWithVersionCandidates?
 )
