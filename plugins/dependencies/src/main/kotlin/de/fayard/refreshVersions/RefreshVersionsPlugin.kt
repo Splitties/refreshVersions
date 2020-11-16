@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
@@ -11,6 +12,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
 open class RefreshVersionsPlugin : Plugin<Any> {
@@ -45,6 +47,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
 
         if (settings.isBuildSrc) {
             settings.bootstrapRefreshVersionsCoreForBuildSrc()
+            addDependencyToBuildSrcForGroovyDsl(settings)
             return
         }
         settings.gradle.settingsEvaluated {
@@ -93,6 +96,21 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             description = "Shows the mapping of Gradle dependencies and their typesafe accessors"
             doLast {
                 println(getArtifactNameToConstantMapping().joinToString("\n"))
+            }
+        }
+    }
+
+    private fun addDependencyToBuildSrcForGroovyDsl(settings: Settings) {
+        require(settings.isBuildSrc)
+        settings.gradle.rootProject {
+            repositories.addAll(settings.pluginManagement.repositories)
+
+            fun plugin(id: String, version: String): String {
+                return "$id:$id.gradle.plugin:$version"
+            }
+
+            dependencies {
+                "implementation"(plugin("de.fayard.refreshVersions", RefreshVersionsCorePlugin.currentVersion))
             }
         }
     }
