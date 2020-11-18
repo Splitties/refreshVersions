@@ -9,13 +9,67 @@ import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
 import kotlinx.coroutines.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.options.Option
+import org.gradle.api.tasks.options.OptionValues
 import org.gradle.util.GradleVersion
 
+/**
+ * $ ./gradlew help --task refreshVersions
+Path
+:refreshVersions
+
+Type
+RefreshVersionsTask (de.fayard.refreshVersions.core.RefreshVersionsTask)
+
+Options
+--disable     Disable a feature flag
+Available values are:
+FOO_DELETED
+FOO_EXPERIMENTAL
+FOO_OKISH
+FOO_STABLE
+
+--enable     Enable a feature flag
+Available values are:
+FOO_DELETED
+FOO_EXPERIMENTAL
+FOO_OKISH
+FOO_STABLE
+
+Description
+Search for new dependencies versions and update versions.properties
+
+ */
 open class RefreshVersionsTask : DefaultTask() {
+
+
+    @Input @Optional
+    @Option(option = "enable", description = "Enable a feature flag")
+    var enableFlag: FeatureFlag? = null
+        set(value) {
+            field = value
+            if (value != null) FeatureFlag.userSettings.put(value, true)
+        }
+
+    @Input @Optional
+    @Option(option = "disable", description = "Disable a feature flag")
+    var disableFlag: FeatureFlag? = null
+        set(value) {
+            field = value
+            if (value != null) FeatureFlag.userSettings.put(value, false)
+        }
 
     @TaskAction
     fun taskActionRefreshVersions() {
+        val REMOVE_BEFORE_PR = true
+        FeatureFlag.values().forEach { flag ->
+            val message = flag.ifEnabled { "should run" } ?: "should not run"
+            logger.lifecycle("refrehVersions: bloc guarded by flag=$flag $message")
+        }
+        if (REMOVE_BEFORE_PR) return
 
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
