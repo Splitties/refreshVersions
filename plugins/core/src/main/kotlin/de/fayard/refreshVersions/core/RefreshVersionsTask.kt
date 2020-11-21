@@ -1,6 +1,9 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.internal.*
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
+import de.fayard.refreshVersions.core.internal.legacy.LegacyBootstrapUpdater
+import de.fayard.refreshVersions.core.internal.lookupVersionCandidates
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
 import kotlinx.coroutines.*
@@ -27,8 +30,19 @@ open class RefreshVersionsTask : DefaultTask() {
                 )
             }
             val result = versionsLookupResultAsync.await()
-            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesWithVersionsCandidates)
-            project.rootProject.updateGradleSettingsIncludingForBuildSrc(result.selfUpdates)
+
+            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
+            SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
+                rootProject = project,
+                settingsPluginsUpdates = result.settingsPluginsUpdates,
+                buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
+            )
+            result.selfUpdatesForLegacyBootstrap?.let {
+                LegacyBootstrapUpdater.updateGradleSettingsWithUpdates(
+                    rootProject = project,
+                    selfUpdates = it
+                )
+            }
 
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
             warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)

@@ -4,13 +4,25 @@ import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
+import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.isAVersionAlias
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.Comment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
+import org.gradle.api.artifacts.ExternalDependency
 import java.io.File
+
+@InternalRefreshVersionsApi
+fun writeMissingEntriesInVersionProperties(newEntries: Map<String, ExternalDependency>) {
+    VersionsPropertiesModel.update { model ->
+        val newSections = newEntries.map { (key, d) ->
+            VersionEntry(emptyList(), key, d.version!!, emptyList(), emptyList())
+        }.sortedBy { it.key }
+        model.copy(sections = model.sections + newSections)
+    }
+}
 
 internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
     dependenciesWithLastVersion: List<DependencyWithVersionCandidates>
@@ -55,15 +67,9 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewEntry(
 
 internal fun VersionsPropertiesModel.writeTo(versionsPropertiesFile: File) {
     val finalModel = this.copy(
-        generatedByVersion = pluginVersion
+        generatedByVersion = RefreshVersionsCorePlugin.currentVersion
     )
     versionsPropertiesFile.writeText(finalModel.toText())
-}
-
-private val pluginVersion by lazy {
-    RefreshVersionsCorePlugin::class.java.getResourceAsStream("/version.txt")
-        .bufferedReader()
-        .useLines { it.first() }
 }
 
 /**

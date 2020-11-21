@@ -20,13 +20,14 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
+    implementation(Libs.kotlin_stdlib)
     implementation(Square.retrofit2.retrofit)
     implementation(KotlinX.coroutines.core)
 
     //implementation("se.jsimo.hello.maven:hello-world-maven:1.0.4-9-g716f2e1")
     //implementation("se.jsimo.hello.maven:hello-world-maven:_")
 
+    implementation(Libs.clikt)
     implementation(Ktor.client.auth)
     implementation(Ktor.client.authBasic)
     implementation(Ktor.client.core)
@@ -68,5 +69,5 @@ dependencies {
     testImplementation(Testing.mockito.kotlin)
     testImplementation(Testing.mockito.inline)
 
-    testImplementation("junit", "junit", "4.12")
+    testImplementation(Libs.junit)
 }

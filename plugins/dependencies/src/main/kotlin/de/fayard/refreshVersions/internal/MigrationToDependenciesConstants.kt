@@ -9,7 +9,8 @@ import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ExternalDependency
 import kotlin.coroutines.coroutineContext
 
-internal fun Configuration.shouldBeIgnored(): Boolean {
+@InternalRefreshVersionsApi
+fun Configuration.shouldBeIgnored(): Boolean {
     return name.startsWith(prefix = "_internal") // Real-life example: _internal_aapt2_binary (introduced by AGP)
         || name in ignoredConfigurationNames || name.startsWith('-')
     //TODO: If unwanted configurations still get through, we can filter to known ones here, like
@@ -24,14 +25,16 @@ private val ignoredConfigurationNames = listOf(
 
 //TODO: Ignore the following dependency: org.jetbrains.kotlin:kotlin-android-extensions-runtime
 
-internal fun Configuration.countDependenciesWithHardcodedVersions(
+@InternalRefreshVersionsApi
+fun Configuration.countDependenciesWithHardcodedVersions(
     versionsMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader
 ): Int = dependencies.count { dependency ->
     dependency is ExternalDependency && dependency.hasHardcodedVersion(versionsMap, versionKeyReader)
 }
 
-internal fun Project.countDependenciesWithHardcodedVersions(versionsMap: Map<String, String>): Int {
+@InternalRefreshVersionsApi
+fun Project.countDependenciesWithHardcodedVersions(versionsMap: Map<String, String>): Int {
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
     return configurations.sumBy { configuration ->
         if (configuration.shouldBeIgnored()) 0 else {

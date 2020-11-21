@@ -1,17 +1,26 @@
-package de.fayard.refreshVersions.core.internal
+package de.fayard.refreshVersions.core.internal.legacy
 
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
+import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
+import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
 import org.gradle.api.Project
 import org.gradle.api.logging.Logger
 import java.io.File
 
-internal fun Project.updateGradleSettingsIncludingForBuildSrc(
-    selfUpdates: DependencyWithVersionCandidates
-) {
-    updateGradleSettings(selfUpdates)
-    RefreshVersionsConfigHolder.buildSrc?.updateGradleSettings(selfUpdates)
+internal object LegacyBootstrapUpdater {
+
+    fun updateGradleSettingsWithUpdates(
+        rootProject: Project,
+        selfUpdates: DependencyWithVersionCandidates
+    ) {
+        require(rootProject.isRootProject)
+        require(rootProject.isBuildSrc.not())
+        rootProject.updateGradleSettings(selfUpdates)
+        RefreshVersionsConfigHolder.buildSrc?.updateGradleSettings(selfUpdates)
+    }
 }
 
 private fun Project.updateGradleSettings(
