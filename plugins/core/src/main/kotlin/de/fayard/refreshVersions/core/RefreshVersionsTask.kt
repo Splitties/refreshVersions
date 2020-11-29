@@ -64,6 +64,10 @@ open class RefreshVersionsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionRefreshVersions() {
+        FeatureFlag.FOO_EXPERIMENTAL.ifEnabled {
+
+        }
+
         val REMOVE_BEFORE_PR = true
         FeatureFlag.values().forEach { flag ->
             val message = flag.ifEnabled { "should run" } ?: "should not run"

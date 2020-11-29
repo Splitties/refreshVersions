@@ -7,22 +7,33 @@ package de.fayard.refreshVersions.core
  * until the feature is deemed to be stable enough for production.
  *
  * The user can then opt-in to enable the in-development feature either on the commmand line
- *    $ ./gradle refreshVersions --enable FOO_EXPERIMENTAL
- *    $ ./gradle refreshVersions --disable FOO_OKISH
+ *
+ * ```bash
+ * ./gradle refreshVersions --enable FOO_EXPERIMENTAL
+ * ./gradle refreshVersions --disable FOO_OKISH
+ * ```
  *
  * Or permanently in the Settings file
- *   refreshVersions {
- *      enableFlags(FOO_EXPERIMENTAL, FOO_OKISH)
- *      disableFlags(FOO_STABLE)
- *   }
+ *
+ * ```kotlin
+ * refreshVersions {
+ *      featureFlags {
+ *          enable(FOO_EXPERIMENTAL)
+ *          enable(FOO_OKISH)
+ *          disable(FOO_STABLE)
+ *      }
+ * }
+ * ```
  *
  * Never delete a flag here since it would break the Settings file
  */
 enum class FeatureFlag(val state: State) {
+
     // TODO: remove FOO_FLAGS before merging
     FOO_EXPERIMENTAL(State.DISABLED_BY_DEFAULT),
     FOO_OKISH(State.ENABLED_BY_DEFAULT),
     FOO_STABLE(State.ENABLED_ALWAYS),
+    @Deprecated("functionality was removed")
     FOO_DELETED(State.DISABLED_ALWAYS),
     ;
     companion object {
@@ -43,8 +54,8 @@ enum class FeatureFlag(val state: State) {
         ;
     }
 
-    fun <T: Any> ifEnabled(block: () -> T) : T? {
-        val shouldRun : Boolean = when(state) {
+    inline fun <T: Any> ifEnabled(block: () -> T) : T? {
+        val shouldRun : Boolean = when (state) {
             State.DISABLED_BY_DEFAULT -> userSettings[this] == true
             State.ENABLED_BY_DEFAULT -> userSettings[this] != false
             State.ENABLED_ALWAYS -> true
