@@ -8,14 +8,14 @@ repo_url: https://github.com/jmfayard/refreshVersions
 site_description: "Life is too short to google for dependencies and versions"
 site_author: jmfayard LouisCAD
 remote_branch: gh-pages
-#edit_uri: ""
+edit_uri: "https://github.com/jmfayard/refreshVersions/edit/release/docs"
 
 extra:
   link:
     playground: https://github.com/LouisCAD/kotlin-libraries-playground
     site: https://jmfayard.github.io/refreshVersions
     github: https://github.com/jmfayard/refreshVersions
-    master: https://github.com/jmfayard/refreshVersions/blob/master
+    master: https://github.com/jmfayard/refreshVersions/blob/main
     issues: https://github.com/jmfayard/refreshVersions/issues
     gradlePluginPortal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
