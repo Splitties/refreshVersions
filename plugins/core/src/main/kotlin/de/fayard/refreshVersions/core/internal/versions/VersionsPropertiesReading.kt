@@ -20,7 +20,7 @@ internal fun VersionsPropertiesModel.Companion.readFromText(
     )
 } catch (e: IllegalArgumentException) {
     throw IllegalStateException(e)
-}.apply { this.sections.forEach(::println) }
+}
 
 private fun VersionsPropertiesModel.Companion.readFromTextInternal(
     fileContent: String
