@@ -8,6 +8,8 @@ import de.fayard.refreshVersions.core.internal.resolveVersion
 import de.fayard.refreshVersions.core.internal.setupVersionPlaceholdersResolving
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.apply
+import org.gradle.tooling.UnsupportedVersionException
+import org.gradle.util.GradleVersion
 import java.io.File
 
 /**
@@ -103,6 +105,14 @@ fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
  * buildscript classpath configuration boilerplate.
  */
 private fun setupRefreshVersions(settings: Settings) {
+    val supportedGradleVersion = "6.3" // 6.2 fail with this error: https://gradle.com/s/shp7hbtd3i3ii
+    if (GradleVersion.current() < GradleVersion.version(supportedGradleVersion)) {
+        throw UnsupportedVersionException("""
+            The plugin "de.fayard.refreshVersions" only works with Gradle $supportedGradleVersion and above.
+            See https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed
+            """.trimIndent())
+    }
+
 
     val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
     @Suppress("unchecked_cast")
