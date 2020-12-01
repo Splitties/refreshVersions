@@ -54,7 +54,7 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
 
     val sections = mutableListOf<VersionsPropertiesModel.Section>()
 
-    sectionsText.trim().splitToSequence("\n\n").mapNotNull { sectionText ->
+    sectionsText.insertNewLinesIfNeeded().splitToSequence("\n\n").mapNotNull { sectionText ->
         readSection(sectionText)
     }.onEach {
         sections.add(it)
@@ -71,6 +71,25 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
         generatedByVersion = generatedByVersion,
         sections = sections
     )
+}
+
+internal fun String.insertNewLinesIfNeeded() : String {
+    var result = StringBuffer()
+    var keyExpected = true
+    for (line in lines()) {
+        val hasKey = line.substringBefore('#').contains('=')
+        if (hasKey) {
+            if (!keyExpected) {
+                result.append('\n')
+            }
+            keyExpected = false
+        } else if (line.isBlank()) {
+            keyExpected = true
+        }
+        result.append(line)
+        result.append('\n')
+    }
+    return result.toString().trim()
 }
 
 private fun readSection(sectionText: String): VersionsPropertiesModel.Section? {
