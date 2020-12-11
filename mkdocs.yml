@@ -64,7 +64,7 @@ nav:
   - 'Setup': setup.md
   - 'Add Dependencies': add-dependencies.md
   - 'Update Dependencies': update-dependencies.md
-#  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
+  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
   - 'Migration': migration.md
   - 'FAQ': faq.md
   - 'Change Log': CHANGELOG.md
