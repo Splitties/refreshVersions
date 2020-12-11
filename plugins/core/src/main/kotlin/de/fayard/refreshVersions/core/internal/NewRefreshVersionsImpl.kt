@@ -1,13 +1,11 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.*
+import de.fayard.refreshVersions.core.FeatureFlag.GRADLE_UPDATES
 import de.fayard.refreshVersions.core.extensions.gradle.hasDynamicVersion
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.legacy.LegacyBoostrapUpdatesFinder
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
@@ -83,25 +81,7 @@ internal suspend fun lookupVersionCandidates(
         }
 
         val gradleUpdatesAsync = async {
-            val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient)
-            val currentGradleVersion = GradleVersion.current()
-            GradleUpdateChecker.VersionType.values().filterNot {
-                it == GradleUpdateChecker.VersionType.All
-            }.let { types ->
-                when {
-                    currentGradleVersion.isSnapshot -> types
-                    else -> types.filterNot {
-                        it == GradleUpdateChecker.VersionType.ReleaseNightly ||
-                                it == GradleUpdateChecker.VersionType.Nightly
-                    }
-                }
-            }.map { type ->
-                async {
-                    checker.fetchGradleVersion(type).map { GradleVersion.version(it.version) }
-                }
-            }.awaitAll().flatten().filter {
-                it > currentGradleVersion
-            }.sorted().map { Version(it.version) }
+            if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions() else emptyList()
         }
 
         val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
@@ -117,6 +97,28 @@ internal suspend fun lookupVersionCandidates(
         )
         TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
     }
+}
+
+suspend fun CoroutineScope.lookupAvailableGradleVersions(): List<Version> {
+    val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient)
+    val currentGradleVersion = GradleVersion.current()
+    return GradleUpdateChecker.VersionType.values().filterNot {
+        it == GradleUpdateChecker.VersionType.All
+    }.let { types ->
+        when {
+            currentGradleVersion.isSnapshot -> types
+            else -> types.filterNot {
+                it == GradleUpdateChecker.VersionType.ReleaseNightly ||
+                    it == GradleUpdateChecker.VersionType.Nightly
+            }
+        }
+    }.map { type ->
+        async {
+            checker.fetchGradleVersion(type).map { GradleVersion.version(it.version) }
+        }
+    }.awaitAll().flatten().filter {
+        it > currentGradleVersion
+    }.sorted().map { Version(it.version) }
 }
 
 internal fun Settings.getDependencyVersionFetchers(

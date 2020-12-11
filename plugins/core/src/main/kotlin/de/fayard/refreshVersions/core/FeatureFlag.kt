@@ -9,8 +9,8 @@ package de.fayard.refreshVersions.core
  * The user can then opt-in to enable the in-development feature either on the commmand line
  *
  * ```bash
- * ./gradle refreshVersions --enable FOO_EXPERIMENTAL
- * ./gradle refreshVersions --disable FOO_OKISH
+ * ./gradle refreshVersions --enable BUILD_SRC_LIBS
+ * ./gradle refreshVersions --disable GRADLE_UPDATES
  * ```
  *
  * Or permanently in the Settings file
@@ -18,9 +18,8 @@ package de.fayard.refreshVersions.core
  * ```kotlin
  * refreshVersions {
  *      featureFlags {
- *          enable(FOO_EXPERIMENTAL)
- *          enable(FOO_OKISH)
- *          disable(FOO_STABLE)
+ *          enable(BUILD_SRC_LIBS)
+ *          disable(GRADLE_UPDATES)
  *      }
  * }
  * ```
@@ -28,17 +27,14 @@ package de.fayard.refreshVersions.core
  * Never delete a flag here since it would break the Settings file
  */
 enum class FeatureFlag(val state: State) {
-
-    // TODO: remove FOO_FLAGS before merging
-    FOO_EXPERIMENTAL(State.DISABLED_BY_DEFAULT),
-    FOO_OKISH(State.ENABLED_BY_DEFAULT),
-    FOO_STABLE(State.ENABLED_ALWAYS),
-    @Deprecated("functionality was removed")
-    FOO_DELETED(State.DISABLED_ALWAYS),
+    GRADLE_UPDATES(State.ENABLED_BY_DEFAULT),
+    BUILD_SRC_LIBS(State.DISABLED_BY_DEFAULT)
     ;
+
     companion object {
         val userSettings: MutableMap<FeatureFlag, Boolean> = mutableMapOf()
     }
+
     /**
      * Lifecycle of a feature flag:
      * it starts disabled by default as to not break people's build with an unstable feature
@@ -54,13 +50,11 @@ enum class FeatureFlag(val state: State) {
         ;
     }
 
-    inline fun <T: Any> ifEnabled(block: () -> T) : T? {
-        val shouldRun : Boolean = when (state) {
+    val isEnabled: Boolean
+        get() = when (state) {
             State.DISABLED_BY_DEFAULT -> userSettings[this] == true
             State.ENABLED_BY_DEFAULT -> userSettings[this] != false
             State.ENABLED_ALWAYS -> true
             State.DISABLED_ALWAYS -> false
         }
-        return if (shouldRun) block() else null
-    }
 }

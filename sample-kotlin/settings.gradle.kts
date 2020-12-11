@@ -24,44 +24,10 @@ plugins {
 
 refreshVersions {
 
-    /**  ./gradlew refreshVersions by default
-    refrehVersions: bloc guarded by flag=FOO_EXPERIMENTAL should not run
-    refrehVersions: bloc guarded by flag=FOO_OKISH should not run
-    refrehVersions: bloc guarded by flag=FOO_STABLE should run
-    refrehVersions: bloc guarded by flag=FOO_DELETED should not run
-     **/
-
-
     featureFlags {
-        enable(FOO_EXPERIMENTAL)
-        disable(FOO_OKISH)
+        enable(BUILD_SRC_LIBS)
+        disable(GRADLE_UPDATES)
     }
-    /**
-     * $ ./gradlew refreshVersions --enable FOO_EXPERIMENTAL
-     * refrehVersions: bloc guarded by flag=FOO_EXPERIMENTAL should run
-     */
-
-    /**
-     * $ ./gradlew refreshVersions --disable FOO_OKISH
-     * refrehVersions: bloc guarded by flag=FOO_OKISH should not run
-     */
-
-    //enable(FOO_DELETED, FOO_EXPERIMENTAL, FOO_OKISH, FOO_STABLE)
-    /** if configuration above is uncommented
-    refrehVersions: bloc guarded by flag=FOO_EXPERIMENTAL should run
-    refrehVersions: bloc guarded by flag=FOO_OKISH should run
-    refrehVersions: bloc guarded by flag=FOO_STABLE should run
-    refrehVersions: bloc guarded by flag=FOO_DELETED should not run
-     */
-
-    //disable(FOO_DELETED, FOO_EXPERIMENTAL, FOO_OKISH, FOO_STABLE)
-    /**
-     * if configuration above is uncommented
-    refrehVersions: bloc guarded by flag=FOO_EXPERIMENTAL should not run
-    refrehVersions: bloc guarded by flag=FOO_OKISH should not run
-    refrehVersions: bloc guarded by flag=FOO_STABLE should run
-    refrehVersions: bloc guarded by flag=FOO_DELETED should not run
-     */
 
     extraArtifactVersionKeyRules(file("refreshVersions-extra-rules.txt"))
 }

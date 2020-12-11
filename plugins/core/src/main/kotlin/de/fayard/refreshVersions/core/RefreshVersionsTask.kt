@@ -9,6 +9,7 @@ import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
 import kotlinx.coroutines.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.logging.LogLevel
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
@@ -64,17 +65,9 @@ open class RefreshVersionsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionRefreshVersions() {
-        FeatureFlag.FOO_EXPERIMENTAL.ifEnabled {
-
+        if (FeatureFlag.userSettings.isNotEmpty()) {
+            logger.lifecycle("Feature flags: " +  FeatureFlag.userSettings)
         }
-
-        val REMOVE_BEFORE_PR = true
-        FeatureFlag.values().forEach { flag ->
-            val message = flag.ifEnabled { "should run" } ?: "should not run"
-            logger.lifecycle("refrehVersions: bloc guarded by flag=$flag $message")
-        }
-        if (REMOVE_BEFORE_PR) return
-
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
 
