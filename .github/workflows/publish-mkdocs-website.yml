@@ -2,7 +2,7 @@ name: Publish MkDocs website to GitHub pages
 on:
   push:
     branches:
-      - master
+      - release
     paths:
       - 'docs/**'
       - 'mkdocs.yml'

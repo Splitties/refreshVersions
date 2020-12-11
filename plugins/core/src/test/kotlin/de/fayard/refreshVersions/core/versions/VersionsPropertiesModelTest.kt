@@ -1,9 +1,11 @@
 package de.fayard.refreshVersions.core.versions
 
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.insertNewLinesIfNeeded
 import de.fayard.refreshVersions.core.internal.versions.readFromText
 import de.fayard.refreshVersions.core.internal.versions.toText
 import de.fayard.refreshVersions.core.testResources
+import io.kotest.matchers.shouldBe
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -18,12 +20,13 @@ class VersionsPropertiesModelTest {
         samplesDir.resolve("old-format").listFiles()!!.filter {
             it.isDirectory
         }.also { check(it.isNotEmpty()) }.forEach {
+            println("== ${it.absolutePath}")
             val inputFile = it.resolve("input.properties")
             val outputFile = it.resolve("output.properties")
             val parsedModel = VersionsPropertiesModel.readFromText(inputFile.readText())
             assertEquals(
-                expected = parsedModel.toText(),
-                actual = outputFile.readText(),
+                expected = outputFile.readText(),
+                actual = parsedModel.toText(),
                 message = "Output of model parsed from input should match the expected input!"
             )
             val reParsedModel = VersionsPropertiesModel.readFromText(parsedModel.toText())
@@ -88,5 +91,21 @@ class VersionsPropertiesModelTest {
             }
         }.count()
         assertTrue(checkedFilesCount >= 0, message = "No test files found!")
+    }
+
+    @Test
+    fun `insert new lines if necessaary`() {
+        val input = """
+            plugin.android=4.1.0
+            #ok
+            plugin.com.osacky.doctor=0.6.2
+            """.trimIndent()
+        val expected = """
+            plugin.android=4.1.0
+            #ok
+
+            plugin.com.osacky.doctor=0.6.2
+            """.trimIndent()
+        input.insertNewLinesIfNeeded() shouldBe expected
     }
 }

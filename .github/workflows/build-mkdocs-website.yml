@@ -2,7 +2,7 @@ name: Build MkDocs website as artifacts
 on:
   push:
     branches-ignore:
-      - master
+      - release
     paths:
       - 'docs/**'
       - 'mkdocs.yml'
