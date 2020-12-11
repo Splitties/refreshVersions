@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.FeatureFlag
+import org.gradle.api.Action
 import java.io.File
 
 open class RefreshVersionsExtension {
@@ -16,10 +17,18 @@ open class RefreshVersionsExtension {
         extraArtifactVersionKeyRules = extraArtifactVersionKeyRules + rawRules
     }
 
-    fun enable(vararg flags: FeatureFlag) {
-        FeatureFlag.userSettings.putAll(flags.map { it to true })
+    fun featureFlags(extension: Action<FeatureFlagExtension>) {
+        extension.execute(FeatureFlagExtension())
     }
-    fun disable(vararg flags: FeatureFlag) {
-        FeatureFlag.userSettings.putAll(flags.map { it to false })
+
+
+}
+
+open class FeatureFlagExtension {
+    fun enable(flag: FeatureFlag) {
+        FeatureFlag.userSettings[flag] = true
+    }
+    fun disable(flag: FeatureFlag) {
+        FeatureFlag.userSettings[flag] = false
     }
 }

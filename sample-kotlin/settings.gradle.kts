@@ -32,6 +32,10 @@ refreshVersions {
      **/
 
 
+    featureFlags {
+        enable(FOO_EXPERIMENTAL)
+        disable(FOO_OKISH)
+    }
     /**
      * $ ./gradlew refreshVersions --enable FOO_EXPERIMENTAL
      * refrehVersions: bloc guarded by flag=FOO_EXPERIMENTAL should run
