@@ -18,31 +18,14 @@ import org.gradle.api.tasks.options.OptionValues
 import org.gradle.util.GradleVersion
 
 /**
+ *
  * $ ./gradlew help --task refreshVersions
-Path
-:refreshVersions
-
-Type
-RefreshVersionsTask (de.fayard.refreshVersions.core.RefreshVersionsTask)
-
-Options
---disable     Disable a feature flag
-Available values are:
-FOO_DELETED
-FOO_EXPERIMENTAL
-FOO_OKISH
-FOO_STABLE
-
---enable     Enable a feature flag
-Available values are:
-FOO_DELETED
-FOO_EXPERIMENTAL
-FOO_OKISH
-FOO_STABLE
-
-Description
-Search for new dependencies versions and update versions.properties
-
+ * Description
+ * Search for new dependencies versions and update versions.properties
+ *
+ * OPTIONS
+ *     --enable <FEATURE_FLAG>
+ *     --disable <FEATURE_FLAG>
  */
 open class RefreshVersionsTask : DefaultTask() {
 

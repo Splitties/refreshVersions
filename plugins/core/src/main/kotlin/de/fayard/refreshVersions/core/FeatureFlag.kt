@@ -25,6 +25,7 @@ package de.fayard.refreshVersions.core
  * ```
  *
  * Never delete a flag here since it would break the Settings file
+ * Instead, mark it as @Deprecated("your message here")
  */
 enum class FeatureFlag(val state: State) {
     GRADLE_UPDATES(State.ENABLED_BY_DEFAULT),
@@ -32,6 +33,9 @@ enum class FeatureFlag(val state: State) {
     ;
 
     companion object {
+        /**
+         * Where we store the settings coming from the command-line or the Settings file
+         */
         val userSettings: MutableMap<FeatureFlag, Boolean> = mutableMapOf()
     }
 
@@ -50,6 +54,11 @@ enum class FeatureFlag(val state: State) {
         ;
     }
 
+    /**
+     * Whether the flag is enabled once the user settings are set
+     * Intended usage:
+     * `if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions() else emptyList()`
+     */
     val isEnabled: Boolean
         get() = when (state) {
             State.DISABLED_BY_DEFAULT -> userSettings[this] == true

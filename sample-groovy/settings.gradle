@@ -1,4 +1,3 @@
-import de.fayard.refreshVersions.core.FeatureFlag
 
 pluginManagement {
     repositories {
@@ -29,6 +28,8 @@ gradleEnterprise {
 rootProject.name = 'sample-groovy'
 
 refreshVersions {
-    enable(FeatureFlag.FOO_DELETED, FeatureFlag.FOO_EXPERIMENTAL, FeatureFlag.FOO_OKISH, FeatureFlag.FOO_STABLE)
-
+    featureFlags {
+        enable 'BUILD_SRC_LIBS'
+        disable 'GRADLE_UPDATES'
+    }
 }

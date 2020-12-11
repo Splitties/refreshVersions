@@ -15,7 +15,14 @@ Run this command to update:
 ./gradlew wrapper --gradle-version {{version.gradle}}
 ```
 
-Note that for Android projects, you need to update the Android Gradle Plugin to its latest stable version at the same time.
+You should also try to update the Gradle plugins present in your build to the latest version. For example on an Android project, do update the version of the Gradle Android Plugin.
+
+The Gradle documentation has detailed migration guide if you are stuck:
+
+- From Gradle 6+: https://docs.gradle.org/current/userguide/upgrading_version_6.html
+- From Gradle 5.x: https://docs.gradle.org/current/userguide/upgrading_version_5.html
+- From Gradle 4.x: https://docs.gradle.org/current/userguide/upgrading_version_4.html
+
 
 ## About Gradle's Settings file
 
