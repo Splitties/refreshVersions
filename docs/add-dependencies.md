@@ -106,7 +106,7 @@ object Libs {
 
 Now here is a good news: you don't need to write this file manually, it can be automatically generated!
 
-This is done with [==> **gradle buildSrcLibs** <==](/gradle-buildsrcversions)
+This is done with [==> **gradle buildSrcLibs** <==]({{link.site}}/gradle-buildsrcversions)
 
 
 ### Use Package Search from JetBrains
