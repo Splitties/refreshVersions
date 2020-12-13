@@ -1,5 +1,7 @@
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
+
 /**
  * A bug in refreshVersions can break people's builds.
  *
@@ -27,7 +29,7 @@ package de.fayard.refreshVersions.core
  * Never delete a flag here since it would break the Settings file
  * Instead, mark it as @Deprecated("your message here")
  */
-enum class FeatureFlag(val state: State) {
+enum class FeatureFlag(private val state: State) {
     GRADLE_UPDATES(State.ENABLED_BY_DEFAULT),
     BUILD_SRC_LIBS(State.DISABLED_BY_DEFAULT)
     ;
@@ -36,6 +38,7 @@ enum class FeatureFlag(val state: State) {
         /**
          * Where we store the settings coming from the command-line or the Settings file
          */
+        @InternalRefreshVersionsApi
         val userSettings: MutableMap<FeatureFlag, Boolean> = mutableMapOf()
     }
 
@@ -46,7 +49,7 @@ enum class FeatureFlag(val state: State) {
      * when the feature is flag it can be always enabled, at this point we delete the old implementation
      * if the feature appeared to be a dead-end, we remove its implementation and mark it as always disabled
      */
-    enum class State {
+    internal enum class State {
         DISABLED_BY_DEFAULT,
         ENABLED_BY_DEFAULT,
         ENABLED_ALWAYS,
@@ -59,7 +62,7 @@ enum class FeatureFlag(val state: State) {
      * Intended usage:
      * `if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions() else emptyList()`
      */
-    val isEnabled: Boolean
+    internal val isEnabled: Boolean
         get() = when (state) {
             State.DISABLED_BY_DEFAULT -> userSettings[this] == true
             State.ENABLED_BY_DEFAULT -> userSettings[this] != false
