@@ -11,7 +11,7 @@ import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
  * The user can then opt-in to enable the in-development feature either on the commmand line
  *
  * ```bash
- * ./gradle refreshVersions --enable BUILD_SRC_LIBS
+ * ./gradle refreshVersions --enable LIBS
  * ./gradle refreshVersions --disable GRADLE_UPDATES
  * ```
  *
@@ -20,7 +20,7 @@ import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
  * ```kotlin
  * refreshVersions {
  *      featureFlags {
- *          enable(BUILD_SRC_LIBS)
+ *          enable(LIBS)
  *          disable(GRADLE_UPDATES)
  *      }
  * }
