@@ -36,6 +36,7 @@ The order is:
 3. The `buildscript` block, if any. (We will use it)
 4. The `plugins` block, if any settings plugins are applied.
 5. Logic for Gradle settings (any other code).
+6. TK new bloc
 
 See the example snippet below:
 
@@ -48,7 +49,9 @@ buildscript {
     // We will setup refreshVersions here, see below.
 }
 
-plugins {} // Optional
+plugins {
+    id("de.fayard.refreshVersions") version {{version.refreshVersions}}
+}
 
 // Then you can have other code after the blocks above,
 // we will bootstrap refreshVersions here.
@@ -92,17 +95,6 @@ Before refreshVersions, [there was the plugin buildSrcVersions](https://dev.to/j
 
 If your project is using it, remove all its configuration from the top `build.gradle[.kts]` file
 
-=== "build.gradle.kts"
-```diff
--plugins {
--    id("de.fayard.buildSrcVersions") version "0.3.2"
--}
-
--buildSrcVersions {
--    someOption = "somevalue"
--}
-```
-
 The task `buildSrcVersions` is still available.
 
 Read more: [gradle buildSrcVersions]({{link.site}}/gradle-buildsrcversions).
@@ -113,26 +105,12 @@ If you use the **buildSrc** module and have dependencies declared in the `buildS
 
 === "buildSrc/settings.gradle.kts"
 ```kotlin
-import de.fayard.refreshVersions.bootstrapRefreshVersionsForBuildSrc
-
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
-}
-
-bootstrapRefreshVersionsForBuildSrc()
+TK
 ```
 
 === "buildSrc/settings.gradle"
 ```groovy
-import de.fayard.refreshVersions.RefreshVersionsSetup
-
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
-}
-
-RefreshVersionsSetup.bootstrapForBuildSrc(settings)
+TK
 ```
 
 
@@ -142,41 +120,18 @@ Sharing used versions with included builds is not supported at the moment.
 
 If you need/want this feature, please vote with a 👍 on [this issue]({{link.issues}}/205), subscribe to it, and tell us about your use case, to help us prioritize.
 
-### If you want to use a development version
+### If you want to use a snapshot version
 
-To use a development version (for example to test an unreleased new feature), you need to find the published development versions by searching in the
-[recent commits on the develop branch]({{link.github}}/commits/develop) (they start with "Dev version").
-
-You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven` as shown below:
+TK setup for testing with mavenLocal/jitpack/devversion https://github.com/jmfayard/refreshVersions/issues/290
 
 === "settings.gradle.kts"
 ```kotlin
-import de.fayard.refreshVersions.bootstrapRefreshVersions
-
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        maven("https://dl.bintray.com/jmfayard/maven")
-    }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersionsDev}}")
-}
-
-bootstrapRefreshVersions()
+TK
 ```
 
 === "settings.gradle"
 ```groovy
-import de.fayard.refreshVersions.RefreshVersionsSetup
-
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        maven { url 'https://dl.bintray.com/jmfayard/maven' }
-    }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersionsDev}}")
-}
-
-RefreshVersionsSetup.bootstrap(settings)
+TK
 ```
 
 ## Next steps
