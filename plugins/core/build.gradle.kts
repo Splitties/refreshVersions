@@ -6,6 +6,7 @@ plugins {
     `java-test-fixtures`
     `maven-publish`
     `kotlin-dsl`
+    idea
 }
 
 gradlePlugin {
@@ -20,7 +21,7 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = "https://builtwithgradle.netlify.com/"
+    website = "https://jmfayard.github.io/refreshVersions"
     vcsUrl = "https://github.com/jmfayard/refreshVersions"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
 }
@@ -43,6 +44,8 @@ dependencies {
     testImplementation(platform(notation = "org.junit:junit-bom:_"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation(Testing.kotest.runner.junit5)
+    testImplementation(Kotlin.test.annotationsCommon)
+    testImplementation(Kotlin.test.junit5)
 
     testFixturesApi(Square.okHttp3.okHttp)
     testFixturesApi(Square.okHttp3.loggingInterceptor)
@@ -60,10 +63,30 @@ kotlin {
     javaComponent.withVariantsFromConfiguration(configurations["testFixturesRuntimeElements"]) { skip() }
 }
 
+val genResourcesDir = buildDir.resolve("generated/refreshVersions/resources")
+
+sourceSets.main {
+    resources.srcDir(genResourcesDir.path)
+}
+
+idea {
+    module.generatedSourceDirs.add(genResourcesDir)
+}
+
+val copyVersionFile by tasks.registering {
+    val versionFile = rootProject.file("version.txt")
+    val versionFileCopy = genResourcesDir.resolve("version.txt")
+    inputs.file(versionFile)
+    outputs.file(versionFileCopy)
+    doFirst { versionFile.copyTo(versionFileCopy, overwrite = true) }
+}
+
 tasks.withType<KotlinCompile> {
+    dependsOn(copyVersionFile)
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xinline-classes",
+        "-Xmulti-platform", // Allow using expect and actual keywords.
         "-Xopt-in=kotlin.RequiresOptIn",
         "-Xopt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
     )

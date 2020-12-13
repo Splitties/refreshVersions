@@ -6,8 +6,7 @@ on:
     paths:
       - 'plugins/version.txt'
     branches:
-      - master
-      - develop
+      - main
 jobs:
   gradle-plugins-publishing:
     runs-on: ubuntu-latest

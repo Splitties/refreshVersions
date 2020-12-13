@@ -1,7 +1,11 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.internal.*
-import de.fayard.refreshVersions.core.internal.updateVersionsProperties
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
+import de.fayard.refreshVersions.core.internal.legacy.LegacyBootstrapUpdater
+import de.fayard.refreshVersions.core.internal.lookupVersionCandidates
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
 import kotlinx.coroutines.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
@@ -21,13 +25,24 @@ open class RefreshVersionsTask : DefaultTask() {
                 lookupVersionCandidates(
                     httpClient = RefreshVersionsConfigHolder.httpClient,
                     project = project,
-                    versionProperties = RefreshVersionsConfigHolder.readVersionProperties(),
+                    versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
                     versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
                 )
             }
             val result = versionsLookupResultAsync.await()
-            project.rootProject.updateVersionsProperties(result.dependenciesWithVersionsCandidates)
-            project.rootProject.updateGradleSettingsIncludingForBuildSrc(result.selfUpdates)
+
+            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
+            SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
+                rootProject = project,
+                settingsPluginsUpdates = result.settingsPluginsUpdates,
+                buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
+            )
+            result.selfUpdatesForLegacyBootstrap?.let {
+                LegacyBootstrapUpdater.updateGradleSettingsWithUpdates(
+                    rootProject = project,
+                    selfUpdates = it
+                )
+            }
 
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
             warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)

@@ -3,6 +3,8 @@ package de.fayard.refreshVersions.core.internal
 import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.hasDynamicVersion
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
+import de.fayard.refreshVersions.core.internal.legacy.LegacyBoostrapUpdatesFinder
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -19,7 +21,7 @@ import org.gradle.util.GradleVersion
 internal suspend fun lookupVersionCandidates(
     httpClient: OkHttpClient,
     project: Project,
-    versionProperties: Map<String, String>,
+    versionMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader
 ): VersionCandidatesLookupResult {
 
@@ -30,7 +32,7 @@ internal suspend fun lookupVersionCandidates(
     val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
     val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
     val dependencyFilter: (Dependency) -> Boolean = { dependency ->
-        dependency.isManageableVersion(versionProperties, versionKeyReader).also { manageable ->
+        dependency.isManageableVersion(versionMap, versionKeyReader).also { manageable ->
             if (manageable) return@also
             if (dependency.version != null) {
                 // null version means it's expected to be added by a BoM or a plugin, so we ignore them.
@@ -56,7 +58,7 @@ internal suspend fun lookupVersionCandidates(
             it.moduleId
         }.map { (moduleId: ModuleId, versionFetchers: List<DependencyVersionsFetcher>) ->
             val resolvedVersion = resolveVersion(
-                properties = versionProperties,
+                properties = versionMap,
                 key = getVersionPropertyName(moduleId, versionKeyReader)
             ) ?: error("Couldn't resolve version for $moduleId")
             async {
@@ -71,27 +73,13 @@ internal suspend fun lookupVersionCandidates(
             }
         }
 
-        val selfUpdateAsync = async {
+        val settingsPluginsUpdatesAsync = async {
+            SettingsPluginsUpdatesFinder.getSettingsPluginUpdates(httpClient, resultMode)
+        }
 
-            val moduleId = ModuleId(group = "de.fayard.refreshVersions", name = "refreshVersions")
-
-            val versionsFetchers = RefreshVersionsConfigHolder.settings.getDependencyVersionFetchers(
-                httpClient = httpClient,
-                dependencyFilter = { dependency ->
-                    dependency.group == moduleId.group && dependency.name == moduleId.name
-                }
-            ).toList()
-
-            val currentVersion = RefreshVersionsConfigHolder.currentVersion
-
-            DependencyWithVersionCandidates(
-                moduleId = moduleId,
-                currentVersion = currentVersion,
-                versionsCandidates = versionsFetchers.getVersionCandidates(
-                    currentVersion = Version(currentVersion),
-                    resultMode = resultMode
-                )
-            )
+        val selfUpdateAsync: Deferred<DependencyWithVersionCandidates>? = when {
+            RefreshVersionsConfigHolder.isSetupViaPlugin -> null
+            else -> async { LegacyBoostrapUpdatesFinder.getSelfUpdates(httpClient, resultMode) }
         }
 
         val gradleUpdatesAsync = async {
@@ -119,17 +107,19 @@ internal suspend fun lookupVersionCandidates(
         val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
 
         return@coroutineScope VersionCandidatesLookupResult(
-            dependenciesWithVersionsCandidates = dependenciesWithVersionCandidates,
+            dependenciesUpdates = dependenciesWithVersionCandidates,
             dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
             dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
+            settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
+            buildSrcSettingsPluginsUpdates = settingsPluginsUpdatesAsync.await().buildSrcSettings,
             gradleUpdates = gradleUpdatesAsync.await(),
-            selfUpdates = selfUpdateAsync.await()
+            selfUpdatesForLegacyBootstrap = selfUpdateAsync?.await()
         )
         TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
     }
 }
 
-private fun Settings.getDependencyVersionFetchers(
+internal fun Settings.getDependencyVersionFetchers(
     httpClient: OkHttpClient,
     dependencyFilter: (Dependency) -> Boolean
 ): Sequence<DependencyVersionsFetcher> = getDependencyVersionFetchers(

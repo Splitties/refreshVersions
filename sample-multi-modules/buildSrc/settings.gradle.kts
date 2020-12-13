@@ -1,5 +1,3 @@
-import de.fayard.refreshVersions.bootstrapRefreshVersionsForBuildSrc
-
 pluginManagement {
     repositories {
         mavenLocal()
@@ -7,21 +5,16 @@ pluginManagement {
         maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
         maven(url = "https://dl.bintray.com/jmfayard/maven")
     }
-}
 
-buildscript {
-    repositories {
-        mavenLocal()
-        gradlePluginPortal()
-        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
-        maven(url = "https://dl.bintray.com/jmfayard/maven")
-    }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions") {
-        version {
-            val versionFile = rootDir.parentFile.parentFile.resolve("plugins/version.txt")
-            strictly(versionFile.readLines().first())
-        }
+    val versionFile = rootDir.parentFile.parentFile.resolve("plugins/version.txt")
+    val pluginsVersion = versionFile.readLines().first()
+
+    @Suppress("UnstableApiUsage")
+    plugins {
+        id("de.fayard.refreshVersions").version(pluginsVersion)
     }
 }
 
-bootstrapRefreshVersionsForBuildSrc()
+plugins {
+    id("de.fayard.refreshVersions")
+}
