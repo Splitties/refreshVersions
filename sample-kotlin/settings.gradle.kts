@@ -25,7 +25,7 @@ plugins {
 refreshVersions {
 
     featureFlags {
-        enable(BUILD_SRC_LIBS)
+        enable(LIBS)
         disable(GRADLE_UPDATES)
     }
 
