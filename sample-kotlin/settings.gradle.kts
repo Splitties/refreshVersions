@@ -1,3 +1,5 @@
+import de.fayard.refreshVersions.core.FeatureFlag.*
+
 pluginManagement {
     repositories {
         mavenLocal()
@@ -21,6 +23,12 @@ plugins {
 }
 
 refreshVersions {
+
+    featureFlags {
+        enable(LIBS)
+        disable(GRADLE_UPDATES)
+    }
+
     extraArtifactVersionKeyRules(file("refreshVersions-extra-rules.txt"))
 }
 
