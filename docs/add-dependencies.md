@@ -80,7 +80,11 @@ plugins {
 
 As you see, the convention is pretty simple. The key is the id of the plugin, prefixed by `plugin.`: `plugin.some.plugin.id` sets the version of the plugin of id `some.plugin.id`.
 
-## Non-built-in dependency notations
+## Other way to add dependencies
+
+The built-in dependencies are there for convenience, but the plugin `refreshVersions` doesn't really care how you add dependencies to the build
+
+As long as you use placeholder version `_`, your library is managed by gradle refreshVersions!
 
 ### Use gradle buildSrcVersions (WIP)
 
@@ -100,9 +104,9 @@ object Libs {
 }
 ```
 
-Because this file used the placeholder version `_`, it is compatible with gradle refreshVersions!
+Now here is a good news: you don't need to write this file manually, it can be automatically generated!
 
-**This feature is not done yet. If you think we should prioritze it, please vote for [this issue]({{link.issues}}/235) with a 👍 and subscribe to it.**
+This is done with [==> **gradle buildSrcLibs** <==]({{link.site}}/gradle-buildsrcversions)
 
 
 ### Use Package Search from JetBrains

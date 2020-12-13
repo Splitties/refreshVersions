@@ -54,6 +54,27 @@ But the `Libs.kt` file has still pretty good use cases, like a project with lots
 
 That's why the *plugin* `refreshVersions` still contains a task `:buildSrcVersions` -- which is just an alias for the better named task `:buildSrcLibs`.
 
+## Setup
+
+TK feature flag
+
+Before refreshVersions, [there was the plugin buildSrcVersions](https://dev.to/jmfayard/better-dependency-management-in-android-studio-3-5-with-gradle-buildsrcversions-34e9)
+
+If your project is using it, remove all its configuration from the top `build.gradle[.kts]` file
+
+=== "build.gradle.kts"
+```diff
+-plugins {
+-    id("de.fayard.buildSrcVersions") version "0.3.2"
+-}
+
+-buildSrcVersions {
+-    someOption = "somevalue"
+-}
+```
+
+## Run `:buildSrcLibs`
+
 Use it like this:
 
 ```bash

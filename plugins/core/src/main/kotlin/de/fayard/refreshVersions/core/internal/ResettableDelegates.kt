@@ -18,12 +18,6 @@ internal class ResettableDelegates {
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
             field = value
         }
-
-        override fun Nothing?.reset() {
-            field = null
-        }
-
-        private var field: T? = null
     }
 
     inner class LateInit<T : Any> : Delegate<T>() {
@@ -38,29 +32,23 @@ internal class ResettableDelegates {
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
             field = value
         }
-
-        override fun Nothing?.reset() {
-            field = null
-        }
-
-        private var field: T? = null
     }
 
     inner class Lazy<T : Any>(private val initializer: () -> T) : Delegate<T>() {
 
-        private var value: T? = null
-
         override fun getValue(thisRef: Any?, property: KProperty<*>): T {
-            return value ?: initializer().apply { value = this }
-        }
-
-        override fun Nothing?.reset() {
-            value = null
+            return field ?: initializer().apply { field = this }
         }
     }
 
     abstract inner class Delegate<T> : ReadOnlyProperty<Any?, T> {
-        abstract fun Nothing?.reset()
+
+        @Suppress("unused") // Discourage use outside this file.
+        fun Nothing?.reset() {
+            field = null
+        }
+
+        @JvmField protected var field: T? = null
 
         init {
             @Suppress("LeakingThis") // Safe in our case where the references are kept private.

@@ -1,7 +1,7 @@
-name: Publish MkDocs website to GitHub pages
+name: Build MkDocs website as artifacts
 on:
   push:
-    branches:
+    branches-ignore:
       - release
     paths:
       - 'docs/**'
@@ -17,4 +17,8 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install -r docs/requirements.txt
-      - run: mkdocs gh-deploy --force
+      - run: mkdocs build --site-dir public
+      - uses: actions/upload-artifact@v2
+        with:
+          name: docs-static-website
+          path: public
