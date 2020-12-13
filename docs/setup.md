@@ -66,26 +66,12 @@ Here is how to configure gradle refreshVersions:
 
 === "settings.gradle.kts"
 ```kotlin
-import de.fayard.refreshVersions.bootstrapRefreshVersions
-
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
-}
-
-bootstrapRefreshVersions()
+TK
 ```
 
 === "settings.gradle"
 ```groovy
-import de.fayard.refreshVersions.RefreshVersionsSetup
-
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
-}
-
-RefreshVersionsSetup.bootstrap(settings)
+TK
 ```
 
 
