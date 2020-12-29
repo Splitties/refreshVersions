@@ -7,13 +7,13 @@ import org.gradle.api.artifacts.ExternalDependency
 
 @InternalRefreshVersionsApi
 fun Dependency.hasHardcodedVersion(
-    versionProperties: Map<String, String>,
+    versionMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader
-): Boolean = isManageableVersion(versionProperties, versionKeyReader).not()
+): Boolean = isManageableVersion(versionMap, versionKeyReader).not()
 
 @InternalRefreshVersionsApi
 fun Dependency.isManageableVersion(
-    versionProperties: Map<String, String>,
+    versionMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader
 ): Boolean {
     return when {
@@ -21,7 +21,7 @@ fun Dependency.isManageableVersion(
         version == versionPlaceholder -> true
         moduleIdentifier?.isGradlePlugin == true -> {
             val versionFromProperty =
-                versionProperties[getVersionPropertyName(moduleIdentifier!!, versionKeyReader)]
+                versionMap[getVersionPropertyName(moduleIdentifier!!, versionKeyReader)]
                     ?: return false
             versionFromProperty.isAVersionAlias().not()
         }

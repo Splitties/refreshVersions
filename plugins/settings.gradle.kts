@@ -5,7 +5,7 @@ buildscript {
         maven(url = "https://dl.bintray.com/jmfayard/maven")
         gradlePluginPortal()
     }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.6-dev-006")
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
 }
 
 bootstrapRefreshVersions()
@@ -30,7 +30,7 @@ gradle.beforeProject {
     loadLocalProperties()
 }
 
-include("core", "dependencies")
+include("core", "dependencies", "buildSrcLibs")
 project(":core").name = "refreshVersions-core"
 project(":dependencies").name = "refreshVersions"
 

@@ -2,12 +2,12 @@
 
 package de.fayard.refreshVersions
 
-import de.fayard.refreshVersions.core.internal.currentVersionOfRefreshVersions
+import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import org.gradle.api.initialization.Settings
 
 @JvmName("migrateIfNeeded")
 fun Settings.migrateRefreshVersionsIfNeeded(fromVersion: String) {
-    val currentVersion = currentVersionOfRefreshVersions()
+    val currentVersion = RefreshVersionsCorePlugin.currentVersion
     if (currentVersion == fromVersion) return // User didn't upgrade yet, skip
     removeMigrationCall(this)
 /*

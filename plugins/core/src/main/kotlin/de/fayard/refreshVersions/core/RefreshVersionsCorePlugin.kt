@@ -39,4 +39,13 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
         @JvmField
         val default: Marker = BasicMarkerFactory().getMarker("refreshVersions")
     }
+
+    @InternalRefreshVersionsApi
+    companion object {
+        val currentVersion by lazy {
+            RefreshVersionsCorePlugin::class.java.getResourceAsStream("/version.txt")
+                .bufferedReader()
+                .useLines { it.first() }
+        }
+    }
 }
