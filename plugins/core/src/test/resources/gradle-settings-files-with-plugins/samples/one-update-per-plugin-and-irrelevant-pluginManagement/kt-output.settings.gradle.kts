@@ -1,5 +1,3 @@
-import de.fayard.refreshVersions.core.FeatureFlag.*
-
 pluginManagement {
     repositories {
         mavenLocal()
@@ -18,25 +16,11 @@ pluginManagement {
 }
 
 plugins {
-    id("com.gradle.enterprise").version("3.1.1")
+    id("com.example.one") version "0.1"
+////                  # available:0.1.1"
+    id("com.example.two") version "1.2.0-beta02"
+////                  # available:1.2.0-beta03"
     id("de.fayard.refreshVersions")
 }
 
-refreshVersions {
-
-    featureFlags {
-        enable(LIBS)
-        disable(GRADLE_UPDATES)
-    }
-
-    extraArtifactVersionKeyRules(file("refreshVersions-extra-rules.txt"))
-}
-
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-    }
-}
-
-rootProject.name = "sample-kotlin"
+rootProject.name = "Whatever"

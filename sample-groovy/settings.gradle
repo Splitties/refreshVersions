@@ -1,3 +1,4 @@
+
 pluginManagement {
     repositories {
         mavenLocal()
@@ -25,3 +26,10 @@ gradleEnterprise {
 }
 
 rootProject.name = 'sample-groovy'
+
+refreshVersions {
+    featureFlags {
+        enable 'LIBS'
+        disable 'GRADLE_UPDATES'
+    }
+}
