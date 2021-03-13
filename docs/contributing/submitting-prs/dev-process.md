@@ -20,7 +20,7 @@ That allows our users to switch-off changes that might interfere with their proj
 
 For changes that break the API or setup of some or all projects, we provide automatic or semi-automatic migration on upgrade. If it's needed, we will let you know in the corresponding issue.
 
-### New features 
+### New features
 
 Unless impossible, we add every new feature behind a feature-flag, so our users can disable it if it causes any problem in their project.
 
