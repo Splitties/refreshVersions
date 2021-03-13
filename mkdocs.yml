@@ -69,10 +69,13 @@ nav:
   - 'FAQ': faq.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing':
-    - 'Code of Conduct': contributing/code_of_conduct.md
+    - 'Before you contribute': contributing/before-you-contribute.md
     - 'Improving docs': contributing/improving-docs.md
-    - 'Dev environment': contributing/dev-env.md
-    - 'Dependency notations': contributing/dependency-notations-updates.md
+    - 'Submitting issues': contributing/submitting-issues.md
+    - 'Submitting PRs':
+      - 'Dev environment': contributing/submitting-prs/dev-env.md
+      - 'Development process': contributing/submitting-prs/dev-process.md
+      - 'Dependency notations': contributing/submitting-prs/dependency-notations-updates.md
 
 plugins:
   - search
