@@ -25,11 +25,12 @@ import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
  *      }
  * }
  * ```
- *
- * Never delete a flag here since it would break the Settings file
- * Instead, mark it as @Deprecated("your message here")
  */
 enum class FeatureFlag(private val enabledByDefault: Boolean?) {
+
+    // NEVER REMOVE A FLAG HERE since it would break projects using it on upgrade.
+    // Instead, mark it as deprecated, like this: @Deprecated("your message here")
+
     GRADLE_UPDATES(enabledByDefault = true),
     LIBS(enabledByDefault = false)
     ;
