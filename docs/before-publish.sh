@@ -7,4 +7,4 @@
 # pip install mkdocs mkdocs-material
 
 # GitHub wants those files to be at the root of the repository
-cp -vf CHANGELOG.md  CONTRIBUTING.md docs
+cp -vf CHANGELOG.md docs
