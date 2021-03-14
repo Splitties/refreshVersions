@@ -4,8 +4,7 @@ name: sample-android
 on:
   push:
     branches:
-      - develop
-      - master
+      - main
     paths:
       - 'sample-android/**'
       - '!**.md'

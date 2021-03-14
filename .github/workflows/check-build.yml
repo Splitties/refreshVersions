@@ -14,8 +14,7 @@ on:
       - '!docs/**'
   push:
     branches:
-      - develop
-      - master
+      - main
     paths:
       - 'plugins/**'
       - 'sample-kotlin/**'
