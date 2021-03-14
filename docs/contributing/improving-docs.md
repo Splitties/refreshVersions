@@ -25,7 +25,7 @@ Before starting any work, **create a branch in your fork** that is **based on th
 
 Please, avoid non-improvements such as adding typos, or spelling errors.
 
-Also, try to keep the language simple, non-ambiguous, and explicit enough, so all of our users can understand it.
+Also, try to keep the language simple, non-ambiguous, and explicit enough, so all of our users can understand it. 🙏
 
 ## View your changes
 
