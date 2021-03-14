@@ -3,19 +3,23 @@ package de.fayard.refreshVersions.core
 import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 
 /**
- * A bug in refreshVersions can break people's builds.
+ * Since a bug in refreshVersions can break people's builds,
+ * we put risky changes and new features behind feature flags.
  *
- * This is why we are prudent and hide new code behind feature flags
- * until the feature is deemed to be stable enough for production.
+ * If it starts disabled, it allows us to test it without affecting people that don't opt-in,
+ * and in all cases, it allows people to disable it without downgrading if problems are caused.
  *
- * The user can then opt-in to enable the in-development feature either on the command line
+ * After several releases where the change didn't cause any issue, we might deprecate the flag,
+ * ignore it, and remove the dead code.
+ *
+ * Users can temporarily control the flags from command-line as such:
  *
  * ```bash
  * ./gradle refreshVersions --enable LIBS
  * ./gradle refreshVersions --disable GRADLE_UPDATES
  * ```
  *
- * Or permanently in the Settings file
+ * Or they can permanently control the flags from the Gradle Settings file:
  *
  * ```kotlin
  * refreshVersions {
