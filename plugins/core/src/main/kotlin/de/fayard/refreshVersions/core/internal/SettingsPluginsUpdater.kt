@@ -57,7 +57,31 @@ internal object SettingsPluginsUpdater {
         fileContent: String,
         isKotlinDsl: Boolean,
         settingsPluginsUpdates: List<PluginWithVersionCandidates>
-    ): String {
+    ): String = buildString {
+        append(fileContent)
+        removeCommentsAddedByUs()
+
+
         TODO("Implement, using code in LegacyBootstrapUpdater as an inspiration source.")
+    }
+
+    /** Removes comments previously added by refreshVersions. */
+    internal fun StringBuilder.removeCommentsAddedByUs() {
+        val startOfRefreshVersionsCommentLines = "\n////"
+        var startIndex = 0
+        while (true) {
+            val indexOfComment = indexOf(startOfRefreshVersionsCommentLines, startIndex = startIndex)
+            if (indexOfComment == -1) return
+            startIndex = indexOfComment
+            val indexOfEndOfLine = indexOf(
+                "\n",
+                startIndex = indexOfComment + startOfRefreshVersionsCommentLines.length
+            ).takeIf { it >= 0 }
+            replace(
+                /* start = */ indexOfComment,
+                /* end = */ indexOfEndOfLine ?: length,
+                /* str = */""
+            )
+        }
     }
 }

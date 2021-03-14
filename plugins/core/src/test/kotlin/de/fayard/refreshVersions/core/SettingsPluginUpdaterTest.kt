@@ -33,6 +33,9 @@ class SettingsPluginUpdaterTest {
         file.isDirectory
     }!!.asList()
 
+    private val unitTestsSampleDataDir = testDataDir.resolve("unit-tests-sample-data")
+        .resolve("SettingsPluginsUpdater")
+
 
     @TestFactory
     @Ignore //TODO: Un-ignore once SettingsPluginsUpdater is fully implemented.
@@ -77,6 +80,41 @@ class SettingsPluginUpdaterTest {
         )
         assertEquals(
             expected = outputFile.readText(),
+            actual = actualOutput
+        )
+    }
+
+    @TestFactory
+    fun `tests for StringBuilder#removeCommentsAddedByUs`(): List<DynamicTest> {
+        val samplesDirs = unitTestsSampleDataDir.resolve("removeCommentsAddedByUs").listFiles { file ->
+            file.isDirectory
+        }!!.asList()
+        return samplesDirs.map { dir ->
+            DynamicTest.dynamicTest(dir.name) {
+                `test StringBuilder#removeCommentsAddedByUs`(
+                    inputFile = dir.resolve("gvy-with-comments.settings.gradle"),
+                    expectedOutputFile = dir.resolve("gvy-without-comments.settings.gradle")
+                )
+                `test StringBuilder#removeCommentsAddedByUs`(
+                    inputFile = dir.resolve("kt-with-comments.settings.gradle.kts"),
+                    expectedOutputFile = dir.resolve("kt-without-comments.settings.gradle.kts")
+                )
+            }
+        }
+    }
+
+    private fun `test StringBuilder#removeCommentsAddedByUs`(
+        inputFile: File,
+        expectedOutputFile: File
+    ) {
+        val actualOutput = buildString {
+            append(inputFile.readText())
+            with(SettingsPluginsUpdater) {
+                removeCommentsAddedByUs()
+            }
+        }
+        assertEquals(
+            expected = expectedOutputFile.readText(),
             actual = actualOutput
         )
     }
