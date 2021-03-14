@@ -21,7 +21,7 @@ The content of the documentation itself is in the `docs` directory where you can
 
 ## Edit the doc
 
-Before starting any work, create a branch in your fork that is based on the `release` branch.
+Before starting any work, **create a branch in your fork** that is **based on the `release` branch**.
 
 Please, avoid non-improvements such as adding typos, or spelling errors.
 
