@@ -8,7 +8,7 @@ import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
  * This is why we are prudent and hide new code behind feature flags
  * until the feature is deemed to be stable enough for production.
  *
- * The user can then opt-in to enable the in-development feature either on the commmand line
+ * The user can then opt-in to enable the in-development feature either on the command line
  *
  * ```bash
  * ./gradle refreshVersions --enable LIBS
