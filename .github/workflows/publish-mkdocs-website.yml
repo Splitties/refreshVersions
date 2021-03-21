@@ -1,5 +1,6 @@
 name: Publish MkDocs website to GitHub pages
 on:
+  workflow_dispatch:
   push:
     branches:
       - release
