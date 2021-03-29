@@ -3,11 +3,13 @@ on:
   push:
     branches:
       - release
+      - main
     paths:
       - 'docs/**'
       - 'mkdocs.yml'
       - 'CHANGELOG.md'
       # Any additional files/dirs that take part in updating the website must be added here.
+  workflow_dispatch:
 jobs:
   deploy:
     runs-on: ubuntu-latest

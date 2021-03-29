@@ -2,8 +2,6 @@
 
 ## Unreleased
 
-### New features
-
 - Support updates of settings plugins in `settings.gradle.kts` and `settings.gradle` files (including refreshVersions itself).
 
 ## Version 0.9.7 (2020-10-16)
