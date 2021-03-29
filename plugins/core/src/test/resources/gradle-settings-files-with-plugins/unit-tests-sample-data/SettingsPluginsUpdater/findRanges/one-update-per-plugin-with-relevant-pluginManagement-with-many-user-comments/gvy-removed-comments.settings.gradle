@@ -7,17 +7,18 @@ pluginManagement {
 
     final File versionFile = new File(rootDir.parentFile.parentFile, "plugins/version.txt")
     final String pluginsVersion = versionFile.readLines().first()
-    plugins {
-        id("de.fayard.refreshVersions").version(pluginsVersion)
+
+        plugins {
+                id("de.fayard.refreshVersions").version(pluginsVersion)
+
+                id("com.example.zero").version("1.0.0")
+            }
     }
-}
 
 plugins {
-    id 'com.example.one' version "0.1"
-////                 # available:"0.1.1"
-    id 'com.example.two' version "1.2.0-beta02"
-////                 # available:"1.2.0-beta03"
-    id("de.fayard.refreshVersions")
-}
+        id 'com.example.one' version "0.1"
+        id 'com.example.two' version "1.2.0-beta02"
+        id("de.fayard.refreshVersions")
+    }
 
 rootProject.name = "Whatever"

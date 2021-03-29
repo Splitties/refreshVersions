@@ -9,18 +9,19 @@ pluginManagement {
     val versionFile = rootDir.parentFile.resolve("plugins/version.txt")
     val pluginsVersion = versionFile.readLines().first()
 
-    @Suppress("UnstableApiUsage")
+
+        @Suppress("UnstableApiUsage")
     plugins {
-        id("de.fayard.refreshVersions").version(pluginsVersion)
+                id("de.fayard.refreshVersions").version(pluginsVersion)
+
+                id("com.example.zero").version("1.0.0")
+            }
     }
-}
 
 plugins {
-    id("com.example.one") version "0.1"
-////                  # available:"0.1.1"
-    id("com.example.two") version "1.2.0-beta02"
-////                  # available:"1.2.0-beta03"
-    id("de.fayard.refreshVersions")
-}
+        id("com.example.one") version "0.1"
+        id("com.example.two") version "1.2.0-beta02"
+        id("de.fayard.refreshVersions")
+    }
 
 rootProject.name = "Whatever"

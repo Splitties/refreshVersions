@@ -2,6 +2,8 @@ package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.PluginWithVersionCandidates
 import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
+import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater.findPluginBlocksRanges
+import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater.findRanges
 import extensions.java.util.loadAndGetAsMap
 import extensions.kotlin.collections.subListAfter
 import io.kotest.matchers.collections.shouldNotBeEmpty
@@ -38,7 +40,6 @@ class SettingsPluginUpdaterTest {
 
 
     @TestFactory
-    @Ignore //TODO: Un-ignore once SettingsPluginsUpdater is fully implemented.
     fun `files editing tests`(): List<DynamicTest> = sampleDirs.map { dirOfSample ->
         DynamicTest.dynamicTest(dirOfSample.name) {
             `test editing files`(dirOfSample)
@@ -116,6 +117,110 @@ class SettingsPluginUpdaterTest {
         assertEquals(
             expected = expectedOutputFile.readText(),
             actual = actualOutput
+        )
+    }
+
+    @TestFactory
+    fun `tests for String#findPluginBlocksRanges`(): List<DynamicTest> {
+        val samplesDirs = unitTestsSampleDataDir.resolve("findRanges").listFiles { file ->
+            file.isDirectory
+        }!!.asList()
+        return samplesDirs.map { dir ->
+            DynamicTest.dynamicTest(dir.name) {
+                `test String#findPluginBlocksRanges`(
+                    inputFile = dir.resolve("gvy-with-comments.settings.gradle"),
+                    pluginsBlocksContentFile = dir.resolve("gvy-plugins-blocks.txt")
+                )
+                `test String#findPluginBlocksRanges`(
+                    inputFile = dir.resolve("kt-with-comments.settings.gradle.kts"),
+                    pluginsBlocksContentFile = dir.resolve("kt-plugins-blocks.txt")
+                )
+            }
+        }
+    }
+
+    private fun `test String#findPluginBlocksRanges`(
+        inputFile: File,
+        pluginsBlocksContentFile: File
+    ) {
+        val text = inputFile.readText()
+        val ranges = text.findRanges(isKotlinDsl = inputFile.extension == "kts")
+        val pluginsBlocksRanges = text.findPluginBlocksRanges(ranges = ranges)
+        assertEquals(
+            expected = pluginsBlocksContentFile.readText().trimEnd(),
+            actual = pluginsBlocksRanges.joinToString(separator = "\n") {
+                text.substring(it.startIndex, it.endIndex).trimEnd()
+            }
+        )
+    }
+
+    @TestFactory
+    fun `tests for String#findRanges`(): List<DynamicTest> {
+        val samplesDirs = unitTestsSampleDataDir.resolve("findRanges").listFiles { file ->
+            file.isDirectory
+        }!!.asList()
+        return samplesDirs.map { dir ->
+            DynamicTest.dynamicTest(dir.name) {
+                `test String#findRanges`(
+                    inputFile = dir.resolve("gvy-with-comments.settings.gradle"),
+                    expectedOutputFile = dir.resolve("gvy-removed-comments.settings.gradle"),
+                    stringLiteralsFile = dir.resolve("gvy-string-literals.txt")
+                )
+                `test String#findRanges`(
+                    inputFile = dir.resolve("kt-with-comments.settings.gradle.kts"),
+                    expectedOutputFile = dir.resolve("kt-removed-comments.settings.gradle.kts"),
+                    stringLiteralsFile = dir.resolve("kt-string-literals.txt")
+                )
+            }
+        }
+    }
+
+    private fun `test String#findRanges`(
+        inputFile: File,
+        expectedOutputFile: File,
+        stringLiteralsFile: File
+    ) {
+        val actualStringLiteralsReversed = mutableListOf<String>()
+        val allTheChunksReversed = mutableListOf<String>()
+        val inputText = inputFile.readText()
+        val actualOutput = with(SettingsPluginsUpdater) {
+            buildString {
+                append(inputText)
+                findRanges(
+                    isKotlinDsl = inputFile.extension == "kts"
+                ).asReversed().forEach { range ->
+                    val textRange = substring(range.startIndex, range.endIndex)
+                    allTheChunksReversed.add(textRange)
+                    when (range.tag) {
+                        SettingsPluginsUpdater.ScriptSection.Comment -> replace(
+                            /* start = */ range.startIndex,
+                            /* end = */ range.endIndex,
+                            /* str = */""
+                        )
+                        SettingsPluginsUpdater.ScriptSection.StringLiteral -> {
+                            actualStringLiteralsReversed.add(textRange)
+                        }
+                        SettingsPluginsUpdater.ScriptSection.CodeChunk -> Unit // Nothing to do.
+                    }
+                }
+            }
+        }
+        assertEquals(
+            expected = expectedOutputFile.readText(),
+            actual = actualOutput.lineSequence().map {
+                it.ifBlank { "" }
+            }.joinToString(separator = "\n")
+        )
+        assertEquals(
+            expected = stringLiteralsFile.readText(),
+            actual = actualStringLiteralsReversed.asReversed().joinToString(
+                separator = "\n",
+                postfix = "\n"
+            )
+        )
+        assertEquals(
+            expected = inputText,
+            actual = allTheChunksReversed.asReversed().joinToString(separator = "")
         )
     }
 }
