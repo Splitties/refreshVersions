@@ -49,7 +49,7 @@ open class RefreshVersionsTask : DefaultTask() {
     @TaskAction
     fun taskActionRefreshVersions() {
         if (FeatureFlag.userSettings.isNotEmpty()) {
-            logger.lifecycle("Feature flags: " +  FeatureFlag.userSettings)
+            logger.lifecycle("Feature flags: " + FeatureFlag.userSettings)
         }
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
