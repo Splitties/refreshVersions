@@ -5,7 +5,6 @@ import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
-import de.fayard.refreshVersions.core.extensions.gradle.registerOrCreate
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
@@ -14,6 +13,7 @@ import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.register
 
 open class RefreshVersionsPlugin : Plugin<Any> {
 
@@ -72,7 +72,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     private fun applyToProject(project: Project) {
         if (project != project.rootProject) return // We want the tasks only for the root project
 
-        project.tasks.registerOrCreate<RefreshVersionsDependenciesMigrationTask>(
+        project.tasks.register<RefreshVersionsDependenciesMigrationTask>(
             name = "migrateToRefreshVersionsDependenciesConstants"
         ) {
             group = "help"
@@ -81,7 +81,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             finalizedBy("refreshVersions")
         }
 
-        project.tasks.registerOrCreate<DefaultTask>(
+        project.tasks.register<DefaultTask>(
             name = "buildSrcVersions"
         ) {
             group = "help"
@@ -89,7 +89,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             dependsOn("buildSrcLibs")
         }
 
-        project.tasks.registerOrCreate<DefaultTask>(
+        project.tasks.register<DefaultTask>(
             name = "refreshVersionsDependenciesMapping"
         ) {
             group = "help"
