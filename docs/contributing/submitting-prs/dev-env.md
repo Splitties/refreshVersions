@@ -10,11 +10,11 @@ We recommend using the most recent version of IntelliJ IDEA to contribute to thi
 
 1. Fork this project from GitHub if not already done.
 2. Clone your fork locally.
-3. Checkout the `develop` branch.
-4. If your fork is not fresh, ensure its `develop` branch is up to date with upstream:
+3. Checkout the `main` branch.
+4. If your fork is not fresh, ensure its `main` branch is up to date with upstream:
     1. Run the `git fetch upstream` command.
-    2. Run the `git merge upstream/develop` command.
-5. Create a new branch based on `develop` with a name describing what it is about.
+    2. Run the `git merge upstream/main` command.
+5. Create a new branch based on `main` with a name describing what it is about.
 
 #### Import the "plugins" Gradle project
 
