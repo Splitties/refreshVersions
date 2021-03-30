@@ -27,7 +27,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             "other-version-alias-rules",
             "testing-version-alias-rules"
         ).map {
-            RefreshVersionsPlugin::class.java.getResourceAsStream("/refreshVersions-rules/$it.txt")
+            RefreshVersionsPlugin::class.java.getResourceAsStream("/refreshVersions-rules/$it.txt")!!
                 .bufferedReader()
                 .readText()
         }

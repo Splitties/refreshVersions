@@ -43,7 +43,7 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
     @InternalRefreshVersionsApi
     companion object {
         val currentVersion by lazy {
-            RefreshVersionsCorePlugin::class.java.getResourceAsStream("/version.txt")
+            RefreshVersionsCorePlugin::class.java.getResourceAsStream("/version.txt")!!
                 .bufferedReader()
                 .useLines { it.first() }
         }
