@@ -55,16 +55,12 @@ open class RefreshVersionsTask : DefaultTask() {
         // will reduce the number of repositories lookups, improving performance a little more.
 
         runBlocking {
-            val versionsLookupResultAsync = async {
-                lookupVersionCandidates(
-                    httpClient = RefreshVersionsConfigHolder.httpClient,
-                    project = project,
-                    versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
-                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-                )
-            }
-            val result = versionsLookupResultAsync.await()
-
+            val result = lookupVersionCandidates(
+                httpClient = RefreshVersionsConfigHolder.httpClient,
+                project = project,
+                versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
+                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+            )
             VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
             SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
                 rootProject = project,
