@@ -2,8 +2,11 @@ package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.PluginWithVersionCandidates
 import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
-import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater.findPluginBlocksRanges
-import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater.findRanges
+import de.fayard.refreshVersions.core.internal.codeparsing.gradle.findPluginBlocksRanges
+import de.fayard.refreshVersions.core.internal.codeparsing.ProgrammingLanguage
+import de.fayard.refreshVersions.core.internal.codeparsing.SourceCodeSection
+import de.fayard.refreshVersions.core.internal.codeparsing.gradle.extractGradleScriptSections
+import de.fayard.refreshVersions.core.internal.codeparsing.findRanges
 import extensions.java.util.loadAndGetAsMap
 import extensions.kotlin.collections.subListAfter
 import io.kotest.matchers.collections.shouldNotBeEmpty
@@ -12,7 +15,6 @@ import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import java.io.File
 import java.util.Properties
-import kotlin.test.Ignore
 import kotlin.test.assertEquals
 
 class SettingsPluginUpdaterTest {
@@ -144,7 +146,7 @@ class SettingsPluginUpdaterTest {
         pluginsBlocksContentFile: File
     ) {
         val text = inputFile.readText()
-        val ranges = text.findRanges(isKotlinDsl = inputFile.extension == "kts")
+        val ranges = text.extractGradleScriptSections(isKotlinDsl = inputFile.extension == "kts")
         val pluginsBlocksRanges = text.findPluginBlocksRanges(ranges = ranges)
         assertEquals(
             expected = pluginsBlocksContentFile.readText().trimEnd(),
@@ -187,20 +189,24 @@ class SettingsPluginUpdaterTest {
             buildString {
                 append(inputText)
                 findRanges(
-                    isKotlinDsl = inputFile.extension == "kts"
+                    programmingLanguage = when (inputFile.extension) {
+                        "kts" -> ProgrammingLanguage.Kotlin
+                        "gradle" -> ProgrammingLanguage.Groovy
+                        else -> throw UnsupportedOperationException("Unexpected extension: ${inputFile.extension}")
+                    }
                 ).asReversed().forEach { range ->
                     val textRange = substring(range.startIndex, range.endIndex)
                     allTheChunksReversed.add(textRange)
                     when (range.tag) {
-                        SettingsPluginsUpdater.ScriptSection.Comment -> replace(
+                        SourceCodeSection.Comment -> replace(
                             /* start = */ range.startIndex,
                             /* end = */ range.endIndex,
                             /* str = */""
                         )
-                        SettingsPluginsUpdater.ScriptSection.StringLiteral -> {
+                        SourceCodeSection.StringLiteral -> {
                             actualStringLiteralsReversed.add(textRange)
                         }
-                        SettingsPluginsUpdater.ScriptSection.CodeChunk -> Unit // Nothing to do.
+                        SourceCodeSection.CodeChunk -> Unit // Nothing to do.
                     }
                 }
             }
