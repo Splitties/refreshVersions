@@ -43,7 +43,10 @@ open class RefreshVersionsPlugin : Plugin<Any> {
 
     private fun bootstrap(settings: Settings) {
         RefreshVersionsConfigHolder.markSetupViaSettingsPlugin()
-        settings.extensions.create<RefreshVersionsExtension>("refreshVersions")
+        if (settings.extensions.findByName("refreshVersions") == null) {
+            // If using legacy bootstrap, the extension has already been created.
+            settings.extensions.create<RefreshVersionsExtension>("refreshVersions")
+        }
 
         if (settings.isBuildSrc) {
             settings.bootstrapRefreshVersionsCoreForBuildSrc()

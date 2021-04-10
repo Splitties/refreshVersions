@@ -5,6 +5,7 @@ package de.fayard.refreshVersions
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.refreshVersions
 import java.io.File
 
@@ -45,6 +46,7 @@ fun Settings.bootstrapRefreshVersions(
                 "bootstrapRefreshVersionsForBuildSrc() instead (Kotlin DSL)," +
                 "or RefreshVersionsSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
     }
+    extensions.create<RefreshVersionsExtension>("refreshVersions")
     refreshVersions {
         this.extraArtifactVersionKeyRules = extraArtifactVersionKeyRules
         this.versionsPropertiesFile = versionsPropertiesFile
