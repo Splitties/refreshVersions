@@ -5,24 +5,26 @@ import de.fayard.refreshVersions.core.internal.versions.insertNewLinesIfNeeded
 import de.fayard.refreshVersions.core.internal.versions.readFromText
 import de.fayard.refreshVersions.core.internal.versions.toText
 import de.fayard.refreshVersions.core.testResources
+import extensions.junit.mapDynamicTest
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DynamicTest
+import org.junit.jupiter.api.TestFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
 
 class VersionsPropertiesModelTest {
 
     private val samplesDir = testResources.resolve("versions-properties-samples")
 
-    @Test
-    fun `test parsing old format`() {
-        samplesDir.resolve("old-format").listFiles()!!.filter {
+    @TestFactory
+    fun `test parsing old format`(): List<DynamicTest> {
+        val samplesDirs = samplesDir.resolve("old-format").listFiles()!!.filter {
             it.isDirectory
-        }.also { check(it.isNotEmpty()) }.forEach {
-            println("== ${it.absolutePath}")
-            val inputFile = it.resolve("input.properties")
-            val outputFile = it.resolve("output.properties")
+        }.also { check(it.isNotEmpty()) }
+        return samplesDirs.mapDynamicTest { dir ->
+            val inputFile = dir.resolve("input.properties")
+            val outputFile = dir.resolve("output.properties")
             val parsedModel = VersionsPropertiesModel.readFromText(inputFile.readText())
             assertEquals(
                 expected = outputFile.readText(),
@@ -43,11 +45,12 @@ class VersionsPropertiesModelTest {
         }
     }
 
-    @Test
-    fun `test new format`() {
-        val checkedFilesCount = samplesDir.resolve("new-format").walkTopDown().filter {
+    @TestFactory
+    fun `test new format`(): List<DynamicTest> {
+        val sampleFiles = samplesDir.resolve("new-format").walkTopDown().filter {
             it.extension == "properties"
-        }.onEach {
+        }.toList().also { check(it.isNotEmpty()) { "No test files found!" } }
+        return sampleFiles.mapDynamicTest {
             val fileContent = it.readText()
             val parsedModel = VersionsPropertiesModel.readFromText(fileContent)
             val reParsedModel = VersionsPropertiesModel.readFromText(parsedModel.toText())
@@ -66,31 +69,30 @@ class VersionsPropertiesModelTest {
                 actual = reParsedModel,
                 message = "Model shouldn't change after being written and parsed again!"
             )
-        }.count()
-        assertTrue(checkedFilesCount >= 0, message = "No test files found!")
+        }
     }
 
-    @Test
-    fun `test new format parsing`() {
-        val checkedFilesCount = samplesDir.resolve("new-format-parsing-only").walkTopDown().filter {
+    @TestFactory
+    fun `test new format parsing`(): List<DynamicTest> {
+        val sampleFiles = samplesDir.resolve("new-format-parsing-only").walkTopDown().filter {
             it.extension == "properties"
-        }.onEach {
+        }.toList().also { check(it.isNotEmpty()) { "No test files found!" } }
+        return sampleFiles.mapDynamicTest {
             VersionsPropertiesModel.readFromText(it.readText())
-        }.count()
-        assertTrue(checkedFilesCount >= 0, message = "No test files found!")
+        }
     }
 
-    @Test
-    fun `test parsing incorrectly formatted version files fails as expected`() {
-        val checkedFilesCount = samplesDir.resolve("new-format-invalid").walkTopDown().filter {
+    @TestFactory
+    fun `test parsing incorrectly formatted version files fails as expected`(): List<DynamicTest> {
+        val sampleFiles = samplesDir.resolve("new-format-invalid").walkTopDown().filter {
             it.extension == "properties"
-        }.onEach {
+        }.toList().also { check(it.isNotEmpty()) { "No test files found!" } }
+        return sampleFiles.mapDynamicTest {
             val fileContent = it.readText()
             assertFailsWith<IllegalStateException> {
                 VersionsPropertiesModel.readFromText(fileContent)
             }
-        }.count()
-        assertTrue(checkedFilesCount >= 0, message = "No test files found!")
+        }
     }
 
     @Test
