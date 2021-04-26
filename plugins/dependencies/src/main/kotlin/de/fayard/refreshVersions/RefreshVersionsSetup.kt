@@ -3,6 +3,7 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
+import de.fayard.refreshVersions.core.internal.legacy.LegacyBootstrapMigrator
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
@@ -52,6 +53,7 @@ fun Settings.bootstrapRefreshVersions(
         this.versionsPropertiesFile = versionsPropertiesFile
     }
     apply(plugin = "de.fayard.refreshVersions")
+    with(LegacyBootstrapMigrator) { replaceBootstrapWithPluginsDslSetup() }
 }
 
 /**
@@ -86,4 +88,5 @@ fun Settings.bootstrapRefreshVersions(
 fun Settings.bootstrapRefreshVersionsForBuildSrc() {
     require(isBuildSrc)
     apply(plugin = "de.fayard.refreshVersions")
+    with(LegacyBootstrapMigrator) { replaceBootstrapWithPluginsDslSetup() }
 }
