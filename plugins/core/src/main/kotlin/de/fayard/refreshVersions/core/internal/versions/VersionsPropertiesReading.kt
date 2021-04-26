@@ -77,7 +77,7 @@ internal fun String.insertNewLinesIfNeeded() : String {
     val result = StringBuilder()
     var keyExpected = true
     for (line in lines()) {
-        val hasKey = line.substringBefore('#').contains('=')
+        val hasKey = '=' in line.substringBefore('#')
         if (hasKey) {
             if (!keyExpected) {
                 result.append('\n')
