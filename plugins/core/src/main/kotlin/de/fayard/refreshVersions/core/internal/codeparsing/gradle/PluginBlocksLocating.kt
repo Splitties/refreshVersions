@@ -1,28 +1,17 @@
 package de.fayard.refreshVersions.core.internal.codeparsing.gradle
 
 import de.fayard.refreshVersions.core.internal.TaggedRange
-import de.fayard.refreshVersions.core.internal.codeparsing.BlockFindingRule
 import de.fayard.refreshVersions.core.internal.codeparsing.SourceCodeSection
-import de.fayard.refreshVersions.core.internal.codeparsing.findBlocksRanges
+import de.fayard.refreshVersions.core.internal.codeparsing.SymbolLocationFindingRule
+import de.fayard.refreshVersions.core.internal.codeparsing.findSymbolsRanges
 
 internal fun CharSequence.findPluginBlocksRanges(
     ranges: List<TaggedRange<SourceCodeSection>>
-): List<TaggedRange<PluginsBlockLocation>> = findBlocksRanges(
+): List<TaggedRange<*>> = findSymbolsRanges(
     ranges = ranges,
     rules = listOf(
-       BlockFindingRule(
-           topLevelBlockName = "plugins",
-           tag = PluginsBlockLocation.TopLevel
-       ),
-        BlockFindingRule(
-            blocksNames = listOf("pluginManagement", "plugins"),
-            tag = PluginsBlockLocation.PluginManagement
-        )
+        SymbolLocationFindingRule.BlockContent("plugins"),
+        SymbolLocationFindingRule.BlockContent("pluginManagement", "plugins")
     ),
     shouldTruncate = { currentList -> currentList.size == 2 }
 )
-
-internal enum class PluginsBlockLocation {
-    TopLevel,
-    PluginManagement
-}
