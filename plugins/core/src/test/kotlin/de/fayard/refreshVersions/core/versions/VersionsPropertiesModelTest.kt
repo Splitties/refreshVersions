@@ -85,7 +85,7 @@ class VersionsPropertiesModelTest {
     }
 
     @Test
-    fun `insert new lines if necessaary`() {
+    fun `insert new lines if necessary`() {
         val input = """
             plugin.android=4.1.0
             #ok
