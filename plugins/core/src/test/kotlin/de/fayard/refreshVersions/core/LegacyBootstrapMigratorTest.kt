@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.legacy.LegacyBootstrapMigrator
+import extensions.junit.mapDynamicTest
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import java.io.File
@@ -15,10 +16,8 @@ class LegacyBootstrapMigratorTest {
         val sampleDirs = testDataDir.listFiles { file ->
             file.isDirectory
         }!!.asList()
-        return sampleDirs.map { dir ->
-            DynamicTest.dynamicTest(dir.name) {
-                `test LegacyBootstrapMigrator`(dir)
-            }
+        return sampleDirs.mapDynamicTest { dir ->
+            `test LegacyBootstrapMigrator`(dir)
         }
     }
 

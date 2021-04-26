@@ -8,6 +8,7 @@ import de.fayard.refreshVersions.core.internal.codeparsing.SourceCodeSection
 import de.fayard.refreshVersions.core.internal.codeparsing.gradle.extractGradleScriptSections
 import de.fayard.refreshVersions.core.internal.codeparsing.findRanges
 import extensions.java.util.loadAndGetAsMap
+import extensions.junit.mapDynamicTest
 import extensions.kotlin.collections.subListAfter
 import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.file.shouldExist
@@ -42,10 +43,8 @@ class SettingsPluginUpdaterTest {
 
 
     @TestFactory
-    fun `files editing tests`(): List<DynamicTest> = sampleDirs.map { dirOfSample ->
-        DynamicTest.dynamicTest(dirOfSample.name) {
-            `test editing files`(dirOfSample)
-        }
+    fun `files editing tests`() = sampleDirs.mapDynamicTest { dirOfSample ->
+        `test editing files`(dirOfSample)
     }
 
     private fun `test editing files`(dirOfSample: File) {
@@ -92,17 +91,15 @@ class SettingsPluginUpdaterTest {
         val samplesDirs = unitTestsSampleDataDir.resolve("removeCommentsAddedByUs").listFiles { file ->
             file.isDirectory
         }!!.asList()
-        return samplesDirs.map { dir ->
-            DynamicTest.dynamicTest(dir.name) {
-                `test StringBuilder#removeCommentsAddedByUs`(
-                    inputFile = dir.resolve("gvy-with-comments.settings.gradle"),
-                    expectedOutputFile = dir.resolve("gvy-without-comments.settings.gradle")
-                )
-                `test StringBuilder#removeCommentsAddedByUs`(
-                    inputFile = dir.resolve("kt-with-comments.settings.gradle.kts"),
-                    expectedOutputFile = dir.resolve("kt-without-comments.settings.gradle.kts")
-                )
-            }
+        return samplesDirs.mapDynamicTest { dir ->
+            `test StringBuilder#removeCommentsAddedByUs`(
+                inputFile = dir.resolve("gvy-with-comments.settings.gradle"),
+                expectedOutputFile = dir.resolve("gvy-without-comments.settings.gradle")
+            )
+            `test StringBuilder#removeCommentsAddedByUs`(
+                inputFile = dir.resolve("kt-with-comments.settings.gradle.kts"),
+                expectedOutputFile = dir.resolve("kt-without-comments.settings.gradle.kts")
+            )
         }
     }
 
@@ -127,17 +124,15 @@ class SettingsPluginUpdaterTest {
         val samplesDirs = unitTestsSampleDataDir.resolve("findRanges").listFiles { file ->
             file.isDirectory
         }!!.asList()
-        return samplesDirs.map { dir ->
-            DynamicTest.dynamicTest(dir.name) {
-                `test String#findPluginBlocksRanges`(
-                    inputFile = dir.resolve("gvy-with-comments.settings.gradle"),
-                    pluginsBlocksContentFile = dir.resolve("gvy-plugins-blocks.txt")
-                )
-                `test String#findPluginBlocksRanges`(
-                    inputFile = dir.resolve("kt-with-comments.settings.gradle.kts"),
-                    pluginsBlocksContentFile = dir.resolve("kt-plugins-blocks.txt")
-                )
-            }
+        return samplesDirs.mapDynamicTest { dir ->
+            `test String#findPluginBlocksRanges`(
+                inputFile = dir.resolve("gvy-with-comments.settings.gradle"),
+                pluginsBlocksContentFile = dir.resolve("gvy-plugins-blocks.txt")
+            )
+            `test String#findPluginBlocksRanges`(
+                inputFile = dir.resolve("kt-with-comments.settings.gradle.kts"),
+                pluginsBlocksContentFile = dir.resolve("kt-plugins-blocks.txt")
+            )
         }
     }
 
@@ -161,19 +156,17 @@ class SettingsPluginUpdaterTest {
         val samplesDirs = unitTestsSampleDataDir.resolve("findRanges").listFiles { file ->
             file.isDirectory
         }!!.asList()
-        return samplesDirs.map { dir ->
-            DynamicTest.dynamicTest(dir.name) {
-                `test String#findRanges`(
-                    inputFile = dir.resolve("gvy-with-comments.settings.gradle"),
-                    expectedOutputFile = dir.resolve("gvy-removed-comments.settings.gradle"),
-                    stringLiteralsFile = dir.resolve("gvy-string-literals.txt")
-                )
-                `test String#findRanges`(
-                    inputFile = dir.resolve("kt-with-comments.settings.gradle.kts"),
-                    expectedOutputFile = dir.resolve("kt-removed-comments.settings.gradle.kts"),
-                    stringLiteralsFile = dir.resolve("kt-string-literals.txt")
-                )
-            }
+        return samplesDirs.mapDynamicTest { dir ->
+            `test String#findRanges`(
+                inputFile = dir.resolve("gvy-with-comments.settings.gradle"),
+                expectedOutputFile = dir.resolve("gvy-removed-comments.settings.gradle"),
+                stringLiteralsFile = dir.resolve("gvy-string-literals.txt")
+            )
+            `test String#findRanges`(
+                inputFile = dir.resolve("kt-with-comments.settings.gradle.kts"),
+                expectedOutputFile = dir.resolve("kt-removed-comments.settings.gradle.kts"),
+                stringLiteralsFile = dir.resolve("kt-string-literals.txt")
+            )
         }
     }
 
