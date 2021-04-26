@@ -3,7 +3,6 @@ package de.fayard.refreshVersions.core.internal
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.extensions.text.indexOfPrevious
-import de.fayard.refreshVersions.core.internal.codeparsing.gradle.PluginsBlockLocation
 import de.fayard.refreshVersions.core.internal.codeparsing.gradle.extractGradleScriptSections
 import de.fayard.refreshVersions.core.internal.codeparsing.gradle.findPluginBlocksRanges
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
@@ -83,7 +82,7 @@ internal object SettingsPluginsUpdater {
     }
 
     private fun StringBuilder.insertAvailableVersionComments(
-        pluginBlockRange: TaggedRange<PluginsBlockLocation>,
+        pluginBlockRange: TaggedRange<*>,
         isKotlinDsl: Boolean,
         settingsPluginsUpdates: List<PluginWithVersionCandidates>
     ) {

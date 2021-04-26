@@ -185,29 +185,27 @@ class SettingsPluginUpdaterTest {
         val actualStringLiteralsReversed = mutableListOf<String>()
         val allTheChunksReversed = mutableListOf<String>()
         val inputText = inputFile.readText()
-        val actualOutput = with(SettingsPluginsUpdater) {
-            buildString {
-                append(inputText)
-                findRanges(
-                    programmingLanguage = when (inputFile.extension) {
-                        "kts" -> ProgrammingLanguage.Kotlin
-                        "gradle" -> ProgrammingLanguage.Groovy
-                        else -> throw UnsupportedOperationException("Unexpected extension: ${inputFile.extension}")
+        val actualOutput = buildString {
+            append(inputText)
+            findRanges(
+                programmingLanguage = when (inputFile.extension) {
+                    "kts" -> ProgrammingLanguage.Kotlin
+                    "gradle" -> ProgrammingLanguage.Groovy
+                    else -> throw UnsupportedOperationException("Unexpected extension: ${inputFile.extension}")
+                }
+            ).asReversed().forEach { range ->
+                val textRange = substring(range.startIndex, range.endIndex)
+                allTheChunksReversed.add(textRange)
+                when (range.tag) {
+                    SourceCodeSection.Comment -> replace(
+                        /* start = */ range.startIndex,
+                        /* end = */ range.endIndex,
+                        /* str = */""
+                    )
+                    SourceCodeSection.StringLiteral -> {
+                        actualStringLiteralsReversed.add(textRange)
                     }
-                ).asReversed().forEach { range ->
-                    val textRange = substring(range.startIndex, range.endIndex)
-                    allTheChunksReversed.add(textRange)
-                    when (range.tag) {
-                        SourceCodeSection.Comment -> replace(
-                            /* start = */ range.startIndex,
-                            /* end = */ range.endIndex,
-                            /* str = */""
-                        )
-                        SourceCodeSection.StringLiteral -> {
-                            actualStringLiteralsReversed.add(textRange)
-                        }
-                        SourceCodeSection.CodeChunk -> Unit // Nothing to do.
-                    }
+                    SourceCodeSection.CodeChunk -> Unit // Nothing to do.
                 }
             }
         }

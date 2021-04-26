@@ -14,7 +14,7 @@ pluginManagement {
      */
     // Hey, I'm user comment 0
     @Suppress("UnstableApiUsage")
-    plugins {
+    plugins /**/ {
         // Hey, I'm user comment 1
         id("de.fayard.refreshVersions").version(pluginsVersion)
         /*

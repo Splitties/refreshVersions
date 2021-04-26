@@ -8,4 +8,6 @@ internal class TaggedRange<out T>(
     val tag: T,
     val startIndex: Int,
     val endIndex: Int
-)
+) {
+    val range: IntRange = startIndex until endIndex
+}

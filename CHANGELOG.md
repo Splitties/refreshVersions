@@ -6,6 +6,14 @@
 
 - Support updates of settings plugins in `settings.gradle.kts` and `settings.gradle` files (including refreshVersions itself).
 
+### Changes
+
+- Setting up refreshVersions has been significantly simplified: Now, it's simply a plugin that must be applied in the `settings.gradle.kts` or `settings.gradle` file. _Note that if you want to apply it to `buildSrc` as well, there's a gotcha regarding defining the version._ The best thing is that on upgrade, **refreshVersions will automatically replace the old & verbose bootstrap with the new plugin setup**, and that works for buildSrc special case as well. We made many tests to ensure that this logic is reliable, doesn't break any code, doesn't remove important comments, and doesn't affect custom configuration in any way.
+
+### Potentially breaking changes
+
+- The fix of the `Square.sqlDelight.coroutinesExtensions` dependency notation can lead to such an error: `Failed to resolve: coroutines-extensions-1.4.4-_`. If you get a similar error on upgrade, it's because you applied a fix like that one: `Square.sqlDelight.coroutinesExtensions + ":_"`. You now can (must) remove it.
+
 ## Version 0.9.7 (2020-10-16)
 
 ### Fixes
