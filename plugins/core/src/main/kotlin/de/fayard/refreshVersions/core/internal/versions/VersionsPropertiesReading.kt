@@ -74,7 +74,7 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
 }
 
 internal fun String.insertNewLinesIfNeeded() : String {
-    var result = StringBuffer()
+    val result = StringBuffer()
     var keyExpected = true
     for (line in lines()) {
         val hasKey = line.substringBefore('#').contains('=')
