@@ -16,7 +16,10 @@ internal fun VersionsPropertiesModel.Companion.readFromText(
     fileContent: String
 ): VersionsPropertiesModel = try {
     readFromTextInternal(
-        fileContent = fileContent.replace("\r", "") // For Windows
+        fileContent = when {
+            '\r' in fileContent -> fileContent.replace("\r", "") // For Windows
+            else -> fileContent
+        }
     )
 } catch (e: IllegalArgumentException) {
     throw IllegalStateException(e)
