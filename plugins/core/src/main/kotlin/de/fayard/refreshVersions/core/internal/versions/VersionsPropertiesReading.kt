@@ -54,17 +54,21 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
 
     val sections = mutableListOf<VersionsPropertiesModel.Section>()
 
-    sectionsText.insertNewLinesIfNeeded().splitToSequence("\n\n").mapNotNull { sectionText ->
-        readSection(sectionText)
-    }.onEach {
-        sections.add(it)
-    }.filterIsInstance<VersionsPropertiesModel.Section.VersionEntry>().uniqueBy(
-        onDuplicate = { key ->
-            throw IllegalArgumentException("The version with key $key has been found twice!")
-        }
-    ) {
-        it.key
-    }.lastOrNull() // Force iteration of the whole sequence.
+    sectionsText
+        .withEntriesLineBreaksIfMissing()
+        .trim()
+        .splitToSequence("\n\n")
+        .map { sectionText ->
+            readSection(sectionText)
+        }.onEach {
+            sections.add(it)
+        }.filterIsInstance<VersionsPropertiesModel.Section.VersionEntry>().uniqueBy(
+            onDuplicate = { key ->
+                throw IllegalArgumentException("The version with key $key has been found twice!")
+            }
+        ) {
+            it.key
+        }.lastOrNull() // Force iteration of the whole sequence.
 
     return VersionsPropertiesModel(
         preHeaderContent = preHeaderContent,
@@ -73,35 +77,49 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
     )
 }
 
-internal fun String.insertNewLinesIfNeeded() : String {
-    val result = StringBuilder()
-    var keyExpected = true
-    for (line in lines()) {
-        val hasKey = '=' in line.substringBefore('#')
-        if (hasKey) {
-            if (keyExpected.not()) {
-                result.append('\n')
-            }
-            keyExpected = false
-        } else if (line.isBlank()) {
-            keyExpected = true
-        }
-        result.append(line)
-        result.append('\n')
+internal fun String.withEntriesLineBreaksIfMissing(): String {
+    val inputText = this
+
+    fun String.isAvailableVersionComment(): Boolean {
+        if (startsWith("##").not()) return false
+        val availableComment = "# available="
+        if (availableComment !in this) return false
+        return substringAfter("##").substringBefore(availableComment).isBlank()
     }
-    return result.toString().trim()
+
+    return buildString {
+        var isAboveVersionKey = false
+        val lines: List<String> = inputText.lines().asReversed().map { line ->
+            var shouldAddExtraLineBreak = false
+            isAboveVersionKey = when {
+                line.isEmpty() -> false
+                line.isAvailableVersionComment() -> {
+                    if (isAboveVersionKey) shouldAddExtraLineBreak = true
+                    false
+                }
+                line.startsWith("#") -> isAboveVersionKey
+                else -> {
+                    if (isAboveVersionKey) shouldAddExtraLineBreak = true
+                    true
+                }
+            }
+            when {
+                shouldAddExtraLineBreak -> line + "\n"
+                else -> line
+            }
+        }.asReversed()
+        ensureCapacity(lines.sumBy { it.length + 1 })
+        lines.joinTo(this, separator = "\n")
+    }
 }
 
-private fun readSection(sectionText: String): VersionsPropertiesModel.Section? {
+private fun readSection(sectionText: String): VersionsPropertiesModel.Section {
     val lines = sectionText.lines().map { it.trim() }
 
     val versionLineIndex = lines.indexOfFirst {
         VersionsPropertiesModel.versionKeysPrefixes.any { prefix -> it.startsWith(prefix) }
     }.also {
-        if (it == -1) {
-            if (sectionText.isEmpty()) return null
-            return VersionsPropertiesModel.Section.Comment(lines = sectionText)
-        }
+        if (it == -1) return VersionsPropertiesModel.Section.Comment(lines = sectionText)
     }
 
     val versionLine = lines[versionLineIndex]

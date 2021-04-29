@@ -1,16 +1,13 @@
 package de.fayard.refreshVersions.core.versions
 
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
-import de.fayard.refreshVersions.core.internal.versions.insertNewLinesIfNeeded
 import de.fayard.refreshVersions.core.internal.versions.readFromText
 import de.fayard.refreshVersions.core.internal.versions.toText
+import de.fayard.refreshVersions.core.internal.versions.withEntriesLineBreaksIfMissing
 import de.fayard.refreshVersions.core.testResources
 import extensions.junit.mapDynamicTest
-import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import java.io.File
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
@@ -84,20 +81,14 @@ class VersionsPropertiesModelTest {
         }
     }
 
-    @Test
-    fun `insert new lines if necessary`() {
-        val input = """
-            plugin.android=4.1.0
-            #ok
-            plugin.com.osacky.doctor=0.6.2
-            """.trimIndent()
-        val expected = """
-            plugin.android=4.1.0
-            #ok
-
-            plugin.com.osacky.doctor=0.6.2
-            """.trimIndent()
-        input.insertNewLinesIfNeeded() shouldBe expected
+    @TestFactory
+    fun `test withEntriesLineBreaksIfMissing`() = sampleDirs(
+        dirName = "withEntriesLineBreaksIfMissing"
+    ).mapDynamicTest { dir ->
+        assertEquals(
+            expected = dir.resolve("output.properties").readText(),
+            actual = dir.resolve("input.properties").readText().withEntriesLineBreaksIfMissing()
+        )
     }
 
     private fun sampleFiles(dirName: String): List<File> {

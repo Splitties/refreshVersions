@@ -95,6 +95,9 @@ internal fun VersionsPropertiesModel.toText(): String = buildString {
     appendln()
     val sb = StringBuilder()
     sections.joinTo(buffer = this, separator = "\n") { it.toText(sb) }
+
+    // Ensure a single empty line at end of file.
+    replace(indexOfLast { it.isWhitespace().not() } + 1, length, "\n")
 }
 
 private fun VersionsPropertiesModel.Section.toText(

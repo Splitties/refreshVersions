@@ -14,7 +14,9 @@ internal actual data class VersionsPropertiesModel(
 
         actual data class Comment(actual val lines: String) : Section() {
             init {
-                lines.lineSequence().forEach { it.mustBeACommentLine() }
+                lines.lineSequence().forEach {
+                    if (it.isNotBlank()) it.mustBeACommentLine()
+                }
             }
         }
 
@@ -32,7 +34,9 @@ internal actual data class VersionsPropertiesModel(
             }
 
             init {
-                leadingCommentLines.forEach { it.mustBeACommentLine() }
+                leadingCommentLines.forEach {
+                    if (it.isNotBlank()) it.mustBeACommentLine()
+                }
                 trailingCommentLines.forEach {
                     it.mustBeACommentLine()
                     require(it.startsWith("##").not()) {
