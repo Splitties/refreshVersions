@@ -8,6 +8,11 @@ open class RefreshVersionsExtension {
 
     var versionsPropertiesFile: File? = null
     var extraArtifactVersionKeyRules: List<String> = emptyList()
+    var isBuildSrcLibsEnabled = false
+
+    fun enableBuildSrcLibs() {
+        isBuildSrcLibsEnabled = true
+    }
 
     fun extraArtifactVersionKeyRules(file: File) {
         extraArtifactVersionKeyRules = extraArtifactVersionKeyRules + file.readText()
