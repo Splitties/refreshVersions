@@ -31,6 +31,7 @@ For refreshVersions to be able to work for all the dependencies in your project,
 A Gradle project has [a Settings file](https://docs.gradle.org/current/userguide/build_lifecycle.html#sec:settings_file) called `settings.gradle`  or `settings.gradle.kts` where you must respect a certain order (otherwise, the build breaks).
 
 The order is:
+
 1. imports, if any.
 2. The `pluginManagement` block, if any.
 3. The `buildscript` block, if any. (We will use it)
