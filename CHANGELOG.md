@@ -18,6 +18,17 @@
 
 - Authentication for maven repositories should now work correctly. Should, because it can only work using internal Gradle APIs for the time being (though there's a safeguard to not crash if the API changes). Thanks to @mayankmkh for the PR!
 
+### New dependency notations
+
+- Firebase:
+  - analyticsKtx
+  - authenticationKtx
+  - cloudMessagingKtx
+  - crashlyticsKtx
+  - dynamicLinksKtx
+  - performanceMonitoringKtx
+- Testing.kotest.assertions.kotlinxDateTime
+
 ## Version 0.9.7 (2020-10-16)
 
 ### Fixes
