@@ -14,6 +14,10 @@
 
 - The fix of the `Square.sqlDelight.coroutinesExtensions` dependency notation can lead to such an error: `Failed to resolve: coroutines-extensions-1.4.4-_`. If you get a similar error on upgrade, it's because you applied a fix like that one: `Square.sqlDelight.coroutinesExtensions + ":_"`. You now can (must) remove it.
 
+### Fixes
+
+- Authentication for maven repositories should now work correctly. Should, because it can only work using internal Gradle APIs for the time being (though there's a safeguard to not crash if the API changes). Thanks to @mayankmkh for the PR!
+
 ## Version 0.9.7 (2020-10-16)
 
 ### Fixes
