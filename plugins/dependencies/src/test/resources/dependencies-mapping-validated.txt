@@ -569,6 +569,7 @@ io.kotest..kotest-assertions-json=Testing.kotest.assertions.json
 io.kotest..kotest-assertions-jsoup=Testing.kotest.assertions.jsoup
 io.kotest..kotest-assertions-klock=Testing.kotest.assertions.klock
 io.kotest..kotest-assertions-konform=Testing.kotest.assertions.konform
+io.kotest..kotest-assertions-kotlinx-time=Testing.kotest.assertions.kotlinxDateTime
 io.kotest..kotest-assertions-ktor=Testing.kotest.assertions.ktor
 io.kotest..kotest-assertions-sql=Testing.kotest.assertions.sql
 io.kotest..kotest-core=Testing.kotest.core

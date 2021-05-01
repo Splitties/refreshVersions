@@ -110,6 +110,7 @@ object Testing {
             const val jsoup = "$artifactPrefix-jsoup:_"
             const val klock = "$artifactPrefix-klock:_"
             const val konform = "$artifactPrefix-konform:_"
+            const val kotlinxDateTime = "$artifactPrefix-kotlinx-time:_"
             const val ktor = "$artifactPrefix-ktor:_"
             const val sql = "$artifactPrefix-sql:_"
         }
