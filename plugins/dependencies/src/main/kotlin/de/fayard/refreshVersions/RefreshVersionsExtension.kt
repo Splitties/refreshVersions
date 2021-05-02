@@ -2,6 +2,7 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.FeatureFlag
 import org.gradle.api.Action
+import org.gradle.api.Incubating
 import java.io.File
 
 open class RefreshVersionsExtension {
@@ -10,6 +11,7 @@ open class RefreshVersionsExtension {
     var extraArtifactVersionKeyRules: List<String> = emptyList()
     internal var isBuildSrcLibsEnabled = false
 
+    @Incubating
     fun enableBuildSrcLibs() {
         isBuildSrcLibsEnabled = true
     }
