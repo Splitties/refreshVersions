@@ -8,7 +8,7 @@ open class RefreshVersionsExtension {
 
     var versionsPropertiesFile: File? = null
     var extraArtifactVersionKeyRules: List<String> = emptyList()
-    var isBuildSrcLibsEnabled = false
+    internal var isBuildSrcLibsEnabled = false
 
     fun enableBuildSrcLibs() {
         isBuildSrcLibsEnabled = true
