@@ -11,7 +11,6 @@ pluginManagement {
 
     @Suppress("UnstableApiUsage")
     plugins {
-        id("de.fayard.buildSrcLibs").version(pluginsVersion)
         id("de.fayard.refreshVersions").version(pluginsVersion)
     }
 }
@@ -19,7 +18,6 @@ pluginManagement {
 plugins {
     id("com.gradle.enterprise").version("3.1.1")
     id("de.fayard.refreshVersions")
-    id("de.fayard.buildSrcLibs")
 }
 
 gradleEnterprise {
@@ -28,5 +26,10 @@ gradleEnterprise {
         termsOfServiceAgree = "yes"
     }
 }
+
+refreshVersions {
+    enableBuildSrcLibs()
+}
+
 include("module1")
 include("module2")

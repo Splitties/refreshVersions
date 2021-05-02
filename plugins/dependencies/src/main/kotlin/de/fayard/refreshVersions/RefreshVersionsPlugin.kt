@@ -10,6 +10,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
@@ -66,6 +67,22 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 versionsPropertiesFile = extension.versionsPropertiesFile
                     ?: settings.rootDir.resolve("versions.properties")
             )
+            if (extension.isBuildSrcLibsEnabled) gradle.beforeProject {
+                if (project != project.rootProject) return@beforeProject
+
+                fun plugin(id: String, version: String) = "$id:$id.gradle.plugin:$version"
+
+                buildscript.repositories.addAll(settings.pluginManagement.repositories)
+                val dependencyNotation = plugin(
+                    id = "de.fayard.buildSrcLibs",
+                    version = RefreshVersionsCorePlugin.currentVersion
+                )
+                buildscript.dependencies.add("classpath", dependencyNotation)
+
+                afterEvaluate {
+                    apply(plugin = "de.fayard.buildSrcLibs")
+                }
+            }
             gradle.rootProject {
                 applyToProject(this)
             }
