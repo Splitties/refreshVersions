@@ -1,34 +1,78 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.internal.*
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
+import de.fayard.refreshVersions.core.internal.legacy.LegacyBootstrapUpdater
+import de.fayard.refreshVersions.core.internal.lookupVersionCandidates
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
 import kotlinx.coroutines.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.logging.LogLevel
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.options.Option
+import org.gradle.api.tasks.options.OptionValues
 import org.gradle.util.GradleVersion
 
+/**
+ *
+ * $ ./gradlew help --task refreshVersions
+ * Description
+ * Search for new dependencies versions and update versions.properties
+ *
+ * OPTIONS
+ *     --enable <FEATURE_FLAG>
+ *     --disable <FEATURE_FLAG>
+ */
 open class RefreshVersionsTask : DefaultTask() {
+
+
+    @Input @Optional
+    @Option(option = "enable", description = "Enable a feature flag")
+    var enableFlag: FeatureFlag? = null
+        set(value) {
+            field = value
+            if (value != null) FeatureFlag.userSettings.put(value, true)
+        }
+
+    @Input @Optional
+    @Option(option = "disable", description = "Disable a feature flag")
+    var disableFlag: FeatureFlag? = null
+        set(value) {
+            field = value
+            if (value != null) FeatureFlag.userSettings.put(value, false)
+        }
 
     @TaskAction
     fun taskActionRefreshVersions() {
-
+        if (FeatureFlag.userSettings.isNotEmpty()) {
+            logger.lifecycle("Feature flags: " + FeatureFlag.userSettings)
+        }
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
 
         runBlocking {
-            val versionsLookupResultAsync = async {
-                lookupVersionCandidates(
-                    httpClient = RefreshVersionsConfigHolder.httpClient,
-                    project = project,
-                    versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
-                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+            val result = lookupVersionCandidates(
+                httpClient = RefreshVersionsConfigHolder.httpClient,
+                project = project,
+                versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
+                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+            )
+            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
+            SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
+                rootProject = project,
+                settingsPluginsUpdates = result.settingsPluginsUpdates,
+                buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
+            )
+            result.selfUpdatesForLegacyBootstrap?.let {
+                LegacyBootstrapUpdater.updateGradleSettingsWithUpdates(
+                    rootProject = project,
+                    selfUpdates = it
                 )
             }
-            val result = versionsLookupResultAsync.await()
-            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesWithVersionsCandidates)
-            project.rootProject.updateGradleSettingsIncludingForBuildSrc(result.selfUpdates)
 
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
             warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)

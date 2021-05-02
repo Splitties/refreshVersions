@@ -1,0 +1,11 @@
+"https://dl.bintray.com/jmfayard/maven"
+"plugins/version.txt"
+"de.fayard.refreshVersions"
+"com.example.zero"
+"1.0.0"
+'com.example.one'
+"0.1"
+'com.example.two'
+"1.2.0-beta02"
+"de.fayard.refreshVersions"
+"Whatever"

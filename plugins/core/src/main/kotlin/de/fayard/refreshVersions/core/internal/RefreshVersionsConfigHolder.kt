@@ -9,7 +9,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
-import org.gradle.api.invocation.Gradle
 import java.io.File
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
@@ -19,6 +18,13 @@ object RefreshVersionsConfigHolder {
 
     internal val resettableDelegates = ResettableDelegates()
 
+    fun markSetupViaSettingsPlugin() {
+        isSetupViaPlugin = true
+    }
+
+    internal var isSetupViaPlugin = false
+        private set
+
     private val versionKeyReaderDelegate = resettableDelegates.LateInit<ArtifactVersionKeyReader>()
 
     var versionKeyReader: ArtifactVersionKeyReader by versionKeyReaderDelegate
@@ -27,10 +33,7 @@ object RefreshVersionsConfigHolder {
     var versionsPropertiesFile: File by resettableDelegates.LateInit()
         private set
 
-    val buildSrc: Project? get() = buildSrcGradle?.rootProject
-
-    internal var currentVersion: String by resettableDelegates.LateInit()
-        private set
+    val buildSrc: Project? get() = buildSrcSettings?.gradle?.rootProject
 
     internal var settings: Settings by resettableDelegates.LateInit()
         private set
@@ -63,10 +66,6 @@ object RefreshVersionsConfigHolder {
             .build()
     }
 
-    internal fun initializedUsedVersion(settings: Settings) {
-        currentVersion = settings.currentVersionOfRefreshVersions()
-    }
-
     internal fun initialize(
         settings: Settings,
         artifactVersionKeyRules: List<String>,
@@ -87,7 +86,7 @@ object RefreshVersionsConfigHolder {
 
     internal fun initializeBuildSrc(settings: Settings) {
         require(settings.isBuildSrc)
-        buildSrcGradle = settings.gradle
+        buildSrcSettings = settings
 
         // The buildSrc will be built a second time as a standalone project by IntelliJ or
         // Android Studio after running initially properly after host project settings evaluation.
@@ -127,7 +126,8 @@ object RefreshVersionsConfigHolder {
 
     private var artifactVersionKeyRules: List<String> by resettableDelegates.LateInit()
 
-    private var buildSrcGradle: Gradle? by resettableDelegates.NullableDelegate()
+    internal var buildSrcSettings: Settings? by resettableDelegates.NullableDelegate()
+        private set
 
 
     private fun persistInitData(settings: Settings) {

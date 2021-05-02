@@ -30,7 +30,7 @@ gradle.beforeProject {
     loadLocalProperties()
 }
 
-include("core", "dependencies")
+include("core", "dependencies", "buildSrcLibs")
 project(":core").name = "refreshVersions-core"
 project(":dependencies").name = "refreshVersions"
 

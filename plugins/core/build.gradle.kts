@@ -21,7 +21,7 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = "https://builtwithgradle.netlify.com/"
+    website = "https://jmfayard.github.io/refreshVersions"
     vcsUrl = "https://github.com/jmfayard/refreshVersions"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
 }
@@ -79,7 +79,7 @@ val copyVersionFile by tasks.registering {
     val versionFileCopy = genResourcesDir.resolve("version.txt")
     inputs.file(versionFile)
     outputs.file(versionFileCopy)
-    doFirst { versionFile.copyTo(versionFileCopy) }
+    doFirst { versionFile.copyTo(versionFileCopy, overwrite = true) }
 }
 
 tasks.withType<KotlinCompile> {

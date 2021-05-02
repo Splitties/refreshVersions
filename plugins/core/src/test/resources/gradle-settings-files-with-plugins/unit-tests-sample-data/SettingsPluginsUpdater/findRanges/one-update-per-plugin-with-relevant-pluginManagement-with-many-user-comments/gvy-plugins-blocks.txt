@@ -1,0 +1,18 @@
+
+        // Hey, I'm user comment 1
+        id("de.fayard.refreshVersions").version(pluginsVersion)
+        /*
+        /*
+        I'm big comment 2
+        */
+        // Hey, I'm user comment 2
+        id("com.example.zero").version("1.0.0")
+        // Hey, I'm user comment 3
+
+    // Hey, I'm user comment 7
+    id 'com.example.one' version "0.1"
+    // Hey, I'm user comment 8
+    id 'com.example.two' version "1.2.0-beta02"
+    // Hey, I'm user comment 9
+    id("de.fayard.refreshVersions")
+    // Hey, I'm user comment 10

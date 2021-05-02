@@ -95,7 +95,7 @@ object Square {
 
         const val gradlePlugin = "$group:gradle-plugin:_"
 
-        const val coroutinesExtensions = "$group:coroutines-extensions"
+        const val coroutinesExtensions = "$group:coroutines-extensions:_"
 
         val drivers = Drivers
 

@@ -1,5 +1,34 @@
 # Change log for refreshVersions
 
+## Unreleased
+
+### New features
+
+- Support updates of settings plugins in `settings.gradle.kts` and `settings.gradle` files (including refreshVersions itself).
+
+### Changes
+
+- Setting up refreshVersions has been significantly simplified: Now, it's simply a plugin that must be applied in the `settings.gradle.kts` or `settings.gradle` file. _Note that if you want to apply it to `buildSrc` as well, there's a gotcha regarding defining the version._ The best thing is that on upgrade, **refreshVersions will automatically replace the old & verbose bootstrap with the new plugin setup**, and that works for buildSrc special case as well. We made many tests to ensure that this logic is reliable, doesn't break any code, doesn't remove important comments, and doesn't affect custom configuration in any way.
+
+### Potentially breaking changes
+
+- The fix of the `Square.sqlDelight.coroutinesExtensions` dependency notation can lead to such an error: `Failed to resolve: coroutines-extensions-1.4.4-_`. If you get a similar error on upgrade, it's because you applied a fix like that one: `Square.sqlDelight.coroutinesExtensions + ":_"`. You now can (must) remove it.
+
+### Fixes
+
+- Authentication for maven repositories should now work correctly. Should, because it can only work using internal Gradle APIs for the time being (though there's a safeguard to not crash if the API changes). Thanks to @mayankmkh for the PR!
+
+### New dependency notations
+
+- Firebase:
+  - analyticsKtx
+  - authenticationKtx
+  - cloudMessagingKtx
+  - crashlyticsKtx
+  - dynamicLinksKtx
+  - performanceMonitoringKtx
+- Testing.kotest.assertions.kotlinxDateTime
+
 ## Version 0.9.7 (2020-10-16)
 
 ### Fixes
@@ -16,9 +45,9 @@
 - Fix of a bug that'd make the first Gradle sync  after adding a dependency fail.
 
 ### Breaking change
-- If you were using Jetpack Compose, the compiler dependency had its maven coordinates changed in version 1.0.0-alpha04. We updated the `AndroidX.compose.compiler` dependency constant, which means it now works only for Compose 1.0.0-alpha04 and more future versions.
+- If you were using Jetpack Compose, the compiler dependency had its maven coordinates changed in version 1.0.0-alpha04. We updated the `AndroidX.compose.compiler` dependency notation, which means it now works only for Compose 1.0.0-alpha04 and more future versions.
 
-### New dependency constants
+### New dependency notations
 
 - Google.android.playServices.mlKit
 - Google.mlKit
@@ -47,7 +76,7 @@ This is a **major release** that brings surface-level and internal changes, pavi
 - Going forward, **refreshVersions will be able to auto-migrate** any breaking changes a new version would introduce in your `versions.properties`, `build.gradle` and `build.gradle.kts` files in. This version of refreshVersions integrates the facility to
 let future versions of refreshVersions that migration is needed, and from which version. This is a very important change that ensures you can keep your projects updated with the least effort possible.
 
-### New dependency constants
+### New dependency notations
 
 - Kotlin.stdlib (for the base version of the stdlib)
 - KotlinX:
@@ -122,9 +151,9 @@ let future versions of refreshVersions that migration is needed, and from which 
   - Concurrent:
     - futuresKtx
 
-### Dependency constants renamed
+### Dependency notations renamed
 
-Several dependencies constants have been renamed in this release (compared to version 0.9.4).
+Several dependencies notations have been renamed in this release (compared to version 0.9.4).
 
 If you were using one of the following, you'll need to migrate these usages.
 
@@ -132,7 +161,7 @@ We recommend to **use "Replace in Path"** in IntelliJ or Android Studio, filteri
 
 _Note that for future versions, refreshVersions will be able to do this automatically._
 
-Here's the list of renamed dependency constants:
+Here's the list of renamed dependency notations:
 
 - `AndroidX.coreKtx` -> `AndroidX.core.ktx`
 - `AndroidX.coreRole` -> `AndroidX.core.role`
@@ -151,13 +180,13 @@ Here's the list of renamed dependency constants:
 - An error is reported if a dependency wasn't found in any of the configured repositories.
 - All the searched repositories are now listed if a dependency wasn't found in any of them.
 - Only declared repositories are now looked up. (Before, refreshVersions would search all dependencies in all repositories of all modules and their buildscript, regardless of which module was declaring them.)
-- Dependency constants in `Ktor` no longer uses the `native` suffixed artifacts (because Kotlin 1.4 drops them, as the main ones become multiplatform)
+- Dependency notation in `Ktor` no longer uses the `native` suffixed artifacts (because Kotlin 1.4 drops them, as the main ones become multiplatform)
 
 ### Fixes
 - Version sorting would crash if a version had a long number in it. This has now been fixed, any length of digit sequence is now supported in versions.
-- Fix maven coordinates of several dependency constants
+- Fix maven coordinates of several dependency notations
 - Don't crash on repositories that are not https or file or have non password credentials.
-- The `AndroidX.test.ext.jankTestHelper` constant and few other ones in `Firebase.mlKit` had wrong maven coordinates. This has been fixed, and tests have been added to prevent it from happening again on any dependency constant we provide.
+- The `AndroidX.test.ext.jankTestHelper` notation and few other ones in `Firebase.mlKit` had wrong maven coordinates. This has been fixed, and tests have been added to prevent it from happening again on any dependency notation we provide.
 
 ## Previous releases
 

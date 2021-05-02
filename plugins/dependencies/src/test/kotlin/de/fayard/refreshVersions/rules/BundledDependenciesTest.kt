@@ -8,6 +8,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import testutils.getVersionCandidates
 import testutils.isInCi
@@ -15,6 +16,11 @@ import testutils.isInCi
 class BundledDependenciesTest {
 
     @Test
+    @Disabled(
+        "This test needs to be made incremental, " +
+            "so it only checks new dependency notations, " +
+            "and doesn't give a 1 minute penalty."
+    )
     fun `test bundled dependencies exist in standard repositories`() {
 
         if (isInCi()) return

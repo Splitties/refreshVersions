@@ -141,6 +141,7 @@ dependencies {
 
 Does that work with refreshVersions too? Yes, just use the version placeholder (`_`):
 
+=== "libraries.gradle"
 ```diff
 ext.libraries = [ // Groovy map literal
 -    spring_core: "org.springframework:spring-core:3.1",

@@ -1,4 +1,4 @@
-import de.fayard.refreshVersions.bootstrapRefreshVersions
+import de.fayard.refreshVersions.core.FeatureFlag.*
 
 pluginManagement {
     repositories {
@@ -7,32 +7,29 @@ pluginManagement {
         maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
         maven(url = "https://dl.bintray.com/jmfayard/maven")
     }
-}
 
-buildscript {
-    repositories {
-        mavenLocal()
-        gradlePluginPortal()
-        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
-        maven(url = "https://dl.bintray.com/jmfayard/maven")
-    }
+    val versionFile = rootDir.parentFile.resolve("plugins/version.txt")
+    val pluginsVersion = versionFile.readLines().first()
 
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions") {
-        version {
-            val versionFile = rootDir.parentFile.resolve("plugins/version.txt")
-            strictly(versionFile.readLines().first())
-        }
+    @Suppress("UnstableApiUsage")
+    plugins {
+        id("de.fayard.refreshVersions").version(pluginsVersion)
     }
 }
-
-bootstrapRefreshVersions(
-    extraArtifactVersionKeyRules = listOf(
-        file("refreshVersions-extra-rules.txt").readText()
-    )
-)
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")
+    id("de.fayard.refreshVersions")
+}
+
+refreshVersions {
+
+    featureFlags {
+        enable(LIBS)
+        disable(GRADLE_UPDATES)
+    }
+
+    extraArtifactVersionKeyRules(file("refreshVersions-extra-rules.txt"))
 }
 
 gradleEnterprise {
