@@ -72,13 +72,19 @@ private suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
                 runCatching {
                     fetcher.getAvailableVersions(versionFilter = versionFilter)
                 }.getOrElse { e ->
-                    when {
-                        e is HttpException -> when (e.code()) {
+                    when (e) {
+                        is HttpException -> when (e.code()) {
+                            403 -> when {
+                                fetcher is MavenDependencyVersionsFetcher && fetcher.repoUrl.let {
+                                    it.startsWith("https://dl.bintray.com") || it.startsWith("https://jcenter.bintray.com")
+                                } -> null // Artifact not available on jcenter nor bintray, post "sunset" announcement.
+                                else -> throw e
+                            }
                             404 -> null // Normal not found result
                             401 -> null // Returned by some repositories that have optional authentication (like jitpack.io)
                             else -> throw e
                         }
-                        e is FileNotFoundException -> null
+                        is FileNotFoundException -> null
                         else -> throw e
                     }
                 }

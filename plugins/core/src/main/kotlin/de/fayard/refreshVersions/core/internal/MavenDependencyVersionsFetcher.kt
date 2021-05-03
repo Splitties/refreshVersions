@@ -14,7 +14,7 @@ import java.util.*
 internal class MavenDependencyVersionsFetcher(
     private val httpClient: OkHttpClient,
     moduleId: ModuleId,
-    repoUrl: String,
+    val repoUrl: String,
     repoAuthorization: String?
 ) : DependencyVersionsFetcher(
     moduleId = moduleId,
