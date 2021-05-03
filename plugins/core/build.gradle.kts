@@ -50,6 +50,8 @@ dependencies {
     testFixturesApi(Square.okHttp3.okHttp)
     testFixturesApi(Square.okHttp3.loggingInterceptor)
     testFixturesApi(KotlinX.coroutines.core)
+    testFixturesApi(Kotlin.test.annotationsCommon)
+    testFixturesApi(Kotlin.test.junit5)
 }
 
 kotlin {
