@@ -24,7 +24,10 @@ object Testing {
      *
      * GitHub page: [robolectric/robolectric](https://github.com/robolectric/robolectric)
      */
-    const val roboElectric = "org.robolectric:robolectric:_"
+    const val robolectric = "org.robolectric:robolectric:_"
+
+    @Deprecated("Wrong spelling", ReplaceWith("robolectric"))
+    const val roboElectric = robolectric
 
 
     /**
