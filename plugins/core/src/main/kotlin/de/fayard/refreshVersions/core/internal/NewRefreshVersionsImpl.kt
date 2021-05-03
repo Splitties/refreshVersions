@@ -103,17 +103,17 @@ internal suspend fun lookupVersionCandidates(
     }
 }
 
-suspend fun CoroutineScope.lookupAvailableGradleVersions(): List<Version> {
+suspend fun lookupAvailableGradleVersions(): List<Version> = coroutineScope {
     val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient)
     val currentGradleVersion = GradleVersion.current()
-    return GradleUpdateChecker.VersionType.values().filterNot {
+    GradleUpdateChecker.VersionType.values().filterNot {
         it == GradleUpdateChecker.VersionType.All
     }.let { types ->
         when {
             currentGradleVersion.isSnapshot -> types
             else -> types.filterNot {
                 it == GradleUpdateChecker.VersionType.ReleaseNightly ||
-                    it == GradleUpdateChecker.VersionType.Nightly
+                        it == GradleUpdateChecker.VersionType.Nightly
             }
         }
     }.map { type ->
