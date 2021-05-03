@@ -2,9 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.kapt")
-    id("org.jetbrains.kotlin.android.extensions")
+    kotlin("android")
+    kotlin("android.extensions")
     id("gradle.site")
 }
 
@@ -22,10 +21,12 @@ dependencies {
 
     implementation(Kotlin.stdlib.jdk7)
     implementation(AndroidX.appCompat)
+    implementation(AndroidX.activityKtx)
     implementation(AndroidX.constraintLayout)
+    implementation(Google.android.material)
     implementation(AndroidX.lifecycle.runtime)
+    implementation(AndroidX.lifecycle.runtimeKtx)
     implementation(AndroidX.lifecycle.viewModel)
-    kapt(AndroidX.lifecycle.compiler)
     testImplementation(Testing.junit4)
     androidTestImplementation(AndroidX.test.core)
     androidTestImplementation(AndroidX.archCore.testing)
