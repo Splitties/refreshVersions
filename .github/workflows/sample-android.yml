@@ -11,6 +11,7 @@ on:
       - '!**.adoc'
       - '!.editorconfig'
       - '!**/.gitignore'
+  workflow_dispatch:
 jobs:
   gradle:
     strategy:
