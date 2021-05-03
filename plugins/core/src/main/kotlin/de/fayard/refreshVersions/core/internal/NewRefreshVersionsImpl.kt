@@ -55,10 +55,14 @@ internal suspend fun lookupVersionCandidates(
         val dependenciesWithVersionCandidatesAsync = dependencyVersionsFetchers.groupBy {
             it.moduleId
         }.map { (moduleId: ModuleId, versionFetchers: List<DependencyVersionsFetcher>) ->
+            val propertyName = getVersionPropertyName(moduleId, versionKeyReader)
             val resolvedVersion = resolveVersion(
                 properties = versionMap,
-                key = getVersionPropertyName(moduleId, versionKeyReader)
-            ) ?: error("Couldn't resolve version for $moduleId")
+                key = propertyName
+            ) ?: `Write versions candidates using latest most stable version and get it`(
+                propertyName = propertyName,
+                dependencyVersionsFetchers = versionFetchers
+            )
             async {
                 DependencyWithVersionCandidates(
                     moduleId = moduleId,
