@@ -6,3 +6,6 @@ io.ktor:*
 
 io.coil-kt:coil(-*)
    ^^^^^^^
+
+io.github.javaeden.orchid:*
+                   ^^^^^^

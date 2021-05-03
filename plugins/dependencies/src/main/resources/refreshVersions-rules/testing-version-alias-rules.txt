@@ -7,5 +7,17 @@ org.junit.jupiter:junit-jupiter(-*)
 io.kotest:*
    ^^^^^^
 
+org.spekframework.spek2:spek-*
+                        ^^^^
+
+io.strikt:strikt-*
+   ^^^^^^
+
 org.robolectric:*
     ^^^^^^^^^^^
+
+io.mockk:mockk(-*)
+   ^^^^^
+
+org.mockito:mockito-*
+    ^^^^^^^
