@@ -8,7 +8,7 @@ import de.fayard.refreshVersions.core.internal.codeparsing.SourceCodeSection
 import de.fayard.refreshVersions.core.internal.codeparsing.gradle.extractGradleScriptSections
 import de.fayard.refreshVersions.core.internal.codeparsing.findRanges
 import extensions.java.util.loadAndGetAsMap
-import extensions.junit.mapDynamicTest
+import testutils.junit.mapDynamicTest
 import extensions.kotlin.collections.subListAfter
 import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.file.shouldExist

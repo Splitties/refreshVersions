@@ -55,10 +55,14 @@ internal suspend fun lookupVersionCandidates(
         val dependenciesWithVersionCandidatesAsync = dependencyVersionsFetchers.groupBy {
             it.moduleId
         }.map { (moduleId: ModuleId, versionFetchers: List<DependencyVersionsFetcher>) ->
+            val propertyName = getVersionPropertyName(moduleId, versionKeyReader)
             val resolvedVersion = resolveVersion(
                 properties = versionMap,
-                key = getVersionPropertyName(moduleId, versionKeyReader)
-            ) ?: error("Couldn't resolve version for $moduleId")
+                key = propertyName
+            ) ?: `Write versions candidates using latest most stable version and get it`(
+                propertyName = propertyName,
+                dependencyVersionsFetchers = versionFetchers
+            )
             async {
                 DependencyWithVersionCandidates(
                     moduleId = moduleId,
@@ -99,17 +103,17 @@ internal suspend fun lookupVersionCandidates(
     }
 }
 
-suspend fun CoroutineScope.lookupAvailableGradleVersions(): List<Version> {
+private suspend fun lookupAvailableGradleVersions(): List<Version> = coroutineScope {
     val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient)
     val currentGradleVersion = GradleVersion.current()
-    return GradleUpdateChecker.VersionType.values().filterNot {
+    GradleUpdateChecker.VersionType.values().filterNot {
         it == GradleUpdateChecker.VersionType.All
     }.let { types ->
         when {
             currentGradleVersion.isSnapshot -> types
             else -> types.filterNot {
                 it == GradleUpdateChecker.VersionType.ReleaseNightly ||
-                    it == GradleUpdateChecker.VersionType.Nightly
+                        it == GradleUpdateChecker.VersionType.Nightly
             }
         }
     }.map { type ->

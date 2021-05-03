@@ -31,8 +31,6 @@
 
 package com.raywenderlich.android.smallvictories
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.res.Resources
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -41,6 +39,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.FrameLayout
+import androidx.activity.viewModels
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -51,10 +50,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val viewModel = ViewModelProviders.of(this).get(VictoryViewModel::class.java)
-        viewModel.viewState.observe(this, Observer { it ->
+        val viewModel:VictoryViewModel by viewModels()
+        viewModel.viewState.observe(this) { it ->
             it?.let { render(it) }
-        })
+        }
         viewModel.repository = Repository(this)
         viewModel.initialize()
 

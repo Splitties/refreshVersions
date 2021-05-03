@@ -1,4 +1,4 @@
-package extensions.junit
+package testutils.junit
 
 import org.junit.jupiter.api.DynamicTest
 import java.io.File

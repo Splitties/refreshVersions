@@ -4,6 +4,7 @@ import AndroidX
 import COIL
 import KotlinX
 import Ktor
+import Orchid
 import Splitties
 import Testing
 import de.fayard.refreshVersions.internal.getArtifactsFromDependenciesObject
@@ -166,12 +167,26 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.work", dependenciesObject = AndroidX.work)
 )
 
+private val testing = listOf(
+    versionKeyWithModules(expected = "junit.junit", dependency = Testing.junit4),
+    versionKeyWithModules(expected = "junit", dependenciesObject = Testing.junit),
+    versionKeyWithModules(expected = "kotest", dependenciesObject = Testing.kotest),
+    versionKeyWithModules(expected = "spek", dependenciesObject = Testing.spek),
+    versionKeyWithModules(expected = "strikt", dependenciesObject = Testing.strikt),
+    versionKeyWithModules(expected = "robolectric", dependency = Testing.robolectric),
+    versionKeyWithModules(expected = "mockk", dependenciesObject = Testing.mockK),
+    versionKeyWithModules(expected = "mockito", dependenciesObject = Testing.mockito).let {
+        it.copy(moduleIdentifiers = it.moduleIdentifiers.filter { moduleIdentifier ->
+            moduleIdentifier.group == "org.mockito"
+        })
+    }
+)
 
-internal val bundledRules = kotlinX + androidX + listOf(
+internal val bundledRules = kotlinX + androidX + testing + listOf(
     versionKeyWithModules(expected = "ktor", dependenciesObject = Ktor),
     versionKeyWithModules(expected = "splitties", dependenciesObject = Splitties),
-    versionKeyWithModules(expected = "junit.junit", dependency = Testing.junit4),
-    versionKeyWithModules(expected = "coil-kt", dependenciesObject = COIL)
+    versionKeyWithModules(expected = "coil-kt", dependenciesObject = COIL),
+    versionKeyWithModules(expected = "orchid", dependenciesObject = Orchid)
 )
 
 

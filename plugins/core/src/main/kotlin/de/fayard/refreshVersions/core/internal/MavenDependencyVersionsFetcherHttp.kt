@@ -10,7 +10,7 @@ import retrofit2.Response
 internal class MavenDependencyVersionsFetcherHttp(
     private val httpClient: OkHttpClient,
     moduleId: ModuleId,
-    repoUrl: String,
+    val repoUrl: String,
     repoAuthorization: String?
 ) : MavenDependencyVersionsFetcher(
     moduleId = moduleId,
@@ -37,6 +37,12 @@ internal class MavenDependencyVersionsFetcherHttp(
             if (response.isSuccessful) {
                 response.use { it.body!!.string() }
             } else when (response.code) {
+                403 -> when {
+                    repoUrl.let {
+                        it.startsWith("https://dl.bintray.com") || it.startsWith("https://jcenter.bintray.com")
+                    } -> null // Artifact not available on jcenter nor bintray, post "sunset" announcement.
+                    else -> throw HttpException(Response.error<Any?>(response.code, response.body!!))
+                }
                 404 -> null // Normal not found result
                 401 -> null // Returned by some repositories that have optional authentication (like jitpack.io)
                 else -> throw HttpException(Response.error<Any?>(response.code, response.body!!))

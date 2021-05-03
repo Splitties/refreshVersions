@@ -178,8 +178,9 @@ private fun `Write versions candidates using latest most stable version and get 
     repositories: ArtifactRepositoryContainer,
     propertyName: String,
     dependency: ExternalDependency
-): String = runBlocking {
-    val dependencyVersionsFetchers = repositories.filterIsInstance<MavenArtifactRepository>()
+): String = `Write versions candidates using latest most stable version and get it`(
+    propertyName = propertyName,
+    dependencyVersionsFetchers = repositories.filterIsInstance<MavenArtifactRepository>()
         .mapNotNull { repo ->
             DependencyVersionsFetcher(
                 httpClient = RefreshVersionsConfigHolder.httpClient,
@@ -187,6 +188,13 @@ private fun `Write versions candidates using latest most stable version and get 
                 repository = repo
             )
         }
+)
+
+@Suppress("FunctionName")
+internal fun `Write versions candidates using latest most stable version and get it`(
+    propertyName: String,
+    dependencyVersionsFetchers: List<DependencyVersionsFetcher>
+): String = runBlocking {
     dependencyVersionsFetchers.getVersionCandidates(
         currentVersion = Version(""),
         resultMode = RefreshVersionsConfigHolder.resultMode

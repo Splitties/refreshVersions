@@ -3,8 +3,7 @@ pluginManagement {
         mavenLocal()
         gradlePluginPortal()
         google()
-        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
-        maven(url = "https://dl.bintray.com/jmfayard/maven")
+        mavenCentral()
     }
 
     val versionFile = rootDir.parentFile.resolve("plugins/version.txt")
@@ -18,6 +17,20 @@ pluginManagement {
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")
+////                        # available:"3.2")
+////                        # available:"3.2.1")
+////                        # available:"3.3")
+////                        # available:"3.3.1")
+////                        # available:"3.3.2")
+////                        # available:"3.3.3")
+////                        # available:"3.3.4")
+////                        # available:"3.4")
+////                        # available:"3.4.1")
+////                        # available:"3.5")
+////                        # available:"3.5.1")
+////                        # available:"3.5.2")
+////                        # available:"3.6")
+////                        # available:"3.6.1")
     id("de.fayard.refreshVersions")
 }
 

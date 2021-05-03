@@ -11,6 +11,7 @@ on:
       - '!**.adoc'
       - '!.editorconfig'
       - '!**/.gitignore'
+  workflow_dispatch:
 jobs:
   gradle:
     strategy:
@@ -18,22 +19,22 @@ jobs:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-java@v1
-      with:
-        java-version: 8
-    - uses: eskatos/gradle-command-action@v1
-      with:
-        wrapper-directory: refreshVersions
-        build-root-directory: refreshVersions
-        arguments: publishToMavenLocal
-    - uses: eskatos/gradle-command-action@v1
-      with:
-        wrapper-directory: dependencies
-        build-root-directory: dependencies
-        arguments: publishToMavenLocal
-    - uses: eskatos/gradle-command-action@v1
-      with:
-        wrapper-directory: sample-android
-        build-root-directory: sample-android
-        arguments: refreshVersions
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          wrapper-directory: plugins
+          build-root-directory: plugins
+          arguments: check publishToMavenLocal --stacktrace
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          wrapper-directory: sample-android
+          build-root-directory: sample-android
+          arguments: refreshVersions --stacktrace
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          wrapper-directory: sample-android
+          build-root-directory: sample-android
+          arguments: check --stacktrace
