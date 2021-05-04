@@ -36,8 +36,8 @@ class MavenDependencyVersionsFetchingTest {
                 ),
                 currentVersion = Version("1.3.50"),
                 repoUrls = listOf(
-                    "https://dl.bintray.com/kotlin/kotlin-eap/",
-                    "https://jcenter.bintray.com/"
+                    "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/bootstrap/",
+                    "https://repo1.maven.org/maven2/"
                 )
             ).joinToString(separator = "\n") { it.value }
             println(versions)

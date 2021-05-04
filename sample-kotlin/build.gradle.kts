@@ -21,8 +21,6 @@ repositories {
     mavenLocal()
     mavenCentral()
     google()
-    jcenter()
-    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap/")
 }
 
 fun DependencyHandler.implementations(deps: List<String>) =

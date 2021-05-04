@@ -2,8 +2,6 @@ pluginManagement {
     repositories {
         mavenLocal()
         gradlePluginPortal()
-        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
-        maven(url = "https://dl.bintray.com/jmfayard/maven")
     }
 
     val versionFile = rootDir.parentFile.parentFile.resolve("plugins/version.txt")

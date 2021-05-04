@@ -39,8 +39,7 @@ class BundledDependenciesTest {
                 "https://repo.maven.apache.org/maven2/",
                 "https://dl.google.com/dl/android/maven2/",
                 "https://jcenter.bintray.com/",
-                "https://plugins.gradle.org/m2/",
-                "https://dl.bintray.com/louiscad/splitties-dev/"
+                "https://plugins.gradle.org/m2/"
             )
             getArtifactNameToConstantMapping().map { dependencyMapping ->
                 async {

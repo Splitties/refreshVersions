@@ -14,9 +14,7 @@ repositories {
             password = TODO()
         }
     }*/
-    maven("https://dl.bintray.com/kotlin/kotlin-eap")
     mavenCentral()
-    jcenter()
 }
 
 dependencies {

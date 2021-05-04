@@ -2,7 +2,6 @@ pluginManagement {
     repositories {
         mavenLocal()
         gradlePluginPortal()
-        maven { url = "https://dl.bintray.com/jmfayard/maven" }
     }
 
     final File versionFile = new File(rootDir.parentFile.parentFile, "plugins/version.txt")
