@@ -4,7 +4,7 @@ package testutils
 
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
-import de.fayard.refreshVersions.core.internal.MavenDependencyVersionsFetcher
+import de.fayard.refreshVersions.core.internal.MavenDependencyVersionsFetcherHttp
 import de.fayard.refreshVersions.core.internal.VersionCandidatesResultMode
 import de.fayard.refreshVersions.core.internal.getVersionCandidates
 import okhttp3.OkHttpClient
@@ -15,7 +15,7 @@ suspend fun getVersionCandidates(
     currentVersion: Version,
     repoUrls: List<String>
 ): List<Version> = repoUrls.map {
-    MavenDependencyVersionsFetcher(
+    MavenDependencyVersionsFetcherHttp(
         httpClient = httpClient,
         moduleId = moduleId,
         repoUrl = it,

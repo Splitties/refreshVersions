@@ -56,7 +56,6 @@ object RefreshVersionsConfigHolder {
 
     internal val httpClient: OkHttpClient by resettableDelegates.Lazy {
         OkHttpClient.Builder()
-            .addInterceptor(OkHttpFileUrlHandler)
             .addInterceptor( //TODO: Allow disabling/configuring logging.
                 HttpLoggingInterceptor(logger = object : HttpLoggingInterceptor.Logger {
                     override fun log(message: String) {

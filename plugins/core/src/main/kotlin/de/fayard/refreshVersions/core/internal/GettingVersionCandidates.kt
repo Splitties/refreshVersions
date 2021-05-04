@@ -7,8 +7,6 @@ import de.fayard.refreshVersions.core.internal.VersionCandidatesResultMode.Sorti
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import retrofit2.HttpException
-import java.io.FileNotFoundException
 
 internal suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
     currentVersion: Version,
@@ -69,25 +67,8 @@ private suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
     return coroutineScope {
         map { fetcher ->
             async {
-                runCatching {
-                    fetcher.getAvailableVersions(versionFilter = versionFilter)
-                }.getOrElse { e ->
-                    when (e) {
-                        is HttpException -> when (e.code()) {
-                            403 -> when {
-                                fetcher is MavenDependencyVersionsFetcher && fetcher.repoUrl.let {
-                                    it.startsWith("https://dl.bintray.com") || it.startsWith("https://jcenter.bintray.com")
-                                } -> null // Artifact not available on jcenter nor bintray, post "sunset" announcement.
-                                else -> throw e
-                            }
-                            404 -> null // Normal not found result
-                            401 -> null // Returned by some repositories that have optional authentication (like jitpack.io)
-                            else -> throw e
-                        }
-                        is FileNotFoundException -> null
-                        else -> throw e
-                    }
-                }
+                @Suppress("BlockingMethodInNonBlockingContext") // False positive.
+                fetcher.getAvailableVersionsOrNull(versionFilter = versionFilter)
             }
         }
     }.awaitAll().filterNotNull().also { results ->
