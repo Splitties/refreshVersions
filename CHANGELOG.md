@@ -5,10 +5,13 @@
 ### New features
 
 - Support updates of settings plugins in `settings.gradle.kts` and `settings.gradle` files (including refreshVersions itself).
+- Support getting versions from [Google Cloud Storage](https://cloud.google.com/storage) backed [repositories](https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:gcs-repositories). This can be helpful if you need to update private artifacts hosted there. Thanks to [@NikkyAI](https://github.com/NikkyAI) for the contribution!
 
 ### Changes
 
 - Setting up refreshVersions has been significantly simplified: Now, it's simply a plugin that must be applied in the `settings.gradle.kts` or `settings.gradle` file. _Note that if you want to apply it to `buildSrc` as well, there's a gotcha regarding defining the version._ The best thing is that on upgrade, **refreshVersions will automatically replace the old & verbose bootstrap with the new plugin setup**, and that works for buildSrc special case as well. We made many tests to ensure that this logic is reliable, doesn't break any code, doesn't remove important comments, and doesn't affect custom configuration in any way.
+- Bintray sunset resiliency: If refreshVersions encounters an HTTP 403 response on a bintray repository or on jcenter, it will consider the artifact to not be in this repository instead of crashing (but you can/should still remove bintray repo declarations anyway since it has been sunset).
+- Missing short version key rules have been added for many dependency notations groups in the `Testing` object, and for `Orchid`.
 
 ### Potentially breaking changes
 
