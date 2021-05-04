@@ -40,6 +40,20 @@ dependencies {
     }
     implementation(Square.moshi.kotlinReflect)
     implementation("com.google.cloud:google-cloud-storage:_")
+    constraints {
+        implementation("com.google.guava:guava") {
+            version {
+                strictly("30.1.1-jre")
+                // Without that version constraint forcing a known "jre" variant,
+                // GCS makes an "android" variant being selected for the buildscript classpath,
+                // which creates a conflict with the Android Gradle Plugin and possibly other plugins,
+                // that would manifest itself at runtime like the following:
+                // Failed to notify project evaluation listener.
+                //   > 'java.util.stream.Collector com.google.common.collect.ImmutableList.toImmutableList()'
+                // (The Android Gradle Plugin is not an Android app or library, so it relies on the "jre" variant.)
+            }
+        }
+    }
 
     testImplementation(Square.okHttp3.loggingInterceptor)
     testImplementation(platform(notation = "org.junit:junit-bom:_"))
