@@ -4,17 +4,13 @@ import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
-import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.getByType
-import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.*
 
 open class RefreshVersionsPlugin : Plugin<Any> {
 
@@ -38,7 +34,12 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     override fun apply(target: Any) {
         when (target) {
             is Settings -> bootstrap(target)
-            is Project -> Unit //TODO: Warn about misconfiguration?
+            is Project -> error(
+                """
+                Gradle plugins.id("de.fayard.refreshVersions") must be configured in settings.gradle(.kts), not in build.gradle(.kts)
+                See https://jmfayard.github.io/refreshVersions/setup/
+                """.trimIndent()
+            )
         }
     }
 
@@ -97,7 +98,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
         ) {
             group = "help"
             description = "Assists migration from hardcoded dependencies to constants of " +
-                    "the refreshVersions dependencies plugin"
+                "the refreshVersions dependencies plugin"
             finalizedBy("refreshVersions")
         }
 
