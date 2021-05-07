@@ -70,10 +70,9 @@ nav:
     - 'Before you contribute': contributing/before-you-contribute.md
     - 'Improving docs': contributing/improving-docs.md
     - 'Submitting issues': contributing/submitting-issues.md
-    - 'Submitting PRs':
-      - 'Dev environment': contributing/submitting-prs/dev-env.md
-      - 'Development process': contributing/submitting-prs/dev-process.md
-      - 'Dependency notations': contributing/submitting-prs/dependency-notations-updates.md
+    - 'Dev environment': contributing/submitting-prs/dev-env.md
+    - 'Development process': contributing/submitting-prs/dev-process.md
+    - 'Dependency notations': contributing/submitting-prs/dependency-notations-updates.md
 
 plugins:
   - search
