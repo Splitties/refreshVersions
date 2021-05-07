@@ -29,15 +29,14 @@ The Gradle documentation has detailed migration guide if you are stuck:
 
 Here is how to configure gradle refreshVersions:
 
-=== "settings.gradle.kts"
+=== "settings.gradle[.kts]"
 ```kotlin
 plugins {
-    /** https://jmfayard.github.io/refreshVersions/ **/
-    id("de.fayard.refreshVersions").version("{{version.refreshVersions}}")
+    id("de.fayard.refreshVersions")
 }
 
 refreshVersions {
-
+    enableBuildSrcLibs()
 }
 ```
 
