@@ -32,14 +32,24 @@ Here is how to configure gradle refreshVersions:
 === "settings.gradle.kts"
 ```kotlin
 plugins {
+    /** https://jmfayard.github.io/refreshVersions/ **/
     id("de.fayard.refreshVersions").version("{{version.refreshVersions}}")
+}
+
+refreshVersions {
+
 }
 ```
 
 === "settings.gradle"
 ```groovy
 plugins {
+    // https://jmfayard.github.io/refreshVersions/
     id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+}
+
+refreshVersions {
+
 }
 ```
 
@@ -72,6 +82,15 @@ If you need/want this feature, please vote with a 👍 on [this issue]({{link.is
 ### If you want to use a development version
 
 Follow [issue 340: Continuous Deployment]({{link.issues}}/340)
+
+## Configuration: `refreshVersions { }`
+
+There are no required configurations.
+
+If you are curious about which options are available, use auto-complete!
+
+<img width="854" src="https://user-images.githubusercontent.com/459464/117489731-41322200-af6e-11eb-8e5d-f3ba0e7b6070.png">
+
 
 ## About Gradle's Settings file
 
