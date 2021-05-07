@@ -65,7 +65,6 @@ nav:
   - 'Update Dependencies': update-dependencies.md
 #  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
   - 'Migration': migration.md
-  - 'FAQ': faq.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing':
     - 'Before you contribute': contributing/before-you-contribute.md
