@@ -32,7 +32,7 @@ Here is how to configure gradle refreshVersions:
 === "settings.gradle[.kts]"
 ```kotlin
 plugins {
-    id("de.fayard.refreshVersions")
+    id("de.fayard.refreshVersions").version("{{version.refreshVersions}}")
 }
 
 refreshVersions {
