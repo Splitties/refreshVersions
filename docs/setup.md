@@ -25,30 +25,22 @@ The Gradle documentation has detailed migration guide if you are stuck:
 
 
 
-## Bootstrap refreshVersions
+## Add the plugin
 
 Here is how to configure gradle refreshVersions:
 
 === "settings.gradle.kts"
     ```kotlin
     plugins {
-        // https://jmfayard.github.io/refreshVersions/
-        id("de.fayard.refreshVersions").version("{{version.refreshVersions}}")
-    }
-
-    refreshVersions {
-
+        // See https://jmfayard.github.io/refreshVersions
+        id("de.fayard.refreshVersions") version "{{version.refreshVersions}}"
     }
     ```
 === "settings.gradle"
     ```groovy
     plugins {
-        // https://jmfayard.github.io/refreshVersions/
+        // See https://jmfayard.github.io/refreshVersions
         id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
-    }
-
-    refreshVersions {
-
     }
     ```
 
@@ -60,7 +52,7 @@ If you use the **buildSrc** module and have dependencies declared in the `buildS
 === "buildSrc/settings.gradle.kts"
     ```kotlin
     plugins {
-        id("de.fayard.refreshVersions").version("{{version.refreshVersions}}")
+        id("de.fayard.refreshVersions") version "{{version.refreshVersions}}"
     }
     ```
 === "buildSrc/settings.gradle"
@@ -69,6 +61,19 @@ If you use the **buildSrc** module and have dependencies declared in the `buildS
         id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
     }
     ```
+
+### If you use the groovy DSL, aka build.gradle
+
+Auto-completion for dependency notations won't work out of the box.
+
+A work-around is to configure the plugin in the `buildSrc` module
+
+=== "buildSrc/settings.gradle"
+```groovy
+plugins {
+    id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+}
+```
 
 
 ### If you have a composite/included build
@@ -81,15 +86,17 @@ If you need/want this feature, please vote with a 👍 on [this issue]({{link.is
 
 Follow [issue 340: Continuous Deployment]({{link.issues}}/340)
 
-## Configuration: `refreshVersions { }`
+## Configure the plugin
 
-There are no required configurations.
+There are no required configurations!
+
+There are some options which can be configured in the bloc `refreshVersions { }`
 
 If you are curious about which options are available, use auto-complete!
 
 <img width="854" src="https://user-images.githubusercontent.com/459464/117489731-41322200-af6e-11eb-8e5d-f3ba0e7b6070.png">
 
-
+<!--
 ## About Gradle's Settings file
 
 For refreshVersions to be able to work for all the dependencies in your project, including for the ones in the `buildscript`'s `classpath`, it needs to be setup in the Gradle settings.
@@ -123,6 +130,7 @@ plugins {} // Optional
 rootProject.name = "My Project" // Optional, defaults to parent dir's name.
 include(":app") // If the project has modules/subprojects to declare.
 ```
+-->
 
 ## Earlier versions
 
