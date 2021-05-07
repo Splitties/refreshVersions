@@ -29,28 +29,28 @@ The Gradle documentation has detailed migration guide if you are stuck:
 
 Here is how to configure gradle refreshVersions:
 
-=== "settings.gradle[.kts]"
-```kotlin
-plugins {
-    id("de.fayard.refreshVersions").version("{{version.refreshVersions}}")
-}
-
-refreshVersions {
-
-}
-```
-
-=== "settings.gradle"
-```groovy
-plugins {
+=== "settings.gradle.kts"
+    ```kotlin
     // https://jmfayard.github.io/refreshVersions/
-    id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
-}
+    plugins {
+        id("de.fayard.refreshVersions").version("{{version.refreshVersions}}")
+    }
 
-refreshVersions {
+    refreshVersions {
 
-}
-```
+    }
+    ```
+=== "settings.gradle"
+    ```groovy
+    plugins {
+        // https://jmfayard.github.io/refreshVersions/
+        id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+    }
+
+    refreshVersions {
+
+    }
+    ```
 
 
 ### If you have a buildSrc module
@@ -58,18 +58,17 @@ refreshVersions {
 If you use the **buildSrc** module and have dependencies declared in the `buildSrc/build.gradle[.kts]` file, you probably want to use refreshVersions there as well. The setup is the same:
 
 === "buildSrc/settings.gradle.kts"
-```kotlin
-plugins {
-    id("de.fayard.refreshVersions").version("{{version.refreshVersions}}")
-}
-```
-
+    ```kotlin
+    plugins {
+        id("de.fayard.refreshVersions").version("{{version.refreshVersions}}")
+    }
+    ```
 === "buildSrc/settings.gradle"
-```groovy
-plugins {
-    id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
-}
-```
+    ```groovy
+    plugins {
+        id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+    }
+    ```
 
 
 ### If you have a composite/included build
@@ -133,28 +132,27 @@ There is an
 Here is how refreshVersions was configured in 0.9.x and earlier versions
 
 === "settings.gradle.kts"
-```kotlin
-import de.fayard.refreshVersions.bootstrapRefreshVersions
+    ```kotlin
+    import de.fayard.refreshVersions.bootstrapRefreshVersions
 
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
-}
+    buildscript {
+        repositories { gradlePluginPortal() }
+        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
+    }
 
-bootstrapRefreshVersions()
-```
-
+    bootstrapRefreshVersions()
+    ```
 === "settings.gradle"
-```groovy
-import de.fayard.refreshVersions.RefreshVersionsSetup
+    ```groovy
+    import de.fayard.refreshVersions.RefreshVersionsSetup
 
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
-}
+    buildscript {
+        repositories { gradlePluginPortal() }
+        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
+    }
 
-RefreshVersionsSetup.bootstrap(settings)
-```
+    RefreshVersionsSetup.bootstrap(settings)
+    ```
 
 
 ### If you upgrade from the plugin buildSrcVersions
