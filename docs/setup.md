@@ -36,7 +36,7 @@ plugins {
 }
 
 refreshVersions {
-    enableBuildSrcLibs()
+    
 }
 ```
 
