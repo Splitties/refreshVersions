@@ -126,6 +126,7 @@ include(":app") // If the project has modules/subprojects to declare.
 
 ## Earlier versions
 
+<!--
 ### refreshVersions 0.9.x and earlier
 
 There is an
@@ -153,7 +154,7 @@ Here is how refreshVersions was configured in 0.9.x and earlier versions
 
     RefreshVersionsSetup.bootstrap(settings)
     ```
-
+-->
 
 ### If you upgrade from the plugin buildSrcVersions
 
