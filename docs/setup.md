@@ -36,7 +36,7 @@ plugins {
 }
 
 refreshVersions {
-    
+
 }
 ```
 
@@ -130,7 +130,7 @@ include(":app") // If the project has modules/subprojects to declare.
 ### refreshVersions 0.9.x and earlier
 
 There is an
-Here is how refreshVersions was configured in 0.7.x and earlier versions
+Here is how refreshVersions was configured in 0.9.x and earlier versions
 
 === "settings.gradle.kts"
 ```kotlin
