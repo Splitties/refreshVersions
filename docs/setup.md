@@ -24,6 +24,55 @@ The Gradle documentation has detailed migration guide if you are stuck:
 - From Gradle 4.x: https://docs.gradle.org/current/userguide/upgrading_version_4.html
 
 
+
+## Bootstrap refreshVersions
+
+Here is how to configure gradle refreshVersions:
+
+=== "settings.gradle.kts"
+```kotlin
+plugins {
+    id("de.fayard.refreshVersions").version("{{version.refreshVersions}}")
+}
+```
+
+=== "settings.gradle"
+```groovy
+plugins {
+    id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+}
+```
+
+
+### If you have a buildSrc module
+
+If you use the **buildSrc** module and have dependencies declared in the `buildSrc/build.gradle[.kts]` file, you probably want to use refreshVersions there as well. The setup is the same:
+
+=== "buildSrc/settings.gradle.kts"
+```kotlin
+plugins {
+    id("de.fayard.refreshVersions").version("{{version.refreshVersions}}")
+}
+```
+
+=== "buildSrc/settings.gradle"
+```groovy
+plugins {
+    id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+}
+```
+
+
+### If you have a composite/included build
+
+Sharing used versions with included builds is not supported at the moment.
+
+If you need/want this feature, please vote with a 👍 on [this issue]({{link.issues}}/205), subscribe to it, and tell us about your use case, to help us prioritize.
+
+### If you want to use a development version
+
+Follow [issue 340: Continuous Deployment]({{link.issues}}/340)
+
 ## About Gradle's Settings file
 
 For refreshVersions to be able to work for all the dependencies in your project, including for the ones in the `buildscript`'s `classpath`, it needs to be setup in the Gradle settings.
@@ -58,9 +107,12 @@ rootProject.name = "My Project" // Optional, defaults to parent dir's name.
 include(":app") // If the project has modules/subprojects to declare.
 ```
 
-## Bootstrap refreshVersions
+## Earlier versions
 
-Here is how to configure gradle refreshVersions:
+### refreshVersions 0.9.x and earlier
+
+There is an
+Here is how refreshVersions was configured in 0.7.x and earlier versions
 
 === "settings.gradle.kts"
 ```kotlin
@@ -68,7 +120,7 @@ import de.fayard.refreshVersions.bootstrapRefreshVersions
 
 buildscript {
     repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
 }
 
 bootstrapRefreshVersions()
@@ -80,7 +132,7 @@ import de.fayard.refreshVersions.RefreshVersionsSetup
 
 buildscript {
     repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
+    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
 }
 
 RefreshVersionsSetup.bootstrap(settings)
@@ -108,44 +160,6 @@ The task `buildSrcVersions` is still available.
 
 Read more: [gradle buildSrcVersions]({{link.site}}/gradle-buildsrcversions).
 
-### If you have a buildSrc module
-
-If you use the **buildSrc** module and have dependencies declared in the `buildSrc/build.gradle[.kts]` file, you probably want to use refreshVersions there as well. For that, an extra special setup is required.
-
-=== "buildSrc/settings.gradle.kts"
-```kotlin
-import de.fayard.refreshVersions.bootstrapRefreshVersionsForBuildSrc
-
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
-}
-
-bootstrapRefreshVersionsForBuildSrc()
-```
-
-=== "buildSrc/settings.gradle"
-```groovy
-import de.fayard.refreshVersions.RefreshVersionsSetup
-
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
-}
-
-RefreshVersionsSetup.bootstrapForBuildSrc(settings)
-```
-
-
-### If you have a composite/included build
-
-Sharing used versions with included builds is not supported at the moment.
-
-If you need/want this feature, please vote with a 👍 on [this issue]({{link.issues}}/205), subscribe to it, and tell us about your use case, to help us prioritize.
-
-### If you want to use a development version
-
-Follow [issue 340: Continuous Deployment](https://github.com/jmfayard/refreshVersions/issues/340)
 
 ## Next steps
 
