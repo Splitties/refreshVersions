@@ -1,5 +1,5 @@
 ## See https://github.com/casey/just
-## Install with $ brew install justfile
+## Install with $ brew install just
 run:
     cd plugins && ./gradlew check publishToMavenLocal
     cd sample-kotlin && ./gradlew refreshVersions
