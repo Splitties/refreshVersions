@@ -9,7 +9,7 @@ class ArtifactVersionKeyRuleTest {
     @Test
     fun `Test kotlinx libraries`() {
         val versionKeyRule = ArtifactVersionKeyRule(
-            artifactPattern = "org.jetbrains.kotlinx:kotlinx-???(-*)",
+            artifactPattern = "  org.jetbrains.kotlinx:kotlinx-???(-*)".trimStart(),
             versionKeyPattern = "              ^^^^^^^.        ^^^"
         )
         kotlinxArtifacts.forEach {
