@@ -19,6 +19,9 @@ androidx.core:core-role(-*)
 androidx.core:core-animation(-*)
 ^^^^^^^^.     ^^^^^^^^^^^^^^
 
+androidx.core:core-google-shortcuts(-*)
+^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^
+
 androidx.dynamicanimation:dynamicanimation-ktx
 ^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^
 

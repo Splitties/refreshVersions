@@ -167,6 +167,8 @@ object AndroidX {
 
         @JvmField val animation = "$artifactPrefix-animation:_"
         @JvmField val animationTesting = "$artifactPrefix-animation-testing:_"
+
+        @JvmField val googleShortcuts = "$artifactPrefix-google-shortcuts:_"
     }
 
     val lifecycle = Lifecycle // TODO kdoc

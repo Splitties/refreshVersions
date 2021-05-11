@@ -54,6 +54,7 @@ androidx.contentpager..contentpager=AndroidX.contentPager
 androidx.coordinatorlayout..coordinatorlayout=AndroidX.coordinatorLayout
 androidx.core..core-animation-testing=AndroidX.core.animationTesting
 androidx.core..core-animation=AndroidX.core.animation
+androidx.core..core-google-shortcuts=AndroidX.core.googleShortcuts
 androidx.core..core-ktx=AndroidX.core.ktx
 androidx.core..core-role=AndroidX.core.role
 androidx.core..core=AndroidX.core

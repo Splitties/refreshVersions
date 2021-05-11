@@ -70,6 +70,7 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.core-role", dependency = AndroidX.core.role),
     versionKeyWithModules(expected = "androidx.core-animation", dependency = AndroidX.core.animation),
     versionKeyWithModules(expected = "androidx.core-animation", dependency = AndroidX.core.animationTesting),
+    versionKeyWithModules(expected = "androidx.core-google-shortcuts", dependency = AndroidX.core.googleShortcuts),
     versionKeyWithModules(expected = "androidx.cursoradapter", dependency = AndroidX.cursorAdapter),
     versionKeyWithModules(expected = "androidx.customview", dependency = AndroidX.customView),
     versionKeyWithModules(expected = "androidx.documentfile", dependency = AndroidX.documentFile),
