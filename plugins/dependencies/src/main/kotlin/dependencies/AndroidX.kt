@@ -403,9 +403,14 @@ object AndroidX {
     object Hilt: IsNotADependency {
         private const val artifactPrefix = "androidx.hilt:hilt"
 
-        const val lifecycleViewModel = "$artifactPrefix-lifecycle-viewmodel:_"
         const val work = "$artifactPrefix-work:_"
+        const val navigationFragment = "$artifactPrefix-navigation-fragment:_"
+        const val navigationCompose = "$artifactPrefix-navigation-compose:_"
         const val compiler = "$artifactPrefix-compiler:_"
+
+        @Deprecated("Use @HiltViewModel instead of @ViewModelInject and remove this dependency. " +
+            "See docs here: https://dagger.dev/hilt/view-model")
+        const val lifecycleViewModel = "$artifactPrefix-lifecycle-viewmodel:_"
     }
 
     val enterprise = Enterprise // TODO kdoc

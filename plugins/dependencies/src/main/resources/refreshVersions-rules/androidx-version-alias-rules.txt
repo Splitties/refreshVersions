@@ -28,6 +28,12 @@ androidx.gaming:gaming-frame-pacing(-*)
 androidx.gaming:gaming-performance-tuner(-*)
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^^^^
 
+androidx.hilt:hilt-lifecycle-viewmodel
+^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.hilt:hilt-navigation-compose
+^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^^^
+
 androidx.lifecycle:lifecycle-viewmodel-compose
 ^^^^^^^^.          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

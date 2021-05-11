@@ -58,7 +58,10 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.compose.material", dependenciesObject = AndroidX.compose.material),
     versionKeyWithModules(expected = "androidx.concurrent", dependenciesObject = AndroidX.concurrent),
     versionKeyWithModules(expected = "androidx.constraintlayout", dependency = AndroidX.constraintLayout),
-    versionKeyWithModules(expected = "androidx.constraintlayout-compose", dependency = AndroidX.constraintLayoutCompose),
+    versionKeyWithModules(
+        expected = "androidx.constraintlayout-compose",
+        dependency = AndroidX.constraintLayoutCompose
+    ),
     versionKeyWithModules(expected = "androidx.constraintlayout", dependency = AndroidX.constraintLayoutSolver),
     versionKeyWithModules(expected = "androidx.contentpager", dependency = AndroidX.contentPager),
     versionKeyWithModules(expected = "androidx.coordinatorlayout", dependency = AndroidX.coordinatorLayout),
@@ -83,6 +86,19 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.fragment", dependency = AndroidX.fragmentTesting),
     versionKeyWithModules(expected = "androidx.gridlayout", dependency = AndroidX.gridLayout),
     versionKeyWithModules(expected = "androidx.heifwriter", dependency = AndroidX.heifWriter),
+    versionKeyWithModules(
+        expected = "androidx.hilt",
+        dependenciesObject = AndroidX.hilt,
+        excludes = listOf(AndroidX.hilt.navigationCompose, @Suppress("deprecation") AndroidX.hilt.lifecycleViewModel)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.hilt-navigation-compose",
+        dependency = AndroidX.hilt.navigationCompose
+    ),
+    versionKeyWithModules(
+        expected = "androidx.hilt-lifecycle-viewmodel",
+        dependency = @Suppress("deprecation") AndroidX.hilt.lifecycleViewModel
+    ),
     versionKeyWithModules(expected = "androidx.interpolator", dependency = AndroidX.interpolator),
     versionKeyWithModules(expected = "androidx.leanback", dependency = AndroidX.leanback),
     versionKeyWithModules(expected = "androidx.leanback", dependency = AndroidX.leanbackPreference),
