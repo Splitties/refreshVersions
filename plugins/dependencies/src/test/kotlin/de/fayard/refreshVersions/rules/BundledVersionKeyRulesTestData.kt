@@ -35,6 +35,7 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.annotation", dependency = AndroidX.annotationExperimental),
     versionKeyWithModules(expected = "androidx.appcompat", dependency = AndroidX.appCompat),
     versionKeyWithModules(expected = "androidx.appcompat", dependency = AndroidX.appCompatResources),
+    versionKeyWithModules(expected = "androidx.appsearch", dependency = AndroidX.appSearch),
     versionKeyWithModules(expected = "androidx.arch.core", dependenciesObject = AndroidX.archCore),
     versionKeyWithModules(expected = "androidx.asynclayoutinflater", dependency = AndroidX.asyncLayoutInflater),
     versionKeyWithModules(expected = "androidx.autofill", dependency = AndroidX.autoFill),

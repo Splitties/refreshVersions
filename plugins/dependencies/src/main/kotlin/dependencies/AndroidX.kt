@@ -158,6 +158,14 @@ object AndroidX {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Definition of nested objects below.  ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    val appSearch = AppSearch
+
+    object AppSearch : DependencyNotationAndGroup(group = "androidx.appsearch", name = "appsearch") {
+
+        @JvmField val compiler = "$artifactPrefix-compiler:_"
+        @JvmField val localStorage = "$artifactPrefix-local-storage:_"
+    }
+
     val core = Core // TODO kdoc
 
     object Core : DependencyNotationAndGroup(group = "androidx.core", name = "core") {
