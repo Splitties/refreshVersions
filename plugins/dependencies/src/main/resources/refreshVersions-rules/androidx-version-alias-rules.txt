@@ -34,6 +34,9 @@ androidx.media:media-widget(-*)
 androidx.navigation:navigation-compose
 ^^^^^^^^.           ^^^^^^^^^^^^^^^^^^
 
+androidx.paging:paging-compose
+^^^^^^^^.       ^^^^^^^^^^^^^^
+
 androidx.security:security-identity-credential
 ^^^^^^^^.         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

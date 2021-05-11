@@ -252,12 +252,15 @@ object AndroidX {
         const val commonKtx = "$artifactPrefix-common-ktx:_"
         const val runtimeKtx = "$artifactPrefix-runtime-ktx:_"
 
+        const val compose = "$artifactPrefix-compose:_"
+
         const val rxJava2Ktx = "$artifactPrefix-rxjava2-ktx:_"
 
         const val common = "$artifactPrefix-common:_"
         const val runtime = "$artifactPrefix-runtime:_"
 
         const val rxJava2 = "$artifactPrefix-rxjava2:_"
+        const val rxJava3 = "$artifactPrefix-rxjava3:_"
     }
 
     val work = Work // TODO kdoc

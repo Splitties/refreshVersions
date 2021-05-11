@@ -113,7 +113,15 @@ private val androidX = listOf(
         expected = "androidx.navigation-compose",
         dependency = AndroidX.navigation.compose
     ),
-    versionKeyWithModules(expected = "androidx.paging", dependenciesObject = AndroidX.paging),
+    versionKeyWithModules(
+        expected = "androidx.paging",
+        dependenciesObject = AndroidX.paging,
+        excludes = listOf(AndroidX.paging.compose)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.paging-compose",
+        dependency = AndroidX.paging.compose
+    ),
     versionKeyWithModules(expected = "androidx.palette", dependency = AndroidX.palette),
     versionKeyWithModules(expected = "androidx.palette", dependency = AndroidX.paletteKtx),
     versionKeyWithModules(expected = "androidx.percentlayout", dependency = AndroidX.percentLayout),
