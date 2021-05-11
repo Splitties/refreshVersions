@@ -10,6 +10,9 @@ androidx.camera:camera-view(-*)
 androidx.car:car-cluster(-*)
 ^^^^^^^^.    ^^^^^^^^^^^
 
+androidx.constraintlayout:constraintlayout-compose
+^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
 androidx.core:core-role(-*)
 ^^^^^^^^.     ^^^^^^^^^
 

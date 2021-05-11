@@ -46,6 +46,7 @@ object AndroidX {
     const val collection = "androidx.collection:collection:_"
 
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:_"
+    const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:_"
     const val constraintLayoutSolver = "androidx.constraintlayout:constraintlayout-solver:_"
 
     const val contentPager = "androidx.contentpager:contentpager:_"

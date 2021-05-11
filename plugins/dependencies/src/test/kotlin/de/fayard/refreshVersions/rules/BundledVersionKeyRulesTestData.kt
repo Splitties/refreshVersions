@@ -58,6 +58,7 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.compose.material", dependenciesObject = AndroidX.compose.material),
     versionKeyWithModules(expected = "androidx.concurrent", dependenciesObject = AndroidX.concurrent),
     versionKeyWithModules(expected = "androidx.constraintlayout", dependency = AndroidX.constraintLayout),
+    versionKeyWithModules(expected = "androidx.constraintlayout-compose", dependency = AndroidX.constraintLayoutCompose),
     versionKeyWithModules(expected = "androidx.constraintlayout", dependency = AndroidX.constraintLayoutSolver),
     versionKeyWithModules(expected = "androidx.contentpager", dependency = AndroidX.contentPager),
     versionKeyWithModules(expected = "androidx.coordinatorlayout", dependency = AndroidX.coordinatorLayout),
