@@ -100,6 +100,7 @@ androidx.lifecycle..lifecycle-reactivestreams=AndroidX.lifecycle.reactiveStreams
 androidx.lifecycle..lifecycle-runtime-ktx=AndroidX.lifecycle.runtimeKtx
 androidx.lifecycle..lifecycle-runtime=AndroidX.lifecycle.runtime
 androidx.lifecycle..lifecycle-service=AndroidX.lifecycle.service
+androidx.lifecycle..lifecycle-viewmodel-compose=AndroidX.lifecycle.viewModelCompose
 androidx.lifecycle..lifecycle-viewmodel-ktx=AndroidX.lifecycle.viewModelKtx
 androidx.lifecycle..lifecycle-viewmodel-savedstate=AndroidX.lifecycle.viewModelSavedState
 androidx.lifecycle..lifecycle-viewmodel=AndroidX.lifecycle.viewModel

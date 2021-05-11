@@ -182,6 +182,8 @@ object AndroidX {
         const val service = "$artifactPrefix-service:_"
         const val viewModelSavedState = "$artifactPrefix-viewmodel-savedstate:_"
 
+        const val viewModelCompose = "$artifactPrefix-viewmodel-compose:_"
+
         const val runtime = "$artifactPrefix-runtime:_"
         const val viewModel = "$artifactPrefix-viewmodel:_"
         const val liveData = "$artifactPrefix-livedata:_"

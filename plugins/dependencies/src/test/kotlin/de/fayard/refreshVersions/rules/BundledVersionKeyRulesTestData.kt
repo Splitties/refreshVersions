@@ -86,7 +86,15 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.leanback", dependency = AndroidX.leanback),
     versionKeyWithModules(expected = "androidx.leanback", dependency = AndroidX.leanbackPreference),
     versionKeyWithModules(expected = "androidx.legacy", dependenciesObject = AndroidX.legacy),
-    versionKeyWithModules(expected = "androidx.lifecycle", dependenciesObject = AndroidX.lifecycle),
+    versionKeyWithModules(
+        expected = "androidx.lifecycle",
+        dependenciesObject = AndroidX.lifecycle,
+        excludes = listOf(AndroidX.lifecycle.viewModelCompose)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.lifecycle-viewmodel-compose",
+        dependency = AndroidX.lifecycle.viewModelCompose
+    ),
     versionKeyWithModules(expected = "androidx.loader", dependency = AndroidX.loader),
     @Suppress("DEPRECATION")
     versionKeyWithModules(expected = "androidx.localbroadcastmanager", dependency = AndroidX.localBroadcastManager),

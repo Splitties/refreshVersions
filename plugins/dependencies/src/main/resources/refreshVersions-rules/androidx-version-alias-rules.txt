@@ -25,6 +25,9 @@ androidx.gaming:gaming-frame-pacing(-*)
 androidx.gaming:gaming-performance-tuner(-*)
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^^^^
 
+androidx.lifecycle:lifecycle-viewmodel-compose
+^^^^^^^^.          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 androidx.media:media-widget(-*)
 ^^^^^^^^.      ^^^^^^^^^^^^
 
