@@ -279,6 +279,10 @@ object AndroidX {
         const val fragmentKtx = "$artifactPrefix-fragment-ktx:_"
         const val uiKtx = "$artifactPrefix-ui-ktx:_"
 
+        const val compose = "$artifactPrefix-compose:_"
+
+        const val dynamicFeaturesFragment = "$artifactPrefix-dynamic-features-fragment:_"
+
         const val safeArgsGenerator = "$artifactPrefix-safe-args-generator:_"
         const val safeArgsGradlePlugin = "$artifactPrefix-safe-args-gradle-plugin:_"
 

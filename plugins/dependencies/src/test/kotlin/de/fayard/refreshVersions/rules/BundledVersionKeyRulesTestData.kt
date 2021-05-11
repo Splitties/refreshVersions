@@ -96,7 +96,15 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.mediarouter", dependency = AndroidX.mediaRouter),
     versionKeyWithModules(expected = "androidx.multidex", dependency = AndroidX.multidex),
     versionKeyWithModules(expected = "androidx.multidex", dependency = AndroidX.multidexInstrumentation),
-    versionKeyWithModules(expected = "androidx.navigation", dependenciesObject = AndroidX.navigation),
+    versionKeyWithModules(
+        expected = "androidx.navigation",
+        dependenciesObject = AndroidX.navigation,
+        excludes = listOf(AndroidX.navigation.compose)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.navigation-compose",
+        dependency = AndroidX.navigation.compose
+    ),
     versionKeyWithModules(expected = "androidx.paging", dependenciesObject = AndroidX.paging),
     versionKeyWithModules(expected = "androidx.palette", dependency = AndroidX.palette),
     versionKeyWithModules(expected = "androidx.palette", dependency = AndroidX.paletteKtx),

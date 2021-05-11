@@ -28,6 +28,9 @@ androidx.gaming:gaming-performance-tuner(-*)
 androidx.media:media-widget(-*)
 ^^^^^^^^.      ^^^^^^^^^^^^
 
+androidx.navigation:navigation-compose
+^^^^^^^^.           ^^^^^^^^^^^^^^^^^^
+
 androidx.security:security-identity-credential
 ^^^^^^^^.         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
