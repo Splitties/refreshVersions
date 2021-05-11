@@ -1,6 +1,9 @@
 androidx.*:*
 ^^^^^^^^^^
 
+androidx.biometric:biometric-ktx
+^^^^^^^^.          ^^^^^^^^^^^^^
+
 androidx.camera:camera-extensions(-*)
 ^^^^^^^^.       ^^^^^^.^^^^^^^^^^
 

@@ -34,6 +34,7 @@ object AndroidX {
     const val autoFill = "androidx.autofill:autofill:_"
 
     const val biometric = "androidx.biometric:biometric:_"
+    const val biometricKtx = "androidx.biometric:biometric-ktx:_"
 
     const val browser = "androidx.browser:browser:_"
 

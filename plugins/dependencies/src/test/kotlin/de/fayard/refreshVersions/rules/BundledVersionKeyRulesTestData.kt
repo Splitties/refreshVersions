@@ -41,6 +41,7 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.autofill", dependency = AndroidX.autoFill),
     versionKeyWithModules(expected = "androidx.benchmark", dependenciesObject = AndroidX.benchmark),
     versionKeyWithModules(expected = "androidx.biometric", dependency = AndroidX.biometric),
+    versionKeyWithModules(expected = "androidx.biometric-ktx", dependency = AndroidX.biometricKtx),
     versionKeyWithModules(expected = "androidx.browser", dependency = AndroidX.browser),
     versionKeyWithModules(expected = "androidx.camera.extensions", dependency = AndroidX.camera.extensions),
     versionKeyWithModules(expected = "androidx.camera.view", dependency = AndroidX.camera.view),
