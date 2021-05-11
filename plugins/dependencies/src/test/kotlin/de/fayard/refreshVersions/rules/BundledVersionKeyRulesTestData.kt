@@ -147,7 +147,7 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.print", dependency = AndroidX.print),
     versionKeyWithModules(expected = "androidx.recommendation", dependency = AndroidX.recommendation),
     versionKeyWithModules(expected = "androidx.recyclerview", dependency = AndroidX.recyclerView),
-    versionKeyWithModules(expected = "androidx.recyclerview", dependency = AndroidX.recyclerViewSelection),
+    versionKeyWithModules(expected = "androidx.recyclerview-selection", dependency = AndroidX.recyclerViewSelection),
     versionKeyWithModules(expected = "androidx.remotecallback", dependency = AndroidX.remoteCallback),
     versionKeyWithModules(expected = "androidx.remotecallback", dependency = AndroidX.remoteCallbackProcessor),
     versionKeyWithModules(expected = "androidx.room", dependenciesObject = AndroidX.room),
