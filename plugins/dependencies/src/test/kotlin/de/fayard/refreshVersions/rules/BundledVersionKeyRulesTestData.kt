@@ -48,6 +48,8 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.camera", dependency = AndroidX.camera.camera2),
     versionKeyWithModules(expected = "androidx.camera", dependency = AndroidX.camera.core),
     versionKeyWithModules(expected = "androidx.car", dependency = AndroidX.car),
+    versionKeyWithModules(expected = "androidx.car.app", dependency = AndroidX.carApp),
+    versionKeyWithModules(expected = "androidx.car.app-testing", dependency = AndroidX.carApp.testing),
     versionKeyWithModules(expected = "androidx.car-cluster", dependency = AndroidX.carCluster),
     versionKeyWithModules(expected = "androidx.cardview", dependency = AndroidX.cardView),
     versionKeyWithModules(expected = "androidx.collection", dependency = AndroidX.collection),

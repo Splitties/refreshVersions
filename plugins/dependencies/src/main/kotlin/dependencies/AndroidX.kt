@@ -167,6 +167,13 @@ object AndroidX {
         @JvmField val localStorage = "$artifactPrefix-local-storage:_"
     }
 
+    val carApp = CarApp
+
+    object CarApp : DependencyNotationAndGroup(group = "androidx.car.app", name = "app") {
+
+        @JvmField val testing = "$artifactPrefix-testing:_"
+    }
+
     val core = Core // TODO kdoc
 
     object Core : DependencyNotationAndGroup(group = "androidx.core", name = "core") {
