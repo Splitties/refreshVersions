@@ -182,6 +182,7 @@ private val androidX = listOf(
         dependency = @Suppress("deprecation") AndroidX.room.coroutines
     ),
     versionKeyWithModules(expected = "androidx.savedstate", dependency = AndroidX.savedState),
+    versionKeyWithModules(expected = "androidx.savedstate", dependency = AndroidX.savedStateKtx),
     versionKeyWithModules(
         expected = "androidx.security",
         dependenciesObject = AndroidX.security,

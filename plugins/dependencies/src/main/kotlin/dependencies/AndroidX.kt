@@ -122,6 +122,7 @@ object AndroidX {
     const val remoteCallbackProcessor = "androidx.remotecallback:remotecallback-processor:_"
 
     const val savedState = "androidx.savedstate:savedstate:_"
+    const val savedStateKtx = "androidx.savedstate:savedstate-ktx:_"
 
     const val shareTarget = "androidx.sharetarget:sharetarget:_"
 
