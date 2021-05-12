@@ -14,7 +14,7 @@ The variant of Markdown used in MKDocs has useful additional features that we us
 A bunch of things are defined in the `mkdocs.yml` file (located at the root of the repo):
 
 - The structure of the documentation website is under the `nav` key.
-- Under the `extra` key, we have common text snippets (example usage: `{{ '{{' }}link.site{{ '}}' }}`)
+- Under the `extra` key, we have common text snippets (example usage: `{{ '{{' }}link.github{{ '}}' }}`)
 - Website metadata is defined at the top of the file (you probably don't need to touch it)
 - Theme and MKDocs configuration
 
