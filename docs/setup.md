@@ -24,6 +24,79 @@ The Gradle documentation has detailed migration guide if you are stuck:
 - From Gradle 4.x: https://docs.gradle.org/current/userguide/upgrading_version_4.html
 
 
+
+## Add the plugin
+
+Here is how to configure gradle refreshVersions:
+
+=== "settings.gradle.kts"
+    ```kotlin
+    plugins {
+        // See https://jmfayard.github.io/refreshVersions
+        id("de.fayard.refreshVersions") version "{{version.refreshVersions}}"
+    }
+    ```
+=== "settings.gradle"
+    ```groovy
+    plugins {
+        // See https://jmfayard.github.io/refreshVersions
+        id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+    }
+    ```
+
+
+### If you have a buildSrc module
+
+If you use the **buildSrc** module and have dependencies declared in the `buildSrc/build.gradle[.kts]` file, you probably want to use refreshVersions there as well. The setup is the same:
+
+=== "buildSrc/settings.gradle.kts"
+    ```kotlin
+    plugins {
+        id("de.fayard.refreshVersions") version "{{version.refreshVersions}}"
+    }
+    ```
+=== "buildSrc/settings.gradle"
+    ```groovy
+    plugins {
+        id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+    }
+    ```
+
+### If you use Groovy DSL, i.e. build.gradle files (not kts)
+
+**Auto-completion for dependency notations won't work out of the box.**
+
+A workaround is to configure the plugin in the `buildSrc` module (create the directory if it doesn't exist yet):
+
+=== "buildSrc/settings.gradle"
+```groovy
+plugins {
+    id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+}
+```
+
+
+### If you have a composite/included build
+
+Sharing used versions with included builds is not supported at the moment.
+
+If you need/want this feature, please vote with a 👍 on [this issue]({{link.issues}}/205), subscribe to it, and tell us about your use case, to help us prioritize.
+
+### If you want to use a development version
+
+Follow [issue 340: Continuous Deployment]({{link.issues}}/340)
+
+## Configure the plugin
+
+There is no required configuration!
+
+There are some options which can be configured in the `refreshVersions { }` block.
+
+If you are curious about what are the available options, you can use auto-complete (you can also type `this.` before to filter the results).
+
+<img width="854" src="https://user-images.githubusercontent.com/459464/117489731-41322200-af6e-11eb-8e5d-f3ba0e7b6070.png">
+
+<!--
 ## About Gradle's Settings file
 
 For refreshVersions to be able to work for all the dependencies in your project, including for the ones in the `buildscript`'s `classpath`, it needs to be setup in the Gradle settings.
@@ -57,41 +130,45 @@ plugins {} // Optional
 rootProject.name = "My Project" // Optional, defaults to parent dir's name.
 include(":app") // If the project has modules/subprojects to declare.
 ```
+-->
 
-## Bootstrap refreshVersions
+## Earlier versions
 
-Here is how to configure gradle refreshVersions:
+<!--
+### refreshVersions 0.9.x and earlier
+
+There is an
+Here is how refreshVersions was configured in 0.9.x and earlier versions
 
 === "settings.gradle.kts"
-```kotlin
-import de.fayard.refreshVersions.bootstrapRefreshVersions
+    ```kotlin
+    import de.fayard.refreshVersions.bootstrapRefreshVersions
 
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
-}
+    buildscript {
+        repositories { gradlePluginPortal() }
+        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
+    }
 
-bootstrapRefreshVersions()
-```
-
+    bootstrapRefreshVersions()
+    ```
 === "settings.gradle"
-```groovy
-import de.fayard.refreshVersions.RefreshVersionsSetup
+    ```groovy
+    import de.fayard.refreshVersions.RefreshVersionsSetup
 
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
-}
+    buildscript {
+        repositories { gradlePluginPortal() }
+        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
+    }
 
-RefreshVersionsSetup.bootstrap(settings)
-```
+    RefreshVersionsSetup.bootstrap(settings)
+    ```
+-->
 
+### If you are upgrading from the buildSrcVersions plugin
 
-### If you upgrade from the plugin buildSrcVersions
+Before refreshVersions, [there was the plugin buildSrcVersions](https://dev.to/jmfayard/better-dependency-management-in-android-studio-3-5-with-gradle-buildsrcversions-34e9).
 
-Before refreshVersions, [there was the plugin buildSrcVersions](https://dev.to/jmfayard/better-dependency-management-in-android-studio-3-5-with-gradle-buildsrcversions-34e9)
-
-If your project is using it, remove all its configuration from the top `build.gradle[.kts]` file
+If your project is using it, remove all its configuration from the top `build.gradle[.kts]` file to avoid any clashes between the two plugins:
 
 === "build.gradle.kts"
 ```diff
@@ -106,79 +183,8 @@ If your project is using it, remove all its configuration from the top `build.gr
 
 The task `buildSrcVersions` is still available.
 
-Read more: [gradle buildSrcVersions]({{link.site}}/gradle-buildsrcversions).
+Read more: [gradle buildSrcVersions](gradle-buildsrcversions.md).
 
-### If you have a buildSrc module
-
-If you use the **buildSrc** module and have dependencies declared in the `buildSrc/build.gradle[.kts]` file, you probably want to use refreshVersions there as well. For that, an extra special setup is required.
-
-=== "buildSrc/settings.gradle.kts"
-```kotlin
-import de.fayard.refreshVersions.bootstrapRefreshVersionsForBuildSrc
-
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
-}
-
-bootstrapRefreshVersionsForBuildSrc()
-```
-
-=== "buildSrc/settings.gradle"
-```groovy
-import de.fayard.refreshVersions.RefreshVersionsSetup
-
-buildscript {
-    repositories { gradlePluginPortal() }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersions}}")
-}
-
-RefreshVersionsSetup.bootstrapForBuildSrc(settings)
-```
-
-
-### If you have a composite/included build
-
-Sharing used versions with included builds is not supported at the moment.
-
-If you need/want this feature, please vote with a 👍 on [this issue]({{link.issues}}/205), subscribe to it, and tell us about your use case, to help us prioritize.
-
-### If you want to use a development version
-
-To use a development version (for example to test an unreleased new feature), you need to find the published development versions by searching in the
-[recent commits on the develop branch]({{link.github}}/commits/develop) (they start with "Dev version").
-
-You also need to add the maven repository `https://dl.bintray.com/jmfayard/maven` as shown below:
-
-=== "settings.gradle.kts"
-```kotlin
-import de.fayard.refreshVersions.bootstrapRefreshVersions
-
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        maven("https://dl.bintray.com/jmfayard/maven")
-    }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersionsDev}}")
-}
-
-bootstrapRefreshVersions()
-```
-
-=== "settings.gradle"
-```groovy
-import de.fayard.refreshVersions.RefreshVersionsSetup
-
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        maven { url 'https://dl.bintray.com/jmfayard/maven' }
-    }
-    dependencies.classpath("de.fayard.refreshVersions:refreshVersions:{{version.refreshVersionsDev}}")
-}
-
-RefreshVersionsSetup.bootstrap(settings)
-```
 
 ## Next steps
 
@@ -186,6 +192,6 @@ You did it! refreshVersions is now properly setup.
 
 Now, you might want to:
 
-- [Migrate/opt-in existing dependency declarations]({{link.site}}/migration), so the `refreshVersions` task can find available updates for you.
-- [Add new dependencies]({{link.site}}/add-dependencies).
-- [Update dependencies]({{link.site}}/update-dependencies).
+- [Migrate/opt-in existing dependency declarations](migration.md), so the `refreshVersions` task can find available updates for you.
+- [Add new dependencies](add-dependencies.md).
+- [Update dependencies](update-dependencies.md).

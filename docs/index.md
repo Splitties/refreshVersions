@@ -84,7 +84,7 @@ Simply run `$ ./gradlew refreshVersions` and you will see the available updates 
 
 Why as comment? Because while googling manually for available updates is a monkey job that is best done by a computer program, while **deciding whether to upgrade or not is your job** as a programmer.
 
-Read more: [Update Dependencies]({{link.site}}/update-dependencies/)
+Read more: [Update Dependencies](update-dependencies.md)
 
 ## It's fast!
 
@@ -138,6 +138,10 @@ We're very grateful to you and [our existing sponsors]({{link.master}}/SPONSORS.
 
 ## Contributing
 
-- This project is under the MIT License.
-- Explain your use case and start the discussion before your submit a pull-request
-- [CONTRIBUTING]({{link.site}}/CONTRIBUTING) describes the process for submitting pull requests.
+If you only want to submit an issue, see this [quick guide](contributing/submitting-issues.md) to maximize the likelihood of it being eventually resolved.
+
+If you want to submit a successful PR, start by reading [our guide](contributing/before-you-contribute.md).
+
+## License
+
+This project is provided under the MIT License.

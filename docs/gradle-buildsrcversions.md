@@ -96,7 +96,7 @@ You can now start to replace your magic strings with the properties available in
 You can still automatically look for updates, but this is now done with the task `:refreshVersions` and editing the file `versions.properties`
 
 ```bash
-$ gradle refreshVersions
+$ ./gradlew refreshVersions
 ```
 
-Read more: [**Update dependencies**]({{link.site}}/update-dependencies).
+Read more: [**Update dependencies**](update-dependencies.md).

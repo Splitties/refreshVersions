@@ -70,4 +70,4 @@ At that point, you probably want to:
 - ✅ Ensure the tests still run properly
 - 🕵️‍♀️ Do manual testing if needed
 - ✅ Commit when appropriate
-- 💝 [Become our sponsor]({{link.site}}/#funding) to thank us for the time saved 😉
+- 💝 [Become our sponsor](index.md#funding) to thank us for the time saved 😉
