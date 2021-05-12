@@ -306,12 +306,14 @@ object AndroidX {
     object Work : IsNotADependency {
         const val runtimeKtx = "androidx.work:work-runtime-ktx:_"
 
+        const val multiprocess = "androidx.work:work-multiprocess:_"
         const val gcm = "androidx.work:work-gcm:_"
         const val testing = "androidx.work:work-testing:_"
 
         const val runtime = "androidx.work:work-runtime:_"
 
         const val rxJava2 = "androidx.work:work-rxjava2:_"
+        const val rxJava3 = "androidx.work:work-rxjava3:_"
     }
 
     val leanback = Leanback
