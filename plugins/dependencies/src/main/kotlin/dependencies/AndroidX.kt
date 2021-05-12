@@ -513,7 +513,12 @@ object AndroidX {
         object Foundation : DependencyNotationAndGroup(group = "$groupPrefix.foundation", name = "foundation") {
             @JvmField
             val layout = "$artifactPrefix-layout:_"
+
             @JvmField
+            @Deprecated(
+                "Symbols moved into the main artifact in 1.0.0-alpha08",
+                ReplaceWith("AndroidX.compose.foundation")
+            )
             val text = "$artifactPrefix-text:_"
         }
 

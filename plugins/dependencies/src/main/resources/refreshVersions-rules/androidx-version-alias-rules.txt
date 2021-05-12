@@ -28,6 +28,9 @@ androidx.core:core-animation(-*)
 androidx.core:core-google-shortcuts(-*)
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^
 
+androidx.compose.foundation:foundation-text // Deprecated artifact, no longer updated with its family.
+^^^^^^^^.^^^^^^^.           ^^^^^^^^^^^^^^^
+
 androidx.dynamicanimation:dynamicanimation-ktx
 ^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^
 

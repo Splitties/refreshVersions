@@ -56,7 +56,15 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.collection", dependency = AndroidX.collectionKtx),
     versionKeyWithModules(expected = "androidx.compose.animation", dependenciesObject = AndroidX.compose.animation),
     versionKeyWithModules(expected = "androidx.compose.compiler", dependency = AndroidX.compose.compiler),
-    versionKeyWithModules(expected = "androidx.compose.foundation", dependenciesObject = AndroidX.compose.foundation),
+    versionKeyWithModules(
+        expected = "androidx.compose.foundation",
+        dependenciesObject = AndroidX.compose.foundation,
+        excludes = listOf(@Suppress("deprecation") AndroidX.compose.foundation.text)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.compose.foundation-text",
+        dependency = @Suppress("deprecation") AndroidX.compose.foundation.text
+    ),
     versionKeyWithModules(expected = "androidx.compose.runtime", dependenciesObject = AndroidX.compose.runtime),
     versionKeyWithModules(expected = "androidx.compose.ui", dependenciesObject = AndroidX.compose.ui),
     versionKeyWithModules(expected = "androidx.compose.material", dependenciesObject = AndroidX.compose.material),
