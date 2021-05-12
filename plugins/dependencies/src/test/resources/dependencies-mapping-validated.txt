@@ -40,6 +40,7 @@ androidx.compose.foundation..foundation-text=AndroidX.compose.foundation.text
 androidx.compose.foundation..foundation=AndroidX.compose.foundation
 androidx.compose.material..material-icons-core=AndroidX.compose.material.icons.core
 androidx.compose.material..material-icons-extended=AndroidX.compose.material.icons.extended
+androidx.compose.material..material-ripple=AndroidX.compose.material.ripple
 androidx.compose.material..material=AndroidX.compose.material
 androidx.compose.runtime..runtime-dispatch=AndroidX.compose.runtime.dispatch
 androidx.compose.runtime..runtime-livedata=AndroidX.compose.runtime.liveData

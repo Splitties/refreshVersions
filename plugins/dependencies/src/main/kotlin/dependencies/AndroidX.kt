@@ -534,6 +534,9 @@ object AndroidX {
                 @JvmField
                 val extended = "$artifactPrefix-icons-extended:_"
             }
+
+            @JvmField
+            val ripple = "$artifactPrefix-ripple:_"
         }
     }
 
