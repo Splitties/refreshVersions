@@ -107,7 +107,23 @@ private val androidX = listOf(
     ),
     versionKeyWithModules(expected = "androidx.interpolator", dependency = AndroidX.interpolator),
     versionKeyWithModules(expected = "androidx.leanback", dependency = AndroidX.leanback),
-    versionKeyWithModules(expected = "androidx.leanback", dependency = AndroidX.leanbackPreference),
+    versionKeyWithModules(
+        expected = "androidx.leanback",
+        dependency = @Suppress("deprecation") AndroidX.leanbackPreference
+    ),
+    versionKeyWithModules(
+        expected = "androidx.leanback",
+        dependenciesObject = AndroidX.leanback,
+        excludes = listOf(AndroidX.leanback.paging, AndroidX.leanback.tab)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.leanback-paging",
+        dependency = AndroidX.leanback.paging
+    ),
+    versionKeyWithModules(
+        expected = "androidx.leanback-tab",
+        dependency = AndroidX.leanback.tab
+    ),
     versionKeyWithModules(expected = "androidx.legacy", dependenciesObject = AndroidX.legacy),
     versionKeyWithModules(
         expected = "androidx.lifecycle",

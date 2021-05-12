@@ -81,7 +81,7 @@ object AndroidX {
 
     const val interpolator = "androidx.interpolator:interpolator:_"
 
-    const val leanback = "androidx.leanback:leanback:_"
+    @Deprecated("Dependency notation moved", ReplaceWith("AndroidX.leanback.preference"))
     const val leanbackPreference = "androidx.leanback:leanback-preference:_"
 
     const val loader = "androidx.loader:loader:_"
@@ -310,6 +310,14 @@ object AndroidX {
         const val runtime = "androidx.work:work-runtime:_"
 
         const val rxJava2 = "androidx.work:work-rxjava2:_"
+    }
+
+    val leanback = Leanback
+
+    object Leanback : DependencyNotationAndGroup(group = "androidx.leanback", name = "leanback") {
+        @JvmField val preference = "$artifactPrefix-preference:_"
+        @JvmField val paging = "$artifactPrefix-paging:_"
+        @JvmField val tab = "$artifactPrefix-tab:_"
     }
 
     val navigation = Navigation // TODO kdoc

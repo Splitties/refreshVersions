@@ -43,6 +43,12 @@ androidx.hilt:hilt-lifecycle-viewmodel
 androidx.hilt:hilt-navigation-compose
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^^^
 
+androidx.leanback:leanback-paging(-*)
+^^^^^^^^.         ^^^^^^^^^^^^^^^
+
+androidx.leanback:leanback-tab(-*)
+^^^^^^^^.         ^^^^^^^^^^^^
+
 androidx.lifecycle:lifecycle-viewmodel-compose
 ^^^^^^^^.          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
