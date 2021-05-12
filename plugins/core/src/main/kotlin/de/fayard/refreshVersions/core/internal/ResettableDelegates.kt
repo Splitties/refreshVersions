@@ -41,6 +41,17 @@ internal class ResettableDelegates {
         }
     }
 
+    inner class MutableLazy<T : Any>(private val initializer: () -> T) : Delegate<T>() {
+
+        override fun getValue(thisRef: Any?, property: KProperty<*>): T {
+            return field ?: initializer().apply { field = this }
+        }
+
+        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+            field = value
+        }
+    }
+
     abstract inner class Delegate<T> : ReadOnlyProperty<Any?, T> {
 
         @Suppress("unused") // Discourage use outside this file.

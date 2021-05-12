@@ -1,3 +1,5 @@
+import static de.fayard.refreshVersions.core.Versions.versionFor
+
 plugins {
     id 'application'
     id 'idea'
@@ -20,3 +22,6 @@ dependencies {
     implementation(AndroidX.annotation)
     implementation("org.jetbrains:annotations:_")
 }
+
+println("The version for artifact org.jetbrains:annotations:_ is " + versionFor("org.jetbrains:annotations:_"))
+println("The version for version key version.com.google.guava..guava is " + versionFor("version.com.google.guava..guava"))

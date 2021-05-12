@@ -1,3 +1,5 @@
+import de.fayard.refreshVersions.core.versionFor
+import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -45,6 +47,21 @@ dependencies {
 
     api("org.apache.poi:poi:_")
     api("org.apache.poi:poi-ooxml:_")
+}
+
+getKotlinPluginVersion().let {
+    val kotlinStdlibVersion = versionFor(dependencyNotation = Kotlin.stdlib)
+    check(it == kotlinStdlibVersion) {
+        "Unexpected mismatch between the version of the Kotlin plugin and the stdlib. " +
+            "Is the versionFor function implementation correct?" +
+            "Got respectively $it and $kotlinStdlibVersion"
+    }
+    val kotlinVersion = versionFor(versionKey = "version.kotlin")
+    check(it == kotlinVersion) {
+        "Unexpected mismatch between the version of the Kotlin plugin and the one from versions.properties. " +
+            "Is the versionFor function implementation correct?" +
+            "Got respectively $it and $kotlinStdlibVersion"
+    }
 }
 
 tasks.register("run", JavaExec::class.java) {
