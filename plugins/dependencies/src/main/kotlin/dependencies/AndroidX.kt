@@ -342,6 +342,13 @@ object AndroidX {
             const val provider = "$artifactPrefix-provider:_"
         }
 
+        val tiles = Tiles
+
+        object Tiles : DependencyNotationAndGroup(group = "androidx.wear.tiles", name = "tiles") {
+            @JvmField val proto = "$artifactPrefix-proto:_"
+            @JvmField val renderer = "$artifactPrefix-renderer:_"
+        }
+
         val watchFace = WatchFace
 
         object WatchFace : DependencyNotationAndGroup(group = "androidx.wear", name = "wear-watchface") {

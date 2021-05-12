@@ -244,6 +244,7 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.wear-ongoing", dependency = AndroidX.wear.ongoing),
     versionKeyWithModules(expected = "androidx.wear-phone-interactions", dependency = AndroidX.wear.phoneInteractions),
     versionKeyWithModules(expected = "androidx.wear-remote-interactions", dependency = AndroidX.wear.remoteInteractions),
+    versionKeyWithModules(expected = "androidx.wear.tiles", dependency = AndroidX.wear.tiles),
     versionKeyWithModules(expected = "androidx.webkit", dependency = AndroidX.webkit),
     versionKeyWithModules(expected = "androidx.work", dependenciesObject = AndroidX.work)
 )
