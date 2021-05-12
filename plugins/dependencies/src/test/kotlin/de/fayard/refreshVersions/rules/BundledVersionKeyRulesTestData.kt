@@ -77,6 +77,7 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.core-google-shortcuts", dependency = AndroidX.core.googleShortcuts),
     versionKeyWithModules(expected = "androidx.cursoradapter", dependency = AndroidX.cursorAdapter),
     versionKeyWithModules(expected = "androidx.customview", dependency = AndroidX.customView),
+    versionKeyWithModules(expected = "androidx.datastore", dependency = AndroidX.dataStore),
     versionKeyWithModules(expected = "androidx.documentfile", dependency = AndroidX.documentFile),
     versionKeyWithModules(expected = "androidx.drawerlayout", dependency = AndroidX.drawerLayout),
     versionKeyWithModules(expected = "androidx.dynamicanimation", dependency = AndroidX.dynamicAnimation),

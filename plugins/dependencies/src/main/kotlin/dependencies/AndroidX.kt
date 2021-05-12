@@ -187,6 +187,23 @@ object AndroidX {
         @JvmField val googleShortcuts = "$artifactPrefix-google-shortcuts:_"
     }
 
+    val dataStore = DataStore
+
+    object DataStore : DependencyNotationAndGroup(group = "androidx.datastore", name = "datastore") {
+
+        val preferences = Preferences
+
+        object Preferences : DependencyNotationAndGroup(group = "androidx.datastore", name = "datastore-preferences") {
+            @JvmField val core = "$artifactPrefix-core:_"
+            @JvmField val rxJava2 = "$artifactPrefix-rxJava2:_"
+            @JvmField val rxJava3 = "$artifactPrefix-rxJava3:_"
+        }
+
+        @JvmField val core = "$artifactPrefix-core:_"
+        @JvmField val rxJava2 = "$artifactPrefix-rxJava2:_"
+        @JvmField val rxJava3 = "$artifactPrefix-rxJava3:_"
+    }
+
     val lifecycle = Lifecycle // TODO kdoc
 
     object Lifecycle: IsNotADependency {
