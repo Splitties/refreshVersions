@@ -356,7 +356,7 @@ object AndroidX {
         object WatchFace : DependencyNotationAndGroup(group = "androidx.wear", name = "wear-watchface") {
             @JvmField val client = "$artifactPrefix-client:_"
             @JvmField val clientGuava = "$artifactPrefix-client-guava:_"
-            @JvmField val complicationsRendering = "$artifactPrefix-compilcations-rendering:_"
+            @JvmField val complicationsRendering = "$artifactPrefix-complications-rendering:_"
             @JvmField val data = "$artifactPrefix-data:_"
             @JvmField val editor = "$artifactPrefix-editor:_"
             @JvmField val editorGuava = "$artifactPrefix-editor-guava:_"
