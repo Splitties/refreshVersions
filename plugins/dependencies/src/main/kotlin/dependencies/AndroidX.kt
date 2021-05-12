@@ -18,8 +18,13 @@ object AndroidX {
     // LibraryGroups.kt: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-master-dev:buildSrc/src/main/kotlin/androidx/build/LibraryGroups.kt;l=22?q=LibraryGroups&sq=
     // LibraryVersions.kt: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-master-dev:buildSrc/src/main/kotlin/androidx/build/LibraryVersions.kt;l=22?q=LibraryVersions&sq=
 
+    val activity = Activity
+
+    object Activity : DependencyNotationAndGroup(group = "androidx.activity", name = "activity") {
+        @JvmField val compose = "$artifactPrefix-compose:_"
+        @JvmField val ktx = "$artifactPrefix-ktx:_"
+    }
     const val activityKtx = "androidx.activity:activity-ktx:_"
-    const val activity = "androidx.activity:activity:_"
 
     // androidx.ads intentionally not included because ads are mental pollution.
 
@@ -163,28 +168,36 @@ object AndroidX {
 
     object AppSearch : DependencyNotationAndGroup(group = "androidx.appsearch", name = "appsearch") {
 
-        @JvmField val compiler = "$artifactPrefix-compiler:_"
-        @JvmField val localStorage = "$artifactPrefix-local-storage:_"
+        @JvmField
+        val compiler = "$artifactPrefix-compiler:_"
+        @JvmField
+        val localStorage = "$artifactPrefix-local-storage:_"
     }
 
     val carApp = CarApp
 
     object CarApp : DependencyNotationAndGroup(group = "androidx.car.app", name = "app") {
 
-        @JvmField val testing = "$artifactPrefix-testing:_"
+        @JvmField
+        val testing = "$artifactPrefix-testing:_"
     }
 
     val core = Core // TODO kdoc
 
     object Core : DependencyNotationAndGroup(group = "androidx.core", name = "core") {
 
-        @JvmField val ktx = "$artifactPrefix-ktx:_"
-        @JvmField val role = "$artifactPrefix-role:_"
+        @JvmField
+        val ktx = "$artifactPrefix-ktx:_"
+        @JvmField
+        val role = "$artifactPrefix-role:_"
 
-        @JvmField val animation = "$artifactPrefix-animation:_"
-        @JvmField val animationTesting = "$artifactPrefix-animation-testing:_"
+        @JvmField
+        val animation = "$artifactPrefix-animation:_"
+        @JvmField
+        val animationTesting = "$artifactPrefix-animation-testing:_"
 
-        @JvmField val googleShortcuts = "$artifactPrefix-google-shortcuts:_"
+        @JvmField
+        val googleShortcuts = "$artifactPrefix-google-shortcuts:_"
     }
 
     val dataStore = DataStore
@@ -194,14 +207,20 @@ object AndroidX {
         val preferences = Preferences
 
         object Preferences : DependencyNotationAndGroup(group = "androidx.datastore", name = "datastore-preferences") {
-            @JvmField val core = "$artifactPrefix-core:_"
-            @JvmField val rxJava2 = "$artifactPrefix-rxJava2:_"
-            @JvmField val rxJava3 = "$artifactPrefix-rxJava3:_"
+            @JvmField
+            val core = "$artifactPrefix-core:_"
+            @JvmField
+            val rxJava2 = "$artifactPrefix-rxJava2:_"
+            @JvmField
+            val rxJava3 = "$artifactPrefix-rxJava3:_"
         }
 
-        @JvmField val core = "$artifactPrefix-core:_"
-        @JvmField val rxJava2 = "$artifactPrefix-rxJava2:_"
-        @JvmField val rxJava3 = "$artifactPrefix-rxJava3:_"
+        @JvmField
+        val core = "$artifactPrefix-core:_"
+        @JvmField
+        val rxJava2 = "$artifactPrefix-rxJava2:_"
+        @JvmField
+        val rxJava3 = "$artifactPrefix-rxJava3:_"
     }
 
     val lifecycle = Lifecycle // TODO kdoc
@@ -246,7 +265,8 @@ object AndroidX {
     val window = Window // TODO kdoc
 
     object Window : DependencyNotationAndGroup(group = "androidx.window", name = "window") {
-        @JvmField val extensions = "$artifactPrefix-extensions:_"
+        @JvmField
+        val extensions = "$artifactPrefix-extensions:_"
     }
 
     val security = Security // TODO kdoc
@@ -319,21 +339,29 @@ object AndroidX {
     val leanback = Leanback
 
     object Leanback : DependencyNotationAndGroup(group = "androidx.leanback", name = "leanback") {
-        @JvmField val preference = "$artifactPrefix-preference:_"
-        @JvmField val paging = "$artifactPrefix-paging:_"
-        @JvmField val tab = "$artifactPrefix-tab:_"
+        @JvmField
+        val preference = "$artifactPrefix-preference:_"
+        @JvmField
+        val paging = "$artifactPrefix-paging:_"
+        @JvmField
+        val tab = "$artifactPrefix-tab:_"
     }
 
     val wear = Wear
 
     object Wear : DependencyNotationAndGroup(group = "androidx.wear", name = "wear") {
-        @JvmField val input = "$artifactPrefix-input:_"
-        @JvmField val inputTesting = "$artifactPrefix-input-testing:_"
+        @JvmField
+        val input = "$artifactPrefix-input:_"
+        @JvmField
+        val inputTesting = "$artifactPrefix-input-testing:_"
 
-        @JvmField val ongoing = "$artifactPrefix-ongoing:_"
+        @JvmField
+        val ongoing = "$artifactPrefix-ongoing:_"
 
-        @JvmField val phoneInteractions = "$artifactPrefix-phone-interactions:_"
-        @JvmField val remoteInteractions = "$artifactPrefix-remote-interactions:_"
+        @JvmField
+        val phoneInteractions = "$artifactPrefix-phone-interactions:_"
+        @JvmField
+        val remoteInteractions = "$artifactPrefix-remote-interactions:_"
 
         val complications = Complications
 
@@ -347,21 +375,31 @@ object AndroidX {
         val tiles = Tiles
 
         object Tiles : DependencyNotationAndGroup(group = "androidx.wear.tiles", name = "tiles") {
-            @JvmField val proto = "$artifactPrefix-proto:_"
-            @JvmField val renderer = "$artifactPrefix-renderer:_"
+            @JvmField
+            val proto = "$artifactPrefix-proto:_"
+            @JvmField
+            val renderer = "$artifactPrefix-renderer:_"
         }
 
         val watchFace = WatchFace
 
         object WatchFace : DependencyNotationAndGroup(group = "androidx.wear", name = "wear-watchface") {
-            @JvmField val client = "$artifactPrefix-client:_"
-            @JvmField val clientGuava = "$artifactPrefix-client-guava:_"
-            @JvmField val complicationsRendering = "$artifactPrefix-complications-rendering:_"
-            @JvmField val data = "$artifactPrefix-data:_"
-            @JvmField val editor = "$artifactPrefix-editor:_"
-            @JvmField val editorGuava = "$artifactPrefix-editor-guava:_"
-            @JvmField val guava = "$artifactPrefix-guava:_"
-            @JvmField val style = "$artifactPrefix-style:_"
+            @JvmField
+            val client = "$artifactPrefix-client:_"
+            @JvmField
+            val clientGuava = "$artifactPrefix-client-guava:_"
+            @JvmField
+            val complicationsRendering = "$artifactPrefix-complications-rendering:_"
+            @JvmField
+            val data = "$artifactPrefix-data:_"
+            @JvmField
+            val editor = "$artifactPrefix-editor:_"
+            @JvmField
+            val editorGuava = "$artifactPrefix-editor-guava:_"
+            @JvmField
+            val guava = "$artifactPrefix-guava:_"
+            @JvmField
+            val style = "$artifactPrefix-style:_"
         }
     }
 
@@ -415,37 +453,50 @@ object AndroidX {
 
         object Runtime : DependencyNotationAndGroup(group = "$groupPrefix.runtime", name = "runtime") {
 
-            @JvmField val dispatch = "$artifactPrefix-dispatch:_"
-            @JvmField val savedInstanceState = "$artifactPrefix-saved-instance-state:_"
+            @JvmField
+            val dispatch = "$artifactPrefix-dispatch:_"
+            @JvmField
+            val savedInstanceState = "$artifactPrefix-saved-instance-state:_"
 
-            @JvmField val liveData = "$artifactPrefix-livedata:_"
-            @JvmField val rxJava2 = "$artifactPrefix-rxjava2:_"
+            @JvmField
+            val liveData = "$artifactPrefix-livedata:_"
+            @JvmField
+            val rxJava2 = "$artifactPrefix-rxjava2:_"
         }
 
         val animation = Animation
 
         object Animation : DependencyNotationAndGroup(group = "$groupPrefix.animation", name = "animation") {
-            @JvmField val core = "$artifactPrefix-core:_"
+            @JvmField
+            val core = "$artifactPrefix-core:_"
         }
 
         val ui = Ui // TODO kdoc
 
         object Ui : DependencyNotationAndGroup(group = "$groupPrefix.ui", name = "ui") {
-            @JvmField val geometry = "$artifactPrefix-geometry:_"
-            @JvmField val graphics = "$artifactPrefix-graphics:_"
+            @JvmField
+            val geometry = "$artifactPrefix-geometry:_"
+            @JvmField
+            val graphics = "$artifactPrefix-graphics:_"
 
-            @JvmField val text = "$artifactPrefix-text:_"
-            @JvmField val textAndroid = "$artifactPrefix-text-android:_"
+            @JvmField
+            val text = "$artifactPrefix-text:_"
+            @JvmField
+            val textAndroid = "$artifactPrefix-text-android:_"
 
-            @JvmField val unit = "$artifactPrefix-unit:_"
-            @JvmField val util = "$artifactPrefix-util:_"
+            @JvmField
+            val unit = "$artifactPrefix-unit:_"
+            @JvmField
+            val util = "$artifactPrefix-util:_"
         }
 
         val foundation = Foundation
 
         object Foundation : DependencyNotationAndGroup(group = "$groupPrefix.foundation", name = "foundation") {
-            @JvmField val layout = "$artifactPrefix-layout:_"
-            @JvmField val text = "$artifactPrefix-text:_"
+            @JvmField
+            val layout = "$artifactPrefix-layout:_"
+            @JvmField
+            val text = "$artifactPrefix-text:_"
         }
 
         val material = Material
@@ -454,9 +505,11 @@ object AndroidX {
 
             val icons = Icons
 
-            object Icons: IsNotADependency {
-                @JvmField val core = "$artifactPrefix-icons-core:_"
-                @JvmField val extended = "$artifactPrefix-icons-extended:_"
+            object Icons : IsNotADependency {
+                @JvmField
+                val core = "$artifactPrefix-icons-core:_"
+                @JvmField
+                val extended = "$artifactPrefix-icons-extended:_"
             }
         }
     }
@@ -496,8 +549,10 @@ object AndroidX {
         const val navigationCompose = "$artifactPrefix-navigation-compose:_"
         const val compiler = "$artifactPrefix-compiler:_"
 
-        @Deprecated("Use @HiltViewModel instead of @ViewModelInject and remove this dependency. " +
-            "See docs here: https://dagger.dev/hilt/view-model")
+        @Deprecated(
+            "Use @HiltViewModel instead of @ViewModelInject and remove this dependency. " +
+                "See docs here: https://dagger.dev/hilt/view-model"
+        )
         const val lifecycleViewModel = "$artifactPrefix-lifecycle-viewmodel:_"
     }
 

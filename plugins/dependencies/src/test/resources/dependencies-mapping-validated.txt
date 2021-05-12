@@ -1,3 +1,5 @@
+androidx.activity..activity-compose=AndroidX.activity.compose
+androidx.activity..activity-ktx=AndroidX.activity.ktx
 androidx.activity..activity-ktx=AndroidX.activityKtx
 androidx.activity..activity=AndroidX.activity
 androidx.annotation..annotation-experimental=AndroidX.annotationExperimental

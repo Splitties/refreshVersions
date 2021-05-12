@@ -29,7 +29,7 @@ private val kotlinX = listOf(
 )
 
 private val androidX = listOf(
-    versionKeyWithModules(expected = "androidx.activity", dependency = AndroidX.activity),
+    versionKeyWithModules(expected = "androidx.activity", dependenciesObject = AndroidX.activity),
     versionKeyWithModules(expected = "androidx.activity", dependency = AndroidX.activityKtx),
     versionKeyWithModules(expected = "androidx.annotation", dependency = AndroidX.annotation),
     versionKeyWithModules(expected = "androidx.annotation", dependency = AndroidX.annotationExperimental),
