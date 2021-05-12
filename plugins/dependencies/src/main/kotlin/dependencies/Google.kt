@@ -19,6 +19,31 @@ object Google {
      */
     val firebase get() = Firebase
 
+    val accompanist = Accompanist
+
+    object Accompanist : IsNotADependency {
+        private const val artifactPrefix = "com.google.accompanist:accompanist"
+
+        const val coil = "$artifactPrefix-coil:_"
+        const val glide = "$artifactPrefix-glide:_"
+        const val imageloadingCore = "$artifactPrefix-imageloading-core:_"
+
+        const val insets = "$artifactPrefix-insets:_"
+        const val systemuicontroller = "$artifactPrefix-systemuicontroller:_"
+
+        const val appcompatTheme = "$artifactPrefix-appcompat-theme:_"
+
+        val pager = Pager
+
+        object Pager : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-pager") {
+            @JvmField
+            val indicators = "$artifactPrefix-indicators:_"
+        }
+
+        const val flowlayout = "$artifactPrefix-flowlayout:_"
+        const val swiperefresh = "$artifactPrefix-swiperefresh:_"
+    }
+
     val android = Android
 
     object Android : IsNotADependency {

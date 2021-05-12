@@ -260,7 +260,8 @@ private val androidX = listOf(
 )
 
 private val google = listOf(
-    versionKeyWithModules(expected = "google.dagger", dependenciesObject = Google.dagger)
+    versionKeyWithModules(expected = "google.dagger", dependenciesObject = Google.dagger),
+    versionKeyWithModules(expected = "google.accompanist", dependenciesObject = Google.accompanist)
 )
 
 private val testing = listOf(
