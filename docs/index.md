@@ -138,6 +138,10 @@ We're very grateful to you and [our existing sponsors]({{link.master}}/SPONSORS.
 
 ## Contributing
 
-- This project is under the MIT License.
-- Explain your use case and start the discussion before your submit a pull-request
-- [CONTRIBUTING]({{link.site}}/CONTRIBUTING) describes the process for submitting pull requests.
+If you only want to submit an issue, see this [quick guide](contributing/submitting-issues.md) to maximize the likelihood of it being eventually resolved.
+
+If you want to submit a successful PR, start by reading [our guide](contributing/before-you-contribute.md).
+
+## License
+
+This project is provided under the MIT License.
