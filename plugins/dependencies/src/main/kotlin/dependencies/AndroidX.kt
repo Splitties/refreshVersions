@@ -153,8 +153,6 @@ object AndroidX {
     const val viewPager = "androidx.viewpager:viewpager:_"
     const val viewPager2 = "androidx.viewpager2:viewpager2:_"
 
-    const val wear = "androidx.wear:wear:_"
-
     const val webkit = "androidx.webkit:webkit:_"
 
 
@@ -322,6 +320,40 @@ object AndroidX {
         @JvmField val preference = "$artifactPrefix-preference:_"
         @JvmField val paging = "$artifactPrefix-paging:_"
         @JvmField val tab = "$artifactPrefix-tab:_"
+    }
+
+    val wear = Wear
+
+    object Wear : DependencyNotationAndGroup(group = "androidx.wear", name = "wear") {
+        @JvmField val input = "$artifactPrefix-input:_"
+        @JvmField val inputTesting = "$artifactPrefix-input-testing:_"
+
+        @JvmField val ongoing = "$artifactPrefix-ongoing:_"
+
+        @JvmField val phoneInteractions = "$artifactPrefix-phone-interactions:_"
+        @JvmField val remoteInteractions = "$artifactPrefix-remote-interactions:_"
+
+        val complications = Complications
+
+        object Complications {
+            private const val artifactPrefix = "androidx.wear:wear-complications"
+
+            const val data = "$artifactPrefix-data:_"
+            const val provider = "$artifactPrefix-provider:_"
+        }
+
+        val watchFace = WatchFace
+
+        object WatchFace : DependencyNotationAndGroup(group = "androidx.wear", name = "wear-watchface") {
+            @JvmField val client = "$artifactPrefix-client:_"
+            @JvmField val clientGuava = "$artifactPrefix-client-guava:_"
+            @JvmField val complicationsRendering = "$artifactPrefix-compilcations-rendering:_"
+            @JvmField val data = "$artifactPrefix-data:_"
+            @JvmField val editor = "$artifactPrefix-editor:_"
+            @JvmField val editorGuava = "$artifactPrefix-editor-guava:_"
+            @JvmField val guava = "$artifactPrefix-guava:_"
+            @JvmField val style = "$artifactPrefix-style:_"
+        }
     }
 
     val navigation = Navigation // TODO kdoc

@@ -237,6 +237,13 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.viewpager", dependency = AndroidX.viewPager),
     versionKeyWithModules(expected = "androidx.viewpager2", dependency = AndroidX.viewPager2),
     versionKeyWithModules(expected = "androidx.wear", dependency = AndroidX.wear),
+    versionKeyWithModules(expected = "androidx.wear-input", dependency = AndroidX.wear.input),
+    versionKeyWithModules(expected = "androidx.wear-input", dependency = AndroidX.wear.inputTesting),
+    versionKeyWithModules(expected = "androidx.wear-watchface", dependenciesObject = AndroidX.wear.watchFace),
+    versionKeyWithModules(expected = "androidx.wear-complications", dependenciesObject = AndroidX.wear.complications),
+    versionKeyWithModules(expected = "androidx.wear-ongoing", dependency = AndroidX.wear.ongoing),
+    versionKeyWithModules(expected = "androidx.wear-phone-interactions", dependency = AndroidX.wear.phoneInteractions),
+    versionKeyWithModules(expected = "androidx.wear-remote-interactions", dependency = AndroidX.wear.remoteInteractions),
     versionKeyWithModules(expected = "androidx.webkit", dependency = AndroidX.webkit),
     versionKeyWithModules(expected = "androidx.work", dependenciesObject = AndroidX.work)
 )
