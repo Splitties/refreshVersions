@@ -37,7 +37,7 @@ androidx.gaming:gaming-frame-pacing(-*)
 androidx.gaming:gaming-performance-tuner(-*)
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^^^^
 
-androidx.hilt:hilt-lifecycle-viewmodel
+androidx.hilt:hilt-lifecycle-viewmodel // Deprecated artifact, no longer updated with its family.
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^^^^
 
 androidx.hilt:hilt-navigation-compose
