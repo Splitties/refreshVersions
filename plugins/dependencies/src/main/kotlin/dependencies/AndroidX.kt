@@ -456,12 +456,16 @@ object AndroidX {
             @JvmField
             val dispatch = "$artifactPrefix-dispatch:_"
             @JvmField
+            val saveable = "$artifactPrefix-saveable:_"
+            @JvmField
             val savedInstanceState = "$artifactPrefix-saved-instance-state:_"
 
             @JvmField
             val liveData = "$artifactPrefix-livedata:_"
             @JvmField
             val rxJava2 = "$artifactPrefix-rxjava2:_"
+            @JvmField
+            val rxJava3 = "$artifactPrefix-rxjava3:_"
         }
 
         val animation = Animation
