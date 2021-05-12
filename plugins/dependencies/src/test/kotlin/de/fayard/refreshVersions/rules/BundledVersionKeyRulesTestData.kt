@@ -227,6 +227,7 @@ private val androidX = listOf(
     ),
     versionKeyWithModules(expected = "androidx.textclassifier", dependency = AndroidX.textClassifier),
     versionKeyWithModules(expected = "androidx.transition", dependency = AndroidX.transition),
+    versionKeyWithModules(expected = "androidx.transition", dependency = AndroidX.transitionKtx),
     versionKeyWithModules(expected = "androidx.tvprovider", dependency = AndroidX.tvProvider),
     versionKeyWithModules(expected = "androidx.ui", dependenciesObject = AndroidX.ui),
     versionKeyWithModules(expected = "androidx.vectordrawable", dependency = AndroidX.vectorDrawable),

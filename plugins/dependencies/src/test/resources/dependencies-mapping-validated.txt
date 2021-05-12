@@ -217,6 +217,7 @@ androidx.test.uiautomator..uiautomator=AndroidX.test.uiAutomator
 androidx.textclassifier..textclassifier=AndroidX.textClassifier
 androidx.tracing..tracing-ktx=AndroidX.tracingKtx
 androidx.tracing..tracing=AndroidX.tracing
+androidx.transition..transition-ktx=AndroidX.transitionKtx
 androidx.transition..transition=AndroidX.transition
 androidx.tvprovider..tvprovider=AndroidX.tvProvider
 androidx.ui..ui-test=AndroidX.ui.test

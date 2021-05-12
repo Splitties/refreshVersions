@@ -140,6 +140,7 @@ object AndroidX {
     const val tracingKtx = "androidx.tracing:tracing-ktx:_"
 
     const val transition = "androidx.transition:transition:_"
+    const val transitionKtx = "androidx.transition:transition-ktx:_"
 
     const val tvProvider = "androidx.tvprovider:tvprovider:_"
 
