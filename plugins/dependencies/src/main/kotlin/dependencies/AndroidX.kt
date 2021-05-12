@@ -206,7 +206,7 @@ object AndroidX {
 
     val lifecycle = Lifecycle // TODO kdoc
 
-    object Lifecycle: IsNotADependency {
+    object Lifecycle : IsNotADependency {
         private const val artifactPrefix = "androidx.lifecycle:lifecycle"
 
         const val runtimeKtx = "$artifactPrefix-runtime-ktx:_"
@@ -239,7 +239,7 @@ object AndroidX {
 
     val startup = Startup // TODO kdoc
 
-    object Startup: IsNotADependency {
+    object Startup : IsNotADependency {
         const val runtime = "androidx.startup:startup-runtime:_"
     }
 
@@ -251,7 +251,7 @@ object AndroidX {
 
     val security = Security // TODO kdoc
 
-    object Security: IsNotADependency {
+    object Security : IsNotADependency {
         private const val artifactPrefix = "androidx.security:security"
 
         const val crypto = "$artifactPrefix-crypto:_"
@@ -262,7 +262,7 @@ object AndroidX {
 
     val room = Room // TODO kdoc
 
-    object Room: IsNotADependency {
+    object Room : IsNotADependency {
         private const val artifactPrefix = "androidx.room:room"
 
         const val ktx = "$artifactPrefix-ktx:_"
@@ -282,7 +282,7 @@ object AndroidX {
 
     val paging = Paging // TODO kdoc
 
-    object Paging: IsNotADependency {
+    object Paging : IsNotADependency {
         private const val artifactPrefix = "androidx.paging:paging"
 
         const val commonKtx = "$artifactPrefix-common-ktx:_"
@@ -301,7 +301,7 @@ object AndroidX {
 
     val work = Work // TODO kdoc
 
-    object Work: IsNotADependency {
+    object Work : IsNotADependency {
         const val runtimeKtx = "androidx.work:work-runtime-ktx:_"
 
         const val gcm = "androidx.work:work-gcm:_"
@@ -314,7 +314,7 @@ object AndroidX {
 
     val navigation = Navigation // TODO kdoc
 
-    object Navigation: IsNotADependency {
+    object Navigation : IsNotADependency {
         private const val artifactPrefix = "androidx.navigation:navigation"
 
         const val fragmentKtx = "$artifactPrefix-fragment-ktx:_"
@@ -343,7 +343,7 @@ object AndroidX {
     val ui = Ui // TODO kdoc
 
     @Incubating
-    object Ui: IsNotADependency {
+    object Ui : IsNotADependency {
         const val test = "androidx.ui:ui-test:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
         const val tooling = "androidx.ui:ui-tooling:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
     }
@@ -352,7 +352,7 @@ object AndroidX {
     val compose = Compose // TODO kdoc
 
     @Incubating
-    object Compose: IsNotADependency {
+    object Compose : IsNotADependency {
         private const val groupPrefix = "androidx.compose"
 
         @Incubating
@@ -410,7 +410,7 @@ object AndroidX {
 
     val media2 = Media2
 
-    object Media2: IsNotADependency {
+    object Media2 : IsNotADependency {
         private const val artifactPrefix = "androidx.media2:media2"
 
         const val session = "$artifactPrefix-session:_"
@@ -423,7 +423,7 @@ object AndroidX {
 
     val camera = Camera
 
-    object Camera: IsNotADependency {
+    object Camera : IsNotADependency {
         private const val artifactPrefix = "androidx.camera:camera"
 
         const val core = "$artifactPrefix-core:_"
@@ -435,7 +435,7 @@ object AndroidX {
 
     val hilt = Hilt // TODO kdoc
 
-    object Hilt: IsNotADependency {
+    object Hilt : IsNotADependency {
         private const val artifactPrefix = "androidx.hilt:hilt"
 
         const val work = "$artifactPrefix-work:_"
@@ -450,7 +450,7 @@ object AndroidX {
 
     val enterprise = Enterprise // TODO kdoc
 
-    object Enterprise: IsNotADependency {
+    object Enterprise : IsNotADependency {
         private const val artifactPrefix = "androidx.enterprise:enterprise"
 
         const val feedback = "$artifactPrefix-feedback:_"
@@ -459,7 +459,7 @@ object AndroidX {
 
     val gaming = Gaming // TODO kdoc
 
-    object Gaming: IsNotADependency {
+    object Gaming : IsNotADependency {
         private const val artifactPrefix = "androidx.gaming:gaming"
 
         const val framePacing = "$artifactPrefix-frame-pacing:_"
@@ -469,7 +469,7 @@ object AndroidX {
 
     val slice = Slice // TODO kdoc
 
-    object Slice: IsNotADependency {
+    object Slice : IsNotADependency {
         private const val artifactPrefix = "androidx.slice:slice"
 
         const val buildersKtx = "$artifactPrefix-builders-ktx:_"
@@ -481,7 +481,7 @@ object AndroidX {
 
     val benchmark = Benchmark // TODO kdoc
 
-    object Benchmark: IsNotADependency {
+    object Benchmark : IsNotADependency {
         private const val artifactPrefix = "androidx.benchmark:benchmark"
 
         const val junit4 = "$artifactPrefix-junit4:_"
@@ -493,7 +493,7 @@ object AndroidX {
 
     val test = Test // TODO kdoc
 
-    object Test: IsNotADependency {
+    object Test : IsNotADependency {
         private const val coreVersion = "_"
         private const val group = "androidx.test"
 
@@ -509,7 +509,7 @@ object AndroidX {
 
         val ext = Ext
 
-        object Ext: IsNotADependency {
+        object Ext : IsNotADependency {
             private const val extGroup = "androidx.test.ext"
             private const val extJunitVersion = "_"
 
@@ -526,7 +526,7 @@ object AndroidX {
 
         val espresso = Espresso
 
-        object Espresso: IsNotADependency {
+        object Espresso : IsNotADependency {
             private const val group = "androidx.test.espresso"
             private const val artifactPrefix = "$group:espresso"
 
@@ -540,7 +540,7 @@ object AndroidX {
 
             val idling = Idling
 
-            object Idling: IsNotADependency {
+            object Idling : IsNotADependency {
                 private const val artifactPrefix = "$group.idling:idling"
 
                 const val concurrent = "$artifactPrefix-concurrent:_"
@@ -551,7 +551,7 @@ object AndroidX {
 
     val concurrent = Concurrent // TODO kdoc
 
-    object Concurrent: IsNotADependency {
+    object Concurrent : IsNotADependency {
         private const val artifactPrefix = "androidx.concurrent:concurrent"
 
         const val futures = "$artifactPrefix-futures:_"
@@ -560,7 +560,7 @@ object AndroidX {
 
     val archCore = ArchCore
 
-    object ArchCore: IsNotADependency {
+    object ArchCore : IsNotADependency {
         private const val artifactPrefix = "androidx.arch.core:core"
 
         const val common = "$artifactPrefix-common:_"
@@ -570,7 +570,7 @@ object AndroidX {
 
     val legacy = Legacy // TODO kdoc
 
-    object Legacy: IsNotADependency {
+    object Legacy : IsNotADependency {
         private const val artifactPrefix = "androidx.legacy:legacy"
 
         const val preferenceV14 = "$artifactPrefix-preference-v14:_"
