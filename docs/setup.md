@@ -62,11 +62,11 @@ If you use the **buildSrc** module and have dependencies declared in the `buildS
     }
     ```
 
-### If you use the groovy DSL, aka build.gradle
+### If you use Groovy DSL, i.e. build.gradle files (not kts)
 
-Auto-completion for dependency notations won't work out of the box.
+**Auto-completion for dependency notations won't work out of the box.**
 
-A work-around is to configure the plugin in the `buildSrc` module
+A workaround is to configure the plugin in the `buildSrc` module (create the directory if it doesn't exist yet):
 
 === "buildSrc/settings.gradle"
 ```groovy
@@ -88,11 +88,11 @@ Follow [issue 340: Continuous Deployment]({{link.issues}}/340)
 
 ## Configure the plugin
 
-There are no required configurations!
+There is no required configuration!
 
-There are some options which can be configured in the bloc `refreshVersions { }`
+There are some options which can be configured in the `refreshVersions { }` block.
 
-If you are curious about which options are available, use auto-complete!
+If you are curious about what are the available options, you can use auto-complete (you can also type `this.` before to filter the results).
 
 <img width="854" src="https://user-images.githubusercontent.com/459464/117489731-41322200-af6e-11eb-8e5d-f3ba0e7b6070.png">
 
@@ -164,11 +164,11 @@ Here is how refreshVersions was configured in 0.9.x and earlier versions
     ```
 -->
 
-### If you upgrade from the plugin buildSrcVersions
+### If you are upgrading from the buildSrcVersions plugin
 
-Before refreshVersions, [there was the plugin buildSrcVersions](https://dev.to/jmfayard/better-dependency-management-in-android-studio-3-5-with-gradle-buildsrcversions-34e9)
+Before refreshVersions, [there was the plugin buildSrcVersions](https://dev.to/jmfayard/better-dependency-management-in-android-studio-3-5-with-gradle-buildsrcversions-34e9).
 
-If your project is using it, remove all its configuration from the top `build.gradle[.kts]` file
+If your project is using it, remove all its configuration from the top `build.gradle[.kts]` file to avoid any clashes between the two plugins:
 
 === "build.gradle.kts"
 ```diff
