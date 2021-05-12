@@ -259,6 +259,10 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.window-extensions", dependency = AndroidX.window.extensions)
 )
 
+private val google = listOf(
+    versionKeyWithModules(expected = "google.dagger", dependenciesObject = Google.dagger)
+)
+
 private val testing = listOf(
     versionKeyWithModules(expected = "junit.junit", dependency = Testing.junit4),
     versionKeyWithModules(expected = "junit", dependenciesObject = Testing.junit),
@@ -274,7 +278,7 @@ private val testing = listOf(
     }
 )
 
-internal val bundledRules = kotlinX + androidX + testing + listOf(
+internal val bundledRules = kotlinX + androidX + google + testing + listOf(
     versionKeyWithModules(expected = "ktor", dependenciesObject = Ktor),
     versionKeyWithModules(expected = "splitties", dependenciesObject = Splitties),
     versionKeyWithModules(expected = "coil-kt", dependenciesObject = COIL),

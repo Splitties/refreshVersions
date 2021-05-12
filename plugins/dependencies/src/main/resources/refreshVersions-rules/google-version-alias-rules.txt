@@ -16,11 +16,8 @@ com.google.android.support:wearable
 com.google.android.gms:play-services-*
     ^^^^^^.^^^^^^^.    ^^^^^^^^^^^^^^^
 
-com.google.dagger:dagger(-*)
+com.google.dagger:*
     ^^^^^^.^^^^^^
-
-com.google.dagger:hilt-android(-*)
-    ^^^^^^.^^^^^^.^^^^
 
 com.google.androidbrowserhelper:androidbrowserhelper
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^

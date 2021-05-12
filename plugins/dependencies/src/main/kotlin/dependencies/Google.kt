@@ -208,12 +208,24 @@ object Google {
 
             object Android : DependencyNotationAndGroup(group = group, name = "hilt-android") {
 
-                @JvmField val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
+                /**
+                 * Id of the plugin: "`dagger.hilt.android.plugin`"
+                 */
+                @JvmField
+                val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
 
-                @JvmField val compiler = "$artifactPrefix-compiler:_"
+                @JvmField
+                @Deprecated(
+                    "Renamed, no longer has the word 'android'.",
+                    ReplaceWith("Google.dagger.hilt.compiler")
+                )
+                val compiler = "$artifactPrefix-compiler:_"
 
-                @JvmField val testing = "$artifactPrefix-testing:_"
+                @JvmField
+                val testing = "$artifactPrefix-testing:_"
             }
+
+            const val compiler = "$group:hilt-compiler:_"
         }
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")
