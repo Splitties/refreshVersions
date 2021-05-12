@@ -63,7 +63,8 @@ nav:
   - 'Setup': setup.md
   - 'Add Dependencies': add-dependencies.md
   - 'Update Dependencies': update-dependencies.md
-  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
+# TODO: Uncomment line below after its content is updated. We might also change the title.
+#  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
   - 'Migration': migration.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing':
