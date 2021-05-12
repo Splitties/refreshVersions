@@ -172,7 +172,15 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.recyclerview-selection", dependency = AndroidX.recyclerViewSelection),
     versionKeyWithModules(expected = "androidx.remotecallback", dependency = AndroidX.remoteCallback),
     versionKeyWithModules(expected = "androidx.remotecallback", dependency = AndroidX.remoteCallbackProcessor),
-    versionKeyWithModules(expected = "androidx.room", dependenciesObject = AndroidX.room),
+    versionKeyWithModules(
+        expected = "androidx.room",
+        dependenciesObject = AndroidX.room,
+        excludes = @Suppress("deprecation") listOf(AndroidX.room.coroutines)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.room-coroutines",
+        dependency = @Suppress("deprecation") AndroidX.room.coroutines
+    ),
     versionKeyWithModules(expected = "androidx.savedstate", dependency = AndroidX.savedState),
     versionKeyWithModules(
         expected = "androidx.security",

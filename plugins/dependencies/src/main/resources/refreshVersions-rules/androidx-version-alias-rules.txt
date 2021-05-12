@@ -64,6 +64,9 @@ androidx.paging:paging-compose
 androidx.recyclerview:recyclerview-selection(-*)
 ^^^^^^^^.             ^^^^^^^^^^^^^^^^^^^^^^
 
+androidx.room:room-coroutines // Deprecated artifact, no longer updated with its family.
+^^^^^^^^^     ^^^^^^^^^^^^^^^
+
 androidx.security:security-identity-credential
 ^^^^^^^^.         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
