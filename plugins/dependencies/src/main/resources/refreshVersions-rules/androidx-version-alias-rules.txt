@@ -67,6 +67,12 @@ androidx.recyclerview:recyclerview-selection(-*)
 androidx.room:room-coroutines // Deprecated artifact, no longer updated with its family.
 ^^^^^^^^^     ^^^^^^^^^^^^^^^
 
+androidx.security:security-app-authenticator
+^^^^^^^^.         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.security:security-crypto(-*)
+^^^^^^^^.         ^^^^^^^^^^^^^^^
+
 androidx.security:security-identity-credential
 ^^^^^^^^.         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

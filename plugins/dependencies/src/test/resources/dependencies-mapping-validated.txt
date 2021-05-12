@@ -178,6 +178,7 @@ androidx.room..room-rxjava2=AndroidX.room.rxJava2
 androidx.room..room-testing=AndroidX.room.testing
 androidx.savedstate..savedstate-ktx=AndroidX.savedStateKtx
 androidx.savedstate..savedstate=AndroidX.savedState
+androidx.security..security-app-authenticator=AndroidX.security.appAuthenticator
 androidx.security..security-crypto-ktx=AndroidX.security.cryptoKtx
 androidx.security..security-crypto=AndroidX.security.crypto
 androidx.security..security-identity-credential=AndroidX.security.identityCredential
