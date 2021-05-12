@@ -480,14 +480,28 @@ object AndroidX {
             val graphics = "$artifactPrefix-graphics:_"
 
             @JvmField
+            val test = "$artifactPrefix-test:_"
+            @JvmField
+            val testJunit4 = "$artifactPrefix-test-junit4:_"
+            @JvmField
+            val testManifest = "$artifactPrefix-test-manifest:_"
+
+            @JvmField
             val text = "$artifactPrefix-text:_"
             @JvmField
             val textAndroid = "$artifactPrefix-text-android:_"
 
             @JvmField
+            val tooling = "$artifactPrefix-tooling:_"
+            @JvmField
+            val toolingData = "$artifactPrefix-tooling-data:_"
+
+            @JvmField
             val unit = "$artifactPrefix-unit:_"
             @JvmField
             val util = "$artifactPrefix-util:_"
+            @JvmField
+            val viewBinding = "$artifactPrefix-viewbinding:_"
         }
 
         val foundation = Foundation
