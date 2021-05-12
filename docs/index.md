@@ -84,7 +84,7 @@ Simply run `$ ./gradlew refreshVersions` and you will see the available updates 
 
 Why as comment? Because while googling manually for available updates is a monkey job that is best done by a computer program, while **deciding whether to upgrade or not is your job** as a programmer.
 
-Read more: [Update Dependencies]({{link.site}}/update-dependencies/)
+Read more: [Update Dependencies](update-dependencies.md)
 
 ## It's fast!
 

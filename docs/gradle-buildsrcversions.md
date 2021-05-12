@@ -99,4 +99,4 @@ You can still automatically look for updates, but this is now done with the task
 $ ./gradlew refreshVersions
 ```
 
-Read more: [**Update dependencies**]({{link.site}}/update-dependencies).
+Read more: [**Update dependencies**](update-dependencies.md).

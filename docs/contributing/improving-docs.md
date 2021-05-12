@@ -2,7 +2,8 @@
 
 ## Docs are powered by MKDocs
 
-The documentation of refreshVersions is published on a website accessible via this url: {{link.site}}.
+The documentation of refreshVersions is published on a website accessible via this url: [{{link.site}}](../index.md).
+
 It is generated with MKDocs from Markdown files.
 The variant of Markdown used in MKDocs has useful additional features that we use:
 - "Variables" interpolation, useful for long urls repeated in the doc.

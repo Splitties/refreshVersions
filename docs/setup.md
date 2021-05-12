@@ -183,7 +183,7 @@ If your project is using it, remove all its configuration from the top `build.gr
 
 The task `buildSrcVersions` is still available.
 
-Read more: [gradle buildSrcVersions]({{link.site}}/gradle-buildsrcversions).
+Read more: [gradle buildSrcVersions](gradle-buildsrcversions.md).
 
 
 ## Next steps
@@ -192,6 +192,6 @@ You did it! refreshVersions is now properly setup.
 
 Now, you might want to:
 
-- [Migrate/opt-in existing dependency declarations]({{link.site}}/migration), so the `refreshVersions` task can find available updates for you.
-- [Add new dependencies]({{link.site}}/add-dependencies).
-- [Update dependencies]({{link.site}}/update-dependencies).
+- [Migrate/opt-in existing dependency declarations](migration.md), so the `refreshVersions` task can find available updates for you.
+- [Add new dependencies](add-dependencies.md).
+- [Update dependencies](update-dependencies.md).
