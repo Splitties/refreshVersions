@@ -1,5 +1,6 @@
 package de.fayard.buildSrcLibs
 
+import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.register
@@ -13,6 +14,13 @@ class BuildSrcLibsPlugin : Plugin<Project> {
             group = "help"
             description = "Update buildSrc/src/main/kotlin/Libs.kt"
             outputs.upToDateWhen { false }
+        }
+        project.tasks.register<DefaultTask>(
+            name = "buildSrcVersions"
+        ) {
+            group = "help"
+            description = "Update buildSrc/src/main/kotlin/Libs.kt"
+            dependsOn("buildSrcLibs")
         }
     }
 }

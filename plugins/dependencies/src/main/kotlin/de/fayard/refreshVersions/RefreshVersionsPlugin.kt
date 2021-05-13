@@ -110,14 +110,6 @@ open class RefreshVersionsPlugin : Plugin<Any> {
         }
 
         project.tasks.register<DefaultTask>(
-            name = "buildSrcVersions"
-        ) {
-            group = "help"
-            description = "Update buildSrc/src/main/kotlin/Libs.kt"
-            dependsOn("buildSrcLibs")
-        }
-
-        project.tasks.register<DefaultTask>(
             name = "refreshVersionsDependenciesMapping"
         ) {
             group = "help"
