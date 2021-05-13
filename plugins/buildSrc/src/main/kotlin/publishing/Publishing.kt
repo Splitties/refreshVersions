@@ -1,6 +1,5 @@
 @file:Suppress("PackageDirectoryMismatch")
 
-import extensions.propertyOrEnv
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
@@ -15,7 +14,6 @@ object Publishing {
 fun PublishingExtension.setupAllPublications(project: Project) {
     val mavenPublications = publications.withType<MavenPublication>()
     mavenPublications.configureEach { setupPom() }
-    if (project.isSnapshot.not()) setupDevPublishRepo(project)
     project.registerPublishingTask()
     project.tasks.named("publishPlugins").configure {
         doFirst {
@@ -34,43 +32,22 @@ private fun Project.registerPublishingTask() {
 
     val publishTaskName = when {
         isSnapshot -> "publishToMavenLocal"
-        else -> "publishAllPublicationsToBintrayRepository"
+        else -> null // TODO: Replace with a dev repo making up for bintray?
     }
-    val publishTask = tasks.named(publishTaskName)
+    val publishTask = publishTaskName?.let { tasks.named(it) }
 
-    publishTask.configure { dependsOn("validatePlugins") }
+    publishTask?.configure { dependsOn("validatePlugins") }
 
     tasks.register("publishToAppropriateRepo") {
         group = "publishing"
         description = "Publishes the Gradle plugin to the appropriate repository, depending on the version."
-        dependsOn(publishTask)
+        publishTask?.let { dependsOn(it) }
         if (isSnapshot.not() && isDevVersion.not()) dependsOn("publishPlugins")
     }
 }
 
 private val Project.isDevVersion get() = version.let { it is String && it.contains("-dev-") }
 private val Project.isSnapshot get() = version.let { it is String && it.endsWith("-SNAPSHOT") }
-
-private fun PublishingExtension.setupDevPublishRepo(project: Project) {
-    repositories {
-        maven {
-            name = "bintray"
-            val bintrayUsername = "jmfayard"
-            val bintrayRepoName = "maven"
-            val bintrayPackageName = "de.fayard.refreshVersions"
-            setUrl(
-                "https://api.bintray.com/maven/" +
-                        "$bintrayUsername/$bintrayRepoName/$bintrayPackageName/;" +
-                        "publish=1;" +
-                        "override=1"
-            )
-            credentials {
-                username = project.propertyOrEnv("bintray_user")
-                password = project.propertyOrEnv("bintray_api_key")
-            }
-        }
-    }
-}
 
 @Suppress("UnstableApiUsage")
 private fun MavenPublication.setupPom() = pom {
