@@ -51,7 +51,11 @@ object Google {
 
         const val browserHelper = "com.google.androidbrowserhelper:androidbrowserhelper:_"
 
-        const val material = "$artifactBase.material:material:_"
+        val material = Material
+
+        object Material : DependencyNotationAndGroup(group = "$artifactBase.material", name = "material") {
+            @JvmField val composeThemeAdapter = "$artifactBase.material:compose-theme-adapter"
+        }
 
         private const val wearOsVersion = "_"
 

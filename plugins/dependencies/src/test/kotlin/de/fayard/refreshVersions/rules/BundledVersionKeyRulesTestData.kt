@@ -266,6 +266,11 @@ private val androidX = listOf(
 )
 
 private val google = listOf(
+    versionKeyWithModules(expected = "google.android.material", dependency = Google.android.material),
+    versionKeyWithModules(
+        expected = "google.android.material.compose-theme-adapter",
+        dependency = Google.android.material.composeThemeAdapter
+    ),
     versionKeyWithModules(expected = "google.dagger", dependenciesObject = Google.dagger),
     versionKeyWithModules(expected = "google.accompanist", dependenciesObject = Google.accompanist)
 )

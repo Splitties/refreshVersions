@@ -10,6 +10,9 @@ com.google.accompanist:accompanist-*
 com.google.android.material:material
     ^^^^^^^^^^^^^^^^^^^^^^^
 
+com.google.android.material:compose-theme-adapter
+    ^^^^^^^^^^^^^^^^^^^^^^^.^^^^^^^^^^^^^^^^^^^^^
+
 com.google.android.wearable:wearable
     ^^^^^^^^^^^^^^^^^^^^^^^
 
