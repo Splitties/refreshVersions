@@ -109,14 +109,8 @@ androidx.vectordrawable:vectordrawable-seekable
 androidx.wear:wear(-*)
 ^^^^^^^^^     ^^^^^^^^
 
-androidx.wear:wear-complications-*
-^^^^^^^^^     ^^^^^^^^^^^^^^^^^^
-
 androidx.wear:wear-input-testing
 ^^^^^^^^^     ^^^^^^^^^^
-
-androidx.wear:wear-watchface(-*)
-^^^^^^^^^     ^^^^^^^^^^^^^^
 
 androidx.window:window-extensions
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^
