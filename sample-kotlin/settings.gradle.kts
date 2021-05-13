@@ -27,6 +27,18 @@ refreshVersions {
     }
 
     extraArtifactVersionKeyRules(file("refreshVersions-extra-rules.txt"))
+
+    fun isNonStable(version: String): Boolean {
+        val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+        val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+        val isStable = stableKeyword || regex.matches(version)
+        return isStable.not()
+    }
+
+    // Reject unstable versions unless the current version is also unstable
+    rejectVersionIf {
+        isNonStable(candidate.version ?: "") && !isNonStable(currentVersion)
+    }
 }
 
 gradleEnterprise {

@@ -14,6 +14,20 @@ pluginManagement {
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")
+////                        # available:"3.2")
+////                        # available:"3.2.1")
+////                        # available:"3.3")
+////                        # available:"3.3.1")
+////                        # available:"3.3.2")
+////                        # available:"3.3.3")
+////                        # available:"3.3.4")
+////                        # available:"3.4")
+////                        # available:"3.4.1")
+////                        # available:"3.5")
+////                        # available:"3.5.1")
+////                        # available:"3.5.2")
+////                        # available:"3.6")
+////                        # available:"3.6.1")
     id 'de.fayard.refreshVersions'
 }
 
@@ -31,4 +45,16 @@ refreshVersions {
         enable 'LIBS'
         disable 'GRADLE_UPDATES'
     }
+
+    def isNonStable = { String version ->
+        def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { keyword -> version.toUpperCase().contains(keyword) }
+        def regex = /^[0-9,.v-]+(-r)?$/
+        return !stableKeyword && !(version ==~ regex)
+    }
+
+    // Reject unstable versions unless the current version is also unstable
+    rejectVersionIf {
+        isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)
+    }
+
 }
