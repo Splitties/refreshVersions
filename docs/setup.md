@@ -181,7 +181,31 @@ If your project is using it, remove all its configuration from the top `build.gr
 -}
 ```
 
-The task `buildSrcVersions` is still available.
+Then, enable `buildSrcLibs` as such:
+
+=== "settings.gradle.kts"
+    ```kotlin
+    plugins {
+        // See https://jmfayard.github.io/refreshVersions
+        id("de.fayard.refreshVersions") version "{{version.refreshVersions}}"
+    }
+
+    refreshVersions {
+        enableBuildSrcLibs() // <-- Add this
+    }
+    ```
+=== "settings.gradle"
+    ```groovy
+    plugins {
+        // See https://jmfayard.github.io/refreshVersions
+        id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+    }
+
+    refreshVersions {
+        enableBuildSrcLibs() // <-- Add this
+    }
+    ```
+
 
 Read more: [gradle buildSrcVersions](gradle-buildsrcversions.md).
 
