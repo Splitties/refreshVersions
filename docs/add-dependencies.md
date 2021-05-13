@@ -111,7 +111,7 @@ JetBrains offers the plugin [**Package Search**](https://plugins.jetbrains.com/p
 
 Package Search provides a nice UX to add a dependency:
 
-![](https://d3nmt5vlzunoa1.cloudfront.net/idea/files/2019/10/Screenshot-2019-10-21-at-10.28.33-1.png)
+![](img/jetbrains_package_search_screenshot.png)
 
 Can you use it with refreshVersions?
 
