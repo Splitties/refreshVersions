@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core.internal
 
+import de.fayard.refreshVersions.core.DependencyFilter
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
@@ -17,6 +18,8 @@ import java.io.ObjectOutputStream
 object RefreshVersionsConfigHolder {
 
     internal val resettableDelegates = ResettableDelegates()
+
+    var dependencyFilter: DependencyFilter? = null
 
     fun markSetupViaSettingsPlugin() {
         isSetupViaPlugin = true
