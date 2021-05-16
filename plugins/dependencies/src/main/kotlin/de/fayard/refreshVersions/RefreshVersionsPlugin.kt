@@ -66,7 +66,6 @@ open class RefreshVersionsPlugin : Plugin<Any> {
 
             val extension: RefreshVersionsExtension = extensions.getByType()
 
-            RefreshVersionsConfigHolder.dependencyFilter = extension.dependencyFilter
             bootstrapRefreshVersionsCore(
                 artifactVersionKeyRules = if (extension.extraArtifactVersionKeyRules.isEmpty()) {
                     artifactVersionKeyRules // Avoid unneeded list copy.

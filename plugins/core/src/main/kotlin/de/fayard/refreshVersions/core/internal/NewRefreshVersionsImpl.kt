@@ -75,7 +75,7 @@ internal suspend fun lookupVersionCandidates(
                         resultMode = resultMode
                     ).filterNot {
                         selection.candidate = it
-                        filter?.reject(selection) ?: false
+                        filter(selection)
                     }
                 )
             }

@@ -32,9 +32,9 @@ refreshVersions {
         disable 'GRADLE_UPDATES'
     }
 
-    // TODO: I don't know the syntax for Groovy
-    //rejectVersionIf {
-    //    false
-    //}
+
+    rejectVersionIf {
+        versionKey != "version.kotlinx.coroutines" && candidate.stabilityLevel.isLessStableThan(current.stabilityLevel)
+    }
 
 }
