@@ -1,35 +1,21 @@
-import de.fayard.refreshVersions.RefreshVersionsSetup
 
 pluginManagement {
     repositories {
         mavenLocal()
         gradlePluginPortal()
-        maven { url = "https://dl.bintray.com/jmfayard/maven" }
     }
-}
 
-buildscript {
-    repositories {
-        mavenLocal() // Only necessary for testing
-        gradlePluginPortal()
-        mavenCentral()
-        maven { url = "https://dl.bintray.com/jmfayard/maven" }
-    }
-    dependencies {
-        classpath("de.fayard.refreshVersions:refreshVersions") {
-            version {
-                final File versionFile = new File(rootDir.parentFile, "plugins/version.txt")
-                strictly(versionFile.readLines().first())
-            }
-        }
+    final File versionFile = new File(rootDir.parentFile, "plugins/version.txt")
+    final String pluginsVersion = versionFile.readLines().first()
+    plugins {
+        id("de.fayard.refreshVersions").version(pluginsVersion)
     }
 }
 
 plugins {
     id("com.gradle.enterprise").version("3.1.1")
+    id 'de.fayard.refreshVersions'
 }
-
-RefreshVersionsSetup.bootstrap(settings)
 
 gradleEnterprise {
     buildScan {
@@ -39,3 +25,10 @@ gradleEnterprise {
 }
 
 rootProject.name = 'sample-groovy'
+
+refreshVersions {
+    featureFlags {
+        enable 'LIBS'
+        disable 'GRADLE_UPDATES'
+    }
+}

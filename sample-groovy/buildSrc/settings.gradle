@@ -1,0 +1,16 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+    }
+
+    final File versionFile = new File(rootDir.parentFile.parentFile, "plugins/version.txt")
+    final String pluginsVersion = versionFile.readLines().first()
+    plugins {
+        id("de.fayard.refreshVersions").version(pluginsVersion)
+    }
+}
+
+plugins {
+    id("de.fayard.refreshVersions")
+}

@@ -12,7 +12,7 @@ abstract class DependencyVersionsFetcher protected constructor(
     companion object;
 
     @Throws(IOException::class, Exception::class)
-    abstract suspend fun getAvailableVersions(versionFilter: ((Version) -> Boolean)?): SuccessfulResult
+    abstract suspend fun getAvailableVersionsOrNull(versionFilter: ((Version) -> Boolean)?): SuccessfulResult?
 
     data class SuccessfulResult(
         val lastUpdateTimestampMillis: Long,

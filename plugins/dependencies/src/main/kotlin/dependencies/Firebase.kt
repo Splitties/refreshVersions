@@ -38,10 +38,12 @@ interface Firebase {
     // AdMob intentionally not included because ads are mental pollution.
 
     val analytics: String
+    val analyticsKtx: String
 
     val appIndexing: String
 
     val authentication: String
+    val authenticationKtx: String
 
     val cloudFirestore: String
     val cloudFirestoreKtx: String
@@ -50,15 +52,18 @@ interface Firebase {
     val cloudFunctionsKtx: String
 
     val cloudMessaging: String
+    val cloudMessagingKtx: String
 
     val cloudStorage: String
     val cloudStorageKtx: String
 
     val crashlytics: String
+    val crashlyticsKtx: String
     val crashlyticsNdk: String
     val crashlyticsGradlePlugin: String
 
     val dynamicLinks: String
+    val dynamicLinksKtx: String
 
     val inAppMessaging: String
     val inAppMessagingKtx: String
@@ -66,6 +71,7 @@ interface Firebase {
     val inAppMessagingDisplayKtx: String
 
     val performanceMonitoring: String
+    val performanceMonitoringKtx: String
 
     val realtimeDatabase: String
     val realtimeDatabaseKtx: String
@@ -137,19 +143,24 @@ internal class FirebaseImpl(isBom: Boolean) : Firebase, IsNotADependency {
     private val artifactPrefix = "com.google.firebase:firebase"
 
     override val analytics = "$artifactPrefix-analytics$suffix"
+    override val analyticsKtx = "$artifactPrefix-analytics-ktx$suffix"
     override val appIndexing = "$artifactPrefix-appindexing$suffix"
     override val authentication = "$artifactPrefix-auth$suffix"
+    override val authenticationKtx = "$artifactPrefix-auth-ktx$suffix"
     override val cloudFirestore = "$artifactPrefix-firestore$suffix"
     override val cloudFirestoreKtx = "$artifactPrefix-firestore-ktx$suffix"
     override val cloudFunctions = "$artifactPrefix-functions$suffix"
     override val cloudFunctionsKtx = "$artifactPrefix-functions-ktx$suffix"
     override val cloudMessaging = "$artifactPrefix-messaging$suffix"
+    override val cloudMessagingKtx = "$artifactPrefix-messaging-ktx$suffix"
     override val cloudStorage = "$artifactPrefix-storage$suffix"
     override val cloudStorageKtx = "$artifactPrefix-storage-ktx$suffix"
     override val crashlytics = "$artifactPrefix-crashlytics$suffix"
+    override val crashlyticsKtx = "$artifactPrefix-crashlytics-ktx$suffix"
     override val crashlyticsNdk = "$artifactPrefix-crashlytics-ndk$suffix"
     override val crashlyticsGradlePlugin = "$artifactPrefix-crashlytics-gradle$suffix"
     override val dynamicLinks = "$artifactPrefix-dynamic-links$suffix"
+    override val dynamicLinksKtx = "$artifactPrefix-dynamic-links-ktx$suffix"
     override val inAppMessaging = "$artifactPrefix-inappmessaging$suffix"
     override val inAppMessagingKtx = "$artifactPrefix-inappmessaging-ktx$suffix"
     override val inAppMessagingDisplay = "$artifactPrefix-inappmessaging-display$suffix"
@@ -186,6 +197,7 @@ internal class FirebaseImpl(isBom: Boolean) : Firebase, IsNotADependency {
     }
 
     override val performanceMonitoring = "$artifactPrefix-perf$suffix"
+    override val performanceMonitoringKtx = "$artifactPrefix-perf-ktx$suffix"
     override val realtimeDatabase = "$artifactPrefix-database$suffix"
     override val realtimeDatabaseKtx = "$artifactPrefix-database-ktx$suffix"
     override val remoteConfig = "$artifactPrefix-config$suffix"

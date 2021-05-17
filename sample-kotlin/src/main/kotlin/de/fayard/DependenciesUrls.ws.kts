@@ -33,7 +33,7 @@ arrayOf(
 ).forEach { mavenCoordinates ->
     println(
         urlOfDependency(
-            repoUrl = "jcenter.bintray.com/",
+            repoUrl = "https://repo1.maven.org/maven2/",
             mavenCoordinates = mavenCoordinates
         )
     )

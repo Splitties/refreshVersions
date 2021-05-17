@@ -24,7 +24,10 @@ object Testing {
      *
      * GitHub page: [robolectric/robolectric](https://github.com/robolectric/robolectric)
      */
-    const val roboElectric = "org.robolectric:robolectric:_"
+    const val robolectric = "org.robolectric:robolectric:_"
+
+    @Deprecated("Wrong spelling", ReplaceWith("robolectric"))
+    const val roboElectric = robolectric
 
 
     /**
@@ -90,12 +93,12 @@ object Testing {
         object Extensions : IsNotADependency {
             private const val artifactPrefix = "$artifactBase-extensions"
 
-            const val spring = "$artifactPrefix-spring:_"
-            const val koin = "$artifactPrefix-koin:_"
             const val allure = "$artifactPrefix-allure:_"
-            const val testContainers = "$artifactPrefix-testcontainers:_"
             const val http = "$artifactPrefix-http:_"
+            const val koin = "$artifactPrefix-koin:_"
             const val mockServer = "$artifactPrefix-mockserver:_"
+            const val spring = "$artifactPrefix-spring:_"
+            const val testContainers = "$artifactPrefix-testcontainers:_"
         }
 
         val assertions = Assertions
@@ -103,15 +106,16 @@ object Testing {
         object Assertions : IsNotADependency {
             private const val artifactPrefix = "$artifactBase-assertions"
 
-            const val core = "$artifactPrefix-core:_"
-            const val ktor = "$artifactPrefix-ktor:_"
-            const val json = "$artifactPrefix-json:_"
             const val arrow = "$artifactPrefix-arrow:_"
-            const val konform = "$artifactPrefix-konform:_"
+            const val compiler = "$artifactPrefix-compiler:_"
+            const val core = "$artifactPrefix-core:_"
+            const val json = "$artifactPrefix-json:_"
             const val jsoup = "$artifactPrefix-jsoup:_"
             const val klock = "$artifactPrefix-klock:_"
+            const val konform = "$artifactPrefix-konform:_"
+            const val kotlinxDateTime = "$artifactPrefix-kotlinx-time:_"
+            const val ktor = "$artifactPrefix-ktor:_"
             const val sql = "$artifactPrefix-sql:_"
-            const val compiler = "$artifactPrefix-compiler:_"
         }
     }
 

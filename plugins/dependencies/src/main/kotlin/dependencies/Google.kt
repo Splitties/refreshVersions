@@ -19,6 +19,31 @@ object Google {
      */
     val firebase get() = Firebase
 
+    val accompanist = Accompanist
+
+    object Accompanist : IsNotADependency {
+        private const val artifactPrefix = "com.google.accompanist:accompanist"
+
+        const val coil = "$artifactPrefix-coil:_"
+        const val glide = "$artifactPrefix-glide:_"
+        const val imageloadingCore = "$artifactPrefix-imageloading-core:_"
+
+        const val insets = "$artifactPrefix-insets:_"
+        const val systemuicontroller = "$artifactPrefix-systemuicontroller:_"
+
+        const val appcompatTheme = "$artifactPrefix-appcompat-theme:_"
+
+        val pager = Pager
+
+        object Pager : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-pager") {
+            @JvmField
+            val indicators = "$artifactPrefix-indicators:_"
+        }
+
+        const val flowlayout = "$artifactPrefix-flowlayout:_"
+        const val swiperefresh = "$artifactPrefix-swiperefresh:_"
+    }
+
     val android = Android
 
     object Android : IsNotADependency {
@@ -26,7 +51,11 @@ object Google {
 
         const val browserHelper = "com.google.androidbrowserhelper:androidbrowserhelper:_"
 
-        const val material = "$artifactBase.material:material:_"
+        val material = Material
+
+        object Material : DependencyNotationAndGroup(group = "$artifactBase.material", name = "material") {
+            @JvmField val composeThemeAdapter = "$artifactBase.material:compose-theme-adapter"
+        }
 
         private const val wearOsVersion = "_"
 
@@ -208,12 +237,24 @@ object Google {
 
             object Android : DependencyNotationAndGroup(group = group, name = "hilt-android") {
 
-                @JvmField val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
+                /**
+                 * Id of the plugin: "`dagger.hilt.android.plugin`"
+                 */
+                @JvmField
+                val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
 
-                @JvmField val compiler = "$artifactPrefix-compiler:_"
+                @JvmField
+                @Deprecated(
+                    "Renamed, no longer has the word 'android'.",
+                    ReplaceWith("Google.dagger.hilt.compiler")
+                )
+                val compiler = "$artifactPrefix-compiler:_"
 
-                @JvmField val testing = "$artifactPrefix-testing:_"
+                @JvmField
+                val testing = "$artifactPrefix-testing:_"
             }
+
+            const val compiler = "$group:hilt-compiler:_"
         }
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")

@@ -4,8 +4,8 @@ package de.fayard.refreshVersions.core.internal
  * The rules are case sensitive.
  */
 internal abstract class ArtifactVersionKeyRule protected constructor(
-    protected val artifactPattern: String,
-    protected val versionKeyPattern: String
+    internal val artifactPattern: String,
+    internal val versionKeyPattern: String
 ) : Comparable<ArtifactVersionKeyRule> {
 
     init {

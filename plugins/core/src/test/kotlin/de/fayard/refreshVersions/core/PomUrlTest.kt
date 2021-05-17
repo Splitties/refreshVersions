@@ -49,7 +49,7 @@ class PomUrlTest {
                 group = "org.jetbrains.kotlin",
                 name = "kotlin-stdlib"
             ),
-            mavenRepoUrl = "https://dl.bintray.com/kotlin/kotlin-eap"
+            mavenRepoUrl = "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/bootstrap/"
         )
         println(xml)
     }

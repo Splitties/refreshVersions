@@ -6,21 +6,22 @@ import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.isGradlePlugin
 import de.fayard.refreshVersions.core.extensions.gradle.moduleId
 import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.writeWithNewEntry
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
 import org.gradle.api.artifacts.*
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.invocation.Gradle
-import java.io.File
 
 internal const val versionPlaceholder = "_"
 
-internal fun Gradle.setupVersionPlaceholdersResolving(versionProperties: Map<String, String>) {
+internal fun Gradle.setupVersionPlaceholdersResolving(versionsMap: Map<String, String>) {
 
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-    var properties: Map<String, String> = versionProperties
-    val refreshProperties = { updatedProperties: Map<String, String> ->
-        properties = updatedProperties
+    var currentVersionsMap: Map<String, String> = versionsMap
+    val refreshVersionsMap = { updatedMap: Map<String, String> ->
+        currentVersionsMap = updatedMap
     }
     beforeProject {
         val project: Project = this@beforeProject
@@ -35,8 +36,8 @@ internal fun Gradle.setupVersionPlaceholdersResolving(versionProperties: Map<Str
                 project = project,
                 isFromBuildscript = isFromBuildscript,
                 versionKeyReader = versionKeyReader,
-                initialProperties = properties,
-                refreshProperties = refreshProperties
+                initialVersionsMap = currentVersionsMap,
+                refreshVersionsMap = refreshVersionsMap
             )
         }
 
@@ -109,7 +110,7 @@ internal tailrec fun resolveVersion(
 }
 
 /**
- * Expects the value of a version property (values of the map returned by [RefreshVersionsConfigHolder.readVersionProperties]).
+ * Expects the value of a version property (values of the map returned by [RefreshVersionsConfigHolder.readVersionsMap]).
  */
 internal fun String.isAVersionAlias(): Boolean = startsWith("version.") || startsWith("plugin.")
 
@@ -119,12 +120,12 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
     project: Project,
     isFromBuildscript: Boolean,
     versionKeyReader: ArtifactVersionKeyReader,
-    initialProperties: Map<String, String>,
-    refreshProperties: (updatedProperties: Map<String, String>) -> Unit
+    initialVersionsMap: Map<String, String>,
+    refreshVersionsMap: (updatedMap: Map<String, String>) -> Unit
 ) {
 
     val repositories = if (isFromBuildscript) project.buildscript.repositories else project.repositories
-    var properties = initialProperties
+    var properties = initialVersionsMap
     @Suppress("UnstableApiUsage")
     withDependencies {
         for (dependency in this) {
@@ -136,20 +137,19 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                 properties = properties,
                 key = propertyName
             ) ?: synchronized(lock) {
-                RefreshVersionsConfigHolder.readVersionProperties().let { updatedProperties ->
-                    properties = updatedProperties
-                    refreshProperties(updatedProperties)
+                RefreshVersionsConfigHolder.readVersionsMap().let { updatedMap ->
+                    properties = updatedMap
+                    refreshVersionsMap(updatedMap)
                 }
                 resolveVersion(properties, propertyName)
                     ?: `Write versions candidates using latest most stable version and get it`(
-                        versionsPropertiesFile = RefreshVersionsConfigHolder.versionsPropertiesFile,
                         repositories = repositories,
                         propertyName = propertyName,
                         dependency = dependency
                     ).also {
-                        RefreshVersionsConfigHolder.readVersionProperties().let { updatedProperties ->
-                            properties = updatedProperties
-                            refreshProperties(updatedProperties)
+                        RefreshVersionsConfigHolder.readVersionsMap().let { updatedMap ->
+                            properties = updatedMap
+                            refreshVersionsMap(updatedMap)
                         }
                     }
             }
@@ -167,8 +167,7 @@ fun Project.writeCurrentVersionInProperties(
     versionKey: String,
     currentVersion: String
 ) {
-    writeWithAddedVersions(
-        versionsFile = RefreshVersionsConfigHolder.versionsPropertiesFile,
+    VersionsPropertiesModel.writeWithNewEntry(
         propertyName = versionKey,
         versionsCandidates = listOf(Version(currentVersion))
     )
@@ -176,12 +175,12 @@ fun Project.writeCurrentVersionInProperties(
 
 @Suppress("FunctionName")
 private fun `Write versions candidates using latest most stable version and get it`(
-    versionsPropertiesFile: File,
     repositories: ArtifactRepositoryContainer,
     propertyName: String,
     dependency: ExternalDependency
-): String = runBlocking {
-    val dependencyVersionsFetchers = repositories.filterIsInstance<MavenArtifactRepository>()
+): String = `Write versions candidates using latest most stable version and get it`(
+    propertyName = propertyName,
+    dependencyVersionsFetchers = repositories.filterIsInstance<MavenArtifactRepository>()
         .mapNotNull { repo ->
             DependencyVersionsFetcher(
                 httpClient = RefreshVersionsConfigHolder.httpClient,
@@ -189,14 +188,20 @@ private fun `Write versions candidates using latest most stable version and get 
                 repository = repo
             )
         }
+)
+
+@Suppress("FunctionName")
+internal fun `Write versions candidates using latest most stable version and get it`(
+    propertyName: String,
+    dependencyVersionsFetchers: List<DependencyVersionsFetcher>
+): String = runBlocking {
     dependencyVersionsFetchers.getVersionCandidates(
         currentVersion = Version(""),
         resultMode = RefreshVersionsConfigHolder.resultMode
     ).let { versionCandidates ->
         val bestStability = versionCandidates.minBy { it.stabilityLevel }!!.stabilityLevel
         val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
-        writeWithAddedVersions(
-            versionsFile = versionsPropertiesFile,
+        VersionsPropertiesModel.writeWithNewEntry(
             propertyName = propertyName,
             versionsCandidates = versionCandidates.dropWhile { it != versionToUse }
         )

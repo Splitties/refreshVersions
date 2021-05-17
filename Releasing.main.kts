@@ -4,9 +4,10 @@
  * Copyright 2019 Louis Cognault Ayeva Derman. Use of this source code is governed by the Apache 2.0 license.
  */
 
-@file:Repository("https://dl.bintray.com/louiscad/maven")
+@file:Repository("https://repo.maven.apache.org/maven2/")
+//@file:Repository("https://oss.sonatype.org/content/repositories/snapshots")
 //@file:Repository("file:///Users/louiscad/.m2/repository")
-@file:DependsOn("com.louiscad.incubator:lib-publishing-helpers:0.1.3")
+@file:DependsOn("com.louiscad.incubator:lib-publishing-helpers:0.1.4")
 
 import java.io.File
 import Releasing_main.ReleaseStep.*
@@ -14,14 +15,7 @@ import Releasing_main.ReleaseStep.*
 import lib_publisher_tools.cli.CliUi
 import lib_publisher_tools.cli.defaultImpl
 import lib_publisher_tools.cli.runUntilSuccessWithErrorPrintingOrCancel
-import lib_publisher_tools.vcs.Vcs
-import lib_publisher_tools.vcs.checkoutDevelop
-import lib_publisher_tools.vcs.checkoutMaster
-import lib_publisher_tools.vcs.git
-import lib_publisher_tools.vcs.isOnDevelopBranch
-import lib_publisher_tools.vcs.mergeMasterIntoCurrent
-import lib_publisher_tools.vcs.pullFromOrigin
-import lib_publisher_tools.vcs.pushToOrigin
+import lib_publisher_tools.vcs.*
 import lib_publisher_tools.versioning.StabilityLevel
 import lib_publisher_tools.versioning.Version
 import lib_publisher_tools.versioning.checkIsValidVersionString
@@ -36,8 +30,8 @@ fun File.checkChanged() = check(git.didFileChange(this)) {
     "Expected changes in the following file: $this"
 }
 
-fun checkOnDevelopBranch() {
-    check(git.isOnDevelopBranch()) { "Please, checkout the `develop` branch first." }
+fun checkOnMainBranch() {
+    check(git.isOnMainBranch()) { "Please, checkout the `main` branch first." }
 }
 
 @Suppress("EnumEntryName")
@@ -52,8 +46,8 @@ enum class ReleaseStep { // Order of the steps, must be kept right.
     `Push tags to origin`,
     `Request PR merge`,
     `Request GitHub release publication`,
-    `Update master branch`,
-    `Update develop branch from master`,
+    `Update release branch`,
+    `Update main branch from release`,
     `Change this library version back to a SNAPSHOT`,
     `Commit "prepare next dev version"`,
     `Push, at last`;
@@ -87,7 +81,7 @@ if (ongoingReleaseFile.exists()) {
     OngoingRelease.load()
     startAtStep = ReleaseStep.valueOf(OngoingRelease.currentStepName)
 } else {
-    checkOnDevelopBranch()
+    checkOnMainBranch()
     with(OngoingRelease) {
         versionBeforeRelease = versionsFile.bufferedReader().use { it.readLine() }.also {
             check(it.contains("-dev-") || it.endsWith("-SNAPSHOT")) {
@@ -124,7 +118,7 @@ fun askNewVersionInput(
 
 fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
     `Change this library version` -> {
-        checkOnDevelopBranch()
+        checkOnMainBranch()
         OngoingRelease.newVersion.let { newVersion ->
             printInfo("refreshVersions new version: \"$newVersion\"")
             requestUserConfirmation("Confirm?")
@@ -133,8 +127,7 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
     }
     `Request doc update confirmation` -> {
         arrayOf(
-            "README.adoc",
-            "docs/Setting-up.adoc"
+            "mkdocs.yml"
         ).forEach { relativePath ->
             do {
                 requestManualAction(
@@ -177,7 +170,7 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
         git.pushToOrigin()
     }
     `Request PR submission` -> {
-        requestManualAction("Create a pull request from the `develop` to the `master` branch on GitHub for the new version, if not already done.")
+        requestManualAction("Create a pull request from the `main` to the `release` branch on GitHub for the new version, if not already done.")
     }
     `Wait for successful release by CI` -> {
         printInfo("To perform this step, we need to wait for the artifacts building and uploading.")
@@ -195,17 +188,17 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
     `Request GitHub release publication` -> {
         requestManualAction("Publish release on GitHub with the changelog.")
     }
-    `Update master branch` -> {
-        printInfo("Will now checkout the `master` branch, pull from GitHub (origin) to update the local `master` branch.")
+    `Update release branch` -> {
+        printInfo("Will now checkout the `release` branch, pull from GitHub (origin) to update the local `release` branch.")
         requestUserConfirmation("Continue?")
-        git.checkoutMaster()
+        git.checkoutBranch("release")
         git.pullFromOrigin()
     }
-    `Update develop branch from master` -> {
-        printInfo("About to checkout the develop branch (and update it from master for merge commits).")
+    `Update main branch from release` -> {
+        printInfo("About to checkout the main branch (and update it from release for merge commits).")
         requestUserConfirmation("Continue?")
-        git.checkoutDevelop()
-        git.mergeMasterIntoCurrent()
+        git.checkoutMain()
+        git.mergeBranchIntoCurrent("release")
     }
     `Change this library version back to a SNAPSHOT` -> {
         val newVersion = Version(OngoingRelease.newVersion)
@@ -220,18 +213,18 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
             printInfo("Congratulations for this new stable release!")
             printInfo("Let's update the library for next development version.")
             runUntilSuccessWithErrorPrintingOrCancel {
-                printInfo("Enter the name of the next target version (`-SNAPSHOT` will be added automatically)")
+                printInfo("Enter the name of the next target version (`-LOCAL-SNAPSHOT` will be added automatically)")
                 val input = readLine()
                 input.checkIsValidVersionString()
                 when (Version(input).stabilityLevel()) {
                     StabilityLevel.Unknown, StabilityLevel.Stable -> Unit
                     else -> error("You need to enter a stable target version")
                 }
-                "$input-SNAPSHOT"
+                "$input-LOCAL-SNAPSHOT"
             }
         } else OngoingRelease.versionBeforeRelease.let {
-            if (it.endsWith("-SNAPSHOT")) it
-            else "${it.substringBefore("-dev-")}-SNAPSHOT"
+            if (it.endsWith("-LOCAL-SNAPSHOT")) it
+            else "${it.substringBefore("-dev-")}-LOCAL-SNAPSHOT"
         }
         versionsFile.writeText(nextDevVersion)
         printInfo("${versionsFile.path} has been edited with next development version ($nextDevVersion).")

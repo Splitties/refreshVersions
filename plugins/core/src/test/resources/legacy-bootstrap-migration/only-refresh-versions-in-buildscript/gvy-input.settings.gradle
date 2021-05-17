@@ -1,0 +1,36 @@
+import de.fayard.refreshVersions.RefreshVersionsSetup
+
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        maven { url = "https://dl.bintray.com/jmfayard/maven" }
+    }
+}
+
+buildscript {
+    repositories {
+        mavenLocal() // Only necessary for testing
+        gradlePluginPortal()
+        mavenCentral()
+        maven { url = "https://dl.bintray.com/jmfayard/maven" }
+    }
+    dependencies {
+        classpath("de.fayard.refreshVersions:refreshVersions:€{currentVersion}")
+    }
+}
+
+plugins {
+    id("com.gradle.enterprise").version("3.1.1")
+}
+
+RefreshVersionsSetup.bootstrap(settings)
+
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+    }
+}
+
+rootProject.name = 'sample-groovy'

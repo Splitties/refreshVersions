@@ -3,7 +3,10 @@ package de.fayard.refreshVersions.rules
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestFactory
+import testutils.junit.dynamicTest
 import java.io.File
 
 @Suppress("UnstableApiUsage")
@@ -13,14 +16,16 @@ class BundledRulesTest {
     private val rulesDir = mainResources.resolve("refreshVersions-rules")
     private val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
-    @Test
-    fun `test bundled version key rules against dependencies constants`() {
-        bundledRules.forEach { (expectedKey, moduleIdentifiers) ->
-            moduleIdentifiers.forEach { moduleIdentifier ->
-                Assertions.assertEquals(
-                    expectedKey,
-                    versionKeyReader.readVersionKey(moduleIdentifier.group, moduleIdentifier.name)
-                )
+    @TestFactory
+    fun `test bundled version key rules against dependencies constants`(): List<DynamicTest> {
+        return bundledRules.map { (expectedKey, moduleIdentifiers) ->
+            dynamicTest(displayName = expectedKey) {
+                moduleIdentifiers.forEach { moduleIdentifier ->
+                    Assertions.assertEquals(
+                        expectedKey,
+                        versionKeyReader.readVersionKey(moduleIdentifier.group, moduleIdentifier.name)
+                    )
+                }
             }
         }
     }

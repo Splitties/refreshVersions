@@ -2,20 +2,28 @@ package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
+import de.fayard.refreshVersions.core.internal.versions.readFrom
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
-import org.gradle.api.invocation.Gradle
 import java.io.File
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
-import java.util.Properties
 
 @InternalRefreshVersionsApi
 object RefreshVersionsConfigHolder {
 
     internal val resettableDelegates = ResettableDelegates()
+
+    fun markSetupViaSettingsPlugin() {
+        isSetupViaPlugin = true
+    }
+
+    internal var isSetupViaPlugin = false
+        private set
 
     private val versionKeyReaderDelegate = resettableDelegates.LateInit<ArtifactVersionKeyReader>()
 
@@ -25,19 +33,20 @@ object RefreshVersionsConfigHolder {
     var versionsPropertiesFile: File by resettableDelegates.LateInit()
         private set
 
-    val buildSrc: Project? get() = buildSrcGradle?.rootProject
-
-    internal var currentVersion: String by resettableDelegates.LateInit()
-        private set
+    val buildSrc: Project? get() = buildSrcSettings?.gradle?.rootProject
 
     internal var settings: Settings by resettableDelegates.LateInit()
         private set
 
-    fun readVersionProperties(): Map<String, String> {
-        @Suppress("unchecked_cast")
-        return Properties().apply {
-            load(versionsPropertiesFile.reader())
-        } as Map<String, String>
+    internal var lastlyReadVersionsMap: Map<String, String> by resettableDelegates.MutableLazy {
+        readVersionsMap()
+    }
+
+    fun readVersionsMap(): Map<String, String> {
+        val model = VersionsPropertiesModel.readFrom(versionsPropertiesFile)
+        return model.sections.filterIsInstance<VersionEntry>().associate { it.key to it.currentVersion }.also {
+            lastlyReadVersionsMap = it
+        }
     }
 
     fun allProjects(project: Project): Sequence<Project> {
@@ -53,7 +62,6 @@ object RefreshVersionsConfigHolder {
 
     internal val httpClient: OkHttpClient by resettableDelegates.Lazy {
         OkHttpClient.Builder()
-            .addInterceptor(OkHttpFileUrlHandler)
             .addInterceptor( //TODO: Allow disabling/configuring logging.
                 HttpLoggingInterceptor(logger = object : HttpLoggingInterceptor.Logger {
                     override fun log(message: String) {
@@ -62,10 +70,6 @@ object RefreshVersionsConfigHolder {
                 }).setLevel(HttpLoggingInterceptor.Level.BASIC)
             )
             .build()
-    }
-
-    internal fun initializedUsedVersion(settings: Settings) {
-        currentVersion = settings.currentVersionOfRefreshVersions()
     }
 
     internal fun initialize(
@@ -88,7 +92,7 @@ object RefreshVersionsConfigHolder {
 
     internal fun initializeBuildSrc(settings: Settings) {
         require(settings.isBuildSrc)
-        buildSrcGradle = settings.gradle
+        buildSrcSettings = settings
 
         // The buildSrc will be built a second time as a standalone project by IntelliJ or
         // Android Studio after running initially properly after host project settings evaluation.
@@ -128,7 +132,8 @@ object RefreshVersionsConfigHolder {
 
     private var artifactVersionKeyRules: List<String> by resettableDelegates.LateInit()
 
-    private var buildSrcGradle: Gradle? by resettableDelegates.NullableDelegate()
+    internal var buildSrcSettings: Settings? by resettableDelegates.NullableDelegate()
+        private set
 
 
     private fun persistInitData(settings: Settings) {

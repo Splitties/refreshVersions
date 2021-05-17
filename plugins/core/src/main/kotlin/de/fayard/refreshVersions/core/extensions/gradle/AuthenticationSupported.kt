@@ -9,5 +9,5 @@ val AuthenticationSupported.passwordCredentials: PasswordCredentials?
     // https://github.com/gradle/gradle/issues/14694
     get() = runCatching {
         // We use runCatching to avoid crashing the build if the internal APIs change.
-        (this as AuthenticationSupportedInternal?)?.configuredCredentials as? PasswordCredentials
+        (this as AuthenticationSupportedInternal?)?.configuredCredentials?.orNull as? PasswordCredentials
     }.getOrNull()
