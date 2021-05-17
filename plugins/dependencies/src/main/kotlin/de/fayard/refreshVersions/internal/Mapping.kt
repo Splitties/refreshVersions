@@ -6,6 +6,7 @@ import CashApp
 import Firebase
 import Google
 import JakeWharton
+import Kodein
 import Kotlin
 import KotlinX
 import Ktor
@@ -50,6 +51,7 @@ internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = 
         Google,
         JakeWharton,
         Firebase,
+        Kodein,
         Kotlin,
         KotlinX,
         Splitties,
