@@ -74,6 +74,7 @@ nav:
     - 'Dev environment': contributing/submitting-prs/dev-env.md
     - 'Development process': contributing/submitting-prs/dev-process.md
     - 'Dependency notations': contributing/submitting-prs/dependency-notations-updates.md
+  - 'Bonus: Gradle tips and tricks': gradle-tips.md
 
 plugins:
   - search
