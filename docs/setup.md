@@ -96,41 +96,6 @@ If you are curious about what are the available options, you can use auto-comple
 
 <img width="854" src="https://user-images.githubusercontent.com/459464/117489731-41322200-af6e-11eb-8e5d-f3ba0e7b6070.png">
 
-<!--
-## About Gradle's Settings file
-
-For refreshVersions to be able to work for all the dependencies in your project, including for the ones in the `buildscript`'s `classpath`, it needs to be setup in the Gradle settings.
-
-A Gradle project has [a Settings file](https://docs.gradle.org/current/userguide/build_lifecycle.html#sec:settings_file) called `settings.gradle`  or `settings.gradle.kts` where you must respect a certain order (otherwise, the build breaks).
-
-The order is:
-
-1. imports, if any.
-2. The `pluginManagement` block, if any.
-3. The `buildscript` block, if any. (We will use it)
-4. The `plugins` block, if any settings plugins are applied.
-5. Logic for Gradle settings (any other code).
-
-See the example snippet below:
-
-```kotlin
-import com.example.something // Imports at the top, as usual.
-
-pluginManagement {} // Optional
-
-buildscript {
-    // We will setup refreshVersions here, see below.
-}
-
-plugins {} // Optional
-
-// Then you can have other code after the blocks above,
-// we will bootstrap refreshVersions here.
-
-rootProject.name = "My Project" // Optional, defaults to parent dir's name.
-include(":app") // If the project has modules/subprojects to declare.
-```
--->
 
 ## Earlier versions
 
