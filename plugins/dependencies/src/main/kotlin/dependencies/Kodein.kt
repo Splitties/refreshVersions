@@ -24,7 +24,7 @@ object Kodein {
         group = "org.kodein.di",
         usePlatformConstraints = usePlatformConstraints,
         rule = ArtifactVersionKeyRule(
-            artifactPattern = "  org.kodein.di:kodein-di(-*)".trimStart(),
+            artifactPattern = "  org.kodein.di:kodein-di(-*)",
             versionKeyPattern = "    ^^^^^^^^^              "
         )
     ) {
@@ -40,7 +40,6 @@ object Kodein {
     }
 }
 
-val ALL_RULES = mutableListOf<ArtifactVersionKeyRule>()
 
 open class DependencyGroup(
     val group: String,

@@ -294,7 +294,8 @@ internal val bundledRules = kotlinX + androidX + google + testing + listOf(
     versionKeyWithModules(expected = "ktor", dependenciesObject = Ktor),
     versionKeyWithModules(expected = "splitties", dependenciesObject = Splitties),
     versionKeyWithModules(expected = "coil-kt", dependenciesObject = COIL),
-    versionKeyWithModules(expected = "orchid", dependenciesObject = Orchid)
+    versionKeyWithModules(expected = "orchid", dependenciesObject = Orchid),
+    versionKeyWithModules(expected = "kodein.kp", dependenciesObject = Kodein.di)
 )
 
 
