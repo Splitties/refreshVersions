@@ -29,35 +29,51 @@ private val kotlinX = listOf(
 )
 
 private val androidX = listOf(
-    versionKeyWithModules(expected = "androidx.activity", dependency = AndroidX.activity),
+    versionKeyWithModules(expected = "androidx.activity", dependenciesObject = AndroidX.activity),
     versionKeyWithModules(expected = "androidx.activity", dependency = AndroidX.activityKtx),
     versionKeyWithModules(expected = "androidx.annotation", dependency = AndroidX.annotation),
     versionKeyWithModules(expected = "androidx.annotation", dependency = AndroidX.annotationExperimental),
     versionKeyWithModules(expected = "androidx.appcompat", dependency = AndroidX.appCompat),
     versionKeyWithModules(expected = "androidx.appcompat", dependency = AndroidX.appCompatResources),
+    versionKeyWithModules(expected = "androidx.appsearch", dependency = AndroidX.appSearch),
     versionKeyWithModules(expected = "androidx.arch.core", dependenciesObject = AndroidX.archCore),
     versionKeyWithModules(expected = "androidx.asynclayoutinflater", dependency = AndroidX.asyncLayoutInflater),
     versionKeyWithModules(expected = "androidx.autofill", dependency = AndroidX.autoFill),
     versionKeyWithModules(expected = "androidx.benchmark", dependenciesObject = AndroidX.benchmark),
     versionKeyWithModules(expected = "androidx.biometric", dependency = AndroidX.biometric),
+    versionKeyWithModules(expected = "androidx.biometric-ktx", dependency = AndroidX.biometricKtx),
     versionKeyWithModules(expected = "androidx.browser", dependency = AndroidX.browser),
     versionKeyWithModules(expected = "androidx.camera.extensions", dependency = AndroidX.camera.extensions),
     versionKeyWithModules(expected = "androidx.camera.view", dependency = AndroidX.camera.view),
     versionKeyWithModules(expected = "androidx.camera", dependency = AndroidX.camera.camera2),
     versionKeyWithModules(expected = "androidx.camera", dependency = AndroidX.camera.core),
     versionKeyWithModules(expected = "androidx.car", dependency = AndroidX.car),
+    versionKeyWithModules(expected = "androidx.car.app", dependency = AndroidX.carApp),
+    versionKeyWithModules(expected = "androidx.car.app-testing", dependency = AndroidX.carApp.testing),
     versionKeyWithModules(expected = "androidx.car-cluster", dependency = AndroidX.carCluster),
     versionKeyWithModules(expected = "androidx.cardview", dependency = AndroidX.cardView),
     versionKeyWithModules(expected = "androidx.collection", dependency = AndroidX.collection),
     versionKeyWithModules(expected = "androidx.collection", dependency = AndroidX.collectionKtx),
     versionKeyWithModules(expected = "androidx.compose.animation", dependenciesObject = AndroidX.compose.animation),
     versionKeyWithModules(expected = "androidx.compose.compiler", dependency = AndroidX.compose.compiler),
-    versionKeyWithModules(expected = "androidx.compose.foundation", dependenciesObject = AndroidX.compose.foundation),
+    versionKeyWithModules(
+        expected = "androidx.compose.foundation",
+        dependenciesObject = AndroidX.compose.foundation,
+        excludes = listOf(@Suppress("deprecation") AndroidX.compose.foundation.text)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.compose.foundation-text",
+        dependency = @Suppress("deprecation") AndroidX.compose.foundation.text
+    ),
     versionKeyWithModules(expected = "androidx.compose.runtime", dependenciesObject = AndroidX.compose.runtime),
     versionKeyWithModules(expected = "androidx.compose.ui", dependenciesObject = AndroidX.compose.ui),
     versionKeyWithModules(expected = "androidx.compose.material", dependenciesObject = AndroidX.compose.material),
     versionKeyWithModules(expected = "androidx.concurrent", dependenciesObject = AndroidX.concurrent),
     versionKeyWithModules(expected = "androidx.constraintlayout", dependency = AndroidX.constraintLayout),
+    versionKeyWithModules(
+        expected = "androidx.constraintlayout-compose",
+        dependency = AndroidX.constraintLayoutCompose
+    ),
     versionKeyWithModules(expected = "androidx.constraintlayout", dependency = AndroidX.constraintLayoutSolver),
     versionKeyWithModules(expected = "androidx.contentpager", dependency = AndroidX.contentPager),
     versionKeyWithModules(expected = "androidx.coordinatorlayout", dependency = AndroidX.coordinatorLayout),
@@ -66,8 +82,10 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.core-role", dependency = AndroidX.core.role),
     versionKeyWithModules(expected = "androidx.core-animation", dependency = AndroidX.core.animation),
     versionKeyWithModules(expected = "androidx.core-animation", dependency = AndroidX.core.animationTesting),
+    versionKeyWithModules(expected = "androidx.core-google-shortcuts", dependency = AndroidX.core.googleShortcuts),
     versionKeyWithModules(expected = "androidx.cursoradapter", dependency = AndroidX.cursorAdapter),
     versionKeyWithModules(expected = "androidx.customview", dependency = AndroidX.customView),
+    versionKeyWithModules(expected = "androidx.datastore", dependency = AndroidX.dataStore),
     versionKeyWithModules(expected = "androidx.documentfile", dependency = AndroidX.documentFile),
     versionKeyWithModules(expected = "androidx.drawerlayout", dependency = AndroidX.drawerLayout),
     versionKeyWithModules(expected = "androidx.dynamicanimation", dependency = AndroidX.dynamicAnimation),
@@ -82,11 +100,48 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.fragment", dependency = AndroidX.fragmentTesting),
     versionKeyWithModules(expected = "androidx.gridlayout", dependency = AndroidX.gridLayout),
     versionKeyWithModules(expected = "androidx.heifwriter", dependency = AndroidX.heifWriter),
+    versionKeyWithModules(
+        expected = "androidx.hilt",
+        dependenciesObject = AndroidX.hilt,
+        excludes = listOf(AndroidX.hilt.navigationCompose, @Suppress("deprecation") AndroidX.hilt.lifecycleViewModel)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.hilt-navigation-compose",
+        dependency = AndroidX.hilt.navigationCompose
+    ),
+    versionKeyWithModules(
+        expected = "androidx.hilt-lifecycle-viewmodel",
+        dependency = @Suppress("deprecation") AndroidX.hilt.lifecycleViewModel
+    ),
     versionKeyWithModules(expected = "androidx.interpolator", dependency = AndroidX.interpolator),
     versionKeyWithModules(expected = "androidx.leanback", dependency = AndroidX.leanback),
-    versionKeyWithModules(expected = "androidx.leanback", dependency = AndroidX.leanbackPreference),
+    versionKeyWithModules(
+        expected = "androidx.leanback",
+        dependency = @Suppress("deprecation") AndroidX.leanbackPreference
+    ),
+    versionKeyWithModules(
+        expected = "androidx.leanback",
+        dependenciesObject = AndroidX.leanback,
+        excludes = listOf(AndroidX.leanback.paging, AndroidX.leanback.tab)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.leanback-paging",
+        dependency = AndroidX.leanback.paging
+    ),
+    versionKeyWithModules(
+        expected = "androidx.leanback-tab",
+        dependency = AndroidX.leanback.tab
+    ),
     versionKeyWithModules(expected = "androidx.legacy", dependenciesObject = AndroidX.legacy),
-    versionKeyWithModules(expected = "androidx.lifecycle", dependenciesObject = AndroidX.lifecycle),
+    versionKeyWithModules(
+        expected = "androidx.lifecycle",
+        dependenciesObject = AndroidX.lifecycle,
+        excludes = listOf(AndroidX.lifecycle.viewModelCompose)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.lifecycle-viewmodel-compose",
+        dependency = AndroidX.lifecycle.viewModelCompose
+    ),
     versionKeyWithModules(expected = "androidx.loader", dependency = AndroidX.loader),
     @Suppress("DEPRECATION")
     versionKeyWithModules(expected = "androidx.localbroadcastmanager", dependency = AndroidX.localBroadcastManager),
@@ -96,8 +151,24 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.mediarouter", dependency = AndroidX.mediaRouter),
     versionKeyWithModules(expected = "androidx.multidex", dependency = AndroidX.multidex),
     versionKeyWithModules(expected = "androidx.multidex", dependency = AndroidX.multidexInstrumentation),
-    versionKeyWithModules(expected = "androidx.navigation", dependenciesObject = AndroidX.navigation),
-    versionKeyWithModules(expected = "androidx.paging", dependenciesObject = AndroidX.paging),
+    versionKeyWithModules(
+        expected = "androidx.navigation",
+        dependenciesObject = AndroidX.navigation,
+        excludes = listOf(AndroidX.navigation.compose)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.navigation-compose",
+        dependency = AndroidX.navigation.compose
+    ),
+    versionKeyWithModules(
+        expected = "androidx.paging",
+        dependenciesObject = AndroidX.paging,
+        excludes = listOf(AndroidX.paging.compose)
+    ),
+    versionKeyWithModules(
+        expected = "androidx.paging-compose",
+        dependency = AndroidX.paging.compose
+    ),
     versionKeyWithModules(expected = "androidx.palette", dependency = AndroidX.palette),
     versionKeyWithModules(expected = "androidx.palette", dependency = AndroidX.paletteKtx),
     versionKeyWithModules(expected = "androidx.percentlayout", dependency = AndroidX.percentLayout),
@@ -106,16 +177,26 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.print", dependency = AndroidX.print),
     versionKeyWithModules(expected = "androidx.recommendation", dependency = AndroidX.recommendation),
     versionKeyWithModules(expected = "androidx.recyclerview", dependency = AndroidX.recyclerView),
-    versionKeyWithModules(expected = "androidx.recyclerview", dependency = AndroidX.recyclerViewSelection),
+    versionKeyWithModules(expected = "androidx.recyclerview-selection", dependency = AndroidX.recyclerViewSelection),
     versionKeyWithModules(expected = "androidx.remotecallback", dependency = AndroidX.remoteCallback),
     versionKeyWithModules(expected = "androidx.remotecallback", dependency = AndroidX.remoteCallbackProcessor),
-    versionKeyWithModules(expected = "androidx.room", dependenciesObject = AndroidX.room),
-    versionKeyWithModules(expected = "androidx.savedstate", dependency = AndroidX.savedState),
     versionKeyWithModules(
-        expected = "androidx.security",
-        dependenciesObject = AndroidX.security,
-        excludes = listOf(AndroidX.security.identityCredential)
+        expected = "androidx.room",
+        dependenciesObject = AndroidX.room,
+        excludes = @Suppress("deprecation") listOf(AndroidX.room.coroutines)
     ),
+    versionKeyWithModules(
+        expected = "androidx.room-coroutines",
+        dependency = @Suppress("deprecation") AndroidX.room.coroutines
+    ),
+    versionKeyWithModules(expected = "androidx.savedstate", dependency = AndroidX.savedState),
+    versionKeyWithModules(expected = "androidx.savedstate", dependency = AndroidX.savedStateKtx),
+    versionKeyWithModules(
+        expected = "androidx.security-app-authenticator",
+        dependency = AndroidX.security.appAuthenticator
+    ),
+    versionKeyWithModules(expected = "androidx.security-crypto", dependency = AndroidX.security.crypto),
+    versionKeyWithModules(expected = "androidx.security-crypto", dependency = AndroidX.security.cryptoKtx),
     versionKeyWithModules(
         expected = "androidx.security-identity-credential",
         dependency = AndroidX.security.identityCredential
@@ -154,6 +235,7 @@ private val androidX = listOf(
     ),
     versionKeyWithModules(expected = "androidx.textclassifier", dependency = AndroidX.textClassifier),
     versionKeyWithModules(expected = "androidx.transition", dependency = AndroidX.transition),
+    versionKeyWithModules(expected = "androidx.transition", dependency = AndroidX.transitionKtx),
     versionKeyWithModules(expected = "androidx.tvprovider", dependency = AndroidX.tvProvider),
     versionKeyWithModules(expected = "androidx.ui", dependenciesObject = AndroidX.ui),
     versionKeyWithModules(expected = "androidx.vectordrawable", dependency = AndroidX.vectorDrawable),
@@ -163,8 +245,34 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.viewpager", dependency = AndroidX.viewPager),
     versionKeyWithModules(expected = "androidx.viewpager2", dependency = AndroidX.viewPager2),
     versionKeyWithModules(expected = "androidx.wear", dependency = AndroidX.wear),
+    versionKeyWithModules(expected = "androidx.wear-input", dependency = AndroidX.wear.input),
+    versionKeyWithModules(expected = "androidx.wear-input", dependency = AndroidX.wear.inputTesting),
+    versionKeyWithModules(expected = "androidx.wear-watchface", dependency = AndroidX.wear.watchFace),
+    versionKeyWithModules(expected = "androidx.wear-watchface-client", dependency = AndroidX.wear.watchFace.client),
+    versionKeyWithModules(expected = "androidx.wear-watchface-complications-rendering", dependency = AndroidX.wear.watchFace.complicationsRendering),
+    versionKeyWithModules(expected = "androidx.wear-watchface-data", dependency = AndroidX.wear.watchFace.data),
+    versionKeyWithModules(expected = "androidx.wear-watchface-editor", dependency = AndroidX.wear.watchFace.editor),
+    versionKeyWithModules(expected = "androidx.wear-watchface-style", dependency = AndroidX.wear.watchFace.style),
+    versionKeyWithModules(expected = "androidx.wear-complications-data", dependency = AndroidX.wear.complications.data),
+    versionKeyWithModules(expected = "androidx.wear-complications-provider", dependency = AndroidX.wear.complications.provider),
+    versionKeyWithModules(expected = "androidx.wear-ongoing", dependency = AndroidX.wear.ongoing),
+    versionKeyWithModules(expected = "androidx.wear-phone-interactions", dependency = AndroidX.wear.phoneInteractions),
+    versionKeyWithModules(expected = "androidx.wear-remote-interactions", dependency = AndroidX.wear.remoteInteractions),
+    versionKeyWithModules(expected = "androidx.wear.tiles", dependency = AndroidX.wear.tiles),
     versionKeyWithModules(expected = "androidx.webkit", dependency = AndroidX.webkit),
-    versionKeyWithModules(expected = "androidx.work", dependenciesObject = AndroidX.work)
+    versionKeyWithModules(expected = "androidx.work", dependenciesObject = AndroidX.work),
+    versionKeyWithModules(expected = "androidx.window", dependency = AndroidX.window),
+    versionKeyWithModules(expected = "androidx.window-extensions", dependency = AndroidX.window.extensions)
+)
+
+private val google = listOf(
+    versionKeyWithModules(expected = "google.android.material", dependency = Google.android.material),
+    versionKeyWithModules(
+        expected = "google.android.material.compose-theme-adapter",
+        dependency = Google.android.material.composeThemeAdapter
+    ),
+    versionKeyWithModules(expected = "google.dagger", dependenciesObject = Google.dagger),
+    versionKeyWithModules(expected = "google.accompanist", dependenciesObject = Google.accompanist)
 )
 
 private val testing = listOf(
@@ -182,7 +290,7 @@ private val testing = listOf(
     }
 )
 
-internal val bundledRules = kotlinX + androidX + testing + listOf(
+internal val bundledRules = kotlinX + androidX + google + testing + listOf(
     versionKeyWithModules(expected = "ktor", dependenciesObject = Ktor),
     versionKeyWithModules(expected = "splitties", dependenciesObject = Splitties),
     versionKeyWithModules(expected = "coil-kt", dependenciesObject = COIL),

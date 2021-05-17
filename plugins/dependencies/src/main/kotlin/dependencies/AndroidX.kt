@@ -18,8 +18,13 @@ object AndroidX {
     // LibraryGroups.kt: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-master-dev:buildSrc/src/main/kotlin/androidx/build/LibraryGroups.kt;l=22?q=LibraryGroups&sq=
     // LibraryVersions.kt: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-master-dev:buildSrc/src/main/kotlin/androidx/build/LibraryVersions.kt;l=22?q=LibraryVersions&sq=
 
+    val activity = Activity
+
+    object Activity : DependencyNotationAndGroup(group = "androidx.activity", name = "activity") {
+        @JvmField val compose = "$artifactPrefix-compose:_"
+        @JvmField val ktx = "$artifactPrefix-ktx:_"
+    }
     const val activityKtx = "androidx.activity:activity-ktx:_"
-    const val activity = "androidx.activity:activity:_"
 
     // androidx.ads intentionally not included because ads are mental pollution.
 
@@ -34,6 +39,7 @@ object AndroidX {
     const val autoFill = "androidx.autofill:autofill:_"
 
     const val biometric = "androidx.biometric:biometric:_"
+    const val biometricKtx = "androidx.biometric:biometric-ktx:_"
 
     const val browser = "androidx.browser:browser:_"
 
@@ -46,6 +52,7 @@ object AndroidX {
     const val collection = "androidx.collection:collection:_"
 
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:_"
+    const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:_"
     const val constraintLayoutSolver = "androidx.constraintlayout:constraintlayout-solver:_"
 
     const val contentPager = "androidx.contentpager:contentpager:_"
@@ -79,7 +86,7 @@ object AndroidX {
 
     const val interpolator = "androidx.interpolator:interpolator:_"
 
-    const val leanback = "androidx.leanback:leanback:_"
+    @Deprecated("Dependency notation moved", ReplaceWith("AndroidX.leanback.preference"))
     const val leanbackPreference = "androidx.leanback:leanback-preference:_"
 
     const val loader = "androidx.loader:loader:_"
@@ -120,6 +127,7 @@ object AndroidX {
     const val remoteCallbackProcessor = "androidx.remotecallback:remotecallback-processor:_"
 
     const val savedState = "androidx.savedstate:savedstate:_"
+    const val savedStateKtx = "androidx.savedstate:savedstate-ktx:_"
 
     const val shareTarget = "androidx.sharetarget:sharetarget:_"
 
@@ -137,6 +145,7 @@ object AndroidX {
     const val tracingKtx = "androidx.tracing:tracing-ktx:_"
 
     const val transition = "androidx.transition:transition:_"
+    const val transitionKtx = "androidx.transition:transition-ktx:_"
 
     const val tvProvider = "androidx.tvprovider:tvprovider:_"
 
@@ -149,28 +158,74 @@ object AndroidX {
     const val viewPager = "androidx.viewpager:viewpager:_"
     const val viewPager2 = "androidx.viewpager2:viewpager2:_"
 
-    const val wear = "androidx.wear:wear:_"
-
     const val webkit = "androidx.webkit:webkit:_"
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Definition of nested objects below.  ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    val appSearch = AppSearch
+
+    object AppSearch : DependencyNotationAndGroup(group = "androidx.appsearch", name = "appsearch") {
+
+        @JvmField
+        val compiler = "$artifactPrefix-compiler:_"
+        @JvmField
+        val localStorage = "$artifactPrefix-local-storage:_"
+    }
+
+    val carApp = CarApp
+
+    object CarApp : DependencyNotationAndGroup(group = "androidx.car.app", name = "app") {
+
+        @JvmField
+        val testing = "$artifactPrefix-testing:_"
+    }
+
     val core = Core // TODO kdoc
 
     object Core : DependencyNotationAndGroup(group = "androidx.core", name = "core") {
 
-        @JvmField val ktx = "$artifactPrefix-ktx:_"
-        @JvmField val role = "$artifactPrefix-role:_"
+        @JvmField
+        val ktx = "$artifactPrefix-ktx:_"
+        @JvmField
+        val role = "$artifactPrefix-role:_"
 
-        @JvmField val animation = "$artifactPrefix-animation:_"
-        @JvmField val animationTesting = "$artifactPrefix-animation-testing:_"
+        @JvmField
+        val animation = "$artifactPrefix-animation:_"
+        @JvmField
+        val animationTesting = "$artifactPrefix-animation-testing:_"
+
+        @JvmField
+        val googleShortcuts = "$artifactPrefix-google-shortcuts:_"
+    }
+
+    val dataStore = DataStore
+
+    object DataStore : DependencyNotationAndGroup(group = "androidx.datastore", name = "datastore") {
+
+        val preferences = Preferences
+
+        object Preferences : DependencyNotationAndGroup(group = "androidx.datastore", name = "datastore-preferences") {
+            @JvmField
+            val core = "$artifactPrefix-core:_"
+            @JvmField
+            val rxJava2 = "$artifactPrefix-rxJava2:_"
+            @JvmField
+            val rxJava3 = "$artifactPrefix-rxJava3:_"
+        }
+
+        @JvmField
+        val core = "$artifactPrefix-core:_"
+        @JvmField
+        val rxJava2 = "$artifactPrefix-rxJava2:_"
+        @JvmField
+        val rxJava3 = "$artifactPrefix-rxJava3:_"
     }
 
     val lifecycle = Lifecycle // TODO kdoc
 
-    object Lifecycle: IsNotADependency {
+    object Lifecycle : IsNotADependency {
         private const val artifactPrefix = "androidx.lifecycle:lifecycle"
 
         const val runtimeKtx = "$artifactPrefix-runtime-ktx:_"
@@ -181,6 +236,8 @@ object AndroidX {
         const val process = "$artifactPrefix-process:_"
         const val service = "$artifactPrefix-service:_"
         const val viewModelSavedState = "$artifactPrefix-viewmodel-savedstate:_"
+
+        const val viewModelCompose = "$artifactPrefix-viewmodel-compose:_"
 
         const val runtime = "$artifactPrefix-runtime:_"
         const val viewModel = "$artifactPrefix-viewmodel:_"
@@ -201,30 +258,33 @@ object AndroidX {
 
     val startup = Startup // TODO kdoc
 
-    object Startup: IsNotADependency {
+    object Startup : IsNotADependency {
         const val runtime = "androidx.startup:startup-runtime:_"
     }
 
     val window = Window // TODO kdoc
 
     object Window : DependencyNotationAndGroup(group = "androidx.window", name = "window") {
-        @JvmField val extensions = "$artifactPrefix-extensions:_"
+        @JvmField
+        val extensions = "$artifactPrefix-extensions:_"
     }
 
     val security = Security // TODO kdoc
 
-    object Security: IsNotADependency {
+    object Security : IsNotADependency {
         private const val artifactPrefix = "androidx.security:security"
 
         const val crypto = "$artifactPrefix-crypto:_"
         const val cryptoKtx = "$artifactPrefix-crypto-ktx:_"
+
+        const val appAuthenticator = "$artifactPrefix-app-authenticator:_"
 
         const val identityCredential = "$artifactPrefix-identity-credential:_"
     }
 
     val room = Room // TODO kdoc
 
-    object Room: IsNotADependency {
+    object Room : IsNotADependency {
         private const val artifactPrefix = "androidx.room:room"
 
         const val ktx = "$artifactPrefix-ktx:_"
@@ -244,11 +304,13 @@ object AndroidX {
 
     val paging = Paging // TODO kdoc
 
-    object Paging: IsNotADependency {
+    object Paging : IsNotADependency {
         private const val artifactPrefix = "androidx.paging:paging"
 
         const val commonKtx = "$artifactPrefix-common-ktx:_"
         const val runtimeKtx = "$artifactPrefix-runtime-ktx:_"
+
+        const val compose = "$artifactPrefix-compose:_"
 
         const val rxJava2Ktx = "$artifactPrefix-rxjava2-ktx:_"
 
@@ -256,28 +318,102 @@ object AndroidX {
         const val runtime = "$artifactPrefix-runtime:_"
 
         const val rxJava2 = "$artifactPrefix-rxjava2:_"
+        const val rxJava3 = "$artifactPrefix-rxjava3:_"
     }
 
     val work = Work // TODO kdoc
 
-    object Work: IsNotADependency {
+    object Work : IsNotADependency {
         const val runtimeKtx = "androidx.work:work-runtime-ktx:_"
 
+        const val multiprocess = "androidx.work:work-multiprocess:_"
         const val gcm = "androidx.work:work-gcm:_"
         const val testing = "androidx.work:work-testing:_"
 
         const val runtime = "androidx.work:work-runtime:_"
 
         const val rxJava2 = "androidx.work:work-rxjava2:_"
+        const val rxJava3 = "androidx.work:work-rxjava3:_"
+    }
+
+    val leanback = Leanback
+
+    object Leanback : DependencyNotationAndGroup(group = "androidx.leanback", name = "leanback") {
+        @JvmField
+        val preference = "$artifactPrefix-preference:_"
+        @JvmField
+        val paging = "$artifactPrefix-paging:_"
+        @JvmField
+        val tab = "$artifactPrefix-tab:_"
+    }
+
+    val wear = Wear
+
+    object Wear : DependencyNotationAndGroup(group = "androidx.wear", name = "wear") {
+        @JvmField
+        val input = "$artifactPrefix-input:_"
+        @JvmField
+        val inputTesting = "$artifactPrefix-input-testing:_"
+
+        @JvmField
+        val ongoing = "$artifactPrefix-ongoing:_"
+
+        @JvmField
+        val phoneInteractions = "$artifactPrefix-phone-interactions:_"
+        @JvmField
+        val remoteInteractions = "$artifactPrefix-remote-interactions:_"
+
+        val complications = Complications
+
+        object Complications {
+            private const val artifactPrefix = "androidx.wear:wear-complications"
+
+            const val data = "$artifactPrefix-data:_"
+            const val provider = "$artifactPrefix-provider:_"
+        }
+
+        val tiles = Tiles
+
+        object Tiles : DependencyNotationAndGroup(group = "androidx.wear.tiles", name = "tiles") {
+            @JvmField
+            val proto = "$artifactPrefix-proto:_"
+            @JvmField
+            val renderer = "$artifactPrefix-renderer:_"
+        }
+
+        val watchFace = WatchFace
+
+        object WatchFace : DependencyNotationAndGroup(group = "androidx.wear", name = "wear-watchface") {
+            @JvmField
+            val client = "$artifactPrefix-client:_"
+            @JvmField
+            val clientGuava = "$artifactPrefix-client-guava:_"
+            @JvmField
+            val complicationsRendering = "$artifactPrefix-complications-rendering:_"
+            @JvmField
+            val data = "$artifactPrefix-data:_"
+            @JvmField
+            val editor = "$artifactPrefix-editor:_"
+            @JvmField
+            val editorGuava = "$artifactPrefix-editor-guava:_"
+            @JvmField
+            val guava = "$artifactPrefix-guava:_"
+            @JvmField
+            val style = "$artifactPrefix-style:_"
+        }
     }
 
     val navigation = Navigation // TODO kdoc
 
-    object Navigation: IsNotADependency {
+    object Navigation : IsNotADependency {
         private const val artifactPrefix = "androidx.navigation:navigation"
 
         const val fragmentKtx = "$artifactPrefix-fragment-ktx:_"
         const val uiKtx = "$artifactPrefix-ui-ktx:_"
+
+        const val compose = "$artifactPrefix-compose:_"
+
+        const val dynamicFeaturesFragment = "$artifactPrefix-dynamic-features-fragment:_"
 
         const val safeArgsGenerator = "$artifactPrefix-safe-args-generator:_"
         const val safeArgsGradlePlugin = "$artifactPrefix-safe-args-gradle-plugin:_"
@@ -298,7 +434,7 @@ object AndroidX {
     val ui = Ui // TODO kdoc
 
     @Incubating
-    object Ui: IsNotADependency {
+    object Ui : IsNotADependency {
         const val test = "androidx.ui:ui-test:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
         const val tooling = "androidx.ui:ui-tooling:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
     }
@@ -307,7 +443,7 @@ object AndroidX {
     val compose = Compose // TODO kdoc
 
     @Incubating
-    object Compose: IsNotADependency {
+    object Compose : IsNotADependency {
         private const val groupPrefix = "androidx.compose"
 
         @Incubating
@@ -317,37 +453,73 @@ object AndroidX {
 
         object Runtime : DependencyNotationAndGroup(group = "$groupPrefix.runtime", name = "runtime") {
 
-            @JvmField val dispatch = "$artifactPrefix-dispatch:_"
-            @JvmField val savedInstanceState = "$artifactPrefix-saved-instance-state:_"
+            @JvmField
+            val dispatch = "$artifactPrefix-dispatch:_"
+            @JvmField
+            val saveable = "$artifactPrefix-saveable:_"
+            @JvmField
+            val savedInstanceState = "$artifactPrefix-saved-instance-state:_"
 
-            @JvmField val liveData = "$artifactPrefix-livedata:_"
-            @JvmField val rxJava2 = "$artifactPrefix-rxjava2:_"
+            @JvmField
+            val liveData = "$artifactPrefix-livedata:_"
+            @JvmField
+            val rxJava2 = "$artifactPrefix-rxjava2:_"
+            @JvmField
+            val rxJava3 = "$artifactPrefix-rxjava3:_"
         }
 
         val animation = Animation
 
         object Animation : DependencyNotationAndGroup(group = "$groupPrefix.animation", name = "animation") {
-            @JvmField val core = "$artifactPrefix-core:_"
+            @JvmField
+            val core = "$artifactPrefix-core:_"
         }
 
         val ui = Ui // TODO kdoc
 
         object Ui : DependencyNotationAndGroup(group = "$groupPrefix.ui", name = "ui") {
-            @JvmField val geometry = "$artifactPrefix-geometry:_"
-            @JvmField val graphics = "$artifactPrefix-graphics:_"
+            @JvmField
+            val geometry = "$artifactPrefix-geometry:_"
+            @JvmField
+            val graphics = "$artifactPrefix-graphics:_"
 
-            @JvmField val text = "$artifactPrefix-text:_"
-            @JvmField val textAndroid = "$artifactPrefix-text-android:_"
+            @JvmField
+            val test = "$artifactPrefix-test:_"
+            @JvmField
+            val testJunit4 = "$artifactPrefix-test-junit4:_"
+            @JvmField
+            val testManifest = "$artifactPrefix-test-manifest:_"
 
-            @JvmField val unit = "$artifactPrefix-unit:_"
-            @JvmField val util = "$artifactPrefix-util:_"
+            @JvmField
+            val text = "$artifactPrefix-text:_"
+            @JvmField
+            val textAndroid = "$artifactPrefix-text-android:_"
+
+            @JvmField
+            val tooling = "$artifactPrefix-tooling:_"
+            @JvmField
+            val toolingData = "$artifactPrefix-tooling-data:_"
+
+            @JvmField
+            val unit = "$artifactPrefix-unit:_"
+            @JvmField
+            val util = "$artifactPrefix-util:_"
+            @JvmField
+            val viewBinding = "$artifactPrefix-viewbinding:_"
         }
 
         val foundation = Foundation
 
         object Foundation : DependencyNotationAndGroup(group = "$groupPrefix.foundation", name = "foundation") {
-            @JvmField val layout = "$artifactPrefix-layout:_"
-            @JvmField val text = "$artifactPrefix-text:_"
+            @JvmField
+            val layout = "$artifactPrefix-layout:_"
+
+            @JvmField
+            @Deprecated(
+                "Symbols moved into the main artifact in 1.0.0-alpha08",
+                ReplaceWith("AndroidX.compose.foundation")
+            )
+            val text = "$artifactPrefix-text:_"
         }
 
         val material = Material
@@ -356,16 +528,21 @@ object AndroidX {
 
             val icons = Icons
 
-            object Icons: IsNotADependency {
-                @JvmField val core = "$artifactPrefix-icons-core:_"
-                @JvmField val extended = "$artifactPrefix-icons-extended:_"
+            object Icons : IsNotADependency {
+                @JvmField
+                val core = "$artifactPrefix-icons-core:_"
+                @JvmField
+                val extended = "$artifactPrefix-icons-extended:_"
             }
+
+            @JvmField
+            val ripple = "$artifactPrefix-ripple:_"
         }
     }
 
     val media2 = Media2
 
-    object Media2: IsNotADependency {
+    object Media2 : IsNotADependency {
         private const val artifactPrefix = "androidx.media2:media2"
 
         const val session = "$artifactPrefix-session:_"
@@ -378,7 +555,7 @@ object AndroidX {
 
     val camera = Camera
 
-    object Camera: IsNotADependency {
+    object Camera : IsNotADependency {
         private const val artifactPrefix = "androidx.camera:camera"
 
         const val core = "$artifactPrefix-core:_"
@@ -390,17 +567,24 @@ object AndroidX {
 
     val hilt = Hilt // TODO kdoc
 
-    object Hilt: IsNotADependency {
+    object Hilt : IsNotADependency {
         private const val artifactPrefix = "androidx.hilt:hilt"
 
-        const val lifecycleViewModel = "$artifactPrefix-lifecycle-viewmodel:_"
         const val work = "$artifactPrefix-work:_"
+        const val navigationFragment = "$artifactPrefix-navigation-fragment:_"
+        const val navigationCompose = "$artifactPrefix-navigation-compose:_"
         const val compiler = "$artifactPrefix-compiler:_"
+
+        @Deprecated(
+            "Use @HiltViewModel instead of @ViewModelInject and remove this dependency. " +
+                "See docs here: https://dagger.dev/hilt/view-model"
+        )
+        const val lifecycleViewModel = "$artifactPrefix-lifecycle-viewmodel:_"
     }
 
     val enterprise = Enterprise // TODO kdoc
 
-    object Enterprise: IsNotADependency {
+    object Enterprise : IsNotADependency {
         private const val artifactPrefix = "androidx.enterprise:enterprise"
 
         const val feedback = "$artifactPrefix-feedback:_"
@@ -409,7 +593,7 @@ object AndroidX {
 
     val gaming = Gaming // TODO kdoc
 
-    object Gaming: IsNotADependency {
+    object Gaming : IsNotADependency {
         private const val artifactPrefix = "androidx.gaming:gaming"
 
         const val framePacing = "$artifactPrefix-frame-pacing:_"
@@ -419,7 +603,7 @@ object AndroidX {
 
     val slice = Slice // TODO kdoc
 
-    object Slice: IsNotADependency {
+    object Slice : IsNotADependency {
         private const val artifactPrefix = "androidx.slice:slice"
 
         const val buildersKtx = "$artifactPrefix-builders-ktx:_"
@@ -431,7 +615,7 @@ object AndroidX {
 
     val benchmark = Benchmark // TODO kdoc
 
-    object Benchmark: IsNotADependency {
+    object Benchmark : IsNotADependency {
         private const val artifactPrefix = "androidx.benchmark:benchmark"
 
         const val junit4 = "$artifactPrefix-junit4:_"
@@ -443,7 +627,7 @@ object AndroidX {
 
     val test = Test // TODO kdoc
 
-    object Test: IsNotADependency {
+    object Test : IsNotADependency {
         private const val coreVersion = "_"
         private const val group = "androidx.test"
 
@@ -459,7 +643,7 @@ object AndroidX {
 
         val ext = Ext
 
-        object Ext: IsNotADependency {
+        object Ext : IsNotADependency {
             private const val extGroup = "androidx.test.ext"
             private const val extJunitVersion = "_"
 
@@ -476,7 +660,7 @@ object AndroidX {
 
         val espresso = Espresso
 
-        object Espresso: IsNotADependency {
+        object Espresso : IsNotADependency {
             private const val group = "androidx.test.espresso"
             private const val artifactPrefix = "$group:espresso"
 
@@ -490,7 +674,7 @@ object AndroidX {
 
             val idling = Idling
 
-            object Idling: IsNotADependency {
+            object Idling : IsNotADependency {
                 private const val artifactPrefix = "$group.idling:idling"
 
                 const val concurrent = "$artifactPrefix-concurrent:_"
@@ -501,7 +685,7 @@ object AndroidX {
 
     val concurrent = Concurrent // TODO kdoc
 
-    object Concurrent: IsNotADependency {
+    object Concurrent : IsNotADependency {
         private const val artifactPrefix = "androidx.concurrent:concurrent"
 
         const val futures = "$artifactPrefix-futures:_"
@@ -510,7 +694,7 @@ object AndroidX {
 
     val archCore = ArchCore
 
-    object ArchCore: IsNotADependency {
+    object ArchCore : IsNotADependency {
         private const val artifactPrefix = "androidx.arch.core:core"
 
         const val common = "$artifactPrefix-common:_"
@@ -520,7 +704,7 @@ object AndroidX {
 
     val legacy = Legacy // TODO kdoc
 
-    object Legacy: IsNotADependency {
+    object Legacy : IsNotADependency {
         private const val artifactPrefix = "androidx.legacy:legacy"
 
         const val preferenceV14 = "$artifactPrefix-preference-v14:_"

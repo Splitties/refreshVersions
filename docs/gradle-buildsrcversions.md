@@ -1,7 +1,8 @@
 
 ## The buildSrc module
 
-The `buildSrc` is a Gradle module where you can write Kotlin code like usual (with full tooling support). That code is then be available to all your build files - not your final application.
+The `buildSrc` is a Gradle module where you can write Kotlin code (with full tooling support).
+That code is then be available to all your build files - not your final application.
 
 One cool thing you can do with it is to replace those [libraries.gradle files](https://github.com/abbas-oveissi/SearchMovies/blob/607ce1c6f9aa48669ab1b91f8824e9251f2a1fa5/libraries.gradle) we used to write:
 
@@ -30,7 +31,7 @@ Finally the IDE tooling we deserve:
 - ...
 
 
-## "gradle buildSrcVersions" is dead...
+## "gradle buildSrcVersions" is dead…
 
 The ancestor of the *plugin* `refreshVersions` was a *plugin* called `buildSrcVersions`.
 
@@ -46,13 +47,20 @@ $ ./gradlew buildSrcVersions
         new file:   buildSrc/src/main/kotlin/Versions.kt
 ```
 
-## .. long live "gradle buildSrcLibs"!
+## …long life "gradle buildSrcLibs"!
 
 The `Versions.kt` file was replaced by a technically better solution, the `versions.properties` file.
 
-But the `Libs.kt` file has still pretty good use cases, like a project with lots of Gradle modules written in Groovy.
+That said, the `Libs.kt` file still has its use cases, so in your `settings.gradle(.kts)` file,
+you can add the following:
 
-That's why the *plugin* `refreshVersions` still contains a task `:buildSrcVersions` -- which is just an alias for the better named task `:buildSrcLibs`.
+```groovy
+refreshVersions {
+    enableBuildSrcLibs()
+}
+```
+
+That will enable the task `buildSrcLibs`, which also has an alias: `buildSrcVersions` for easier transition for existing users.
 
 Use it like this:
 
@@ -79,13 +87,13 @@ object Libs {
 }
 ```
 
-The constant generated in `Libs.kt` are the same as they was in the *plugin* `buildSrcVersions`.
+The constants generated in `Libs.kt` have the same name as they had in the `buildSrcVersions` *plugin*.
 
 This makes updating to refreshVersions pretty straightforward.
 
 ## Replace your dependencies
 
-Sync your Gradle build.
+First, reload/sync your Gradle project in the IDE.
 
 You can now start to replace your magic strings with the properties available in `Libs.kt`
 
@@ -93,10 +101,10 @@ You can now start to replace your magic strings with the properties available in
 
 ## Update dependencies
 
-You can still automatically look for updates, but this is now done with the task `:refreshVersions` and editing the file `versions.properties`
+You can still automatically look for updates, but this is now done with the task `refreshVersions` and editing the file `versions.properties`
 
 ```bash
-$ gradle refreshVersions
+$ ./gradlew refreshVersions
 ```
 
-Read more: [**Update dependencies**]({{link.site}}/update-dependencies).
+Read more: [**Update dependencies**](update-dependencies.md).

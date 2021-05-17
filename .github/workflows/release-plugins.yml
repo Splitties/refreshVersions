@@ -20,6 +20,3 @@ jobs:
           wrapper-directory: plugins
           build-root-directory: plugins
           arguments: publishToAppropriateRepo --scan -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
-        env:
-          bintray_user: ${{ secrets.bintray_user }}
-          bintray_api_key: ${{ secrets.bintray_api_key }}

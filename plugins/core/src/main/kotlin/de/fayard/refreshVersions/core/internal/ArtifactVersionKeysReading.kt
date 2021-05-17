@@ -23,7 +23,7 @@ abstract class ArtifactVersionKeyReader private constructor() {
         fun fromRules(fileContent: String): ArtifactVersionKeyReader = fromRules(listOf(fileContent))
 
         fun fromRules(filesContent: List<String>): ArtifactVersionKeyReader {
-            val rules = filesContent.flatMap { parseArtifactVersionKeysRules(it) }
+            val rules = filesContent.flatMap { parseArtifactVersionKeysRules(it) }.sortedDescending()
             return object : ArtifactVersionKeyReader() {
                 override fun readVersionKey(group: String, name: String): String? {
                     return rules.firstOrNull { it.matches(group, name) }?.key(group, name)
@@ -50,5 +50,5 @@ internal fun parseArtifactVersionKeysRules(fileContent: String): List<ArtifactVe
             artifactPattern = lines[i * 2],
             versionKeyPattern = lines[i * 2 + 1]
         )
-    }.sortedDescending()
+    }
 }

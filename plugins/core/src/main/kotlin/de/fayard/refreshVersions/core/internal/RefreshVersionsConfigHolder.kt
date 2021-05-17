@@ -38,9 +38,15 @@ object RefreshVersionsConfigHolder {
     internal var settings: Settings by resettableDelegates.LateInit()
         private set
 
+    internal var lastlyReadVersionsMap: Map<String, String> by resettableDelegates.MutableLazy {
+        readVersionsMap()
+    }
+
     fun readVersionsMap(): Map<String, String> {
         val model = VersionsPropertiesModel.readFrom(versionsPropertiesFile)
-        return model.sections.filterIsInstance<VersionEntry>().associate { it.key to it.currentVersion }
+        return model.sections.filterIsInstance<VersionEntry>().associate { it.key to it.currentVersion }.also {
+            lastlyReadVersionsMap = it
+        }
     }
 
     fun allProjects(project: Project): Sequence<Project> {

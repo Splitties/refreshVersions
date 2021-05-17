@@ -20,9 +20,8 @@ extra:
     gradlePluginPortal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
-    gradle: 6.7
-    refreshVersions: '0.9.7'
-    refreshVersionsDev: '0.9.7-dev-001'
+    gradle: 6.9
+    refreshVersions: '0.10.0'
   keyboard_shortcuts:
     find_actions: <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>A</kbd>
 
@@ -64,18 +63,17 @@ nav:
   - 'Setup': setup.md
   - 'Add Dependencies': add-dependencies.md
   - 'Update Dependencies': update-dependencies.md
+# TODO: Uncomment line below after its content is updated. We might also change the title.
 #  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
   - 'Migration': migration.md
-  - 'FAQ': faq.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing':
     - 'Before you contribute': contributing/before-you-contribute.md
     - 'Improving docs': contributing/improving-docs.md
     - 'Submitting issues': contributing/submitting-issues.md
-    - 'Submitting PRs':
-      - 'Dev environment': contributing/submitting-prs/dev-env.md
-      - 'Development process': contributing/submitting-prs/dev-process.md
-      - 'Dependency notations': contributing/submitting-prs/dependency-notations-updates.md
+    - 'Dev environment': contributing/submitting-prs/dev-env.md
+    - 'Development process': contributing/submitting-prs/dev-process.md
+    - 'Dependency notations': contributing/submitting-prs/dependency-notations-updates.md
 
 plugins:
   - search
