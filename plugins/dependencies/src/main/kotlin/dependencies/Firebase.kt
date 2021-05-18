@@ -19,7 +19,7 @@ interface Firebase {
         /**
          * Usage example:
          * ```
-         * implementation(platform(Firebase.bom)
+         * implementation(platform(Firebase.bom))
          * implementation(Firebase.authentication)
          * implementation(Firebase.cloudMessaging)
          * ```
