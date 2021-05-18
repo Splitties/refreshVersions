@@ -9,10 +9,10 @@ run: plugins
     cd sample-multi-modules  && ./gradlew buildSrcVersions
     cd sample-android && ./gradlew refreshVersions
 cleanup: plugins
-    cd sample-kotlin && ./gradlew refreshVersions --cleanup
-    cd sample-groovy && ./gradlew refreshVersions --cleanup
-    cd sample-multi-modules  && ./gradlew refreshVersions --cleanup
-    cd sample-android && ./gradlew refreshVersions --cleanup
+    cd sample-kotlin && ./gradlew refreshVersionsCleanup
+    cd sample-groovy && ./gradlew refreshVersionsCleanup
+    cd sample-multi-modules  && ./gradlew refreshVersionsCleanup
+    cd sample-android && ./gradlew refreshVersionsCleanup
 docs:
     mkdocs serve &
 ngrok: docs
