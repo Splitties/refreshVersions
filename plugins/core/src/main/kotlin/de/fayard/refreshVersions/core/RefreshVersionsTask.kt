@@ -5,16 +5,16 @@ import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
 import de.fayard.refreshVersions.core.internal.legacy.LegacyBootstrapUpdater
 import de.fayard.refreshVersions.core.internal.lookupVersionCandidates
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.readFrom
+import de.fayard.refreshVersions.core.internal.versions.writeTo
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
-import kotlinx.coroutines.*
+import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.logging.LogLevel
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
-import org.gradle.api.tasks.options.OptionValues
 import org.gradle.util.GradleVersion
 
 /**
@@ -30,7 +30,8 @@ import org.gradle.util.GradleVersion
 open class RefreshVersionsTask : DefaultTask() {
 
 
-    @Input @Optional
+    @Input
+    @Optional
     @Option(option = "enable", description = "Enable a feature flag")
     var enableFlag: FeatureFlag? = null
         set(value) {
@@ -38,7 +39,8 @@ open class RefreshVersionsTask : DefaultTask() {
             if (value != null) FeatureFlag.userSettings.put(value, true)
         }
 
-    @Input @Optional
+    @Input
+    @Optional
     @Option(option = "disable", description = "Disable a feature flag")
     var disableFlag: FeatureFlag? = null
         set(value) {
@@ -46,8 +48,16 @@ open class RefreshVersionsTask : DefaultTask() {
             if (value != null) FeatureFlag.userSettings.put(value, false)
         }
 
+    @Input
+    @Option(option = "cleanup", description = "Cleanup versions.properties from comments")
+    var cleanup: Boolean = false
+
     @TaskAction
     fun taskActionRefreshVersions() {
+        if (cleanup) {
+            cleanUpAvailableVersions()
+            return
+        }
         if (FeatureFlag.userSettings.isNotEmpty()) {
             logger.lifecycle("Feature flags: " + FeatureFlag.userSettings)
         }
@@ -78,6 +88,28 @@ open class RefreshVersionsTask : DefaultTask() {
             warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
             warnAboutGradleUpdateAvailableIfAny(result.gradleUpdates)
         }
+    }
+
+    private fun cleanUpAvailableVersions() {
+        val model = VersionsPropertiesModel.readFrom(RefreshVersionsConfigHolder.versionsPropertiesFile)
+
+        val cleanupSections = model.sections.map { section ->
+            when (section) {
+                is VersionsPropertiesModel.Section.Comment -> section
+                is VersionsPropertiesModel.Section.VersionEntry -> section.copy(availableUpdates = emptyList())
+            }
+        }
+        model.copy(sections = cleanupSections).writeTo(RefreshVersionsConfigHolder.versionsPropertiesFile)
+        val settingsFiles = listOf("settings.gradle", "settings.gradle.kts", "buildSrc/settings.gradle", "buildSrc/settings.gradle.kts")
+            .mapNotNull { project.file(it).takeIf { it.exists() } }
+        settingsFiles.forEach { settings ->
+            val oldContent = settings.readLines()
+            val newContent = oldContent.filterNot { it.contains("////") && it.contains("available") }
+            if (newContent.size != oldContent.size) {
+                settings.writeText(newContent.joinToString(separator = "\n"))
+            }
+        }
+
     }
 
     private fun warnAboutGradleUpdateAvailableIfAny(gradleUpdates: List<Version>) {
