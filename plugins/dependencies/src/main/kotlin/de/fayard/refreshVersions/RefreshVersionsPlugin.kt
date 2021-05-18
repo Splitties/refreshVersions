@@ -103,7 +103,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
         project.tasks.register<RefreshVersionsDependenciesMigrationTask>(
             name = "migrateToRefreshVersionsDependenciesConstants"
         ) {
-            group = "help"
+            group = "refreshVersions"
             description = "Assists migration from hardcoded dependencies to constants of " +
                 "the refreshVersions dependencies plugin"
             finalizedBy("refreshVersions")
@@ -112,7 +112,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
         project.tasks.register<DefaultTask>(
             name = "refreshVersionsDependenciesMapping"
         ) {
-            group = "help"
+            group = "refreshVersions"
             description = "Shows the mapping of Gradle dependencies and their typesafe accessors"
             doLast {
                 println(getArtifactNameToConstantMapping().joinToString("\n"))
