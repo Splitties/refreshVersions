@@ -118,9 +118,45 @@ refreshVersions will handle it.
 
 Below are some ways to deal with the dependency notations that are not built-in.
 
-### Using gradle buildSrcLibs (WIP)
+### Using buildSrcLibs
 
-Yet another approach to managing dependencies is to use the **Gradle buildSrc** module, and to automatically generate a file `Libs.kt` that contains all the dependencies applied to your build:
+The Gradle task `buildSrcLibs` can be used to automatically generate a `Libs.kt` file in the [buildSrc](https://docs.gradle.org/current/userguide/organizing_gradle_projects.html#sec:build_sources), that will contain all the dependency notations curently used in your build.
+
+To use it, you need to enable it:
+
+=== "settings.gradle.kts"
+    ```kotlin
+    plugins {
+        // See https://jmfayard.github.io/refreshVersions
+        id("de.fayard.refreshVersions") version "{{version.refreshVersions}}"
+    }
+
+    refreshVersions {
+        enableBuildSrcLibs() // <-- Add this
+    }
+    ```
+=== "settings.gradle"
+    ```groovy
+    plugins {
+        // See https://jmfayard.github.io/refreshVersions
+        id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+    }
+
+    refreshVersions {
+        enableBuildSrcLibs() // <-- Add this
+    }
+    ```
+
+Then you can use the command `./gradlew buildSrcLibs` to generate accessors for your dependencies
+
+```bash
+$ ./gradlew buildSrcLibs
+> Task :buildSrcLibs
+        new file:   buildSrc/build.gradle.kts
+        new file:   buildSrc/src/main/kotlin/Libs.kt
+```
+
+The generated file will look like this:
 
 === "buildSrc/src/main/kotlin/Libs.kt"
 ```kotlin
@@ -136,9 +172,9 @@ object Libs {
 }
 ```
 
-Because this file used the placeholder version `_`, it is compatible with gradle refreshVersions!
+Because this file uses the version placeholder (`_`), it is compatible with refreshVersions!
 
-**This feature is not done yet. If you think we should prioritize it, please vote for [this issue]({{link.issues}}/235) with a 👍 and subscribe to it.**
+Read more: [gradle buildSrcVersions]({{link.site}}/gradle-buildsrcversions).
 
 
 ### Using Package Search from JetBrains
@@ -174,7 +210,7 @@ accompanist-insets = "com.google.accompanist:accompanist-insets:_"
 ...
 ```
 
-In this configuration, the versions catalog centralize the maven artifacts while refreshVersions take care of setting and updating the versions.
+In this configuration, the versions catalog centralizes the dependency notations, while refreshVersions takes care of setting and updating the versions.
 
 We have ideas to integrate Versions Catalogs deeper into refreshVersions, see [this issue](https://github.com/jmfayard/refreshVersions/issues/333).
 
