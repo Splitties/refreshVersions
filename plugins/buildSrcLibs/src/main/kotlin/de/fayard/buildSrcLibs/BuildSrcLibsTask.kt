@@ -1,11 +1,12 @@
 package de.fayard.buildSrcLibs
 
 import com.squareup.kotlinpoet.FileSpec
+import de.fayard.buildSrcLibs.internal.Case
 import de.fayard.buildSrcLibs.internal.Library
-import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.buildSrcLibs.internal.PluginConfig
 import de.fayard.buildSrcLibs.internal.checkModeAndNames
 import de.fayard.buildSrcLibs.internal.kotlinpoet
+import de.fayard.refreshVersions.core.internal.OutputFile
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ExternalDependency
@@ -49,7 +50,7 @@ open class BuildSrcLibsTask : DefaultTask() {
             configured = emptyList(),
             byDefault = PluginConfig.MEANING_LESS_NAMES
         )
-        val deps = allDependencies.checkModeAndNames(resolvedUseFqdn)
+        val deps = allDependencies.checkModeAndNames(resolvedUseFqdn, Case.snake_case)
 
         val libsFile: FileSpec = kotlinpoet(deps)
 
