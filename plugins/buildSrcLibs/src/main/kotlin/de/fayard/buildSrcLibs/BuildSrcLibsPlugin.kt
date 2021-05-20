@@ -8,17 +8,25 @@ import org.gradle.kotlin.dsl.register
 class BuildSrcLibsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
+        project.tasks.register<MissingEntriesTask>(
+            name = "refreshVersionsMissingEntries"
+        ) {
+            group = "refreshVersions"
+            description = "Add missing entries to 'versions.properties'"
+            outputs.upToDateWhen { false }
+        }
         project.tasks.register<BuildSrcLibsTask>(
             name = "buildSrcLibs"
         ) {
-            group = "help"
+            group = "refreshVersions"
             description = "Update buildSrc/src/main/kotlin/Libs.kt"
             outputs.upToDateWhen { false }
+            dependsOn("refreshVersionsMissingEntries")
         }
         project.tasks.register<DefaultTask>(
             name = "buildSrcVersions"
         ) {
-            group = "help"
+            group = "refreshVersions"
             description = "Update buildSrc/src/main/kotlin/Libs.kt"
             dependsOn("buildSrcLibs")
         }

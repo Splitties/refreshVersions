@@ -2,20 +2,11 @@ package de.fayard.buildSrcLibs
 
 import com.squareup.kotlinpoet.FileSpec
 import de.fayard.buildSrcLibs.internal.Library
-import de.fayard.buildSrcLibs.internal.OutputFile
+import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.buildSrcLibs.internal.PluginConfig
 import de.fayard.buildSrcLibs.internal.checkModeAndNames
 import de.fayard.buildSrcLibs.internal.kotlinpoet
-import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
-import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
-import de.fayard.refreshVersions.core.internal.getVersionPropertyName
-import de.fayard.refreshVersions.core.internal.hasHardcodedVersion
-import de.fayard.refreshVersions.core.internal.versions.writeMissingEntriesInVersionProperties
-import de.fayard.refreshVersions.internal.countDependenciesWithHardcodedVersions
-import de.fayard.refreshVersions.internal.shouldBeIgnored
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
-import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.tasks.TaskAction
 
@@ -24,12 +15,9 @@ open class BuildSrcLibsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionInitializeBuildSrc() {
-
+        OutputFile.checkWhichFilesExist(project.rootDir)
         project.file(OutputFile.OUTPUT_DIR.path).also {
             if (it.isDirectory.not()) it.mkdirs()
-        }
-        for (output in OutputFile.values()) {
-            output.existed = output.fileExists(project)
         }
         val initializationMap = mapOf(
             OutputFile.BUILD to PluginConfig.INITIAL_BUILD_GRADLE_KTS,
@@ -49,23 +37,6 @@ open class BuildSrcLibsTask : DefaultTask() {
         }
     }
 
-    @TaskAction
-    fun initVersionsProperties() {
-        require(project == project.rootProject) { "Expected a rootProject but got $project" }
-        val configurationsWithHardcodedDependencies = project.findHardcodedDependencies()
-
-        val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
-        val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-        val newEntries: Map<String, ExternalDependency> = findMissingEntries(
-            configurations = configurationsWithHardcodedDependencies,
-            versionsMap = versionsMap,
-            versionKeyReader = versionKeyReader
-        )
-
-        writeMissingEntriesInVersionProperties(newEntries)
-        OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
-        Thread.sleep(1000)
-    }
 
     @TaskAction
     fun taskUpdateLibsKt() {
@@ -105,42 +76,3 @@ open class BuildSrcLibsTask : DefaultTask() {
     }
 }
 
-internal fun Project.findHardcodedDependencies(): List<Configuration> {
-    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
-    val projectsWithHardcodedDependenciesVersions: List<Project> = rootProject.allprojects.filter {
-        it.countDependenciesWithHardcodedVersions(versionsMap) > 0
-    }
-
-    return projectsWithHardcodedDependenciesVersions.flatMap { project ->
-        project.configurations.filterNot { configuration ->
-            configuration.shouldBeIgnored() || 0 == configuration.countDependenciesWithHardcodedVersions(
-                versionsMap = versionsMap,
-                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-            )
-        }
-    }
-}
-
-
-internal fun findMissingEntries(
-    configurations: List<Configuration>,
-    versionsMap: Map<String, String>,
-    versionKeyReader: ArtifactVersionKeyReader
-): Map<String, ExternalDependency> {
-
-    val dependencyMap = configurations.flatMap { configuration ->
-        configuration.dependencies
-            .filterIsInstance<ExternalDependency>()
-            .filter { it.hasHardcodedVersion(versionsMap, versionKeyReader) && it.version != null }
-            .map { dependency: ExternalDependency ->
-                val versionKey = getVersionPropertyName(dependency.module, versionKeyReader)
-                versionKey to dependency
-            }
-    }
-    val newEntries = dependencyMap
-        .groupBy({ it.first }, { it.second })
-        .filter { entry -> entry.key !in versionsMap }
-        .mapValues { entry -> entry.value.maxBy { it.version!! }!! }
-
-    return newEntries
-}

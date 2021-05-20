@@ -1,8 +1,10 @@
-package de.fayard.buildSrcLibs.internal
+package de.fayard.refreshVersions.core.internal
 
 import org.gradle.api.Project
+import java.io.File
 
-internal enum class OutputFile(var path: String, var existed: Boolean = false, val alternativePath: String? = null) {
+@InternalRefreshVersionsApi
+enum class OutputFile(var path: String, var existed: Boolean = false, val alternativePath: String? = null) {
     OUTPUT_DIR("buildSrc/src/main/kotlin"),
     BUILD("buildSrc/build.gradle.kts", alternativePath = "buildSrc/build.gradle"),
     GIT_IGNORE("buildSrc/.gitignore"),
@@ -12,11 +14,7 @@ internal enum class OutputFile(var path: String, var existed: Boolean = false, v
     VERSIONS_PROPERTIES("versions.properties")
     ;
 
-    fun fileExists(project: Project) = when {
-        project.file(path).exists() -> true
-        alternativePath != null -> project.file(alternativePath).exists()
-        else -> false
-    }
+
 
     fun logFileWasModified(delete: Boolean = false) {
         logFileWasModified(path, existed, delete)
@@ -39,6 +37,16 @@ internal enum class OutputFile(var path: String, var existed: Boolean = false, v
                 else -> "        new file:   "
             }
             println("$color$status$path$ANSI_RESET")
+        }
+
+        fun checkWhichFilesExist(rootDir: File) {
+            values().forEach { outputFile ->
+                outputFile.existed = when {
+                    rootDir.resolve(outputFile.path).exists() -> true
+                    outputFile.alternativePath == null -> false
+                    else -> rootDir.resolve(outputFile.alternativePath).exists()
+                }
+            }
         }
 
     }

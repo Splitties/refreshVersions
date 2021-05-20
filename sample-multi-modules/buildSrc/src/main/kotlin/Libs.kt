@@ -14,11 +14,16 @@ import kotlin.String
 object Libs {
     const val clikt: String = "com.github.ajalt.clikt:clikt:_"
 
+    const val okio: String = "com.github.javadev:okio:_"
+
     const val mockito_kotlin: String = "com.nhaarman.mockitokotlin2:mockito-kotlin:_"
 
     const val okhttp: String = "com.squareup.okhttp3:okhttp:_"
 
     const val retrofit: String = "com.squareup.retrofit2:retrofit:_"
+
+    const val de_fayard_buildsrclibs_gradle_plugin: String =
+            "de.fayard.buildSrcLibs:de.fayard.buildSrcLibs.gradle.plugin:_"
 
     const val kotest_assertions_core: String = "io.kotest:kotest-assertions-core:_"
 
