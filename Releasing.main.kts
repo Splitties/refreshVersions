@@ -213,18 +213,18 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
             printInfo("Congratulations for this new stable release!")
             printInfo("Let's update the library for next development version.")
             runUntilSuccessWithErrorPrintingOrCancel {
-                printInfo("Enter the name of the next target version (`-LOCAL-SNAPSHOT` will be added automatically)")
+                printInfo("Enter the name of the next target version (`-SNAPSHOT` will be added automatically)")
                 val input = readLine()
                 input.checkIsValidVersionString()
                 when (Version(input).stabilityLevel()) {
                     StabilityLevel.Unknown, StabilityLevel.Stable -> Unit
                     else -> error("You need to enter a stable target version")
                 }
-                "$input-LOCAL-SNAPSHOT"
+                "$input-SNAPSHOT"
             }
         } else OngoingRelease.versionBeforeRelease.let {
-            if (it.endsWith("-LOCAL-SNAPSHOT")) it
-            else "${it.substringBefore("-dev-")}-LOCAL-SNAPSHOT"
+            if (it.endsWith("-SNAPSHOT")) it
+            else "${it.substringBefore("-dev-")}-SNAPSHOT"
         }
         versionsFile.writeText(nextDevVersion)
         printInfo("${versionsFile.path} has been edited with next development version ($nextDevVersion).")
