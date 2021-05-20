@@ -10,10 +10,28 @@ enum class OutputFile(var path: String, var existed: Boolean = false, val altern
     GIT_IGNORE("buildSrc/.gitignore"),
     LIBS("buildSrc/src/main/kotlin/Libs.kt"),
     VERSIONS_KT("buildSrc/src/main/kotlin/Versions.kt"),
-    GRADLE_PROPERTIES("gradle.properties"),
-    VERSIONS_PROPERTIES("versions.properties")
+    VERSIONS_PROPERTIES("versions.properties"),
+    SETTINGS("settings.gradle", alternativePath = "settings.gradle.kts"),
     ;
 
+
+    fun readText(project: Project) = when {
+        project.file(path).canRead() -> project.file(path).readText()
+        alternativePath != null && project.file(alternativePath).canRead() -> project.file(alternativePath).readText()
+        else -> {
+            println("${ANSI_RED}Cannot read file $path ${alternativePath ?:""} $ANSI_RESET")
+            error("File not found $this")
+        }
+    }
+
+    fun writeText(text: String, project: Project) = when {
+        project.file(path).exists() -> project.file(path).writeText(text)
+        alternativePath != null && project.file(alternativePath).canRead() -> project.file(alternativePath).writeText(text)
+        else -> {
+            println("${ANSI_RED}Cannot write file $path ${alternativePath ?:""} $ANSI_RESET")
+            error("File not found $this")
+        }
+    }
 
 
     fun logFileWasModified(delete: Boolean = false) {

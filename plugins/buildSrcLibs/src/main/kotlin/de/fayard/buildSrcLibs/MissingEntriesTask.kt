@@ -35,7 +35,6 @@ open class MissingEntriesTask : DefaultTask() {
         writeMissingEntriesInVersionProperties(newEntries)
         OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
         Thread.sleep(1000)
-        OutputFile.GIT_IGNORE.logFileWasModified()
     }
 
 }

@@ -23,6 +23,14 @@ class BuildSrcLibsPlugin : Plugin<Project> {
             outputs.upToDateWhen { false }
             dependsOn("refreshVersionsMissingEntries")
         }
+        project.tasks.register<VersionsCatalogTask>(
+            name = "refreshVersionsCatalog"
+        ) {
+            group = "refreshVersions"
+            description = "Update gradle/libs.versions.toml"
+            outputs.upToDateWhen { false }
+            dependsOn("refreshVersionsMissingEntries")
+        }
         project.tasks.register<DefaultTask>(
             name = "buildSrcVersions"
         ) {
