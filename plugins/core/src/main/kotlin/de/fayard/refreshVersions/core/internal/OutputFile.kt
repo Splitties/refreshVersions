@@ -12,6 +12,7 @@ enum class OutputFile(var path: String, var existed: Boolean = false, val altern
     VERSIONS_KT("buildSrc/src/main/kotlin/Versions.kt"),
     VERSIONS_PROPERTIES("versions.properties"),
     SETTINGS("settings.gradle", alternativePath = "settings.gradle.kts"),
+    GRADLE_VERSIONS_CATALOG("gradle/libs.versions.toml"),
     ;
 
 
@@ -19,16 +20,18 @@ enum class OutputFile(var path: String, var existed: Boolean = false, val altern
         project.file(path).canRead() -> project.file(path).readText()
         alternativePath != null && project.file(alternativePath).canRead() -> project.file(alternativePath).readText()
         else -> {
-            println("${ANSI_RED}Cannot read file $path ${alternativePath ?:""} $ANSI_RESET")
+            println("${ANSI_RED}Cannot read file $path ${alternativePath ?: ""} $ANSI_RESET")
             error("File not found $this")
         }
     }
 
-    fun writeText(text: String, project: Project) = when {
+    fun writeText(text: String, project: Project, mustExists: Boolean = false) = when {
+        !mustExists -> project.file(path).writeText(text)
         project.file(path).exists() -> project.file(path).writeText(text)
-        alternativePath != null && project.file(alternativePath).canRead() -> project.file(alternativePath).writeText(text)
+        alternativePath != null && project.file(alternativePath).canRead() -> project.file(alternativePath)
+            .writeText(text)
         else -> {
-            println("${ANSI_RED}Cannot write file $path ${alternativePath ?:""} $ANSI_RESET")
+            println("${ANSI_RED}Cannot write file $path ${alternativePath ?: ""} $ANSI_RESET")
             error("File not found $this")
         }
     }

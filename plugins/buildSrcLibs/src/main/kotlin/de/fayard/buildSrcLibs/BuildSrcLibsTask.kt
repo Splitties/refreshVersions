@@ -7,6 +7,7 @@ import de.fayard.buildSrcLibs.internal.PluginConfig
 import de.fayard.buildSrcLibs.internal.checkModeAndNames
 import de.fayard.buildSrcLibs.internal.kotlinpoet
 import org.gradle.api.DefaultTask
+import org.gradle.api.Project
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.tasks.TaskAction
 
@@ -42,12 +43,12 @@ open class BuildSrcLibsTask : DefaultTask() {
     fun taskUpdateLibsKt() {
         val outputDir = project.file(OutputFile.OUTPUT_DIR.path)
 
-        val allDependencies = findDependencies()
+        val allDependencies = project.findDependencies()
         val resolvedUseFqdn = PluginConfig.computeUseFqdnFor(
-                libraries = allDependencies,
-                configured = emptyList(),
-                byDefault = PluginConfig.MEANING_LESS_NAMES
-            )
+            libraries = allDependencies,
+            configured = emptyList(),
+            byDefault = PluginConfig.MEANING_LESS_NAMES
+        )
         val deps = allDependencies.checkModeAndNames(resolvedUseFqdn)
 
         val libsFile: FileSpec = kotlinpoet(deps)
@@ -56,23 +57,25 @@ open class BuildSrcLibsTask : DefaultTask() {
         OutputFile.logFileWasModified(OutputFile.LIBS.path, OutputFile.LIBS.existed)
     }
 
-    private fun findDependencies(): List<Library> {
-        val allDependencies = mutableListOf<Library>()
-        project.allprojects {
-            (configurations + buildscript.configurations)
-                .flatMapTo(allDependencies) { configuration ->
-                    configuration.allDependencies
-                        .filterIsInstance<ExternalDependency>()
-                        .filter {
-                            @Suppress("SENSELESS_COMPARISON")
-                            it.group != null
-                        }
-                        .map { dependency ->
-                            Library(dependency.group, dependency.name, dependency.version ?: "none")
-                        }
-                }
+    companion object {
+        internal fun Project.findDependencies(): List<Library> {
+            val allDependencies = mutableListOf<Library>()
+            allprojects {
+                (configurations + buildscript.configurations)
+                    .flatMapTo(allDependencies) { configuration ->
+                        configuration.allDependencies
+                            .filterIsInstance<ExternalDependency>()
+                            .filter {
+                                @Suppress("SENSELESS_COMPARISON")
+                                it.group != null
+                            }
+                            .map { dependency ->
+                                Library(dependency.group, dependency.name, dependency.version ?: "none")
+                            }
+                    }
+            }
+            return allDependencies.distinctBy { d -> d.groupModule() }
         }
-        return allDependencies.distinctBy { d -> d.groupModule() }
     }
 }
 

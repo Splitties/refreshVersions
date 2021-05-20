@@ -1,4 +1,3 @@
-"
 pluginManagement {
     repositories {
         mavenLocal()
