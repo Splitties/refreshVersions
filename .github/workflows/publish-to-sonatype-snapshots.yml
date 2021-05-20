@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Build and upload artifacts
-        run: ./gradlew publishMavenPublicationToSonatypeSnapshotsRepository
+        run: ./plugins/gradlew publishAllPublicationsToSonatypeSnapshotsRepository
         env:
           sonatype_username: ${{ secrets.SONATYPE_USERNAME }}
           sonatype_password: ${{ secrets.SONATYPE_PASSWORD }}
