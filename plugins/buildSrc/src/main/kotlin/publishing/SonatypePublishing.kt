@@ -15,8 +15,8 @@ fun PublishingExtension.mavenCentralStagingPublishing(
         maven {
             name = "MavenCentralStaging"
             url = when (repositoryId) {
-                null -> URI("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-                else -> URI("https://oss.sonatype.org/service/local/staging/deployByRepositoryId/$repositoryId/")
+                null -> URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                else -> URI("https://s01.oss.sonatype.org/service/local/staging/deployByRepositoryId/$repositoryId/")
             }
             credentials {
                 username = sonatypeUsername
@@ -34,7 +34,7 @@ fun PublishingExtension.sonatypeSnapshotsPublishing(
     repositories {
         maven {
             name = "SonatypeSnapshots"
-            url = URI("https://oss.sonatype.org/content/repositories/snapshots/")
+            url = URI("https://s01.oss.sonatype.org/content/repositories/snapshots/")
             credentials {
                 username = sonatypeUsername
                 password = sonatypePassword
