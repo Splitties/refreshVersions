@@ -1,6 +1,7 @@
 package de.fayard.buildSrcLibs.internal
 
 import com.squareup.kotlinpoet.*
+import de.fayard.buildSrcLibs.internal.Case.*
 
 
 internal data class Library(
@@ -12,7 +13,10 @@ internal data class Library(
     fun groupModuleVersion() = "$group:$module:$version"
     fun groupModuleUnderscore() = "$group:$module:_"
     fun groupModule() = "$group:$module"
-    fun versionName(mode: VersionMode): String = PluginConfig.escapeLibsKt(
+    fun versionNameCamelCase(mode: VersionMode): String =
+        Case.toCamelCase(versionNameSnakeCase(mode))
+
+    fun versionNameSnakeCase(mode: VersionMode): String = PluginConfig.escapeLibsKt(
         when (mode) {
             VersionMode.MODULE -> module
             VersionMode.GROUP -> group
@@ -68,7 +72,7 @@ internal fun kotlinpoet(
 
 }
 
-internal fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>): Deps {
+internal fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>, case: Case): Deps {
     val dependencies = this
 
     val modes: Map<Library, VersionMode> =
@@ -80,7 +84,13 @@ internal fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>): De
             }
         }.toMutableMap()
 
-    val versionNames = dependencies.associateWith { d -> d.versionName(modes.getValue(d)) }
+    val versionNames = dependencies.associateWith { d ->
+        val mode = modes.getValue(d)
+        when (case) {
+            camelCase -> d.versionNameCamelCase(mode)
+            snake_case -> d.versionNameSnakeCase(mode)
+        }
+    }
     val sortedDependencies = dependencies.sortedBy { d: Library -> d.groupModule() }
     return Deps(sortedDependencies, versionNames)
 }
