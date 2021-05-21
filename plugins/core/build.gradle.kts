@@ -5,6 +5,7 @@ plugins {
     `java-gradle-plugin`
     `java-test-fixtures`
     `maven-publish`
+    signing
     `kotlin-dsl`
     idea
 }
@@ -24,6 +25,15 @@ pluginBundle {
     website = "https://jmfayard.github.io/refreshVersions"
     vcsUrl = "https://github.com/jmfayard/refreshVersions"
     tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
+}
+
+signing {
+    useInMemoryPgpKeys(
+        propertyOrEnvOrNull("GPG_key_id"),
+        propertyOrEnvOrNull("GPG_private_key") ?: return@signing,
+        propertyOrEnv("GPG_private_password")
+    )
+    sign(publishing.publications)
 }
 
 publishing {
