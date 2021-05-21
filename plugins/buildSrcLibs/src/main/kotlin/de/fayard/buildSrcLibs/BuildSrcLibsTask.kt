@@ -1,8 +1,7 @@
 package de.fayard.buildSrcLibs
 
 import com.squareup.kotlinpoet.FileSpec
-import de.fayard.buildSrcLibs.internal.Case
-import de.fayard.buildSrcLibs.internal.Library
+import de.fayard.buildSrcLibs.internal.*
 import de.fayard.buildSrcLibs.internal.PluginConfig
 import de.fayard.buildSrcLibs.internal.checkModeAndNames
 import de.fayard.buildSrcLibs.internal.kotlinpoet
@@ -45,10 +44,10 @@ open class BuildSrcLibsTask : DefaultTask() {
         val outputDir = project.file(OutputFile.OUTPUT_DIR.path)
 
         val allDependencies = project.findDependencies()
-        val resolvedUseFqdn = PluginConfig.computeUseFqdnFor(
+        val resolvedUseFqdn = computeUseFqdnFor(
             libraries = allDependencies,
             configured = emptyList(),
-            byDefault = PluginConfig.MEANING_LESS_NAMES
+            byDefault = MEANING_LESS_NAMES
         )
         val deps = allDependencies.checkModeAndNames(resolvedUseFqdn, Case.snake_case)
 
@@ -58,25 +57,5 @@ open class BuildSrcLibsTask : DefaultTask() {
         OutputFile.logFileWasModified(OutputFile.LIBS.path, OutputFile.LIBS.existed)
     }
 
-    companion object {
-        internal fun Project.findDependencies(): List<Library> {
-            val allDependencies = mutableListOf<Library>()
-            allprojects {
-                (configurations + buildscript.configurations)
-                    .flatMapTo(allDependencies) { configuration ->
-                        configuration.allDependencies
-                            .filterIsInstance<ExternalDependency>()
-                            .filter {
-                                @Suppress("SENSELESS_COMPARISON")
-                                it.group != null
-                            }
-                            .map { dependency ->
-                                Library(dependency.group, dependency.name, dependency.version ?: "none")
-                            }
-                    }
-            }
-            return allDependencies.distinctBy { d -> d.groupModule() }
-        }
-    }
 }
 

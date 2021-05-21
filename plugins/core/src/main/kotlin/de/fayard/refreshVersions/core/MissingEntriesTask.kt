@@ -1,13 +1,7 @@
-package de.fayard.buildSrcLibs
+package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.internal.OutputFile
-import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
-import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
-import de.fayard.refreshVersions.core.internal.getVersionPropertyName
-import de.fayard.refreshVersions.core.internal.hasHardcodedVersion
+import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.versions.writeMissingEntriesInVersionProperties
-import de.fayard.refreshVersions.internal.countDependenciesWithHardcodedVersions
-import de.fayard.refreshVersions.internal.shouldBeIgnored
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -39,6 +33,25 @@ open class MissingEntriesTask : DefaultTask() {
 
 }
 
+
+@InternalRefreshVersionsApi
+fun Configuration.countDependenciesWithHardcodedVersions(
+    versionsMap: Map<String, String>,
+    versionKeyReader: ArtifactVersionKeyReader
+): Int = dependencies.count { dependency ->
+    dependency is ExternalDependency && dependency.hasHardcodedVersion(versionsMap, versionKeyReader)
+}
+
+@InternalRefreshVersionsApi
+fun Project.countDependenciesWithHardcodedVersions(versionsMap: Map<String, String>): Int {
+    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+    return configurations.sumBy { configuration ->
+        if (configuration.shouldBeIgnored()) 0 else {
+            configuration.countDependenciesWithHardcodedVersions(versionsMap, versionKeyReader)
+        }
+    }
+}
+
 internal fun Project.findHardcodedDependencies(): List<Configuration> {
     val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
     val projectsWithHardcodedDependenciesVersions: List<Project> = rootProject.allprojects.filter {
@@ -55,6 +68,19 @@ internal fun Project.findHardcodedDependencies(): List<Configuration> {
     }
 }
 
+private val ignoredConfigurationNames = listOf(
+    "kotlinCompilerPluginClasspath",
+    "kotlinKaptWorkerDependencies",
+    "lintClassPath"
+)
+
+@InternalRefreshVersionsApi
+fun Configuration.shouldBeIgnored(): Boolean {
+    return name.startsWith(prefix = "_internal") // Real-life example: _internal_aapt2_binary (introduced by AGP)
+        || name in ignoredConfigurationNames || name.startsWith('-')
+    //TODO: If unwanted configurations still get through, we can filter to known ones here, like
+    // implementation, api, compileOnly, runtimeOnly, kapt, plus test, MPP and MPP test variants.
+}
 
 internal fun findMissingEntries(
     configurations: List<Configuration>,

@@ -1,5 +1,7 @@
 package de.fayard.buildSrcLibs
 
+import de.fayard.refreshVersions.core.MissingEntriesTask
+import de.fayard.refreshVersions.core.VersionsCatalogTask
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project

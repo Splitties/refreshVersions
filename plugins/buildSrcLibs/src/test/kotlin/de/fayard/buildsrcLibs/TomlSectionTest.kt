@@ -1,7 +1,7 @@
 package de.fayard.buildsrcLibs
 
-import de.fayard.buildSrcLibs.VersionsCatalogTask.Companion.parseTomlInSection
-import de.fayard.buildSrcLibs.VersionsCatalogTask.Companion.tomlSectionsToString
+import de.fayard.refreshVersions.core.VersionsCatalogTask.Companion.parseTomlInSection
+import de.fayard.refreshVersions.core.VersionsCatalogTask.Companion.tomlSectionsToString
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 

@@ -1,10 +1,7 @@
-package de.fayard.buildSrcLibs
+package de.fayard.refreshVersions.core
 
-import de.fayard.buildSrcLibs.BuildSrcLibsTask.Companion.findDependencies
+import de.fayard.buildSrcLibs.internal.*
 import de.fayard.buildSrcLibs.internal.Case
-import de.fayard.buildSrcLibs.internal.Deps
-import de.fayard.buildSrcLibs.internal.PluginConfig
-import de.fayard.buildSrcLibs.internal.checkModeAndNames
 import de.fayard.refreshVersions.core.internal.OutputFile
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
@@ -49,10 +46,10 @@ open class VersionsCatalogTask : DefaultTask() {
         val catalog = OutputFile.GRADLE_VERSIONS_CATALOG
 
         val allDependencies = project.findDependencies()
-        val resolvedUseFqdn: List<String> = PluginConfig.computeUseFqdnFor(
+        val resolvedUseFqdn: List<String> = computeUseFqdnFor(
             libraries = allDependencies,
             configured = emptyList(),
-            byDefault = PluginConfig.MEANING_LESS_NAMES
+            byDefault = MEANING_LESS_NAMES
         )
         val deps: Deps = allDependencies.checkModeAndNames(resolvedUseFqdn, Case.camelCase)
         val currentText = if (catalog.existed) catalog.readText(project) else ""
