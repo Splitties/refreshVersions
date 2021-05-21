@@ -1,4 +1,4 @@
-package de.fayard.buildsrcLibs
+package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.VersionsCatalogTask.Companion.parseTomlInSection
 import de.fayard.refreshVersions.core.VersionsCatalogTask.Companion.tomlSectionsToString
