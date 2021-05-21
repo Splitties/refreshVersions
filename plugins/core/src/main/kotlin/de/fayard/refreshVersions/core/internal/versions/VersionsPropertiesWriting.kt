@@ -15,12 +15,26 @@ import org.gradle.api.artifacts.ExternalDependency
 import java.io.File
 
 @InternalRefreshVersionsApi
-fun writeMissingEntriesInVersionProperties(newEntries: Map<String, ExternalDependency>) {
+fun writeMissingEntriesInVersionProperties(newEntries: Map<String, ExternalDependency>, isUsed: Boolean) {
+    val isUsedComment = when {
+        isUsed -> emptyList<String>()
+        else -> listOf("## unused")
+    }
+    val unusedLibraries = """
+        #### Some libraries were hardcoded when the file was generated
+        #### Use the version placeholder _ then run ./ gradlew refreshVersions
+        ####
+        """.trimIndent() + "\n"
     VersionsPropertiesModel.update { model ->
+        val preHeaderContent = model.preHeaderContent + when {
+            isUsed -> ""
+            unusedLibraries in model.preHeaderContent -> ""
+            else -> unusedLibraries
+        }
         val newSections = newEntries.map { (key, d) ->
-            VersionEntry(emptyList(), key, d.version!!, emptyList(), emptyList())
+            VersionEntry(isUsedComment, key, d.version!!, emptyList(), emptyList())
         }.sortedBy { it.key }
-        model.copy(sections = model.sections + newSections)
+        model.copy(sections = model.sections + newSections, preHeaderContent = preHeaderContent)
     }
 }
 

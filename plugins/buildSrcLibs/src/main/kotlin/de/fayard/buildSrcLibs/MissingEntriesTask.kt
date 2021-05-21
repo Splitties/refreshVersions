@@ -32,7 +32,7 @@ open class MissingEntriesTask : DefaultTask() {
             versionKeyReader = versionKeyReader
         )
 
-        writeMissingEntriesInVersionProperties(newEntries)
+        writeMissingEntriesInVersionProperties(newEntries, isUsed = false)
         OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
         Thread.sleep(1000)
     }
