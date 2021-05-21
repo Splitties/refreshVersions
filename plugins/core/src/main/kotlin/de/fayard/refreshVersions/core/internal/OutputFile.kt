@@ -11,7 +11,8 @@ enum class OutputFile(var path: String, var existed: Boolean = false, val altern
     LIBS("buildSrc/src/main/kotlin/Libs.kt"),
     VERSIONS_KT("buildSrc/src/main/kotlin/Versions.kt"),
     VERSIONS_PROPERTIES("versions.properties"),
-    SETTINGS("settings.gradle", alternativePath = "settings.gradle.kts"),
+    SETTINGS_GRADLE("settings.gradle"),
+    SETTINGS_GRADLE_KTS("settings.gradle.kts"),
     GRADLE_VERSIONS_CATALOG("gradle/libs.versions.toml"),
     ;
 

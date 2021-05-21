@@ -26,17 +26,14 @@ open class VersionsCatalogTask : DefaultTask() {
             """.trimMargin()
             )
         }
-        OutputFile.checkWhichFilesExist(project.rootDir)
-        val outputDir = project.file(OutputFile.OUTPUT_DIR.path)
-        // Enable Gradle's version catalog support
-        // https://docs.gradle.org/current/userguide/platforms.html
-        val file = OutputFile.SETTINGS
-        if (file.existed.not()) return
+        val file =
+            if (OutputFile.SETTINGS_GRADLE.existed) OutputFile.SETTINGS_GRADLE else OutputFile.SETTINGS_GRADLE_KTS
         val settingsText = file.readText(project)
         val alreadyConfigured = settingsText.lines().any { it.containsVersionsCatalogDeclaration() }
         if (!alreadyConfigured) {
             val newText = ("""
                 |${settingsText}
+                |// Enable Gradle's version catalog support https://docs.gradle.org/current/userguide/platforms.html
                 |enableFeaturePreview("VERSION_CATALOGS")
                 |""".trimMargin())
             file.writeText(newText, project)
