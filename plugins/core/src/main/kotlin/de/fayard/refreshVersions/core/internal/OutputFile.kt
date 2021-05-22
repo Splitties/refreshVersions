@@ -47,9 +47,11 @@ enum class OutputFile(var path: String, var existed: Boolean = false, val altern
         private const val ANSI_RESET = "\u001B[0m"
         private const val ANSI_GREEN = "\u001B[32m"
         private const val ANSI_RED = "\u001B[31m"
+        private const val ANSI_BLUE = "\u001B[34m"
 
         fun logFileWasModified(path: String, existed: Boolean, delete: Boolean = false) {
             val color = when {
+                existed -> ANSI_BLUE
                 delete -> ANSI_RED
                 else -> ANSI_GREEN
             }
