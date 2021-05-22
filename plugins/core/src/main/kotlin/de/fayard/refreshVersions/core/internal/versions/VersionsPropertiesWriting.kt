@@ -20,21 +20,19 @@ fun writeMissingEntriesInVersionProperties(newEntries: Map<String, ExternalDepen
         isUsed -> emptyList<String>()
         else -> listOf("## unused")
     }
-    val unusedLibraries = """
-        #### Some libraries were hardcoded when the file was generated
-        #### Use the version placeholder _ then run ./ gradlew refreshVersions
-        ####
-        """.trimIndent() + "\n"
+    val comment = Comment(
+        """
+            ## Some libraries were hardcoded when the file was generated
+            ## TODO Use the version placeholder _ then run: ./gradlew refreshVersions
+            ##
+            """.trimIndent() + "\n"
+    )
     VersionsPropertiesModel.update { model ->
-        val preHeaderContent = model.preHeaderContent + when {
-            isUsed -> ""
-            unusedLibraries in model.preHeaderContent -> ""
-            else -> unusedLibraries
-        }
-        val newSections = newEntries.map { (key, d) ->
+        val maybeAddComment = if (model.sections.firstOrNull() == comment) emptyList() else listOf(comment)
+        val newSections = maybeAddComment + newEntries.map { (key, d) ->
             VersionEntry(isUsedComment, key, d.version!!, emptyList(), emptyList())
         }.sortedBy { it.key }
-        model.copy(sections = model.sections + newSections, preHeaderContent = preHeaderContent)
+        model.copy(sections = model.sections + newSections)
     }
 }
 
