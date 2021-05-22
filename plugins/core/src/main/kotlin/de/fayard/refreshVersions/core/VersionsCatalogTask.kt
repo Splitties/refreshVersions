@@ -96,11 +96,13 @@ open class VersionsCatalogTask : DefaultTask() {
         }
 
         internal fun versionsCatalogLibraries(deps: Deps) = buildString {
+            append('\n')
             deps.libraries.forEach {
                 append(deps.names[it])
                 append(" = \"")
                 append(it.groupModuleUnderscore())
                 append('"')
+                append("\n")
                 append("\n")
             }
             append("\n")
