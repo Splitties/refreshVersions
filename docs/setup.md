@@ -100,9 +100,35 @@ Sharing used versions with included builds is not supported at the moment.
 
 If you need/want this feature, please vote with a 👍 on [this issue]({{link.issues}}/205), subscribe to it, and tell us about your use case, to help us prioritize.
 
-### If you want to use a development version
+### If you want to use a snapshot version
 
-Follow [issue 340: Continuous Deployment]({{link.issues}}/340)
+=== "settings.gradle.kts"
+    ```kotlin
+    pluginManagement {
+        repositories {
+            gradlePluginPortal()
+            maven("https://s01.oss.sonatype.org/content/repositories/snapshot")
+        }
+    }
+    plugins {
+        // See https://jmfayard.github.io/refreshVersions
+        id("de.fayard.refreshVersions") version "{{version.snapshot}}"
+    }
+    ```
+=== "settings.gradle"
+    ```groovy
+    pluginManagement {
+        repositories {
+            gradlePluginPortal()
+            maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots' }
+        }
+    }
+    plugins {
+        // See https://jmfayard.github.io/refreshVersions
+        id 'de.fayard.refreshVersions' version '{{version.snapshot}}'
+    }
+    ```
+
 
 ## Configure the plugin
 
