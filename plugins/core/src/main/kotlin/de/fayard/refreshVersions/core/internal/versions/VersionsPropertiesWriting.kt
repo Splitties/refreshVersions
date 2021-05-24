@@ -20,15 +20,21 @@ fun writeMissingEntriesInVersionProperties(newEntries: Map<String, ExternalDepen
         isUsed -> emptyList<String>()
         else -> listOf("## unused")
     }
-    val comment = Comment(
-        """
-            ## Some libraries were hardcoded when the file was generated
+    val header = "Some libraries were hardcoded when the file was generated"
+    val todos = listOf(
+        Comment(
+            """
+            ## $header
             ## TODO Use the version placeholder _ then run: ./gradlew refreshVersions
             ##
             """.trimIndent() + "\n"
+        )
     )
     VersionsPropertiesModel.update { model ->
-        val maybeAddComment = if (model.sections.firstOrNull() == comment) emptyList() else listOf(comment)
+        val maybeAddComment = when {
+            model.sections.any { it is Comment && it.lines.contains(header) } -> emptyList()
+            else -> todos
+        }
         val newSections = maybeAddComment + newEntries.map { (key, d) ->
             VersionEntry(isUsedComment, key, d.version!!, emptyList(), emptyList())
         }.sortedBy { it.key }
