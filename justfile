@@ -1,11 +1,18 @@
 ## See https://github.com/casey/just
 ## Install with $ brew install just
-run:
+plugins:
     cd plugins && ./gradlew check publishToMavenLocal
+run: plugins
     cd sample-kotlin && ./gradlew refreshVersions
     cd sample-groovy && ./gradlew refreshVersions
     cd sample-multi-modules  && ./gradlew refreshVersions
     cd sample-multi-modules  && ./gradlew buildSrcVersions
+    cd sample-android && ./gradlew refreshVersions
+cleanup: plugins
+    cd sample-kotlin && ./gradlew refreshVersionsCleanup
+    cd sample-groovy && ./gradlew refreshVersionsCleanup
+    cd sample-multi-modules  && ./gradlew refreshVersionsCleanup
+    cd sample-android && ./gradlew refreshVersionsCleanup
 docs:
     mkdocs serve &
 ngrok: docs
