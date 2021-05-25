@@ -107,7 +107,7 @@ If you need/want this feature, please vote with a 👍 on [this issue]({{link.is
     pluginManagement {
         repositories {
             gradlePluginPortal()
-            maven("https://s01.oss.sonatype.org/content/repositories/snapshot")
+            maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
         }
     }
     plugins {
