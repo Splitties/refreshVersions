@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
 import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
@@ -51,6 +52,7 @@ open class RefreshVersionsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionRefreshVersions() {
+        OutputFile.checkWhichFilesExist(project.rootDir)
         if (FeatureFlag.userSettings.isNotEmpty()) {
             logger.lifecycle("Feature flags: " + FeatureFlag.userSettings)
         }
@@ -87,6 +89,7 @@ open class RefreshVersionsTask : DefaultTask() {
                 logger.log(problem)
             }
         }
+        OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
     }
 
     private fun warnAboutGradleUpdateAvailableIfAny(gradleUpdates: List<Version>) {
