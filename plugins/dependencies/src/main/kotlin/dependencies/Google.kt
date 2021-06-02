@@ -54,7 +54,7 @@ object Google {
         val material = Material
 
         object Material : DependencyNotationAndGroup(group = "$artifactBase.material", name = "material") {
-            @JvmField val composeThemeAdapter = "$artifactBase.material:compose-theme-adapter"
+            @JvmField val composeThemeAdapter = "$artifactBase.material:compose-theme-adapter:_"
         }
 
         private const val wearOsVersion = "_"
