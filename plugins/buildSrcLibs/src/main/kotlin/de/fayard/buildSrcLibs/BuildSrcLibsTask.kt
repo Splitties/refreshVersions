@@ -1,11 +1,8 @@
 package de.fayard.buildSrcLibs
 
 import com.squareup.kotlinpoet.FileSpec
-import de.fayard.buildSrcLibs.internal.Library
-import de.fayard.buildSrcLibs.internal.OutputFile
-import de.fayard.buildSrcLibs.internal.PluginConfig
-import de.fayard.buildSrcLibs.internal.checkModeAndNames
-import de.fayard.buildSrcLibs.internal.kotlinpoet
+import de.fayard.buildSrcLibs.internal.*
+import de.fayard.refreshVersions.core.extensions.gradle.moduleId
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.getVersionPropertyName
@@ -16,6 +13,7 @@ import de.fayard.refreshVersions.internal.shouldBeIgnored
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.tasks.TaskAction
 
@@ -56,7 +54,7 @@ open class BuildSrcLibsTask : DefaultTask() {
 
         val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
         val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-        val newEntries: Map<String, ExternalDependency> = findMissingEntries(
+        val newEntries: Map<String, Dependency> = findMissingEntries(
             configurations = configurationsWithHardcodedDependencies,
             versionsMap = versionsMap,
             versionKeyReader = versionKeyReader
@@ -126,14 +124,16 @@ internal fun findMissingEntries(
     configurations: List<Configuration>,
     versionsMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader
-): Map<String, ExternalDependency> {
+): Map<String, Dependency> {
 
     val dependencyMap = configurations.flatMap { configuration ->
         configuration.dependencies
-            .filterIsInstance<ExternalDependency>()
             .filter { it.hasHardcodedVersion(versionsMap, versionKeyReader) && it.version != null }
-            .map { dependency: ExternalDependency ->
-                val versionKey = getVersionPropertyName(dependency.module, versionKeyReader)
+            .mapNotNull { dependency: Dependency ->
+                val versionKey = getVersionPropertyName(
+                    moduleId = dependency.moduleId() ?: return@mapNotNull null,
+                    versionKeyReader = versionKeyReader
+                )
                 versionKey to dependency
             }
     }

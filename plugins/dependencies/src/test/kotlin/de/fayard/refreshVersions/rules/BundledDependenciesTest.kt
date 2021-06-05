@@ -45,7 +45,7 @@ class BundledDependenciesTest {
                 async {
                     getVersionCandidates(
                         httpClient = defaultHttpClient,
-                        moduleId = ModuleId(
+                        mavenModuleId = ModuleId.Maven(
                             group = dependencyMapping.group,
                             name = dependencyMapping.artifact
                         ),
