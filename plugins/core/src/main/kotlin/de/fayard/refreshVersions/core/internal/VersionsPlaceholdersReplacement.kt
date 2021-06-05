@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.DependencyVersionsFetcher
+import de.fayard.refreshVersions.core.FeatureFlag
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.moduleId
@@ -162,7 +163,12 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                     reject(versionPlaceholder) // Remember that we're managing the version of this dependency.
                 }
             } else if (moduleId is ModuleId.Npm) {
-                dependenciesToReplace += dependency to npmDependencyWithVersion(dependency, versionFromProperties)
+                val version = if (FeatureFlag.NPM_IMPLICIT_RANGE.isEnabled && !Version(versionFromProperties).isRange){
+                    "^$versionFromProperties"
+                } else {
+                    versionFromProperties
+                }
+                dependenciesToReplace += dependency to npmDependencyWithVersion(dependency, version)
             }
         }
         dependenciesToReplace.forEach { (old, new) ->
