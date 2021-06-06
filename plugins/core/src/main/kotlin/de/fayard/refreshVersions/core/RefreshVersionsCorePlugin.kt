@@ -4,20 +4,22 @@ import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.core.internal.ResettableDelegates
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.register
 import org.slf4j.Marker
 import org.slf4j.helpers.BasicMarkerFactory
+import java.lang.IllegalStateException
 
 open class RefreshVersionsCorePlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         check(project.isRootProject) { "ERROR: de.fayard.refreshVersions.core should not be applied manually" }
         if (project.isBuildSrc.not()) {
+            val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
             project.tasks.register<RefreshVersionsTask>(name = "refreshVersions") {
                 group = "Help"
-                val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
                 description = "Search for new dependencies versions and update $versionsFileName"
             }
         }
