@@ -37,7 +37,7 @@ enum class FeatureFlag(private val enabledByDefault: Boolean?) {
 
     GRADLE_UPDATES(enabledByDefault = true),
     LIBS(enabledByDefault = false),
-    NPM_IMPLICIT_RANGE(enabledByDefault = true)
+    NPM_IMPLICIT_RANGE(enabledByDefault = false)
     ;
 
     companion object {

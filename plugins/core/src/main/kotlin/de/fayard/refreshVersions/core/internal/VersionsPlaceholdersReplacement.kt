@@ -163,7 +163,7 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                     reject(versionPlaceholder) // Remember that we're managing the version of this dependency.
                 }
             } else if (moduleId is ModuleId.Npm) {
-                val version = if (FeatureFlag.NPM_IMPLICIT_RANGE.isEnabled && !Version(versionFromProperties).isRange){
+                val version = if (FeatureFlag.NPM_IMPLICIT_RANGE.isEnabled && Version(versionFromProperties).isRange.not()){
                     "^$versionFromProperties"
                 } else {
                     versionFromProperties

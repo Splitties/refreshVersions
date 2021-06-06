@@ -36,6 +36,8 @@ data class Version(val value: String) : Comparable<Version> {
 
         //region Version comparison logic details (private symbols only)
 
+        private val npmRangeCharsRegex = "[<=>^~*]|\\.x".toRegex()
+
         private val versionComparator: Comparator<Version> = object : Comparator<Version> {
 
             // Usage of this comparator is likely to get discontinued in favor of distinct per-repo ordered results.
@@ -141,7 +143,7 @@ data class Version(val value: String) : Comparable<Version> {
 
         private fun String.rangeComponents(): List<Version> {
             return this
-                .replace("[<=>^~*]|\\.x".toRegex(), "")
+                .replace(npmRangeCharsRegex, "")
                 .split(" - ", " || ",  " ")
                 .filter { it.isNotBlank() }
                 .map { Version(it) }
