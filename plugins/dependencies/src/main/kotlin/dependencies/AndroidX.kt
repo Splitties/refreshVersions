@@ -530,6 +530,7 @@ object AndroidX {
         const val cryptoKtx = "$artifactPrefix-crypto-ktx:_"
 
         const val appAuthenticator = "$artifactPrefix-app-authenticator:_"
+        const val appAuthenticatorTesting = "$artifactPrefix-app-authenticator-testing:_"
 
         const val identityCredential = "$artifactPrefix-identity-credential:_"
     }
