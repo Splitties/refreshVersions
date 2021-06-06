@@ -430,6 +430,14 @@ object AndroidX {
         const val common = "$artifactPrefix-common:_"
     }
 
+    val health = Health
+
+    object Health : IsNotADependency {
+        private const val group = "androidx.health"
+
+        const val servicesClient = "$group:health-services-client:_"
+    }
+
     @Incubating
     val ui = Ui // TODO kdoc
 
