@@ -1,5 +1,21 @@
 # Change log for refreshVersions
 
+## Unreleased
+
+### New releases
+
+- In Android projects, if you used the version placeholder (`_`) directly in `build.gradle(.kts)` files, Android lint would trigger an unwanted warning, or error in the case of the Android build tools (aka. AGP, the Android Gradle Plugin). To avoid this inconvenience, running the refreshVersions task will now automatically check if it's running on an Android project, and in such cases, will edit (safely) the `lint.xml` file, creating it if needed, and add the needed rules to have these specific warnings and errors ignored.
+
+### New dependency notations:
+
+- AndroidX:
+    - emoji2
+        - views-helper
+        - views
+    - health.servicesClient
+    - security.appAuthenticatorTesting
+- Google.accompanist.insets.ui
+
 ## Version 0.10.0 (2021-05-13)
 
 ### New features
