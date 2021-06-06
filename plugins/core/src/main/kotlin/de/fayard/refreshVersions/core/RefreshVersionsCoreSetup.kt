@@ -140,8 +140,8 @@ private fun setupPluginsVersionsResolution(
             }
             val pluginNamespace = requested.id.namespace ?: ""
             val versionKey = when {
-                pluginNamespace.startsWith("org.jetbrains.kotlin") -> "version.kotlin"
-                pluginNamespace.startsWith("com.android") -> "plugin.android"
+                pluginNamespace.startsWith("org.jetbrains.kotlin.") -> "version.kotlin"
+                pluginNamespace.startsWith("com.android.") -> "plugin.android"
                 else -> "plugin.$pluginId"
             }
             val version = resolveVersion(properties, versionKey) ?: return@eachPlugin
