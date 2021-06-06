@@ -6,6 +6,10 @@
 
 - In Android projects, if you used the version placeholder (`_`) directly in `build.gradle(.kts)` files, Android lint would trigger an unwanted warning, or error in the case of the Android build tools (aka. AGP, the Android Gradle Plugin). To avoid this inconvenience, running the refreshVersions task will now automatically check if it's running on an Android project, and in such cases, will edit (safely) the `lint.xml` file, creating it if needed, and add the needed rules to have these specific warnings and errors ignored.
 
+### Fixes
+
+- Fix a bug that prevented from using the correct version of `org.jetbrains.kotlinx.benchmark` and any other Gradle plugin with an id starting with `org.jetbrains.kotlinx` because it matched over `org.jetbrains.kotlin` as well. We are now matching on `org.jetbrains.kotlin.` to avoid this issue.
+
 ### New dependency notations:
 
 - AndroidX:
