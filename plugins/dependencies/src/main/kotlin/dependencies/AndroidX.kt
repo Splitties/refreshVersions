@@ -278,6 +278,15 @@ object AndroidX {
     const val emojiAppCompat = "androidx.emoji:emoji-appcompat:_"
     const val emojiBundled = "androidx.emoji:emoji-bundled:_"
 
+    val emoji2 = Emoji2
+
+    object Emoji2 : DependencyNotationAndGroup(group = "androidx.emoji2", name = "emoji2") {
+        @JvmField
+        val views = "$artifactPrefix-views:_"
+        @JvmField
+        val viewsHelper = "$artifactPrefix-views-helper:_"
+    }
+
     val enterprise = Enterprise // TODO kdoc
 
     object Enterprise : IsNotADependency {
