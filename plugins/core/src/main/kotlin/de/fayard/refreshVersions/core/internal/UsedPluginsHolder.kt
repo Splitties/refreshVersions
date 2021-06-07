@@ -6,6 +6,10 @@ import org.gradle.api.internal.artifacts.dependencies.AbstractDependency
 
 internal object UsedPluginsHolder {
 
+}
+
+internal class UsedPlugins {
+
     fun noteUsedPluginDependency(
         dependencyNotation: String,
         repositories: ArtifactRepositoryContainer

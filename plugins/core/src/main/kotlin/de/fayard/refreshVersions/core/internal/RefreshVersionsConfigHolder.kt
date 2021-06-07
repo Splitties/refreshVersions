@@ -74,6 +74,8 @@ object RefreshVersionsConfigHolder {
 class RefreshVersionsConfig {
     internal val resettableDelegates = ResettableDelegates()
 
+    internal val usedPlugins by resettableDelegates.Lazy { UsedPlugins() }
+
     fun markSetupViaSettingsPlugin() {
         isSetupViaPlugin = true
     }

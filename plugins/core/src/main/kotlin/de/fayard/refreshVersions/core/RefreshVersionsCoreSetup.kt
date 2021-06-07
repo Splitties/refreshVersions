@@ -106,7 +106,7 @@ fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
  * This function also sets up the module for the Android and Fabric (Crashlytics) Gradle plugins, so you can avoid the
  * buildscript classpath configuration boilerplate.
  */
-private fun setupRefreshVersions(settings: Settings, config: RefreshVersionsConfig) {
+private fun setupRefreshVersions(config: RefreshVersionsConfig, settings: Settings) {
     val supportedGradleVersion = "6.3" // 6.2 fail with this error: https://gradle.com/s/shp7hbtd3i3ii
     if (GradleVersion.current() < GradleVersion.version(supportedGradleVersion)) {
         throw UnsupportedVersionException("""
@@ -118,6 +118,7 @@ private fun setupRefreshVersions(settings: Settings, config: RefreshVersionsConf
     val versionsMap = config.readVersionsMap()
     @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(
+        config = config,
         settings = settings,
         properties = versionsMap
     )
@@ -133,6 +134,7 @@ private fun setupRefreshVersions(settings: Settings, config: RefreshVersionsConf
 }
 
 private fun setupPluginsVersionsResolution(
+    config: RefreshVersionsConfig,
     settings: Settings,
     properties: Map<String, String>
 ) {
@@ -156,14 +158,14 @@ private fun setupPluginsVersionsResolution(
             when {
                 pluginNamespace.startsWith("com.android") -> {
                     val dependencyNotation = "com.android.tools.build:gradle:$version"
-                    UsedPluginsHolder.noteUsedPluginDependency(
+                    config.usedPlugins.noteUsedPluginDependency(
                         dependencyNotation = dependencyNotation,
                         repositories = repositories
                     )
                     useModule(dependencyNotation)
                 }
                 else -> {
-                    UsedPluginsHolder.noteUsedPluginDependency(
+                    config.usedPlugins.noteUsedPluginDependency(
                         dependencyNotation = "$pluginId:$pluginId.gradle.plugin:$version",
                         repositories = repositories
                     )

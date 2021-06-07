@@ -48,7 +48,7 @@ internal suspend fun lookupVersionCandidates(
     val dependencyVersionsFetchers: Set<DependencyVersionsFetcher> = projects.flatMap {
         it.getDependencyVersionFetchers(httpClient = httpClient, dependencyFilter = dependencyFilter)
     }.plus(
-        getUsedPluginsDependencyVersionFetchers(httpClient = httpClient)
+        getUsedPluginsDependencyVersionFetchers(config = config, httpClient = httpClient)
     ).toSet()
 
     return coroutineScope {
@@ -156,9 +156,10 @@ private fun Project.getDependencyVersionFetchers(
 )
 
 private fun getUsedPluginsDependencyVersionFetchers(
+    config: RefreshVersionsConfig,
     httpClient: OkHttpClient
 ): Sequence<DependencyVersionsFetcher> {
-    return UsedPluginsHolder.read().flatMap { (dependency, repositories) ->
+    return config.usedPlugins.read().flatMap { (dependency, repositories) ->
         repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
             DependencyVersionsFetcher(
                 httpClient = httpClient,
