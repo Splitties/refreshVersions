@@ -21,7 +21,7 @@ plugins {
 }
 
 refreshVersions {
-//    versionsPropertiesFile = rootDir.parentFile.resolve("versions.properties")
+    versionsPropertiesFile = rootDir.parentFile.resolve("versions.properties")
     featureFlags {
         enable(LIBS)
         disable(GRADLE_UPDATES)
