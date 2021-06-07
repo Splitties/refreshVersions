@@ -37,6 +37,6 @@ dependencies {
 //    api(project(":subproject"))
 //    api(project(":subproject2"))
 
-    api("org.apache.poi:poi:_")
-    api("org.apache.poi:poi-ooxml:_")
+//    api("org.apache.poi:poi:_")
+//    api("org.apache.poi:poi-ooxml:_")
 }
