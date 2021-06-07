@@ -3,7 +3,6 @@
 package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
-import de.fayard.refreshVersions.core.extensions.gradle.isIncluded
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.resolveVersion
 import de.fayard.refreshVersions.core.internal.setupVersionPlaceholdersResolving
@@ -44,18 +43,20 @@ import java.io.File
 fun Settings.bootstrapRefreshVersionsCore(
     artifactVersionKeyRules: List<String> = emptyList(),
     versionsPropertiesFile: File = rootDir.resolve("versions.properties")
-) {
+): RefreshVersionsConfig {
     require(settings.isBuildSrc.not()) {
         "This bootstrap is only for the root project. For buildSrc, please call " +
                 "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
                 "or RefreshVersionsCoreSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
     }
-    RefreshVersionsConfigHolder.initialize(
+    //TODO: use versionsPropertiesFile as key
+    val config = RefreshVersionsConfigHolder.initialize(
         settings = settings,
         artifactVersionKeyRules = artifactVersionKeyRules,
         versionsPropertiesFile = versionsPropertiesFile
     )
-    setupRefreshVersions(settings = settings)
+    setupRefreshVersions(config = config, settings = settings)
+    return config
 }
 
 /**
@@ -88,8 +89,8 @@ fun Settings.bootstrapRefreshVersionsCore(
  */
 @JvmName("bootstrapForBuildSrc")
 fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
-    RefreshVersionsConfigHolder.initializeBuildSrc(this)
-    setupRefreshVersions(settings = settings)
+    val config = RefreshVersionsConfigHolder.initializeBuildSrc(this)
+    setupRefreshVersions(settings = settings, config = config)
 }
 
 /**
@@ -105,7 +106,7 @@ fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
  * This function also sets up the module for the Android and Fabric (Crashlytics) Gradle plugins, so you can avoid the
  * buildscript classpath configuration boilerplate.
  */
-private fun setupRefreshVersions(settings: Settings) {
+private fun setupRefreshVersions(settings: Settings, config: RefreshVersionsConfig) {
     val supportedGradleVersion = "6.3" // 6.2 fail with this error: https://gradle.com/s/shp7hbtd3i3ii
     if (GradleVersion.current() < GradleVersion.version(supportedGradleVersion)) {
         throw UnsupportedVersionException("""
@@ -114,15 +115,17 @@ private fun setupRefreshVersions(settings: Settings) {
             """.trimIndent())
     }
 
-
-    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
+    val versionsMap = config.readVersionsMap()
     @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(
         settings = settings,
         properties = versionsMap
     )
 
-    settings.gradle.setupVersionPlaceholdersResolving(versionsMap = versionsMap)
+    settings.gradle.setupVersionPlaceholdersResolving(
+        config = config,
+        versionsMap = versionsMap
+    )
 
     settings.gradle.rootProject {
         apply<RefreshVersionsCorePlugin>()

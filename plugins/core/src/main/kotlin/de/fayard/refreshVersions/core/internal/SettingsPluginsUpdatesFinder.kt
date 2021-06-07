@@ -19,12 +19,13 @@ internal object SettingsPluginsUpdatesFinder {
     )
 
     suspend fun getSettingsPluginUpdates(
+        config: RefreshVersionsConfig,
         httpClient: OkHttpClient,
         mode: VersionCandidatesResultMode
     ): UpdatesLookupResult {
 
-        val rootProjectSettings = RefreshVersionsConfigHolder.settings
-        val buildSrcSettings = RefreshVersionsConfigHolder.buildSrcSettings
+        val rootProjectSettings = config.settings
+        val buildSrcSettings = config.buildSrcSettings
 
         val rootProjectSettingsPlugins = rootProjectSettings.getPluginsList()
         val buildSrcSettingsPlugins = buildSrcSettings?.let { settings ->

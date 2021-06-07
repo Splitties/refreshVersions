@@ -1,7 +1,6 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
-import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
+import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
 import de.fayard.refreshVersions.core.internal.configureLintIfRunningOnAnAndroidProject
 import de.fayard.refreshVersions.core.internal.legacy.LegacyBootstrapUpdater
@@ -57,16 +56,17 @@ open class RefreshVersionsTask : DefaultTask() {
 
         runBlocking {
             logger.lifecycle("${project.rootDir.name} task action")
+            val config = RefreshVersionsConfigHolder.getConfigForProject(project)
             val lintUpdatingProblemsAsync = async {
-                configureLintIfRunningOnAnAndroidProject(settings, RefreshVersionsConfigHolder.readVersionsMap())
+                configureLintIfRunningOnAnAndroidProject(config.settings, config.readVersionsMap())
             }
             val result = lookupVersionCandidates(
-                httpClient = RefreshVersionsConfigHolder.httpClient,
+                httpClient = config.httpClient,
                 project = project,
-                versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
-                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+                versionMap = config.readVersionsMap(),
+                versionKeyReader = config.versionKeyReader
             )
-            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
+            VersionsPropertiesModel.writeWithNewVersions(config, result.dependenciesUpdates)
             SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
                 rootProject = project,
                 settingsPluginsUpdates = result.settingsPluginsUpdates,
@@ -79,7 +79,7 @@ open class RefreshVersionsTask : DefaultTask() {
                 )
             }
 
-            warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
+            warnAboutHardcodedVersionsIfAny(config, result.dependenciesWithHardcodedVersions)
             warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
             warnAboutGradleUpdateAvailableIfAny(result.gradleUpdates)
             lintUpdatingProblemsAsync.await().forEach { problem ->
@@ -127,13 +127,13 @@ open class RefreshVersionsTask : DefaultTask() {
         }
     }
 
-    private fun warnAboutHardcodedVersionsIfAny(dependenciesWithHardcodedVersions: List<Dependency>) {
+    private fun warnAboutHardcodedVersionsIfAny(config: RefreshVersionsConfig, dependenciesWithHardcodedVersions: List<Dependency>) {
         if (dependenciesWithHardcodedVersions.isNotEmpty()) {
             //TODO: Suggest running a diagnosis task to list the hardcoded versions.
             val warnFor = (dependenciesWithHardcodedVersions).take(3).map {
                 "${it.group}:${it.name}:${it.version}"
             }
-            val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
+            val versionsFileName = config.versionsPropertiesFile.name
             logger.warn(
                 """Found ${dependenciesWithHardcodedVersions.count()} hardcoded dependencies versions.
                     |

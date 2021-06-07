@@ -35,7 +35,8 @@ fun Configuration.countDependenciesWithHardcodedVersions(
 
 @InternalRefreshVersionsApi
 fun Project.countDependenciesWithHardcodedVersions(versionsMap: Map<String, String>): Int {
-    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+    val config = RefreshVersionsConfigHolder.getConfigForProject(project)
+    val versionKeyReader = config.versionKeyReader
     return configurations.sumBy { configuration ->
         if (configuration.shouldBeIgnored()) 0 else {
             configuration.countDependenciesWithHardcodedVersions(versionsMap, versionKeyReader)
@@ -45,7 +46,8 @@ fun Project.countDependenciesWithHardcodedVersions(versionsMap: Map<String, Stri
 
 internal fun promptProjectSelection(rootProject: Project): Project? {
     require(rootProject == rootProject.rootProject) { "Expected a rootProject but got $rootProject" }
-    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
+    val config = RefreshVersionsConfigHolder.getConfigForProject(rootProject)
+    val versionsMap = config.readVersionsMap()
     val projectsWithHardcodedDependenciesVersions: List<Pair<Project, Int>> = rootProject.allprojects.mapNotNull {
         val hardcodedDependenciesVersionsCount = it.countDependenciesWithHardcodedVersions(versionsMap)
         if (hardcodedDependenciesVersionsCount > 0) {
@@ -64,7 +66,8 @@ internal fun promptProjectSelection(rootProject: Project): Project? {
 }
 
 internal suspend fun runInteractiveMigrationToDependenciesConstants(project: Project) {
-    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
+    val config = RefreshVersionsConfigHolder.getConfigForProject(project)
+    val versionsMap = config.readVersionsMap()
     while (coroutineContext.isActive) {
         val selectedConfiguration = project.promptConfigurationSelection(versionsMap) ?: return
         runConfigurationDependenciesMigration(
@@ -77,7 +80,8 @@ internal suspend fun runInteractiveMigrationToDependenciesConstants(project: Pro
 
 private fun Project.promptConfigurationSelection(versionsMap: Map<String, String>): Configuration? {
     @Suppress("UnstableApiUsage")
-    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+    val config = RefreshVersionsConfigHolder.getConfigForProject(this)
+    val versionKeyReader = config.versionKeyReader
     val configurationsWithHardcodedDependenciesVersions = configurations.mapNotNull { configuration ->
         if (configuration.shouldBeIgnored()) return@mapNotNull null
         val count = configuration.countDependenciesWithHardcodedVersions(versionsMap, versionKeyReader)

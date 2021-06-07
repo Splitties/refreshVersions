@@ -17,7 +17,8 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
     override fun apply(project: Project) {
         check(project.isRootProject) { "ERROR: de.fayard.refreshVersions.core should not be applied manually" }
         if (project.isBuildSrc.not()) {
-            val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
+            val config = RefreshVersionsConfigHolder.getConfigForProject(project)
+            val versionsFileName = config.versionsPropertiesFile.name
             project.tasks.register<RefreshVersionsTask>(name = "refreshVersions") {
                 group = "Help"
                 description = "Search for new dependencies versions and update $versionsFileName"

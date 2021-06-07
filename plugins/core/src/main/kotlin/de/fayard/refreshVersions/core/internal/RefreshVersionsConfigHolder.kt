@@ -14,9 +14,64 @@ import java.io.File
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 
-@InternalRefreshVersionsApi
-object RefreshVersionsConfigHolder {
+//val RefreshVersionsConfigHolder = RefreshVersionsConfig()
 
+object RefreshVersionsConfigHolder {
+    internal val resettableDelegates = ResettableDelegates()
+    private val configs: MutableMap<String, RefreshVersionsConfig> by resettableDelegates.Lazy { mutableMapOf() }
+
+    internal fun initialize(
+        settings: Settings,
+        artifactVersionKeyRules: List<String>,
+        versionsPropertiesFile: File
+    ): RefreshVersionsConfig {
+        require(settings.isBuildSrc.not())
+        val key: String = settings.rootDir.path
+
+        val config = RefreshVersionsConfig()
+        config.initialize(
+            settings = settings,
+            artifactVersionKeyRules = artifactVersionKeyRules,
+            versionsPropertiesFile = versionsPropertiesFile
+        )
+        configs[key] = config
+        settings.gradle.buildFinished {
+            config.clearStaticState()
+            configs.remove(key)
+        }
+        return config
+    }
+
+    internal fun initializeBuildSrc(settings: Settings): RefreshVersionsConfig {
+        require(settings.isBuildSrc)
+        val key: String = settings.rootDir.parentFile.path
+        val config = configs[key]!!
+
+        config.initializeBuildSrc(settings)
+
+
+        settings.gradle.buildFinished {
+            config.clearStaticState()
+            configs.remove(key)
+        }
+
+        return config
+    }
+
+    @InternalRefreshVersionsApi
+    fun getConfigForProject(project: Project): RefreshVersionsConfig {
+        val key = project.rootDir.path
+        return configs[key]!!
+    }
+    @InternalRefreshVersionsApi
+    fun getConfigForSettings(settings: Settings): RefreshVersionsConfig {
+        val key = settings.rootDir.path
+        return configs[key]!!
+    }
+}
+
+@InternalRefreshVersionsApi
+class RefreshVersionsConfig {
     internal val resettableDelegates = ResettableDelegates()
 
     fun markSetupViaSettingsPlugin() {
@@ -122,7 +177,7 @@ object RefreshVersionsConfigHolder {
         }
     }
 
-    private fun clearStaticState() {
+    internal fun clearStaticState() {
         httpClient.dispatcher.executorService.shutdown()
         resettableDelegates.reset()
         // Clearing static state is needed because Gradle holds onto previous builds, yet,

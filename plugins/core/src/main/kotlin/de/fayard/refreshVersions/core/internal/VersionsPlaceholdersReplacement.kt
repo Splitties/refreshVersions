@@ -16,9 +16,9 @@ import org.gradle.api.invocation.Gradle
 
 internal const val versionPlaceholder = "_"
 
-internal fun Gradle.setupVersionPlaceholdersResolving(versionsMap: Map<String, String>) {
+internal fun Gradle.setupVersionPlaceholdersResolving(config: RefreshVersionsConfig, versionsMap: Map<String, String>) {
 
-    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+    val versionKeyReader = config.versionKeyReader
     var currentVersionsMap: Map<String, String> = versionsMap
     val refreshVersionsMap = { updatedMap: Map<String, String> ->
         currentVersionsMap = updatedMap
@@ -123,7 +123,7 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
     initialVersionsMap: Map<String, String>,
     refreshVersionsMap: (updatedMap: Map<String, String>) -> Unit
 ) {
-
+    val config = RefreshVersionsConfigHolder.getConfigForProject(project)
     val repositories = if (isFromBuildscript) project.buildscript.repositories else project.repositories
     var properties = initialVersionsMap
     @Suppress("UnstableApiUsage")
@@ -137,17 +137,18 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                 properties = properties,
                 key = propertyName
             ) ?: synchronized(lock) {
-                RefreshVersionsConfigHolder.readVersionsMap().let { updatedMap ->
+                config.readVersionsMap().let { updatedMap ->
                     properties = updatedMap
                     refreshVersionsMap(updatedMap)
                 }
                 resolveVersion(properties, propertyName)
                     ?: `Write versions candidates using latest most stable version and get it`(
+                        config = config,
                         repositories = repositories,
                         propertyName = propertyName,
                         dependency = dependency
                     ).also {
-                        RefreshVersionsConfigHolder.readVersionsMap().let { updatedMap ->
+                        config.readVersionsMap().let { updatedMap ->
                             properties = updatedMap
                             refreshVersionsMap(updatedMap)
                         }
@@ -167,7 +168,9 @@ fun Project.writeCurrentVersionInProperties(
     versionKey: String,
     currentVersion: String
 ) {
+    val config = RefreshVersionsConfigHolder.getConfigForProject(this)
     VersionsPropertiesModel.writeWithNewEntry(
+        config = config,
         propertyName = versionKey,
         versionsCandidates = listOf(Version(currentVersion))
     )
@@ -175,15 +178,17 @@ fun Project.writeCurrentVersionInProperties(
 
 @Suppress("FunctionName")
 private fun `Write versions candidates using latest most stable version and get it`(
+    config: RefreshVersionsConfig,
     repositories: ArtifactRepositoryContainer,
     propertyName: String,
     dependency: ExternalDependency
 ): String = `Write versions candidates using latest most stable version and get it`(
+    config = config,
     propertyName = propertyName,
     dependencyVersionsFetchers = repositories.filterIsInstance<MavenArtifactRepository>()
         .mapNotNull { repo ->
             DependencyVersionsFetcher(
-                httpClient = RefreshVersionsConfigHolder.httpClient,
+                httpClient = config.httpClient,
                 dependency = dependency,
                 repository = repo
             )
@@ -192,16 +197,18 @@ private fun `Write versions candidates using latest most stable version and get 
 
 @Suppress("FunctionName")
 internal fun `Write versions candidates using latest most stable version and get it`(
+    config: RefreshVersionsConfig,
     propertyName: String,
     dependencyVersionsFetchers: List<DependencyVersionsFetcher>
 ): String = runBlocking {
     dependencyVersionsFetchers.getVersionCandidates(
         currentVersion = Version(""),
-        resultMode = RefreshVersionsConfigHolder.resultMode
+        resultMode = config.resultMode
     ).let { versionCandidates ->
         val bestStability = versionCandidates.minBy { it.stabilityLevel }!!.stabilityLevel
         val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
         VersionsPropertiesModel.writeWithNewEntry(
+            config = config,
             propertyName = propertyName,
             versionsCandidates = versionCandidates.dropWhile { it != versionToUse }
         )

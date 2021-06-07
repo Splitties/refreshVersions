@@ -19,7 +19,8 @@ internal object LegacyBootstrapUpdater {
         require(rootProject.isRootProject)
         require(rootProject.isBuildSrc.not())
         rootProject.updateGradleSettings(selfUpdates)
-        RefreshVersionsConfigHolder.buildSrc?.updateGradleSettings(selfUpdates)
+        val config = RefreshVersionsConfigHolder.getConfigForProject(rootProject)
+        config.buildSrc?.updateGradleSettings(selfUpdates)
     }
 
     class ExpectedValues private constructor(
