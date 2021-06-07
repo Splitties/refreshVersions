@@ -56,6 +56,7 @@ open class RefreshVersionsTask : DefaultTask() {
         // will reduce the number of repositories lookups, improving performance a little more.
 
         runBlocking {
+            logger.lifecycle("${project.rootDir.name} task action")
             val lintUpdatingProblemsAsync = async {
                 configureLintIfRunningOnAnAndroidProject(settings, RefreshVersionsConfigHolder.readVersionsMap())
             }

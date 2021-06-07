@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
+import de.fayard.refreshVersions.core.extensions.gradle.isIncluded
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
@@ -23,6 +24,9 @@ object RefreshVersionsConfigHolder {
     }
 
     internal var isSetupViaPlugin = false
+        private set
+
+    private var isInitialized: Boolean = false
         private set
 
     private val versionKeyReaderDelegate = resettableDelegates.LateInit<ArtifactVersionKeyReader>()
@@ -78,6 +82,9 @@ object RefreshVersionsConfigHolder {
         versionsPropertiesFile: File
     ) {
         require(settings.isBuildSrc.not())
+        if(isInitialized && settings.isIncluded) {
+            return
+        }
         settings.gradle.buildFinished {
             clearStaticState()
         }
@@ -88,6 +95,7 @@ object RefreshVersionsConfigHolder {
         }
         this.artifactVersionKeyRules = artifactVersionKeyRules
         versionKeyReader = ArtifactVersionKeyReader.fromRules(filesContent = artifactVersionKeyRules)
+        isInitialized = true
     }
 
     internal fun initializeBuildSrc(settings: Settings) {
@@ -124,6 +132,7 @@ object RefreshVersionsConfigHolder {
     private fun clearStaticState() {
         httpClient.dispatcher.executorService.shutdown()
         resettableDelegates.reset()
+        isInitialized = false
         // Clearing static state is needed because Gradle holds onto previous builds, yet,
         // duplicates static state.
         // We need to beware of never retaining Gradle objects.

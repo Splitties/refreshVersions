@@ -27,12 +27,6 @@ repositories {
     google()
 }
 
-fun DependencyHandler.implementations(deps: List<String>) =
-    deps.forEach { implementation(it) }
-
-fun DependencyHandler.testImplementations(deps: List<String>) =
-    deps.forEach { testImplementation(it) }
-
 dependencies {
 //    api(project(":subproject"))
 //    api(project(":subproject2"))

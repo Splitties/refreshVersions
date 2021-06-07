@@ -26,12 +26,6 @@ repositories {
     google()
 }
 
-fun DependencyHandler.implementations(deps: List<String>) =
-    deps.forEach { implementation(it) }
-
-fun DependencyHandler.testImplementations(deps: List<String>) =
-    deps.forEach { testImplementation(it) }
-
 dependencies {
     api("org.apache.poi:poi:_")
     api("org.apache.poi:poi-ooxml:_")
