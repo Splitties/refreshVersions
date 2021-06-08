@@ -27,14 +27,15 @@ object RefreshVersionsConfigHolder {
         require(settings.isBuildSrc.not())
         val key: String = settings.rootDir.path
 
-        val config = RefreshVersionsConfig()
+        val config = configs.getOrPut(key) { RefreshVersionsConfig() }
+
         config.initialize(
             settings = settings,
             artifactVersionKeyRules = artifactVersionKeyRules,
             versionsPropertiesFile = versionsPropertiesFile
         )
+
         configCounter.incrementAndGet()
-        configs[key] = config
         settings.gradle.buildFinished {
             val current = configCounter.decrementAndGet()
             if(current == 0) {
@@ -47,7 +48,7 @@ object RefreshVersionsConfigHolder {
     internal fun initializeBuildSrc(settings: Settings): RefreshVersionsConfig {
         require(settings.isBuildSrc)
         val key: String = settings.rootDir.parentFile.path
-        val config = configs[key]!!
+        val config = configs.getOrPut(key) { RefreshVersionsConfig() }
 
         config.initializeBuildSrc(settings)
 
@@ -136,7 +137,6 @@ class RefreshVersionsConfig {
     ) {
         require(settings.isBuildSrc.not())
         settings.gradle.buildFinished {
-            System.err.println("${settings.rootDir.name} initialize buildFinished")
             clearStaticState()
         }
         this.settings = settings
@@ -174,7 +174,6 @@ class RefreshVersionsConfig {
                 )
             }
             settings.gradle.buildFinished {
-                System.err.println("${settings.rootDir.name} initializeBuildSrc buildSrc buildFinished")
                 clearStaticState()
             }
         }
