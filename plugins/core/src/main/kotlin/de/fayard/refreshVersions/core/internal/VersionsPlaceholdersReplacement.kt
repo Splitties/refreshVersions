@@ -33,6 +33,7 @@ internal fun Gradle.setupVersionPlaceholdersResolving(config: RefreshVersionsCon
             if (configuration.name in configurationNamesToIgnore) return
 
             configuration.replaceVersionPlaceholdersFromDependencies(
+                config = config,
                 project = project,
                 isFromBuildscript = isFromBuildscript,
                 versionKeyReader = versionKeyReader,
@@ -117,13 +118,13 @@ internal fun String.isAVersionAlias(): Boolean = startsWith("version.") || start
 private val lock = Any()
 
 private fun Configuration.replaceVersionPlaceholdersFromDependencies(
+    config: RefreshVersionsConfig,
     project: Project,
     isFromBuildscript: Boolean,
     versionKeyReader: ArtifactVersionKeyReader,
     initialVersionsMap: Map<String, String>,
     refreshVersionsMap: (updatedMap: Map<String, String>) -> Unit
 ) {
-    val config = RefreshVersionsConfigHolder.getConfigForProject(project)
     val repositories = if (isFromBuildscript) project.buildscript.repositories else project.repositories
     var properties = initialVersionsMap
     @Suppress("UnstableApiUsage")

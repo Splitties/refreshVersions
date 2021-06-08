@@ -1,7 +1,6 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
-import de.fayard.refreshVersions.core.extensions.gradle.isIncluded
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
@@ -13,12 +12,12 @@ import org.gradle.api.initialization.Settings
 import java.io.File
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
-
-//val RefreshVersionsConfigHolder = RefreshVersionsConfig()
+import java.util.concurrent.atomic.AtomicInteger
 
 object RefreshVersionsConfigHolder {
     internal val resettableDelegates = ResettableDelegates()
     private val configs: MutableMap<String, RefreshVersionsConfig> by resettableDelegates.Lazy { mutableMapOf() }
+    private val configCounter = AtomicInteger()
 
     internal fun initialize(
         settings: Settings,
@@ -34,10 +33,13 @@ object RefreshVersionsConfigHolder {
             artifactVersionKeyRules = artifactVersionKeyRules,
             versionsPropertiesFile = versionsPropertiesFile
         )
+        configCounter.incrementAndGet()
         configs[key] = config
         settings.gradle.buildFinished {
-            config.clearStaticState()
-            configs.remove(key)
+            val current = configCounter.decrementAndGet()
+            if(current == 0) {
+                resettableDelegates.reset()
+            }
         }
         return config
     }
@@ -49,10 +51,12 @@ object RefreshVersionsConfigHolder {
 
         config.initializeBuildSrc(settings)
 
-
+        configCounter.incrementAndGet()
         settings.gradle.buildFinished {
-            config.clearStaticState()
-            configs.remove(key)
+            val current = configCounter.decrementAndGet()
+            if(current == 0) {
+                resettableDelegates.reset()
+            }
         }
 
         return config
@@ -61,12 +65,7 @@ object RefreshVersionsConfigHolder {
     @InternalRefreshVersionsApi
     fun getConfigForProject(project: Project): RefreshVersionsConfig {
         val key = project.rootDir.path
-        return configs[key]!!
-    }
-    @InternalRefreshVersionsApi
-    fun getConfigForSettings(settings: Settings): RefreshVersionsConfig {
-        val key = settings.rootDir.path
-        return configs[key]!!
+        return configs[key] ?: error("failed to load config for $key, available: ${configs.keys}")
     }
 }
 
@@ -137,6 +136,7 @@ class RefreshVersionsConfig {
     ) {
         require(settings.isBuildSrc.not())
         settings.gradle.buildFinished {
+            System.err.println("${settings.rootDir.name} initialize buildFinished")
             clearStaticState()
         }
         this.settings = settings
@@ -174,6 +174,7 @@ class RefreshVersionsConfig {
                 )
             }
             settings.gradle.buildFinished {
+                System.err.println("${settings.rootDir.name} initializeBuildSrc buildSrc buildFinished")
                 clearStaticState()
             }
         }
