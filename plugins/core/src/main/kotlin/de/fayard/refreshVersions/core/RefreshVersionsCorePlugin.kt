@@ -4,13 +4,11 @@ import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
-import de.fayard.refreshVersions.core.internal.ResettableDelegates
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.register
 import org.slf4j.Marker
 import org.slf4j.helpers.BasicMarkerFactory
-import java.lang.IllegalStateException
 
 open class RefreshVersionsCorePlugin : Plugin<Project> {
 
@@ -23,6 +21,7 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
                 group = "Help"
                 description = "Search for new dependencies versions and update $versionsFileName"
             }
+            project.extensions.add("versions", VersionExtension(config))
         }
         cleanFilesFromPreviousVersions(project)
     }

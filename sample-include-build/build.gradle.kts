@@ -57,13 +57,13 @@ dependencies {
 
 
 getKotlinPluginVersion().let {
-    val kotlinStdlibVersion = versionFor(dependencyNotation = Kotlin.stdlib)
+    val kotlinStdlibVersion = versions.versionFor(dependencyNotation = Kotlin.stdlib)
     check(it == kotlinStdlibVersion) {
         "Unexpected mismatch between the version of the Kotlin plugin and the stdlib. " +
             "Is the versionFor function implementation correct?" +
             "Got respectively $it and $kotlinStdlibVersion"
     }
-    val kotlinVersion = versionFor(versionKey = "version.kotlin")
+    val kotlinVersion = versions.versionFor(versionKey = "version.kotlin")
     check(it == kotlinVersion) {
         "Unexpected mismatch between the version of the Kotlin plugin and the one from versions.properties. " +
             "Is the versionFor function implementation correct?" +

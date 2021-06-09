@@ -8,6 +8,17 @@ import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.resolveVersion
 import org.gradle.api.Project
 
+@Deprecated("use versions extension", ReplaceWith("versions.versionFor(versionKey)"), level = DeprecationLevel.ERROR)
+fun versionFor(versionKey: String): String {
+    throw NotImplementedError("use versions.versionFor")
+}
+
+@Deprecated("use versions extension", ReplaceWith("versions.versionFor(dependencyNotation)"), level = DeprecationLevel.ERROR)
+fun versionFor(dependencyNotation: CharSequence): String {
+    throw NotImplementedError("use versions.versionFor")
+}
+
+@Deprecated("use versions extension", ReplaceWith("versions.versionFor(versionKey)"))
 fun Project.versionFor(versionKey: String): String {
     // This function is overloaded to allow named parameter usage in Kotlin.
     // However, no check is performed here because we cannot detect if
@@ -16,6 +27,7 @@ fun Project.versionFor(versionKey: String): String {
     return retrieveVersionFor(config = config, dependencyNotationOrVersionKey = versionKey)
 }
 
+@Deprecated("use versions extension", ReplaceWith("versions.versionFor(dependencyNotation)"))
 fun Project.versionFor(dependencyNotation: CharSequence): String {
     // This function is overloaded to allow named parameter usage in Kotlin.
     // However, no check is performed here because we cannot detect if
@@ -24,7 +36,7 @@ fun Project.versionFor(dependencyNotation: CharSequence): String {
     return retrieveVersionFor(config = config, dependencyNotationOrVersionKey = dependencyNotation)
 }
 
-private fun retrieveVersionFor(config: RefreshVersionsConfig, dependencyNotationOrVersionKey: CharSequence): String {
+internal fun retrieveVersionFor(config: RefreshVersionsConfig, dependencyNotationOrVersionKey: CharSequence): String {
     val isDependencyNotation = ':' in dependencyNotationOrVersionKey
     val versionKey = when {
         isDependencyNotation -> {
