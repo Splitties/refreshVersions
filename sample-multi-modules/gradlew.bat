@@ -1,1 +1,1 @@
-../sample-kotlin/gradlew.bat
+../plugins/gradlew.bat
