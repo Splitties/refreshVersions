@@ -36,6 +36,8 @@ fun checkOnMainBranch() {
 
 @Suppress("EnumEntryName")
 enum class ReleaseStep { // Order of the steps, must be kept right.
+    `Update release branch`,
+    `Update main branch from release`,
     `Change this library version`,
     `Request doc update confirmation`,
     `Request CHANGELOG update confirmation`,
@@ -46,8 +48,6 @@ enum class ReleaseStep { // Order of the steps, must be kept right.
     `Push tags to origin`,
     `Request PR merge`,
     `Request GitHub release publication`,
-    `Update release branch`,
-    `Update main branch from release`,
     `Change this library version back to a SNAPSHOT`,
     `Commit "prepare next dev version"`,
     `Push, at last`;
@@ -117,6 +117,18 @@ fun askNewVersionInput(
 
 
 fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
+    `Update release branch` -> {
+        printInfo("Will now checkout the `release` branch, pull from GitHub (origin) to update the local `release` branch.")
+        requestUserConfirmation("Continue?")
+        git.checkoutBranch("release")
+        git.pullFromOrigin()
+    }
+    `Update main branch from release` -> {
+        printInfo("About to checkout the main branch (and update it from release for merge commits).")
+        requestUserConfirmation("Continue?")
+        git.checkoutMain()
+        git.mergeBranchIntoCurrent("release")
+    }
     `Change this library version` -> {
         checkOnMainBranch()
         OngoingRelease.newVersion.let { newVersion ->
@@ -187,18 +199,6 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
     }
     `Request GitHub release publication` -> {
         requestManualAction("Publish release on GitHub with the changelog.")
-    }
-    `Update release branch` -> {
-        printInfo("Will now checkout the `release` branch, pull from GitHub (origin) to update the local `release` branch.")
-        requestUserConfirmation("Continue?")
-        git.checkoutBranch("release")
-        git.pullFromOrigin()
-    }
-    `Update main branch from release` -> {
-        printInfo("About to checkout the main branch (and update it from release for merge commits).")
-        requestUserConfirmation("Continue?")
-        git.checkoutMain()
-        git.mergeBranchIntoCurrent("release")
     }
     `Change this library version back to a SNAPSHOT` -> {
         val newVersion = Version(OngoingRelease.newVersion)
