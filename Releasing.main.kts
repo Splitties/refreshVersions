@@ -118,7 +118,8 @@ fun askNewVersionInput(
 
 fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
     `Update release branch` -> {
-        printInfo("Will now checkout the `release` branch, pull from GitHub (origin) to update the local `release` branch.")
+        printInfo("Before proceeding to the release, we will ensure we merge changes from the release branch into the main branch.")
+        printInfo("Will now checkout the `release` branch and pull from GitHub (origin) to update the local `release` branch.")
         requestUserConfirmation("Continue?")
         git.checkoutBranch("release")
         git.pullFromOrigin()
