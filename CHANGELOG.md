@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased]
+## Version 0.10.1 (2021-06-10)
 
 ### New features
 

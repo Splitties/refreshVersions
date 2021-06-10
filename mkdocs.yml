@@ -21,7 +21,7 @@ extra:
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
     gradle: 6.9
-    refreshVersions: '0.10.0'
+    refreshVersions: '0.10.1'
     snapshot: '0.10.1-SNAPSHOT'
   keyboard_shortcuts:
     find_actions: <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>A</kbd>
