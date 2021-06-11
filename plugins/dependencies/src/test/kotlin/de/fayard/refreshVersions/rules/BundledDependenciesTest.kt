@@ -14,6 +14,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.jupiter.api.Test
 import testutils.getVersionCandidates
+import testutils.isInCi
 
 class BundledDependenciesTest {
 
@@ -22,7 +23,6 @@ class BundledDependenciesTest {
 
         val validatedDependencyMappingFile = testResources.resolve("bundled-dependencies-validated.txt")
         val validatedDependencyMapping = validatedDependencyMappingFile.readLines()
-            .map { it.substringBeforeLast(':') }
             .filter { it.isNotBlank() }
             .toSet()
 
@@ -60,15 +60,17 @@ class BundledDependenciesTest {
 
         val newValidatesMappings = mappings
             .filter { it.second != null }
-            .joinToString(prefix = "\n", separator = "\n") { (mapping, version) ->
-                "${mapping.group}:${mapping.artifact}:${version!!.value}"
+        if (isInCi()) {
+            withClue("Unit tests must be run and changes to bundled-dependencies-validated.txt committed, but that isn't the case for those dependency notations") {
+                newValidatesMappings shouldBe emptyList()
             }
-        validatedDependencyMappingFile.appendText(newValidatesMappings)
-
-        val invalidMappings = mappings.filter { it.second == null }.map { "${it.first.group}:${it.first.artifact}" }
-        withClue("We didn't find those dependency notations in the standard maven repositories") {
-            invalidMappings shouldBe emptyList()
         }
+        val newValidatedContent =
+            newValidatesMappings.joinToString(prefix = "\n", separator = "\n") { (mapping, version) ->
+                "${mapping.group}:${mapping.artifact}"
+            }
+        validatedDependencyMappingFile.appendText(newValidatedContent)
+
     }
 
     private val defaultHttpClient by lazy { createTestHttpClient() }
