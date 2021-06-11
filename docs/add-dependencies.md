@@ -84,32 +84,24 @@ As you see, the convention is pretty simple. The key is the id of the plugin, pr
 ## Get the version from anywhere
 
 In some cases, you might need to get the version defined in the `versions.properties` file in a Gradle script.
-For these cases, there's the `versionFor` function that takes either a version key, or a full dependency notation.
+For these cases, there's the `versions.versionFor` function that takes either a version key, or a full dependency notation.
 
 Here's a usage example with Jetpack Compose in an Android project:
 
 === "build.gradle.kts"
     ```kotlin
-    import de.fayard.refreshVersions.core.versionFor
-
-    ...
-
     composeOptions {
-        kotlinCompilerExtensionVersion = versionFor(AndroidX.compose.ui)
+        kotlinCompilerExtensionVersion = versions.versionFor(AndroidX.compose.ui)
     }
     ```
 === "build.gradle"
     ```groovy
-    import static de.fayard.refreshVersions.core.Versions.versionFor
-
-    ...
-
     composeOptions {
-        kotlinCompilerExtensionVersion = versionFor(AndroidX.compose.ui)
+        kotlinCompilerExtensionVersion = versions.versionFor(AndroidX.compose.ui)
     }
     ```
 
-Using `versionFor("version.androidx.compose.ui")` would also work, so long as `version.androidx.compose.ui` is defined in the `versions.properties` file.
+Using `versions.versionFor("version.androidx.compose.ui")` would also work, so long as `version.androidx.compose.ui` is defined in the `versions.properties` file.
 
 ## Non-built-in dependency notations
 

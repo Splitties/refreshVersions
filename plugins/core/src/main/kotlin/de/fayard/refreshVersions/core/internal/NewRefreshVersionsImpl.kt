@@ -25,7 +25,9 @@ internal suspend fun lookupVersionCandidates(
 
     require(project.isRootProject)
 
-    val projects = RefreshVersionsConfigHolder.allProjects(project)
+    val config = RefreshVersionsConfigHolder.getConfigForProject(project)
+
+    val projects = config.allProjects(project)
 
     val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
     val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
@@ -46,12 +48,12 @@ internal suspend fun lookupVersionCandidates(
     val dependencyVersionsFetchers: Set<DependencyVersionsFetcher> = projects.flatMap {
         it.getDependencyVersionFetchers(httpClient = httpClient, dependencyFilter = dependencyFilter)
     }.plus(
-        getUsedPluginsDependencyVersionFetchers(httpClient = httpClient)
+        getUsedPluginsDependencyVersionFetchers(config = config, httpClient = httpClient)
     ).toSet()
 
     return coroutineScope {
 
-        val resultMode = RefreshVersionsConfigHolder.resultMode
+        val resultMode = config.resultMode
         val dependenciesWithVersionCandidatesAsync = dependencyVersionsFetchers.groupBy {
             it.moduleId
         }.map { (moduleId: ModuleId, versionFetchers: List<DependencyVersionsFetcher>) ->
@@ -60,6 +62,7 @@ internal suspend fun lookupVersionCandidates(
                 properties = versionMap,
                 key = propertyName
             ) ?: `Write versions candidates using latest most stable version and get it`(
+                config = config,
                 propertyName = propertyName,
                 dependencyVersionsFetchers = versionFetchers
             )
@@ -76,16 +79,16 @@ internal suspend fun lookupVersionCandidates(
         }
 
         val settingsPluginsUpdatesAsync = async {
-            SettingsPluginsUpdatesFinder.getSettingsPluginUpdates(httpClient, resultMode)
+            SettingsPluginsUpdatesFinder.getSettingsPluginUpdates(config, httpClient, resultMode)
         }
 
         val selfUpdateAsync: Deferred<DependencyWithVersionCandidates>? = when {
-            RefreshVersionsConfigHolder.isSetupViaPlugin -> null
-            else -> async { LegacyBoostrapUpdatesFinder.getSelfUpdates(httpClient, resultMode) }
+            config.isSetupViaPlugin -> null
+            else -> async { LegacyBoostrapUpdatesFinder.getSelfUpdates(config, httpClient, resultMode) }
         }
 
         val gradleUpdatesAsync = async {
-            if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions() else emptyList()
+            if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions(config) else emptyList()
         }
 
         val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
@@ -103,8 +106,8 @@ internal suspend fun lookupVersionCandidates(
     }
 }
 
-private suspend fun lookupAvailableGradleVersions(): List<Version> = coroutineScope {
-    val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient)
+private suspend fun lookupAvailableGradleVersions(config: RefreshVersionsConfig): List<Version> = coroutineScope {
+    val checker = GradleUpdateChecker(config.httpClient)
     val currentGradleVersion = GradleVersion.current()
     GradleUpdateChecker.VersionType.values().filterNot {
         it == GradleUpdateChecker.VersionType.All
@@ -153,9 +156,10 @@ private fun Project.getDependencyVersionFetchers(
 )
 
 private fun getUsedPluginsDependencyVersionFetchers(
+    config: RefreshVersionsConfig,
     httpClient: OkHttpClient
 ): Sequence<DependencyVersionsFetcher> {
-    return UsedPluginsHolder.read().flatMap { (dependency, repositories) ->
+    return config.usedPlugins.read().flatMap { (dependency, repositories) ->
         repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
             DependencyVersionsFetcher(
                 httpClient = httpClient,

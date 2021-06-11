@@ -12,11 +12,69 @@ import org.gradle.api.initialization.Settings
 import java.io.File
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
+import java.util.concurrent.atomic.AtomicInteger
+
+object RefreshVersionsConfigHolder {
+    internal val resettableDelegates = ResettableDelegates()
+    private val configs: MutableMap<String, RefreshVersionsConfig> by resettableDelegates.Lazy { mutableMapOf() }
+    private val configCounter = AtomicInteger()
+
+    internal fun initialize(
+        settings: Settings,
+        artifactVersionKeyRules: List<String>,
+        versionsPropertiesFile: File
+    ): RefreshVersionsConfig {
+        require(settings.isBuildSrc.not())
+        val key: String = settings.rootDir.path
+
+        val config = configs.getOrPut(key) { RefreshVersionsConfig() }
+
+        config.initialize(
+            settings = settings,
+            artifactVersionKeyRules = artifactVersionKeyRules,
+            versionsPropertiesFile = versionsPropertiesFile
+        )
+
+        configCounter.incrementAndGet()
+        settings.gradle.buildFinished {
+            val current = configCounter.decrementAndGet()
+            if(current == 0) {
+                resettableDelegates.reset()
+            }
+        }
+        return config
+    }
+
+    internal fun initializeBuildSrc(settings: Settings): RefreshVersionsConfig {
+        require(settings.isBuildSrc)
+        val key: String = settings.rootDir.parentFile.path
+        val config = configs.getOrPut(key) { RefreshVersionsConfig() }
+
+        config.initializeBuildSrc(settings)
+
+        configCounter.incrementAndGet()
+        settings.gradle.buildFinished {
+            val current = configCounter.decrementAndGet()
+            if(current == 0) {
+                resettableDelegates.reset()
+            }
+        }
+
+        return config
+    }
+
+    @InternalRefreshVersionsApi
+    fun getConfigForProject(project: Project): RefreshVersionsConfig {
+        val key = project.rootDir.path
+        return configs[key] ?: error("failed to load config for $key, available: ${configs.keys}")
+    }
+}
 
 @InternalRefreshVersionsApi
-object RefreshVersionsConfigHolder {
-
+class RefreshVersionsConfig {
     internal val resettableDelegates = ResettableDelegates()
+
+    internal val usedPlugins by resettableDelegates.Lazy { UsedPlugins() }
 
     fun markSetupViaSettingsPlugin() {
         isSetupViaPlugin = true
@@ -121,7 +179,7 @@ object RefreshVersionsConfigHolder {
         }
     }
 
-    private fun clearStaticState() {
+    internal fun clearStaticState() {
         httpClient.dispatcher.executorService.shutdown()
         resettableDelegates.reset()
         // Clearing static state is needed because Gradle holds onto previous builds, yet,

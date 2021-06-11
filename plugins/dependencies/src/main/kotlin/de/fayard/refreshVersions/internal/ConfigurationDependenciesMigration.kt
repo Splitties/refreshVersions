@@ -13,9 +13,10 @@ internal fun runConfigurationDependenciesMigration(
     versionsMap: Map<String, String>,
     configuration: Configuration
 ) {
+    val config = RefreshVersionsConfigHolder.getConfigForProject(project)
     configuration.dependencies.forEach { dependency ->
         if (dependency !is ExternalDependency) return@forEach
-        project.attemptDependencyMigration(versionsMap, dependency)
+        project.attemptDependencyMigration(config, versionsMap, dependency)
     }
 }
 
@@ -28,10 +29,11 @@ private fun DependencyMapping.matches(dependency: ExternalDependency): Boolean {
 }
 
 private fun Project.attemptDependencyMigration(
+    config: RefreshVersionsConfig,
     versionsMap: Map<String, String>,
     dependency: ExternalDependency
 ) {
-    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+    val versionKeyReader = config.versionKeyReader
 
     if (dependency.hasHardcodedVersion(versionsMap, versionKeyReader).not()) return
     val currentVersion = dependency.version ?: return
@@ -54,7 +56,7 @@ private fun Project.attemptDependencyMigration(
         versionKey = versionKey,
         currentVersion = currentVersion
     )
-    logAddedVersionsKey(versionKey)
+    logAddedVersionsKey(config, versionKey)
 }
 
 private fun offerReplacingHardcodedVersionWithPlaceholder(moduleIdentifier: ModuleIdentifier): Boolean {
@@ -93,8 +95,11 @@ private fun offerReplacingHardcodedVersionWithConstantOrPlaceholder(
     )
 }
 
-private fun logAddedVersionsKey(versionKey: String) {
-    val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
+private fun logAddedVersionsKey(
+    config: RefreshVersionsConfig,
+    versionKey: String
+) {
+    val versionsFileName = config.versionsPropertiesFile.name
     println("Moved the current version to the $versionsFileName file under the following key:")
     print(AnsiColor.WHITE.boldHighIntensity)
     print(AnsiColor.YELLOW.background)

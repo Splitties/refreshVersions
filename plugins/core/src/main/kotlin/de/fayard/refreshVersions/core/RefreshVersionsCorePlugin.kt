@@ -15,11 +15,13 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
     override fun apply(project: Project) {
         check(project.isRootProject) { "ERROR: de.fayard.refreshVersions.core should not be applied manually" }
         if (project.isBuildSrc.not()) {
+            val config = RefreshVersionsConfigHolder.getConfigForProject(project)
+            val versionsFileName = config.versionsPropertiesFile.name
             project.tasks.register<RefreshVersionsTask>(name = "refreshVersions") {
                 group = "Help"
-                val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
                 description = "Search for new dependencies versions and update $versionsFileName"
             }
+            project.extensions.add("versions", VersionExtension(config))
         }
         cleanFilesFromPreviousVersions(project)
     }

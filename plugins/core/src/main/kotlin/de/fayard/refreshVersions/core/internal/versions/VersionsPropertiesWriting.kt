@@ -3,10 +3,8 @@ package de.fayard.refreshVersions.core.internal.versions
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
+import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
-import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
-import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
-import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.isAVersionAlias
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.Comment
@@ -15,8 +13,11 @@ import org.gradle.api.artifacts.ExternalDependency
 import java.io.File
 
 @InternalRefreshVersionsApi
-fun writeMissingEntriesInVersionProperties(newEntries: Map<String, ExternalDependency>) {
-    VersionsPropertiesModel.update { model ->
+fun writeMissingEntriesInVersionProperties(
+    config: RefreshVersionsConfig,
+    newEntries: Map<String, ExternalDependency>
+) {
+    VersionsPropertiesModel.update(config.versionsPropertiesFile) { model ->
         val newSections = newEntries.map { (key, d) ->
             VersionEntry(emptyList(), key, d.version!!, emptyList(), emptyList())
         }.sortedBy { it.key }
@@ -25,15 +26,16 @@ fun writeMissingEntriesInVersionProperties(newEntries: Map<String, ExternalDepen
 }
 
 internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
+    config: RefreshVersionsConfig,
     dependenciesWithLastVersion: List<DependencyWithVersionCandidates>
 ) {
-    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+    val versionKeyReader = config.versionKeyReader
 
     val candidatesMap = dependenciesWithLastVersion.associateBy {
         getVersionPropertyName(it.moduleId.toModuleIdentifier(), versionKeyReader)
     }
 
-    update { model ->
+    update(config.versionsPropertiesFile) { model ->
         model.copy(
             sections = model.sections.map { section ->
                 when (section) {
@@ -53,10 +55,11 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
 }
 
 internal fun VersionsPropertiesModel.Companion.writeWithNewEntry(
+    config: RefreshVersionsConfig,
     propertyName: String,
     versionsCandidates: List<Version>
 ) {
-    VersionsPropertiesModel.update { model ->
+    VersionsPropertiesModel.update(config.versionsPropertiesFile) { model ->
         model + VersionEntry(
             key = propertyName,
             currentVersion = versionsCandidates.first().value,
@@ -76,7 +79,7 @@ internal fun VersionsPropertiesModel.writeTo(versionsPropertiesFile: File) {
  * [transform] is crossinline to enforce synchronous execution of (no suspension points).
  */
 private inline fun VersionsPropertiesModel.Companion.update(
-    versionsPropertiesFile: File = RefreshVersionsConfigHolder.versionsPropertiesFile,
+    versionsPropertiesFile: File,
     crossinline transform: (model: VersionsPropertiesModel) -> VersionsPropertiesModel
 ) {
     require(versionsPropertiesFile.name == "versions.properties")

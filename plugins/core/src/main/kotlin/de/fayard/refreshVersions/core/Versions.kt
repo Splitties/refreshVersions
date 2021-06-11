@@ -2,25 +2,41 @@
 
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfig
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.resolveVersion
+import org.gradle.api.Project
 
+@Deprecated("use versions extension", ReplaceWith("versions.versionFor(versionKey)"), level = DeprecationLevel.ERROR)
 fun versionFor(versionKey: String): String {
-    // This function is overloaded to allow named parameter usage in Kotlin.
-    // However, no check is performed here because we cannot detect if
-    // the function wasn't called with named argument.
-    return retrieveVersionFor(dependencyNotationOrVersionKey = versionKey)
+    throw NotImplementedError("use versions.versionFor")
 }
 
+@Deprecated("use versions extension", ReplaceWith("versions.versionFor(dependencyNotation)"), level = DeprecationLevel.ERROR)
 fun versionFor(dependencyNotation: CharSequence): String {
+    throw NotImplementedError("use versions.versionFor")
+}
+
+@Deprecated("use versions extension", ReplaceWith("versions.versionFor(versionKey)"))
+fun Project.versionFor(versionKey: String): String {
     // This function is overloaded to allow named parameter usage in Kotlin.
     // However, no check is performed here because we cannot detect if
     // the function wasn't called with named argument.
-    return retrieveVersionFor(dependencyNotationOrVersionKey = dependencyNotation)
+    val config = RefreshVersionsConfigHolder.getConfigForProject(this)
+    return retrieveVersionFor(config = config, dependencyNotationOrVersionKey = versionKey)
 }
 
-private fun retrieveVersionFor(dependencyNotationOrVersionKey: CharSequence): String {
+@Deprecated("use versions extension", ReplaceWith("versions.versionFor(dependencyNotation)"))
+fun Project.versionFor(dependencyNotation: CharSequence): String {
+    // This function is overloaded to allow named parameter usage in Kotlin.
+    // However, no check is performed here because we cannot detect if
+    // the function wasn't called with named argument.
+    val config = RefreshVersionsConfigHolder.getConfigForProject(this)
+    return retrieveVersionFor(config = config, dependencyNotationOrVersionKey = dependencyNotation)
+}
+
+internal fun retrieveVersionFor(config: RefreshVersionsConfig, dependencyNotationOrVersionKey: CharSequence): String {
     val isDependencyNotation = ':' in dependencyNotationOrVersionKey
     val versionKey = when {
         isDependencyNotation -> {
@@ -36,7 +52,7 @@ private fun retrieveVersionFor(dependencyNotationOrVersionKey: CharSequence): St
                         group = it.substringBefore(':'),
                         name = it.substringBeforeLast(':').substringAfter(':')
                     ),
-                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+                    versionKeyReader = config.versionKeyReader
                 )
             }
         }
@@ -47,12 +63,12 @@ private fun retrieveVersionFor(dependencyNotationOrVersionKey: CharSequence): St
         }
     }
     return resolveVersion(
-        properties = RefreshVersionsConfigHolder.lastlyReadVersionsMap,
+        properties = config.lastlyReadVersionsMap,
         key = versionKey
     ) ?: resolveVersion(
-        properties = RefreshVersionsConfigHolder.readVersionsMap(),
+        properties = config.readVersionsMap(),
         key = versionKey
-    ) ?: RefreshVersionsConfigHolder.versionsPropertiesFile.name.let { versionsFileName ->
+    ) ?: config.versionsPropertiesFile.name.let { versionsFileName ->
         val errorMessage = when {
             isDependencyNotation -> "The version of the artifact $dependencyNotationOrVersionKey requested in " +
                 "versionFor call wasn't found in the $versionsFileName file.\n" +

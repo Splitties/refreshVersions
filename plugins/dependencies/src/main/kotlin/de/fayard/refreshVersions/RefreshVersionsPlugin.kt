@@ -4,6 +4,7 @@ import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfig
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
@@ -51,7 +52,6 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     }
 
     private fun bootstrap(settings: Settings) {
-        RefreshVersionsConfigHolder.markSetupViaSettingsPlugin()
         if (settings.extensions.findByName("refreshVersions") == null) {
             // If using legacy bootstrap, the extension has already been created.
             settings.extensions.create<RefreshVersionsExtension>("refreshVersions")
@@ -66,7 +66,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
 
             val extension: RefreshVersionsExtension = extensions.getByType()
 
-            bootstrapRefreshVersionsCore(
+           val config = bootstrapRefreshVersionsCore(
                 artifactVersionKeyRules = if (extension.extraArtifactVersionKeyRules.isEmpty()) {
                     artifactVersionKeyRules // Avoid unneeded list copy.
                 } else {
@@ -75,6 +75,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 versionsPropertiesFile = extension.versionsPropertiesFile
                     ?: settings.rootDir.resolve("versions.properties")
             )
+            config.markSetupViaSettingsPlugin()
             if (extension.isBuildSrcLibsEnabled) gradle.beforeProject {
                 if (project != project.rootProject) return@beforeProject
 

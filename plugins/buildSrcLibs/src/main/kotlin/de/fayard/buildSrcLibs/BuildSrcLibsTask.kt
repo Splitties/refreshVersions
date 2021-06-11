@@ -52,17 +52,18 @@ open class BuildSrcLibsTask : DefaultTask() {
     @TaskAction
     fun initVersionsProperties() {
         require(project == project.rootProject) { "Expected a rootProject but got $project" }
+        val config = RefreshVersionsConfigHolder.getConfigForProject(project)
         val configurationsWithHardcodedDependencies = project.findHardcodedDependencies()
 
-        val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
-        val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+        val versionsMap = config.readVersionsMap()
+        val versionKeyReader = config.versionKeyReader
         val newEntries: Map<String, ExternalDependency> = findMissingEntries(
             configurations = configurationsWithHardcodedDependencies,
             versionsMap = versionsMap,
             versionKeyReader = versionKeyReader
         )
 
-        writeMissingEntriesInVersionProperties(newEntries)
+        writeMissingEntriesInVersionProperties(config, newEntries)
         OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
         Thread.sleep(1000)
     }
@@ -106,7 +107,8 @@ open class BuildSrcLibsTask : DefaultTask() {
 }
 
 internal fun Project.findHardcodedDependencies(): List<Configuration> {
-    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
+    val config = RefreshVersionsConfigHolder.getConfigForProject(this)
+    val versionsMap = config.readVersionsMap()
     val projectsWithHardcodedDependenciesVersions: List<Project> = rootProject.allprojects.filter {
         it.countDependenciesWithHardcodedVersions(versionsMap) > 0
     }
@@ -115,7 +117,7 @@ internal fun Project.findHardcodedDependencies(): List<Configuration> {
         project.configurations.filterNot { configuration ->
             configuration.shouldBeIgnored() || 0 == configuration.countDependenciesWithHardcodedVersions(
                 versionsMap = versionsMap,
-                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+                versionKeyReader = config.versionKeyReader
             )
         }
     }
