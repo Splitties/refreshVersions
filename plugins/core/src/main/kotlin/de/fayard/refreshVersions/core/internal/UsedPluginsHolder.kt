@@ -25,13 +25,15 @@ internal object UsedPluginsHolder {
         }
     }
 
-    fun noteUnusedPlugin(dependency: ExternalDependency) {
+    fun pluginHasNoEntryInVersionsFile(dependency: ExternalDependency) {
         synchronized(lock) {
-            unusedPlugins.add(dependency)
+            _usedPluginsWithoutEntryInVersionsFile.add(dependency)
         }
     }
+    val usedPluginsWithoutEntryInVersionsFile: List<ExternalDependency>
+        get() = _usedPluginsWithoutEntryInVersionsFile
 
-    val unusedPlugins by RefreshVersionsConfigHolder.resettableDelegates.Lazy {
+    private val _usedPluginsWithoutEntryInVersionsFile by RefreshVersionsConfigHolder.resettableDelegates.Lazy {
         mutableListOf<ExternalDependency>()
     }
 

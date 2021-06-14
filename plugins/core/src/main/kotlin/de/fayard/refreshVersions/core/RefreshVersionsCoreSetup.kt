@@ -153,7 +153,7 @@ private fun setupPluginsVersionsResolution(
             val version = resolveVersion(properties, versionKey)
             if (version == null) {
                 val pluginVersion = requested.version ?: return@eachPlugin
-                UsedPluginsHolder.noteUnusedPlugin(pluginIdToDependency(pluginId, pluginVersion))
+                UsedPluginsHolder.pluginHasNoEntryInVersionsFile(pluginIdToDependency(pluginId, pluginVersion))
                 return@eachPlugin
             }
             when {
