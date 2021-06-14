@@ -10,6 +10,7 @@ androidx.appsearch:appsearch-compiler
 androidx.appsearch:appsearch-local-storage
 androidx.arch.core:core-common
 androidx.arch.core:core-runtime
+androidx.arch.core:core-testing
 androidx.asynclayoutinflater:asynclayoutinflater
 androidx.autofill:autofill
 androidx.benchmark:benchmark-common
