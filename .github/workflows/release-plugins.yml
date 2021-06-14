@@ -20,3 +20,9 @@ jobs:
           wrapper-directory: plugins
           build-root-directory: plugins
           arguments: publishToAppropriateRepo --scan -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
+        env:
+          sonatype_username: ${{ secrets.SONATYPE_USERNAME }}
+          sonatype_password: ${{ secrets.SONATYPE_PASSWORD }}
+          GPG_key_id: ${{ secrets.GPG_KEY_ID }}
+          GPG_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_private_password: ${{ secrets.GPG_PRIVATE_PASSWORD }}

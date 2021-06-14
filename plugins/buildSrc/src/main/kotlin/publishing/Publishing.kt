@@ -1,8 +1,14 @@
 @file:Suppress("PackageDirectoryMismatch")
 
 import org.gradle.api.Project
+import org.gradle.api.UnknownTaskException
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.tasks.TaskContainer
+import org.gradle.api.tasks.TaskProvider
+import org.gradle.jvm.tasks.Jar
+import org.gradle.kotlin.dsl.named
+import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 
 object Publishing {
@@ -13,7 +19,13 @@ object Publishing {
 
 fun PublishingExtension.setupAllPublications(project: Project) {
     val mavenPublications = publications.withType<MavenPublication>()
-    mavenPublications.configureEach { setupPom() }
+    mavenPublications.configureEach {
+        artifact(project.tasks.emptyJavadocJar())
+        setupPom()
+    }
+    if (project.isSnapshot) {
+        sonatypeSnapshotsPublishing(project = project)
+    }
     project.registerPublishingTask()
     project.tasks.named("publishPlugins").configure {
         doFirst {
@@ -27,11 +39,21 @@ fun PublishingExtension.setupAllPublications(project: Project) {
     }
 }
 
+fun TaskContainer.emptyJavadocJar(): TaskProvider<Jar> {
+    val taskName = "javadocJar"
+    return try {
+        named(name = taskName)
+    } catch (e: UnknownTaskException) {
+        register(name = taskName) { archiveClassifier by "javadoc" }
+    }
+}
+
+
 private fun Project.registerPublishingTask() {
     require(project != rootProject)
 
     val publishTaskName = when {
-        isSnapshot -> "publishToMavenLocal"
+        isSnapshot -> "publishAllPublicationsToSonatypeSnapshotsRepository"
         else -> null // TODO: Replace with a dev repo making up for bintray?
     }
     val publishTask = publishTaskName?.let { tasks.named(it) }

@@ -3,12 +3,13 @@ package de.fayard.refreshVersions.rules
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import de.fayard.testResources
+import io.kotest.assertions.withClue
+import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import testutils.getVersionCandidates
 import testutils.isInCi
@@ -16,44 +17,55 @@ import testutils.isInCi
 class BundledDependenciesTest {
 
     @Test
-    @Disabled(
-        "This test needs to be made incremental, " +
-            "so it only checks new dependency notations, " +
-            "and doesn't give a 1 minute penalty."
-    )
     fun `test bundled dependencies exist in standard repositories`() {
 
-        if (isInCi()) return
-        /* Because running this test (almost always) fails on GitHub Actions with this error:
-           java.net.SocketTimeoutException at JvmOkio.kt:143
-               Caused by: javax.net.ssl.SSLException at Alert.java:127
-                   Caused by: java.net.SocketException at SocketInputStream.java:183
+        val validatedDependencyMappingFile = testResources.resolve("bundled-dependencies-validated.txt")
+        val validatedDependencyMapping = validatedDependencyMappingFile.readLines()
+            .filter { it.isNotBlank() }
+            .toSet()
 
-        https://github.com/jmfayard/refreshVersions/runs/872495471?check_suite_focus=true
-        https://gradle.com/s/l47xwdefpipo2
-        */
+        // "standard repositories" are mavenCentral and google
+        val reposUrls = listOf(
+            "https://repo.maven.apache.org/maven2/",
+            "https://dl.google.com/dl/android/maven2/",
+            "https://plugins.gradle.org/m2/"
+        )
 
-        runBlocking {
-            // "standard repositories" are mavenCentral, jcenter and google
-            val reposUrls = listOf(
-                "https://repo.maven.apache.org/maven2/",
-                "https://dl.google.com/dl/android/maven2/",
-                "https://jcenter.bintray.com/",
-                "https://plugins.gradle.org/m2/"
-            )
-            getArtifactNameToConstantMapping().map { dependencyMapping ->
-                async {
-                    getVersionCandidates(
-                        httpClient = defaultHttpClient,
-                        moduleId = ModuleId(
-                            group = dependencyMapping.group,
-                            name = dependencyMapping.artifact
-                        ),
-                        repoUrls = reposUrls,
-                        currentVersion = Version("")
-                    ).also { check(it.isNotEmpty()) }
+        val newValidatedMappings = runBlocking {
+
+            getArtifactNameToConstantMapping()
+                .filter { dependencyMapping ->
+                    "${dependencyMapping.group}:${dependencyMapping.artifact}" !in validatedDependencyMapping
+                }.map { dependencyMapping ->
+                    dependencyMapping.group to dependencyMapping.artifact
                 }
-            }.awaitAll().also { check(it.isNotEmpty()) }
+                .distinct()
+                .onEach { (group, name) ->
+                    launch {
+                        getVersionCandidates(
+                            httpClient = defaultHttpClient,
+                            moduleId = ModuleId(group, name),
+                            repoUrls = reposUrls,
+                            currentVersion = Version("")
+                        )
+                    }
+                }
+        }
+
+        when {
+            newValidatedMappings.isEmpty() -> return
+            isInCi() -> withClue(
+                "Unit tests must be run and changes to bundled-dependencies-validated.txt must be committed, " +
+                    "but that wasn't the case for those dependency notations."
+            ) {
+                newValidatedMappings shouldBe emptyList()
+            }
+            else -> {
+                val mappings = getArtifactNameToConstantMapping().map {
+                    "${it.group}:${it.artifact}"
+                }.distinct().sorted().joinToString(separator = "\n")
+                validatedDependencyMappingFile.writeText(mappings)
+            }
         }
     }
 

@@ -28,7 +28,7 @@ We recommend using the most recent version of IntelliJ IDEA to contribute to thi
 
 This step is required for the samples to work afterwards and enable you to test your changes.
 
-1. Ensure the version in the `plugins/version.txt` file ends with `-LOCAL-SNAPSHOT` to avoid overlapping a published version.
+1. Ensure the version in the `plugins/version.txt` file ends with `-SNAPSHOT` to avoid overlapping a published version.
 2. In the "Gradle" tool window, or from the terminal, run the `publishToMavenLocal` task.
 
 ### Testing changes locally
@@ -63,4 +63,4 @@ pluginManagement {
 }
 ```
 
-Once you're done, you can replace the version with the local snapshot version (e.g. `0.9.8` -> `0.9.9-LOCAL-SNAPSHOT`) and test your changes.
+Once you're done, you can replace the version with the snapshot version (e.g. `0.9.8` -> `0.9.9-SNAPSHOT`) and test your changes.

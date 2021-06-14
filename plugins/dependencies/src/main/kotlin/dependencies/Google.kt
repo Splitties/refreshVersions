@@ -28,7 +28,12 @@ object Google {
         const val glide = "$artifactPrefix-glide:_"
         const val imageloadingCore = "$artifactPrefix-imageloading-core:_"
 
-        const val insets = "$artifactPrefix-insets:_"
+        val insets = Insets
+
+        object Insets : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-insets") {
+            @JvmField
+            val ui = "$artifactPrefix-ui:_"
+        }
         const val systemuicontroller = "$artifactPrefix-systemuicontroller:_"
 
         const val appcompatTheme = "$artifactPrefix-appcompat-theme:_"
@@ -54,7 +59,7 @@ object Google {
         val material = Material
 
         object Material : DependencyNotationAndGroup(group = "$artifactBase.material", name = "material") {
-            @JvmField val composeThemeAdapter = "$artifactBase.material:compose-theme-adapter"
+            @JvmField val composeThemeAdapter = "$artifactBase.material:compose-theme-adapter:_"
         }
 
         private const val wearOsVersion = "_"

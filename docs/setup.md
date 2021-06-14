@@ -51,14 +51,26 @@ If you use the **buildSrc** module and have dependencies declared in the `buildS
 
 === "buildSrc/settings.gradle.kts"
     ```kotlin
+    pluginManagement {
+        plugins {
+            id("de.fayard.refreshVersions") version "{{version.refreshVersions}}"
+        }
+    }
+
     plugins {
-        id("de.fayard.refreshVersions") version "{{version.refreshVersions}}"
+        id("de.fayard.refreshVersions")
     }
     ```
 === "buildSrc/settings.gradle"
     ```groovy
+    pluginManagement {
+        plugins {
+            id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+        }
+    }
+
     plugins {
-        id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+        id 'de.fayard.refreshVersions'
     }
     ```
 
@@ -69,11 +81,17 @@ If you use the **buildSrc** module and have dependencies declared in the `buildS
 A workaround is to configure the plugin in the `buildSrc` module (create the directory if it doesn't exist yet):
 
 === "buildSrc/settings.gradle"
-```groovy
-plugins {
-    id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
-}
-```
+    ```groovy
+    pluginManagement {
+        plugins {
+            id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
+        }
+    }
+
+    plugins {
+        id 'de.fayard.refreshVersions'
+    }
+    ```
 
 
 ### If you have a composite/included build
@@ -82,9 +100,35 @@ Sharing used versions with included builds is not supported at the moment.
 
 If you need/want this feature, please vote with a 👍 on [this issue]({{link.issues}}/205), subscribe to it, and tell us about your use case, to help us prioritize.
 
-### If you want to use a development version
+### If you want to use a snapshot version
 
-Follow [issue 340: Continuous Deployment]({{link.issues}}/340)
+=== "settings.gradle.kts"
+    ```kotlin
+    pluginManagement {
+        repositories {
+            gradlePluginPortal()
+            maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
+        }
+    }
+    plugins {
+        // See https://jmfayard.github.io/refreshVersions
+        id("de.fayard.refreshVersions") version "{{version.snapshot}}"
+    }
+    ```
+=== "settings.gradle"
+    ```groovy
+    pluginManagement {
+        repositories {
+            gradlePluginPortal()
+            maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots' }
+        }
+    }
+    plugins {
+        // See https://jmfayard.github.io/refreshVersions
+        id 'de.fayard.refreshVersions' version '{{version.snapshot}}'
+    }
+    ```
+
 
 ## Configure the plugin
 
@@ -96,73 +140,8 @@ If you are curious about what are the available options, you can use auto-comple
 
 <img width="854" src="https://user-images.githubusercontent.com/459464/117489731-41322200-af6e-11eb-8e5d-f3ba0e7b6070.png">
 
-<!--
-## About Gradle's Settings file
-
-For refreshVersions to be able to work for all the dependencies in your project, including for the ones in the `buildscript`'s `classpath`, it needs to be setup in the Gradle settings.
-
-A Gradle project has [a Settings file](https://docs.gradle.org/current/userguide/build_lifecycle.html#sec:settings_file) called `settings.gradle`  or `settings.gradle.kts` where you must respect a certain order (otherwise, the build breaks).
-
-The order is:
-
-1. imports, if any.
-2. The `pluginManagement` block, if any.
-3. The `buildscript` block, if any. (We will use it)
-4. The `plugins` block, if any settings plugins are applied.
-5. Logic for Gradle settings (any other code).
-
-See the example snippet below:
-
-```kotlin
-import com.example.something // Imports at the top, as usual.
-
-pluginManagement {} // Optional
-
-buildscript {
-    // We will setup refreshVersions here, see below.
-}
-
-plugins {} // Optional
-
-// Then you can have other code after the blocks above,
-// we will bootstrap refreshVersions here.
-
-rootProject.name = "My Project" // Optional, defaults to parent dir's name.
-include(":app") // If the project has modules/subprojects to declare.
-```
--->
 
 ## Earlier versions
-
-<!--
-### refreshVersions 0.9.x and earlier
-
-There is an
-Here is how refreshVersions was configured in 0.9.x and earlier versions
-
-=== "settings.gradle.kts"
-    ```kotlin
-    import de.fayard.refreshVersions.bootstrapRefreshVersions
-
-    buildscript {
-        repositories { gradlePluginPortal() }
-        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
-    }
-
-    bootstrapRefreshVersions()
-    ```
-=== "settings.gradle"
-    ```groovy
-    import de.fayard.refreshVersions.RefreshVersionsSetup
-
-    buildscript {
-        repositories { gradlePluginPortal() }
-        dependencies.classpath("de.fayard.refreshVersions:refreshVersions:0.9.7")
-    }
-
-    RefreshVersionsSetup.bootstrap(settings)
-    ```
--->
 
 ### If you are upgrading from the buildSrcVersions plugin
 
