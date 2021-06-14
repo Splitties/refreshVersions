@@ -41,7 +41,6 @@ fun addMissingEntriesInVersionsProperties(project: Project) {
 
     writeMissingEntriesInVersionProperties(plugins + newEntries, isUsed = false)
     OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
-    Thread.sleep(1000)
 }
 
 
