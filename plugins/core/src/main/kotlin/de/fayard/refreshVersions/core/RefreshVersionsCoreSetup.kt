@@ -177,7 +177,8 @@ private fun setupPluginsVersionsResolution(
     }
 }
 
-fun pluginDependencyNotationToVersionKey(dependencyNotation: String): String? =
+// TODO: try to centralize version key shorthands
+internal fun pluginDependencyNotationToVersionKey(dependencyNotation: String): String? =
     when {
         dependencyNotation.startsWith("com.android") -> "plugin.android"
         dependencyNotation.startsWith("org.jetbrains.kotlin.") -> "version.kotlin"
@@ -185,5 +186,5 @@ fun pluginDependencyNotationToVersionKey(dependencyNotation: String): String? =
         else -> null
     }
 
-fun pluginIdToDependency(pluginId: String, version: String): ExternalDependency =
+internal fun pluginIdToDependency(pluginId: String, version: String): ExternalDependency =
     DefaultClientModule(pluginId, "$pluginId.gradle.plugin", version)
