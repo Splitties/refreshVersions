@@ -2,6 +2,7 @@ package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section
 import de.fayard.refreshVersions.core.internal.versions.readFrom
 import de.fayard.refreshVersions.core.internal.versions.writeTo
 import org.gradle.api.DefaultTask
@@ -13,13 +14,14 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
     fun cleanUpVersionsProperties() {
         val model = VersionsPropertiesModel.readFrom(RefreshVersionsConfigHolder.versionsPropertiesFile)
 
-        val cleanupSections = model.sections.map { section ->
+        val sectionsWithoutAvailableUpdates = model.sections.map { section ->
             when (section) {
-                is VersionsPropertiesModel.Section.Comment -> section
-                is VersionsPropertiesModel.Section.VersionEntry -> section.copy(availableUpdates = emptyList())
+                is Section.Comment -> section
+                is Section.VersionEntry -> section.copy(availableUpdates = emptyList())
             }
         }
-        model.copy(sections = cleanupSections).writeTo(RefreshVersionsConfigHolder.versionsPropertiesFile)
+        val newModel = model.copy(sections = sectionsWithoutAvailableUpdates)
+        newModel.writeTo(RefreshVersionsConfigHolder.versionsPropertiesFile)
     }
 
     @TaskAction
@@ -32,6 +34,9 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
             val newLineAtTheEnd = if (newContent.lastOrNull().isNullOrBlank()) "" else "\n"
             if (newContent.size != oldContent.size) {
                 settings.writeText(newContent.joinToString(separator = "\n", postfix = newLineAtTheEnd))
+            }
+            if (initialContent.length != newContent.length) {
+                settingsFile.writeText(newContent)
             }
         }
     }
