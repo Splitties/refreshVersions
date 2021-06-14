@@ -1,14 +1,12 @@
 package de.fayard.refreshVersions.rules
 
 import de.fayard.refreshVersions.core.ModuleId
-import de.fayard.refreshVersions.core.StabilityLevel
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import de.fayard.testResources
 import io.kotest.assertions.withClue
 import io.kotest.matchers.shouldBe
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,46 +29,44 @@ class BundledDependenciesTest {
             "https://repo.maven.apache.org/maven2/",
             "https://dl.google.com/dl/android/maven2/",
             "https://plugins.gradle.org/m2/"
-            //"https://jcenter.bintray.com/",
         )
 
-        val mappings = runBlocking {
+        val newValidatedMappings = runBlocking {
 
             getArtifactNameToConstantMapping()
                 .filter { dependencyMapping ->
                     "${dependencyMapping.group}:${dependencyMapping.artifact}" !in validatedDependencyMapping
+                }.map { dependencyMapping ->
+                    dependencyMapping.group to dependencyMapping.artifact
                 }
-                .map { dependencyMapping ->
-                    async {
+                .distinct()
+                .onEach { (group, name) ->
+                    launch {
                         getVersionCandidates(
                             httpClient = defaultHttpClient,
-                            moduleId = ModuleId(
-                                group = dependencyMapping.group,
-                                name = dependencyMapping.artifact
-                            ),
+                            moduleId = ModuleId(group, name),
                             repoUrls = reposUrls,
                             currentVersion = Version("")
-                        ).run {
-                            val version = lastOrNull { it.stabilityLevel == StabilityLevel.Stable } ?: lastOrNull()
-                            dependencyMapping to version
-                        }
+                        )
                     }
-                }.awaitAll()
+                }
         }
 
-        val newValidatesMappings = mappings
-            .filter { it.second != null }
-        if (isInCi()) {
-            withClue("Unit tests must be run and changes to bundled-dependencies-validated.txt committed, but that isn't the case for those dependency notations") {
-                newValidatesMappings shouldBe emptyList()
+        when {
+            newValidatedMappings.isEmpty() -> return
+            isInCi() -> withClue(
+                "Unit tests must be run and changes to bundled-dependencies-validated.txt must be committed, " +
+                    "but that wasn't the case for those dependency notations."
+            ) {
+                newValidatedMappings shouldBe emptyList()
+            }
+            else -> {
+                val mappings = getArtifactNameToConstantMapping().map {
+                    "${it.group}:${it.artifact}"
+                }.distinct().sorted().joinToString(separator = "\n")
+                validatedDependencyMappingFile.writeText(mappings)
             }
         }
-        val newValidatedContent =
-            newValidatesMappings.joinToString(prefix = "\n", separator = "\n") { (mapping, version) ->
-                "${mapping.group}:${mapping.artifact}"
-            }
-        validatedDependencyMappingFile.appendText(newValidatedContent)
-
     }
 
     private val defaultHttpClient by lazy { createTestHttpClient() }
