@@ -119,6 +119,8 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 println(getArtifactNameToConstantMapping().joinToString("\n"))
             }
         }
+
+        /* // TODO: Find out whether we want to expose the task or not.
         project.tasks.register<MissingEntriesTask>(
             name = "refreshVersionsMissingEntries"
         ) {
@@ -126,6 +128,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             description = "Add missing entries to 'versions.properties'"
             outputs.upToDateWhen { false }
         }
+        */
     }
 
     private fun addDependencyToBuildSrcForGroovyDsl(settings: Settings) {

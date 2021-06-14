@@ -3,6 +3,7 @@ package de.fayard.refreshVersions.core
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.versions.writeMissingEntriesInVersionProperties
 import org.gradle.api.DefaultTask
+import org.gradle.api.Incubating
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
@@ -10,34 +11,39 @@ import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.tasks.TaskAction
 
 @Suppress("UnstableApiUsage")
+@Incubating
 open class MissingEntriesTask : DefaultTask() {
 
 
     @TaskAction
-    fun initVersionsProperties() {
-        require(project == project.rootProject) { "Expected a rootProject but got $project" }
-        OutputFile.checkWhichFilesExist(project.rootDir)
-        val configurationsWithHardcodedDependencies = project.findHardcodedDependencies()
-
-        val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
-        val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-        val newEntries: Map<String, ExternalDependency> = findMissingEntries(
-            configurations = configurationsWithHardcodedDependencies,
-            versionsMap = versionsMap,
-            versionKeyReader = versionKeyReader
-        )
-        val plugins = UsedPluginsHolder.unusedPlugins
-            .distinctBy { d -> pluginDependencyNotationToVersionKey(d.name) }
-            .associateBy { d -> pluginDependencyNotationToVersionKey(d.name) }
-            .filterKeys { key -> key != null && key !in versionsMap }
-            as Map<String, ExternalDependency>
-
-
-        writeMissingEntriesInVersionProperties(plugins + newEntries, isUsed = false)
-        OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
-        Thread.sleep(1000)
+    fun refreshVersionsMissingEntries() {
+        addMissingEntriesInVersionsProperties(project)
     }
+}
 
+@InternalRefreshVersionsApi
+fun addMissingEntriesInVersionsProperties(project: Project) {
+    require(project == project.rootProject) { "Expected a rootProject but got $project" }
+    OutputFile.checkWhichFilesExist(project.rootDir)
+    val configurationsWithHardcodedDependencies = project.findHardcodedDependencies()
+
+    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
+    val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+    val newEntries: Map<String, ExternalDependency> = findMissingEntries(
+        configurations = configurationsWithHardcodedDependencies,
+        versionsMap = versionsMap,
+        versionKeyReader = versionKeyReader
+    )
+    val plugins = UsedPluginsHolder.unusedPlugins
+        .distinctBy { d -> pluginDependencyNotationToVersionKey(d.name) }
+        .associateBy { d -> pluginDependencyNotationToVersionKey(d.name) }
+        .filterKeys { key -> key != null && key !in versionsMap }
+        as Map<String, ExternalDependency>
+
+
+    writeMissingEntriesInVersionProperties(plugins + newEntries, isUsed = false)
+    OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
+    Thread.sleep(1000)
 }
 
 

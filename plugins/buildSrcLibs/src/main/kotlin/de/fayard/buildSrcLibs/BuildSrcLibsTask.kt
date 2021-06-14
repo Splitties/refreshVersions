@@ -2,17 +2,18 @@ package de.fayard.buildSrcLibs
 
 import com.squareup.kotlinpoet.FileSpec
 import de.fayard.buildSrcLibs.internal.*
-import de.fayard.buildSrcLibs.internal.PluginConfig
-import de.fayard.buildSrcLibs.internal.checkModeAndNames
-import de.fayard.buildSrcLibs.internal.kotlinpoet
+import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.internal.OutputFile
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
-import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.tasks.TaskAction
 
 @Suppress("UnstableApiUsage")
 open class BuildSrcLibsTask : DefaultTask() {
+
+    @TaskAction
+    fun addMissingEntries() {
+        addMissingEntriesInVersionsProperties(project)
+    }
 
     @TaskAction
     fun taskActionInitializeBuildSrc() {
