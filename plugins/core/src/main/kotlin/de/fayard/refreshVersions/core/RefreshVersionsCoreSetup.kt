@@ -180,7 +180,7 @@ private fun setupPluginsVersionsResolution(
 fun pluginDependencyNotationToVersionKey(dependencyNotation: String): String? =
     when {
         dependencyNotation.startsWith("com.android") -> "plugin.android"
-        dependencyNotation.startsWith("org.jetbrains.kotlin") -> "version.kotlin"
+        dependencyNotation.startsWith("org.jetbrains.kotlin.") -> "version.kotlin"
         dependencyNotation.endsWith(".gradle.plugin") -> "plugin." + dependencyNotation.removeSuffix(".gradle.plugin")
         else -> null
     }

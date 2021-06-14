@@ -9,6 +9,7 @@ class PluginsTest : StringSpec({
         "org.jetbrains.kotlin.multiplatform.gradle.plugin" to "version.kotlin",
         "org.jetbrains.kotlin.plugin.serialization.gradle.plugin" to "version.kotlin",
         "org.jetbrains.kotlin.jvm.gradle.plugin" to "version.kotlin",
+        "org.jetbrains.kotlinx.benchmark.gradle.plugin" to "plugin.org.jetbrains.kotlinx.benchmark",
         "com.android.application" to "plugin.android",
         "com.android.library" to "plugin.android",
         "com.adarshr.test-logger.gradle.plugin" to "plugin.com.adarshr.test-logger",
