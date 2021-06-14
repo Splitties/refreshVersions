@@ -39,7 +39,6 @@ What it did was to auto-generate the `buildSrc/.../{Libs,Versions}.kt` files abo
 
 ```bash
 $ ./gradlew buildSrcVersions
-> Task :dependencyUpdates
 > Task :buildSrcVersions
         new file:   buildSrc/build.gradle.kts
         new file:   buildSrc/.gitignore
