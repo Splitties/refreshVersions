@@ -20,10 +20,10 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
                 val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
                 description = "Search for new dependencies versions and update $versionsFileName"
             }
+
             project.tasks.register<RefreshVersionsCleanupTask>(name = "refreshVersionsCleanup") {
                 group = "refreshVersions"
-                val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
-                description = "Search for new dependencies versions and update $versionsFileName"
+                description = "Cleanup versions availability comments"
             }
         }
         cleanFilesFromPreviousVersions(project)
