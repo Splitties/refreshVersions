@@ -6,7 +6,6 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Incubating
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
-import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.tasks.TaskAction
 
@@ -37,7 +36,7 @@ fun addMissingEntriesInVersionsProperties(project: Project) {
     val plugins = UsedPluginsHolder.usedPluginsWithoutEntryInVersionsFile
         .associateBy { d -> pluginDependencyNotationToVersionKey(d.name) }
         .filterKeys { key -> key != null && key !in versionsMap }
-        as Map<String, ExternalDependency>
+        .mapKeys { (k, _) -> k!! }
 
 
     writeMissingEntriesInVersionProperties(plugins + newEntries, isUsed = false)
