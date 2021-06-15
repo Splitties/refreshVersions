@@ -22,8 +22,7 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 }
 
 
-@InternalRefreshVersionsApi
-fun migrateFileIfNeeded(file: File) {
+internal fun migrateFileIfNeeded(file: File) {
     val oldContent = file.readText()
     val newContent = oldContent.lines()
         .detectPluginsBlock()
@@ -54,8 +53,7 @@ private val underscoreBlackList = setOf(
     "targetCompatibility", "sourceCompatibility"
 )
 
-@InternalRefreshVersionsApi
-fun replaceVersionWithUndercore(line: String, inPluginsBlock: Boolean = false): String? = when {
+internal fun replaceVersionWithUndercore(line: String, inPluginsBlock: Boolean = false): String? = when {
     inPluginsBlock -> line.replace(pluginVersionRegex, "")
     line.trimStart().startsWith("version") -> null
     underscoreBlackList.any { line.contains(it) } -> null
@@ -63,8 +61,7 @@ fun replaceVersionWithUndercore(line: String, inPluginsBlock: Boolean = false): 
     else -> null
 }
 
-@InternalRefreshVersionsApi
-fun findFilesWithDependencyNotations(fromDir: File): List<File> {
+internal fun findFilesWithDependencyNotations(fromDir: File): List<File> {
     require(fromDir.isDirectory()) { "Expected a directory, got ${fromDir.absolutePath}" }
     val expectedNames = listOf("build", "build.gradle", "deps", "dependencies", "libs", "libraries", "versions")
     val expectedExtesions = listOf("gradle", "kts", "groovy", "kt")
@@ -76,8 +73,7 @@ fun findFilesWithDependencyNotations(fromDir: File): List<File> {
 }
 
 
-@InternalRefreshVersionsApi
-fun List<String>.detectPluginsBlock(): List<Pair<String, Boolean>> {
+internal fun List<String>.detectPluginsBlock(): List<Pair<String, Boolean>> {
     val result = mutableListOf<Pair<String, Boolean>>()
     var inBlock = false
     for (line in this) {

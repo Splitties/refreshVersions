@@ -1,9 +1,5 @@
-package de.fayard.refreshVersions.migration.upgrade
+package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.detectPluginsBlock
-import de.fayard.refreshVersions.core.findFilesWithDependencyNotations
-import de.fayard.refreshVersions.core.migrateFileIfNeeded
-import de.fayard.refreshVersions.core.replaceVersionWithUndercore
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.ints.shouldBeExactly
@@ -13,7 +9,7 @@ import java.io.File
 class MigrationTest : StringSpec({
     val testResources: File = File(".").absoluteFile.resolve("src/test/resources")
 
-    "Try migrating loccal repository".config(enabled = false) {
+    "Try migrating local repository".config(enabled = false) {
         val file = File("/Users/jmfayard/IdeaProjects/android/compose-samples")
         findFilesWithDependencyNotations(file).forEach {
             migrateFileIfNeeded(it)
