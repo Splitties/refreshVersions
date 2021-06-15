@@ -3,7 +3,8 @@ package de.fayard.refreshVersions.core.internal
 /**
  * The rules are case sensitive.
  */
-internal abstract class ArtifactVersionKeyRule protected constructor(
+@InternalRefreshVersionsApi
+abstract class ArtifactVersionKeyRule protected constructor(
     internal val artifactPattern: String,
     internal val versionKeyPattern: String
 ) : Comparable<ArtifactVersionKeyRule> {
@@ -24,12 +25,17 @@ internal abstract class ArtifactVersionKeyRule protected constructor(
 
     private val versionKeySignificantCharsLength = versionKeyPattern.count { it != ' ' }
 
+    override fun toString(): String = """
+        $artifactPattern
+        $versionKeyPattern
+    """.trimIndent()
+
     companion object {
 
         operator fun invoke(
             artifactPattern: String,
             versionKeyPattern: String
-        ): ArtifactVersionKeyRule = ArtifactVersionKeyRuleRegexImpl(artifactPattern, versionKeyPattern)
+        ): ArtifactVersionKeyRule = ArtifactVersionKeyRuleRegexImpl(artifactPattern.trimStart(), versionKeyPattern)
 
         private val comparator: Comparator<ArtifactVersionKeyRule> = compareBy<ArtifactVersionKeyRule> {
             it.versionKeySignificantCharsLength
