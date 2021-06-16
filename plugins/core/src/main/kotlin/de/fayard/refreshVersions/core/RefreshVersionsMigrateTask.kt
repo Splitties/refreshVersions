@@ -74,7 +74,7 @@ internal fun replaceVersionWithUnderscore(line: String, inPluginsBlock: Boolean 
 }
 
 internal fun findFilesWithDependencyNotations(fromDir: File): List<File> {
-    require(fromDir.isDirectory()) { "Expected a directory, got ${fromDir.absolutePath}" }
+    require(fromDir.isDirectory) { "Expected a directory, got ${fromDir.absolutePath}" }
     val expectedNames = listOf("build", "build.gradle", "deps", "dependencies", "libs", "libraries", "versions")
     val expectedExtensions = listOf("gradle", "kts", "groovy", "kt")
     return fromDir.walkBottomUp().filter {
