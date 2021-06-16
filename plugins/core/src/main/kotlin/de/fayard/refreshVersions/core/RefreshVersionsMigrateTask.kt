@@ -84,7 +84,10 @@ internal fun findFilesWithDependencyNotations(fromDir: File): List<File> {
         .toList()
 }
 
-
+/**
+ * Takes a list of lines as input.
+ * Returns the same lines, along with a boolean indicating if that line is inside a plugins block.
+ */
 internal fun List<String>.detectPluginsBlock(): List<Pair<String, Boolean>> {
     val result = mutableListOf<Pair<String, Boolean>>()
     var inBlock = false
