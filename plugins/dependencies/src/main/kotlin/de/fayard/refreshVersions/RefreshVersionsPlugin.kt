@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.MissingEntriesTask
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
@@ -118,6 +119,16 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 println(getArtifactNameToConstantMapping().joinToString("\n"))
             }
         }
+
+        /* // TODO: Find out whether we want to expose the task or not.
+        project.tasks.register<MissingEntriesTask>(
+            name = "refreshVersionsMissingEntries"
+        ) {
+            group = "refreshVersions"
+            description = "Add missing entries to 'versions.properties'"
+            outputs.upToDateWhen { false }
+        }
+        */
     }
 
     private fun addDependencyToBuildSrcForGroovyDsl(settings: Settings) {

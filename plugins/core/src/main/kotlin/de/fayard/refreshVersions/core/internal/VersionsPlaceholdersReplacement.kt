@@ -81,12 +81,13 @@ fun getVersionPropertyName(
     val group = moduleIdentifier.group
     val name = moduleIdentifier.name
 
+    //TODO: Pos pluginDependencyNotationToVersionKey ?
     return when {
         name == "gradle" && group == "com.android.tools.build" -> "plugin.android"
         moduleIdentifier.isGradlePlugin -> {
             name.substringBeforeLast(".gradle.plugin").let { pluginId ->
                 when {
-                    pluginId.startsWith("org.jetbrains.kotlin") -> "version.kotlin"
+                    pluginId.startsWith("org.jetbrains.kotlin.") -> "version.kotlin"
                     pluginId.startsWith("com.android") -> "plugin.android"
                     else -> "plugin.$pluginId"
                 }
