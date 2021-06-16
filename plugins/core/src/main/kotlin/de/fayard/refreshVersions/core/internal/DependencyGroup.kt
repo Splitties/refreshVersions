@@ -15,12 +15,13 @@ open class DependencyGroup(
     }
 
     init {
+        require(group.isNotBlank()) { "Invalid group=[$group]" }
         ALL.add(this)
     }
 
     fun module(module: String): String {
-        assert(module.trim() == module)
-        assert(module.contains(":").not())
+        assert(module.trim() == module) { "module=[$module] is not trimmed properly"}
+        assert(module.contains(":").not()) { "module=[$module] is invalid"}
         return "$group:$module" + if (usePlatformConstraints) "" else ":_"
     }
 }

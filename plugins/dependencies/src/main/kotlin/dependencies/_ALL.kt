@@ -12,6 +12,7 @@ import KotlinX
 import Ktor
 import Orchid
 import Splitties
+import Spring
 import Square
 import Testing
 
@@ -30,5 +31,6 @@ internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     Testing,
     COIL,
     Kodein,
-    Orchid
+    Orchid,
+    Spring
 )
