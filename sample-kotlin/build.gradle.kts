@@ -15,6 +15,7 @@ buildscript {
 
 plugins {
     kotlin("jvm")
+    id("org.jetbrains.kotlinx.benchmark")
 }
 
 group = "de.fayard"

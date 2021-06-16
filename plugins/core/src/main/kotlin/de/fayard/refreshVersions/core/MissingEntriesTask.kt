@@ -98,20 +98,25 @@ internal fun findMissingEntries(
     versionKeyReader: ArtifactVersionKeyReader
 ): Map<String, ExternalDependency> {
 
-    val dependencyMap = configurations.flatMap { configuration ->
-        configuration.dependencies
-            .filterIsInstance<ExternalDependency>()
-            .filter { it.hasHardcodedVersion(versionsMap, versionKeyReader) && it.version != null }
-            .map { dependency: ExternalDependency ->
-                val versionKey = getVersionPropertyName(dependency.module, versionKeyReader)
-                versionKey to dependency
-            }
-    }
-    val newEntries = dependencyMap
-        .groupBy({ it.first }, { it.second })
-        .filter { entry -> entry.key !in versionsMap }
-        .mapValues { entry -> entry.value.maxBy { it.version!! }!! }
+    val dependencyMap: List<Pair<String, ExternalDependency>> =
+        configurations.flatMap { configuration ->
+            configuration.dependencies
+                .filterIsInstance<ExternalDependency>()
+                .filter {
+                    it.hasHardcodedVersion(versionsMap, versionKeyReader) && it.version != null
+                }
+                .map { dependency: ExternalDependency ->
+                    val versionKey = getVersionPropertyName(dependency.module, versionKeyReader)
+                    versionKey to dependency
+                }
+        }
 
-    return newEntries
+    return dependencyMap
+        .groupBy({ (versionKey, _) -> versionKey }, { (_, dependency) -> dependency })
+        .filter { (versionKey, _) ->
+            versionKey !in versionsMap
+        }
+        .mapValues { (_, dependencies) ->
+            dependencies.maxBy { it.version!! }!!
+        }
 }
-
