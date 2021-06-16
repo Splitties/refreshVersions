@@ -20,6 +20,14 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
     }
 }
 
+//TODO: Don't rely on a regex to extract the version so we detect absolutely any version string literal.
+//TODO: Use CharSequence.findSymbolsRanges(…) to find the plugins block.
+//TODO: Use CharSequence.findSymbolsRanges(…) to find the dependencies blocks.
+//TODO: Use CharSequence.findSymbolsRanges(…) to find the implementation/api/etc calls.
+// Might imply a function name matcher to support dynamic configuration names.
+// Also, what about string based configuration names like: "iosApi"("blabla:blabla:1.0.0")?
+//TODO: Use CharSequence.findRanges(…) to find the string literals to lookup for maven coordinates and versions.
+//TODO: Replace versions with underscore in the Gradle Versions Catalog files.
 
 internal fun migrateFileIfNeeded(file: File) {
     val oldContent = file.readText()
