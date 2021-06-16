@@ -39,8 +39,12 @@ private const val ANSI_RESET = "\u001B[0m"
 private const val ANSI_BLUE = "\u001B[34m"
 
 @Language("RegExp")
-private val underscoreRegex =
-    "(['\":])(?:\\\$\\{?\\w+ersion}?|\\\$\\w*VERSION|\\\$\\{?(?:versions|rootProject)\\.\\w+}?|(?:\\d+\\.){1,2}\\d+)(?:[.-]?(?:alpha|beta|rc|eap|ALPHA|BETA|RC|EAP|RELEASE|Final|M)[-.]?\\d*)?([\"'])".toRegex()
+private val versionRegex =
+    "(['\":])(?:\\d+\\.){1,2}\\d+(?:[.-]?(?:alpha|beta|rc|eap|ALPHA|BETA|RC|EAP|RELEASE|Final|M)[-.]?\\d*)?([\"'])".toRegex()
+
+@Language("RegExp")
+private val variableRegex =
+    "(['\":])(?:\\\$\\{?\\w+ersion}?|\\\$\\w*VERSION|\\\$\\{?(?:versions|rootProject)\\.\\w+}?)(?:[-.]?\\d*)?([\"'])".toRegex()
 
 private val pluginVersionRegex =
     "[. ]version[. (]['\"](\\d+\\.){1,2}\\d+['\"]\\)?".toRegex()
@@ -57,7 +61,8 @@ internal fun replaceVersionWithUndercore(line: String, inPluginsBlock: Boolean =
     inPluginsBlock -> line.replace(pluginVersionRegex, "")
     line.trimStart().startsWith("version") -> null
     underscoreBlackList.any { line.contains(it) } -> null
-    underscoreRegex.containsMatchIn(line) -> line.replace(underscoreRegex, "\$1_\$2")
+    versionRegex.containsMatchIn(line) -> line.replace(versionRegex, "\$1_\$2")
+    variableRegex.containsMatchIn(line) -> line.replace(variableRegex, "\$1_\$2")
     else -> null
 }
 
