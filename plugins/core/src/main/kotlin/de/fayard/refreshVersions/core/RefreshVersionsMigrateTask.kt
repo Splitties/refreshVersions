@@ -1,6 +1,5 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.intellij.lang.annotations.Language
@@ -27,7 +26,7 @@ internal fun migrateFileIfNeeded(file: File) {
     val newContent = oldContent.lines()
         .detectPluginsBlock()
         .joinToString(separator = "\n") { (line, isPlugin) ->
-            replaceVersionWithUndercore(line, isPlugin) ?: line
+            replaceVersionWithUnderscore(line, isPlugin) ?: line
         }
     if (newContent != oldContent) {
         println("$ANSI_BLUE  modified: $file$ANSI_RESET")
@@ -57,7 +56,7 @@ private val underscoreBlackList = setOf(
     "targetCompatibility", "sourceCompatibility"
 )
 
-internal fun replaceVersionWithUndercore(line: String, inPluginsBlock: Boolean = false): String? = when {
+internal fun replaceVersionWithUnderscore(line: String, inPluginsBlock: Boolean = false): String? = when {
     inPluginsBlock -> line.replace(pluginVersionRegex, "")
     line.trimStart().startsWith("version") -> null
     underscoreBlackList.any { line.contains(it) } -> null

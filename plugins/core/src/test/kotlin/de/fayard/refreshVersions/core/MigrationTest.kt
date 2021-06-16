@@ -47,7 +47,7 @@ class MigrationTest : StringSpec({
                  toolVersion = "1.0.4"
             }
         """.trimIndent()
-        lines.lines().forAll { line -> replaceVersionWithUndercore(line) shouldBe null }
+        lines.lines().forAll { line -> replaceVersionWithUnderscore(line) shouldBe null }
     }
 
     "Replace version with underscore" {
@@ -108,7 +108,7 @@ class MigrationTest : StringSpec({
         input.size shouldBeExactly expected.size
         List(input.size) { input[it] to expected[it] }
             .forAll { (input, output) ->
-                replaceVersionWithUndercore(input) shouldBe output
+                replaceVersionWithUnderscore(input) shouldBe output
             }
     }
 
@@ -153,7 +153,7 @@ class MigrationTest : StringSpec({
         input.size shouldBeExactly expected.size
         List(input.size) { input[it] to expected[it] }
             .forAll { (input, output) ->
-                replaceVersionWithUndercore(input, inPluginsBlock = true) shouldBe output
+                replaceVersionWithUnderscore(input, inPluginsBlock = true) shouldBe output
             }
     }
 
