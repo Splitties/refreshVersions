@@ -14,6 +14,7 @@ class BuildSrcLibsPlugin : Plugin<Project> {
             group = "refreshVersions"
             description = "Update buildSrc/src/main/kotlin/Libs.kt"
             outputs.upToDateWhen { false }
+            dependsOn("refreshVersionsMissingEntries")
         }
         project.tasks.register<DefaultTask>(
             name = "buildSrcVersions"
