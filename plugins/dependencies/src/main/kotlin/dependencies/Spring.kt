@@ -6,20 +6,10 @@ object Spring : IsNotADependency {
     val boms = Boms
 
     object Boms: IsNotADependency {
-        val solace = "com.solace.spring.cloud:solace-spring-cloud-bom:_"
-        val vaadin = "com.vaadin:vaadin-bom:_"
+        val dependencies = "org.springframework.boot:spring-boot-dependencies:_"
         val geode = "org.springframework.geode:spring-geode-bom:_"
-        val wavefront = "com.wavefront:wavefront-spring-boot-bom:_"
-        val testcontainers = "org.testcontainers:testcontainers-bom:_"
-        val codecentric = "de.codecentric:spring-boot-admin-dependencies:_"
-        val springCloud = "io.pivotal.spring.cloud:spring-cloud-services-dependencies:_"
-        val springAzure = "com.azure.spring:azure-spring-boot-bom:_"
         val springclmoud = "org.springframework.cloud:spring-cloud-dependencies:_"
     }
-
-    val lombok = "org.projectlombok:lombok"
-
-    val thymeleaf_extras_springsecurity5 = "org.thymeleaf.extras:thymeleaf-extras-springsecurity5"
 
     val kafka = "org.springframework.kafka:spring-kafka"
 
@@ -29,67 +19,9 @@ object Spring : IsNotADependency {
 
     val geode = "org.springframework.geode:spring-geode-starter"
 
-    val jacksonModuleKotlin = "com.fasterxml.jackson.module:jackson-module-kotlin"
-
-    val h2 = "com.h2database:h2"
-
-    val jcc = "com.ibm.db2:jcc"
-
-    val mssqlJdbc = "com.microsoft.sqlserver:mssql-jdbc"
-
-    val okta = "com.okta.spring:okta-spring-boot-starter:_"
-
-    val ojdbc8 = "com.oracle.database.jdbc:ojdbc8"
-
-    val solaceStream = "com.solace.spring.cloud:spring-cloud-starter-stream-solace"
-
-    val unboundidLdapsdk = "com.unboundid:unboundid-ldapsdk"
-
-    val vadinGradlePlugin = "com.vaadin:com.vaadin.gradle.plugin:_"
-
-    val vaadinStarter = "com.vaadin:vaadin-spring-boot-starter"
-
-    val wavefront = "com.wavefront:wavefront-spring-boot-starter"
-
-    val embedMongo = "de.flapdoodle.embed:de.flapdoodle.embed.mongo"
-
-    val r2DbcMysql = "dev.miku:r2dbc-mysql"
-
-
-    val dependencyManagementPlugin =
-        "io.spring.dependency-management:io.spring.dependency-management.gradle.plugin:_"
-
-    val mysqlConnectorJava = "mysql:mysql-connector-java"
-
-    val camelSpringBootStarter = "org.apache.camel.springboot:camel-spring-boot-starter:_"
-
-    val derby = "org.apache.derby:derby"
-
-    val kafkaStreams = "org.apache.kafka:kafka-streams"
-
-    val asciidoctorPlugin =
-        "org.asciidoctor.convert:org.asciidoctor.convert.gradle.plugin:_"
-
-    val flywayCore = "org.flywaydb:flyway-core"
-
-    val hsqldb = "org.hsqldb:hsqldb"
-
-    val liquibaseCore = "org.liquibase:liquibase-core"
-
-    val mariadb = "org.mariadb.jdbc:mariadb-java-client"
-
-    val r2DbcMariadb = "org.mariadb:r2dbc-mariadb"
-
-    val mybatis = "org.mybatis.spring.boot:mybatis-spring-boot-starter:_"
-
-    val postgresql = "org.postgresql:postgresql"
-
     val rabbitTest = "org.springframework.amqp:spring-rabbit-test"
 
     val batchTest = "org.springframework.batch:spring-batch-test"
-
-    val springBootPlugin =
-        "org.springframework.boot:org.springframework.boot.gradle.plugin:_"
 
     val reactor = Reactor
 
@@ -101,43 +33,10 @@ object Spring : IsNotADependency {
 
     val data = Data
 
-    object Data : DependencyGroup("org.framework.data") {
+    object Data : DependencyGroup("org.springframework.data", usePlatformConstraints = true) {
         val halExplorer = "org.springframework.data:spring-data-rest-hal-explorer"
     }
 
-    val azure = Azure
-
-    object Azure : DependencyGroup(group = "com.azure.spring", usePlatformConstraints = true) {
-
-        val starter = module("azure-spring-boot-starter")
-
-        val activeDirectory = module("azure-spring-boot-starter-active-directory")
-
-        val keyvaultSecrets = module("azure-spring-boot-starter-keyvault-secrets")
-
-        val starterStorage = module("azure-spring-boot-starter-storage")
-    }
-
-    val codeCentric = CodeCentric
-
-    object CodeCentric : DependencyGroup("de.codecentric", usePlatformConstraints = true) {
-        val clientStarter = module("spring-boot-admin-starter-client")
-        val serverStarter = module("spring-boot-admin-starter-server")
-    }
-
-    val micrometer = MicroMeter
-
-    object MicroMeter : DependencyGroup("io.micrometer", usePlatformConstraints = true) {
-        val datadog = module("micrometer-registry-datadog")
-
-        val graphite = module("micrometer-registry-graphite")
-
-        val influx = module("micrometer-registry-influx")
-
-        val newRelic = module("micrometer-registry-new-relic")
-
-        val prometheus = module("micrometer-registry-prometheus")
-    }
 
     val springCloud = SpringCloud
 
@@ -147,16 +46,6 @@ object Spring : IsNotADependency {
         val configClient = module("spring-cloud-services-starter-config-client")
 
         val serviceRegistry = module("spring-cloud-services-starter-service-registry")
-    }
-
-    val r2dbc = R2dbc
-
-    object R2dbc : DependencyGroup("io.r2dbc", usePlatformConstraints = true) {
-        val h2 = module("r2dbc-h2")
-
-        val mssql = module("r2dbc-mssql")
-
-        val ostgresql = module("r2dbc-postgresql")
     }
 
     val boot = Boot
@@ -260,7 +149,6 @@ object Spring : IsNotADependency {
 
         val websocket = module("spring-boot-starter-websocket")
     }
-
 
     val cloud = Cloud
 
@@ -377,8 +265,6 @@ object Spring : IsNotADependency {
         val streamBinderRabbit = module("spring-cloud-stream-binder-rabbit")
     }
 
-
-
     val integration = Integration
 
     object Integration : DependencyGroup("org.springframework.integration", usePlatformConstraints = true) {
@@ -436,39 +322,4 @@ object Spring : IsNotADependency {
         val jdbc = module("spring-session-jdbc")
     }
 
-    val testContainers = TestContainers
-
-    object TestContainers : DependencyGroup("org.testcontainers") {
-        val cassandra = module("cassandra")
-
-        val couchbase = module("couchbase")
-
-        val db2 = module("db2")
-
-        val elasticsearch = module("elasticsearch")
-
-        val junit_jupiter = module("junit-jupiter")
-
-        val kafka = module("kafka")
-
-        val mariadb = module("mariadb")
-
-        val mongodb = module("mongodb")
-
-        val mssqlserver = module("mssqlserver")
-
-        val mysql = module("mysql")
-
-        val neo4j = module("neo4j")
-
-        val oracle_xe = module("oracle-xe")
-
-        val postgresql = module("postgresql")
-
-        val r2dbc = module("r2dbc")
-
-        val rabbitmq = module("rabbitmq")
-
-        val solr = module("solr")
-    }
 }
