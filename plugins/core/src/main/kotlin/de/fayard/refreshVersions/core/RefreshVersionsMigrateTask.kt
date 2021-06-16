@@ -20,6 +20,7 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
     }
 }
 
+//TODO: Don't replace random versions in build.gradle(.kts) files to avoid breaking plugins.
 //TODO: Don't rely on a regex to extract the version so we detect absolutely any version string literal.
 //TODO: Use CharSequence.findSymbolsRanges(…) to find the plugins block.
 //TODO: Use CharSequence.findSymbolsRanges(…) to find the dependencies blocks.
@@ -27,6 +28,12 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 // Might imply a function name matcher to support dynamic configuration names.
 // Also, what about string based configuration names like: "iosApi"("blabla:blabla:1.0.0")?
 //TODO: Use CharSequence.findRanges(…) to find the string literals to lookup for maven coordinates and versions.
+//TODO: Consider bringing semi-automations for things we detect might need manual edits.
+// Possible solutions for semi-automation:
+// - Interactive task
+// - separate CLI tool
+// - FIXME/TODO comments insertion
+//TODO: Release BEFORE the 30th of June.
 //TODO: Replace versions with underscore in the Gradle Versions Catalog files.
 
 internal fun migrateFileIfNeeded(file: File) {
