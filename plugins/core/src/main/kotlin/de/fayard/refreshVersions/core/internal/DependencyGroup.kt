@@ -9,7 +9,7 @@ open class DependencyGroup(
     var usePlatformConstraints: Boolean = false
 ) : IsNotADependency {
     companion object {
-        val ALL = mutableListOf<DependencyGroup>()
+        private val ALL = mutableListOf<DependencyGroup>()
         val ALL_RULES: List<ArtifactVersionKeyRule>
             get() = ALL.mapNotNull { it.rule }
     }

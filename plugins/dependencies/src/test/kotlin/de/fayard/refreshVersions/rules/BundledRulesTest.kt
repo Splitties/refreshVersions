@@ -32,7 +32,10 @@ class BundledRulesTest {
     fun `generate rules file for dependency groups`() {
         ALL_DEPENDENCIES_NOTATIONS
         val file = rulesDir.resolve("dependency-groups-alias-rules.txt")
-        val content = DependencyGroup.ALL_RULES.joinToString(separator = "\n\n")
+        val content = DependencyGroup.ALL_RULES
+            .sorted()
+            .distinct()
+            .joinToString(separator = "\n\n")
         file.writeText(content)
     }
 
