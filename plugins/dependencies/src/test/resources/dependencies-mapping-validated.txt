@@ -697,6 +697,7 @@ io.ktor..ktor-metrics=Ktor.features.metrics
 io.ktor..ktor-network-tls-certificates=Ktor.network.tlsCertificates
 io.ktor..ktor-network-tls=Ktor.network.tls
 io.ktor..ktor-network=Ktor.network.network
+io.ktor..ktor-serialization=Ktor.features.serialization
 io.ktor..ktor-server-core=Ktor.server.core
 io.ktor..ktor-server-jetty=Ktor.server.jetty
 io.ktor..ktor-server-netty=Ktor.server.netty

@@ -564,6 +564,7 @@ io.ktor:ktor-metrics
 io.ktor:ktor-network
 io.ktor:ktor-network-tls
 io.ktor:ktor-network-tls-certificates
+io.ktor:ktor-serialization
 io.ktor:ktor-server-core
 io.ktor:ktor-server-jetty
 io.ktor:ktor-server-netty
