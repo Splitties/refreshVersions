@@ -20,7 +20,8 @@ open class DependencyGroup(
     }
 
     fun module(module: String): String {
-        assert(module.trim() == module) { "module=[$module] is not trimmed properly" }
+        assert(module.trimStart() == module) { "module=[$module] has superfluous leading whitespace" }
+        assert(module.trimEnd() == module) { "module=[$module] has superfluous trailing whitespace" }
         assert(module.contains(":").not()) { "module=[$module] is invalid" }
         return "$group:$module" + if (usePlatformConstraints) "" else ":_"
     }
