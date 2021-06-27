@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## Unreleased
+## Version 0.10.1 (2021-06-10)
 
 ### New features
 
@@ -8,6 +8,7 @@
 
 ### Fixes
 
+- Add missing version placeholder (`_`) for the `Google.android.material.composeThemeAdapter` dependency notation.
 - Fix a bug that prevented from using the correct version of `org.jetbrains.kotlinx.benchmark` and any other Gradle plugin with an id starting with `org.jetbrains.kotlinx` because it matched over `org.jetbrains.kotlin` as well. We are now matching on `org.jetbrains.kotlin.` to avoid this issue.
 
 ### New dependency notations:
