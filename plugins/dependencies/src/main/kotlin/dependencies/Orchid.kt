@@ -1,6 +1,5 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyRule
 import de.fayard.refreshVersions.core.internal.DependencyGroup
 import org.gradle.api.Incubating
 
@@ -20,10 +19,10 @@ import org.gradle.api.Incubating
  */
 object Orchid : DependencyGroup(
     group = "io.github.javaeden.orchid",
-    rule = ArtifactVersionKeyRule(
-        artifactPattern = "  io.github.javaeden.orchid:*",
-        versionKeyPattern = "                   ^^^^^^"
-    )
+    rawRule = """
+        io.github.javaeden.orchid:*
+                           ^^^^^^
+    """.trimIndent()
 ) {
 
     private const val groupId = "io.github.javaeden.orchid"

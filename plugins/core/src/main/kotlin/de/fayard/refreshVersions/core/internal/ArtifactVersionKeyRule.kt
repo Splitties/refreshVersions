@@ -35,7 +35,7 @@ abstract class ArtifactVersionKeyRule protected constructor(
         operator fun invoke(
             artifactPattern: String,
             versionKeyPattern: String
-        ): ArtifactVersionKeyRule = ArtifactVersionKeyRuleRegexImpl(artifactPattern.trimStart(), versionKeyPattern)
+        ): ArtifactVersionKeyRule = ArtifactVersionKeyRuleRegexImpl(artifactPattern, versionKeyPattern)
 
         private val comparator: Comparator<ArtifactVersionKeyRule> = compareBy<ArtifactVersionKeyRule> {
             it.versionKeySignificantCharsLength

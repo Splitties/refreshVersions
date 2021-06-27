@@ -5,9 +5,22 @@ import org.gradle.kotlin.dsl.IsNotADependency
 @InternalRefreshVersionsApi
 open class DependencyGroup(
     val group: String,
-    val rule: ArtifactVersionKeyRule? = null,
+    rawRule: String? = null,
     var usePlatformConstraints: Boolean = false
 ) : IsNotADependency {
+
+    val rule: ArtifactVersionKeyRule? = rawRule?.let {
+        val lines = it.lines()
+        assert(lines.size == 2) {
+            "2 lines were expected, but ${lines.size} were found: $it"
+        }
+        ArtifactVersionKeyRule(
+            artifactPattern = lines.first(),
+            versionKeyPattern = lines.last()
+        )
+    }
+
+
     companion object {
         private val ALL = mutableListOf<DependencyGroup>()
         val ALL_RULES: List<ArtifactVersionKeyRule>

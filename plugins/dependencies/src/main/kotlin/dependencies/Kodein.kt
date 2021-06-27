@@ -1,6 +1,5 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyRule
 import de.fayard.refreshVersions.core.internal.DependencyGroup
 import org.gradle.api.Incubating
 
@@ -19,10 +18,10 @@ object Kodein {
 
     class DI : DependencyGroup(
         group = "org.kodein.di",
-        rule = ArtifactVersionKeyRule(
-            artifactPattern = "  org.kodein.di:kodein-di(-*)",
-            versionKeyPattern = "    ^^^^^^^^^              "
-        )
+        rawRule = """
+            org.kodein.di:kodein-di(-*)
+                ^^^^^^^^^
+        """.trimIndent()
     ) {
         val androidCore = module("kodein-di-framework-android-core")
         val androidSupport = module("kodein-di-framework-android-support")
