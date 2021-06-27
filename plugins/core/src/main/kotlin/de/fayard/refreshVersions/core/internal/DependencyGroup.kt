@@ -15,7 +15,7 @@ open class DependencyGroup(
     }
 
     init {
-        require(group.isNotBlank()) { "Invalid group=[$group]" }
+        require(group.isNotBlank()) { "Group shall not be blank" }
         ALL.add(this)
     }
 
