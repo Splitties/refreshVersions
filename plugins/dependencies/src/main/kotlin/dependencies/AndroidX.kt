@@ -449,6 +449,8 @@ object AndroidX {
         const val safeArgsGenerator = "$artifactPrefix-safe-args-generator:_"
         const val safeArgsGradlePlugin = "$artifactPrefix-safe-args-gradle-plugin:_"
 
+        const val testing = "$artifactPrefix-testing:_"
+
         // All the Navigation artifacts below are transitively included in fragmentKtx and uiKtx.
 
         const val commonKtx = "$artifactPrefix-common-ktx:_"
