@@ -7,6 +7,7 @@ import COIL
 import CashApp
 import Firebase
 import Google
+import Http4k
 import JakeWharton
 import Kodein
 import Kotlin
@@ -35,5 +36,6 @@ internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     COIL,
     Kodein,
     Orchid,
-    Spring
+    Spring,
+    Http4k
 )
