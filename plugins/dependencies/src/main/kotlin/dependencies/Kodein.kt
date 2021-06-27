@@ -15,7 +15,6 @@ import org.gradle.api.Incubating
 @Incubating
 object Kodein {
 
-
     val di = DI()
 
     class DI : DependencyGroup(
@@ -36,5 +35,3 @@ object Kodein {
         val tornadofx = module("kodein-di-framework-tornadofx-jvm")
     }
 }
-
-
