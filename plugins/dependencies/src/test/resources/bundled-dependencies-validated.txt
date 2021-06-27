@@ -159,6 +159,7 @@ androidx.navigation:navigation-runtime
 androidx.navigation:navigation-runtime-ktx
 androidx.navigation:navigation-safe-args-generator
 androidx.navigation:navigation-safe-args-gradle-plugin
+androidx.navigation:navigation-testing
 androidx.navigation:navigation-ui
 androidx.navigation:navigation-ui-ktx
 androidx.paging:paging-common
