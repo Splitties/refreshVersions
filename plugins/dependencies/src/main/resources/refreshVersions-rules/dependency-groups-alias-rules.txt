@@ -2,4 +2,4 @@ io.github.javaeden.orchid:*
                    ^^^^^^
 
 org.kodein.di:kodein-di(-*)
-    ^^^^^^^^^              
+    ^^^^^^^^^
