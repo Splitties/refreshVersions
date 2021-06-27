@@ -20,8 +20,8 @@ open class DependencyGroup(
     }
 
     fun module(module: String): String {
-        assert(module.trim() == module) { "module=[$module] is not trimmed properly"}
-        assert(module.contains(":").not()) { "module=[$module] is invalid"}
+        assert(module.trim() == module) { "module=[$module] is not trimmed properly" }
+        assert(module.contains(":").not()) { "module=[$module] is invalid" }
         return "$group:$module" + if (usePlatformConstraints) "" else ":_"
     }
 }
