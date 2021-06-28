@@ -88,8 +88,13 @@ object Testing {
             const val piTest = "$artifactPrefix-pitest:_"
         }
 
+        @Suppress("DEPRECATION")
         val extensions = Extensions
 
+        @Deprecated(
+            message = "Since Kotest 4.5.0 extensions have a separate lifecycle per extension",
+            replaceWith = ReplaceWith("Testing.KotestExtensions")
+        )
         object Extensions : IsNotADependency {
             private const val artifactPrefix = "$artifactBase-extensions"
 
@@ -117,6 +122,21 @@ object Testing {
             const val ktor = "$artifactPrefix-ktor:_"
             const val sql = "$artifactPrefix-sql:_"
         }
+    }
+
+    object KotestExtensions: IsNotADependency {
+        private const val extensionArtifactPrefix = "io.kotest.extensions:kotest-extensions"
+
+        const val pitest = "$extensionArtifactPrefix-pitest:_"
+        const val embeddedKafka = "$extensionArtifactPrefix-embedded-kafka:_"
+        const val roboelectric = "$extensionArtifactPrefix-roboelectric:_"
+        const val wiremock = "$extensionArtifactPrefix-wiremock:_"
+        const val gherkin = "$extensionArtifactPrefix-gherkin:_"
+        const val allure = "$extensionArtifactPrefix-allure:_"
+        const val koin = "$extensionArtifactPrefix-koin:_"
+        const val mockServer = "$extensionArtifactPrefix-mockserver:_"
+        const val spring = "$extensionArtifactPrefix-spring:_"
+        const val testContainers = "$extensionArtifactPrefix-testcontainers:_"
     }
 
     /**
