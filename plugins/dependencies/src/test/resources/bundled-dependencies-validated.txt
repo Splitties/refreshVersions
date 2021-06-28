@@ -659,6 +659,7 @@ org.http4k:http4k-jsonrpc
 org.http4k:http4k-metrics-micrometer
 org.http4k:http4k-multipart
 org.http4k:http4k-opentelemetry
+org.http4k:http4k-realtime-core
 org.http4k:http4k-resilience4j
 org.http4k:http4k-security-oauth
 org.http4k:http4k-server-apache
@@ -673,6 +674,7 @@ org.http4k:http4k-serverless-alibaba
 org.http4k:http4k-serverless-azure
 org.http4k:http4k-serverless-gcf
 org.http4k:http4k-serverless-lambda
+org.http4k:http4k-serverless-lambda-runtime
 org.http4k:http4k-serverless-openwhisk
 org.http4k:http4k-serverless-tencent
 org.http4k:http4k-template-core
@@ -687,6 +689,7 @@ org.http4k:http4k-testing-chaos
 org.http4k:http4k-testing-hamkrest
 org.http4k:http4k-testing-kotest
 org.http4k:http4k-testing-servirtium
+org.http4k:http4k-testing-strikt
 org.http4k:http4k-testing-webdriver
 org.jetbrains.kotlin:kotlin-stdlib
 org.jetbrains.kotlin:kotlin-stdlib-common

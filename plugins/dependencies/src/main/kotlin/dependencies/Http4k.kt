@@ -22,6 +22,7 @@ object Http4k : DependencyGroup(
     val metricsMicrometer = module("http4k-metrics-micrometer")
     val multipart = module("http4k-multipart")
     val opentelemetry = module("http4k-opentelemetry")
+    val realtimeCore = module("http4k-realtime-core")
     val resilience4j = module("http4k-resilience4j")
     val securityOauth = module("http4k-security-oauth")
 
@@ -73,6 +74,7 @@ object Http4k : DependencyGroup(
         val azure = module("http4k-serverless-azure")
         val gcf = module("http4k-serverless-gcf")
         val lambda = module("http4k-serverless-lambda")
+        val lambdaRuntime = module("http4k-serverless-lambda-runtime")
         val openwhisk = module("http4k-serverless-openwhisk")
         val tencent = module("http4k-serverless-tencent")
     }
@@ -97,6 +99,7 @@ object Http4k : DependencyGroup(
         val hamkrest = module("http4k-testing-hamkrest")
         val kotest = module("http4k-testing-kotest")
         val servirtium = module("http4k-testing-servirtium")
+        val strikt = module("http4k-testing-strikt")
         val webdriver = module("http4k-testing-webdriver")
     }
 }
