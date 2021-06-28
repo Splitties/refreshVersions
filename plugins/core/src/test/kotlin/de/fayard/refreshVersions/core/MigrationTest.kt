@@ -16,7 +16,53 @@ class MigrationTest : StringSpec({
         }
     }
 
-    "Ignore lines that do not contain version" {
+    "Replace versions in maven coordinates in build files" {
+        val input = """
+            implementation("com.example:name:${'$'}exampleVersion")
+            implementation("com.example:name:${'$'}version")
+            implementation("com.example:name:${'$'}{version}")
+            implementation('com.example:name:${'$'}exampleVersion')
+            implementation('com.example:name:${'$'}version')
+            implementation('com.example:name:1.2.3-alpha1')
+            implementation('com.example:name:1.2.3-alpha-1')
+            implementation('com.example:name:1.2.3.alpha.1')
+            implementation('com.example:name:1.2.3-beta-1')
+            implementation('com.example:name:1.2.3.beta.1')
+            implementation('com.example:name:1.2.3.beta1')
+            implementation('com.example:name:1.2.3-eap-1')
+            implementation 'com.example:name:1.2.3.eap.1'
+            implementation 'com.example:name:1.2.3.eap1'
+            implementation 'com.example:name:1.2.3-native-mt'
+        """.trimIndent().lines()
+        val expected = """
+            implementation("com.example:name:_")
+            implementation("com.example:name:_")
+            implementation("com.example:name:_")
+            implementation('com.example:name:_')
+            implementation('com.example:name:_')
+            implementation('com.example:name:_')
+            implementation('com.example:name:_')
+            implementation('com.example:name:_')
+            implementation('com.example:name:_')
+            implementation('com.example:name:_')
+            implementation('com.example:name:_')
+            implementation('com.example:name:_')
+            implementation 'com.example:name:_'
+            implementation 'com.example:name:_'
+            implementation 'com.example:name:_'
+        """.trimIndent().lines()
+        input.size shouldBeExactly expected.size
+        List(input.size) { input[it] to expected[it] }
+            .forAll { (input, output) ->
+                withVersionPlaceholder(
+                    input,
+                    isBuildFile = true,
+                    isInsidePluginsBlock = false
+                ) shouldBe output
+            }
+    }
+
+    "Ignore lines that do not contain a maven coordinate" {
         val lines = """
             plugins {
                 kotlin("jvm")
@@ -37,7 +83,6 @@ class MigrationTest : StringSpec({
             }
             resolutionStrategy {
                   details.useVersion = "1.2.3"
-                  force "androidx:legacy:1.0.0"
             }
             tasks.wrapper {
                  gradleVersion = "6.9"
@@ -47,7 +92,13 @@ class MigrationTest : StringSpec({
                  toolVersion = "1.0.4"
             }
         """.trimIndent()
-        lines.lines().forAll { line -> replaceVersionWithUnderscore(line) shouldBe null }
+        lines.lines().forAll { line ->
+            withVersionPlaceholder(
+                line,
+                isBuildFile = true,
+                isInsidePluginsBlock = false
+            ) shouldBe null
+        }
     }
 
     "Replace version with underscore" {
@@ -108,7 +159,11 @@ class MigrationTest : StringSpec({
         input.size shouldBeExactly expected.size
         List(input.size) { input[it] to expected[it] }
             .forAll { (input, output) ->
-                replaceVersionWithUnderscore(input) shouldBe output
+                withVersionPlaceholder(
+                    input,
+                    isInsidePluginsBlock = false,
+                    isBuildFile = false
+                ) shouldBe output
             }
     }
 
@@ -153,7 +208,11 @@ class MigrationTest : StringSpec({
         input.size shouldBeExactly expected.size
         List(input.size) { input[it] to expected[it] }
             .forAll { (input, output) ->
-                replaceVersionWithUnderscore(input, inPluginsBlock = true) shouldBe output
+                withVersionPlaceholder(
+                    input,
+                    isInsidePluginsBlock = true,
+                    isBuildFile = false
+                ) shouldBe output
             }
     }
 

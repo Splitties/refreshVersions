@@ -36,12 +36,15 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 //TODO: Release BEFORE the 30th of June.
 //TODO: Replace versions with underscore in the Gradle Versions Catalog files.
 
+private val buildFilesNames = setOf("build.gradle", "build.gradle.kts")
+
 internal fun migrateFileIfNeeded(file: File) {
+    val isBuildFile = file.name in buildFilesNames
     val oldContent = file.readText()
     val newContent = oldContent.lines()
         .detectPluginsBlock()
-        .joinToString(separator = "\n") { (line, isPlugin) ->
-            replaceVersionWithUnderscore(line, isPlugin) ?: line
+        .joinToString(separator = "\n") { (line, isInsidePluginsBlock) ->
+            withVersionPlaceholder(line, isInsidePluginsBlock, isBuildFile) ?: line
         }
     if (newContent != oldContent) {
         println("$ANSI_BLUE  modified: $file$ANSI_RESET")
@@ -63,22 +66,34 @@ private val variableRegex =
 private val pluginVersionRegex =
     "[. ]version[. (]['\"](\\d+\\.){1,2}\\d+['\"]\\)?".toRegex()
 
-private val underscoreBlackList = setOf(
-    "jvmTarget", "versionName",
-    "useVersion", "gradleVersion",
-    "gradleLatestVersion", "toolVersion",
-    "ndkVersion", "force",
-    "targetCompatibility", "sourceCompatibility"
-)
 
-internal fun replaceVersionWithUnderscore(line: String, inPluginsBlock: Boolean = false): String? = when {
-    inPluginsBlock -> line.replace(pluginVersionRegex, "")
-    line.trimStart().startsWith("version") -> null
-    underscoreBlackList.any { line.contains(it) } -> null
+/**
+ * Returns the line with versions replaced with the version placeholder (`_`),
+ * or null if no replacement is needed.
+ */
+internal fun withVersionPlaceholder(
+    line: String,
+    isInsidePluginsBlock: Boolean,
+    isBuildFile: Boolean
+): String? = when {
+    isInsidePluginsBlock -> line.replace(pluginVersionRegex, "")
+    isBuildFile -> when {
+        mavenCoordinateRegex.containsMatchIn(line) -> {
+            line.replace(mavenCoordinateRegex, "\$1_\$2")
+        }
+        else -> null
+    }
     versionRegex.containsMatchIn(line) -> line.replace(versionRegex, "\$1_\$2")
     variableRegex.containsMatchIn(line) -> line.replace(variableRegex, "\$1_\$2")
     else -> null
 }
+
+private const val mavenChars = "[a-zA-Z0-9_.-]"
+private const val versionChars = "[a-zA-Z0-9_.{}$-]"
+
+@Language("RegExp")
+private val mavenCoordinateRegex =
+    "(['\"]$mavenChars+:$mavenChars+:)$versionChars+([\"'])".toRegex()
 
 internal fun findFilesWithDependencyNotations(fromDir: File): List<File> {
     require(fromDir.isDirectory) { "Expected a directory, got ${fromDir.absolutePath}" }
