@@ -47,7 +47,7 @@ internal fun migrateFileIfNeeded(file: File) {
             withVersionPlaceholder(line, isInsidePluginsBlock, isBuildFile) ?: line
         }
     if (newContent != oldContent) {
-        println("$ANSI_BLUE  modified: $file$ANSI_RESET")
+        println("$ANSI_BLUE        modified:   $file$ANSI_RESET")
         file.writeText(newContent)
     }
 }
