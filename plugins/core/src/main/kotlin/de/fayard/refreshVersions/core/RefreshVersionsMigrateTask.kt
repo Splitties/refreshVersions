@@ -17,6 +17,12 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
         findFilesWithDependencyNotations(project.rootDir).forEach { buildFile ->
             migrateFileIfNeeded(buildFile)
         }
+        println()
+        println("""
+            To find available updates, run this:
+
+                $ANSI_GREEN./gradlew refreshVersions$ANSI_RESET
+            """.trimIndent())
     }
 }
 
@@ -54,6 +60,7 @@ internal fun migrateFileIfNeeded(file: File) {
 
 private const val ANSI_RESET = "\u001B[0m"
 private const val ANSI_BLUE = "\u001B[34m"
+private const val ANSI_GREEN = "\u001B[36m"
 
 @Language("RegExp")
 private val versionRegex =
