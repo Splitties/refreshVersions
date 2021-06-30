@@ -1,7 +1,7 @@
 package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.*
-import de.fayard.refreshVersions.core.internal.versions.writeMissingEntriesInVersionProperties
+import de.fayard.refreshVersions.core.internal.versions.writeNewEntriesInVersionProperties
 import org.gradle.api.DefaultTask
 import org.gradle.api.Incubating
 import org.gradle.api.Project
@@ -39,7 +39,7 @@ fun addMissingEntriesInVersionsProperties(project: Project) {
         .mapKeys { (k, _) -> k!! }
 
 
-    writeMissingEntriesInVersionProperties(plugins + newEntries, isUsed = false)
+    writeNewEntriesInVersionProperties(plugins + newEntries)
     OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 }
 

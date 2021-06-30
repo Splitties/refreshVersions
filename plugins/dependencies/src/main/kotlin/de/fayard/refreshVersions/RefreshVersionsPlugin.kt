@@ -1,7 +1,7 @@
 package de.fayard.refreshVersions
 
-import de.fayard.refreshVersions.core.MissingEntriesTask
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
+import de.fayard.refreshVersions.core.RefreshVersionsMigrateTask
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
@@ -129,6 +129,12 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             outputs.upToDateWhen { false }
         }
         */
+        project.tasks.register<RefreshVersionsMigrateTask>(
+            name = "refreshVersionsMigrate"
+        ) {
+            group = "refreshVersions"
+            description = "Migrate build to refreshVersions"
+        }
     }
 
     private fun addDependencyToBuildSrcForGroovyDsl(settings: Settings) {
