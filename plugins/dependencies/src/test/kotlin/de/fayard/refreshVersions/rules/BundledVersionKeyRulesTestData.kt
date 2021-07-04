@@ -195,6 +195,10 @@ private val androidX = listOf(
         expected = "androidx.security-app-authenticator",
         dependency = AndroidX.security.appAuthenticator
     ),
+    versionKeyWithModules(
+        expected = "androidx.security-app-authenticator-testing",
+        dependency = AndroidX.security.appAuthenticatorTesting
+    ),
     versionKeyWithModules(expected = "androidx.security-crypto", dependency = AndroidX.security.crypto),
     versionKeyWithModules(expected = "androidx.security-crypto", dependency = AndroidX.security.cryptoKtx),
     versionKeyWithModules(

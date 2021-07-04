@@ -9,10 +9,7 @@ import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewEntry
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
-import org.gradle.api.artifacts.ArtifactRepositoryContainer
-import org.gradle.api.artifacts.Configuration
-import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.ExternalDependency
+import org.gradle.api.artifacts.*
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.invocation.Gradle
 import kotlin.reflect.full.memberFunctions
@@ -70,32 +67,40 @@ private val configurationNamesToIgnore: List<String> = listOf(
 fun getVersionPropertyName(
     moduleId: ModuleId,
     versionKeyReader: ArtifactVersionKeyReader
-): String = when (moduleId) {
-    is ModuleId.Maven -> when {
-        moduleId.name == "gradle" && moduleId.group == "com.android.tools.build" -> "plugin.android"
-        moduleId.name.endsWith(".gradle.plugin") -> {
-            moduleId.name.substringBeforeLast(".gradle.plugin").let { pluginId ->
-                when {
-                    pluginId.startsWith("org.jetbrains.kotlin") -> "version.kotlin"
-                    pluginId.startsWith("com.android") -> "plugin.android"
-                    else -> "plugin.$pluginId"
+): String {
+
+    val group = moduleId.group
+    val name = moduleId.name
+
+    //TODO: Pos pluginDependencyNotationToVersionKey ?
+    return when(moduleId) {
+        is ModuleId.Maven -> when {
+
+            name == "gradle" && group == "com.android.tools.build" -> "plugin.android"
+            moduleId.name.endsWith(".gradle.plugin") -> {
+                name.substringBeforeLast(".gradle.plugin").let { pluginId ->
+                    when {
+                        pluginId.startsWith("org.jetbrains.kotlin.") -> "version.kotlin"
+                        pluginId.startsWith("com.android") -> "plugin.android"
+                        else -> "plugin.$pluginId"
+                    }
                 }
             }
+            else -> {
+                val versionKey = versionKeyReader.readVersionKey(
+                    group = moduleId.group,
+                    name = moduleId.name
+                ) ?: "${moduleId.group}..${moduleId.name}"
+                "version.$versionKey"
+            }
         }
-        else -> {
-            val versionKey = versionKeyReader.readVersionKey(
-                group = moduleId.group,
-                name = moduleId.name
-            ) ?: "${moduleId.group}..${moduleId.name}"
-            "version.$versionKey"
-        }
-    }
-    is ModuleId.Npm -> {
-        val group = moduleId.group
-        val name = moduleId.name
-        when (group) {
-            null -> "version.npm.$name"
-            else -> "version.npm.@$group/$name"
+        is ModuleId.Npm -> {
+            val group = moduleId.group
+            val name = moduleId.name
+            when (group) {
+                null -> "version.npm.$name"
+                else -> "version.npm.@$group/$name"
+            }
         }
     }
 }

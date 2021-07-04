@@ -73,6 +73,9 @@ androidx.room:room-coroutines // Deprecated artifact, no longer updated with its
 androidx.security:security-app-authenticator
 ^^^^^^^^.         ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+androidx.security:security-app-authenticator-testing
+^^^^^^^^.         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 androidx.security:security-crypto(-*)
 ^^^^^^^^.         ^^^^^^^^^^^^^^^
 

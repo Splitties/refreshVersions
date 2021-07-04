@@ -13,11 +13,14 @@ import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.
 import org.gradle.api.artifacts.Dependency
 import java.io.File
 
-@InternalRefreshVersionsApi
-fun writeMissingEntriesInVersionProperties(newEntries: Map<String, Dependency>) {
+internal fun writeNewEntriesInVersionProperties(newEntries: Map<String, Dependency>) {
     VersionsPropertiesModel.update { model ->
-        val newSections = newEntries.map { (key, d) ->
-            VersionEntry(emptyList(), key, d.version!!, emptyList(), emptyList())
+        val newSections = newEntries.map { (key, d: Dependency) ->
+            VersionEntry(
+                key = key,
+                currentVersion = d.version!!,
+                availableUpdates = emptyList()
+            )
         }.sortedBy { it.key }
         model.copy(sections = model.sections + newSections)
     }
