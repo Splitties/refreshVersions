@@ -62,11 +62,11 @@ markdown_extensions:
 nav:
   - 'Overview': index.md
   - 'Setup': setup.md
+  - 'Migrate': migrate.md
   - 'Add Dependencies': add-dependencies.md
   - 'Update Dependencies': update-dependencies.md
-# TODO: Uncomment line below after its content is updated. We might also change the title.
-#  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
-  - 'Migration': migration.md
+  # TODO: Uncomment line below after its content is updated. We might also change the title.
+  #  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing':
     - 'Before you contribute': contributing/before-you-contribute.md

@@ -195,6 +195,6 @@ You did it! refreshVersions is now properly setup.
 
 Now, you might want to:
 
-- [Migrate/opt-in existing dependency declarations](migration.md), so the `refreshVersions` task can find available updates for you.
+- [Migrate your project](migrate.md).
 - [Add new dependencies](add-dependencies.md).
 - [Update dependencies](update-dependencies.md).
