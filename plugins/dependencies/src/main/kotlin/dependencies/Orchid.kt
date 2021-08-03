@@ -27,8 +27,8 @@ object Orchid : DependencyGroup(
 
     private const val groupId = "io.github.javaeden.orchid"
 
-    val core = module("OrchidCore")
-    val test = module("OrchidTest")
+    val core get() = module("OrchidCore")
+    val test get() = module("OrchidTest")
 
     /**
      * Official webpage: [orchid.run/plugins](https://orchid.run/plugins)
@@ -36,33 +36,33 @@ object Orchid : DependencyGroup(
     val plugins = Plugins
 
     object Plugins : DependencyGroup(group = "io.github.javaeden.orchid") {
-        val changelog = module("OrchidChangelog")
-        val forms = module("OrchidForms")
-        val groovydoc = module("OrchidGroovydoc")
-        val javadoc = module("OrchidJavadoc")
-        val kotlindoc = module("OrchidKotlindoc")
-        val kss = module("OrchidKSS")
-        val netlifyCMS = module("OrchidNetlifyCMS")
-        val pages = module("OrchidPages")
-        val pluginDocs = module("OrchidPluginDocs")
-        val posts = module("OrchidPosts")
-        val presentations = module("OrchidPresentations")
-        val search = module("OrchidSearch")
-        val sourceDoc = module("OrchidSourceDoc")
-        val swagger = module("OrchidSwagger")
-        val swiftdoc = module("OrchidSwiftdoc")
-        val taxonomies = module("OrchidTaxonomies")
-        val wiki = module("OrchidWiki")
-        val asciidoc = module("OrchidAsciidoc")
-        val bible = module("OrchidBible")
-        val diagrams = module("OrchidDiagrams")
-        val syntaxHighlighter = module("OrchidSyntaxHighlighter")
-        val writersBlocks = module("OrchidWritersBlocks")
-        val azure = module("OrchidAzure")
-        val bitbucket = module("OrchidBitbucket")
-        val github = module("OrchidGithub")
-        val gitlab = module("OrchidGitlab")
-        val netlify = module("OrchidNetlify")
+        val changelog get() = module("OrchidChangelog")
+        val forms get() = module("OrchidForms")
+        val groovydoc get() = module("OrchidGroovydoc")
+        val javadoc get() = module("OrchidJavadoc")
+        val kotlindoc get() = module("OrchidKotlindoc")
+        val kss get() = module("OrchidKSS")
+        val netlifyCMS get() = module("OrchidNetlifyCMS")
+        val pages get() = module("OrchidPages")
+        val pluginDocs get() = module("OrchidPluginDocs")
+        val posts get() = module("OrchidPosts")
+        val presentations get() = module("OrchidPresentations")
+        val search get() = module("OrchidSearch")
+        val sourceDoc get() = module("OrchidSourceDoc")
+        val swagger get() = module("OrchidSwagger")
+        val swiftdoc get() = module("OrchidSwiftdoc")
+        val taxonomies get() = module("OrchidTaxonomies")
+        val wiki get() = module("OrchidWiki")
+        val asciidoc get() = module("OrchidAsciidoc")
+        val bible get() = module("OrchidBible")
+        val diagrams get() = module("OrchidDiagrams")
+        val syntaxHighlighter get() = module("OrchidSyntaxHighlighter")
+        val writersBlocks get() = module("OrchidWritersBlocks")
+        val azure get() = module("OrchidAzure")
+        val bitbucket get() = module("OrchidBitbucket")
+        val github get() = module("OrchidGithub")
+        val gitlab get() = module("OrchidGitlab")
+        val netlify get() = module("OrchidNetlify")
     }
 
     /**
@@ -71,18 +71,18 @@ object Orchid : DependencyGroup(
     val themes = Themes
 
     object Themes : DependencyGroup(group = "io.github.javaeden.orchid") {
-        val bsDoc = module("OrchidBsDoc")
-        val copper = module("OrchidCopper")
-        val editorial = module("OrchidEditorial")
-        val futureImperfect = module("OrchidFutureImperfect")
+        val bsDoc get() = module("OrchidBsDoc")
+        val copper get() = module("OrchidCopper")
+        val editorial get() = module("OrchidEditorial")
+        val futureImperfect get() = module("OrchidFutureImperfect")
     }
 
     val bundles = Bundles
 
     object Bundles : DependencyGroup(group = "io.github.javaeden.orchid") {
-        val all = module("OrchidAll")
-        val blog = module("OrchidBlog")
-        val docs = module("OrchidDocs")
-        val languagePack = module("OrchidLanguagePack")
+        val all get() = module("OrchidAll")
+        val blog get() = module("OrchidBlog")
+        val docs get() = module("OrchidDocs")
+        val languagePack get() = module("OrchidLanguagePack")
     }
 }
