@@ -1,5 +1,23 @@
 # Change log for refreshVersions
 
+## Version 0.11.0 (2021-08-03)
+
+### New feature
+
+Add task **refreshVersionsMigrate** that adds all missing entries in versions.properties and try to migrate the `build.gradle(.kts)` and other known files like `libraries.gradle` so that the version placeholder `_` is used everywhere. Please [try it out and give us your feedback for refreshVersionsMigrate](https://github.com/jmfayard/refreshVersions/discussions/396)
+
+### Fixes
+
+- Plugins org.jetbrains.kotlinx.benchmark should not use key version.kotlin
+
+### New dependency notations
+
+- Ktor.features.serialization
+- AndroidX.navigation.testing
+- Testing.kotestExtensions who replaces Testing.kotest.extensions in Kotest >= 4.5.0
+
+
+
 ## Version 0.10.1 (2021-06-10)
 
 ### New features

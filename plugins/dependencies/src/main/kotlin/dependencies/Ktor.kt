@@ -158,6 +158,11 @@ object Ktor {
         const val locations = "$artifactBase-locations:_"
 
         /**
+         * ktor doc: [kotlinx.serialization](https://ktor.io/docs/kotlin-serialization.html)
+         */
+        const val serialization = "$artifactBase-serialization:_"
+
+        /**
          * Supports JVM only (because Dropwizard is JVM-only).
          *
          * ktor doc: [Metrics with Dropwizard metrics](https://ktor.io/servers/features/metrics.html)

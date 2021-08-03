@@ -7,7 +7,7 @@
 @file:Repository("https://repo.maven.apache.org/maven2/")
 //@file:Repository("https://oss.sonatype.org/content/repositories/snapshots")
 //@file:Repository("file:///Users/louiscad/.m2/repository")
-@file:DependsOn("com.louiscad.incubator:lib-publishing-helpers:0.1.4")
+@file:DependsOn("com.louiscad.incubator:lib-publishing-helpers:0.2.1")
 
 import java.io.File
 import Releasing_main.ReleaseStep.*
