@@ -19,13 +19,9 @@ object RefreshVersionsConfigHolder {
 
     internal val resettableDelegates = ResettableDelegates()
 
-    internal var useDependencyFilter = false
+    internal val isUsingVersionRejection: Boolean get() = versionRejectionFilter != null
 
-    var dependencyFilter: DependencySelection.() -> Boolean = { false }
-        set(value) {
-            useDependencyFilter = true
-            field = value
-        }
+    var versionRejectionFilter: (DependencySelection.() -> Boolean)? by resettableDelegates.NullableDelegate()
 
     fun markSetupViaSettingsPlugin() {
         isSetupViaPlugin = true

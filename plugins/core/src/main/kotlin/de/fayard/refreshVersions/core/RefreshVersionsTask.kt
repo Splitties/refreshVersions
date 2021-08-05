@@ -92,7 +92,7 @@ open class RefreshVersionsTask : DefaultTask() {
     }
 
     private fun warnAboutRefreshVersionsIfSettingIfAny() {
-        if (RefreshVersionsConfigHolder.useDependencyFilter) {
+        if (RefreshVersionsConfigHolder.isUsingVersionRejection) {
             logger.warn("NOTE: Some versions are filtered by the rejectVersionsIf predicate. See the settings.gradle.kts file.")
         }
     }

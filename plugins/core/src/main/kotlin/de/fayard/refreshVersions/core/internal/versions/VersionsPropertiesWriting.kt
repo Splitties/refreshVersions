@@ -8,6 +8,7 @@ import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.isAVersionAlias
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.isUsingVersionRejectionHeader
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.Comment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
 import org.gradle.api.artifacts.ExternalDependency
@@ -93,9 +94,11 @@ internal val versionsPropertiesFileLock = Any()
 internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)
     appendln(VersionsPropertiesModel.versionsPropertiesHeader(
-        version = generatedByVersion,
-        useRejectVersionsIf = RefreshVersionsConfigHolder.useDependencyFilter
+        version = generatedByVersion
     ))
+    if (RefreshVersionsConfigHolder.isUsingVersionRejection) {
+        appendln(isUsingVersionRejectionHeader)
+    }
     if (sections.isEmpty()) return@buildString
     appendln()
     val sb = StringBuilder()

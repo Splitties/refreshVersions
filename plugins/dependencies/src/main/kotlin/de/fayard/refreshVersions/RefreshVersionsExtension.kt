@@ -32,14 +32,14 @@ open class RefreshVersionsExtension {
     }
 
     fun rejectVersionIf(filter: Closure<Boolean>) {
-        RefreshVersionsConfigHolder.dependencyFilter = {
+        RefreshVersionsConfigHolder.versionRejectionFilter = {
             filter.delegate = this
             filter.call()
         }
     }
 
     fun rejectVersionIf(filter: DependencySelection.() -> Boolean) {
-        RefreshVersionsConfigHolder.dependencyFilter = filter
+        RefreshVersionsConfigHolder.versionRejectionFilter = filter
     }
 }
 
