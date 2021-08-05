@@ -15,10 +15,19 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
     override fun apply(project: Project) {
         check(project.isRootProject) { "ERROR: de.fayard.refreshVersions.core should not be applied manually" }
         if (project.isBuildSrc.not()) {
+            // In the case where this runs in includedBuilds, the task configuration lambda may (will) run
+            // after the `Gradle.buildFinished { … }` callback is executed, which means the
+            // RefreshVersionsConfigHolder content will be cleared, so we get the value before.
+            val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
+
             project.tasks.register<RefreshVersionsTask>(name = "refreshVersions") {
-                group = "Help"
-                val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
+                group = "refreshVersions"
                 description = "Search for new dependencies versions and update $versionsFileName"
+            }
+
+            project.tasks.register<RefreshVersionsCleanupTask>(name = "refreshVersionsCleanup") {
+                group = "refreshVersions"
+                description = "Cleanup versions availability comments"
             }
         }
         cleanFilesFromPreviousVersions(project)

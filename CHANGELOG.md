@@ -1,5 +1,44 @@
 # Change log for refreshVersions
 
+## Version 0.11.0 (2021-08-03)
+
+### New feature
+
+Add task **refreshVersionsMigrate** that adds all missing entries in versions.properties and try to migrate the `build.gradle(.kts)` and other known files like `libraries.gradle` so that the version placeholder `_` is used everywhere. Please [try it out and give us your feedback for refreshVersionsMigrate](https://github.com/jmfayard/refreshVersions/discussions/396)
+
+### Fixes
+
+- Plugins org.jetbrains.kotlinx.benchmark should not use key version.kotlin
+
+### New dependency notations
+
+- Ktor.features.serialization
+- AndroidX.navigation.testing
+- Testing.kotestExtensions who replaces Testing.kotest.extensions in Kotest >= 4.5.0
+
+
+
+## Version 0.10.1 (2021-06-10)
+
+### New features
+
+- In Android projects, if you used the version placeholder (`_`) directly in `build.gradle(.kts)` files, Android lint would trigger an unwanted warning, or error in the case of the Android build tools (aka. AGP, the Android Gradle Plugin). To avoid this inconvenience, running the refreshVersions task will now automatically check if it's running on an Android project, and in such cases, will edit (safely) the `lint.xml` file, creating it if needed, and add the needed rules to have these specific warnings and errors ignored.
+
+### Fixes
+
+- Add missing version placeholder (`_`) for the `Google.android.material.composeThemeAdapter` dependency notation.
+- Fix a bug that prevented from using the correct version of `org.jetbrains.kotlinx.benchmark` and any other Gradle plugin with an id starting with `org.jetbrains.kotlinx` because it matched over `org.jetbrains.kotlin` as well. We are now matching on `org.jetbrains.kotlin.` to avoid this issue.
+
+### New dependency notations:
+
+- AndroidX:
+    - emoji2
+        - views-helper
+        - views
+    - health.servicesClient
+    - security.appAuthenticatorTesting
+- Google.accompanist.insets.ui
+
 ## Version 0.10.0 (2021-05-13)
 
 ### New features

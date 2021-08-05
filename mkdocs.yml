@@ -21,7 +21,8 @@ extra:
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
     gradle: 6.9
-    refreshVersions: '0.10.0'
+    refreshVersions: '0.11.0'
+    snapshot: '0.11.1-SNAPSHOT'
   keyboard_shortcuts:
     find_actions: <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>A</kbd>
 
@@ -61,11 +62,11 @@ markdown_extensions:
 nav:
   - 'Overview': index.md
   - 'Setup': setup.md
+  - 'Migrate': migrate.md
   - 'Add Dependencies': add-dependencies.md
   - 'Update Dependencies': update-dependencies.md
-# TODO: Uncomment line below after its content is updated. We might also change the title.
-#  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
-  - 'Migration': migration.md
+  # TODO: Uncomment line below after its content is updated. We might also change the title.
+  #  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing':
     - 'Before you contribute': contributing/before-you-contribute.md
@@ -74,6 +75,7 @@ nav:
     - 'Dev environment': contributing/submitting-prs/dev-env.md
     - 'Development process': contributing/submitting-prs/dev-process.md
     - 'Dependency notations': contributing/submitting-prs/dependency-notations-updates.md
+  - 'Bonus: Gradle tips and tricks': gradle-tips.md
 
 plugins:
   - search
