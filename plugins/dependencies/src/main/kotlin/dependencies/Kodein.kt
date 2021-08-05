@@ -23,14 +23,14 @@ object Kodein {
                 ^^^^^^^^^
         """.trimIndent()
     ) {
-        val androidCore get() = module("kodein-di-framework-android-core")
-        val androidSupport get() = module("kodein-di-framework-android-support")
-        val androidx get() = module("kodein-di-framework-android-x")
-        val configurableJS get() = module("kodein-di-conf-js")
-        val configurableJvm get() = module("kodein-di-conf-jvm")
-        val js get() = module("kodein-di-js")
-        val jsr330 get() = module("kodein-di-jxinject-jvm")
-        val ktor get() = module("kodein-di-framework-ktor-server-jvm")
-        val tornadofx get() = module("kodein-di-framework-tornadofx-jvm")
+        val androidCore by module("kodein-di-framework-android-core")
+        val androidSupport by module("kodein-di-framework-android-support")
+        val androidx by module("kodein-di-framework-android-x")
+        val configurableJS by module("kodein-di-conf-js")
+        val configurableJvm by module("kodein-di-conf-jvm")
+        val js by module("kodein-di-js")
+        val jsr330 by module("kodein-di-jxinject-jvm")
+        val ktor by module("kodein-di-framework-ktor-server-jvm")
+        val tornadofx by module("kodein-di-framework-tornadofx-jvm")
     }
 }

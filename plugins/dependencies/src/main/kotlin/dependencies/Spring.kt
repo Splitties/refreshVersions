@@ -41,11 +41,11 @@ object Spring : IsNotADependency {
     val springCloud = SpringCloud
 
     object SpringCloud : DependencyGroup("io.pivotal.spring.cloud", usePlatformConstraints = true) {
-        val circuitBreaker get() = module("spring-cloud-services-starter-circuit-breaker")
+        val circuitBreaker by module("spring-cloud-services-starter-circuit-breaker")
 
-        val configClient get() = module("spring-cloud-services-starter-config-client")
+        val configClient by module("spring-cloud-services-starter-config-client")
 
-        val serviceRegistry get() = module("spring-cloud-services-starter-service-registry")
+        val serviceRegistry by module("spring-cloud-services-starter-service-registry")
     }
 
     val boot = Boot
@@ -55,271 +55,249 @@ object Spring : IsNotADependency {
 
         val configurationProcessor = "org.springframework.boot:spring-boot-configuration-processor"
 
-        val activemq get() = module("spring-boot-starter-activemq")
+        val activemq by module("spring-boot-starter-activemq")
 
-        val actuator get() = module("spring-boot-starter-actuator")
+        val actuator by module("spring-boot-starter-actuator")
 
-        val amqp get() = module("spring-boot-starter-amqp")
+        val amqp by module("spring-boot-starter-amqp")
 
-        val artemis get() = module("spring-boot-starter-artemis")
+        val artemis by module("spring-boot-starter-artemis")
 
-        val batch get() = module("spring-boot-starter-batch")
+        val batch by module("spring-boot-starter-batch")
 
-        val cache get() = module("spring-boot-starter-cache")
+        val cache by module("spring-boot-starter-cache")
 
         val data = Data
 
         object Data : IsNotADependency {
-            val cassandra get() = module("spring-boot-starter-data-cassandra")
+            val cassandra by module("spring-boot-starter-data-cassandra")
 
-            val cassandraReactive =
-                module("spring-boot-starter-data-cassandra-reactive")
+            val cassandraReactive by module("spring-boot-starter-data-cassandra-reactive")
 
-            val couchbase get() = module("spring-boot-starter-data-couchbase")
+            val couchbase by module("spring-boot-starter-data-couchbase")
 
-            val couchbase_reactive =
-                module("spring-boot-starter-data-couchbase-reactive")
+            val couchbase_reactive by module("spring-boot-starter-data-couchbase-reactive")
 
-            val elasticsearch =
-                module("spring-boot-starter-data-elasticsearch")
+            val elasticsearch by module("spring-boot-starter-data-elasticsearch")
 
-            val jdbc get() = module("spring-boot-starter-data-jdbc")
+            val jdbc by module("spring-boot-starter-data-jdbc")
 
-            val jpa get() = module("spring-boot-starter-data-jpa")
+            val jpa by module("spring-boot-starter-data-jpa")
 
-            val ldap get() = module("spring-boot-starter-data-ldap")
+            val ldap by module("spring-boot-starter-data-ldap")
 
-            val mongodb get() = module("spring-boot-starter-data-mongodb")
+            val mongodb by module("spring-boot-starter-data-mongodb")
 
-            val mongodbReactive =
-                module("spring-boot-starter-data-mongodb-reactive")
+            val mongodbReactive by module("spring-boot-starter-data-mongodb-reactive")
 
-            val neo4j get() = module("spring-boot-starter-data-neo4j")
+            val neo4j by module("spring-boot-starter-data-neo4j")
 
-            val r2dbc get() = module("spring-boot-starter-data-r2dbc")
+            val r2dbc by module("spring-boot-starter-data-r2dbc")
 
-            val redis get() = module("spring-boot-starter-data-redis")
+            val redis by module("spring-boot-starter-data-redis")
 
-            val redis_reactive =
-                module("spring-boot-starter-data-redis-reactive")
+            val redis_reactive by module("spring-boot-starter-data-redis-reactive")
 
-            val rest get() = module("spring-boot-starter-data-rest")
+            val rest by module("spring-boot-starter-data-rest")
 
-            val solr get() = module("spring-boot-starter-data-solr")
+            val solr by module("spring-boot-starter-data-solr")
         }
 
-        val freemarker get() = module("spring-boot-starter-freemarker")
+        val freemarker by module("spring-boot-starter-freemarker")
 
-        val groovyTemplates get() = module("spring-boot-starter-groovy-templates")
+        val groovyTemplates by module("spring-boot-starter-groovy-templates")
 
-        val hateoas get() = module("spring-boot-starter-hateoas")
+        val hateoas by module("spring-boot-starter-hateoas")
 
-        val integration get() = module("spring-boot-starter-integration")
+        val integration by module("spring-boot-starter-integration")
 
-        val jdbc get() = module("spring-boot-starter-jdbc")
+        val jdbc by module("spring-boot-starter-jdbc")
 
-        val jersey get() = module("spring-boot-starter-jersey")
+        val jersey by module("spring-boot-starter-jersey")
 
-        val jooq get() = module("spring-boot-starter-jooq")
+        val jooq by module("spring-boot-starter-jooq")
 
-        val mail get() = module("spring-boot-starter-mail")
+        val mail by module("spring-boot-starter-mail")
 
-        val mustache get() = module("spring-boot-starter-mustache")
+        val mustache by module("spring-boot-starter-mustache")
 
-        val oauth2Client get() = module("spring-boot-starter-oauth2-client")
+        val oauth2Client by module("spring-boot-starter-oauth2-client")
 
-        val oauth2ResourceServer =
-            module("spring-boot-starter-oauth2-resource-server")
+        val oauth2ResourceServer by module("spring-boot-starter-oauth2-resource-server")
 
-        val quartz get() = module("spring-boot-starter-quartz")
+        val quartz by module("spring-boot-starter-quartz")
 
-        val rsocket get() = module("spring-boot-starter-rsocket")
+        val rsocket by module("spring-boot-starter-rsocket")
 
-        val security get() = module("spring-boot-starter-security")
+        val security by module("spring-boot-starter-security")
 
-        val test get() = module("spring-boot-starter-test")
+        val test by module("spring-boot-starter-test")
 
-        val thymeleaf get() = module("spring-boot-starter-thymeleaf")
+        val thymeleaf by module("spring-boot-starter-thymeleaf")
 
-        val validation get() = module("spring-boot-starter-validation")
+        val validation by module("spring-boot-starter-validation")
 
-        val webServices get() = module("spring-boot-starter-web-services")
+        val webServices by module("spring-boot-starter-web-services")
 
-        val webflux get() = module("spring-boot-starter-webflux")
+        val webflux by module("spring-boot-starter-webflux")
 
-        val websocket get() = module("spring-boot-starter-websocket")
+        val websocket by module("spring-boot-starter-websocket")
     }
 
     val cloud = Cloud
 
     object Cloud : DependencyGroup("org.springframework.cloud", usePlatformConstraints = true) {
 
-        val bus get() = module("spring-cloud-bus")
+        val bus by module("spring-cloud-bus")
 
-        val cloudfoundry_discovery =
-            module("spring-cloud-cloudfoundry-discovery")
+        val cloudfoundry_discovery by module("spring-cloud-cloudfoundry-discovery")
 
-        val config_server get() = module("spring-cloud-config-server")
+        val config_server by module("spring-cloud-config-server")
 
-        val function_web get() = module("spring-cloud-function-web")
+        val function_web by module("spring-cloud-function-web")
 
-        val gcp_starter get() = module("spring-cloud-gcp-starter")
+        val gcp_starter by module("spring-cloud-gcp-starter")
 
-        val gcp_starter_pubsub get() = module("spring-cloud-gcp-starter-pubsub")
+        val gcp_starter_pubsub by module("spring-cloud-gcp-starter-pubsub")
 
-        val gcp_starter_storage get() = module("spring-cloud-gcp-starter-storage")
+        val gcp_starter_storage by module("spring-cloud-gcp-starter-storage")
 
-        val starter get() = module("spring-cloud-starter")
+        val starter by module("spring-cloud-starter")
 
         val aws = Aws
 
         object Aws : IsNotADependency {
-            val aws get() = module("spring-cloud-starter-aws")
+            val aws by module("spring-cloud-starter-aws")
 
-            val jdbc get() = module("spring-cloud-starter-aws-jdbc")
+            val jdbc by module("spring-cloud-starter-aws-jdbc")
 
-            val messaging get() = module("spring-cloud-starter-aws-messaging")
+            val messaging by module("spring-cloud-starter-aws-messaging")
         }
 
-        val circuitbreakerReactorResilience4J =
-            module("spring-cloud-starter-circuitbreaker-reactor-resilience4j")
+        val circuitbreakerReactorResilience4J by module("spring-cloud-starter-circuitbreaker-reactor-resilience4j")
 
-        val config get() = module("spring-cloud-starter-config")
+        val config by module("spring-cloud-starter-config")
 
-        val consulConfig get() = module("spring-cloud-starter-consul-config")
+        val consulConfig by module("spring-cloud-starter-consul-config")
 
-        val consulDiscovery =
-            module("spring-cloud-starter-consul-discovery")
+        val consulDiscovery by module("spring-cloud-starter-consul-discovery")
 
-        val contractStubRunner =
-            module("spring-cloud-starter-contract-stub-runner")
+        val contractStubRunner by module("spring-cloud-starter-contract-stub-runner")
 
-        val contractVerifier =
-            module("spring-cloud-starter-contract-verifier")
+        val contractVerifier by module("spring-cloud-starter-contract-verifier")
 
-        val gateway get() = module("spring-cloud-starter-gateway")
+        val gateway by module("spring-cloud-starter-gateway")
 
-        val loadbalancer get() = module("spring-cloud-starter-loadbalancer")
+        val loadbalancer by module("spring-cloud-starter-loadbalancer")
         val netflix = Netflix
 
         object Netflix : IsNotADependency {
 
-            val eurekaClient =
-                module("spring-cloud-starter-netflix-eureka-client")
+            val eurekaClient by module("spring-cloud-starter-netflix-eureka-client")
 
-            val eurekaServer =
-                module("spring-cloud-starter-netflix-eureka-server")
+            val eurekaServer by module("spring-cloud-starter-netflix-eureka-server")
 
-            val hystrix =
-                module("spring-cloud-starter-netflix-hystrix")
+            val hystrix by module("spring-cloud-starter-netflix-hystrix")
 
-            val hystrixDashboard =
-                module("spring-cloud-starter-netflix-hystrix-dashboard")
+            val hystrixDashboard by module("spring-cloud-starter-netflix-hystrix-dashboard")
 
-            val ribbon =
-                module("spring-cloud-starter-netflix-ribbon")
+            val ribbon by module("spring-cloud-starter-netflix-ribbon")
 
-            val turbine =
-                module("spring-cloud-starter-netflix-turbine")
+            val turbine by module("spring-cloud-starter-netflix-turbine")
 
-            val turbineStream =
-                module("spring-cloud-starter-netflix-turbine-stream")
+            val turbineStream by module("spring-cloud-starter-netflix-turbine-stream")
 
-            val zuul get() = module("spring-cloud-starter-netflix-zuul")
+            val zuul by module("spring-cloud-starter-netflix-zuul")
         }
 
-        val oauth2 get() = module("spring-cloud-starter-oauth2")
+        val oauth2 by module("spring-cloud-starter-oauth2")
 
-        val openServiceBroker =
-            module("spring-cloud-starter-open-service-broker")
+        val openServiceBroker by module("spring-cloud-starter-open-service-broker")
 
-        val openfeign get() = module("spring-cloud-starter-openfeign")
+        val openfeign by module("spring-cloud-starter-openfeign")
 
-        val security get() = module("spring-cloud-starter-security")
+        val security by module("spring-cloud-starter-security")
 
-        val sleuth get() = module("spring-cloud-starter-sleuth")
+        val sleuth by module("spring-cloud-starter-sleuth")
 
-        val task get() = module("spring-cloud-starter-task")
+        val task by module("spring-cloud-starter-task")
 
-        val vault_config get() = module("spring-cloud-starter-vault-config")
+        val vault_config by module("spring-cloud-starter-vault-config")
 
-        val zipkin get() = module("spring-cloud-starter-zipkin")
+        val zipkin by module("spring-cloud-starter-zipkin")
 
-        val zookeeperConfig =
-            module("spring-cloud-starter-zookeeper-config")
+        val zookeeperConfig by module("spring-cloud-starter-zookeeper-config")
 
-        val zookeeperDiscovery =
-            module("spring-cloud-starter-zookeeper-discovery")
+        val zookeeperDiscovery by module("spring-cloud-starter-zookeeper-discovery")
 
         val stream = Stream
 
         object Stream : IsNotADependency {
-            val stream get() = module("spring-cloud-stream")
+            val stream by module("spring-cloud-stream")
 
-            val binderKafka get() = module("spring-cloud-stream-binder-kafka")
+            val binderKafka by module("spring-cloud-stream-binder-kafka")
 
-            val binderKafkaStreams =
-                module("spring-cloud-stream-binder-kafka-streams")
+            val binderKafkaStreams by module("spring-cloud-stream-binder-kafka-streams")
         }
 
-        val streamBinderRabbit get() = module("spring-cloud-stream-binder-rabbit")
+        val streamBinderRabbit by module("spring-cloud-stream-binder-rabbit")
     }
 
     val integration = Integration
 
     object Integration : DependencyGroup("org.springframework.integration", usePlatformConstraints = true) {
 
-        val amqp get() = module("spring-integration-amqp")
+        val amqp by module("spring-integration-amqp")
 
-        val gemfire get() = module("spring-integration-gemfire")
+        val gemfire by module("spring-integration-gemfire")
 
-        val jdbc get() = module("spring-integration-jdbc")
+        val jdbc by module("spring-integration-jdbc")
 
-        val jms get() = module("spring-integration-jms")
+        val jms by module("spring-integration-jms")
 
-        val jpa get() = module("spring-integration-jpa")
+        val jpa by module("spring-integration-jpa")
 
-        val kafka get() = module("spring-integration-kafka")
+        val kafka by module("spring-integration-kafka")
 
-        val mail get() = module("spring-integration-mail")
+        val mail by module("spring-integration-mail")
 
-        val mongodb get() = module("spring-integration-mongodb")
+        val mongodb by module("spring-integration-mongodb")
 
-        val r2dbc get() = module("spring-integration-r2dbc")
+        val r2dbc by module("spring-integration-r2dbc")
 
-        val redis get() = module("spring-integration-redis")
+        val redis by module("spring-integration-redis")
 
-        val rsocket get() = module("spring-integration-rsocket")
+        val rsocket by module("spring-integration-rsocket")
 
-        val security get() = module("spring-integration-security")
+        val security by module("spring-integration-security")
 
-        val stomp get() = module("spring-integration-stomp")
+        val stomp by module("spring-integration-stomp")
 
-        val test get() = module("spring-integration-test")
+        val test by module("spring-integration-test")
 
-        val webflux get() = module("spring-integration-webflux")
+        val webflux by module("spring-integration-webflux")
 
-        val websocket get() = module("spring-integration-websocket")
+        val websocket by module("spring-integration-websocket")
 
-        val ws get() = module("spring-integration-ws")
+        val ws by module("spring-integration-ws")
     }
 
     val security = Security
 
     object Security : DependencyGroup("org.springframework.security", usePlatformConstraints = true) {
-        val spring_security_messaging get() = module("spring-security-messaging")
+        val spring_security_messaging by module("spring-security-messaging")
 
-        val spring_security_rsocket get() = module("spring-security-rsocket")
+        val spring_security_rsocket by module("spring-security-rsocket")
 
-        val spring_security_test get() = module("spring-security-test")
+        val spring_security_test by module("spring-security-test")
     }
 
     val session = Session
 
     object Session : DependencyGroup("org.springframework.session", usePlatformConstraints = true) {
-        val dataRedis get() = module("spring-session-data-redis")
+        val dataRedis by module("spring-session-data-redis")
 
-        val jdbc get() = module("spring-session-jdbc")
+        val jdbc by module("spring-session-jdbc")
     }
 
 }

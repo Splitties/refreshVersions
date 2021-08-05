@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core.internal
 
 import org.gradle.kotlin.dsl.IsNotADependency
+import kotlin.reflect.KProperty
 
 @InternalRefreshVersionsApi
 open class DependencyGroup(
@@ -32,10 +33,15 @@ open class DependencyGroup(
         ALL.add(this)
     }
 
-    fun module(module: String): String {
+    fun module(module: String): Module {
         assert(module.trimStart() == module) { "module=[$module] has superfluous leading whitespace" }
         assert(module.trimEnd() == module) { "module=[$module] has superfluous trailing whitespace" }
         assert(module.contains(":").not()) { "module=[$module] is invalid" }
-        return "$group:$module" + if (usePlatformConstraints) "" else ":_"
+        return Module("$group:$module" + if (usePlatformConstraints) "" else ":_")
     }
+
+    @Suppress("nothing_to_inline") // Must be inline for Kotlin 1.4 to optimize unused params.
+    inline operator fun Module.getValue(thisRef: Any?, property: KProperty<*>): String = name
+
+    inner class Module internal constructor(val name: String)
 }
