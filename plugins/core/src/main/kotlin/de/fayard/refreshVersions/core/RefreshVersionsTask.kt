@@ -80,6 +80,7 @@ open class RefreshVersionsTask : DefaultTask() {
                 )
             }
 
+            warnAboutRefreshVersionsIfSettingIfAny()
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
             warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
             warnAboutGradleUpdateAvailableIfAny(result.gradleUpdates)
@@ -87,6 +88,12 @@ open class RefreshVersionsTask : DefaultTask() {
                 logger.log(problem)
             }
             OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
+        }
+    }
+
+    private fun warnAboutRefreshVersionsIfSettingIfAny() {
+        if (RefreshVersionsConfigHolder.useDependencyFilter) {
+            logger.warn("NOTE: Some versions are filtered by the rejectVersionsIf predicate. See the settings.gradle.kts file.")
         }
     }
 

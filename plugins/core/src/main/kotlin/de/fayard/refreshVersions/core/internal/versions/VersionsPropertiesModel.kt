@@ -63,10 +63,10 @@ internal actual data class VersionsPropertiesModel(
 
         val versionKeysPrefixes = listOf("plugin", "version")
 
-        fun versionsPropertiesHeader(version: String) = """
+        fun versionsPropertiesHeader(version: String, useRejectVersionsIf: Boolean) = """
             |#### Dependencies and Plugin versions with their available updates.
             |$generatedByLineStart$version
-            |####
+            |####${if (useRejectVersionsIf) useRejectVersionsIfHeader else "" }
             |#### Don't manually edit or split the comments that start with four hashtags (####),
             |#### they will be overwritten by refreshVersions.
             |####
@@ -75,6 +75,12 @@ internal actual data class VersionsPropertiesModel(
             """.trimMargin().also { headerText ->
             assert(headerText.lineSequence().all { it.startsWith(headerLinesPrefix) })
         }
+
+        val useRejectVersionsIfHeader = """
+            |
+            |#### NOTE: Some versions are filtered by the rejectVersionsIf predicate. See the settings.gradle.kts file.
+            |####
+            """.trimMargin()
 
         private fun String.mustBeACommentLine() {
             require(startsWith("#")) { "Expected a comment but found random text: $this" }

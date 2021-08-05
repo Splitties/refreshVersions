@@ -4,7 +4,6 @@ import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
-import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.isAVersionAlias
@@ -93,7 +92,10 @@ internal val versionsPropertiesFileLock = Any()
 
 internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)
-    appendln(VersionsPropertiesModel.versionsPropertiesHeader(version = generatedByVersion))
+    appendln(VersionsPropertiesModel.versionsPropertiesHeader(
+        version = generatedByVersion,
+        useRejectVersionsIf = RefreshVersionsConfigHolder.useDependencyFilter
+    ))
     if (sections.isEmpty()) return@buildString
     appendln()
     val sb = StringBuilder()
