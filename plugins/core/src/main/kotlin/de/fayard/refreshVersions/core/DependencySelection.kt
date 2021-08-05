@@ -1,6 +1,9 @@
 package de.fayard.refreshVersions.core
 
-data class DependencySelection(
+import org.gradle.api.Incubating
+
+class DependencySelection internal constructor(
+    @Incubating
     val moduleId: ModuleId,
     val current: Version,
     val versionKey: String,
