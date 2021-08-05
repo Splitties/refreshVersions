@@ -33,15 +33,37 @@ open class DependencyGroup(
         ALL.add(this)
     }
 
-    fun module(module: String): Module {
+    fun module(module: String, isBom: Boolean = false): Module {
         assert(module.trimStart() == module) { "module=[$module] has superfluous leading whitespace" }
         assert(module.trimEnd() == module) { "module=[$module] has superfluous trailing whitespace" }
         assert(module.contains(":").not()) { "module=[$module] is invalid" }
-        return Module("$group:$module" + if (usePlatformConstraints) "" else ":_")
+        return Module(
+            name = "$group:$module" + if (usePlatformConstraints && isBom.not()) "" else ":_",
+            isBom = isBom
+        )
     }
 
-    @Suppress("nothing_to_inline") // Must be inline for Kotlin 1.4 to optimize unused params.
-    inline operator fun Module.getValue(thisRef: Any?, property: KProperty<*>): String = name
+    private var haveDependencyNotationsBeenUsed = false
 
-    inner class Module internal constructor(val name: String)
+    @Suppress("nothing_to_inline") // Must be inline for Kotlin 1.4 to optimize unused params.
+    inline operator fun Module.getValue(thisRef: Any?, property: KProperty<*>): String {
+        markDependencyNotationsUsage()
+        return name
+    }
+
+    inner class Module internal constructor(
+        val name: String,
+        val isBom: Boolean
+    ) {
+        @PublishedApi
+        internal fun markDependencyNotationsUsage() {
+            if (isBom && usePlatformConstraints.not()) {
+                if (haveDependencyNotationsBeenUsed) {
+                    error("You are trying to use a BoM ($name), but dependency notations relying on it have been declared before! Declare the BoM first to fix this issue.")
+                }
+            }
+            if (isBom) usePlatformConstraints = true
+            haveDependencyNotationsBeenUsed = true
+        }
+    }
 }

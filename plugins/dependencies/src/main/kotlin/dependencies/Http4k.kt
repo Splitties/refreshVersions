@@ -9,10 +9,7 @@ object Http4k : DependencyGroup(
             ^^^^^^
     """.trimIndent()
 ) {
-    val bom: String get() {
-        usePlatformConstraints = true
-        return "org.http4k:http4k-bom:_"
-    }
+    val bom by module("http4k-bom", isBom = true)
 
     val aws by module("http4k-aws")
     val cloudnative by module("http4k-cloudnative")
