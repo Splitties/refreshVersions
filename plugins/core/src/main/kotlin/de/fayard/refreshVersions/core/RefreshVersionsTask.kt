@@ -144,13 +144,10 @@ open class RefreshVersionsTask : DefaultTask() {
                     |To ensure single source of truth, refreshVersions only works with version placeholders,
                     |that is the explicit way of marking the version is not there (but in the $versionsFileName file).
                     |
-                    |If you intentionally want to keep hardcoded versions so a module has a different version of a
-                    |dependency than the rest of the project, you can safely ignore this warning for these artifacts,
-                    |but keep in mind refreshVersions will not show available updates for these.
+                    |To migrate your project, run
+                    |   ./gradlew refreshVersionsMigrate
                     |
-                    |Note that a migration task is planned in a future version of refreshVersions.
-                    |
-                    |See https://github.com/jmfayard/refreshVersions/issues/160""".trimMargin()
+                    |See https://jmfayard.github.io/refreshVersions/migrate/""".trimMargin()
             )
             //TODO: Replace issue link above with stable link to explanation in documentation.
         }
