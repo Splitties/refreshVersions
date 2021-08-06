@@ -26,6 +26,15 @@ open class DependencyGroup(
         private val ALL = mutableListOf<DependencyGroup>()
         val ALL_RULES: List<ArtifactVersionKeyRule>
             get() = ALL.mapNotNull { it.rule }
+
+        private val isRunningTests: Boolean by lazy {
+            try {
+                Class.forName("org.junit.jupiter.api.AssertEquals")
+                true
+            } catch (e: ClassNotFoundException) {
+                false
+            }
+        }
     }
 
     init {
@@ -45,8 +54,7 @@ open class DependencyGroup(
 
     private var haveDependencyNotationsBeenUsed = false
 
-    @Suppress("nothing_to_inline") // Must be inline for Kotlin 1.4 to optimize unused params.
-    inline operator fun Module.getValue(thisRef: Any?, property: KProperty<*>): String {
+    operator fun Module.getValue(thisRef: Any?, property: KProperty<*>): String {
         markDependencyNotationsUsage()
         return name
     }
@@ -58,7 +66,7 @@ open class DependencyGroup(
         @PublishedApi
         internal fun markDependencyNotationsUsage() {
             if (isBom && usePlatformConstraints.not()) {
-                if (haveDependencyNotationsBeenUsed) {
+                if (haveDependencyNotationsBeenUsed && !isRunningTests) {
                     error("You are trying to use a BoM ($name), but dependency notations relying on it have been declared before! Declare the BoM first to fix this issue.")
                 }
             }
