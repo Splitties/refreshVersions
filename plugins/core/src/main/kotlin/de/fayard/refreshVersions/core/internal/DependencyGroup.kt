@@ -52,26 +52,14 @@ open class DependencyGroup(
         )
     }
 
-    private var haveDependencyNotationsBeenUsed = false
 
     operator fun Module.getValue(thisRef: Any?, property: KProperty<*>): String {
-        markDependencyNotationsUsage()
+        if (isBom) usePlatformConstraints = true
         return name
     }
 
     inner class Module internal constructor(
         val name: String,
         val isBom: Boolean
-    ) {
-        @PublishedApi
-        internal fun markDependencyNotationsUsage() {
-            if (isBom && usePlatformConstraints.not()) {
-                if (haveDependencyNotationsBeenUsed && !isRunningTests) {
-                    error("You are trying to use a BoM ($name), but dependency notations relying on it have been declared before! Declare the BoM first to fix this issue.")
-                }
-            }
-            if (isBom) usePlatformConstraints = true
-            haveDependencyNotationsBeenUsed = true
-        }
-    }
+    )
 }
