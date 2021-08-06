@@ -1,6 +1,8 @@
-package de.fayard.refreshVersions.core
+package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.intellij.lang.annotations.Language
@@ -15,7 +17,7 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 
     @TaskAction
     fun migrateBuild() {
-        val dependencyMapping = RefreshVersionsConfigHolder.dependencyMapping.associate { d ->
+        val dependencyMapping = getArtifactNameToConstantMapping().associate { d ->
             "${d.group}:${d.artifact}" to d.constantName
         }
 

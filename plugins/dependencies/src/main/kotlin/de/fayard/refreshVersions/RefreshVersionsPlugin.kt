@@ -1,7 +1,6 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
-import de.fayard.refreshVersions.core.RefreshVersionsMigrateTask
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
@@ -120,8 +119,6 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 println(getArtifactNameToConstantMapping().joinToString("\n"))
             }
         }
-
-        RefreshVersionsConfigHolder.dependencyMapping = getArtifactNameToConstantMapping()
 
         /* // TODO: Find out whether we want to expose the task or not.
         project.tasks.register<MissingEntriesTask>(

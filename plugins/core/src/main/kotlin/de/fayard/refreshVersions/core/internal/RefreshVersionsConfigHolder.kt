@@ -19,8 +19,6 @@ object RefreshVersionsConfigHolder {
 
     internal val resettableDelegates = ResettableDelegates()
 
-    var dependencyMapping: List<DependencyMapping> by resettableDelegates.LateInit()
-
     fun markSetupViaSettingsPlugin() {
         isSetupViaPlugin = true
     }
