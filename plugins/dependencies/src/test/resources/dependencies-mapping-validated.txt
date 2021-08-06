@@ -534,6 +534,7 @@ com.jakewharton.wormhole..wormhole-gradle=JakeWharton.wormholeGradlePlugin
 com.louiscad.splitties..splitties-activities=Splitties.activities
 com.louiscad.splitties..splitties-alertdialog-appcompat-coroutines=Splitties.alertdialogAppcompatCoroutines
 com.louiscad.splitties..splitties-alertdialog-appcompat=Splitties.alertdialogAppcompat
+com.louiscad.splitties..splitties-alertdialog-material=Splitties.alertdialogMaterial
 com.louiscad.splitties..splitties-alertdialog=Splitties.alertdialog
 com.louiscad.splitties..splitties-appctx=Splitties.appctx
 com.louiscad.splitties..splitties-arch-lifecycle=Splitties.archLifecycle

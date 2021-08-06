@@ -23,6 +23,7 @@ object Splitties {
     const val alertdialog = "$artifactPrefix-alertdialog:_"
     const val alertdialogAppcompat = "$artifactPrefix-alertdialog-appcompat:_"
     const val alertdialogAppcompatCoroutines = "$artifactPrefix-alertdialog-appcompat-coroutines:_"
+    const val alertdialogMaterial = "$artifactPrefix-alertdialog-material:_"
     const val appctx = "$artifactPrefix-appctx:_"
     const val archLifecycle = "$artifactPrefix-arch-lifecycle:_"
     const val archRoom = "$artifactPrefix-arch-room:_"
