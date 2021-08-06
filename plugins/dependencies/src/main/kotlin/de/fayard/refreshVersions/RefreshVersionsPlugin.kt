@@ -121,6 +121,8 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             }
         }
 
+        RefreshVersionsConfigHolder.dependencyMapping = getArtifactNameToConstantMapping()
+
         /* // TODO: Find out whether we want to expose the task or not.
         project.tasks.register<MissingEntriesTask>(
             name = "refreshVersionsMissingEntries"

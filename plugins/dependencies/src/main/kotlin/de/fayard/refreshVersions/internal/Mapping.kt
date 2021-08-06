@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.internal
 
+import de.fayard.refreshVersions.core.internal.DependencyMapping
 import dependencies.ALL_DEPENDENCIES_NOTATIONS
 import dependencies.DependencyNotationAndGroup
 import org.gradle.api.artifacts.ModuleIdentifier
@@ -12,25 +13,6 @@ import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField
 import kotlin.reflect.jvm.javaType
 import kotlin.reflect.typeOf
-
-internal data class DependencyMapping(
-    val group: String,
-    val artifact: String,
-    val constantName: String
-) {
-    companion object {
-        fun fromLine(line: String): DependencyMapping? {
-            if (line.isEmpty()) return null
-            val (key, constantName) = line.split("=").takeIf { it.size == 2 } ?: return null
-            val (group, artifact) = key.split("..").takeIf { it.size == 2 } ?: return null
-            return DependencyMapping(group, artifact, constantName)
-        }
-    }
-
-    override fun toString(): String = string
-
-    private val string by lazy(LazyThreadSafetyMode.NONE) { "$group..$artifact=$constantName" }
-}
 
 internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = false): List<DependencyMapping> {
     return ALL_DEPENDENCIES_NOTATIONS.asSequence().flatMap { objectInstance ->

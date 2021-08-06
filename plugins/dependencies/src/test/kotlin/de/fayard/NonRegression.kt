@@ -1,7 +1,7 @@
 package de.fayard
 
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
-import de.fayard.refreshVersions.internal.DependencyMapping
+import de.fayard.refreshVersions.core.internal.DependencyMapping
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import io.kotest.assertions.fail
 import io.kotest.assertions.withClue

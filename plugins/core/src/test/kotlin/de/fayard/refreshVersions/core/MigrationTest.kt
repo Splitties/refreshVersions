@@ -12,7 +12,7 @@ class MigrationTest : StringSpec({
     "Try migrating local repository".config(enabled = false) {
         val file = File("/Users/jmfayard/IdeaProjects/android/compose-samples")
         findFilesWithDependencyNotations(file).forEach {
-            migrateFileIfNeeded(it)
+            migrateFileIfNeeded(it, emptyMap())
         }
     }
 
@@ -163,6 +163,31 @@ class MigrationTest : StringSpec({
                     input,
                     isInsidePluginsBlock = false,
                     isBuildFile = false
+                ) shouldBe output
+            }
+    }
+
+    "Replace with dependency names, if present" {
+        val dependencyMapping = mapOf(
+            "com.squareup.okio:okio" to "Square.okio",
+            "com.squareup.moshi:moshi" to "Square.moshi"
+        )
+        val input = """
+            implementation 'com.squareup.okio:okio:1.2'
+            implementation("com.squareup.moshi:moshi:_")
+        """.trimIndent().lines()
+        val expected = """
+            implementation Square.okio
+            implementation(Square.moshi)
+        """.trimIndent().lines()
+        input.size shouldBeExactly expected.size
+        List(input.size) { input[it] to expected[it] }
+            .forAll { (input, output) ->
+                withVersionPlaceholder(
+                    input,
+                    isInsidePluginsBlock = false,
+                    isBuildFile = true,
+                    dependencyMapping = dependencyMapping
                 ) shouldBe output
             }
     }
