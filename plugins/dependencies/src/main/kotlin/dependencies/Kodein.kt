@@ -2,6 +2,7 @@
 
 import de.fayard.refreshVersions.core.internal.DependencyGroup
 import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
  * painless Kotlin dependency injection
@@ -10,14 +11,14 @@ import org.gradle.api.Incubating
  * - GitHub page: [Kodein-Framework/Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI)
  * - [GitHub Releases here](https://github.com/Kodein-Framework/Kodein-DI/releases)
  */
-
 @Incubating
-object Kodein {
+object Kodein: IsNotADependency {
 
-    val di = DI()
+    val di = DI
 
-    class DI : DependencyGroup(
+    object DI : DependencyGroup(
         group = "org.kodein.di",
+        usePlatformConstraints = false,
         rawRule = """
             org.kodein.di:kodein-di(-*)
                 ^^^^^^^^^
