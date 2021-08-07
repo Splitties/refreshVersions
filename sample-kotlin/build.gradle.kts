@@ -33,6 +33,7 @@ fun DependencyHandler.testImplementations(deps: List<String>) =
     deps.forEach { testImplementation(it) }
 
 dependencies {
+
     implementations(listOf(AndroidX.browser, AndroidX.cardView))
     implementation(AndroidX.core)
     testImplementations(listOf(KotlinX.coroutines.core, KotlinX.coroutines.jdk8))
