@@ -32,9 +32,26 @@ refreshVersions {
         disable 'GRADLE_UPDATES'
     }
 
-
+    // ignore dependencies among a blacklist of version keys
     rejectVersionIf {
-        versionKey != "version.kotlinx.coroutines" && candidate.stabilityLevel.isLessStableThan(current.stabilityLevel)
+        def blacklist =  ["version.retrofit", "version.okhttp3"]
+        versionKey in blacklist
+    }
+
+    // ignore dependencies among a blacklist of maven groups
+    rejectVersionIf {
+        def blacklist = ["com.squareup.retrofit", "com.squareup.okhttp3"]
+        moduleId.group in blacklist
+    }
+
+    // ignore all non-stable releases
+    rejectVersionIf {
+        candidate.stabilityLevel != StabilityLevel.Stable
+    }
+
+    // Or maybe you want to see alpha versions if you are already using an alpha version, otherwise you want to see only stable versions
+    rejectVersionIf {
+        candidate.stabilityLevel.isLessStableThan(current.stabilityLevel)
     }
 
 }
