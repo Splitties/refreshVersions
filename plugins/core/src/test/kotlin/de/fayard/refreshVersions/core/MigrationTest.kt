@@ -91,6 +91,7 @@ class MigrationTest : StringSpec({
             jacoco {
                  toolVersion = "1.0.4"
             }
+             buildConfigField("String", "BUILD_TIME", "\"{new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(new Date())}\"")
         """.trimIndent()
         lines.lines().forAll { line ->
             withVersionPlaceholder(
