@@ -27,6 +27,7 @@ open class DependencyGroup(
         val ALL_RULES: List<ArtifactVersionKeyRule>
             get() = ALL.mapNotNull { it.rule }
 
+        var disableBomCheck: Boolean = false
         private val isRunningTests: Boolean by lazy {
             try {
                 Class.forName("org.junit.jupiter.api.AssertEquals")
@@ -65,8 +66,8 @@ open class DependencyGroup(
     ) {
         @PublishedApi
         internal fun markDependencyNotationsUsage() {
-            if (isBom && usePlatformConstraints.not()) {
-                if (haveDependencyNotationsBeenUsed && !isRunningTests) {
+            if (!isRunningTests && !disableBomCheck) {
+                if (isBom && usePlatformConstraints.not() && haveDependencyNotationsBeenUsed) {
                     error("You are trying to use a BoM ($name), but dependency notations relying on it have been declared before! Declare the BoM first to fix this issue.")
                 }
             }

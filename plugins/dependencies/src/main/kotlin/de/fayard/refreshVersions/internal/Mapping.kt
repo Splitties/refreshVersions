@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.internal
 
+import de.fayard.refreshVersions.core.internal.DependencyGroup
 import de.fayard.refreshVersions.core.internal.DependencyMapping
 import dependencies.ALL_DEPENDENCIES_NOTATIONS
 import dependencies.DependencyNotationAndGroup
@@ -15,13 +16,16 @@ import kotlin.reflect.jvm.javaType
 import kotlin.reflect.typeOf
 
 internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = false): List<DependencyMapping> {
-    return ALL_DEPENDENCIES_NOTATIONS.asSequence().flatMap { objectInstance ->
+    DependencyGroup.disableBomCheck = true
+    val result = ALL_DEPENDENCIES_NOTATIONS.asSequence().flatMap { objectInstance ->
         getArtifactNameToConstantMappingFromObject(
             objectInstance,
             excludeBomDependencies = excludeBomDependencies,
             isTopLevelObject = true
         )
     }.sortedBy { it.toString() }.toList()
+    DependencyGroup.disableBomCheck = false
+    return result
 }
 
 internal fun getArtifactsFromDependenciesObject(objectInstance: Any): List<ModuleIdentifier> {
