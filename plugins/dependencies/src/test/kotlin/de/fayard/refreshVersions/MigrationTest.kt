@@ -175,7 +175,7 @@ class MigrationTest : StringSpec({
         val dependencyMapping = mapOf(
             "com.squareup.okio:okio" to "Square.okio",
             "com.squareup.moshi:moshi" to "Square.moshi",
-            "com.google.firebase:firebase-analytics" to "Firebase.no-BoM.analytics"
+            "com.google.firebase:firebase-analytics" to "Firebase.analytics"
         )
         val input = """
             implementation 'com.squareup.okio:okio:1.2'
@@ -185,7 +185,7 @@ class MigrationTest : StringSpec({
         val expected = """
             implementation Square.okio
             implementation(Square.moshi)
-            implementation(Firebase.`no-BoM`.analytics)
+            implementation(Firebase.analytics)
         """.trimIndent().lines()
         input.size shouldBeExactly expected.size
         List(input.size) { input[it] to expected[it] }
