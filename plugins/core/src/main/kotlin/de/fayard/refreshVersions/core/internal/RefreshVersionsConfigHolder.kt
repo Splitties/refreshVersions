@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream
 @InternalRefreshVersionsApi
 object RefreshVersionsConfigHolder {
 
+
     internal val resettableDelegates = ResettableDelegates()
 
     fun markSetupViaSettingsPlugin() {

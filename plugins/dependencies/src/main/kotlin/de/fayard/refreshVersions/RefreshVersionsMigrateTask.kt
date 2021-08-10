@@ -1,5 +1,8 @@
-package de.fayard.refreshVersions.core
+package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.intellij.lang.annotations.Language
@@ -14,8 +17,12 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 
     @TaskAction
     fun migrateBuild() {
+        val dependencyMapping = getArtifactNameToConstantMapping().associate { d ->
+            "${d.group}:${d.artifact}" to d.constantName
+        }
+
         findFilesWithDependencyNotations(project.rootDir).forEach { buildFile ->
-            migrateFileIfNeeded(buildFile)
+            migrateFileIfNeeded(buildFile, dependencyMapping)
         }
         println()
         println("""
@@ -44,13 +51,13 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 
 private val buildFilesNames = setOf("build.gradle", "build.gradle.kts")
 
-internal fun migrateFileIfNeeded(file: File) {
+internal fun migrateFileIfNeeded(file: File, dependencyMapping: Map<String, String>) {
     val isBuildFile = file.name in buildFilesNames
     val oldContent = file.readText()
     val newContent = oldContent.lines()
         .detectPluginsBlock()
         .joinToString(separator = "\n") { (line, isInsidePluginsBlock) ->
-            withVersionPlaceholder(line, isInsidePluginsBlock, isBuildFile) ?: line
+            withVersionPlaceholder(line, isInsidePluginsBlock, isBuildFile, dependencyMapping) ?: line
         }
     if (newContent != oldContent) {
         println("$ANSI_BLUE        modified:   $file$ANSI_RESET")
@@ -81,12 +88,18 @@ private val pluginVersionRegex =
 internal fun withVersionPlaceholder(
     line: String,
     isInsidePluginsBlock: Boolean,
-    isBuildFile: Boolean
+    isBuildFile: Boolean,
+    dependencyMapping: Map<String, String> = emptyMap()
 ): String? = when {
     isInsidePluginsBlock -> line.replace(pluginVersionRegex, "")
     isBuildFile -> when {
         mavenCoordinateRegex.containsMatchIn(line) -> {
-            line.replace(mavenCoordinateRegex, "\$1_\$2")
+            val coordinate = extractCoordinate(line)
+            if (coordinate in dependencyMapping) {
+                line.replace(mavenCoordinateRegex, dependencyMapping[coordinate]!!)
+            } else {
+                line.replace(mavenCoordinateRegex, "\$1_\$2")
+            }
         }
         else -> null
     }
@@ -95,12 +108,17 @@ internal fun withVersionPlaceholder(
     else -> null
 }
 
+private fun extractCoordinate(line: String): String {
+    val coordinate = mavenCoordinateRegex.find(line)!!.value
+    return coordinate.replaceAfterLast(':', "").removeSuffix(":").removePrefix("'").removePrefix("\"")
+}
+
 private const val mavenChars = "[a-zA-Z0-9_.-]"
 private const val versionChars = "[a-zA-Z0-9_.{}$-]"
 
 @Language("RegExp")
 private val mavenCoordinateRegex =
-    "(['\"]$mavenChars{3,}:$mavenChars{3,}:)$versionChars{3,}([\"'])".toRegex()
+    "(['\"]$mavenChars{3,}:$mavenChars{3,}:)(?:_|$versionChars{3,})([\"'])".toRegex()
 
 internal fun findFilesWithDependencyNotations(fromDir: File): List<File> {
     require(fromDir.isDirectory) { "Expected a directory, got ${fromDir.absolutePath}" }

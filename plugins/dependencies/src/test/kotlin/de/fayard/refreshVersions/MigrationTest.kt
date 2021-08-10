@@ -1,4 +1,4 @@
-package de.fayard.refreshVersions.core
+package de.fayard.refreshVersions
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
@@ -12,12 +12,13 @@ class MigrationTest : StringSpec({
     "Try migrating local repository".config(enabled = false) {
         val file = File("/Users/jmfayard/IdeaProjects/android/compose-samples")
         findFilesWithDependencyNotations(file).forEach {
-            migrateFileIfNeeded(it)
+            migrateFileIfNeeded(it, emptyMap())
         }
     }
 
     "Replace versions in maven coordinates in build files" {
         val input = """
+            implementation("com.example:name:_")
             implementation("com.example:name:${'$'}exampleVersion")
             implementation("com.example:name:${'$'}version")
             implementation("com.example:name:${'$'}{version}")
@@ -35,6 +36,7 @@ class MigrationTest : StringSpec({
             implementation 'com.example:name:1.2.3-native-mt'
         """.trimIndent().lines()
         val expected = """
+            implementation("com.example:name:_")
             implementation("com.example:name:_")
             implementation("com.example:name:_")
             implementation("com.example:name:_")
@@ -164,6 +166,31 @@ class MigrationTest : StringSpec({
                     input,
                     isInsidePluginsBlock = false,
                     isBuildFile = false
+                ) shouldBe output
+            }
+    }
+
+    "Replace with dependency names, if present" {
+        val dependencyMapping = mapOf(
+            "com.squareup.okio:okio" to "Square.okio",
+            "com.squareup.moshi:moshi" to "Square.moshi"
+        )
+        val input = """
+            implementation 'com.squareup.okio:okio:1.2'
+            implementation("com.squareup.moshi:moshi:_")
+        """.trimIndent().lines()
+        val expected = """
+            implementation Square.okio
+            implementation(Square.moshi)
+        """.trimIndent().lines()
+        input.size shouldBeExactly expected.size
+        List(input.size) { input[it] to expected[it] }
+            .forAll { (input, output) ->
+                withVersionPlaceholder(
+                    input,
+                    isInsidePluginsBlock = false,
+                    isBuildFile = true,
+                    dependencyMapping = dependencyMapping
                 ) shouldBe output
             }
     }

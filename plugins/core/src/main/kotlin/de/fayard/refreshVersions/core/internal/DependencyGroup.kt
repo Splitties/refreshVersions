@@ -24,8 +24,13 @@ open class DependencyGroup(
 
     companion object {
         private val ALL = mutableListOf<DependencyGroup>()
+
+        @InternalRefreshVersionsApi
         val ALL_RULES: List<ArtifactVersionKeyRule>
             get() = ALL.mapNotNull { it.rule }
+
+        @InternalRefreshVersionsApi
+        var disableBomCheck: Boolean = false
 
         private val isRunningTests: Boolean by lazy {
             try {
@@ -65,11 +70,13 @@ open class DependencyGroup(
     ) {
         @PublishedApi
         internal fun markDependencyNotationsUsage() {
-            if (isBom && usePlatformConstraints.not()) {
-                if (haveDependencyNotationsBeenUsed && !isRunningTests) {
-                    error("You are trying to use a BoM ($name), but dependency notations relying on it have been declared before! Declare the BoM first to fix this issue.")
-                }
+            if (isRunningTests || disableBomCheck) {
+                return
             }
+            if (isBom && usePlatformConstraints.not() && haveDependencyNotationsBeenUsed) {
+                error("You are trying to use a BoM ($name), but dependency notations relying on it have been declared before! Declare the BoM first to fix this issue.")
+            }
+
             if (isBom) usePlatformConstraints = true
             haveDependencyNotationsBeenUsed = true
         }

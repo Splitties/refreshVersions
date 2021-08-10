@@ -1,7 +1,6 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
-import de.fayard.refreshVersions.core.RefreshVersionsMigrateTask
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
