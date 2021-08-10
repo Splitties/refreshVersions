@@ -410,6 +410,7 @@ com.louiscad.splitties:splitties-activities
 com.louiscad.splitties:splitties-alertdialog
 com.louiscad.splitties:splitties-alertdialog-appcompat
 com.louiscad.splitties:splitties-alertdialog-appcompat-coroutines
+com.louiscad.splitties:splitties-alertdialog-material
 com.louiscad.splitties:splitties-appctx
 com.louiscad.splitties:splitties-arch-lifecycle
 com.louiscad.splitties:splitties-arch-room
