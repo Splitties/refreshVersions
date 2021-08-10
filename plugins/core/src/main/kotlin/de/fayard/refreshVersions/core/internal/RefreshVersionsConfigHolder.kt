@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core.internal
 
+import de.fayard.refreshVersions.core.DependencySelection
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
@@ -18,6 +19,10 @@ object RefreshVersionsConfigHolder {
 
 
     internal val resettableDelegates = ResettableDelegates()
+
+    internal val isUsingVersionRejection: Boolean get() = versionRejectionFilter != null
+
+    var versionRejectionFilter: (DependencySelection.() -> Boolean)? by resettableDelegates.NullableDelegate()
 
     fun markSetupViaSettingsPlugin() {
         isSetupViaPlugin = true

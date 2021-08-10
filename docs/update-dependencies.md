@@ -71,3 +71,89 @@ At that point, you probably want to:
 - 🕵️‍♀️ Do manual testing if needed
 - ✅ Commit when appropriate
 - 💝 [Become our sponsor](index.md#funding) to thank us for the time saved 😉
+
+## Filter which versions are added to versions.properties
+
+Maybe you don't want alpha/beta versions to show up in `versions.properties`.
+
+This is easy to configure with a `rejectVersionIf { ... }` predicate:
+
+=== "settings.gradle.kts"
+    ```kotlin
+    refreshVersions {
+        rejectVersionIf {
+            candidate.stabilityLevel != StabilityLevel.Stable
+        }
+    }
+    ```
+=== "settings.gradle"
+    ```groovy
+    refreshVersions {
+        rejectVersionIf {
+            candidate.stabilityLevel != StabilityLevel.Stable
+        }
+    }
+    ```
+
+A perhaps better approach is to display development versions only if you are already using a development version at least as stable:
+
+=== "settings.gradle.kts"
+    ```kotlin
+    refreshVersions {
+        rejectVersionIf {
+            candidate.stabilityLevel.isLessStableThan(current.stabilityLevel)
+        }
+    }
+    ```
+=== "settings.gradle"
+    ```groovy
+    refreshVersions {
+        rejectVersionIf {
+            candidate.stabilityLevel.isLessStableThan(current.stabilityLevel)
+        }
+    }
+    ```
+
+`rejectVersionsIf { ...}` is pretty flexible, you can also use it to ban versions from specific version keys:
+
+=== "settings.gradle.kts"
+    ```kotlin
+    refreshVersions {
+        rejectVersionIf {
+            val blacklist = listOf("version.retrofit", "version.okhttp3")
+            versionKey in blacklist
+        }
+    }
+    ```
+=== "settings.gradle"
+    ```groovy
+    refreshVersions {
+        rejectVersionIf {
+            def blacklist =  ["version.retrofit", "version.okhttp3"]
+            versionKey in blacklist
+        }
+    }
+    ```
+
+Or if you prefer for dependencies with specific maven coordinates:
+
+=== "settings.gradle.kts"
+    ```kotlin
+    refreshVersions {
+        rejectVersionIf {
+            val blacklist = listOf("com.squareup.retrofit", "com.squareup.okhttp3")
+            moduleId.group in blacklist
+        }
+    }
+    ```
+=== "settings.gradle"
+    ```groovy
+    refreshVersions {
+        rejectVersionIf {
+            def blacklist = ["com.squareup.retrofit", "com.squareup.okhttp3"]
+            moduleId.group in blacklist
+        }
+    }
+    ```
+
+You can also combine all of the above to match your particular needs!

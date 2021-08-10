@@ -76,6 +76,11 @@ internal actual data class VersionsPropertiesModel(
             assert(headerText.lineSequence().all { it.startsWith(headerLinesPrefix) })
         }
 
+        val isUsingVersionRejectionHeader = """
+            |####
+            |#### NOTE: Some versions are filtered by the rejectVersionsIf predicate. See the settings.gradle.kts file.
+            """.trimMargin()
+
         private fun String.mustBeACommentLine() {
             require(startsWith("#")) { "Expected a comment but found random text: $this" }
         }
