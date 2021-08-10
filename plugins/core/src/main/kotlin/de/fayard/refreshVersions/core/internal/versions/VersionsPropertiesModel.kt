@@ -61,6 +61,8 @@ internal actual data class VersionsPropertiesModel(
 
         const val availableComment = "# available"
 
+        const val unusedEntryComment = "## unused"
+
         val versionKeysPrefixes = listOf("plugin", "version")
 
         fun versionsPropertiesHeader(version: String) = """
