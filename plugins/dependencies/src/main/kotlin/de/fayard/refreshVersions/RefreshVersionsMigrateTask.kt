@@ -1,7 +1,7 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
-import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.core.internal.DependencyMapping
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
@@ -17,9 +17,8 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 
     @TaskAction
     fun migrateBuild() {
-        val dependencyMapping = getArtifactNameToConstantMapping().associate { d ->
-            "${d.group}:${d.artifact}" to d.constantName
-        }
+        val dependencyMapping = getArtifactNameToConstantMapping()
+            .associateShortestByMavenCoordinate()
 
         findFilesWithDependencyNotations(project.rootDir).forEach { buildFile ->
             migrateFileIfNeeded(buildFile, dependencyMapping)
@@ -30,6 +29,14 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 
                 $ANSI_GREEN./gradlew refreshVersions$ANSI_RESET
             """.trimIndent())
+    }
+}
+
+internal fun List<DependencyMapping>.associateShortestByMavenCoordinate(): Map<String, String> {
+    return this.sortedByDescending { mapping ->
+        mapping.constantName.length
+    }.associate { mapping ->
+        "${mapping.group}:${mapping.artifact}" to mapping.constantName
     }
 }
 

@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.internal.DependencyMapping
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.ints.shouldBeExactly
@@ -173,15 +174,18 @@ class MigrationTest : StringSpec({
     "Replace with dependency names, if present" {
         val dependencyMapping = mapOf(
             "com.squareup.okio:okio" to "Square.okio",
-            "com.squareup.moshi:moshi" to "Square.moshi"
+            "com.squareup.moshi:moshi" to "Square.moshi",
+            "com.google.firebase:firebase-analytics" to "Firebase.no-BoM.analytics"
         )
         val input = """
             implementation 'com.squareup.okio:okio:1.2'
             implementation("com.squareup.moshi:moshi:_")
+            implementation("com.google.firebase:firebase-analytics:3.4")
         """.trimIndent().lines()
         val expected = """
             implementation Square.okio
             implementation(Square.moshi)
+            implementation(Firebase.`no-BoM`.analytics)
         """.trimIndent().lines()
         input.size shouldBeExactly expected.size
         List(input.size) { input[it] to expected[it] }
@@ -247,6 +251,13 @@ class MigrationTest : StringSpec({
     "Detect the plugins block" {
         val detected = exampleBuildGradle.detectPluginsBlock().map { it.second }
         detected shouldBe (List(exampleBuildGradle.size) { it in 3..5 })
+    }
+
+    "The shortest dependency constant should be picked" {
+        val a = DependencyMapping("com.example", "artifact", "Firebase.analytics")
+        val b = DependencyMapping("com.example", "artifact", "Firebase.no-BoM.analytics")
+        listOf(a, b).associateShortestByMavenCoordinate() shouldBe mapOf("com.example:artifact" to "Firebase.analytics")
+        listOf(b, a).associateShortestByMavenCoordinate() shouldBe mapOf("com.example:artifact" to "Firebase.analytics")
     }
 })
 
