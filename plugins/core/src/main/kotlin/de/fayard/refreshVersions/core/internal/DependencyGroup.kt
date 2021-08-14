@@ -47,12 +47,16 @@ open class DependencyGroup(
         ALL.add(this)
     }
 
-    fun module(module: String, isBom: Boolean = false): Module {
+    fun module(
+        module: String,
+        isBom: Boolean = false,
+        usePlatformConstraints: Boolean = isBom || this.usePlatformConstraints
+    ): Module {
         assert(module.trimStart() == module) { "module=[$module] has superfluous leading whitespace" }
         assert(module.trimEnd() == module) { "module=[$module] has superfluous trailing whitespace" }
         assert(module.contains(":").not()) { "module=[$module] is invalid" }
         return Module(
-            name = "$group:$module" + if (usePlatformConstraints && isBom.not()) "" else ":_",
+            name = "$group:$module" + if (usePlatformConstraints) ":_" else "",
             isBom = isBom
         )
     }
