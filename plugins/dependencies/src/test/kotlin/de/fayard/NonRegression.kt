@@ -44,7 +44,7 @@ class NonRegression: FreeSpec({
         val receivedMapping = getArtifactNameToConstantMapping().map {
             val key = versionKeyReader.readVersionKey(it.group, it.artifact) ?: "NO-RULE"
             it.copy(constantName = "version.$key")
-        }
+        }.distinct()
         receivedKeys.writeText(receivedMapping.joinToString(separator = "\n", postfix = "\n"))
 
         val breakingChanges = existingMapping - receivedMapping
