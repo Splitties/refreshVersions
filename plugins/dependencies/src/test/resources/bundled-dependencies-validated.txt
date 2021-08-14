@@ -368,8 +368,11 @@ com.google.firebase:firebase-inappmessaging-display
 com.google.firebase:firebase-inappmessaging-display-ktx
 com.google.firebase:firebase-inappmessaging-ktx
 com.google.firebase:firebase-messaging
+com.google.firebase:firebase-messaging-directboot
 com.google.firebase:firebase-messaging-ktx
 com.google.firebase:firebase-ml-model-interpreter
+com.google.firebase:firebase-ml-modeldownloader
+com.google.firebase:firebase-ml-modeldownloader-ktx
 com.google.firebase:firebase-ml-natural-language
 com.google.firebase:firebase-ml-natural-language-language-id-model
 com.google.firebase:firebase-ml-natural-language-smart-reply-model
