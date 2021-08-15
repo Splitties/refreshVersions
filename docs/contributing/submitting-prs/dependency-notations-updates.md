@@ -42,7 +42,7 @@ object Kodein: IsNotADependency {                               // 3
 
 Here is what you need to know:
 
-1. We use on purpose no package - and suppress the corresponding warning - so that the user doesn't have to import the dependency notation
+1. We use no package on purpose - and suppress the corresponding warning - so that the user doesn't have to import the dependency notation
 2. We provide a KDoc with a description of what the library does and link to GitHub and the documentation
 3. We tag classes with `IsNotADependency` so that the IDE shows a warning if the user tries to do `implementation(Kodein)`
 4. We support Gradle build scripts in both Kotlin and Groovy. `Kodein.DI` works in Kotlin but not in Groovy. That's why we have the property `Kotlin.di` who works in both.
