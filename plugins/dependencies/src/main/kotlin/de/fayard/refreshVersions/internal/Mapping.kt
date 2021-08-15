@@ -1,9 +1,9 @@
 package de.fayard.refreshVersions.internal
 
-import de.fayard.refreshVersions.core.internal.DependencyGroup
+import de.fayard.refreshVersions.core.AbstractDependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.internal.DependencyMapping
 import dependencies.ALL_DEPENDENCIES_NOTATIONS
-import dependencies.DependencyNotationAndGroup
 import org.gradle.api.artifacts.ModuleIdentifier
 import java.lang.reflect.Field
 import kotlin.reflect.KProperty
@@ -16,7 +16,7 @@ import kotlin.reflect.jvm.javaType
 import kotlin.reflect.typeOf
 
 internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = false): List<DependencyMapping> {
-    DependencyGroup.disableBomCheck = true
+    AbstractDependencyGroup.disableBomCheck = true
     val result = ALL_DEPENDENCIES_NOTATIONS.asSequence().flatMap { objectInstance ->
         getArtifactNameToConstantMappingFromObject(
             objectInstance,
@@ -24,7 +24,7 @@ internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = 
             isTopLevelObject = true
         )
     }.sortedBy { it.toString() }.toList()
-    DependencyGroup.disableBomCheck = false
+    AbstractDependencyGroup.disableBomCheck = false
     return result
 }
 
@@ -57,7 +57,9 @@ private fun getArtifactNameToConstantMappingFromObject(
             it != typeOf<String>() && it.javaType != java.lang.Void::class.java
         }
     }.flatMap { kProperty ->
-        if (kProperty.name == "rule") return@flatMap emptySequence()
+        when (kProperty.name) {
+            "rule", "length", "externalImplementationGuard" -> return@flatMap emptySequence()
+        }
         @Suppress("unchecked_cast")
         val nestedObjectInstance = (kProperty as KProperty1<Any?, Any>).get(objectInstance)
         getArtifactNameToConstantMappingFromObject(
@@ -71,17 +73,18 @@ private fun getArtifactNameToConstantMappingFromObject(
     val currentObjectDependencyNotations: Sequence<Pair<KProperty<*>?, String>> =
         objectClass.memberProperties.asSequence().filter { kProperty ->
             kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType.let {
-                (it == typeOf<String>() || it.isSubtypeOf(typeOf<DependencyNotationAndGroup>())) &&
-                        it.javaType != java.lang.Void::class.java // Filter out redirection properties.
+                (it == typeOf<String>() || it.isSubtypeOf(typeOf<DependencyNotation>())) &&
+                        it.javaType != java.lang.Void::class.java && // Filter out redirection properties.
+                kProperty.name != "artifactPrefix"
             }
-        }.mapNotNull { kProperty ->
+        }.map { kProperty ->
             val javaField: Field? = kProperty.javaField
 
             @OptIn(ExperimentalStdlibApi::class)
             @Suppress("unchecked_cast")
             val dependencyNotation = when {
-                kProperty.returnType.isSubtypeOf(typeOf<DependencyNotationAndGroup>()) -> {
-                    (kProperty as KProperty1<Any?, DependencyNotationAndGroup>).get(objectInstance).backingString
+                kProperty.returnType.isSubtypeOf(typeOf<DependencyNotation>()) -> {
+                    (kProperty as KProperty1<Any?, DependencyNotation>).get(objectInstance).toString()
                 }
                 kProperty.isConst -> javaField!!.get(null).toString()
                 else -> try {
@@ -93,8 +96,8 @@ private fun getArtifactNameToConstantMappingFromObject(
             kProperty to dependencyNotation
         }
 
-    val dependencyNotations = if (isTopLevelObject && objectInstance is DependencyNotationAndGroup) {
-        currentObjectDependencyNotations + (null to objectInstance.backingString)
+    val dependencyNotations = if (isTopLevelObject && objectInstance is DependencyNotation) {
+        currentObjectDependencyNotations + (null to objectInstance.toString())
     } else currentObjectDependencyNotations
 
     val currentObjectDependencyMapping = dependencyNotations.mapNotNull { (kProperty, dependencyNotation) ->

@@ -1,6 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import dependencies.DependencyNotationAndGroup
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
@@ -227,7 +227,6 @@ object Google {
     val dagger = Dagger
 
     object Dagger : DependencyNotationAndGroup(group = "com.google.dagger", name = "dagger") {
-        private const val group = "com.google.dagger"
 
         @JvmField val compiler = "$artifactPrefix-compiler:_"
 
@@ -259,7 +258,7 @@ object Google {
                 val testing = "$artifactPrefix-testing:_"
             }
 
-            const val compiler = "$group:hilt-compiler:_"
+            val compiler = "$group:hilt-compiler:_"
         }
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")

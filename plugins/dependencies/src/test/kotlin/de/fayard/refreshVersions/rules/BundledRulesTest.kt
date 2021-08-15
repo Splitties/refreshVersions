@@ -1,7 +1,7 @@
 package de.fayard.refreshVersions.rules
 
+import de.fayard.refreshVersions.core.AbstractDependencyGroup
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
-import de.fayard.refreshVersions.core.internal.DependencyGroup
 import dependencies.ALL_DEPENDENCIES_NOTATIONS
 import org.junit.jupiter.api.*
 import testutils.junit.dynamicTest
@@ -32,7 +32,7 @@ class BundledRulesTest {
     fun `generate rules file for dependency groups`() {
         ALL_DEPENDENCIES_NOTATIONS
         val file = rulesDir.resolve("dependency-groups-alias-rules.txt")
-        val content = DependencyGroup.ALL_RULES
+        val content = AbstractDependencyGroup.ALL_RULES
             .sorted()
             .distinct()
             .joinToString(separator = "\n\n")
