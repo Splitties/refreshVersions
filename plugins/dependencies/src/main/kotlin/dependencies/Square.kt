@@ -57,9 +57,9 @@ object Square {
         val converter = Converter
 
         object Converter : IsNotADependency {
-
             val scalars = module("converter-scalars")
 
+            val wire = module("converter-wire")
             val moshi = module("converter-moshi")
             val gson = module("converter-gson")
             val jackson = module("converter-jackson")

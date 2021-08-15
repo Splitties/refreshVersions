@@ -499,6 +499,7 @@ com.squareup.retrofit2..converter-jackson=version.retrofit2
 com.squareup.retrofit2..converter-moshi=version.retrofit2
 com.squareup.retrofit2..converter-scalars=version.retrofit2
 com.squareup.retrofit2..converter-simplexml=version.retrofit2
+com.squareup.retrofit2..converter-wire=version.retrofit2
 com.squareup.retrofit2..retrofit-mock=version.retrofit2
 com.squareup.retrofit2..retrofit=version.retrofit2
 com.squareup.sqldelight..android-driver=version.sqldelight
