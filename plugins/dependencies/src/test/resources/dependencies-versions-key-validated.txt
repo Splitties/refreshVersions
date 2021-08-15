@@ -485,6 +485,7 @@ com.squareup.moshi..moshi-kotlin=version.moshi
 com.squareup.moshi..moshi=version.moshi
 com.squareup.okhttp3..logging-interceptor=version.okhttp3
 com.squareup.okhttp3..mockwebserver=version.okhttp3
+com.squareup.okhttp3..okhttp-bom=version.okhttp3
 com.squareup.okhttp3..okhttp=version.okhttp3
 com.squareup.okio..okio=version.okio
 com.squareup.picasso..picasso-pollexor=version.picasso

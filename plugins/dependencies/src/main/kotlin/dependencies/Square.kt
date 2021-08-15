@@ -29,11 +29,11 @@ object Square {
      */
     val okHttp3 = OkHttp3
 
-    object OkHttp3 : IsNotADependency {
-        private const val group = "com.squareup.okhttp3"
-        const val okHttp = "$group:okhttp:_"
-        const val loggingInterceptor = "$group:logging-interceptor:_"
-        const val mockWebServer = "$group:mockwebserver:_"
+    object OkHttp3 : DependencyNotationAndGroup(group = "com.squareup.okhttp3", name = "okhttp") {
+        val bom = module("okhttp-bom", isBom = true)
+        val okHttp = module("okhttp")
+        val loggingInterceptor = module("logging-interceptor")
+        val mockWebServer = module("mockwebserver")
     }
 
     /**
