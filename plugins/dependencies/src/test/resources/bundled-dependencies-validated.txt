@@ -483,6 +483,7 @@ com.squareup.moshi:moshi-kotlin-codegen
 com.squareup.okhttp3:logging-interceptor
 com.squareup.okhttp3:mockwebserver
 com.squareup.okhttp3:okhttp
+com.squareup.okhttp3:okhttp-bom
 com.squareup.okio:okio
 com.squareup.picasso:picasso
 com.squareup.picasso:picasso-pollexor
@@ -495,6 +496,7 @@ com.squareup.retrofit2:converter-jackson
 com.squareup.retrofit2:converter-moshi
 com.squareup.retrofit2:converter-scalars
 com.squareup.retrofit2:converter-simplexml
+com.squareup.retrofit2:converter-wire
 com.squareup.retrofit2:retrofit
 com.squareup.retrofit2:retrofit-mock
 com.squareup.sqldelight:android-driver
