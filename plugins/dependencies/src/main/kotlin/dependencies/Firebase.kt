@@ -1,6 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "ObjectPropertyName", "SpellCheckingInspection")
 
-import de.fayard.refreshVersions.core.internal.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
@@ -24,57 +24,57 @@ object Firebase : DependencyGroup(
     group = "com.google.firebase",
     usePlatformConstraints = true
 ) {
-    val bom by module("firebase-bom", isBom = true)
+    val bom = module("firebase-bom", isBom = true)
 
-    val appDistributionGradlePlugin by module("firebase-appdistribution-gradle", usePlatformConstraints = false)
-    val performanceMonitoringGradlePlugin by module("perf-plugin", usePlatformConstraints = false)
+    val appDistributionGradlePlugin = module("firebase-appdistribution-gradle", usePlatformConstraints = false)
+    val performanceMonitoringGradlePlugin = module("perf-plugin", usePlatformConstraints = false)
 
     // AdMob intentionally not included because ads are mental pollution.
 
-    val analytics by module("firebase-analytics")
-    val analyticsKtx by module("firebase-analytics-ktx")
+    val analytics = module("firebase-analytics")
+    val analyticsKtx = module("firebase-analytics-ktx")
 
-    val appIndexing by module("firebase-appindexing")
+    val appIndexing = module("firebase-appindexing")
 
-    val authentication by module("firebase-auth")
-    val authenticationKtx by module("firebase-auth-ktx")
+    val authentication = module("firebase-auth")
+    val authenticationKtx = module("firebase-auth-ktx")
 
-    val cloudFirestore by module("firebase-firestore")
-    val cloudFirestoreKtx by module("firebase-firestore-ktx")
+    val cloudFirestore = module("firebase-firestore")
+    val cloudFirestoreKtx = module("firebase-firestore-ktx")
 
-    val cloudFunctions by module("firebase-functions")
-    val cloudFunctionsKtx by module("firebase-functions-ktx")
+    val cloudFunctions = module("firebase-functions")
+    val cloudFunctionsKtx = module("firebase-functions-ktx")
 
-    val cloudMessaging by module("firebase-messaging")
-    val cloudMessagingKtx by module("firebase-messaging-ktx")
-    val cloudMessagingDirectBoot by module("firebase-messaging-directboot")
+    val cloudMessaging = module("firebase-messaging")
+    val cloudMessagingKtx = module("firebase-messaging-ktx")
+    val cloudMessagingDirectBoot = module("firebase-messaging-directboot")
 
-    val cloudStorage by module("firebase-storage")
-    val cloudStorageKtx by module("firebase-storage-ktx")
-    val crashlytics by module("firebase-crashlytics")
-    val crashlyticsKtx by module("firebase-crashlytics-ktx")
-    val crashlyticsNdk by module("firebase-crashlytics-ndk")
-    val crashlyticsGradlePlugin by module("firebase-crashlytics-gradle", usePlatformConstraints = false)
+    val cloudStorage = module("firebase-storage")
+    val cloudStorageKtx = module("firebase-storage-ktx")
+    val crashlytics = module("firebase-crashlytics")
+    val crashlyticsKtx = module("firebase-crashlytics-ktx")
+    val crashlyticsNdk = module("firebase-crashlytics-ndk")
+    val crashlyticsGradlePlugin = module("firebase-crashlytics-gradle", usePlatformConstraints = false)
 
-    val dynamicLinks by module("firebase-dynamic-links")
-    val dynamicLinksKtx by module("firebase-dynamic-links-ktx")
+    val dynamicLinks = module("firebase-dynamic-links")
+    val dynamicLinksKtx = module("firebase-dynamic-links-ktx")
 
-    val inAppMessaging by module("firebase-inappmessaging")
-    val inAppMessagingKtx by module("firebase-inappmessaging-ktx")
-    val inAppMessagingDisplay by module("firebase-inappmessaging-display")
-    val inAppMessagingDisplayKtx by module("firebase-inappmessaging-display-ktx")
+    val inAppMessaging = module("firebase-inappmessaging")
+    val inAppMessagingKtx = module("firebase-inappmessaging-ktx")
+    val inAppMessagingDisplay = module("firebase-inappmessaging-display")
+    val inAppMessagingDisplayKtx = module("firebase-inappmessaging-display-ktx")
 
-    val mlModelDownloader by module("firebase-ml-modeldownloader")
-    val mlModelDownloaderKtx by module("firebase-ml-modeldownloader-ktx")
+    val mlModelDownloader = module("firebase-ml-modeldownloader")
+    val mlModelDownloaderKtx = module("firebase-ml-modeldownloader-ktx")
 
-    val performanceMonitoring by module("firebase-perf")
-    val performanceMonitoringKtx by module("firebase-perf-ktx")
+    val performanceMonitoring = module("firebase-perf")
+    val performanceMonitoringKtx = module("firebase-perf-ktx")
 
-    val realtimeDatabase by module("firebase-database")
-    val realtimeDatabaseKtx by module("firebase-database-ktx")
+    val realtimeDatabase = module("firebase-database")
+    val realtimeDatabaseKtx = module("firebase-database-ktx")
 
-    val remoteConfig by module("firebase-config")
-    val remoteConfigKtx by module("firebase-config-ktx")
+    val remoteConfig = module("firebase-config")
+    val remoteConfigKtx = module("firebase-config-ktx")
 
     @Deprecated("Use Google ML Kit and Firebase ML model donwloader instead. " +
         "Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit, " +
@@ -88,10 +88,10 @@ object Firebase : DependencyGroup(
             "See migration page: https://developers.google.com/ml-kit/migration/android"
 
         @Deprecated(deprecationMessage)
-        val vision by module("firebase-ml-vision")
+        val vision = module("firebase-ml-vision")
 
         @Deprecated(deprecationMessage)
-        val naturalLanguage by module("firebase-ml-natural-language", usePlatformConstraints = false)
+        val naturalLanguage = module("firebase-ml-natural-language", usePlatformConstraints = false)
 
         @Deprecated(deprecationMessage)
         val models = Models
@@ -99,7 +99,7 @@ object Firebase : DependencyGroup(
         object Models : IsNotADependency {
 
             @Deprecated("Replaced with the Firebase ML model downloader", ReplaceWith("Firebase.mlModelDownloaderKtx"))
-            val custom by module("firebase-ml-model-interpreter", usePlatformConstraints = false)
+            val custom = module("firebase-ml-model-interpreter", usePlatformConstraints = false)
 
             @Deprecated(deprecationMessage)
             val vision = Vision
@@ -107,19 +107,19 @@ object Firebase : DependencyGroup(
             object Vision : IsNotADependency {
 
                 @Deprecated(deprecationMessage)
-                val imageLabelling by module("firebase-ml-vision-image-label-model", usePlatformConstraints = false)
+                val imageLabelling = module("firebase-ml-vision-image-label-model", usePlatformConstraints = false)
 
                 @Deprecated(deprecationMessage)
-                val objectDetectionAndTracking by module("firebase-ml-vision-object-detection-model", usePlatformConstraints = false)
+                val objectDetectionAndTracking = module("firebase-ml-vision-object-detection-model", usePlatformConstraints = false)
 
                 @Deprecated(deprecationMessage)
-                val faceDetection by module("firebase-ml-vision-face-model", usePlatformConstraints = false)
+                val faceDetection = module("firebase-ml-vision-face-model", usePlatformConstraints = false)
 
                 @Deprecated(deprecationMessage)
-                val barcodeScanning by module("firebase-ml-vision-barcode-model", usePlatformConstraints = false)
+                val barcodeScanning = module("firebase-ml-vision-barcode-model", usePlatformConstraints = false)
 
                 @Deprecated(deprecationMessage)
-                val autoMl by module("firebase-ml-vision-automl", usePlatformConstraints = false)
+                val autoMl = module("firebase-ml-vision-automl", usePlatformConstraints = false)
             }
 
             @Deprecated(deprecationMessage)
@@ -128,13 +128,13 @@ object Firebase : DependencyGroup(
             object NaturalLanguage : IsNotADependency {
 
                 @Deprecated(deprecationMessage)
-                val languageIdentification by module("firebase-ml-natural-language-language-id-model", usePlatformConstraints = false)
+                val languageIdentification = module("firebase-ml-natural-language-language-id-model", usePlatformConstraints = false)
 
                 @Deprecated(deprecationMessage)
-                val translate by module("firebase-ml-natural-language-translate-model", usePlatformConstraints = false)
+                val translate = module("firebase-ml-natural-language-translate-model", usePlatformConstraints = false)
 
                 @Deprecated(deprecationMessage)
-                val smartReply by module("firebase-ml-natural-language-smart-reply-model", usePlatformConstraints = false)
+                val smartReply = module("firebase-ml-natural-language-smart-reply-model", usePlatformConstraints = false)
             }
         }
     }

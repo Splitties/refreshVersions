@@ -1,6 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import dependencies.DependencyNotationAndGroup
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
@@ -123,7 +123,7 @@ object Square {
     object Moshi : DependencyNotationAndGroup(group = "com.squareup.moshi", name = "moshi") {
         @JvmField val kotlinReflect = "$artifactPrefix-kotlin:_"
         @JvmField val kotlinCodegen = "$artifactPrefix-kotlin-codegen:_"
-        @JvmField val javaReflect = backingString
+        val javaReflect = module("moshi")
     }
 
 

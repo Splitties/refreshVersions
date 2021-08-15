@@ -9,7 +9,7 @@ Here is what a dependency notation should look like:
 ```kotlin
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused") // 1
 
-import de.fayard.refreshVersions.core.internal.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
@@ -33,9 +33,9 @@ object Kodein: IsNotADependency {                               // 3
                 ^^^^^^^^^
         """.trimIndent()                                        // 8
     ) {
-        val bom by module("kodein-bom", isBom = true)           // 9
-        val js by module("kodein-di-js")                        // 10
-        val androidx by module("kodein-di-framework-android-x")
+        val bom = module("kodein-bom", isBom = true)           // 9
+        val js = module("kodein-di-js")                        // 10
+        val androidx = module("kodein-di-framework-android-x")
     }
 }
 ```
@@ -51,7 +51,7 @@ Here is what you need to know:
 7. If the library provides a Bill of Materials `BoM` of another kind of platform constraints, we set `usePlatformConstraints = true`.
 8. All dependency notations with a name like `org.kodein.di:kodein-di(-*)` will use the same version `version.kodein.di` because we defined an artifact rule. To learn more about [refreshVersions rules, have a look here](thttps://github.com/jmfayard/refreshVersions)
 9. DependencyGroup has firt class support for `BoM`s via the `isBom = true` parameter. It switches the boolean `usePlatformConstraints = true` and does various checks.
-10. A module is defined via the `by module("module.name")` syntax.
+10. A module is defined via the `= module("module.name")` syntax.
 
 Three more things before you  start coding:
 

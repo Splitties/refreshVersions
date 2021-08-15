@@ -1,6 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import de.fayard.refreshVersions.core.internal.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
@@ -24,14 +24,14 @@ object Kodein: IsNotADependency {
                 ^^^^^^^^^
         """.trimIndent()
     ) {
-        val androidCore by module("kodein-di-framework-android-core")
-        val androidSupport by module("kodein-di-framework-android-support")
-        val androidx by module("kodein-di-framework-android-x")
-        val configurableJS by module("kodein-di-conf-js")
-        val configurableJvm by module("kodein-di-conf-jvm")
-        val js by module("kodein-di-js")
-        val jsr330 by module("kodein-di-jxinject-jvm")
-        val ktor by module("kodein-di-framework-ktor-server-jvm")
-        val tornadofx by module("kodein-di-framework-tornadofx-jvm")
+        val androidCore = module("kodein-di-framework-android-core")
+        val androidSupport = module("kodein-di-framework-android-support")
+        val androidx = module("kodein-di-framework-android-x")
+        val configurableJS = module("kodein-di-conf-js")
+        val configurableJvm = module("kodein-di-conf-jvm")
+        val js = module("kodein-di-js")
+        val jsr330 = module("kodein-di-jxinject-jvm")
+        val ktor = module("kodein-di-framework-ktor-server-jvm")
+        val tornadofx = module("kodein-di-framework-tornadofx-jvm")
     }
 }

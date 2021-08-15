@@ -8,7 +8,7 @@ import Orchid
 import Splitties
 import Testing
 import de.fayard.refreshVersions.internal.getArtifactsFromDependenciesObject
-import dependencies.DependencyNotationAndGroup
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.artifacts.ModuleIdentifier
 
 data class VersionKeyWithModules(
@@ -313,7 +313,7 @@ private fun versionKeyWithModules(expected: String, dependency: String): Version
 private fun versionKeyWithModules(expected: String, dependency: DependencyNotationAndGroup): VersionKeyWithModules {
     return VersionKeyWithModules(
         expectedVersionKey = expected,
-        moduleIdentifiers = listOf(moduleIdentifier(dependency.backingString))
+        moduleIdentifiers = listOf(moduleIdentifier(dependency.toString()))
     )
 }
 

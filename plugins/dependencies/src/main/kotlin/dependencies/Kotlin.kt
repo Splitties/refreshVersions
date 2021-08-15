@@ -1,6 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import dependencies.DependencyNotationAndGroup
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
