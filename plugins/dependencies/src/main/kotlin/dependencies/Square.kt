@@ -29,11 +29,11 @@ object Square {
      */
     val okHttp3 = OkHttp3
 
-    object OkHttp3 : IsNotADependency {
-        private const val group = "com.squareup.okhttp3"
-        const val okHttp = "$group:okhttp:_"
-        const val loggingInterceptor = "$group:logging-interceptor:_"
-        const val mockWebServer = "$group:mockwebserver:_"
+    object OkHttp3 : DependencyNotationAndGroup(group = "com.squareup.okhttp3", name = "okhttp") {
+        val bom = module("okhttp-bom", isBom = true)
+        val okHttp = module("okhttp")
+        val loggingInterceptor = module("logging-interceptor")
+        val mockWebServer = module("mockwebserver")
     }
 
     /**
@@ -49,33 +49,31 @@ object Square {
      */
     val retrofit2 = Retrofit2
 
-    object Retrofit2 : IsNotADependency {
-        private const val group = "com.squareup.retrofit2"
+    object Retrofit2 : DependencyNotationAndGroup(group = "com.squareup.retrofit2", name = "retrofit") {
 
-        const val retrofit = "$group:retrofit:_"
-        const val mock = "$group:retrofit-mock:_"
+        val retrofit = module("retrofit")
+        val mock = module("retrofit-mock")
 
         val converter = Converter
 
         object Converter : IsNotADependency {
-            private const val artifactPrefix = "$group:converter"
+            val scalars = module("converter-scalars")
 
-            const val scalars = "$artifactPrefix-scalars:_"
+            val wire = module("converter-wire")
+            val moshi = module("converter-moshi")
+            val gson = module("converter-gson")
+            val jackson = module("converter-jackson")
 
-            const val moshi = "$artifactPrefix-moshi:_"
-            const val gson = "$artifactPrefix-gson:_"
-            const val jackson = "$artifactPrefix-jackson:_"
-
-            const val simpleXml = "$artifactPrefix-simplexml:_"
+            val simpleXml = module("converter-simplexml")
         }
 
         val adapter = Adapter
 
         object Adapter : IsNotADependency {
-            const val java8 = "$group:adapter-java8:_"
-            const val rxJava1 = "$group:adapter-rxjava:_"
-            const val rxJava2 = "$group:adapter-rxjava2:_"
-            const val rxJava3 = "$group:adapter-rxjava3:_"
+            val java8 = module("adapter-java8")
+            val rxJava1 = module("adapter-rxjava")
+            val rxJava2 = module("adapter-rxjava2")
+            val rxJava3 = module("adapter-rxjava3")
         }
     }
 
