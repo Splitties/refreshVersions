@@ -552,6 +552,7 @@ com.squareup.retrofit2..converter-moshi=Square.retrofit2.converter.moshi
 com.squareup.retrofit2..converter-scalars=Square.retrofit2.converter.scalars
 com.squareup.retrofit2..converter-simplexml=Square.retrofit2.converter.simpleXml
 com.squareup.retrofit2..retrofit-mock=Square.retrofit2.mock
+com.squareup.retrofit2..retrofit=Square.retrofit2
 com.squareup.retrofit2..retrofit=Square.retrofit2.retrofit
 com.squareup.sqldelight..android-driver=CashApp.sqlDelight.drivers.android
 com.squareup.sqldelight..android-driver=Square.sqlDelight.drivers.android
