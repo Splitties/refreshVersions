@@ -1,9 +1,12 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.DependencyNotation
+import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestMethodOrder
 import kotlin.test.assertFailsWith
 
+@TestMethodOrder(MethodOrderer.MethodName::class)
 class BomTest {
 
     @Test
