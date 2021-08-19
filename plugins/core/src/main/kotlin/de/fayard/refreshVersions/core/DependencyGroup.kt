@@ -132,32 +132,35 @@ sealed class AbstractDependencyGroup(
         ) {
 
             override fun shouldUsePlatformConstraints(): Boolean {
-                markDependencyNotationsUsage()
-                return usePlatformConstraints ?: this@AbstractDependencyGroup.usePlatformConstraints
-            }
+                val usePlatformConstraintsForThisOne = usePlatformConstraints
+                    ?: this@AbstractDependencyGroup.usePlatformConstraints
 
-            private fun markDependencyNotationsUsage() {
-                if (disableBomCheck) return
-
-                val isGroupUsingPlatformConstraints = this@AbstractDependencyGroup.usePlatformConstraints
-
-                if (isBom) {
-                    if (isGroupUsingPlatformConstraints.not() &&
-                        haveDependencyNotationsWithPlatformConstraintsBeenUsed
-                    ) {
-                        error(
+                if (disableBomCheck.not()) {
+                    if (isBom) {
+                        if (usedDependencyNotationsWithNoPlatformConstraints) error(
                             "You are trying to use a BoM ($artifactPrefix), " +
                                 "but dependency notations relying on it have been declared before! " +
                                 "Declare the BoM first to fix this issue."
                         )
+                        this@AbstractDependencyGroup.usePlatformConstraints = true
+                    } else when (usePlatformConstraints) {
+                        null -> {
+                            if (this@AbstractDependencyGroup.usePlatformConstraints.not()) {
+                                usedDependencyNotationsWithNoPlatformConstraints = true
+                            }
+                        }
                     }
-                    this@AbstractDependencyGroup.usePlatformConstraints = true
-                } else if (isGroupUsingPlatformConstraints) {
-                    haveDependencyNotationsWithPlatformConstraintsBeenUsed = true
                 }
+
+                return usePlatformConstraintsForThisOne
             }
         }
     }
 
-    private var haveDependencyNotationsWithPlatformConstraintsBeenUsed = false
+    @InternalRefreshVersionsApi
+    fun reset() {
+        usedDependencyNotationsWithNoPlatformConstraints = false
+    }
+
+    private var usedDependencyNotationsWithNoPlatformConstraints = false
 }
