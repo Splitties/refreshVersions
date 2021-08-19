@@ -2,6 +2,7 @@
 # https://github.com/marketplace/actions/gradle-command
 name: Check build and tests of plugins and samples
 on:
+  workflow_dispatch:
   pull_request:
     paths:
       - 'plugins/**'
