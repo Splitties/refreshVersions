@@ -27,6 +27,10 @@ repositories {
 }
 
 dependencies {
+    implementation(Firebase.analytics)
+    implementation(platform(Firebase.bom))
+    implementation(Firebase.analyticsKtx)
+
     implementation(AndroidX.core)
     testImplementation(KotlinX.coroutines.core)
     testImplementation(KotlinX.coroutines.jdk8)
