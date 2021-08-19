@@ -1,5 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
@@ -88,22 +89,21 @@ object Square {
      */
     val sqlDelight = SqlDelight
 
-    object SqlDelight : IsNotADependency {
-        private const val group = "com.squareup.sqldelight"
+    object SqlDelight : DependencyGroup("com.squareup.sqldelight") {
 
-        const val gradlePlugin = "$group:gradle-plugin:_"
+        val gradlePlugin = module("gradle-plugin")
 
-        const val coroutinesExtensions = "$group:coroutines-extensions:_"
+        val coroutinesExtensions = module("coroutines-extensions")
 
         val drivers = Drivers
 
         object Drivers : IsNotADependency {
-            const val android = "$group:android-driver:_"
+            val android = module("android-driver")
 
-            const val jdbc = "$group:jdbc-driver:_"
-            const val jdbcSqlite = "$group:sqlite-driver:_"
+            val jdbc = module("jdbc-driver")
+            val jdbcSqlite = module("sqlite-driver")
 
-            const val native = "$group:native-driver:_"
+            val native = module("native-driver")
         }
     }
 
@@ -119,8 +119,8 @@ object Square {
     val moshi = Moshi
 
     object Moshi : DependencyNotationAndGroup(group = "com.squareup.moshi", name = "moshi") {
-        @JvmField val kotlinReflect = "$artifactPrefix-kotlin:_"
-        @JvmField val kotlinCodegen = "$artifactPrefix-kotlin-codegen:_"
+        val kotlinReflect = module("moshi-kotlin")
+        val kotlinCodegen = module("moshi-kotlin-codegen")
         val javaReflect = module("moshi")
     }
 
@@ -138,17 +138,16 @@ object Square {
      */
     val wire = Wire
 
-    object Wire : IsNotADependency {
-        private const val artifactPrefix = "com.squareup.wire:wire"
+    object Wire : DependencyGroup("com.squareup.wire") {
 
-        const val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
+        val gradlePlugin = module("wire-gradle-plugin")
 
-        const val runtime = "$artifactPrefix-runtime:_"
+        val runtime = module("wire-runtime")
 
         val grpc = Grpc
 
         object Grpc : IsNotADependency {
-            const val client = "$artifactPrefix-grpc-client:_"
+            val client = module("wire-grpc-client")
         }
     }
 
@@ -166,37 +165,36 @@ object Square {
      */
     val leakCanary = LeakCanary
 
-    object LeakCanary : IsNotADependency {
-        private const val group = "com.squareup.leakcanary"
+    object LeakCanary : DependencyGroup("com.squareup.leakcanary") {
 
         /**
          * [API reference](https://square.github.io/leakcanary/api/leakcanary-android-core/leakcanary/)
          */
-        const val android = "$group:leakcanary-android:_"
+        val android = module("leakcanary-android")
 
         /**
          * [Code recipe](https://square.github.io/leakcanary/recipes/#running-the-leakcanary-analysis-in-a-separate-process)
          *
          * [API reference](https://square.github.io/leakcanary/api/leakcanary-android-process/leakcanary/)
          */
-        const val androidProcess = "$group:leakcanary-android-process:_"
+        val androidProcess = module("leakcanary-android-process")
 
         /**
          * [Code recipe](https://square.github.io/leakcanary/recipes/#running-leakcanary-in-instrumentation-tests)
          *
          * [API reference](https://square.github.io/leakcanary/api/leakcanary-android-instrumentation/leakcanary/)
          */
-        const val androidInstrumentation = "$group:leakcanary-android-instrumentation:_"
+        val androidInstrumentation = module("leakcanary-android-instrumentation")
 
         /**
          * [Blog post "LeakCanary—Deobfuscation Feature Explained" by the contributors to this feature](https://www.polidea.com/blog/leakcanary-deobfuscation-feature-explained/)
          */
-        const val deobfuscationGradlePlugin = "$group:leakcanary-deobfuscation-gradle-plugin:_"
+        val deobfuscationGradlePlugin = module("leakcanary-deobfuscation-gradle-plugin")
 
         /**
          * [Plumber introduction in the changelog of the version 2.4](https://square.github.io/leakcanary/changelog/#version-24-2020-06-10)
          */
-        const val plumber = "$group:plumber-android:_"
+        val plumber = module("plumber-android")
 
         /**
          * [API reference](https://square.github.io/leakcanary/api/leakcanary-object-watcher/leakcanary/)
@@ -210,7 +208,7 @@ object Square {
              *
              * [API reference](https://square.github.io/leakcanary/api/leakcanary-object-watcher-android/leakcanary/)
              */
-            @JvmField val android = "$artifactPrefix-android:_"
+            val android = module("leakcanary-object-watcher-android")
         }
 
         /**
@@ -231,22 +229,22 @@ object Square {
             /**
              * [API reference](https://square.github.io/leakcanary/api/shark-hprof/shark/)
              */
-            @JvmField val hprof = "$artifactPrefix-hprof:_"
+            val hprof = module("shark-hprof")
 
             /**
              * [API reference](https://square.github.io/leakcanary/api/shark-graph/shark/)
              */
-            @JvmField val graph = "$artifactPrefix-graph:_"
+            val graph = module("shark-graph")
 
             /**
              * [API reference](https://square.github.io/leakcanary/api/shark-android/shark/)
              */
-            @JvmField val android = "$artifactPrefix-android:_"
+            val android = module("shark-android")
 
             /**
              * [Official documentation](https://square.github.io/leakcanary/shark/#shark-cli)
              */
-            @JvmField val cli = "$artifactPrefix-cli:_"
+            val cli = module("shark-cli")
         }
     }
 
@@ -270,14 +268,14 @@ object Square {
          *
          * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet-metadata/com.squareup.kotlinpoet.metadata/)
          */
-        @JvmField val metadata = "$artifactPrefix-metadata:_"
+        val metadata = module("kotlinpoet-metadata")
 
         /**
          * [Official webpage](https://square.github.io/kotlinpoet/kotlinpoet_metadata_specs/)
          *
          * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet-metadata-specs/com.squareup.kotlinpoet.metadata.specs/)
          */
-        @JvmField val metadataSpecs = "$artifactPrefix-metadata-specs:_"
+        val metadataSpecs = module("kotlinpoet-metadata-specs")
     }
 
     /**
@@ -296,6 +294,6 @@ object Square {
         /**
          * [Documentation page](https://github.com/square/picasso/blob/master/picasso-pollexor/README.md)
          */
-        @JvmField val pollexor = "$artifactPrefix-pollexor:_"
+        val pollexor = module("picasso-pollexor")
     }
 }

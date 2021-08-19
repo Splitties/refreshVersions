@@ -4,8 +4,8 @@
 
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import de.fayard.refreshVersions.core.DependencyGroup
 import org.gradle.api.Incubating
-import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object JakeWharton {
@@ -45,25 +45,24 @@ object JakeWharton {
      */
     val retrofit2 = Retrofit2
 
-    object Retrofit2 : IsNotADependency {
-        private const val artifactPrefix = "com.jakewharton.retrofit:retrofit2"
+    object Retrofit2 : DependencyGroup("com.jakewharton.retrofit") {
 
         val converter = Converter
 
-        object Converter: IsNotADependency {
+        object Converter  {
 
             /**
              * A Retrofit 2 `Converter.Factory` for [Kotlin serialization](https://github.com/Kotlin/kotlinx.serialization/).
              *
              * GitHub page: [JakeWharton/retrofit2-kotlinx-serialization-converter](https://github.com/JakeWharton/retrofit2-kotlinx-serialization-converter)
              */
-            const val kotlinxSerialization = "$artifactPrefix-kotlinx-serialization-converter:_"
+            val kotlinxSerialization = module("retrofit2-kotlinx-serialization-converter")
         }
     }
 
     val moshi = Moshi
 
-    object Moshi: IsNotADependency {
+    object Moshi: DependencyGroup("com.jakewharton.moshi") {
 
         /**
          * Shimo is a `JsonAdapter.Factory` for [Square.moshi] which randomizes the order of keys
@@ -71,6 +70,6 @@ object JakeWharton {
          *
          * GitHub page: [JakeWharton/shimo](https://github.com/JakeWharton/shimo)
          */
-        const val shimo = "com.jakewharton.moshi:shimo:_"
+        val shimo = module("shimo")
     }
 }

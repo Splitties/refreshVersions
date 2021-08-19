@@ -24,8 +24,8 @@ data class VersionKeyWithModules(
 private val kotlinX = listOf(
     versionKeyWithModules(expected = "kotlinx.coroutines", dependenciesObject = KotlinX.coroutines),
     versionKeyWithModules(expected = "kotlinx.serialization", dependenciesObject = KotlinX.serialization),
-    versionKeyWithModules(expected = "kotlinx.collections.immutable", dependency = KotlinX.collections.immutable),
-    versionKeyWithModules(expected = "kotlinx.collections.immutable", dependency = KotlinX.collections.immutableJvmOnly)
+    versionKeyWithModules(expected = "kotlinx.collections.immutable", dependency = KotlinX.collections.immutable.toString()),
+    versionKeyWithModules(expected = "kotlinx.collections.immutable", dependency = KotlinX.collections.immutableJvmOnly.toString())
 )
 
 private val androidX = listOf(

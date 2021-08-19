@@ -1,8 +1,8 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
-import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object Kotlin {
@@ -14,10 +14,10 @@ object Kotlin {
     val stdlib = Stdlib
 
     object Stdlib : DependencyNotationAndGroup(group = "org.jetbrains.kotlin", name = "kotlin-stdlib") {
-        @JvmField val jdk7 = "$artifactPrefix-jdk7:_"
-        @JvmField val jdk8 = "$artifactPrefix-jdk8:_"
-        @JvmField val js = "$artifactPrefix-js:_"
-        @JvmField val common = "$artifactPrefix-common:_"
+        val jdk7 = module("kotlin-stdlib-jdk7")
+        val jdk8 = module("kotlin-stdlib-jdk8")
+        val js = module("kotlin-stdlib-js")
+        val common = module("kotlin-stdlib-common")
     }
 
     /**
@@ -29,16 +29,15 @@ object Kotlin {
      */
     val test = Test
 
-    object Test : IsNotADependency {
-        private const val artifactPrefix = "org.jetbrains.kotlin:kotlin-test"
+    object Test : DependencyGroup("org.jetbrains.kotlin") {
 
-        const val annotationsCommon = "$artifactPrefix-annotations-common:_"
-        const val common = "$artifactPrefix-common:_"
-        const val js = "$artifactPrefix-js:_"
-        const val jsRunner = "$artifactPrefix-js-runner:_"
+        val annotationsCommon = module("kotlin-test-annotations-common")
+        val common = module("kotlin-test-common")
+        val js = module("kotlin-test-js")
+        val jsRunner = module("kotlin-test-js-runner")
 
-        const val junit = "$artifactPrefix-junit:_"
-        const val junit5 = "$artifactPrefix-junit5:_"
-        const val testng = "$artifactPrefix-testng:_"
+        val junit = module("kotlin-test-junit")
+        val junit5 = module("kotlin-test-junit5")
+        val testng = module("kotlin-test-testng")
     }
 }
