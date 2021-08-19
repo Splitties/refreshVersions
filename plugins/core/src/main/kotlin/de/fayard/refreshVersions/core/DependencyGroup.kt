@@ -111,15 +111,6 @@ sealed class AbstractDependencyGroup(
 
         @InternalRefreshVersionsApi
         var disableBomCheck: Boolean = false
-
-        private val isRunningTests: Boolean by lazy {
-            try {
-                Class.forName("org.junit.jupiter.api.AssertEquals")
-                true
-            } catch (e: ClassNotFoundException) {
-                false
-            }
-        }
     }
 
     init {
@@ -146,7 +137,7 @@ sealed class AbstractDependencyGroup(
             }
 
             private fun markDependencyNotationsUsage() {
-                if (isRunningTests || disableBomCheck) return
+                if (disableBomCheck) return
 
                 val isGroupUsingPlatformConstraints = this@AbstractDependencyGroup.usePlatformConstraints
 
