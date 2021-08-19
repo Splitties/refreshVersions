@@ -12,7 +12,7 @@ class BomTest {
     @Test
     fun `should fail when related BoM is used after dependencies from the group`() {
         Square.okHttp3.reset()
-        use(Square.okHttp3.okHttp)
+        use(Square.okHttp3)
         assertFailsWith<IllegalStateException> {
             use(Square.okHttp3.bom)
         }
@@ -22,7 +22,7 @@ class BomTest {
     fun `should succeed when related BoM is used before dependencies from the group`() {
         Square.okHttp3.reset()
         use(Square.okHttp3.bom)
-        use(Square.okHttp3.okHttp)
+        use(Square.okHttp3)
     }
 
     @Test

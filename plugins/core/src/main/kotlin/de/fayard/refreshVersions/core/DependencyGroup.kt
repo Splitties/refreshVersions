@@ -24,10 +24,17 @@ abstract class DependencyNotationAndGroup(
     group = group,
     rawRule = rawRule,
     usePlatformConstraints = usePlatformConstraints
-), DependencyNotation by object : DependencyNotationImpl(group = group, name = name) {
-    override fun shouldUsePlatformConstraints(): Boolean = false
-} {
+), DependencyNotation by DependencyNotationImpl(
+    group = group,
+    name = name,
+    isBom = false,
+    usePlatformConstraints = null
+) {
     val artifactPrefix: String get() = withoutVersion()
+
+    init {
+        attachToGroup(this)
+    }
 }
 
 @RequiresOptIn
@@ -42,16 +49,21 @@ interface DependencyNotation : CharSequence {
     override fun toString(): String
 
     @PrivateForImplementation
+    fun attachToGroup(dependencyGroup: AbstractDependencyGroup) {
+        throw UnsupportedOperationException()
+    }
+
+    @PrivateForImplementation
     val externalImplementationGuard: Nothing
 }
 
 @OptIn(PrivateForImplementation::class)
-private abstract class DependencyNotationImpl(
+private class DependencyNotationImpl(
     group: String,
-    name: String
+    name: String,
+    private val isBom: Boolean,
+    private val usePlatformConstraints: Boolean?
 ) : DependencyNotation {
-
-    protected abstract fun shouldUsePlatformConstraints(): Boolean
 
     override fun withVersionPlaceholder(): String = this(version = "_")
     override fun withVersion(version: String): String = this(version = version)
@@ -62,20 +74,49 @@ private abstract class DependencyNotationImpl(
         else -> "$artifactPrefix:$version"
     }
 
+    private fun shouldUsePlatformConstraints(): Boolean {
+
+        if (AbstractDependencyGroup.disableBomCheck.not()) {
+            if (isBom) {
+                if (dependencyGroup.usedDependencyNotationsWithNoPlatformConstraints) error(
+                    "You are trying to use a BoM ($artifactPrefix), " +
+                        "but dependency notations relying on it have been declared before! " +
+                        "Declare the BoM first to fix this issue."
+                )
+                dependencyGroup.usePlatformConstraints = true
+            } else when (usePlatformConstraints) {
+                null -> {
+                    if (dependencyGroup.usePlatformConstraints.not()) {
+                        dependencyGroup.usedDependencyNotationsWithNoPlatformConstraints = true
+                    }
+                }
+            }
+        }
+
+        return usePlatformConstraints ?: dependencyGroup.usePlatformConstraints
+    }
+
     @PrivateForImplementation
-    protected open val artifactPrefix = "$group:$name"
+    override fun attachToGroup(dependencyGroup: AbstractDependencyGroup) {
+        check(this::dependencyGroup.isInitialized.not())
+        this.dependencyGroup = dependencyGroup
+    }
+
+    private lateinit var dependencyGroup: AbstractDependencyGroup
+
+    private val artifactPrefix = "$group:$name"
 
     private val backingString: String by lazy(LazyThreadSafetyMode.PUBLICATION) {
         artifactPrefix + if (shouldUsePlatformConstraints()) "" else ":_"
     }
 
-    final override val length get() = backingString.length
-    final override fun get(index: Int) = backingString[index]
-    final override fun subSequence(
+    override val length get() = backingString.length
+    override fun get(index: Int) = backingString[index]
+    override fun subSequence(
         startIndex: Int,
         endIndex: Int
     ) = backingString.subSequence(startIndex = startIndex, endIndex = endIndex)
-    final override fun toString(): String = backingString
+    override fun toString(): String = backingString
 
     @PrivateForImplementation
     override val externalImplementationGuard: Nothing get() = throw IllegalAccessException()
@@ -126,34 +167,13 @@ sealed class AbstractDependencyGroup(
         assert(name.trimStart() == name) { "module($name) has superfluous leading whitespace" }
         assert(name.trimEnd() == name) { "module($name) has superfluous trailing whitespace" }
         assert(name.contains(":").not()) { "module($name) is invalid" }
-        return object : DependencyNotationImpl(
+        return DependencyNotationImpl(
             group = group,
-            name = name
-        ) {
-
-            override fun shouldUsePlatformConstraints(): Boolean {
-                val usePlatformConstraintsForThisOne = usePlatformConstraints
-                    ?: this@AbstractDependencyGroup.usePlatformConstraints
-
-                if (disableBomCheck.not()) {
-                    if (isBom) {
-                        if (usedDependencyNotationsWithNoPlatformConstraints) error(
-                            "You are trying to use a BoM ($artifactPrefix), " +
-                                "but dependency notations relying on it have been declared before! " +
-                                "Declare the BoM first to fix this issue."
-                        )
-                        this@AbstractDependencyGroup.usePlatformConstraints = true
-                    } else when (usePlatformConstraints) {
-                        null -> {
-                            if (this@AbstractDependencyGroup.usePlatformConstraints.not()) {
-                                usedDependencyNotationsWithNoPlatformConstraints = true
-                            }
-                        }
-                    }
-                }
-
-                return usePlatformConstraintsForThisOne
-            }
+            name = name,
+            isBom = isBom,
+            usePlatformConstraints = usePlatformConstraints
+        ).also {
+            it.attachToGroup(this@AbstractDependencyGroup)
         }
     }
 
@@ -162,5 +182,6 @@ sealed class AbstractDependencyGroup(
         usedDependencyNotationsWithNoPlatformConstraints = false
     }
 
-    private var usedDependencyNotationsWithNoPlatformConstraints = false
+    @PrivateForImplementation
+    internal var usedDependencyNotationsWithNoPlatformConstraints = false
 }
