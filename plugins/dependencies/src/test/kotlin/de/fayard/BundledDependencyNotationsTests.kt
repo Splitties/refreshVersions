@@ -16,7 +16,7 @@ import java.io.File
 
 val testResources: File = File(".").absoluteFile.resolve("src/test/resources")
 
-class NonRegression: FreeSpec({
+class BundledDependencyNotationsTests: FreeSpec({
 
     "Generate rule files for dependency groups with a rawRule" {
         ALL_DEPENDENCIES_NOTATIONS
