@@ -22,7 +22,6 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             "google-version-alias-rules",
             "kotlin(x)-version-alias-rules",
             "square-version-alias-rules",
-            "other-version-alias-rules",
             "testing-version-alias-rules",
             "dependency-groups-alias-rules"
         ).map {

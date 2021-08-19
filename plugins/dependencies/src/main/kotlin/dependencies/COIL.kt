@@ -13,7 +13,11 @@ import org.gradle.api.Incubating
  * GitHub Page: [coil-kt/coil](https://github.com/coil-kt/coil/)
  */
 @Incubating
-object COIL : DependencyNotationAndGroup(group = "io.coil-kt", name = "coil") {
+object COIL : DependencyNotationAndGroup(group = "io.coil-kt", name = "coil",
+rawRule = """
+    io.coil-kt:coil(-*)
+       ^^^^^^^
+""".trimIndent()) {
 
     val base = module("coil-base")
 

@@ -19,7 +19,12 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * TODO: Finish KDoc of undocumented artifact constants. Also link to their KDoc.
  */
 @Incubating
-object Ktor : DependencyGroup("io.ktor") {
+object Ktor : DependencyGroup("io.ktor",
+    rawRule = """
+        io.ktor:*
+           ^^^^
+    """.trimIndent()
+    ) {
 
     val http = module("ktor-http")
 

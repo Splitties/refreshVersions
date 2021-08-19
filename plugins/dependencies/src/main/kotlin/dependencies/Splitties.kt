@@ -6,7 +6,11 @@ import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object Splitties : DependencyGroup(
-    "com.louiscad.splitties"
+    "com.louiscad.splitties",
+    rawRule = """
+    com.louiscad.splitties:splitties-*
+                 ^^^^^^^^^
+    """.trimIndent()
 ) {
 
     val pack = Packs
