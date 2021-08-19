@@ -29,17 +29,6 @@ class BundledRulesTest {
     }
 
     @Test
-    fun `generate rules file for dependency groups`() {
-        ALL_DEPENDENCIES_NOTATIONS
-        val file = rulesDir.resolve("dependency-groups-alias-rules.txt")
-        val content = AbstractDependencyGroup.ALL_RULES
-            .sorted()
-            .distinct()
-            .joinToString(separator = "\n\n")
-        file.writeText(content)
-    }
-
-    @Test
     @Disabled("Not implemented yet")
     fun `check all dependencies constants have version key rules`() {
         TODO()

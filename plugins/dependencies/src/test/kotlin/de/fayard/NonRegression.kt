@@ -1,8 +1,10 @@
 package de.fayard
 
+import de.fayard.refreshVersions.core.AbstractDependencyGroup
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
 import de.fayard.refreshVersions.core.internal.DependencyMapping
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
+import dependencies.ALL_DEPENDENCIES_NOTATIONS
 import io.kotest.assertions.fail
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FreeSpec
@@ -15,6 +17,17 @@ import java.io.File
 val testResources: File = File(".").absoluteFile.resolve("src/test/resources")
 
 class NonRegression: FreeSpec({
+
+    "Generate rule files for dependency groups with a rawRule" {
+        ALL_DEPENDENCIES_NOTATIONS
+        val rulesDir = File(".").absoluteFile.resolve("src/main/resources/refreshVersions-rules")
+        val file = rulesDir.resolve("dependency-groups-alias-rules.txt")
+        val content = AbstractDependencyGroup.ALL_RULES
+            .sorted()
+            .distinct()
+            .joinToString(separator = "\n\n")
+        file.writeText(content)
+    }
 
     "We should never remove a property" {
         val existingProperties = testResources.resolve("dependencies-mapping-validated.txt")
