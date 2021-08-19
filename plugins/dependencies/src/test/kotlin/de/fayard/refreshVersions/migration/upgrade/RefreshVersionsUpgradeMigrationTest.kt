@@ -1,7 +1,7 @@
 package de.fayard.refreshVersions.migration.upgrade
 
+import de.fayard.refreshVersions.testResources
 import de.fayard.refreshVersions.withRemovedMigrationCall
-import de.fayard.testResources
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
