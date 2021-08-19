@@ -20,14 +20,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.jupiter.api.Test
 import testutils.getVersionCandidates
 import testutils.isInCi
-import java.io.File
 
 class BundledDependenciesTest {
 
     @Test
     fun `Generate rule files for dependency groups with a rawRule`() {
         ALL_DEPENDENCIES_NOTATIONS
-        val rulesDir = File(".").absoluteFile.resolve("src/main/resources/refreshVersions-rules")
+        val rulesDir = mainResources.resolve("refreshVersions-rules")
         val file = rulesDir.resolve("dependency-groups-alias-rules.txt")
         val content = AbstractDependencyGroup.ALL_RULES
             .sorted()
@@ -55,7 +54,6 @@ class BundledDependenciesTest {
 
     @Test
     fun `We should not change version keys`() {
-        val mainResources: File = File(".").absoluteFile.resolve("src/main/resources")
         val rulesDir = mainResources.resolve("refreshVersions-rules")
         val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
