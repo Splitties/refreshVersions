@@ -12,7 +12,7 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * - [GitHub Releases here](https://github.com/Kodein-Framework/Kodein-DI/releases)
  */
 @Incubating
-object Kodein: IsNotADependency {
+object Kodein : IsNotADependency {
 
     val di = DI
 
