@@ -17,7 +17,6 @@ Add task **refreshVersionsMigrate** that adds all missing entries in versions.pr
 - Testing.kotestExtensions who replaces Testing.kotest.extensions in Kotest >= 4.5.0
 
 
-
 ## Version 0.10.1 (2021-06-10)
 
 ### New features
@@ -38,6 +37,7 @@ Add task **refreshVersionsMigrate** that adds all missing entries in versions.pr
     - health.servicesClient
     - security.appAuthenticatorTesting
 - Google.accompanist.insets.ui
+
 
 ## Version 0.10.0 (2021-05-13)
 
@@ -170,6 +170,7 @@ We're very grateful for your time and help, and we think our users will be as we
 
 Also, thanks to all the folks that reported issues. It was very helpful to prioritize on our side.
 
+
 ## Version 0.9.7 (2020-10-16)
 
 ### Fixes
@@ -177,6 +178,7 @@ Also, thanks to all the folks that reported issues. It was very helpful to prior
 - Running the `refreshVersions` task twice or more would fail with "executor rejected" as an error message, until the Gradle daemon is killed. This has now been fixed. (Issue #263)
 - The `refreshVersions` task was failing after the latest Gradle release candidate was superseded by the stable release because the API would return an empty JSON object after this, which we didn't expect.
 - (Minor) We fixed a typo in a diagnostic task name (`refreshVersionsDependenciesMapping`)
+
 
 ## Version 0.9.6 (2020-10-12)
 
@@ -201,6 +203,7 @@ Firebase ML Kit has been rebranded to Google ML Kit along with API and feature c
 ### New features
 
 - refreshVersions will now warn you when Gradle is not up to date, and will give you the commands to run to update it for you to copy/paste and run. It works if you're using a release candidate, and also if you're using a nightly version!
+
 
 ## Version 0.9.5 (2020-08-21)
 
