@@ -106,17 +106,13 @@ private class DependencyNotationImpl(
 
     private val artifactPrefix = "$group:$name"
 
-    private val backingString: String by lazy(LazyThreadSafetyMode.PUBLICATION) {
-        artifactPrefix + if (shouldUsePlatformConstraints()) "" else ":_"
-    }
-
-    override val length get() = backingString.length
-    override fun get(index: Int) = backingString[index]
+    override val length get() = toString().length
+    override fun get(index: Int) = toString()[index]
     override fun subSequence(
         startIndex: Int,
         endIndex: Int
-    ) = backingString.subSequence(startIndex = startIndex, endIndex = endIndex)
-    override fun toString(): String = backingString
+    ) = toString().subSequence(startIndex = startIndex, endIndex = endIndex)
+    override fun toString(): String = artifactPrefix + if (shouldUsePlatformConstraints()) "" else ":_"
 
     @PrivateForImplementation
     override val externalImplementationGuard: Nothing get() = throw IllegalAccessException()
@@ -130,6 +126,8 @@ sealed class AbstractDependencyGroup(
     @InternalRefreshVersionsApi
     var usePlatformConstraints: Boolean = false
 ) {
+
+    private val usePlatformConstraintsInitialValue = usePlatformConstraints
 
     private val rule: ArtifactVersionKeyRule? = rawRule?.let {
         val lines = it.lines()
@@ -180,6 +178,7 @@ sealed class AbstractDependencyGroup(
     @InternalRefreshVersionsApi
     fun reset() {
         usedDependencyNotationsWithNoPlatformConstraints = false
+        usePlatformConstraints = usePlatformConstraintsInitialValue
     }
 
     @PrivateForImplementation
