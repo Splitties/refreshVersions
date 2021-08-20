@@ -1,5 +1,45 @@
 # Change log for refreshVersions
 
+## [Unreleased]
+
+### New features
+
+- refreshVersions will now add `## unused` comments on top of unused entries in the `versions.properties` file after you run the `refreshVersions` task, so you know which ones are obsolete and can be removed.
+- The new `rejectVersionsIf { … }` predicate available in the `refreshVersions { … }` extension in your `settings.gradle[.kts]` file will allow you to filter any kind of versions you don't want to know about. It can be handy to filter snapshots out for example.
+- Most of our dependency notations now provide more flexibility with 3 new extension functions: `withVersionPlaceholder()`, `withVersion(…)`, and `withoutVersion()`.
+
+### Change (potentially breaking)
+
+- If you use a BoM from the built-in dependency notations, it must always appear before dependencies from the group it controls, or you'll see an error message that will fail the Gradle build. We do this because we can't switch on usage of the BoM for linked dependencies that have already been evaluated by Gradle.
+
+### Improvements
+
+The `refreshVersionsMigrate` will now use the built-in dependency notations if they match existing dependencies.
+
+### New dependency notations:
+
+- AndroidX:
+    - navigation.testing
+- COIL:
+    - compose
+    - composeBase
+- Firebase:
+    - cloudMessagingDirectBoot
+    - Firebase.mlModelDownloaderKtx
+    - Firebase.mlModelDownloader
+- Kodein.di (new group with many dependencies)
+- Kotlin.test (which is compatible with multiplatform projects since Kotlin 1.5)
+- Ktor.features.serialization
+- Http4k (new group with many dependencies)
+- Splitties.alertdialogMaterial
+- Square
+    - okHttp3.bom
+    - okHttp3 (shortcut to existing okHttp3.okHttp)
+    - retrofit2.converter.wire
+    - retrofit2 (shortcut to existing retrofit2.retrofit)
+- Spring (new group with many dependencies)
+
+
 ## Version 0.11.0 (2021-08-03)
 
 ### New feature
