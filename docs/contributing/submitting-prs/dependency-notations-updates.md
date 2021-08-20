@@ -40,7 +40,7 @@ object Kodein : IsNotADependency {                              // 3
 }
 ```
 
-Here is what you need to know:
+What you need to know:
 
 1. We use no package on purpose - and suppress the corresponding warning - so that users don't have to import the dependency notation.
 2. We provide a KDoc with a description of what the library does, a link to GitHub, and a link to the documentation. Please, keep the exact same style for consistency.
