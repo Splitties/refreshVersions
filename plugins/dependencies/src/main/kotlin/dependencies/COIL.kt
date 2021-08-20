@@ -21,6 +21,10 @@ rawRule = """
 
     val base = module("coil-base")
 
+    val compose = module("coil-compose")
+
+    val composeBase = module("coil-compose-base")
+
     val gif = module("coil-gif")
 
     val svg = module("coil-svg")

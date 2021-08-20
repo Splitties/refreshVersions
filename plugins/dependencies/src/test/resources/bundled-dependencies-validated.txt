@@ -513,6 +513,8 @@ com.squareup:kotlinpoet-metadata
 com.squareup:kotlinpoet-metadata-specs
 io.coil-kt:coil
 io.coil-kt:coil-base
+io.coil-kt:coil-compose
+io.coil-kt:coil-compose-base
 io.coil-kt:coil-gif
 io.coil-kt:coil-svg
 io.coil-kt:coil-video
