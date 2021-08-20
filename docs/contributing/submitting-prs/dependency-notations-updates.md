@@ -33,8 +33,8 @@ object Kodein: IsNotADependency {                               // 3
                 ^^^^^^^^^
         """.trimIndent()                                        // 8
     ) {
-        val bom = module("kodein-bom", isBom = true)           // 9
-        val js = module("kodein-di-js")                        // 10
+        val bom = module("kodein-bom", isBom = true)            // 9
+        val js = module("kodein-di-js")                         // 10
         val androidx = module("kodein-di-framework-android-x")
     }
 }
