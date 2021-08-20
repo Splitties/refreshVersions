@@ -23,19 +23,18 @@ import Testing
 internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     AndroidX,
     CashApp,
-    Google,
-    JakeWharton,
+    COIL,
     Firebase,
+    Google,
+    Http4k,
+    JakeWharton,
     Kodein,
     Kotlin,
     KotlinX,
-    Splitties,
-    Square,
     Ktor,
-    Testing,
-    COIL,
-    Kodein,
     Orchid,
+    Splitties,
     Spring,
-    Http4k
+    Square,
+    Testing
 )
