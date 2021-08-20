@@ -27,7 +27,7 @@ object Kodein : IsNotADependency {                              // 3
 
     object DI : DependencyGroup(                                // 5
         group = "org.kodein.di",                                // 6
-        usePlatformConstraints = false,                          // 7
+        usePlatformConstraints = false,                         // 7
         rawRule = """
             org.kodein.di:kodein-di(-*)
                 ^^^^^^^^^
