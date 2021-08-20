@@ -781,6 +781,7 @@ org.jetbrains.kotlin..kotlin-test-js=Kotlin.test.js
 org.jetbrains.kotlin..kotlin-test-junit5=Kotlin.test.junit5
 org.jetbrains.kotlin..kotlin-test-junit=Kotlin.test.junit
 org.jetbrains.kotlin..kotlin-test-testng=Kotlin.test.testng
+org.jetbrains.kotlin..kotlin-test=Kotlin.test
 org.jetbrains.kotlinx..kotlinx-collections-immutable-jvm=KotlinX.collections.immutableJvmOnly
 org.jetbrains.kotlinx..kotlinx-collections-immutable=KotlinX.collections.immutable
 org.jetbrains.kotlinx..kotlinx-coroutines-android=KotlinX.coroutines.android
