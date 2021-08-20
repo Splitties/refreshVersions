@@ -16,18 +16,16 @@ import kotlin.reflect.jvm.javaType
 import kotlin.reflect.typeOf
 
 internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = false): List<DependencyMapping> {
-    synchronized(AbstractDependencyGroup) {
-        AbstractDependencyGroup.disableBomCheck = true
-        val result = ALL_DEPENDENCIES_NOTATIONS.asSequence().flatMap { objectInstance ->
-            getArtifactNameToConstantMappingFromObject(
-                objectInstance,
-                excludeBomDependencies = excludeBomDependencies,
-                isTopLevelObject = true
-            )
-        }.sortedBy { it.toString() }.toList()
-        AbstractDependencyGroup.disableBomCheck = false
-        return result
-    }
+    AbstractDependencyGroup.disableBomCheck = true
+    val result = ALL_DEPENDENCIES_NOTATIONS.asSequence().flatMap { objectInstance ->
+        getArtifactNameToConstantMappingFromObject(
+            objectInstance,
+            excludeBomDependencies = excludeBomDependencies,
+            isTopLevelObject = true
+        )
+    }.sortedBy { it.toString() }.toList()
+    AbstractDependencyGroup.disableBomCheck = false
+    return result
 }
 
 internal fun getArtifactsFromDependenciesObject(objectInstance: Any): List<ModuleIdentifier> {
@@ -76,8 +74,8 @@ private fun getArtifactNameToConstantMappingFromObject(
         objectClass.memberProperties.asSequence().filter { kProperty ->
             kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType.let {
                 (it == typeOf<String>() || it.isSubtypeOf(typeOf<DependencyNotation>())) &&
-                    it.javaType != java.lang.Void::class.java && // Filter out redirection properties.
-                    kProperty.name != "artifactPrefix"
+                        it.javaType != java.lang.Void::class.java && // Filter out redirection properties.
+                kProperty.name != "artifactPrefix"
             }
         }.map { kProperty ->
             val javaField: Field? = kProperty.javaField
