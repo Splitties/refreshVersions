@@ -15,9 +15,9 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 11
-      - uses: eskatos/gradle-command-action@v1
+      - uses: gradle/gradle-build-action@v1
         with:
-          wrapper-directory: plugins
+          gradle-executable: plugins/gradlew
           build-root-directory: plugins
           arguments: publishToAppropriateRepo --scan -Pgradle.publish.key=${{ secrets.gradle_publish_key }} -Pgradle.publish.secret=${{ secrets.gradle_publish_secret }}
         env:
