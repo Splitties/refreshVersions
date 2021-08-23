@@ -575,15 +575,6 @@ object AndroidX : IsNotADependency {
 
     val tvProvider = DependencyNotation("androidx.tvprovider", "tvprovider")
 
-    @Incubating
-    val ui = Ui // TODO kdoc
-
-    @Incubating
-    object Ui : IsNotADependency {
-        const val test = "androidx.ui:ui-test:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
-        const val tooling = "androidx.ui:ui-tooling:_" // "Not Yet Refactored (no changes)" as of version 0.1.0-dev15.
-    }
-
     val vectorDrawable = DependencyNotation("androidx.vectordrawable", "vectordrawable")
     val vectorDrawableAnimated = DependencyNotation("androidx.vectordrawable", "vectordrawable-animated")
     val vectorDrawableSeekable = DependencyNotation("androidx.vectordrawable", "vectordrawable-seekable")
