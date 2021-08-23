@@ -1,8 +1,8 @@
 ---
-name: New dependency notations
+name: Dependency notations
 about: Propose dependency notations for a new library
 title: 'Dependency notations for xxx/yyy'
-labels: 'Dependency Notation, good first issue'
+labels: 'Dependency Notation, up-for-grabs'
 assignees: ''
 
 ---
