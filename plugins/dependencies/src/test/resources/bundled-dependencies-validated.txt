@@ -100,6 +100,11 @@ androidx.exifinterface:exifinterface
 androidx.fragment:fragment
 androidx.fragment:fragment-ktx
 androidx.fragment:fragment-testing
+androidx.games:games-activity
+androidx.games:games-controller
+androidx.games:games-frame-pacing
+androidx.games:games-performance-tuner
+androidx.games:games-text-input
 androidx.gaming:gaming-frame-pacing
 androidx.gaming:gaming-performance-tuner
 androidx.gridlayout:gridlayout

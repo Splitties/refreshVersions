@@ -34,10 +34,16 @@ androidx.compose.foundation:foundation-text // Deprecated artifact, no longer up
 androidx.dynamicanimation:dynamicanimation-ktx
 ^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^
 
-androidx.gaming:gaming-frame-pacing(-*)
+androidx.games:games-*
+^^^^^^^^.^^^^^      ^^
+
+androidx.games:* // In case they add an artifact that doesn't start with "games"
+^^^^^^^^.^^^^^.^
+
+androidx.gaming:gaming-frame-pacing(-*) // Family renamed to androidx.games
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^
 
-androidx.gaming:gaming-performance-tuner(-*)
+androidx.gaming:gaming-performance-tuner(-*) // Family renamed to androidx.games
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^^^^
 
 androidx.hilt:hilt-lifecycle-viewmodel // Deprecated artifact, no longer updated with its family.

@@ -302,12 +302,27 @@ object AndroidX : IsNotADependency {
     const val fragment = "androidx.fragment:fragment:_"
     const val fragmentTesting = "androidx.fragment:fragment-testing:_"
 
+    val games = Games
+
+    object Games : IsNotADependency {
+        private const val artifactPrefix = "androidx.games:games"
+
+        const val framePacing = "$artifactPrefix-frame-pacing:_"
+        const val performanceTuner = "$artifactPrefix-performance-tuner:_"
+        const val activity = "$artifactPrefix-activity:_"
+        const val controller = "$artifactPrefix-controller:_"
+        const val textInput = "$artifactPrefix-text-input:_"
+    }
+
     val gaming = Gaming // TODO kdoc
 
     object Gaming : IsNotADependency {
         private const val artifactPrefix = "androidx.gaming:gaming"
 
+        @Deprecated("Group was renamed", ReplaceWith("AndroidX.games.framePacing"))
         const val framePacing = "$artifactPrefix-frame-pacing:_"
+
+        @Deprecated("Group was renamed", ReplaceWith("AndroidX.games.performanceTuner"))
         const val performanceTuner = "$artifactPrefix-performance-tuner:_"
 
     }
