@@ -55,6 +55,20 @@ interface DependencyNotation : CharSequence {
 
     @PrivateForImplementation
     val externalImplementationGuard: Nothing
+
+    companion object {
+        operator fun invoke(
+            group: String,
+            name: String,
+            isBom: Boolean = false,
+            usePlatformConstraints: Boolean? = null
+        ): DependencyNotation = DependencyNotationImpl(
+            group = group,
+            name = name,
+            isBom = isBom,
+            usePlatformConstraints = usePlatformConstraints
+        )
+    }
 }
 
 @OptIn(PrivateForImplementation::class)
@@ -75,7 +89,7 @@ private class DependencyNotationImpl(
     }
 
     private fun shouldUsePlatformConstraints(): Boolean {
-
+        val dependencyGroup = dependencyGroup ?: return usePlatformConstraints ?: false
         if (AbstractDependencyGroup.disableBomCheck.not()) {
             if (isBom) {
                 if (dependencyGroup.usedDependencyNotationsWithNoPlatformConstraints) error(
@@ -98,11 +112,11 @@ private class DependencyNotationImpl(
 
     @PrivateForImplementation
     override fun attachToGroup(dependencyGroup: AbstractDependencyGroup) {
-        check(this::dependencyGroup.isInitialized.not())
+        check(this.dependencyGroup == null)
         this.dependencyGroup = dependencyGroup
     }
 
-    private lateinit var dependencyGroup: AbstractDependencyGroup
+    private var dependencyGroup: AbstractDependencyGroup? = null
 
     private val artifactPrefix = "$group:$name"
 
@@ -112,10 +126,12 @@ private class DependencyNotationImpl(
         startIndex: Int,
         endIndex: Int
     ) = toString().subSequence(startIndex = startIndex, endIndex = endIndex)
+
     override fun toString(): String = artifactPrefix + if (shouldUsePlatformConstraints()) "" else ":_"
 
     @PrivateForImplementation
-    override val externalImplementationGuard: Nothing get() = throw IllegalAccessException()
+    override val externalImplementationGuard: Nothing
+        get() = throw IllegalAccessException()
 }
 
 
