@@ -273,7 +273,10 @@ androidx.wear:wear-watchface-guava
 androidx.wear:wear-watchface-style
 androidx.webkit:webkit
 androidx.window:window
-androidx.window:window-extensions
+androidx.window:window-java
+androidx.window:window-rxjava2
+androidx.window:window-rxjava3
+androidx.window:window-testing
 androidx.work:work-gcm
 androidx.work:work-multiprocess
 androidx.work:work-runtime

@@ -737,6 +737,12 @@ object AndroidX : IsNotADependency {
     val window = Window // TODO kdoc
 
     object Window : DependencyNotationAndGroup(group = "androidx.window", name = "window") {
+        val testing = module("window-testing")
+
+        /** For Java-friendly APIs to register and unregister callbacks */
+        val java = module("window-java")
+        val rxJava2 = module("window-rxjava2")
+        val rxJava3 = module("window-rxjava3")
     }
 
     val work = Work // TODO kdoc
