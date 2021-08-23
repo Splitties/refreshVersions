@@ -12,18 +12,21 @@ plugins {
 }
 
 refreshVersions { // Optional: configure the plugin
-
+    // ...
 }
-
-// Migrate project
-./gradlew refreshVersionsMigrate
-
-// Find available updates in versions.properties
-./gradlew refreshVersions
-
-// Cleanup versions availability comments
-./gradlew refreshVersionsCleanup
 ```
+
+**Migrate project:**
+
+`./gradlew refreshVersionsMigrate`
+
+**Find available updates in `versions.properties`:**
+
+`./gradlew refreshVersions`
+
+**Cleanup versions availability comments:**
+
+`./gradlew refreshVersionsCleanup`
 
 ### Documentation is at [jmfayard.github.io/refreshVersions](https://jmfayard.github.io/refreshVersions/)
 
