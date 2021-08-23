@@ -1,6 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
@@ -142,9 +143,12 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
      */
     val html = Html
 
-    object Html : IsNotADependency {
+    object Html : DependencyNotationAndGroup(group = group, name = "kotlinx-html") {
 
+        @Deprecated("Use the base artifact instead", ReplaceWith("KotlinX.html"))
         val jvm = module("kotlinx-html-jvm")
+
+        @Deprecated("Use the base artifact instead", ReplaceWith("KotlinX.html"))
         val js = module("kotlinx-html-js")
     }
 

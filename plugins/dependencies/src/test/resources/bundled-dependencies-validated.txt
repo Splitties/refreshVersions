@@ -754,6 +754,7 @@ org.jetbrains.kotlinx:kotlinx-coroutines-rx3
 org.jetbrains.kotlinx:kotlinx-coroutines-slf4j
 org.jetbrains.kotlinx:kotlinx-coroutines-swing
 org.jetbrains.kotlinx:kotlinx-coroutines-test
+org.jetbrains.kotlinx:kotlinx-html
 org.jetbrains.kotlinx:kotlinx-html-js
 org.jetbrains.kotlinx:kotlinx-html-jvm
 org.jetbrains.kotlinx:kotlinx-io-jvm

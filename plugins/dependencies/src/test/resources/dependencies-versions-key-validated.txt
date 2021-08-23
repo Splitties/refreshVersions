@@ -756,6 +756,7 @@ org.jetbrains.kotlinx..kotlinx-coroutines-swing=version.kotlinx.coroutines
 org.jetbrains.kotlinx..kotlinx-coroutines-test=version.kotlinx.coroutines
 org.jetbrains.kotlinx..kotlinx-html-js=version.kotlinx.html
 org.jetbrains.kotlinx..kotlinx-html-jvm=version.kotlinx.html
+org.jetbrains.kotlinx..kotlinx-html=version.kotlinx.html
 org.jetbrains.kotlinx..kotlinx-io-jvm=version.kotlinx.io
 org.jetbrains.kotlinx..kotlinx-nodejs=version.kotlinx.nodejs
 org.jetbrains.kotlinx..kotlinx-serialization-cbor=version.kotlinx.serialization
