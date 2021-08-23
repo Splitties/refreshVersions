@@ -61,6 +61,9 @@ androidx.leanback:leanback-paging(-*)
 androidx.leanback:leanback-tab(-*)
 ^^^^^^^^.         ^^^^^^^^^^^^
 
+androidx.lifecycle:lifecycle-extensions // Deprecated artifact, no longer updated with its family.
+^^^^^^^^.          ^^^^^^^^^^^^^^^^^^^^
+
 androidx.lifecycle:lifecycle-viewmodel-compose
 ^^^^^^^^.          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
