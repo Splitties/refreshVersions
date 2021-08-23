@@ -737,8 +737,6 @@ object AndroidX : IsNotADependency {
     val window = Window // TODO kdoc
 
     object Window : DependencyNotationAndGroup(group = "androidx.window", name = "window") {
-        @JvmField
-        val extensions = "$artifactPrefix-extensions:_"
     }
 
     val work = Work // TODO kdoc

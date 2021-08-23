@@ -265,8 +265,7 @@ private val androidX = listOf(
     versionKeyWithModules(expected = "androidx.wear.tiles", dependency = AndroidX.wear.tiles),
     versionKeyWithModules(expected = "androidx.webkit", dependency = AndroidX.webkit),
     versionKeyWithModules(expected = "androidx.work", dependenciesObject = AndroidX.work),
-    versionKeyWithModules(expected = "androidx.window", dependency = AndroidX.window),
-    versionKeyWithModules(expected = "androidx.window-extensions", dependency = AndroidX.window.extensions)
+    versionKeyWithModules(expected = "androidx.window", dependency = AndroidX.window)
 )
 
 private val google = listOf(

@@ -274,7 +274,6 @@ androidx.wear.tiles..tiles-proto=AndroidX.wear.tiles.proto
 androidx.wear.tiles..tiles-renderer=AndroidX.wear.tiles.renderer
 androidx.wear.tiles..tiles=AndroidX.wear.tiles
 androidx.webkit..webkit=AndroidX.webkit
-androidx.window..window-extensions=AndroidX.window.extensions
 androidx.window..window=AndroidX.window
 androidx.work..work-gcm=AndroidX.work.gcm
 androidx.work..work-multiprocess=AndroidX.work.multiprocess

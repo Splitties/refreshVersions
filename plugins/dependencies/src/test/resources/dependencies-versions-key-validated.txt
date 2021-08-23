@@ -272,7 +272,6 @@ androidx.wear.tiles..tiles-proto=version.androidx.wear.tiles
 androidx.wear.tiles..tiles-renderer=version.androidx.wear.tiles
 androidx.wear.tiles..tiles=version.androidx.wear.tiles
 androidx.webkit..webkit=version.androidx.webkit
-androidx.window..window-extensions=version.androidx.window-extensions
 androidx.window..window=version.androidx.window
 androidx.work..work-gcm=version.androidx.work
 androidx.work..work-multiprocess=version.androidx.work
