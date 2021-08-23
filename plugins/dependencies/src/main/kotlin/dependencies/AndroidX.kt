@@ -238,6 +238,9 @@ object AndroidX : IsNotADependency {
 
         @JvmField
         val googleShortcuts = "$artifactPrefix-google-shortcuts:_"
+
+        @JvmField
+        val splashscreen = "$artifactPrefix-splashscreen:_"
     }
 
     const val cursorAdapter = "androidx.cursoradapter:cursoradapter:_"

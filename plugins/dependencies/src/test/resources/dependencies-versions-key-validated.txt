@@ -73,6 +73,7 @@ androidx.core..core-animation=version.androidx.core-animation
 androidx.core..core-google-shortcuts=version.androidx.core-google-shortcuts
 androidx.core..core-ktx=version.androidx.core
 androidx.core..core-role=version.androidx.core-role
+androidx.core..core-splashscreen=version.androidx.core-splashscreen
 androidx.core..core=version.androidx.core
 androidx.cursoradapter..cursoradapter=version.androidx.cursoradapter
 androidx.customview..customview=version.androidx.customview

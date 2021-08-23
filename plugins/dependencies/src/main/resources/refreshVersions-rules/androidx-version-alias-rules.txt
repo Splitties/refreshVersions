@@ -28,6 +28,9 @@ androidx.core:core-animation(-*)
 androidx.core:core-google-shortcuts(-*)
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^
 
+androidx.core:core-splashscreen(-*)
+^^^^^^^^.     ^^^^^^^^^^^^^^^^^
+
 androidx.compose.foundation:foundation-text // Deprecated artifact, no longer updated with its family.
 ^^^^^^^^.^^^^^^^.           ^^^^^^^^^^^^^^^
 
