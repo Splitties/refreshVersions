@@ -19,7 +19,23 @@ The `refreshVersionsMigrate` will now use the built-in dependency notations if t
 ### New dependency notations:
 
 - AndroidX:
+    - benchmark.macroJunit4
+    - core.splashscreen
+    - games:
+        - activity
+        - controller
+        - framePacing
+        - performanceTuner
+        - textInput
     - navigation.testing
+    - wear.compose:
+        - foundation
+        - material
+    - window
+      - java
+      - rxJava2
+      - rxJava3
+      - testing
 - COIL:
     - compose
     - composeBase
@@ -29,6 +45,7 @@ The `refreshVersionsMigrate` will now use the built-in dependency notations if t
     - Firebase.mlModelDownloader
 - Kodein.di (new group with many dependencies)
 - Kotlin.test (which is compatible with multiplatform projects since Kotlin 1.5)
+- KotlinX.html (compatible with multiplatform projects)
 - Ktor.features.serialization
 - Http4k (new group with many dependencies)
 - Splitties.alertdialogMaterial
