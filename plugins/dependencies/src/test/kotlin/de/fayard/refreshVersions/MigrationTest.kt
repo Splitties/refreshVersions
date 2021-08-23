@@ -1,5 +1,6 @@
-package de.fayard.refreshVersions.core
+package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.internal.DependencyMapping
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.ints.shouldBeExactly
@@ -12,12 +13,13 @@ class MigrationTest : StringSpec({
     "Try migrating local repository".config(enabled = false) {
         val file = File("/Users/jmfayard/IdeaProjects/android/compose-samples")
         findFilesWithDependencyNotations(file).forEach {
-            migrateFileIfNeeded(it)
+            migrateFileIfNeeded(it, emptyMap())
         }
     }
 
     "Replace versions in maven coordinates in build files" {
         val input = """
+            implementation("com.example:name:_")
             implementation("com.example:name:${'$'}exampleVersion")
             implementation("com.example:name:${'$'}version")
             implementation("com.example:name:${'$'}{version}")
@@ -35,6 +37,7 @@ class MigrationTest : StringSpec({
             implementation 'com.example:name:1.2.3-native-mt'
         """.trimIndent().lines()
         val expected = """
+            implementation("com.example:name:_")
             implementation("com.example:name:_")
             implementation("com.example:name:_")
             implementation("com.example:name:_")
@@ -91,6 +94,7 @@ class MigrationTest : StringSpec({
             jacoco {
                  toolVersion = "1.0.4"
             }
+             buildConfigField("String", "BUILD_TIME", "\"{new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(new Date())}\"")
         """.trimIndent()
         lines.lines().forAll { line ->
             withVersionPlaceholder(
@@ -167,6 +171,34 @@ class MigrationTest : StringSpec({
             }
     }
 
+    "Replace with dependency names, if present" {
+        val dependencyMapping = mapOf(
+            "com.squareup.okio:okio" to "Square.okio",
+            "com.squareup.moshi:moshi" to "Square.moshi",
+            "com.google.firebase:firebase-analytics" to "Firebase.analytics"
+        )
+        val input = """
+            implementation 'com.squareup.okio:okio:1.2'
+            implementation("com.squareup.moshi:moshi:_")
+            implementation("com.google.firebase:firebase-analytics:3.4")
+        """.trimIndent().lines()
+        val expected = """
+            implementation Square.okio
+            implementation(Square.moshi)
+            implementation(Firebase.analytics)
+        """.trimIndent().lines()
+        input.size shouldBeExactly expected.size
+        List(input.size) { input[it] to expected[it] }
+            .forAll { (input, output) ->
+                withVersionPlaceholder(
+                    input,
+                    isInsidePluginsBlock = false,
+                    isBuildFile = true,
+                    dependencyMapping = dependencyMapping
+                ) shouldBe output
+            }
+    }
+
     "Search for files that may contain dependency notations" {
         val expected = """
             app/feature/build.gradle.kts
@@ -219,6 +251,13 @@ class MigrationTest : StringSpec({
     "Detect the plugins block" {
         val detected = exampleBuildGradle.detectPluginsBlock().map { it.second }
         detected shouldBe (List(exampleBuildGradle.size) { it in 3..5 })
+    }
+
+    "The shortest dependency constant should be picked" {
+        val a = DependencyMapping("com.example", "artifact", "Firebase.analytics")
+        val b = DependencyMapping("com.example", "artifact", "Firebase.no-BoM.analytics")
+        listOf(a, b).associateShortestByMavenCoordinate() shouldBe mapOf("com.example:artifact" to "Firebase.analytics")
+        listOf(b, a).associateShortestByMavenCoordinate() shouldBe mapOf("com.example:artifact" to "Firebase.analytics")
     }
 })
 

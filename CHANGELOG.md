@@ -1,5 +1,68 @@
 # Change log for refreshVersions
 
+## Version 0.20.0 (2021-08-23)
+
+### Announcement
+
+We are now ready to accept dependency notation contributions for high-quality and popular dependencies from the Kotlin ecosystem!
+
+Look for [issues with the `Dependency notations` and `up-for-grabs` tags](https://github.com/jmfayard/refreshVersions/issues?q=is%3Aopen+label%3A%22Dependency+notations%22+label%3A%22up-for-grabs%22) to find one you can directly contribute to, or submit a new issue to ask for a new one to be added. We updated the contributing guide on the website, it now has [a guide dedicated to it here](docs/contributing/submitting-prs/dependency-notations-updates.md).
+
+### New features
+
+- refreshVersions will now add `## unused` comments on top of unused entries in the `versions.properties` file after you run the `refreshVersions` task, so you know which ones are obsolete and can be removed.
+- The new `rejectVersionsIf { … }` predicate available in the `refreshVersions { … }` extension in your `settings.gradle[.kts]` file will allow you to filter any kind of versions you don't want to know about. It can be handy to filter snapshots out for example.
+- Most of our dependency notations now provide more flexibility with 3 new extension functions: `withVersionPlaceholder()`, `withVersion(…)`, and `withoutVersion()`.
+
+### Change (potentially breaking)
+
+- If you use a BoM from the built-in dependency notations, it must always appear before dependencies from the group it controls, or you'll see an error message that will fail the Gradle build. We do this because we can't switch on usage of the BoM for linked dependencies that have already been evaluated by Gradle.
+
+### Improvements
+
+The `refreshVersionsMigrate` will now use the built-in dependency notations if they match existing dependencies.
+
+### New dependency notations:
+
+- AndroidX:
+    - benchmark.macroJunit4
+    - core.splashscreen
+    - games:
+        - activity
+        - controller
+        - framePacing
+        - performanceTuner
+        - textInput
+    - navigation.testing
+    - wear.compose:
+        - foundation
+        - material
+    - window
+      - java
+      - rxJava2
+      - rxJava3
+      - testing
+- COIL:
+    - compose
+    - composeBase
+- Firebase:
+    - cloudMessagingDirectBoot
+    - Firebase.mlModelDownloaderKtx
+    - Firebase.mlModelDownloader
+- Kodein.di (new group with many dependencies)
+- Kotlin.test (which is compatible with multiplatform projects since Kotlin 1.5)
+- KotlinX.html (compatible with multiplatform projects)
+- Ktor.features.serialization
+- Http4k (new group with many dependencies)
+- Splitties.alertdialogMaterial
+- Square
+    - okHttp3.bom
+    - okHttp3 (shortcut to existing okHttp3.okHttp)
+    - retrofit2.converter.wire
+    - retrofit2 (shortcut to existing retrofit2.retrofit)
+- Spring (new group with many dependencies)
+
+
 ## Version 0.11.0 (2021-08-03)
 
 ### New feature
@@ -15,7 +78,6 @@ Add task **refreshVersionsMigrate** that adds all missing entries in versions.pr
 - Ktor.features.serialization
 - AndroidX.navigation.testing
 - Testing.kotestExtensions who replaces Testing.kotest.extensions in Kotest >= 4.5.0
-
 
 
 ## Version 0.10.1 (2021-06-10)
@@ -38,6 +100,7 @@ Add task **refreshVersionsMigrate** that adds all missing entries in versions.pr
     - health.servicesClient
     - security.appAuthenticatorTesting
 - Google.accompanist.insets.ui
+
 
 ## Version 0.10.0 (2021-05-13)
 
@@ -170,6 +233,7 @@ We're very grateful for your time and help, and we think our users will be as we
 
 Also, thanks to all the folks that reported issues. It was very helpful to prioritize on our side.
 
+
 ## Version 0.9.7 (2020-10-16)
 
 ### Fixes
@@ -177,6 +241,7 @@ Also, thanks to all the folks that reported issues. It was very helpful to prior
 - Running the `refreshVersions` task twice or more would fail with "executor rejected" as an error message, until the Gradle daemon is killed. This has now been fixed. (Issue #263)
 - The `refreshVersions` task was failing after the latest Gradle release candidate was superseded by the stable release because the API would return an empty JSON object after this, which we didn't expect.
 - (Minor) We fixed a typo in a diagnostic task name (`refreshVersionsDependenciesMapping`)
+
 
 ## Version 0.9.6 (2020-10-12)
 
@@ -201,6 +266,7 @@ Firebase ML Kit has been rebranded to Google ML Kit along with API and feature c
 ### New features
 
 - refreshVersions will now warn you when Gradle is not up to date, and will give you the commands to run to update it for you to copy/paste and run. It works if you're using a release candidate, and also if you're using a nightly version!
+
 
 ## Version 0.9.5 (2020-08-21)
 

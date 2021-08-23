@@ -4,11 +4,11 @@ import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
-import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.isAVersionAlias
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.isUsingVersionRejectionHeader
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.Comment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
 import org.gradle.api.artifacts.ExternalDependency
@@ -42,16 +42,29 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
                 when (section) {
                     is Comment -> section
                     is VersionEntry -> {
-
                         if (section.currentVersion.isAVersionAlias()) return@map section
 
-                        val versionsCandidates = candidatesMap[section.key]?.versionsCandidates
-                            ?: return@map section
-                        section.copy(availableUpdates = versionsCandidates.map { it.value })
+                        when (val versionsCandidates = candidatesMap[section.key]?.versionsCandidates) {
+                            null -> section.asUnused(isUnused = true)
+                            else -> section.copy(
+                                availableUpdates = versionsCandidates.map { it.value }
+                            ).asUnused(isUnused = false)
+                        }
                     }
                 }
             }
         )
+    }
+}
+
+private fun VersionEntry.asUnused(isUnused: Boolean): VersionEntry {
+    val wasMarkedAsUnused = this.leadingCommentLines.any {
+        it.contains(VersionsPropertiesModel.unusedEntryComment)
+    }
+    if (isUnused == wasMarkedAsUnused) return this
+    return when {
+        isUnused -> copy(leadingCommentLines = leadingCommentLines + VersionsPropertiesModel.unusedEntryComment)
+        else -> copy(leadingCommentLines = leadingCommentLines - VersionsPropertiesModel.unusedEntryComment)
     }
 }
 
@@ -93,7 +106,14 @@ internal val versionsPropertiesFileLock = Any()
 
 internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)
-    appendln(VersionsPropertiesModel.versionsPropertiesHeader(version = generatedByVersion))
+    appendln(
+        VersionsPropertiesModel.versionsPropertiesHeader(
+            version = generatedByVersion
+        )
+    )
+    if (RefreshVersionsConfigHolder.isUsingVersionRejection) {
+        appendln(isUsingVersionRejectionHeader)
+    }
     if (sections.isEmpty()) return@buildString
     appendln()
     val sb = StringBuilder()

@@ -1,7 +1,6 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
-import de.fayard.refreshVersions.core.RefreshVersionsMigrateTask
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
@@ -23,8 +22,8 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             "google-version-alias-rules",
             "kotlin(x)-version-alias-rules",
             "square-version-alias-rules",
-            "other-version-alias-rules",
-            "testing-version-alias-rules"
+            "testing-version-alias-rules",
+            "dependency-groups-alias-rules"
         ).map {
             RefreshVersionsPlugin::class.java.getResourceAsStream("/refreshVersions-rules/$it.txt")!!
                 .bufferedReader()

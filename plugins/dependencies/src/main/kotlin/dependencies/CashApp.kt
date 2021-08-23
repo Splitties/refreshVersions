@@ -1,6 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import org.gradle.kotlin.dsl.IsNotADependency
+import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotation
 
 object CashApp {
 
@@ -22,7 +23,7 @@ object CashApp {
      *
      * GitHub page: [cashapp/turbine](https://github.com/cashapp/turbine)
      */
-    const val turbine = "app.cash.turbine:turbine:_"
+    val turbine = DependencyNotation("app.cash.turbine", "turbine")
 
     /**
      * A content provider wrapper for reactive queries with Kotlin coroutines `Flow` or RxJava `Observable`.
@@ -33,11 +34,9 @@ object CashApp {
      */
     val copper = Copper
 
-    object Copper : IsNotADependency {
-        private const val artifactPrefix = "app.cash.copper:copper"
-
-        const val flow = "$artifactPrefix-flow:_"
-        const val rx2 = "$artifactPrefix-rx2:_"
-        const val rx3 = "$artifactPrefix-rx3:_"
+    object Copper : DependencyGroup(group = "app.cash.copper") {
+        val flow = module("copper-flow")
+        val rx2 = module("copper-rx2")
+        val rx3 = module("copper-rx3")
     }
 }
