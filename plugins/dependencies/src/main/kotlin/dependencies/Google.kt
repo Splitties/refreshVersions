@@ -24,7 +24,9 @@ object Google {
     object Accompanist : IsNotADependency {
         private const val artifactPrefix = "com.google.accompanist:accompanist"
 
+        @Deprecated("Moved to COIL.compose", ReplaceWith("COIL.compose"))
         const val coil = "$artifactPrefix-coil:_"
+
         const val glide = "$artifactPrefix-glide:_"
         const val imageloadingCore = "$artifactPrefix-imageloading-core:_"
 
