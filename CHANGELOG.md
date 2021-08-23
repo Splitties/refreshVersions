@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Announcement
+
+We are now ready to accept dependency notation contributions for high-quality and popular dependencies from the Kotlin ecosystem! Look for [issues with the `Dependency notations` and `up-for-grabs` tags](https://github.com/jmfayard/refreshVersions/issues?q=is%3Aopen+label%3A%22Dependency+notations%22+label%3A%22up-for-grabs%22) to find one you can directly contribute to, or submit a new issue to ask for a new one to be added. We updated the contributing guide on the website, it now has [a guide dedicated to it here](docs/update-dependencies.md).
+
 ### New features
 
 - refreshVersions will now add `## unused` comments on top of unused entries in the `versions.properties` file after you run the `refreshVersions` task, so you know which ones are obsolete and can be removed.
