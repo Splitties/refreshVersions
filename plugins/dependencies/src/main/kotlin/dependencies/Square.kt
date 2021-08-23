@@ -1,6 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
@@ -17,7 +18,7 @@ object Square {
      *
      * GitHub page: [square/okio](https://github.com/square/okio)
      */
-    const val okio = "com.squareup.okio:okio:_"
+    val okio = DependencyNotation("com.squareup.okio", "okio")
 
     /**
      * Square's meticulous HTTP client for Java and Kotlin.
