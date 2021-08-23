@@ -2,7 +2,7 @@
 name: Dependency notations
 about: Propose dependency notations for a new library
 title: 'Dependency notations for xxx/yyy'
-labels: 'Dependency Notation, up-for-grabs'
+labels: 'Dependency notations, up-for-grabs'
 assignees: ''
 
 ---
