@@ -61,14 +61,14 @@ object AndroidX : IsNotADependency {
 
     val benchmark = Benchmark // TODO kdoc
 
-    object Benchmark : IsNotADependency {
-        private const val artifactPrefix = "androidx.benchmark:benchmark"
+    object Benchmark : DependencyGroup(group = "androidx.benchmark") {
 
-        const val junit4 = "$artifactPrefix-junit4:_"
+        val gradlePlugin = module(name = "benchmark-gradle-plugin")
 
-        const val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
+        val junit4 = module(name = "benchmark-junit4")
+        val macroJunit4 = module(name = "benchmark-macro-junit4")
 
-        const val common = "$artifactPrefix-common:_"
+        val common = module(name = "benchmark-common")
     }
 
     const val biometric = "androidx.biometric:biometric:_"

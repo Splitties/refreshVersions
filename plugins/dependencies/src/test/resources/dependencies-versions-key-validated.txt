@@ -16,6 +16,7 @@ androidx.autofill..autofill=version.androidx.autofill
 androidx.benchmark..benchmark-common=version.androidx.benchmark
 androidx.benchmark..benchmark-gradle-plugin=version.androidx.benchmark
 androidx.benchmark..benchmark-junit4=version.androidx.benchmark
+androidx.benchmark..benchmark-macro-junit4=version.androidx.benchmark
 androidx.biometric..biometric-ktx=version.androidx.biometric-ktx
 androidx.biometric..biometric=version.androidx.biometric
 androidx.browser..browser=version.androidx.browser
