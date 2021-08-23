@@ -250,11 +250,11 @@ object AndroidX : IsNotADependency {
         val feedbackTesting = module("enterprise-feedback-testing")
     }
 
-    const val exifInterface = "androidx.exifinterface:exifinterface:_"
+    val exifInterface = DependencyNotation("androidx.exifinterface", "exifinterface")
 
-    const val fragmentKtx = "androidx.fragment:fragment-ktx:_"
-    const val fragment = "androidx.fragment:fragment:_"
-    const val fragmentTesting = "androidx.fragment:fragment-testing:_"
+    val fragmentKtx = DependencyNotation("androidx.fragment", "fragment-ktx")
+    val fragment = DependencyNotation("androidx.fragment", "fragment")
+    val fragmentTesting = DependencyNotation("androidx.fragment", "fragment-testing")
 
     val games = Games
 
