@@ -1,6 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotation
 
 object CashApp {
 
@@ -22,7 +23,7 @@ object CashApp {
      *
      * GitHub page: [cashapp/turbine](https://github.com/cashapp/turbine)
      */
-    const val turbine = "app.cash.turbine:turbine:_"
+    val turbine = DependencyNotation("app.cash.turbine", "turbine")
 
     /**
      * A content provider wrapper for reactive queries with Kotlin coroutines `Flow` or RxJava `Observable`.
@@ -33,9 +34,7 @@ object CashApp {
      */
     val copper = Copper
 
-    object Copper : DependencyGroup(
-        group = "app.cash.copper"
-    ) {
+    object Copper : DependencyGroup(group = "app.cash.copper") {
         val flow = module("copper-flow")
         val rx2 = module("copper-rx2")
         val rx3 = module("copper-rx3")
