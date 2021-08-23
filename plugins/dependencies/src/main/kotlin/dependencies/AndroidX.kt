@@ -1,5 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
@@ -691,6 +692,13 @@ object AndroidX : IsNotADependency {
 
             const val data = "$artifactPrefix-data:_"
             const val provider = "$artifactPrefix-provider:_"
+        }
+
+        val compose = Compose
+
+        object Compose : DependencyGroup(group = "androidx.wear.compose") {
+            val foundation = module(name = "compose-foundation")
+            val material = module(name = "compose-material")
         }
 
         val tiles = Tiles
