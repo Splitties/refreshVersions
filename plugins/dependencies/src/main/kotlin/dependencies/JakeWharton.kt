@@ -5,6 +5,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotation
 import org.gradle.api.Incubating
 
 @Incubating
@@ -15,28 +16,28 @@ object JakeWharton {
      *
      * GitHub page: [JakeWharton/timber](https://github.com/JakeWharton/timber)
      */
-    const val timber = "com.jakewharton.timber:timber:_"
+    val timber = DependencyNotation("com.jakewharton.timber", "timber")
 
     /**
      * A Kotlin DSL and Java/Kotlin builder API for constructing HTML-like tables which can be rendered to text.
      *
      * GitHub page: [JakeWharton/picnic](https://github.com/JakeWharton/picnic)
      */
-    const val picnic = "com.jakewharton.picnic:picnic:_"
+    val picnic = DependencyNotation("com.jakewharton.picnic", "picnic")
 
     /**
      * A Kotlin compiler plugin which brings Kotlin/JS's `unsafeCast` to Kotlin/JVM.
      *
      * GitHub page: [JakeWharton/confundus](https://github.com/JakeWharton/confundus)
      */
-    const val confundusGradlePlugin = "com.jakewharton.confundus:confundus-gradle:_"
+    val confundusGradlePlugin = DependencyNotation("com.jakewharton.confundus", "confundus-gradle")
 
     /**
      * A time-traveling bytecode rewriter which adds future APIs to `android.jar` which can be desugared to all API levels by D8 and R8.
      *
      * GitHub page: [JakeWharton/wormhole](https://github.com/JakeWharton/wormhole)
      */
-    const val wormholeGradlePlugin = "com.jakewharton.wormhole:wormhole-gradle:_"
+    val wormholeGradlePlugin = DependencyNotation("com.jakewharton.wormhole", "wormhole-gradle")
 
     /**
      * A type-safe HTTP client for Android and the JVM
