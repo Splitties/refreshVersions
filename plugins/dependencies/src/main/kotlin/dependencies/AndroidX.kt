@@ -14,7 +14,7 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * - As of 2019 November the 18th, AndroidX is made of **187 artifacts**.
  */
 @Incubating
-object AndroidX {
+object AndroidX : IsNotADependency {
     // LibraryGroups.kt: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-master-dev:buildSrc/src/main/kotlin/androidx/build/LibraryGroups.kt;l=22?q=LibraryGroups&sq=
     // LibraryVersions.kt: https://cs.android.com/androidx/platform/frameworks/support/+/androidx-master-dev:buildSrc/src/main/kotlin/androidx/build/LibraryVersions.kt;l=22?q=LibraryVersions&sq=
 
