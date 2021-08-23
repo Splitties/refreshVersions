@@ -5,6 +5,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
@@ -17,7 +18,7 @@ object Testing {
      *
      * Official website: [junit.org/junit4](https://junit.org/junit4/)
      */
-    const val junit4 = "junit:junit:_"
+    val junit4 = DependencyNotation("junit", "junit")
 
 
     /**
@@ -25,10 +26,10 @@ object Testing {
      *
      * GitHub page: [robolectric/robolectric](https://github.com/robolectric/robolectric)
      */
-    const val robolectric = "org.robolectric:robolectric:_"
+    val robolectric = DependencyNotation("org.robolectric", "robolectric")
 
     @Deprecated("Wrong spelling", ReplaceWith("robolectric"))
-    const val roboElectric = robolectric
+    val roboElectric = robolectric
 
 
     /**
@@ -259,6 +260,6 @@ object Testing {
          * Using Mockito with Kotlin
          * [More info here](https://github.com/nhaarman/mockito-kotlin)
          */
-        const val kotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:_"
+        val kotlin = DependencyNotation("com.nhaarman.mockitokotlin2", "mockito-kotlin")
     }
 }
