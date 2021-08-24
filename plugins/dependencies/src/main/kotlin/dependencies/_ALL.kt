@@ -9,6 +9,7 @@ import Firebase
 import Google
 import Http4k
 import JakeWharton
+import Koin
 import Kodein
 import Kotlin
 import KotlinX
@@ -29,6 +30,7 @@ internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     Http4k,
     JakeWharton,
     Kodein,
+    Koin,
     Kotlin,
     KotlinX,
     Ktor,
