@@ -13,6 +13,9 @@ org.http4k:http4k-*
 io.coil-kt:coil(-*)
    ^^^^^^^
 
+com.russhwolf:multiplatform-settings(-*)
+                            ^^^^^^^^
+
 com.louiscad.splitties:splitties-*
              ^^^^^^^^^
 
