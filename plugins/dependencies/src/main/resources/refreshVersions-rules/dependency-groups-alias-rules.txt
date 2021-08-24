@@ -1,3 +1,6 @@
+io.insert-koin:koin-*
+          ^^^^
+
 io.ktor:*
    ^^^^
 
@@ -15,6 +18,3 @@ com.louiscad.splitties:splitties-*
 
 org.kodein.di:kodein-di(-*)
     ^^^^^^^^^
-
-io.insert-koin:koin-*
-   ^^^^^^^^^^^

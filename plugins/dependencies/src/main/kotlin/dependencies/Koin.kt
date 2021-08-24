@@ -3,7 +3,7 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import org.gradle.api.Incubating
 
-/**                                                            
+/**
  * A pragmatic lightweight dependency injection framework for Kotlin developers.
  * Koin is a DSL, a light container and a pragmatic API
  *
@@ -16,7 +16,7 @@ object Koin : DependencyGroup(
     group = "io.insert-koin",
     rawRule = """
         io.insert-koin:koin-*
-           ^^^^^^^^^^^
+                  ^^^^
     """.trimIndent()
 ) {
     val core = module("koin-core")
