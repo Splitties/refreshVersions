@@ -1,8 +1,10 @@
-# gradle refreshVersions
+# What is refreshVersions? [jmfayard.github.io/refreshVersions](https://jmfayard.github.io/refreshVersions/)
 
-> Life is too short to google for dependencies and versions
+**refreshVersions** helps **Gradle** users with the **tedious manual work** usually involved in adding and updating **dependencies and their versions**.
 
-### Usage
+## Usage
+
+### Setup
 
 ```kotlin
 // settings.gradle(.kts)
