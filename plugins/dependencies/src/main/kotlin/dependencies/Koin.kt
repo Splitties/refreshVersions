@@ -13,7 +13,11 @@ import org.gradle.api.Incubating
  */
 @Incubating
 object Koin : DependencyGroup(
-    group = "io.insert-koin"
+    group = "io.insert-koin",
+    rawRule = """
+        io.insert-koin:koin-*
+           ^^^^^^^^^^^
+    """.trimIndent()
 ) {
     val core = module("koin-core")
     val test = module("koin-test")
