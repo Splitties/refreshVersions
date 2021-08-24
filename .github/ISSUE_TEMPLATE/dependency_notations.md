@@ -11,7 +11,7 @@ assignees: ''
 
 - *Description*:
 - *GitHub*:
-- *Official website*:
+- *Official website* (if any, besides the GitHub page):
 
 ## Want to contribute the sample?
 
