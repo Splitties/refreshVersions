@@ -13,11 +13,11 @@ org.http4k:http4k-*
 io.coil-kt:coil(-*)
    ^^^^^^^
 
-com.russhwolf:multiplatform-settings(-*)
-                            ^^^^^^^^
-
 com.louiscad.splitties:splitties-*
              ^^^^^^^^^
 
 org.kodein.di:kodein-di(-*)
     ^^^^^^^^^
+
+com.russhwolf:multiplatform-settings(-*)
+              ^^^^^^^^^^^^^^^^^^^^^^
