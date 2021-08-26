@@ -18,3 +18,6 @@ com.louiscad.splitties:splitties-*
 
 org.kodein.di:kodein-di(-*)
     ^^^^^^^^^
+
+com.russhwolf:multiplatform-settings(-*)
+              ^^^^^^^^^^^^^^^^^^^^^^
