@@ -35,6 +35,7 @@ class MigrationTest : StringSpec({
             implementation 'com.example:name:1.2.3.eap.1'
             implementation 'com.example:name:1.2.3.eap1'
             implementation 'com.example:name:1.2.3-native-mt'
+            implementation "androidx.compose.ui:ui:${'$'}compose_version"
         """.trimIndent().lines()
         val expected = """
             implementation("com.example:name:_")
@@ -53,6 +54,7 @@ class MigrationTest : StringSpec({
             implementation 'com.example:name:_'
             implementation 'com.example:name:_'
             implementation 'com.example:name:_'
+            implementation "androidx.compose.ui:ui:_"
         """.trimIndent().lines()
         input.size shouldBeExactly expected.size
         List(input.size) { input[it] to expected[it] }
