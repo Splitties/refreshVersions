@@ -95,8 +95,6 @@ fun getVersionPropertyName(
             }
         }
         is ModuleId.Npm -> {
-            val group = moduleId.group
-            val name = moduleId.name
             when (group) {
                 null -> "version.npm.$name"
                 else -> "version.npm.@$group/$name"
