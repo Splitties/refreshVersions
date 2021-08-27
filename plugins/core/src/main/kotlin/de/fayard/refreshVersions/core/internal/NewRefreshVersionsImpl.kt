@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core.internal
 
+import de.fayard.refreshVersions.core.DependencySelection
 import de.fayard.refreshVersions.core.DependencyVersionsFetcher
 import de.fayard.refreshVersions.core.FeatureFlag.GRADLE_UPDATES
 import de.fayard.refreshVersions.core.ModuleId
