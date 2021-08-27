@@ -64,8 +64,7 @@ internal suspend fun lookupVersionCandidates(
                 propertyName = propertyName,
                 dependencyVersionsFetchers = versionFetchers
             )
-            val selection =
-                DependencySelection(moduleId, Version(resolvedVersion), propertyName, Version(resolvedVersion))
+            val selection = DependencySelection(moduleId, Version(resolvedVersion), propertyName)
             async {
                 DependencyWithVersionCandidates(
                     moduleId = moduleId,
