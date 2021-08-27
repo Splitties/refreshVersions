@@ -12,6 +12,7 @@ import org.gradle.api.Incubating
 @Incubating
 object RussHWolf {
     val multiplatformSettings = MultiplatformSettings
+
     object MultiplatformSettings : DependencyNotationAndGroup(
         group = "com.russhwolf",
         rawRule = """
