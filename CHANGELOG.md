@@ -1,5 +1,12 @@
 # Change log for refreshVersions
 
+## [Unreleased]
+
+### New dependency notations:
+
+- Koin (new group with several dependencies)
+- RussHWolf.multiplatformSettings (new group with several dependencies)
+
 ## Version 0.20.0 (2021-08-23)
 
 ### Announcement
