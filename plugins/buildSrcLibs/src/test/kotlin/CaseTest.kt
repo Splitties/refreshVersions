@@ -1,5 +1,3 @@
-package de.fayard.refreshVersions.core
-
 import de.fayard.buildSrcLibs.internal.Case
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll

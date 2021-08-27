@@ -61,6 +61,8 @@ internal actual data class VersionsPropertiesModel(
 
         const val availableComment = "# available"
 
+        const val unusedEntryComment = "## unused"
+
         val versionKeysPrefixes = listOf("plugin", "version")
 
         fun versionsPropertiesHeader(version: String) = """
@@ -75,6 +77,11 @@ internal actual data class VersionsPropertiesModel(
             """.trimMargin().also { headerText ->
             assert(headerText.lineSequence().all { it.startsWith(headerLinesPrefix) })
         }
+
+        val isUsingVersionRejectionHeader = """
+            |####
+            |#### NOTE: Some versions are filtered by the rejectVersionsIf predicate. See the settings.gradle.kts file.
+            """.trimMargin()
 
         private fun String.mustBeACommentLine() {
             require(startsWith("#")) { "Expected a comment but found random text: $this" }

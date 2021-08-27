@@ -1,6 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import dependencies.DependencyNotationAndGroup
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 
 /**
@@ -13,10 +13,21 @@ import org.gradle.api.Incubating
  * GitHub Page: [coil-kt/coil](https://github.com/coil-kt/coil/)
  */
 @Incubating
-object COIL : DependencyNotationAndGroup(group = "io.coil-kt", name = "coil") {
+object COIL : DependencyNotationAndGroup(group = "io.coil-kt", name = "coil",
+rawRule = """
+    io.coil-kt:coil(-*)
+       ^^^^^^^
+""".trimIndent()) {
 
-    @JvmField val base = "$artifactPrefix-base:_"
-    @JvmField val gif = "$artifactPrefix-gif:_"
-    @JvmField val svg = "$artifactPrefix-svg:_"
-    @JvmField val video = "$artifactPrefix-video:_"
+    val base = module("coil-base")
+
+    val compose = module("coil-compose")
+
+    val composeBase = module("coil-compose-base")
+
+    val gif = module("coil-gif")
+
+    val svg = module("coil-svg")
+
+    val video = module("coil-video")
 }

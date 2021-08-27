@@ -1,13 +1,15 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import dependencies.DependencyNotationAndGroup
+import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotation
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 @Incubating
 object Google {
 
-    const val playServicesGradlePlugin = "com.google.gms:google-services:_"
+    val playServicesGradlePlugin = DependencyNotation("com.google.gms", "google-services")
 
     /**
      * Firebase Android libraries.
@@ -21,32 +23,31 @@ object Google {
 
     val accompanist = Accompanist
 
-    object Accompanist : IsNotADependency {
-        private const val artifactPrefix = "com.google.accompanist:accompanist"
+    object Accompanist : DependencyGroup(group = "com.google.accompanist") {
 
-        const val coil = "$artifactPrefix-coil:_"
-        const val glide = "$artifactPrefix-glide:_"
-        const val imageloadingCore = "$artifactPrefix-imageloading-core:_"
+        @Deprecated("Moved to COIL.compose", ReplaceWith("COIL.compose"))
+        val coil = module("accompanist-coil")
+
+        val glide = module("accompanist-glide")
+        val imageloadingCore = module("accompanist-imageloading-core")
 
         val insets = Insets
 
         object Insets : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-insets") {
-            @JvmField
-            val ui = "$artifactPrefix-ui:_"
+            val ui = module("accompanist-insets-ui")
         }
-        const val systemuicontroller = "$artifactPrefix-systemuicontroller:_"
+        val systemuicontroller = module("accompanist-systemuicontroller")
 
-        const val appcompatTheme = "$artifactPrefix-appcompat-theme:_"
+        val appcompatTheme = module("accompanist-appcompat-theme")
 
         val pager = Pager
 
         object Pager : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-pager") {
-            @JvmField
-            val indicators = "$artifactPrefix-indicators:_"
+            val indicators = module("accompanist-pager-indicators")
         }
 
-        const val flowlayout = "$artifactPrefix-flowlayout:_"
-        const val swiperefresh = "$artifactPrefix-swiperefresh:_"
+        val flowlayout = module("accompanist-flowlayout")
+        val swiperefresh = module("accompanist-swiperefresh")
     }
 
     val android = Android
@@ -54,54 +55,51 @@ object Google {
     object Android : IsNotADependency {
         private const val artifactBase = "com.google.android"
 
-        const val browserHelper = "com.google.androidbrowserhelper:androidbrowserhelper:_"
+        val browserHelper = DependencyNotation("com.google.androidbrowserhelper", "androidbrowserhelper")
 
         val material = Material
 
-        object Material : DependencyNotationAndGroup(group = "$artifactBase.material", name = "material") {
-            @JvmField val composeThemeAdapter = "$artifactBase.material:compose-theme-adapter:_"
+        object Material : DependencyNotationAndGroup(group = "com.google.android.material", name = "material") {
+            val composeThemeAdapter = module("compose-theme-adapter")
         }
 
-        private const val wearOsVersion = "_"
-
-        const val wearable = "$artifactBase.wearable:wearable:$wearOsVersion"
-        const val supportWearable = "$artifactBase.support:wearable:$wearOsVersion"
+        val wearable = DependencyNotation("com.google.android.wearable", "wearable")
+        val supportWearable = DependencyNotation("com.google.android.support", "wearable")
 
         val playServices = PlayServices
 
-        object PlayServices : IsNotADependency {
-            private const val artifactPrefix = "$artifactBase.gms:play-services"
+        object PlayServices : DependencyGroup(group = "com.google.android.gms") {
 
             /** Google Account Login */
-            const val auth = "$artifactPrefix-auth:_"
+            val auth = module("play-services-auth")
 
             /** Base client library and Google Actions */
-            const val base = "$artifactPrefix-base:_"
+            val base = module("play-services-base")
 
             /** Google Sign In */
-            const val identity = "$artifactPrefix-identity:_"
+            val identity = module("play-services-identity")
 
             /** Google Analytics */
-            const val analytics = "$artifactPrefix-analytics:_"
+            val analytics = module("play-services-analytics")
 
             /** Google Awareness */
-            const val awareness = "$artifactPrefix-awareness:_"
+            val awareness = module("play-services-awareness")
 
             /** Google Cast */
-            const val cast = "$artifactPrefix-cast:_"
+            val cast = module("play-services-cast")
 
             /** Google Cloud Messaging */
             @Deprecated("Use Firebase Cloud Messaging instead")
-            const val gcm = "$artifactPrefix-gcm:_"
+            val gcm = module("play-services-gcm")
 
             /** Google Drive */
-            const val drive = "$artifactPrefix-drive:_"
+            val drive = module("play-services-drive")
 
             /** Google Fit */
-            const val fitness = "$artifactPrefix-fitness:_"
+            val fitness = module("play-services-fitness")
 
             /** Google Location and Activity Recognition */
-            const val location = "$artifactPrefix-location:_"
+            val location = module("play-services-location")
 
             // Play Services Ads intentionally not included because ads are mental pollution.
 
@@ -109,34 +107,32 @@ object Google {
              * Google Tasks API (yet another "Future" type, because they're not using Kotlin coroutines yet).
              * We recommend to use it with [KotlinX.Coroutines.playServices].
              */
-            const val tasks = "$artifactPrefix-tasks:_"
+            val tasks = module("play-services-tasks")
 
             /** Mobile Vision */
-            const val vision = "$artifactPrefix-vision:_"
+            val vision = module("play-services-vision")
 
             /** Google Nearby */
-            const val nearby = "$artifactPrefix-nearby:_"
+            val nearby = module("play-services-nearby")
 
             /** Google Panorama Viewer */
-            const val panorama = "$artifactPrefix-panorama:_"
+            val panorama = module("play-services-panorama")
 
             /** Google Play Game services */
-            const val games = "$artifactPrefix-games:_"
+            val games = module("play-services-games")
 
             /** SafetyNet */
-            const val safetynet = "$artifactPrefix-safetynet:_"
+            val safetynet = module("play-services-safetynet")
 
             /** Google Pay */
-            const val pay = "$artifactPrefix-wallet:_"
+            val pay = module("play-services-wallet")
 
             /** Wear OS by Google */
-            const val wearOS = "$artifactPrefix-wearable:_"
+            val wearOS = module("play-services-wearable")
 
             val mlKit = MlKit
 
             object MlKit : IsNotADependency {
-                private const val prefix = "$artifactPrefix-mlkit"
-
 
                 val vision = Vision
 
@@ -147,37 +143,35 @@ object Google {
                      *
                      * [Overview](https://developers.google.com/ml-kit/vision/barcode-scanning)
                      */
-                    const val barcodeScanning = "$prefix-barcode-scanning:_"
+                    val barcodeScanning = module("play-services-mlkit-barcode-scanning")
 
                     /**
                      * Unbundled version of [Google.MlKit.Vision.faceDetection]
                      *
                      * [Overview](https://developers.google.com/ml-kit/vision/face-detection)
                      */
-                    const val faceDetection = "$prefix-face-detection:_"
+                    val faceDetection = module("play-services-mlkit-face-detection")
 
                     /**
                      * Unbundled version of [Google.MlKit.Vision.imageLabeling]
                      *
                      * [Overview](https://developers.google.com/ml-kit/vision/image-labeling)
                      */
-                    const val imageLabeling = "$prefix-image-labeling:_"
+                    val imageLabeling = module("play-services-mlkit-image-labeling")
 
                     /**
                      * [Overview](https://developers.google.com/ml-kit/vision/text-recognition)
                      */
-                    const val textRecognition = "$prefix-text-recognition:_"
+                    val textRecognition = module("play-services-mlkit-text-recognition")
                 }
             }
         }
 
         val play = Play
 
-        object Play : IsNotADependency {
-            private const val group = "$artifactBase.play"
-
-            const val core = "$group:core:_"
-            const val coreKtx = "$group:core-ktx:_"
+        object Play : DependencyGroup(group = "com.google.android.play") {
+            val core = module("core")
+            val coreKtx = module("core-ktx")
         }
     }
 
@@ -189,31 +183,30 @@ object Google {
      */
     val ar = Ar
 
-    object Ar : IsNotADependency {
+    object Ar : DependencyGroup(group = "com.google.ar") {
         private const val baseArtifact = "com.google.ar"
 
         /**
          * [Android guide here](https://developers.google.com/ar/develop/java/quickstart).
          */
-        const val core = "$baseArtifact:core:_"
+        val core = module("core")
 
         /**
          * [Official doc here](https://developers.google.com/ar/develop/java/sceneform).
          */
         val sceneform = Sceneform
 
-        object Sceneform : IsNotADependency {
-            private const val artifactPrefix = "$baseArtifact.sceneform"
+        object Sceneform : DependencyGroup(group = "com.google.ar.sceneform") {
 
-            const val animation = "$artifactPrefix:animation:_"
-            const val assets = "$artifactPrefix:assets:_"
-            const val core = "$artifactPrefix:core:_"
-            const val filamentAndroid = "$artifactPrefix:filament-android:_"
-            const val plugin = "$artifactPrefix:plugin:_"
-            const val rendering = "$artifactPrefix:rendering:_"
-            const val sceneformBase = "$artifactPrefix:sceneform-base:_"
+            val animation = module("animation")
+            val assets = module("assets")
+            val core = module("core")
+            val filamentAndroid = module("filament-android")
+            val plugin = module("plugin")
+            val rendering = module("rendering")
+            val sceneformBase = module("sceneform-base")
 
-            const val ux = "$artifactPrefix.ux:sceneform-ux:_"
+            val ux = DependencyNotation("com.google.ar.sceneform.ux", "sceneform-ux")
         }
     }
 
@@ -227,13 +220,12 @@ object Google {
     val dagger = Dagger
 
     object Dagger : DependencyNotationAndGroup(group = "com.google.dagger", name = "dagger") {
-        private const val group = "com.google.dagger"
 
-        @JvmField val compiler = "$artifactPrefix-compiler:_"
+        val compiler = module("dagger-compiler")
 
-        @JvmField val spi = "$artifactPrefix-spi:_"
-        @JvmField val producers = "$artifactPrefix-producers:_"
-        @JvmField val gwt = "$artifactPrefix-gwt:_"
+        val spi = module("dagger-spi")
+        val producers = module("dagger-producers")
+        val gwt = module("dagger-gwt")
 
         val hilt = Hilt
 
@@ -245,21 +237,18 @@ object Google {
                 /**
                  * Id of the plugin: "`dagger.hilt.android.plugin`"
                  */
-                @JvmField
-                val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
+                val gradlePlugin = module("hilt-android-gradle-plugin")
 
-                @JvmField
                 @Deprecated(
                     "Renamed, no longer has the word 'android'.",
                     ReplaceWith("Google.dagger.hilt.compiler")
                 )
-                val compiler = "$artifactPrefix-compiler:_"
+                val compiler = module("hilt-android-compiler")
 
-                @JvmField
-                val testing = "$artifactPrefix-testing:_"
+                val testing = module("hilt-android-testing")
             }
 
-            const val compiler = "$group:hilt-compiler:_"
+            val compiler = module("hilt-compiler")
         }
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")
@@ -268,12 +257,12 @@ object Google {
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")
         object Android : DependencyNotationAndGroup(group = group, name = "dagger-android") {
-            @JvmField val processor = "$artifactPrefix-processor:_"
+            val processor = module("dagger-android-processor")
 
             /**
              * ⚠️ Requires jetifier to be enabled.
              */
-            @JvmField val support = "$artifactPrefix-support:_"
+            val support = module("dagger-android-support")
         }
 
         val grpc = Grpc
@@ -282,8 +271,8 @@ object Google {
             val server = Server
 
             object Server : DependencyNotationAndGroup(group = group, name = "dagger-grpc-server") {
-                @JvmField val processor = "$artifactPrefix-processor:_"
-                @JvmField val annotations = "$artifactPrefix-annotations:_"
+                val processor = module("dagger-grpc-server-processor")
+                val annotations = module("dagger-grpc-server-annotations")
             }
         }
     }
@@ -297,8 +286,7 @@ object Google {
      */
     val mlKit = MlKit
 
-    object MlKit : IsNotADependency {
-        private const val group = "com.google.mlkit"
+    object MlKit : DependencyGroup(group = "com.google.mlkit") {
 
         val vision = Vision
 
@@ -309,26 +297,26 @@ object Google {
              *
              * [Overview](https://developers.google.com/ml-kit/vision/barcode-scanning)
              */
-            const val barcodeScanning = "$group:barcode-scanning:_"
+            val barcodeScanning = module("barcode-scanning")
 
             /**
              * [Overview](https://developers.google.com/ml-kit/vision/digital-ink-recognition)
              */
-            const val digitalInkRecognition = "$group:digital-ink-recognition:_"
+            val digitalInkRecognition = module("digital-ink-recognition")
 
             /**
              * Bundled version of [Google.Android.PlayServices.MlKit.Vision.faceDetection]
              *
              * [Overview](https://developers.google.com/ml-kit/vision/face-detection)
              */
-            const val faceDetection = "$group:face-detection:_"
+            val faceDetection = module("face-detection")
 
             /**
              * Add downloading of the models instead of having to bundle them in the app for [ImageLabeling.autoMl].
              *
              * [Official documentation](https://firebase.google.com/docs/ml/android/label-images-with-automl)
              */
-            const val linkFirebase = "$group:linkfirebase:_"
+            val linkFirebase = module("linkfirebase")
 
             /**
              * Bundled version of [Google.Android.PlayServices.MlKit.Vision.imageLabeling]
@@ -344,12 +332,12 @@ object Google {
                  *
                  * [Firebase documentation](https://firebase.google.com/docs/ml/android/label-images-with-automl)
                  */
-                @JvmField val autoMl = "$artifactPrefix-automl:_"
+                val autoMl = module("image-labeling-automl")
 
                 /**
                  * [Official documentation](https://developers.google.com/ml-kit/vision/image-labeling/custom-models/android)
                  */
-                @JvmField val custom = "$artifactPrefix-custom:_"
+                val custom = module("image-labeling-custom")
             }
 
             /**
@@ -362,7 +350,7 @@ object Google {
                 /**
                  * [Official documentation](https://developers.google.com/ml-kit/vision/object-detection/custom-models/android)
                  */
-                @JvmField val custom = "$artifactPrefix-custom:_"
+                val custom = module("object-detection-custom")
             }
 
             /**
@@ -371,7 +359,7 @@ object Google {
             val poseDetection = PoseDetection
 
             object PoseDetection : DependencyNotationAndGroup(group = group, name = "pose-detection") {
-                @JvmField val accurate = "$artifactPrefix-accurate:_"
+                val accurate = module("pose-detection-accurate")
             }
 
             @Deprecated(
@@ -392,17 +380,17 @@ object Google {
             /**
              * [Overview](https://developers.google.com/ml-kit/language/identification)
              */
-            const val languageIdentification = "$group:language-id:_"
+            val languageIdentification = module("language-id")
 
             /**
              * [Overview](https://developers.google.com/ml-kit/language/translation)
              */
-            const val translate = "$group:translate:_"
+            val translate = module("translate")
 
             /**
              * [Overview](https://developers.google.com/ml-kit/language/smart-reply)
              */
-            const val smartReply = "$group:smart-reply:_"
+            val smartReply = module("smart-reply")
         }
     }
 }
