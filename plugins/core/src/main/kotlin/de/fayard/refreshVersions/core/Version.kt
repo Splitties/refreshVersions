@@ -123,35 +123,32 @@ data class Version(val value: String) : Comparable<Version> {
             }
         }
 
-        private fun String.isRange(): Boolean = when {
-            // npm operators
-            startsWith('^') -> true
-            startsWith('~') -> true
-            startsWith('*') -> true
-            // yarn operators
-            startsWith('>') -> true
-            startsWith('<') -> true
-            startsWith('=') -> true
-            // yarn hyphen range
-            contains(" - ") -> true
-            // yarn union
-            contains(" || ") -> true
-            // x ranges
-            contains(".x") -> true
-            else -> false
+        private fun String.isRange(): Boolean {
+            if (isEmpty()) return false
+            val npmOperators = "^~*"
+            val yarnOperators = "<>="
+            val firstCharOperators = npmOperators + yarnOperators
+            return when {
+                first() in firstCharOperators -> true
+                " - " in this -> true // yarn hyphen range
+                " || " in this -> true // yarn union
+                ".x" in this -> true // x ranges
+                else -> false
+            }
         }
 
         private fun String.rangeComponents(): List<Version> {
             return this
                 .replace(npmRangeCharsRegex, "")
-                .split(" - ", " || ",  " ")
+                .split(" - ", " || ", " ")
                 .filter { it.isNotBlank() }
                 .map { Version(it) }
         }
 
         private fun Version.toComparableList(): List<Comparable<*>> {
-            if(value.isRange()) {
-                val lowerBound: Version = value.rangeComponents().min() ?: error("no lower version bound found in range: '$value'")
+            if (this.isRange) {
+                val lowerBound: Version = value.rangeComponents().min()
+                    ?: error("no lower version bound found in range: '$value'")
                 return lowerBound.toComparableList()
             }
             return value.withoutKnownStableKeywordsOrSuffixes().split(".", "-").flatMap {
