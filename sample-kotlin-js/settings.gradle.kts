@@ -1,4 +1,5 @@
 import de.fayard.refreshVersions.core.FeatureFlag.*
+import de.fayard.refreshVersions.core.ModuleId
 
 pluginManagement {
     repositories {
@@ -25,6 +26,9 @@ refreshVersions {
         enable(LIBS)
         disable(GRADLE_UPDATES)
         disable(NPM_IMPLICIT_RANGE)
+    }
+    rejectVersionIf {
+        moduleId is ModuleId.Npm && moduleId.name == "react" && candidate.stabilityLevel.isLessStableThan(current.stabilityLevel)
     }
 }
 
