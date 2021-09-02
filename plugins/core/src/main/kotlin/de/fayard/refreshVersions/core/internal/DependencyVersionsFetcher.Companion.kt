@@ -55,7 +55,6 @@ internal fun DependencyVersionsFetcher.Companion.forNpm(
     return NpmDependencyVersionsFetcherHttp(
         httpClient = httpClient,
         moduleId = npmDependency.npmModuleId(),
-        repoUrl = npmRegistry,
-        repoAuthorization = null
+        repoUrl = npmRegistry
     )
 }

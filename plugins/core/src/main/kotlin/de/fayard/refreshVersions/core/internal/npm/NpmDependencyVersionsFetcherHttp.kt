@@ -15,8 +15,7 @@ import java.time.Instant
 internal class NpmDependencyVersionsFetcherHttp(
     private val httpClient: OkHttpClient,
     moduleId: ModuleId.Npm,
-    val repoUrl: String = "https://registry.npmjs.org/",
-    repoAuthorization: String? = null
+    val repoUrl: String = "https://registry.npmjs.org/"
 ) : DependencyVersionsFetcher(
     moduleId = moduleId,
     repoKey = repoUrl
@@ -34,10 +33,6 @@ internal class NpmDependencyVersionsFetcherHttp(
             }
         }
         url(metadataUrlForArtifact)
-//        header(
-//            name = "Authorization",
-//            value = repoAuthorization ?: return@apply
-//        )
     }.build()
 
 
