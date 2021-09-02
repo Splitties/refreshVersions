@@ -24,6 +24,10 @@ data class Version(val value: String) : Comparable<Version> {
         }
     }
 
+    val isRange: Boolean by lazy(LazyThreadSafetyMode.NONE) {
+        value.isRange()
+    }
+
     override fun compareTo(other: Version): Int = versionComparator.compare(this, other)
 
     private val comparableList: List<Comparable<*>> by lazy(LazyThreadSafetyMode.NONE) { toComparableList() }
@@ -31,6 +35,8 @@ data class Version(val value: String) : Comparable<Version> {
     companion object {
 
         //region Version comparison logic details (private symbols only)
+
+        private val npmRangeCharsRegex = "[<=>^~*]|\\.x".toRegex()
 
         private val versionComparator: Comparator<Version> = object : Comparator<Version> {
 
@@ -117,7 +123,34 @@ data class Version(val value: String) : Comparable<Version> {
             }
         }
 
+        private fun String.isRange(): Boolean {
+            if (isEmpty()) return false
+            val npmOperators = "^~*"
+            val yarnOperators = "<>="
+            val firstCharOperators = npmOperators + yarnOperators
+            return when {
+                first() in firstCharOperators -> true
+                " - " in this -> true // yarn hyphen range
+                " || " in this -> true // yarn union
+                ".x" in this -> true // x ranges
+                else -> false
+            }
+        }
+
+        private fun String.rangeComponents(): List<Version> {
+            return this
+                .replace(npmRangeCharsRegex, "")
+                .split(" - ", " || ", " ")
+                .filter { it.isNotBlank() }
+                .map { Version(it) }
+        }
+
         private fun Version.toComparableList(): List<Comparable<*>> {
+            if (this.isRange) {
+                val lowerBound: Version = value.rangeComponents().min()
+                    ?: error("no lower version bound found in range: '$value'")
+                return lowerBound.toComparableList()
+            }
             return value.withoutKnownStableKeywordsOrSuffixes().split(".", "-").flatMap {
                 it.toBigIntegerOrNull()?.let { number -> listOf(number) }
                     ?: Version(it).stabilityLevel.let { level ->
