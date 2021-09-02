@@ -38,10 +38,7 @@ internal class NpmDependencyVersionsFetcherHttp(
 
     override suspend fun getAvailableVersionsOrNull(versionFilter: ((Version) -> Boolean)?): SuccessfulResult? {
 
-        val jsonString = getJsoMmetadataOrNull() ?: return null
-
-        val jsonAdapter = moshi.adapter(NpmMetadata::class.java)
-        val metadata = jsonAdapter.fromJson(jsonString) ?: return null
+        val metadata = getNpmMetadataOrNull() ?: return null
 
         val allVersions = parseVersionsFromNpmMetaData(metadata)
         return SuccessfulResult(
@@ -54,10 +51,13 @@ internal class NpmDependencyVersionsFetcherHttp(
         )
     }
 
-    suspend fun getJsoMmetadataOrNull(): String? {
+    private suspend fun getNpmMetadataOrNull(): NpmMetadata? {
         return httpClient.newCall(request).await().use { response ->
             if (response.isSuccessful) {
-                response.use { it.body!!.string() }
+                response.use {
+                    val jsonAdapter = moshi.adapter(NpmMetadata::class.java)
+                    jsonAdapter.fromJson(it.body!!.source())
+                }
             } else when (response.code) {
                 404 -> null // Normal not found result
                 401 -> null // Returned by some repositories that have optional authentication
@@ -88,6 +88,7 @@ internal data class NpmMetadata(
     val versions: Map<String, NpmVersion>,
     val time: Map<String, String>
 )
+
 internal data class NpmVersion(
     val name: String,
     val version: String
