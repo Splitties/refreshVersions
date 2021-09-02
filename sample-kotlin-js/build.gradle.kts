@@ -5,7 +5,6 @@ plugins {
 group = "de.fayard"
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
