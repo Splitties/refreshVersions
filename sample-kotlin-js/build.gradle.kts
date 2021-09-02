@@ -37,19 +37,10 @@ kotlin {
             dependencies {
                 implementation(npm("decamelize", "_", generateExternals = true))
 
-                implementation(npm("leaflet", "_"))
-                implementation(npm("leaflet-imageoverlay-rotated", "_"))
-
-                implementation(npm("bootstrap-icons", "_"))
-
-                implementation(npm("css-loader", "_"))
-                implementation(npm("css-loader", "_"))
-                implementation(npm("style-loader", "_"))
-                implementation(npm("file-loader", "_"))
+                implementation(npm("react", "_"))
+                implementation(npm("moment", "_"))
 
                 implementation(npm("@googlemaps/js-api-loader", "_"))
-
-                implementation(npm("debug", "_"))
             }
         }
 
