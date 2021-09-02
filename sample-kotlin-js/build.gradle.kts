@@ -10,7 +10,7 @@ repositories {
 }
 
 kotlin {
-    js() {
+    js {
         browser {
             testTask {
                 useMocha()
@@ -20,20 +20,19 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(Kotlin.stdlib)
             }
         }
-
-        val commonTest by getting {
+        commonTest {
             dependencies {
                 implementation(Kotlin.test.common)
                 implementation(Kotlin.test.annotationsCommon)
             }
         }
 
-        val jsMain by getting {
+        getByName("jsMain") {
             dependencies {
                 implementation(npm("decamelize", "_", generateExternals = true))
 
@@ -44,7 +43,7 @@ kotlin {
             }
         }
 
-        val jsTest by getting {
+        getByName("jsTest") {
             dependencies {
                 implementation(Kotlin.test.js)
                 implementation(Testing.Kotest.assertions.core)
