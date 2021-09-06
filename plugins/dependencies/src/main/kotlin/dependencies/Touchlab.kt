@@ -19,7 +19,7 @@ object Touchlab {
         rawRule = """
         co.touchlab:stately-*
                     ^^^^^^^
-    """.trimIndent()
+        """.trimIndent()
     ) {
         val common = module("stately-common")
         val concurrency = module("stately-concurrency")
