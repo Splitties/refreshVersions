@@ -1,18 +1,19 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.DependencyVersionsFetcher
+import de.fayard.refreshVersions.core.FeatureFlag
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
-import de.fayard.refreshVersions.core.extensions.gradle.isGradlePlugin
 import de.fayard.refreshVersions.core.extensions.gradle.moduleId
-import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.readFromFile
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewEntry
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
 import org.gradle.api.artifacts.*
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.invocation.Gradle
+import kotlin.reflect.full.memberFunctions
 
 internal const val versionPlaceholder = "_"
 
@@ -67,35 +68,38 @@ private val configurationNamesToIgnore: List<String> = listOf(
 fun getVersionPropertyName(
     moduleId: ModuleId,
     versionKeyReader: ArtifactVersionKeyReader
-): String = getVersionPropertyName(
-    moduleIdentifier = moduleId.toModuleIdentifier(),
-    versionKeyReader = versionKeyReader
-)
-
-@InternalRefreshVersionsApi
-fun getVersionPropertyName(
-    moduleIdentifier: ModuleIdentifier,
-    versionKeyReader: ArtifactVersionKeyReader
 ): String {
 
-    val group = moduleIdentifier.group
-    val name = moduleIdentifier.name
+    val group = moduleId.group
+    val name = moduleId.name
 
     //TODO: Pos pluginDependencyNotationToVersionKey ?
-    return when {
-        name == "gradle" && group == "com.android.tools.build" -> "plugin.android"
-        moduleIdentifier.isGradlePlugin -> {
-            name.substringBeforeLast(".gradle.plugin").let { pluginId ->
-                when {
-                    pluginId.startsWith("org.jetbrains.kotlin.") -> "version.kotlin"
-                    pluginId.startsWith("com.android") -> "plugin.android"
-                    else -> "plugin.$pluginId"
+    return when (moduleId) {
+        is ModuleId.Maven -> when {
+
+            name == "gradle" && group == "com.android.tools.build" -> "plugin.android"
+            moduleId.name.endsWith(".gradle.plugin") -> {
+                name.substringBeforeLast(".gradle.plugin").let { pluginId ->
+                    when {
+                        pluginId.startsWith("org.jetbrains.kotlin.") -> "version.kotlin"
+                        pluginId.startsWith("com.android") -> "plugin.android"
+                        else -> "plugin.$pluginId"
+                    }
                 }
             }
+            else -> {
+                val versionKey = versionKeyReader.readVersionKey(
+                    group = moduleId.group,
+                    name = moduleId.name
+                ) ?: "${moduleId.group}..${moduleId.name}"
+                "version.$versionKey"
+            }
         }
-        else -> {
-            val versionKey = versionKeyReader.readVersionKey(group = group, name = name) ?: "$group..$name"
-            "version.$versionKey"
+        is ModuleId.Npm -> {
+            when (group) {
+                null -> "version.npm.$name"
+                else -> "version.npm.@$group/$name"
+            }
         }
     }
 }
@@ -127,12 +131,14 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
 
     val repositories = if (isFromBuildscript) project.buildscript.repositories else project.repositories
     var properties = initialVersionsMap
+
+    val dependenciesToReplace = mutableListOf<Pair<Dependency, Dependency>>()
+
     @Suppress("UnstableApiUsage")
     withDependencies {
         for (dependency in this) {
-            if (dependency !is ExternalDependency) continue
             if (dependency.version != versionPlaceholder) continue
-            val moduleId = dependency.moduleId
+            val moduleId = dependency.moduleId() ?: continue
             val propertyName = getVersionPropertyName(moduleId, versionKeyReader)
             val versionFromProperties = resolveVersion(
                 properties = properties,
@@ -143,10 +149,17 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                     refreshVersionsMap(updatedMap)
                 }
                 resolveVersion(properties, propertyName)
+                    ?: `Copy previously matching version entry, if any, and get its version`(
+                        versionKeyReader = versionKeyReader,
+                        propertyName = propertyName,
+                        versionsMap = properties,
+                        moduleId = moduleId
+                    )
                     ?: `Write versions candidates using latest most stable version and get it`(
                         repositories = repositories,
                         propertyName = propertyName,
-                        dependency = dependency
+                        dependency = dependency,
+                        moduleId = moduleId
                     ).also {
                         RefreshVersionsConfigHolder.readVersionsMap().let { updatedMap ->
                             properties = updatedMap
@@ -154,12 +167,48 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                         }
                     }
             }
-            dependency.version {
-                require(versionFromProperties)
-                reject(versionPlaceholder) // Remember that we're managing the version of this dependency.
+            if (dependency is ExternalDependency) {
+                dependency.version {
+                    require(versionFromProperties)
+                    reject(versionPlaceholder) // Remember that we're managing the version of this dependency.
+                }
+            } else if (moduleId is ModuleId.Npm) {
+                val version = when {
+                    FeatureFlag.NPM_IMPLICIT_RANGE.isEnabled && Version(versionFromProperties).isRange.not() -> {
+                        "^$versionFromProperties"
+                    }
+                    else -> {
+                        versionFromProperties
+                    }
+                }
+                dependenciesToReplace += dependency to npmDependencyWithVersion(dependency, version)
             }
         }
+        dependenciesToReplace.forEach { (old, new) ->
+            remove(old)
+            add(new)
+        }
     }
+}
+
+/**
+ * Equivalent to: dependency.copy(version = versionFromProperties)
+ */
+private fun npmDependencyWithVersion(
+    dependency: Dependency,
+    versionFromProperties: String
+): Dependency {
+    val copyFun =
+        dependency::class.memberFunctions.first { it.name == "copy" && it.parameters.any { p -> p.name == "version" } }
+    val versionParameter = copyFun.parameters.first { it.name == "version" }
+    val receiverParameter = copyFun.parameters.first { it.name == null }
+
+    return copyFun.callBy(
+        mapOf(
+            receiverParameter to dependency,
+            versionParameter to versionFromProperties
+        )
+    ) as Dependency
 }
 
 @Suppress("unused") // Used in the dependencies plugin
@@ -175,20 +224,70 @@ fun Project.writeCurrentVersionInProperties(
 }
 
 @Suppress("FunctionName")
+private fun `Copy previously matching version entry, if any, and get its version`(
+    versionKeyReader: ArtifactVersionKeyReader,
+    propertyName: String,
+    versionsMap: Map<String, String>,
+    moduleId: ModuleId
+): String? {
+    if (moduleId !is ModuleId.Maven) return null
+    val previouslyMatchingEntry = findAnyPreviouslyMatchingVersionEntry(
+        versionKeyReader = versionKeyReader,
+        moduleId = moduleId,
+        versionsMap = versionsMap
+    ) ?: return null
+    VersionsPropertiesModel.writeWithNewEntry(
+        propertyName = propertyName,
+        versionsCandidates = List(previouslyMatchingEntry.availableUpdates.size + 1) { index ->
+            when (index) {
+                0 -> Version(previouslyMatchingEntry.currentVersion)
+                else -> Version(previouslyMatchingEntry.availableUpdates[index -1])
+            }
+        }
+    )
+    return previouslyMatchingEntry.currentVersion
+}
+
+private fun findAnyPreviouslyMatchingVersionEntry(
+    versionKeyReader: ArtifactVersionKeyReader,
+    moduleId: ModuleId.Maven,
+    versionsMap: Map<String, String>
+): VersionsPropertiesModel.Section.VersionEntry? {
+    val model = VersionsPropertiesModel.readFromFile()
+    val versionEntries = model.sections.filterIsInstance<VersionsPropertiesModel.Section.VersionEntry>()
+    val previouslyMatchingVersionKey = versionKeyReader.getRemovedDependenciesVersionsKeys()[moduleId]
+    return versionEntries.find { it.key == previouslyMatchingVersionKey }
+        ?: with(moduleId) {
+            "version.$group..$name".takeIf { it in versionsMap }
+        }?.let { defaultVersionKey ->
+            versionEntries.find { it.key == defaultVersionKey }
+        }
+}
+
+@Suppress("FunctionName")
 private fun `Write versions candidates using latest most stable version and get it`(
     repositories: ArtifactRepositoryContainer,
     propertyName: String,
-    dependency: ExternalDependency
+    dependency: Dependency,
+    moduleId: ModuleId
 ): String = `Write versions candidates using latest most stable version and get it`(
     propertyName = propertyName,
-    dependencyVersionsFetchers = repositories.filterIsInstance<MavenArtifactRepository>()
-        .mapNotNull { repo ->
-            DependencyVersionsFetcher(
+    dependencyVersionsFetchers = when (moduleId) {
+        is ModuleId.Maven -> repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
+            DependencyVersionsFetcher.forMaven(
                 httpClient = RefreshVersionsConfigHolder.httpClient,
                 dependency = dependency,
                 repository = repo
             )
         }
+        is ModuleId.Npm -> listOf(
+            DependencyVersionsFetcher.forNpm(
+                httpClient = RefreshVersionsConfigHolder.httpClient,
+                npmDependency = dependency,
+                npmRegistry = "https://registry.npmjs.org/"
+            )
+        )
+    }
 )
 
 @Suppress("FunctionName")

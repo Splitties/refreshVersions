@@ -9,7 +9,7 @@ import retrofit2.Response
 
 internal class MavenDependencyVersionsFetcherHttp(
     private val httpClient: OkHttpClient,
-    moduleId: ModuleId,
+    moduleId: ModuleId.Maven,
     val repoUrl: String,
     repoAuthorization: String?
 ) : MavenDependencyVersionsFetcher(
@@ -23,7 +23,7 @@ internal class MavenDependencyVersionsFetcherHttp(
 
     private val request = Request.Builder().apply {
         val metadataUrlForArtifact = moduleId.let { (group, name) ->
-            "$repoUrl${group!!.replace('.', '/')}/$name/maven-metadata.xml"
+            "$repoUrl${group.replace('.', '/')}/$name/maven-metadata.xml"
         }
         url(metadataUrlForArtifact)
         header(

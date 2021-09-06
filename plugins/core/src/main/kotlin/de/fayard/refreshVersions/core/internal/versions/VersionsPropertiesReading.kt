@@ -3,10 +3,11 @@ package de.fayard.refreshVersions.core.internal.versions
 import de.fayard.refreshVersions.core.extensions.sequences.uniqueBy
 import de.fayard.refreshVersions.core.extensions.text.substringAfterLastLineStartingWith
 import de.fayard.refreshVersions.core.extensions.text.substringBetween
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import java.io.File
 
-internal fun VersionsPropertiesModel.Companion.readFrom(
-    versionsPropertiesFile: File
+internal fun VersionsPropertiesModel.Companion.readFromFile(
+    versionsPropertiesFile: File = RefreshVersionsConfigHolder.versionsPropertiesFile
 ): VersionsPropertiesModel {
     val text = synchronized(versionsPropertiesFileLock) { versionsPropertiesFile.readText() }
     return readFromText(text)
