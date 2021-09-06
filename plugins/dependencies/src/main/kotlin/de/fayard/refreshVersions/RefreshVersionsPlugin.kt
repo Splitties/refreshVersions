@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
@@ -12,10 +13,16 @@ import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
 import org.gradle.api.invocation.Gradle
 import org.gradle.kotlin.dsl.*
+import java.io.InputStream
 
 open class RefreshVersionsPlugin : Plugin<Any> {
 
     companion object {
+
+        private fun getBundledResourceAsStream(relativePath: String): InputStream {
+            return RefreshVersionsPlugin::class.java.getResourceAsStream("/$relativePath")!!
+        }
+
         @JvmStatic
         val artifactVersionKeyRules: List<String> = listOf(
             "androidx-version-alias-rules",
@@ -25,7 +32,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             "testing-version-alias-rules",
             "dependency-groups-alias-rules"
         ).map {
-            RefreshVersionsPlugin::class.java.getResourceAsStream("/refreshVersions-rules/$it.txt")!!
+            getBundledResourceAsStream("refreshVersions-rules/$it.txt")
                 .bufferedReader()
                 .readText()
         }
@@ -73,7 +80,21 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                     artifactVersionKeyRules + extension.extraArtifactVersionKeyRules
                 },
                 versionsPropertiesFile = extension.versionsPropertiesFile
-                    ?: settings.rootDir.resolve("versions.properties")
+                    ?: settings.rootDir.resolve("versions.properties"),
+                getRemovedDependenciesVersionsKeys = {
+                    getBundledResourceAsStream("removed-dependencies-versions-keys.txt")
+                        .bufferedReader()
+                        .useLines { sequence ->
+                            sequence.filter { it.isNotEmpty() }.associate {
+                                val groupNameSeparator = ".."
+                                val group = it.substringBefore(groupNameSeparator)
+                                val postGroupPart = it.substring(startIndex = group.length + groupNameSeparator.length)
+                                val name = postGroupPart.substringBefore('=')
+                                val versionKey = postGroupPart.substring(startIndex = name.length + 1)
+                                ModuleId.Maven(group, name) to versionKey
+                            }
+                        }
+                }
             )
             if (extension.isBuildSrcLibsEnabled) gradle.beforeProject {
                 if (project != project.rootProject) return@beforeProject

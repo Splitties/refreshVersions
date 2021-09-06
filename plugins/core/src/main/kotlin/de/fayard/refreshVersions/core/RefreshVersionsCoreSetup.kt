@@ -44,7 +44,8 @@ import java.io.File
 @JvmName("bootstrap")
 fun Settings.bootstrapRefreshVersionsCore(
     artifactVersionKeyRules: List<String> = emptyList(),
-    versionsPropertiesFile: File = rootDir.resolve("versions.properties")
+    versionsPropertiesFile: File = rootDir.resolve("versions.properties"),
+    getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }
 ) {
     require(settings.isBuildSrc.not()) {
         "This bootstrap is only for the root project. For buildSrc, please call " +
@@ -54,6 +55,7 @@ fun Settings.bootstrapRefreshVersionsCore(
     RefreshVersionsConfigHolder.initialize(
         settings = settings,
         artifactVersionKeyRules = artifactVersionKeyRules,
+        getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys,
         versionsPropertiesFile = versionsPropertiesFile
     )
     setupRefreshVersions(settings = settings)

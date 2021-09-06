@@ -96,7 +96,7 @@ private inline fun VersionsPropertiesModel.Companion.update(
 ) {
     require(versionsPropertiesFile.name == "versions.properties")
     synchronized(versionsPropertiesFileLock) {
-        val newModel = transform(VersionsPropertiesModel.readFrom(versionsPropertiesFile))
+        val newModel = transform(VersionsPropertiesModel.readFromFile(versionsPropertiesFile))
         newModel.writeTo(versionsPropertiesFile)
     }
 }
