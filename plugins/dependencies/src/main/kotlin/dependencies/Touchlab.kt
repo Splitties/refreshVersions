@@ -13,6 +13,7 @@ import org.gradle.api.Incubating
 @Incubating
 object Touchlab {
     val stately = Stately
+
     object Stately : DependencyGroup(
         group = "co.touchlab",
         rawRule = """
