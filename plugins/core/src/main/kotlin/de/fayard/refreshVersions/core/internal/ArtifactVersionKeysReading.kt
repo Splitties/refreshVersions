@@ -1,30 +1,22 @@
-@file:Suppress("UNREACHABLE_CODE")
-
-// Remove when impl complete
-
 package de.fayard.refreshVersions.core.internal
 
+import de.fayard.refreshVersions.core.ModuleId
+
 @InternalRefreshVersionsApi
-abstract class ArtifactVersionKeyReader private constructor() {
+abstract class ArtifactVersionKeyReader private constructor(
+    val getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String>
+) {
 
     abstract fun readVersionKey(group: String, name: String): String?
 
-    operator fun plus(other: ArtifactVersionKeyReader): ArtifactVersionKeyReader {
-        val initial = this
-        return object : ArtifactVersionKeyReader() {
-            override fun readVersionKey(group: String, name: String): String? {
-                return other.readVersionKey(group, name) ?: initial.readVersionKey(group, name)
-            }
-        }
-    }
-
     companion object {
 
-        fun fromRules(fileContent: String): ArtifactVersionKeyReader = fromRules(listOf(fileContent))
-
-        fun fromRules(filesContent: List<String>): ArtifactVersionKeyReader {
+        fun fromRules(
+            filesContent: List<String>,
+            getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }
+        ): ArtifactVersionKeyReader {
             val rules = filesContent.flatMap { parseArtifactVersionKeysRules(it) }.sortedDescending()
-            return object : ArtifactVersionKeyReader() {
+            return object : ArtifactVersionKeyReader(getRemovedDependenciesVersionsKeys) {
                 override fun readVersionKey(group: String, name: String): String? {
                     return rules.firstOrNull { it.matches(group, name) }?.key(group, name)
                 }

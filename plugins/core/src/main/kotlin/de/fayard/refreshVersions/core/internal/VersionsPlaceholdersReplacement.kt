@@ -6,6 +6,7 @@ import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.moduleId
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.readFromFile
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewEntry
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
@@ -148,6 +149,12 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                     refreshVersionsMap(updatedMap)
                 }
                 resolveVersion(properties, propertyName)
+                    ?: `Copy previously matching version entry, if any, and get its version`(
+                        versionKeyReader = versionKeyReader,
+                        propertyName = propertyName,
+                        versionsMap = properties,
+                        moduleId = moduleId
+                    )
                     ?: `Write versions candidates using latest most stable version and get it`(
                         repositories = repositories,
                         propertyName = propertyName,
@@ -214,6 +221,47 @@ fun Project.writeCurrentVersionInProperties(
         propertyName = versionKey,
         versionsCandidates = listOf(Version(currentVersion))
     )
+}
+
+@Suppress("FunctionName")
+private fun `Copy previously matching version entry, if any, and get its version`(
+    versionKeyReader: ArtifactVersionKeyReader,
+    propertyName: String,
+    versionsMap: Map<String, String>,
+    moduleId: ModuleId
+): String? {
+    if (moduleId !is ModuleId.Maven) return null
+    val previouslyMatchingEntry = findAnyPreviouslyMatchingVersionEntry(
+        versionKeyReader = versionKeyReader,
+        moduleId = moduleId,
+        versionsMap = versionsMap
+    ) ?: return null
+    VersionsPropertiesModel.writeWithNewEntry(
+        propertyName = propertyName,
+        versionsCandidates = List(previouslyMatchingEntry.availableUpdates.size + 1) { index ->
+            when (index) {
+                0 -> Version(previouslyMatchingEntry.currentVersion)
+                else -> Version(previouslyMatchingEntry.availableUpdates[index -1])
+            }
+        }
+    )
+    return previouslyMatchingEntry.currentVersion
+}
+
+private fun findAnyPreviouslyMatchingVersionEntry(
+    versionKeyReader: ArtifactVersionKeyReader,
+    moduleId: ModuleId.Maven,
+    versionsMap: Map<String, String>
+): VersionsPropertiesModel.Section.VersionEntry? {
+    val model = VersionsPropertiesModel.readFromFile()
+    val versionEntries = model.sections.filterIsInstance<VersionsPropertiesModel.Section.VersionEntry>()
+    val previouslyMatchingVersionKey = versionKeyReader.getRemovedDependenciesVersionsKeys()[moduleId]
+    return versionEntries.find { it.key == previouslyMatchingVersionKey }
+        ?: with(moduleId) {
+            "version.$group..$name".takeIf { it in versionsMap }
+        }?.let { defaultVersionKey ->
+            versionEntries.find { it.key == defaultVersionKey }
+        }
 }
 
 @Suppress("FunctionName")

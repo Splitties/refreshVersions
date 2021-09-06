@@ -53,12 +53,13 @@ class BundledDependenciesTest {
     }
 
     @Test
-    fun `We should not change version keys`() {
+    fun `Version keys should be up to date`() {
         val rulesDir = mainResources.resolve("refreshVersions-rules")
         val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
         val existingKeys = testResources.resolve("dependencies-versions-key-validated.txt")
         val receivedKeys = testResources.resolve("dependencies-versions-key-received.txt")
+        val removedKeys = mainResources.resolve("removed-dependencies-versions-keys.txt")
 
         val existingMapping = existingKeys.readLines().mapNotNull { DependencyMapping.fromLine(it) }
         val receivedMapping = getArtifactNameToConstantMapping().map {
@@ -68,11 +69,17 @@ class BundledDependenciesTest {
         receivedKeys.writeText(receivedMapping.joinToString(separator = "\n", postfix = "\n"))
 
         val breakingChanges = existingMapping - receivedMapping
-        withClue("diff -u ${existingKeys.absolutePath}  ${receivedKeys.absolutePath}") {
-            breakingChanges should haveSize(0)
-        }
-        withClue("Changes to $existingKeys must be committed, but I got new entries") {
-            if (isInCi()) (receivedMapping - existingMapping) should haveSize(0)
+        if (isInCi()) {
+            withClue("diff -u ${existingKeys.absolutePath}  ${receivedKeys.absolutePath}") {
+                breakingChanges should haveSize(0)
+            }
+            withClue("Changes to $existingKeys must be committed, but I got new entries") {
+                (receivedMapping - existingMapping) should haveSize(0)
+            }
+        } else if (breakingChanges.isNotEmpty()) {
+            removedKeys.appendText(
+                text = breakingChanges.joinToString(separator = "\n", postfix = "\n")
+            )
         }
         receivedKeys.copyTo(existingKeys, overwrite = true)
         receivedKeys.deleteOnExit()
