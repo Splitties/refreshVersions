@@ -10,6 +10,9 @@ io.github.javaeden.orchid:*
 org.http4k:http4k-*
     ^^^^^^
 
+co.touchlab:stately-*
+            ^^^^^^^
+
 io.coil-kt:coil(-*)
    ^^^^^^^
 
