@@ -6,6 +6,8 @@ class DependencySelection internal constructor(
     @Incubating
     val moduleId: ModuleId,
     val current: Version,
-    val versionKey: String,
-    var candidate: Version
-)
+    val versionKey: String
+) {
+    lateinit var candidate: Version
+        internal set
+}

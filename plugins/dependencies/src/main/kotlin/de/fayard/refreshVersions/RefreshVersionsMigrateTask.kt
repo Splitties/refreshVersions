@@ -125,7 +125,7 @@ private const val versionChars = "[a-zA-Z0-9_.{}$-]"
 
 @Language("RegExp")
 private val mavenCoordinateRegex =
-    "(['\"]$mavenChars{3,}:$mavenChars{3,}:)(?:_|$versionChars{3,})([\"'])".toRegex()
+    "(['\"]$mavenChars{4,}:$mavenChars{2,}:)(?:_|$versionChars{3,})([\"'])".toRegex()
 
 internal fun findFilesWithDependencyNotations(fromDir: File): List<File> {
     require(fromDir.isDirectory) { "Expected a directory, got ${fromDir.absolutePath}" }

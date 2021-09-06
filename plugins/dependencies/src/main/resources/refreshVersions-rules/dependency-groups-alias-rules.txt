@@ -1,3 +1,6 @@
+io.insert-koin:koin-*
+          ^^^^
+
 io.ktor:*
    ^^^^
 
@@ -7,6 +10,9 @@ io.github.javaeden.orchid:*
 org.http4k:http4k-*
     ^^^^^^
 
+co.touchlab:stately-*
+            ^^^^^^^
+
 io.coil-kt:coil(-*)
    ^^^^^^^
 
@@ -15,3 +21,6 @@ com.louiscad.splitties:splitties-*
 
 org.kodein.di:kodein-di(-*)
     ^^^^^^^^^
+
+com.russhwolf:multiplatform-settings(-*)
+              ^^^^^^^^^^^^^^^^^^^^^^

@@ -11,9 +11,9 @@ assignees: ''
 
 - *Description*:
 - *GitHub*:
-- *Official website*:
+- *Official website* (if any, besides the GitHub page):
 
-## Wants to contribute the sample?
+## Want to contribute the sample?
 
 - Say so in a comment here
 - Follow [instructions for submitting dependency notations](https://jmfayard.github.io/refreshVersions/contributing/submitting-prs/dependency-notations-updates/)

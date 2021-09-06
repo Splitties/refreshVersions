@@ -1,11 +1,17 @@
 package de.fayard.refreshVersions.core.internal
 
-import de.fayard.refreshVersions.core.*
+import de.fayard.refreshVersions.core.DependencySelection
+import de.fayard.refreshVersions.core.DependencyVersionsFetcher
 import de.fayard.refreshVersions.core.FeatureFlag.GRADLE_UPDATES
+import de.fayard.refreshVersions.core.ModuleId
+import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.hasDynamicVersion
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.legacy.LegacyBoostrapUpdatesFinder
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import okhttp3.OkHttpClient
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
@@ -64,8 +70,7 @@ internal suspend fun lookupVersionCandidates(
                 propertyName = propertyName,
                 dependencyVersionsFetchers = versionFetchers
             )
-            val selection =
-                DependencySelection(moduleId, Version(resolvedVersion), propertyName, Version(resolvedVersion))
+            val selection = DependencySelection(moduleId, Version(resolvedVersion), propertyName)
             async {
                 DependencyWithVersionCandidates(
                     moduleId = moduleId,
@@ -163,7 +168,7 @@ private fun getUsedPluginsDependencyVersionFetchers(
 ): Sequence<DependencyVersionsFetcher> {
     return UsedPluginsHolder.read().flatMap { (dependency, repositories) ->
         repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
-            DependencyVersionsFetcher(
+            DependencyVersionsFetcher.forMaven(
                 httpClient = httpClient,
                 dependency = dependency,
                 repository = repo
@@ -180,11 +185,21 @@ private fun getDependencyVersionFetchers(
 ): Sequence<DependencyVersionsFetcher> = configurations.asSequence().flatMap {
     it.dependencies.asSequence().filter(dependencyFilter)
 }.flatMap { dependency ->
-    repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
-        DependencyVersionsFetcher(
-            httpClient = httpClient,
-            dependency = dependency,
-            repository = repo
+    if (dependency::class.simpleName == "NpmDependency") {
+        sequenceOf(
+            DependencyVersionsFetcher.forNpm(
+                httpClient = RefreshVersionsConfigHolder.httpClient,
+                npmDependency = dependency,
+                npmRegistry = "https://registry.npmjs.org/"
+            )
         )
-    }.asSequence()
+    } else {
+        repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
+            DependencyVersionsFetcher.forMaven(
+                httpClient = httpClient,
+                dependency = dependency,
+                repository = repo
+            )
+        }.asSequence()
+    }
 }

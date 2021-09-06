@@ -1,11 +1,12 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.DependencySelection
+import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
-import de.fayard.refreshVersions.core.internal.versions.readFrom
+import de.fayard.refreshVersions.core.internal.versions.readFromFile
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.gradle.api.Project
@@ -49,7 +50,7 @@ object RefreshVersionsConfigHolder {
     }
 
     fun readVersionsMap(): Map<String, String> {
-        val model = VersionsPropertiesModel.readFrom(versionsPropertiesFile)
+        val model = VersionsPropertiesModel.readFromFile(versionsPropertiesFile)
         return model.sections.filterIsInstance<VersionEntry>().associate { it.key to it.currentVersion }.also {
             lastlyReadVersionsMap = it
         }
@@ -81,6 +82,7 @@ object RefreshVersionsConfigHolder {
     internal fun initialize(
         settings: Settings,
         artifactVersionKeyRules: List<String>,
+        getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() },
         versionsPropertiesFile: File
     ) {
         require(settings.isBuildSrc.not())
@@ -93,7 +95,11 @@ object RefreshVersionsConfigHolder {
             it.createNewFile() // Creates the file if it doesn't exist yet
         }
         this.artifactVersionKeyRules = artifactVersionKeyRules
-        versionKeyReader = ArtifactVersionKeyReader.fromRules(filesContent = artifactVersionKeyRules)
+        this.getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys
+        versionKeyReader = ArtifactVersionKeyReader.fromRules(
+            filesContent = artifactVersionKeyRules,
+            getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys
+        )
     }
 
     internal fun initializeBuildSrc(settings: Settings) {
@@ -117,7 +123,7 @@ object RefreshVersionsConfigHolder {
             }.onFailure { e ->
                 throw IllegalStateException(
                     "You also need to bootstrap refreshVersions in the " +
-                            "settings.gradle[.kts] file of the root project",
+                        "settings.gradle[.kts] file of the root project",
                     e
                 )
             }
@@ -136,6 +142,7 @@ object RefreshVersionsConfigHolder {
         // This must be called in gradle.buildFinished { }.
     }
 
+    private var getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> by resettableDelegates.LateInit()
     private var artifactVersionKeyRules: List<String> by resettableDelegates.LateInit()
 
     internal var buildSrcSettings: Settings? by resettableDelegates.NullableDelegate()
@@ -177,7 +184,10 @@ object RefreshVersionsConfigHolder {
                 (it.readObject() as Array<String>).asList()
             }
         }
-        versionKeyReader = ArtifactVersionKeyReader.fromRules(filesContent = artifactVersionKeyRules)
+        versionKeyReader = ArtifactVersionKeyReader.fromRules(
+            filesContent = artifactVersionKeyRules,
+            getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys
+        )
     }
 
     private val Settings.artifactVersionKeyRulesFile: File

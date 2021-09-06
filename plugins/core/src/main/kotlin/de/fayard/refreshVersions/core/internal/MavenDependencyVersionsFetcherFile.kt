@@ -25,7 +25,7 @@ internal class MavenDependencyVersionsFetcherFile(
                 it.startsWith("maven-metadata") && it.endsWith(".xml")
             }.also {
                 check(it.size <= 1) {
-                    "Expected only one maven-metadata xml file but got ${it.size} matching files!"
+                    "Expected only one maven-metadata xml file but got ${it.size} matching files at $targetDir!"
                 }
             }.singleOrNull()?.let { filename ->
                 targetDir.resolve(filename).readText()
