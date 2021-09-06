@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Improvements
+
+Before this release, when we added new dependency notations and shorter version keys, it could lead to an unwanted upgrade of the dependency in the project upgrading refreshVersions. With this release, we make sure to copy the same version if we add or change the version key, and it will also work if we decide to remove one. This ensures that upgrading refreshVersions will not be able to affect your application or library.
+
 ### New dependency notations:
 
 - Koin (new group with several dependencies)
