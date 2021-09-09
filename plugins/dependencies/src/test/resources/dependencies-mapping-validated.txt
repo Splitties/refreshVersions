@@ -58,6 +58,7 @@ androidx.compose.ui..ui-test=AndroidX.compose.ui.test
 androidx.compose.ui..ui-text-android=AndroidX.compose.ui.textAndroid
 androidx.compose.ui..ui-text=AndroidX.compose.ui.text
 androidx.compose.ui..ui-tooling-data=AndroidX.compose.ui.toolingData
+androidx.compose.ui..ui-tooling-preview=AndroidX.compose.ui.toolingPreview
 androidx.compose.ui..ui-tooling=AndroidX.compose.ui.tooling
 androidx.compose.ui..ui-unit=AndroidX.compose.ui.unit
 androidx.compose.ui..ui-util=AndroidX.compose.ui.util
