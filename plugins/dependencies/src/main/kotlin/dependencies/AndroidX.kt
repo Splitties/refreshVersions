@@ -141,6 +141,7 @@ object AndroidX : IsNotADependency {
 
             val tooling = module("ui-tooling")
             val toolingData = module("ui-tooling-data")
+            val toolingPreview = module("ui-tooling-preview")
 
             val unit = module("ui-unit")
             val util = module("ui-util")

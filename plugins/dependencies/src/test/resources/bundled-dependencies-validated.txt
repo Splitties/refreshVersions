@@ -59,6 +59,7 @@ androidx.compose.ui:ui-text
 androidx.compose.ui:ui-text-android
 androidx.compose.ui:ui-tooling
 androidx.compose.ui:ui-tooling-data
+androidx.compose.ui:ui-tooling-preview
 androidx.compose.ui:ui-unit
 androidx.compose.ui:ui-util
 androidx.compose.ui:ui-viewbinding
