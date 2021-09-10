@@ -756,6 +756,7 @@ org.jetbrains.kotlin:kotlin-test-js-runner
 org.jetbrains.kotlin:kotlin-test-junit
 org.jetbrains.kotlin:kotlin-test-junit5
 org.jetbrains.kotlin:kotlin-test-testng
+org.jetbrains.kotlinx:kotlinx-cli
 org.jetbrains.kotlinx:kotlinx-collections-immutable
 org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm
 org.jetbrains.kotlinx:kotlinx-coroutines-android
