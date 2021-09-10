@@ -777,6 +777,7 @@ org.jetbrains.kotlinx..kotlinx-coroutines-rx3=version.kotlinx.coroutines
 org.jetbrains.kotlinx..kotlinx-coroutines-slf4j=version.kotlinx.coroutines
 org.jetbrains.kotlinx..kotlinx-coroutines-swing=version.kotlinx.coroutines
 org.jetbrains.kotlinx..kotlinx-coroutines-test=version.kotlinx.coroutines
+org.jetbrains.kotlinx..kotlinx-datetime=version.kotlinx.datetime
 org.jetbrains.kotlinx..kotlinx-html-js=version.kotlinx.html
 org.jetbrains.kotlinx..kotlinx-html-jvm=version.kotlinx.html
 org.jetbrains.kotlinx..kotlinx-html=version.kotlinx.html

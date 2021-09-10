@@ -194,4 +194,14 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
      * GitHub page: [Kotlin/kotlinx-cli](https://github.com/Kotlin/kotlinx-cli)
      */
     val cli = module("kotlinx-cli")
+
+
+    /**
+     * A multiplatform Kotlin library for working with date and time.
+     *
+     * [Change log](https://github.com/Kotlin/kotlinx-datetime/blob/master/CHANGELOG.md)
+     *
+     * GitHub page: [Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
+     */
+    val datetime = module("kotlinx-datetime")
 }
