@@ -185,4 +185,13 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
     object Reflect : IsNotADependency {
         val lite = module("kotlinx.reflect.lite")
     }
+
+    /**
+     * Pure Kotlin implementation of a generic command-line parser.
+     *
+     * [Change log](https://github.com/Kotlin/kotlinx-cli/blob/master/CHANGELOG.md)
+     *
+     * GitHub page: [Kotlin/kotlinx-cli](https://github.com/Kotlin/kotlinx-cli)
+     */
+    val cli = module("kotlinx-cli")
 }
