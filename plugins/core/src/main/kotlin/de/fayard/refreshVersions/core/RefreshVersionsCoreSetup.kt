@@ -44,7 +44,8 @@ import java.io.File
 @JvmName("bootstrap")
 fun Settings.bootstrapRefreshVersionsCore(
     artifactVersionKeyRules: List<String> = emptyList(),
-    versionsPropertiesFile: File = rootDir.resolve("versions.properties"),
+    versionsPropertiesFile: File = extension.versionsPropertiesFile
+        ?: settings.rootDir.resolve("versions.properties"),
     getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }
 ) {
     require(settings.isBuildSrc.not()) {
