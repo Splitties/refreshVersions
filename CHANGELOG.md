@@ -1,5 +1,20 @@
 # Change log for refreshVersions
 
+## [Unreleased]
+
+### Bug fix
+
+Fix a regression that brought a `KotlinNullPointerException` in the build. We apologize for the issue. Thanks to Marcin and Craig for [the report](https://github.com/jmfayard/refreshVersions/issues/442).
+
+### New dependency notations:
+
+- AndroidX.compose.ui.toolingPreview
+- Chucker
+- KotlinX.cli
+- KotlinX.datetime
+
+Thanks to [Filip Czaplicki](https://github.com/starsep), who contributed to the new dependency notations!
+
 ## Version 0.21.0 (2021-09-07)
 
 ### New feature
