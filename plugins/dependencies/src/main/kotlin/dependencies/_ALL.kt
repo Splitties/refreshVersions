@@ -5,6 +5,7 @@ package dependencies
 import AndroidX
 import COIL
 import CashApp
+import Chucker
 import Firebase
 import Google
 import Http4k
@@ -26,6 +27,7 @@ import Touchlab
 internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     AndroidX,
     CashApp,
+    Chucker,
     COIL,
     Firebase,
     Google,

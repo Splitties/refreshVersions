@@ -19,8 +19,8 @@ open class RefreshVersionsPlugin : Plugin<Any> {
 
     companion object {
 
-        private fun getBundledResourceAsStream(relativePath: String): InputStream {
-            return RefreshVersionsPlugin::class.java.getResourceAsStream("/$relativePath")!!
+        private fun getBundledResourceAsStream(relativePath: String): InputStream? {
+            return RefreshVersionsPlugin::class.java.getResourceAsStream("/$relativePath")
         }
 
         @JvmStatic
@@ -32,7 +32,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             "testing-version-alias-rules",
             "dependency-groups-alias-rules"
         ).map {
-            getBundledResourceAsStream("refreshVersions-rules/$it.txt")
+            getBundledResourceAsStream("refreshVersions-rules/$it.txt")!!
                 .bufferedReader()
                 .readText()
         }
@@ -83,8 +83,8 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                     ?: settings.rootDir.resolve("versions.properties"),
                 getRemovedDependenciesVersionsKeys = {
                     getBundledResourceAsStream("removed-dependencies-versions-keys.txt")
-                        .bufferedReader()
-                        .useLines { sequence ->
+                        ?.bufferedReader()
+                        ?.useLines { sequence ->
                             sequence.filter { it.isNotEmpty() }.associate {
                                 val groupNameSeparator = ".."
                                 val group = it.substringBefore(groupNameSeparator)
@@ -93,7 +93,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                                 val versionKey = postGroupPart.substring(startIndex = name.length + 1)
                                 ModuleId.Maven(group, name) to versionKey
                             }
-                        }
+                        } ?: emptyMap()
                 }
             )
             if (extension.isBuildSrcLibsEnabled) gradle.beforeProject {
