@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased] Version 0.23.0 (2021-09-28)
+## Version 0.23.0 (2021-09-28)
 
 ### Bug fix
 
