@@ -1,5 +1,11 @@
 # Change log for refreshVersions
 
+## Version 0.23.0 (2021-09-28)
+
+### Bug fix
+
+Fix a bug that broke standalone buildSrc builds.
+
 ## Version 0.22.0 (2021-09-27)
 
 ### Bug fix
