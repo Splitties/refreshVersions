@@ -82,7 +82,7 @@ object RefreshVersionsConfigHolder {
     internal fun initialize(
         settings: Settings,
         artifactVersionKeyRules: List<String>,
-        getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() },
+        getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String>,
         versionsPropertiesFile: File
     ) {
         require(settings.isBuildSrc.not())
@@ -95,14 +95,16 @@ object RefreshVersionsConfigHolder {
             it.createNewFile() // Creates the file if it doesn't exist yet
         }
         this.artifactVersionKeyRules = artifactVersionKeyRules
-        this.getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys
         versionKeyReader = ArtifactVersionKeyReader.fromRules(
             filesContent = artifactVersionKeyRules,
             getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys
         )
     }
 
-    internal fun initializeBuildSrc(settings: Settings) {
+    internal fun initializeBuildSrc(
+        settings: Settings,
+        getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String>
+    ) {
         require(settings.isBuildSrc)
         buildSrcSettings = settings
 
@@ -119,7 +121,7 @@ object RefreshVersionsConfigHolder {
             persistInitData(settings)
         } else {
             runCatching {
-                restorePersistedInitData(settings)
+                restorePersistedInitData(settings, getRemovedDependenciesVersionsKeys)
             }.onFailure { e ->
                 throw IllegalStateException(
                     "You also need to bootstrap refreshVersions in the " +
@@ -142,7 +144,6 @@ object RefreshVersionsConfigHolder {
         // This must be called in gradle.buildFinished { }.
     }
 
-    private var getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> by resettableDelegates.LateInit()
     private var artifactVersionKeyRules: List<String> by resettableDelegates.LateInit()
 
     internal var buildSrcSettings: Settings? by resettableDelegates.NullableDelegate()
@@ -174,7 +175,10 @@ object RefreshVersionsConfigHolder {
         }
     }
 
-    private fun restorePersistedInitData(settings: Settings) {
+    private fun restorePersistedInitData(
+        settings: Settings,
+        getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }
+    ) {
         versionsPropertiesFile = settings.versionsPropertiesFileFile.let { file ->
             ObjectInputStream(file.inputStream()).use { it.readObject() as File }
         }
