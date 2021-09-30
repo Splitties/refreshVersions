@@ -1,5 +1,19 @@
 # Change log for refreshVersions
 
+## [Unreleased]
+
+## Bug fix
+
+The kotest extensions dependencies were previously wrongly sharing their version as per refreshVersions rules. Now, they each have their independent, own version key.
+
+### New dependency notations:
+
+- Testing.kotest.framework:
+    - api
+    - dataset
+
+Thanks to [Emil Kantis](https://github.com/Kantis) for [the kotest dependencies fixes](https://github.com/jmfayard/refreshVersions/pull/446)!
+
 ## Version 0.23.0 (2021-09-28)
 
 ### Bug fix
