@@ -13,6 +13,9 @@ org.http4k:http4k-*
 co.touchlab:stately-*
             ^^^^^^^
 
+com.github.chuckerteam.chucker:library(-*)
+                       ^^^^^^^
+
 io.coil-kt:coil(-*)
    ^^^^^^^
 

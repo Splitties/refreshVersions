@@ -49,8 +49,8 @@ fun Settings.bootstrapRefreshVersionsCore(
 ) {
     require(settings.isBuildSrc.not()) {
         "This bootstrap is only for the root project. For buildSrc, please call " +
-                "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
-                "or RefreshVersionsCoreSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
+            "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
+            "or RefreshVersionsCoreSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
     }
     RefreshVersionsConfigHolder.initialize(
         settings = settings,
@@ -89,9 +89,12 @@ fun Settings.bootstrapRefreshVersionsCore(
  * RefreshVersionsCoreSetup.bootstrapForBuildSrc(settings)
  * ```
  */
+@JvmOverloads
 @JvmName("bootstrapForBuildSrc")
-fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
-    RefreshVersionsConfigHolder.initializeBuildSrc(this)
+fun Settings.bootstrapRefreshVersionsCoreForBuildSrc(
+    getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }
+) {
+    RefreshVersionsConfigHolder.initializeBuildSrc(this, getRemovedDependenciesVersionsKeys)
     setupRefreshVersions(settings = settings)
 }
 
@@ -111,10 +114,12 @@ fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
 private fun setupRefreshVersions(settings: Settings) {
     val supportedGradleVersion = "6.3" // 6.2 fail with this error: https://gradle.com/s/shp7hbtd3i3ii
     if (GradleVersion.current() < GradleVersion.version(supportedGradleVersion)) {
-        throw UnsupportedVersionException("""
+        throw UnsupportedVersionException(
+            """
             The plugin "de.fayard.refreshVersions" only works with Gradle $supportedGradleVersion and above.
             See https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
 
@@ -147,6 +152,7 @@ private fun setupPluginsVersionsResolution(
                 require(prefix.endsWith('.').not())
                 return this == prefix || this.startsWith("$prefix.")
             }
+
             val versionKey = when {
                 pluginNamespace.namespaceStartsWith("org.jetbrains.kotlin") -> "version.kotlin"
                 pluginNamespace.namespaceStartsWith("com.android") -> "plugin.android"

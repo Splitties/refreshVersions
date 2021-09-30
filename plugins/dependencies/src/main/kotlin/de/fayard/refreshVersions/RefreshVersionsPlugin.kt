@@ -19,8 +19,8 @@ open class RefreshVersionsPlugin : Plugin<Any> {
 
     companion object {
 
-        private fun getBundledResourceAsStream(relativePath: String): InputStream {
-            return RefreshVersionsPlugin::class.java.getResourceAsStream("/$relativePath")!!
+        private fun getBundledResourceAsStream(relativePath: String): InputStream? {
+            return RefreshVersionsPlugin::class.java.getResourceAsStream("/$relativePath")
         }
 
         @JvmStatic
@@ -32,7 +32,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             "testing-version-alias-rules",
             "dependency-groups-alias-rules"
         ).map {
-            getBundledResourceAsStream("refreshVersions-rules/$it.txt")
+            getBundledResourceAsStream("refreshVersions-rules/$it.txt")!!
                 .bufferedReader()
                 .readText()
         }
@@ -57,6 +57,21 @@ open class RefreshVersionsPlugin : Plugin<Any> {
         bootstrap(target)
     }
 
+    private fun getRemovedDependenciesVersionsKeys(): Map<ModuleId.Maven, String> {
+        return getBundledResourceAsStream("removed-dependencies-versions-keys.txt")
+            ?.bufferedReader()
+            ?.useLines { sequence ->
+                sequence.filter { it.isNotEmpty() }.associate {
+                    val groupNameSeparator = ".."
+                    val group = it.substringBefore(groupNameSeparator)
+                    val postGroupPart = it.substring(startIndex = group.length + groupNameSeparator.length)
+                    val name = postGroupPart.substringBefore('=')
+                    val versionKey = postGroupPart.substring(startIndex = name.length + 1)
+                    ModuleId.Maven(group, name) to versionKey
+                }
+            } ?: emptyMap()
+    }
+
     private fun bootstrap(settings: Settings) {
         RefreshVersionsConfigHolder.markSetupViaSettingsPlugin()
         if (settings.extensions.findByName("refreshVersions") == null) {
@@ -65,7 +80,9 @@ open class RefreshVersionsPlugin : Plugin<Any> {
         }
 
         if (settings.isBuildSrc) {
-            settings.bootstrapRefreshVersionsCoreForBuildSrc()
+            settings.bootstrapRefreshVersionsCoreForBuildSrc(
+                getRemovedDependenciesVersionsKeys = ::getRemovedDependenciesVersionsKeys
+            )
             addDependencyToBuildSrcForGroovyDsl(settings)
             return
         }
@@ -81,20 +98,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 },
                 versionsPropertiesFile = extension.versionsPropertiesFile
                     ?: settings.rootDir.resolve("versions.properties"),
-                getRemovedDependenciesVersionsKeys = {
-                    getBundledResourceAsStream("removed-dependencies-versions-keys.txt")
-                        .bufferedReader()
-                        .useLines { sequence ->
-                            sequence.filter { it.isNotEmpty() }.associate {
-                                val groupNameSeparator = ".."
-                                val group = it.substringBefore(groupNameSeparator)
-                                val postGroupPart = it.substring(startIndex = group.length + groupNameSeparator.length)
-                                val name = postGroupPart.substringBefore('=')
-                                val versionKey = postGroupPart.substring(startIndex = name.length + 1)
-                                ModuleId.Maven(group, name) to versionKey
-                            }
-                        }
-                }
+                getRemovedDependenciesVersionsKeys = ::getRemovedDependenciesVersionsKeys
             )
             if (extension.isBuildSrcLibsEnabled) gradle.beforeProject {
                 if (project != project.rootProject) return@beforeProject
