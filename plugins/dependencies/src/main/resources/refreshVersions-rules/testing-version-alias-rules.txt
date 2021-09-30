@@ -7,35 +7,8 @@ org.junit.jupiter:junit-jupiter(-*)
 io.kotest:*
    ^^^^^^
 
-io.kotest.extensions:kotest-extensions-allure
-                     ^^^^^^.^^^^^^^^^^.^^^^^^
-
-io.kotest.extensions:kotest-extensions-embedded-kafka
-                     ^^^^^^.^^^^^^^^^^.^^^^^^^^^^^^^^
-
-io.kotest.extensions:kotest-extensions-gherkin
-                     ^^^^^^.^^^^^^^^^^.^^^^^^^
-
-io.kotest.extensions:kotest-extensions-koin
-                     ^^^^^^.^^^^^^^^^^.^^^^
-
-io.kotest.extensions:kotest-extensions-mockserver
-                     ^^^^^^.^^^^^^^^^^.^^^^^^^^^^
-
-io.kotest.extensions:kotest-extensions-pitest
-                     ^^^^^^.^^^^^^^^^^.^^^^^^
-
-io.kotest.extensions:kotest-extensions-robolectric
-                     ^^^^^^.^^^^^^^^^^.^^^^^^^^^^^
-
-io.kotest.extensions:kotest-extensions-spring
-                     ^^^^^^.^^^^^^^^^^.^^^^^^
-
-io.kotest.extensions:kotest-extensions-testcontainers
-                     ^^^^^^.^^^^^^^^^^.^^^^^^^^^^^^^^
-
-io.kotest.extensions:kotest-extensions-wiremock
-                     ^^^^^^.^^^^^^^^^^.^^^^^^^^
+io.kotest.extensions:kotest-extensions-*
+                     ^^^^^^.^^^^^^^^^^.^
 
 org.spekframework.spek2:spek-*
                         ^^^^
