@@ -616,6 +616,8 @@ io.kotest:kotest-extensions-koin
 io.kotest:kotest-extensions-mockserver
 io.kotest:kotest-extensions-spring
 io.kotest:kotest-extensions-testcontainers
+io.kotest:kotest-framework-api
+io.kotest:kotest-framework-datatest
 io.kotest:kotest-plugins-pitest
 io.kotest:kotest-property
 io.kotest:kotest-property-arrow

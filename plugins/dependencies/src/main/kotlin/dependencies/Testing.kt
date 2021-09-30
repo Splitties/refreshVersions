@@ -98,6 +98,13 @@ object Testing {
         )
         val extensions = Extensions
 
+        val framework = Framework
+        object Framework : IsNotADependency {
+
+            val api = module("kotest-framework-api")
+            val datatest = module("kotest-framework-datatest")
+        }
+
         @Deprecated(
             message = "Since Kotest 4.5.0 extensions have a separate lifecycle per extension",
             replaceWith = ReplaceWith("Testing.KotestExtensions")

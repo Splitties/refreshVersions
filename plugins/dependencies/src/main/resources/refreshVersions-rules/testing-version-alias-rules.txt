@@ -8,7 +8,7 @@ io.kotest:*
    ^^^^^^
 
 io.kotest.extensions:kotest-extensions-*
-                     ^^^^^^^^^^^^^^^^^
+                     ^^^^^^.^^^^^^^^^^.^
 
 org.spekframework.spek2:spek-*
                         ^^^^
