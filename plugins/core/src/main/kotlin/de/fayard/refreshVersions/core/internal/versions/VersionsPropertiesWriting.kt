@@ -13,16 +13,15 @@ import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.
 import org.gradle.api.artifacts.Dependency
 import java.io.File
 
-internal fun writeNewEntriesInVersionProperties(newEntries: Map<String, Dependency>) {
-    VersionsPropertiesModel.update { model ->
-        val newSections = newEntries.map { (key, d: Dependency) ->
+internal fun VersionsPropertiesModel.Companion.writeWithNewEntries(newEntries: Map<String, Dependency>) {
+    update { model ->
+        model + newEntries.map { (key, d: Dependency) ->
             VersionEntry(
                 key = key,
                 currentVersion = d.version!!,
                 availableUpdates = emptyList()
             )
         }.sortedBy { it.key }
-        model.copy(sections = model.sections + newSections)
     }
 }
 
