@@ -107,7 +107,7 @@ internal fun findMissingEntries(
                 }
                 .map { dependency: ExternalDependency ->
                     val versionKey = getVersionPropertyName(
-                        ModuleId.Maven(group = dependency.group!!, name = dependency.name),
+                        ModuleId.Maven(group = dependency.group, name = dependency.name),
                         versionKeyReader
                     )
                     versionKey to dependency
