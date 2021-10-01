@@ -2,23 +2,9 @@ package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.versions.writeNewEntriesInVersionProperties
-import org.gradle.api.DefaultTask
-import org.gradle.api.Incubating
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ExternalDependency
-import org.gradle.api.tasks.TaskAction
-
-@Suppress("UnstableApiUsage")
-@Incubating
-open class MissingEntriesTask : DefaultTask() {
-
-
-    @TaskAction
-    fun refreshVersionsMissingEntries() {
-        addMissingEntriesInVersionsProperties(project)
-    }
-}
 
 @InternalRefreshVersionsApi
 fun addMissingEntriesInVersionsProperties(project: Project) {

@@ -144,15 +144,6 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             }
         }
 
-        /* // TODO: Find out whether we want to expose the task or not.
-        project.tasks.register<MissingEntriesTask>(
-            name = "refreshVersionsMissingEntries"
-        ) {
-            group = "refreshVersions"
-            description = "Add missing entries to 'versions.properties'"
-            outputs.upToDateWhen { false }
-        }
-        */
         project.tasks.register<RefreshVersionsMigrateTask>(
             name = "refreshVersionsMigrate"
         ) {
