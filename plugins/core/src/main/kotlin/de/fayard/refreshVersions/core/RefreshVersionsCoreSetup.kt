@@ -112,7 +112,7 @@ fun Settings.bootstrapRefreshVersionsCoreForBuildSrc(
  * buildscript classpath configuration boilerplate.
  */
 private fun setupRefreshVersions(settings: Settings) {
-    val supportedGradleVersion = "6.3" // 6.2 fail with this error: https://gradle.com/s/shp7hbtd3i3ii
+    val supportedGradleVersion = "6.3" // 6.2 fails with this error: https://gradle.com/s/shp7hbtd3i3ii
     if (GradleVersion.current() < GradleVersion.version(supportedGradleVersion)) {
         throw UnsupportedVersionException(
             """
