@@ -47,6 +47,7 @@ fun Settings.bootstrapRefreshVersionsCore(
     versionsPropertiesFile: File = rootDir.resolve("versions.properties"),
     getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }
 ) {
+    checkGradleVersionIsSupported()
     require(settings.isBuildSrc.not()) {
         "This bootstrap is only for the root project. For buildSrc, please call " +
             "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
@@ -94,8 +95,21 @@ fun Settings.bootstrapRefreshVersionsCore(
 fun Settings.bootstrapRefreshVersionsCoreForBuildSrc(
     getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }
 ) {
+    checkGradleVersionIsSupported()
     RefreshVersionsConfigHolder.initializeBuildSrc(this, getRemovedDependenciesVersionsKeys)
     setupRefreshVersions(settings = settings)
+}
+
+private fun checkGradleVersionIsSupported() {
+    val supportedGradleVersion = "6.3" // 6.2 fails with this error: https://gradle.com/s/shp7hbtd3i3ii
+    if (GradleVersion.current() < GradleVersion.version(supportedGradleVersion)) {
+        throw UnsupportedVersionException(
+            """
+            The plugin "de.fayard.refreshVersions" only works with Gradle $supportedGradleVersion and above.
+            See https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed
+            """.trimIndent()
+        )
+    }
 }
 
 /**
@@ -112,16 +126,6 @@ fun Settings.bootstrapRefreshVersionsCoreForBuildSrc(
  * buildscript classpath configuration boilerplate.
  */
 private fun setupRefreshVersions(settings: Settings) {
-    val supportedGradleVersion = "6.3" // 6.2 fails with this error: https://gradle.com/s/shp7hbtd3i3ii
-    if (GradleVersion.current() < GradleVersion.version(supportedGradleVersion)) {
-        throw UnsupportedVersionException(
-            """
-            The plugin "de.fayard.refreshVersions" only works with Gradle $supportedGradleVersion and above.
-            See https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed
-            """.trimIndent()
-        )
-    }
-
 
     val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
     @Suppress("unchecked_cast")
