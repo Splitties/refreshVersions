@@ -41,6 +41,8 @@ class ReplacementOfRemovedDependencyNotationsTest {
             val inputFile = dir.resolve(inputFileName).takeIf { it.exists() }
             val outputFile = dir.resolve(outputFileName).takeIf { it.exists() }
             if (inputFile == null) null else inputFile to outputFile
+        }.also {
+            check(it.isNotEmpty())
         }.forEach { (inputFile, outputFile) ->
             `test replaceRemovedDependencyNotationReferencesIfAny`(
                 revisionsHistory,
