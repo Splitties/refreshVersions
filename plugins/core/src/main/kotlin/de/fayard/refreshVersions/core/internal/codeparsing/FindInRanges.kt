@@ -2,9 +2,40 @@ package de.fayard.refreshVersions.core.internal.codeparsing
 
 import de.fayard.refreshVersions.core.internal.TaggedRange
 
+internal fun CharSequence.rangesOfCode(
+    code: String,
+    startIndex: Int = 0,
+    ignoreCase: Boolean = false,
+    sectionsRanges: List<TaggedRange<SourceCodeSection>>
+): List<IntRange> {
+    val list = rangeOfCode(
+        code = code,
+        startIndex = startIndex,
+        ignoreCase = ignoreCase,
+        sectionsRanges = sectionsRanges
+    )?.let { mutableListOf(it) } ?: return emptyList()
+    @Suppress("name_shadowing")
+    var startIndex = list.single().last + 1
+    if (startIndex > lastIndex) return list
+    do {
+        val nextRange = rangeOfCode(
+            code = code,
+            startIndex = startIndex,
+            ignoreCase = ignoreCase,
+            sectionsRanges = sectionsRanges
+        )?.also {
+            list.add(it)
+            startIndex = it.last + 1
+            if (startIndex > lastIndex) return list
+        }
+    } while (nextRange != null)
+    return list
+}
+
 internal fun CharSequence.rangeOfCode(
     code: String,
     startIndex: Int = 0,
+    ignoreCase: Boolean = false,
     sectionsRanges: List<TaggedRange<SourceCodeSection>>
 ): IntRange?  = rangeOf(
     text = code,
