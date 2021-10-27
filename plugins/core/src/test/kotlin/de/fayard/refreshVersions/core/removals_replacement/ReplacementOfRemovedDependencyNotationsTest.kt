@@ -1,6 +1,5 @@
 package de.fayard.refreshVersions.core.removals_replacement
 
-import de.fayard.refreshVersions.core.internal.codeparsing.ProgrammingLanguage
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotation
 import de.fayard.refreshVersions.core.internal.removals_replacement.parseRemovedDependencyNotationsHistory
 import de.fayard.refreshVersions.core.internal.removals_replacement.replaceRemovedDependencyNotationReferencesIfAny
@@ -59,10 +58,7 @@ class ReplacementOfRemovedDependencyNotationsTest {
     ) {
         val output = revisionsHistory.replaceRemovedDependencyNotationReferencesIfAny(
             gradleBuildFileContent = inputFile.readText(),
-            programmingLanguage = when (inputFile.extension) {
-                "kts" -> ProgrammingLanguage.Kotlin
-                else -> ProgrammingLanguage.Groovy
-            }
+            isKotlinDsl = inputFile.extension == "kts"
         )
         output shouldBe outputFile?.readText()
     }
