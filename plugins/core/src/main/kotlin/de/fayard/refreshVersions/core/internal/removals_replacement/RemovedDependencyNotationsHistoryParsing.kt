@@ -30,7 +30,7 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(currentRevi
             line.startsWith("~~") && line.endsWith("~~") -> {
                 check(commentLines.isEmpty())
                 check(dependencyNotation == null)
-                dependencyNotation = line.removeSurrounding("~~")
+                dependencyNotation = line.removeSurrounding("~~").also { check(it.isNotEmpty()) }
             }
             line.startsWith("//") -> {
                 checkNotNull(dependencyNotation)
