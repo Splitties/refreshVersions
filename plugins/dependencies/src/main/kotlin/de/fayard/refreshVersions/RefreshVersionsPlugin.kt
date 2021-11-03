@@ -23,16 +23,20 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             return RefreshVersionsPlugin::class.java.getResourceAsStream("/$relativePath")
         }
 
+        internal val artifactVersionKeyRulesFileNames: List<String> = listOf(
+            "androidx-version-alias-rules.txt",
+            "cashapp-version-alias-rules.txt",
+            "dependency-groups-alias-rules.txt",
+            "google-version-alias-rules.txt",
+            "jakewharton-version-alias-rules.txt",
+            "kotlin(x)-version-alias-rules.txt",
+            "square-version-alias-rules.txt",
+            "testing-version-alias-rules.txt"
+        )
+
         @JvmStatic
-        val artifactVersionKeyRules: List<String> = listOf(
-            "androidx-version-alias-rules",
-            "google-version-alias-rules",
-            "kotlin(x)-version-alias-rules",
-            "square-version-alias-rules",
-            "testing-version-alias-rules",
-            "dependency-groups-alias-rules"
-        ).map {
-            getBundledResourceAsStream("refreshVersions-rules/$it.txt")!!
+        val artifactVersionKeyRules: List<String> = artifactVersionKeyRulesFileNames.map {
+            getBundledResourceAsStream("refreshVersions-rules/$it")!!
                 .bufferedReader()
                 .readText()
         }

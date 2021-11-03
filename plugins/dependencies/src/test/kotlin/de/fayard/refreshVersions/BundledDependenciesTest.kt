@@ -11,6 +11,7 @@ import io.kotest.assertions.fail
 import io.kotest.assertions.withClue
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.collections.haveSize
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.launch
@@ -33,6 +34,13 @@ class BundledDependenciesTest {
             .distinct()
             .joinToString(separator = "\n\n")
         file.writeText(content)
+    }
+
+    @Test
+    fun `The artifactVersionKeyRules property should contain all rules`() {
+        val rulesDir = mainResources.resolve("refreshVersions-rules")
+        val dirFileNames = rulesDir.listFiles { file -> file.extension == "txt" }!!.map { it.name }.toSet()
+        RefreshVersionsPlugin.artifactVersionKeyRulesFileNames shouldContainAll dirFileNames
     }
 
     @Test
