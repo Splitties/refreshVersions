@@ -33,7 +33,7 @@ class BundledDependenciesTest {
             .sorted()
             .distinct()
             .joinToString(separator = "\n\n")
-        file.writeText(content)
+        if (file.readText() != content) file.writeText(content)
     }
 
     @Test
