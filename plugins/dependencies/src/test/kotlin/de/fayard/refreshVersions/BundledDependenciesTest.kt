@@ -25,7 +25,7 @@ class BundledDependenciesTest {
 
     @Test
     fun `Generate rule files for dependency groups with a rawRule`() {
-        ALL_DEPENDENCIES_NOTATIONS
+        ALL_DEPENDENCIES_NOTATIONS // Ensure all objects are initialized.
         val rulesDir = mainResources.resolve("refreshVersions-rules")
         val file = rulesDir.resolve("dependency-groups-alias-rules.txt")
         val content = AbstractDependencyGroup.ALL_RULES
