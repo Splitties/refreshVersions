@@ -54,7 +54,9 @@ internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationRef
                 range.last + 1,
                 indexOfPreviousLineBreak + 1
             )
-            val hasCallOnTheDependencyNotation = endOfPreviousLine.trimStart().firstOrNull() == '.'
+            val hasCallOnTheDependencyNotation = endOfPreviousLine.trimStart().firstOrNull().let {
+                it == '.' || it == '('
+            }
             removedDependencyNotation.replacementMavenCoordinates?.let { moduleId ->
                 val insertionIndex = indexOf('\n', startIndex = range.last).let {
                     if (it == -1) size else it + 1

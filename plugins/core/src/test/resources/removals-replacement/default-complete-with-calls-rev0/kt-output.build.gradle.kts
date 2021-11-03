@@ -27,5 +27,13 @@ dependencies {
 //             moved:AnotherGroup.two )
     implementation ( DependencyNotation.parse("com.somegroup:somegroup-two").withoutVersion() )
 //             moved:AnotherGroup.two.withoutVersion() )
+    implementation ( DependencyNotation.parse("com.somegroup:somegroup-two")(version = null) )
+//             moved:AnotherGroup.two(version = null) )
+    implementation ( DependencyNotation.parse("com.somegroup:somegroup-two")(version = versionFor("whatever")) )
+//             moved:AnotherGroup.two(version = versionFor("whatever")) )
+    implementation (DependencyNotation.parse("com.somegroup:somegroup-two")(versionFor("whatever")))
+//            moved:AnotherGroup.two(versionFor("whatever")))
+    implementation (DependencyNotation.parse("com.somegroup:somegroup-two")(null))
+//            moved:AnotherGroup.two(null))
     implementation (" SomeGroup.two ")
 }
