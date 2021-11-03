@@ -1,7 +1,8 @@
 package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
-import de.fayard.refreshVersions.core.internal.DependencyMapping
+import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
@@ -32,14 +33,6 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
     }
 }
 
-internal fun List<DependencyMapping>.associateShortestByMavenCoordinate(): Map<String, String> {
-    return this.sortedByDescending { mapping ->
-        mapping.constantName.length
-    }.associate { mapping ->
-        "${mapping.group}:${mapping.artifact}" to mapping.constantName
-    }
-}
-
 //TODO: Don't replace random versions in build.gradle(.kts) files to avoid breaking plugins.
 //TODO: Don't rely on a regex to extract the version so we detect absolutely any version string literal.
 //TODO: Use CharSequence.findSymbolsRanges(…) to find the plugins block.
@@ -58,7 +51,7 @@ internal fun List<DependencyMapping>.associateShortestByMavenCoordinate(): Map<S
 
 private val buildFilesNames = setOf("build.gradle", "build.gradle.kts")
 
-internal fun migrateFileIfNeeded(file: File, dependencyMapping: Map<String, String>) {
+internal fun migrateFileIfNeeded(file: File, dependencyMapping: Map<ModuleId.Maven, String>) {
     val isBuildFile = file.name in buildFilesNames
     val oldContent = file.readText()
     val newContent = oldContent.lines()
@@ -96,7 +89,7 @@ internal fun withVersionPlaceholder(
     line: String,
     isInsidePluginsBlock: Boolean,
     isBuildFile: Boolean,
-    dependencyMapping: Map<String, String> = emptyMap()
+    dependencyMapping: Map<ModuleId.Maven, String> = emptyMap()
 ): String? = when {
     isInsidePluginsBlock -> line.replace(pluginVersionRegex, "")
     isBuildFile -> when {
@@ -115,9 +108,14 @@ internal fun withVersionPlaceholder(
     else -> null
 }
 
-private fun extractCoordinate(line: String): String {
+private fun extractCoordinate(line: String): ModuleId.Maven {
     val coordinate = mavenCoordinateRegex.find(line)!!.value
-    return coordinate.replaceAfterLast(':', "").removeSuffix(":").removePrefix("'").removePrefix("\"")
+    coordinate.replaceAfterLast(':', "").let {
+        return ModuleId.Maven(
+            group = it.substringBefore(':').removePrefix("'").removePrefix("\""),
+            name = it.substringAfter(':').removeSuffix(":")
+        )
+    }
 }
 
 private const val mavenChars = "[a-zA-Z0-9_.-]"

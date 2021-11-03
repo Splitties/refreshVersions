@@ -14,6 +14,7 @@ internal fun CharSequence.rangesOfCode(
         ignoreCase = ignoreCase,
         sectionsRanges = sectionsRanges
     )?.let { mutableListOf(it) } ?: return emptyList()
+
     @Suppress("name_shadowing")
     var startIndex = list.single().last + 1
     if (startIndex > lastIndex) return list
@@ -37,7 +38,7 @@ internal fun CharSequence.rangeOfCode(
     startIndex: Int = 0,
     ignoreCase: Boolean = false,
     sectionsRanges: List<TaggedRange<SourceCodeSection>>
-): IntRange?  = rangeOf(
+): IntRange? = rangeOf(
     text = code,
     sectionKind = SourceCodeSection.CodeChunk,
     startIndex = startIndex,
@@ -77,4 +78,40 @@ internal fun CharSequence.rangeOf(
         return absoluteStartIndexOfMatch until absoluteStartIndexOfMatch + text.length
     }
     return null
+}
+
+/**
+ * Returns -1 if there's no import statement
+ */
+internal fun CharSequence.findFirstImportStatement(
+    sectionsRanges: List<TaggedRange<SourceCodeSection>>
+): Int {
+    sectionsRanges.forEach { section ->
+        if (section.tag == SourceCodeSection.CodeChunk) {
+            val codeChunk = substring(section.range)
+            if (codeChunk.isBlank()) return@forEach
+            val startTrimmedCodeChunk = codeChunk.trimStart()
+            if (startTrimmedCodeChunk.startsWith("import ")) {
+                return section.startIndex + codeChunk.length - startTrimmedCodeChunk.length
+            }
+            return -1
+        }
+    }
+    return -1
+}
+
+/**
+ * Returns lastIndex + 1 (i.e. [CharSequence.length]) if no non-blank code chunk is found.
+ */
+internal fun CharSequence.indexOfFirstNonBlankCodeChunk(
+    sectionsRanges: List<TaggedRange<SourceCodeSection>>
+): Int {
+    sectionsRanges.forEach { section ->
+        if (section.tag == SourceCodeSection.CodeChunk) {
+            val codeChunk = substring(section.range)
+            if (codeChunk.isBlank()) return@forEach
+            return section.startIndex + codeChunk.indexOfFirst { it.isWhitespace().not() }
+        }
+    }
+    return length
 }

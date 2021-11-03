@@ -68,6 +68,13 @@ interface DependencyNotation : CharSequence {
             isBom = isBom,
             usePlatformConstraints = usePlatformConstraints
         )
+
+        @JvmStatic
+        @Suppress("unused") // Used in code writing in replaceRemovedDependencyNotationReferencesIfAny
+        fun parse(colonSeparatedGroupAndName: String): DependencyNotation = this(
+            group = colonSeparatedGroupAndName.substringBefore(':'),
+            name = colonSeparatedGroupAndName.substringAfter(':')
+        )
     }
 }
 
@@ -139,7 +146,7 @@ private class DependencyNotationImpl(
 sealed class AbstractDependencyGroup(
     val group: String,
     rawRule: String? = null,
-    @InternalRefreshVersionsApi
+    @property:InternalRefreshVersionsApi
     var usePlatformConstraints: Boolean = false
 ) {
 

@@ -2,18 +2,6 @@
 
 Must be done at init time (in `settingsEvaluated { … }`) because it shall happen before build files are compiled and evaluated.
 
-## Should the code be in refreshVersions or in refreshVersionsCore?
-
-Before answering here are the things to check:
-
-### Is the code parsing code all in the core module?
-
-Yes
-
-### Are there any objections to have it in the core module?
-
-I don't think so.
-
 ## How to detect removal?
 
 Tests checking for no removal would instead populate the new file for removed dependency notations.
@@ -38,7 +26,7 @@ In `bootstrapRefreshVersionsCore`, figure out efficiently if refreshVersions has
 
 ### Doing the migration
 
-#### Required data:
+#### ✅🧐 Required data:
 
 An ordered list (oldest to newest) with the following data for all removals since last upgrade:
 - dependency notation
@@ -49,7 +37,7 @@ An ordered list (oldest to newest) with the following data for all removals sinc
   - info url, if any
   - actionable info for a TODO comment?
 
-#### Removed dependency notations storage/file-format
+#### ✅ Removed dependency notations storage/file-format
 
 ```markdown
 ## Revision 1
@@ -64,7 +52,13 @@ id:[androidx.wear..wear-watchface-client]
 id:[com.somegroup..somegroup-something]
 ```
 
-TK
+#### Tests update
+
+Removed dependency notations shall be removed from the `dependencies-mapping-validated.txt` file to avoid clash when the
+maven coordinates stay the same, but the dependency notation moves.
+
+The list of removed dependency notations should be prefilled, but
+the tests should fail until there's been manual edit and validation.
 
 #### Migration operation:
 
@@ -73,7 +67,7 @@ Keep in mind it shall:
 - Not be able to break the build.
 - Let the user know about the rewrite via a warning log.
 
-#### Example results
+#### ✅ Example results
 
 ```kotlin
 dependencies {

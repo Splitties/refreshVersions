@@ -1,5 +1,8 @@
 package de.fayard.refreshVersions.core.removals_replacement
 
+import de.fayard.refreshVersions.core.ModuleId
+import de.fayard.refreshVersions.core.internal.DependencyMapping
+import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotation
 import de.fayard.refreshVersions.core.internal.removals_replacement.parseRemovedDependencyNotationsHistory
 import de.fayard.refreshVersions.core.internal.removals_replacement.replaceRemovedDependencyNotationReferencesIfAny
@@ -14,6 +17,16 @@ class ReplacementOfRemovedDependencyNotationsTest {
 
     private val testDataDir = testResources.resolve("removals-replacement")
     private val defaultHistoryFileContent = testDataDir.resolve("default-revisions-history.md").readText()
+    private val mapping: Map<ModuleId.Maven, String> = testResources.parentFile!!.parentFile!!.parentFile!!.parentFile!!
+        .resolveSibling("dependencies")
+        .resolve("src/test/resources/dependencies-mapping-validated.txt")
+        .let { readDependencyMappingFromFile(it) }
+
+    private fun readDependencyMappingFromFile(file: File) = file.useLines { lines ->
+        lines.mapNotNull {
+            DependencyMapping.fromLine(it)
+        }.toList().associateShortestByMavenCoordinate()
+    }
 
     @TestFactory
     fun `tests for replaceRemovedDependencyNotationReferencesIfAny`(): List<DynamicTest> {
@@ -33,6 +46,9 @@ class ReplacementOfRemovedDependencyNotationsTest {
         val revisionsHistory = revisionsHistoryFileContent.lineSequence().parseRemovedDependencyNotationsHistory(
             currentRevision = currentRevision
         )
+        val dependencyMapping = dir.resolve("dependency-mapping.txt").takeIf {
+            it.exists()
+        }?.let { readDependencyMappingFromFile(it) } ?: mapping
         listOf(
             "kt-input.build.gradle.kts" to "kt-output.build.gradle.kts",
             "gvy-input.build.gradle" to "gvy-output.build.gradle"
@@ -44,7 +60,8 @@ class ReplacementOfRemovedDependencyNotationsTest {
             check(it.isNotEmpty())
         }.forEach { (inputFile, outputFile) ->
             `test replaceRemovedDependencyNotationReferencesIfAny`(
-                revisionsHistory,
+                mapping = dependencyMapping,
+                revisionsHistory = revisionsHistory,
                 inputFile = inputFile,
                 outputFile = outputFile
             )
@@ -52,11 +69,13 @@ class ReplacementOfRemovedDependencyNotationsTest {
     }
 
     private fun `test replaceRemovedDependencyNotationReferencesIfAny`(
+        mapping: Map<ModuleId.Maven, String>,
         revisionsHistory: List<RemovedDependencyNotation>,
         inputFile: File,
         outputFile: File?
     ) {
         val output = revisionsHistory.replaceRemovedDependencyNotationReferencesIfAny(
+            mapping = mapping,
             gradleBuildFileContent = inputFile.readText(),
             isKotlinDsl = inputFile.extension == "kts"
         )
