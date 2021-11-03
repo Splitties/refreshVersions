@@ -25,5 +25,7 @@ dependencies {
     implementation("com.somegroup:somegroup-one:_")
     implementation ( "com.somegroup:somegroup-two:_" )
 //             moved:AnotherGroup.two )
+    implementation ( DependencyNotation.parse("com.somegroup:somegroup-two").withoutVersion() )
+//             moved:AnotherGroup.two.withoutVersion() )
     implementation (" SomeGroup.two ")
 }

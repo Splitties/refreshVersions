@@ -14,5 +14,6 @@ dependencies {
     implementation(SomeGroup.something)
     implementation(SomeGroup.one)
     implementation ( SomeGroup.two )
+    implementation ( SomeGroup.two.withoutVersion() )
     implementation (" SomeGroup.two ")
 }

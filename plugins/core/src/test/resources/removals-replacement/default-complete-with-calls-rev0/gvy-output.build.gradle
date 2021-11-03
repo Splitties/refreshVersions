@@ -1,3 +1,5 @@
+import de.fayard.refreshVersions.core.DependencyNotation
+
 plugins {
     id "org.jetbrains.kotlin.jvm"
 }
@@ -16,6 +18,19 @@ dependencies {
 //           moved:AnotherGroup.two
     implementation   "com.somegroup:somegroup-two:_"
 //             moved:AnotherGroup.two
+    implementation    DependencyNotation.parse("com.somegroup:somegroup-two").withoutVersion()
+//              moved:AnotherGroup.two.withoutVersion()
+    implementation     DependencyNotation.parse("com.somegroup:somegroup-two").withVersion("0.1.0")
+//               moved:AnotherGroup.two.withVersion("0.1.0")
+    implementation(     DependencyNotation.parse("com.somegroup:somegroup-two").withVersion("SomeGroup.two.withVersion"))
+//                moved:AnotherGroup.two.withVersion("SomeGroup.two.withVersion"))
+    implementation(     DependencyNotation.parse("com.somegroup:somegroup-two").withVersion(versionFor("whatever")))
+//                moved:AnotherGroup.two.withVersion(versionFor("whatever")))
+    implementation(DependencyNotation.parse("com.somegroup:somegroup-two").withVersionPlaceholder())
+//           moved:AnotherGroup.two.withVersionPlaceholder())
+    //FIXME: Replace with the new dependency and remove these comments.
+    implementation(DependencyNotation.parse("androidx.wear:wear-watchface-client").withVersionPlaceholder())
+//           moved:DependencyNotation.parse("androidx.wear.watchface:watchface-client").withVersionPlaceholder())
     implementation (" SomeGroup.two ")
     implementation " SomeGroup.two "
 }
