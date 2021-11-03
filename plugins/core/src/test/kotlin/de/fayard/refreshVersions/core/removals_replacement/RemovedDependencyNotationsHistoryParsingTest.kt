@@ -4,12 +4,16 @@ import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotation
 import de.fayard.refreshVersions.core.internal.removals_replacement.parseRemovedDependencyNotationsHistory
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DynamicTest
+import org.junit.jupiter.api.TestFactory
+import testutils.junit.dynamicTest
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 class RemovedDependencyNotationsHistoryParsingTest {
 
     @Test
-    fun testParseRemovedDependencyNotationsHistory() {
+    fun `test parseRemovedDependencyNotationsHistory`() {
         val testData = """
             ## Revision 1
 
@@ -85,6 +89,66 @@ class RemovedDependencyNotationsHistoryParsingTest {
             testData.lineSequence().parseRemovedDependencyNotationsHistory(
                 currentRevision = currentRevision
             ).joinToString(separator = "\n") shouldBe expectedList.joinToString(separator = "\n")
+        }
+    }
+
+    @TestFactory
+    fun `incorrect revision order should fail to parse`(): List<DynamicTest> {
+        return listOf(
+            """
+            ## Revision 2
+
+            ~~AndroidX.wear.watchFace.client~~
+            //FIXME: Replace with the new dependency and remove these comments.
+            moved:[androidx.wear.watchface..watchface-client]
+            id:[androidx.wear..wear-watchface-client]
+        """.trimIndent(),
+            """
+            ## Revision 2
+
+            ~~AndroidX.wear.watchFace.client~~
+            //FIXME: Replace with the new dependency and remove these comments.
+            moved:[androidx.wear.watchface..watchface-client]
+            id:[androidx.wear..wear-watchface-client]
+
+            ## Revision 3
+            ~~SomeGroup.something~~
+            id:[com.somegroup..somegroup-something]
+
+            ## Revision 4
+            ~~SomeGroup.one~~
+            //FIXME: Remove dependency now that somegroup one has been deprecated.
+            id:[com.somegroup..somegroup-one]
+            ~~SomeGroup.two~~
+            moved:[com.anothergroup..anothergroup-two]
+            id:[com.somegroup..somegroup-two]
+        """.trimIndent(),
+            """
+            ## Revision 1
+
+            ~~AndroidX.wear.watchFace.client~~
+            //FIXME: Replace with the new dependency and remove these comments.
+            moved:[androidx.wear.watchface..watchface-client]
+            id:[androidx.wear..wear-watchface-client]
+
+            ## Revision 3
+            ~~SomeGroup.something~~
+            id:[com.somegroup..somegroup-something]
+
+            ## Revision 4
+            ~~SomeGroup.one~~
+            //FIXME: Remove dependency now that somegroup one has been deprecated.
+            id:[com.somegroup..somegroup-one]
+            ~~SomeGroup.two~~
+            moved:[com.anothergroup..anothergroup-two]
+            id:[com.somegroup..somegroup-two]
+        """.trimIndent()
+        ).mapIndexed { index: Int, testData: String ->
+            dynamicTest("testData #${index + 1}") {
+                assertFailsWith<IllegalArgumentException> {
+                    testData.lineSequence().parseRemovedDependencyNotationsHistory(currentRevision = null)
+                }
+            }
         }
     }
 }

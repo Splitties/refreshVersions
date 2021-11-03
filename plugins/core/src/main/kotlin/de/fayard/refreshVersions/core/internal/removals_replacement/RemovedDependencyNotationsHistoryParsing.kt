@@ -14,18 +14,30 @@ internal fun InputStream.parseRemovedDependencyNotationsHistory(currentRevision:
     return bufferedReader().lineSequence().parseRemovedDependencyNotationsHistory(currentRevision)
 }
 
-internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(currentRevision: Int): List<RemovedDependencyNotation> {
+internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
+    currentRevision: Int?
+): List<RemovedDependencyNotation> {
+    if (currentRevision != null) {
+        require(currentRevision >= 0) { "currentRevision must be positive or null" }
+    }
     val list = mutableListOf<RemovedDependencyNotation>()
     var dependencyNotation: String? = null
     val commentLines = mutableListOf<String>()
     var replacementMavenCoordinates: ModuleId.Maven? = null
-    filter { line ->
-        line.isNotEmpty()
-    }.dropWhile { line ->
-        line != "## Revision ${currentRevision + 1}"
-    }.filter { line ->
-        line.startsWith("## Revision ").not()
-    }.forEach { line ->
+    var revisionTracking = 0
+    forEach { line ->
+        if (line.isEmpty()) return@forEach
+        val isRevisionHeader = line.startsWith("## Revision ")
+        if (isRevisionHeader) {
+            val value = line.substringAfter("## Revision ")
+            require(value.toIntOrNull() == ++revisionTracking) {
+                "Expected to encounter heading for revision $revisionTracking but found $value instead."
+            }
+            return@forEach
+        }
+        if (revisionTracking <= (currentRevision ?: 0)) {
+            return@forEach
+        }
         when {
             line.startsWith("~~") && line.endsWith("~~") -> {
                 check(commentLines.isEmpty())
