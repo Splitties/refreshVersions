@@ -33,6 +33,9 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
             require(value.toIntOrNull() == ++revisionTracking) {
                 "Expected to encounter heading for revision $revisionTracking but found $value instead."
             }
+            check(dependencyNotation == null)
+            check(commentLines.isEmpty())
+            check(replacementMavenCoordinates == null)
             return@forEach
         }
         if (revisionTracking <= (currentRevision ?: 0)) {
@@ -40,15 +43,18 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
         }
         when {
             line.startsWith("~~") && line.endsWith("~~") -> {
-                check(commentLines.isEmpty())
                 check(dependencyNotation == null)
+                check(commentLines.isEmpty())
+                check(replacementMavenCoordinates == null)
                 dependencyNotation = line.removeSurrounding("~~").also { check(it.isNotEmpty()) }
             }
             line.startsWith("//") -> {
                 checkNotNull(dependencyNotation)
+                check(replacementMavenCoordinates == null)
                 commentLines.add(line)
             }
             line.startsWith("moved:[") -> {
+                checkNotNull(dependencyNotation)
                 replacementMavenCoordinates = line.substringAfter("moved:")
                     .removeSurrounding("[", "]").let {
                         ModuleId.Maven(
