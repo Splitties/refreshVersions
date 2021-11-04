@@ -16,4 +16,5 @@ dependencies {
     implementation ( "com.somegroup:somegroup-two:_" )
 //             moved:"com.anothergroup:anothergroup-two:_" )
     implementation (" SomeGroup.two ")
+    implementation(SomeGroup.three)
 }

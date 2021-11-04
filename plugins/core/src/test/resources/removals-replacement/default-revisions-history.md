@@ -19,3 +19,13 @@ id:[com.somegroup:somegroup-one]
 ~~SomeGroup.two~~
 moved:[com.anothergroup:anothergroup-two]
 id:[com.somegroup:somegroup-two]
+
+## [WIP]
+
+~~SomeGroup.three~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[com.somegroup:somegroup-one]

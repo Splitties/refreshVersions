@@ -57,6 +57,10 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
                 checkNotNull(dependencyNotation)
                 replacementMavenCoordinates = line.substringAfter("moved:")
                     .removeSurrounding("[", "]").let {
+                        require(it.first() != '<' && it.last() != '>' && it.none { c -> c.isWhitespace() }) {
+                            "Expected comma separated group and name within the brackets, " +
+                                "but found extra surrounding or whitespace in the moved clause."
+                        }
                         ModuleId.Maven(
                             group = it.substringBefore(':'),
                             name = it.substringAfter(':')
@@ -82,6 +86,14 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
                 commentLines.clear()
                 list.add(newElement)
             }
+            line == "## [WIP]" -> {
+                check(dependencyNotation == null)
+                check(commentLines.isEmpty())
+                check(replacementMavenCoordinates == null)
+                return list
+            }
+            line.startsWith("**") -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException()
         }
     }
     return list

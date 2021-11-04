@@ -12,4 +12,5 @@ dependencies {
     implementation(SomeGroup.one)
     implementation ( SomeGroup.two )
     implementation (" SomeGroup.two ")
+    implementation(SomeGroup.three)
 }
