@@ -58,8 +58,8 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
                 replacementMavenCoordinates = line.substringAfter("moved:")
                     .removeSurrounding("[", "]").let {
                         ModuleId.Maven(
-                            group = it.substringBefore(".."),
-                            name = it.substringAfter("..")
+                            group = it.substringBefore(':'),
+                            name = it.substringAfter(':')
                         )
                     }
             }
@@ -70,8 +70,8 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
                     moduleId = line.substringAfter("id:")
                         .removeSurrounding("[", "]").let {
                             ModuleId.Maven(
-                                group = it.substringBefore(".."),
-                                name = it.substringAfter("..")
+                                group = it.substringBefore(':'),
+                                name = it.substringAfter(':')
                             )
                         },
                     leadingCommentLines = commentLines.toList(),
