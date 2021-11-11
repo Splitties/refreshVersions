@@ -128,7 +128,3 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
     withSourcesJar()
 }
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}
