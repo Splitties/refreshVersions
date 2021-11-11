@@ -43,9 +43,9 @@ publishing {
 dependencies {
     implementation(gradleKotlinDsl())
     implementation(KotlinX.coroutines.core)
-    implementation(Square.okHttp3.okHttp)
+    implementation(Square.okHttp3)
     implementation(Square.okHttp3.loggingInterceptor)
-    implementation(Square.retrofit2.retrofit) {
+    implementation(Square.retrofit2)!!.apply {
         because("It has ready to use HttpException class")
     }
     implementation(Square.moshi.kotlinReflect)
