@@ -618,7 +618,7 @@ object AndroidX : IsNotADependency {
             val renderer = module("tiles-renderer")
         }
 
-        val watchFace = WatchFace
+        /*val watchFace = WatchFace
 
         object WatchFace : DependencyNotationAndGroup(group = "androidx.wear", name = "wear-watchface") {
             val client = module("wear-watchface-client")
@@ -634,7 +634,7 @@ object AndroidX : IsNotADependency {
             val guava = module("wear-watchface-guava")
 
             val style = module("wear-watchface-style")
-        }
+        }*/
     }
 
     val webkit = DependencyNotation(group = "androidx.webkit", name = "webkit")
