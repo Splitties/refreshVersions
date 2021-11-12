@@ -107,9 +107,11 @@ val copyVersionFile by tasks.registering {
     outputs.file(versionFileCopy)
     doFirst { versionFile.copyTo(versionFileCopy, overwrite = true) }
 }
+tasks.processResources {
+    dependsOn(copyVersionFile)
+}
 
 tasks.withType<KotlinCompile> {
-    dependsOn(copyVersionFile)
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xinline-classes",
