@@ -57,6 +57,12 @@ fun Settings.bootstrapRefreshVersionsCore(
             "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
             "or RefreshVersionsCoreSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
     }
+    RefreshVersionsConfigHolder.initialize(
+        settings = settings,
+        artifactVersionKeyRules = artifactVersionKeyRules,
+        getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys,
+        versionsPropertiesFile = versionsPropertiesFile
+    )
     val versionsPropertiesModel = RefreshVersionsConfigHolder.readVersionsPropertiesModel()
     getRemovedDependencyNotationsReplacementInfo?.let {
         replaceRemovedDependencyNotationReferencesIfNeeded(
@@ -67,12 +73,6 @@ fun Settings.bootstrapRefreshVersionsCore(
             getRemovedDependencyNotationsReplacementInfo = it
         )
     }
-    RefreshVersionsConfigHolder.initialize(
-        settings = settings,
-        artifactVersionKeyRules = artifactVersionKeyRules,
-        getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys,
-        versionsPropertiesFile = versionsPropertiesFile
-    )
     setupRefreshVersions(
         settings = settings,
         versionsMap = RefreshVersionsConfigHolder.readVersionsMap(versionsPropertiesModel),
