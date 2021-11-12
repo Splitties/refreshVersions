@@ -97,7 +97,9 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     private fun getRemovedDependencyNotationsReplacementInfo(): RemovedDependencyNotationsReplacementInfo {
         return RemovedDependencyNotationsReplacementInfo(
             readRevisionOfLastRefreshVersionsRun = { lastVersion, snapshotRevision ->
-                snapshotRevision ?: removalsRevision(lastVersion)
+                snapshotRevision ?: lastVersion.let {
+                    if (it.endsWith("-SNAPSHOT")) 0 else removalsRevision(lastVersion)
+                }
             },
             currentRevision = removalsRevision(),
             removalsListingResource = getBundledResourceAsStream("removals-revisions-history.md")!!
