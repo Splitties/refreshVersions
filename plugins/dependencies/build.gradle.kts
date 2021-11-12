@@ -99,7 +99,7 @@ val copyDependencyNotationsRemovalsRevisionNumber by tasks.registering {
             if (existingMapping != null) {
                 check(existingMapping == mappingLine)
             } else {
-                check(mappingFileContent.endsWith('\n'))
+                check(mappingFileContent.endsWith('\n') || mappingFileContent.isEmpty())
                 versionToRemovalsMappingFile.appendText("$mappingLine\n")
             }
         }
