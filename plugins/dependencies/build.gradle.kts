@@ -6,6 +6,8 @@ plugins {
     `maven-publish`
     signing
     `kotlin-dsl`
+    `jvm-test-suite`
+    idea
 }
 
 gradlePlugin {
@@ -54,6 +56,76 @@ dependencies {
     implementation(KotlinX.coroutines.core)
 }
 
+val genResourcesDir = buildDir.resolve("generated/refreshVersions/resources")
+
+sourceSets.main {
+    resources.srcDir(genResourcesDir.path)
+}
+
+idea {
+    module.generatedSourceDirs.add(genResourcesDir)
+}
+
+val copyDependencyNotationsRemovalsRevisionNumber by tasks.registering {
+    val versionFile = rootProject.file("version.txt")
+    val removalsRevisionHistoryFile = file("src/main/resources/removals-revisions-history.md")
+    val snapshotDependencyNotationsRemovalsRevisionNumberFile = genResourcesDir.resolve("snapshot-dpdc-rm-rev.txt")
+    val versionToRemovalsMappingFile = file("src/main/resources/version-to-removals-revision-mapping.txt")
+
+
+    inputs.files(versionFile, removalsRevisionHistoryFile)
+    outputs.files(snapshotDependencyNotationsRemovalsRevisionNumberFile, versionToRemovalsMappingFile)
+
+    doFirst {
+        val version = versionFile.useLines { it.first() }
+        val removalsRevision: Int? = removalsRevisionHistoryFile.useLines { lines ->
+            lines.lastOrNull { it.startsWith("## ") }?.takeUnless { it == "## [WIP]" }
+        }?.substringAfter("## Revision ")?.toInt()
+        if (version.endsWith("-SNAPSHOT")) {
+            snapshotDependencyNotationsRemovalsRevisionNumberFile.let {
+                when (removalsRevision) {
+                    null -> it.delete()
+                    else -> it.writeText(removalsRevision.toString())
+                }
+            }
+        } else {
+            snapshotDependencyNotationsRemovalsRevisionNumberFile.delete()
+            val expectedPrefix = "$version->"
+            val mappingLine = "$expectedPrefix$removalsRevision"
+            val mappingFileContent = versionToRemovalsMappingFile.readText()
+            val existingMapping = mappingFileContent.lineSequence().firstOrNull {
+                it.startsWith(expectedPrefix)
+            }
+            if (existingMapping != null) {
+                check(existingMapping == mappingLine)
+            } else {
+                check(mappingFileContent.endsWith('\n'))
+                versionToRemovalsMappingFile.appendText("$mappingLine\n")
+            }
+        }
+    }
+}
+
+tasks.processResources {
+    dependsOn(copyDependencyNotationsRemovalsRevisionNumber)
+}
+
+@Suppress("UnstableApiUsage")
+val prePublishTest = testing.suites.create<JvmTestSuite>("prePublishTest") {
+    useJUnitJupiter()
+    dependencies {
+        implementation(project)
+        implementation(Testing.kotest.assertions.core)
+    }
+}
+
+tasks.check {
+    dependsOn(prePublishTest)
+}
+
+tasks.withType<AbstractPublishToMaven>().configureEach {
+    dependsOn(prePublishTest)
+}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
