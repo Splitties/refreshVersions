@@ -59,7 +59,7 @@ getKotlinPluginVersion().let {
     }
 }
 
-tasks.register("run", JavaExec::class.java) {
+tasks.register<JavaExec>("run") {
     this.main = "de.fayard.GuavaTest"
 }
 
