@@ -15,12 +15,12 @@ Run this command to update:
 ./gradlew wrapper --gradle-version {{version.gradle}}
 ```
 
-!!! tip
+!!! info "If the command fails"
 
     If that command fails, locate the `gradle/wrapper/gradle-wrapper.properties` file,
     and edit the distribution url to the Gradle version you want to update to.
 
-!!! warning
+!!! warning "Don't rely on the IDE for troubleshooting"
 
     If you are in the process of **troubleshooting** a failing build, we recommend that you
     **do it in the terminal** rather than trying to perform a Gradle sync/import/reload in
