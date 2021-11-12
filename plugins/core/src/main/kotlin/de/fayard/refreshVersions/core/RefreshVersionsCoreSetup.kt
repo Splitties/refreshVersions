@@ -51,7 +51,7 @@ fun Settings.bootstrapRefreshVersionsCore(
     getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() },
     getRemovedDependencyNotationsReplacementInfo: (() -> RemovedDependencyNotationsReplacementInfo)? = null
 ) {
-    checkGradleVersionIsSupported()
+    null.checkGradleVersionIsSupported()
     require(settings.isBuildSrc.not()) {
         "This bootstrap is only for the root project. For buildSrc, please call " +
             "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
@@ -112,17 +112,24 @@ fun Settings.bootstrapRefreshVersionsCore(
 fun Settings.bootstrapRefreshVersionsCoreForBuildSrc(
     getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }
 ) {
-    checkGradleVersionIsSupported()
+    null.checkGradleVersionIsSupported()
     RefreshVersionsConfigHolder.initializeBuildSrc(this, getRemovedDependenciesVersionsKeys)
     setupRefreshVersions(settings = settings)
 }
 
-private fun checkGradleVersionIsSupported() {
-    val supportedGradleVersion = "6.3" // 6.2 fails with this error: https://gradle.com/s/shp7hbtd3i3ii
-    if (GradleVersion.current() < GradleVersion.version(supportedGradleVersion)) {
+private const val minimumGradleVersionString = "6.8" // Because we require Kotlin 1.4
+private val minimumGradleVersion = GradleVersion.version(minimumGradleVersionString)
+
+/**
+ * This is an extension on `Nothing?` to avoid polluting top-level.
+ */
+@InternalRefreshVersionsApi
+fun @Suppress("unused") Nothing?.checkGradleVersionIsSupported() {
+    minimumGradleVersion.version
+    if (GradleVersion.current() < minimumGradleVersion) {
         throw UnsupportedVersionException(
             """
-            The plugin "de.fayard.refreshVersions" only works with Gradle $supportedGradleVersion and above.
+            The plugin "de.fayard.refreshVersions" only works with Gradle $minimumGradleVersionString and above.
             See https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed
             """.trimIndent()
         )

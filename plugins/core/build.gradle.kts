@@ -113,6 +113,7 @@ tasks.processResources {
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.apiVersion = "1.4"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xinline-classes",
         "-Xmulti-platform", // Allow using expect and actual keywords.

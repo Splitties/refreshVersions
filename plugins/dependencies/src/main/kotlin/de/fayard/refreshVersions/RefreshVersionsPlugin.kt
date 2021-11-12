@@ -1,9 +1,6 @@
 package de.fayard.refreshVersions
 
-import de.fayard.refreshVersions.core.ModuleId
-import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
-import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
-import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
+import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
@@ -64,6 +61,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
 
 
     override fun apply(target: Any) {
+        null.checkGradleVersionIsSupported() // Check early to avoid confusing compat-related errors.
         require(target is Settings) {
             val notInExtraClause: String = when (target) {
                 is Project -> when (target) {

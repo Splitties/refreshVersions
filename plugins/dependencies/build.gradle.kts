@@ -129,6 +129,7 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.apiVersion = "1.4"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xopt-in=kotlin.RequiresOptIn",
         "-Xopt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
