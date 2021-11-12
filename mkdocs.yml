@@ -58,6 +58,7 @@ markdown_extensions:
   - pymdownx.tilde
   - pymdownx.tabbed
   - tables
+  - admonition
 
 nav:
   - 'Overview': index.md
