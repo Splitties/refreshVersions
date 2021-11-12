@@ -9,6 +9,12 @@ Gradle 6.8+ is required because this plugin relies on Kotlin 1.4.
 Updating Gradle is anyway usually a good idea. You get fewer bugs, more
 features, and faster builds.
 
+!!! note "See available Gradle updates"
+
+    Gradle maintains a page that references all the releases at [gradle.org/releases](https://gradle.org/releases/).
+
+    It can be helpful if you find out you need/want to upgrade your project to a specific version.
+
 Run this command to update:
 
 ```shell
@@ -28,8 +34,9 @@ Run this command to update:
 
 You should also try to update the Gradle plugins present in your build to the latest version. For example on an Android project, do update the version of the Gradle Android Plugin.
 
-The Gradle documentation has detailed migration guide if you are stuck:
+The Gradle documentation has detailed migration guides if you are stuck:
 
+- From Gradle 7+: https://docs.gradle.org/current/userguide/upgrading_version_7.html
 - From Gradle 6+: https://docs.gradle.org/current/userguide/upgrading_version_6.html
 - From Gradle 5.x: https://docs.gradle.org/current/userguide/upgrading_version_5.html
 - From Gradle 4.x: https://docs.gradle.org/current/userguide/upgrading_version_4.html
