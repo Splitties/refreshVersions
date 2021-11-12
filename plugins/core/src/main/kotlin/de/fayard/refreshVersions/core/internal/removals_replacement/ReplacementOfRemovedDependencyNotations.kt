@@ -37,6 +37,8 @@ internal fun replaceRemovedDependencyNotationReferencesIfNeeded(
     projectDir.walk().onEnter {
         it.name != "src" && it.name != "build"
     }.filter {
+        it.isFile
+    }.filter {
         it.name.endsWith("gradle.kts") || it.extension == "gradle"
     }.filter {
         it.name != "settings.gradle" && it.name != "settings.gradle.kts"
