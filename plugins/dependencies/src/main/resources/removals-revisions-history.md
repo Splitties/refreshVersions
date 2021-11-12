@@ -1,4 +1,4 @@
-## [WIP]
+## Revision 1
 
 ~~AndroidX.wear.watchFace.clientGuava~~
 // This library moved to another artifact as part of 1.0.0-alpha23 update.
