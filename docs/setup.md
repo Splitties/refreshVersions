@@ -22,7 +22,7 @@ Run this command to update:
 
 !!! warning "Don't rely on the IDE for troubleshooting"
 
-    If you are in the process of **troubleshooting** a failing build, we recommend that you
+    If you are in the process of troubleshooting a failing build, we recommend that you
     **do it in the terminal** rather than trying to perform a Gradle sync/import/reload in
     the IDE, because it will unfortunately not show the root causes of the failures.
 
