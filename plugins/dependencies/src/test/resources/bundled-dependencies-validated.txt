@@ -254,6 +254,10 @@ androidx.wear.compose:compose-material
 androidx.wear.tiles:tiles
 androidx.wear.tiles:tiles-proto
 androidx.wear.tiles:tiles-renderer
+androidx.wear.watchface:watchface
+androidx.wear.watchface:watchface-complications-data-source
+androidx.wear.watchface:watchface-complications-data-source-ktx
+androidx.wear.watchface:watchface-editor
 androidx.wear:wear
 androidx.wear:wear-complications-data
 androidx.wear:wear-complications-provider
@@ -262,15 +266,6 @@ androidx.wear:wear-input-testing
 androidx.wear:wear-ongoing
 androidx.wear:wear-phone-interactions
 androidx.wear:wear-remote-interactions
-androidx.wear:wear-watchface
-androidx.wear:wear-watchface-client
-androidx.wear:wear-watchface-client-guava
-androidx.wear:wear-watchface-complications-rendering
-androidx.wear:wear-watchface-data
-androidx.wear:wear-watchface-editor
-androidx.wear:wear-watchface-editor-guava
-androidx.wear:wear-watchface-guava
-androidx.wear:wear-watchface-style
 androidx.webkit:webkit
 androidx.window:window
 androidx.window:window-java

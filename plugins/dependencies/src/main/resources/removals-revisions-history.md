@@ -5,7 +5,7 @@
 // TODO: Put guidance comment lines here.
 // We recommend prefixing them with "FIXME:" if the user should take further action,
 // such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+moved:[androidx.wear.watchface:watchface-client-guava]
 id:[androidx.wear:wear-watchface-client-guava]
 
 ~~AndroidX.wear.watchFace.client~~
@@ -13,7 +13,7 @@ id:[androidx.wear:wear-watchface-client-guava]
 // TODO: Put guidance comment lines here.
 // We recommend prefixing them with "FIXME:" if the user should take further action,
 // such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+moved:[androidx.wear.watchface:watchface-client]
 id:[androidx.wear:wear-watchface-client]
 
 ~~AndroidX.wear.watchFace.complicationsRendering~~
@@ -21,7 +21,7 @@ id:[androidx.wear:wear-watchface-client]
 // TODO: Put guidance comment lines here.
 // We recommend prefixing them with "FIXME:" if the user should take further action,
 // such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+moved:[androidx.wear.watchface:watchface-complications-rendering]
 id:[androidx.wear:wear-watchface-complications-rendering]
 
 ~~AndroidX.wear.watchFace.data~~
@@ -29,7 +29,7 @@ id:[androidx.wear:wear-watchface-complications-rendering]
 // TODO: Put guidance comment lines here.
 // We recommend prefixing them with "FIXME:" if the user should take further action,
 // such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+moved:[androidx.wear.watchface:watchface-data]
 id:[androidx.wear:wear-watchface-data]
 
 ~~AndroidX.wear.watchFace.editorGuava~~
@@ -37,7 +37,7 @@ id:[androidx.wear:wear-watchface-data]
 // TODO: Put guidance comment lines here.
 // We recommend prefixing them with "FIXME:" if the user should take further action,
 // such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+moved:[androidx.wear.watchface:watchface-editor-guava]
 id:[androidx.wear:wear-watchface-editor-guava]
 
 ~~AndroidX.wear.watchFace.editor~~
@@ -45,7 +45,7 @@ id:[androidx.wear:wear-watchface-editor-guava]
 // TODO: Put guidance comment lines here.
 // We recommend prefixing them with "FIXME:" if the user should take further action,
 // such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+moved:[androidx.wear.watchface:watchface-editor]
 id:[androidx.wear:wear-watchface-editor]
 
 ~~AndroidX.wear.watchFace.guava~~
@@ -53,7 +53,7 @@ id:[androidx.wear:wear-watchface-editor]
 // TODO: Put guidance comment lines here.
 // We recommend prefixing them with "FIXME:" if the user should take further action,
 // such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+moved:[androidx.wear.watchface:watchface-guava]
 id:[androidx.wear:wear-watchface-guava]
 
 ~~AndroidX.wear.watchFace.style~~
@@ -61,7 +61,7 @@ id:[androidx.wear:wear-watchface-guava]
 // TODO: Put guidance comment lines here.
 // We recommend prefixing them with "FIXME:" if the user should take further action,
 // such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+moved:[androidx.wear.watchface:watchface-style]
 id:[androidx.wear:wear-watchface-style]
 
 ~~AndroidX.wear.watchFace~~
@@ -69,5 +69,5 @@ id:[androidx.wear:wear-watchface-style]
 // TODO: Put guidance comment lines here.
 // We recommend prefixing them with "FIXME:" if the user should take further action,
 // such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+moved:[androidx.wear.watchface:watchface]
 id:[androidx.wear:wear-watchface]
