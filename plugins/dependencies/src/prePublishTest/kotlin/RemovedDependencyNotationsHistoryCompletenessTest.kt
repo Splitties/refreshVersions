@@ -12,8 +12,6 @@ class RemovedDependencyNotationsHistoryCompletenessTest {
 
     @Test
     fun `No WIP section should be left`() {
-        //TODO: Unskip this test before merging into the main branch.
-        throw TestAbortedException("Skipped to get other tests to run in CI")
         val removalsRevisionsHistoryFile = mainResources.resolve("removals-revisions-history.md")
         val removalsRevisionsHistory = removalsRevisionsHistoryFile.readText()
         removalsRevisionsHistory.lineSequence().indexOf("## [WIP]").let {
