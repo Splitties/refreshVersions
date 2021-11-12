@@ -127,7 +127,7 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
     dependsOn(prePublishTest)
 }
 
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xopt-in=kotlin.RequiresOptIn",
@@ -135,7 +135,7 @@ tasks.withType<KotlinCompile> {
     )
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 

@@ -63,11 +63,11 @@ tasks.register("run", JavaExec::class.java) {
     this.main = "de.fayard.GuavaTest"
 }
 
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-tasks.withType(JavaExec::class.java) {
+tasks.withType<JavaExec>().configureEach {
     classpath = sourceSets["main"].runtimeClasspath
 }
 

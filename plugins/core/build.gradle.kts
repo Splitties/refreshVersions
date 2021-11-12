@@ -111,7 +111,7 @@ tasks.processResources {
     dependsOn(copyVersionFile)
 }
 
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xinline-classes",
@@ -121,7 +121,7 @@ tasks.withType<KotlinCompile> {
     )
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
