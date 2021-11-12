@@ -17,3 +17,6 @@ androidx.wear..wear-watchface-editor=version.androidx.wear-watchface-editor
 androidx.wear..wear-watchface-guava=version.androidx.wear-watchface-guava
 androidx.wear..wear-watchface-style=version.androidx.wear-watchface-style
 androidx.wear..wear-watchface=version.androidx.wear-watchface
+androidx.wear.watchface..watchface-complications-data-source-ktx=version.androidx.wear.watchface
+androidx.wear.watchface..watchface-complications-data-source=version.androidx.wear.watchface
+androidx.wear.watchface..watchface-editor=version.androidx.wear.watchface
