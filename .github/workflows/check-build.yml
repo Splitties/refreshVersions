@@ -35,27 +35,27 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-      - uses: gradle/gradle-build-action@v1
+      - uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: plugins/gradlew
           build-root-directory: plugins
           arguments: check publishToMavenLocal --stacktrace
-      - uses: gradle/gradle-build-action@v1
+      - uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-kotlin/gradlew
           build-root-directory: sample-kotlin
           arguments: check --stacktrace
-      - uses: gradle/gradle-build-action@v1
+      - uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-groovy/gradlew
           build-root-directory: sample-groovy
           arguments: check --stacktrace
-      - uses: gradle/gradle-build-action@v1
+      - uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-multi-modules/gradlew
           build-root-directory: sample-multi-modules
           arguments: check --stacktrace
-      - uses: gradle/gradle-build-action@v1
+      - uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-kotlin-js/gradlew
           build-root-directory: sample-kotlin-js

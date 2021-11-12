@@ -17,7 +17,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 11
-      - uses: gradle/gradle-build-action@v1
+      - uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: plugins/gradlew
           build-root-directory: plugins
