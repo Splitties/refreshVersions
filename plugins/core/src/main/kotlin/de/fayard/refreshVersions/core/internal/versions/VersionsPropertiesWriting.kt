@@ -106,7 +106,8 @@ internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)
     appendln(
         VersionsPropertiesModel.versionsPropertiesHeader(
-            version = generatedByVersion
+            version = generatedByVersion,
+            dependencyNotationRemovalsRevision = dependencyNotationRemovalsRevision
         )
     )
     if (RefreshVersionsConfigHolder.isUsingVersionRejection) {

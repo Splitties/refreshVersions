@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core.internal.removals_replacement
 
 import de.fayard.refreshVersions.core.ModuleId
+import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.extensions.text.indexOfFirst
 import de.fayard.refreshVersions.core.extensions.text.indexOfPrevious
 import de.fayard.refreshVersions.core.internal.TaggedRange
@@ -10,9 +11,52 @@ import de.fayard.refreshVersions.core.internal.codeparsing.findFirstImportStatem
 import de.fayard.refreshVersions.core.internal.codeparsing.gradle.extractGradleScriptSections
 import de.fayard.refreshVersions.core.internal.codeparsing.rangeOfCode
 import de.fayard.refreshVersions.core.internal.codeparsing.rangesOfCode
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.writeTo
+import java.io.File
+
+internal fun replaceRemovedDependencyNotationReferencesIfNeeded(
+    projectDir: File,
+    versionsPropertiesFile: File,
+    versionsPropertiesModel: VersionsPropertiesModel,
+    dependencyMapping: Map<ModuleId.Maven, String>,
+    getRemovedDependencyNotationsReplacementInfo: () -> RemovedDependencyNotationsReplacementInfo
+) {
+    val currentVersion = RefreshVersionsCorePlugin.currentVersion
+    val lastVersion = versionsPropertiesModel.generatedByVersion
+    if (currentVersion == lastVersion) return
+
+    val info = getRemovedDependencyNotationsReplacementInfo()
+    val history = info.removalsListingResource.parseRemovedDependencyNotationsHistory(
+        currentRevision = info.readRevisionOfLastRefreshVersionsRun(
+            lastVersion,
+            versionsPropertiesModel.dependencyNotationRemovalsRevision
+        )
+    )
+
+    projectDir.walk().onEnter {
+        it.name != "src" && it.name != "build"
+    }.filter {
+        it.name.endsWith("gradle.kts") || it.extension == "gradle"
+    }.filter {
+        it.name != "settings.gradle" && it.name != "settings.gradle.kts"
+    }.forEach { gradleFile ->
+        history.replaceRemovedDependencyNotationReferencesIfAny(
+            dependencyMapping = dependencyMapping,
+            gradleBuildFileContent = gradleFile.readText(),
+            isKotlinDsl = gradleFile.extension == "kts"
+        )?.let { newContent ->
+            gradleFile.writeText(newContent)
+        }
+    }
+
+    versionsPropertiesModel.copy(
+        dependencyNotationRemovalsRevision = info.currentRevision.takeIf { currentVersion.endsWith("-SNAPSHOT") }
+    ).writeTo(versionsPropertiesFile)
+}
 
 internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationReferencesIfAny(
-    mapping: Map<ModuleId.Maven, String>,
+    dependencyMapping: Map<ModuleId.Maven, String>,
     gradleBuildFileContent: String,
     isKotlinDsl: Boolean
 ): String? {
@@ -71,7 +115,7 @@ internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationRef
                     }
                     append(prefix)
                     val dependencyNotation = moduleId.dependencyNotation(
-                        mapping = mapping,
+                        mapping = dependencyMapping,
                         ensureWrappedInParsedDependencyNotation = hasCallOnTheDependencyNotation
                     )
                     if (dependencyNotation.startsWith(dpdcNotationParse)) {
@@ -84,7 +128,7 @@ internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationRef
             }
             run {
                 val dependencyNotation = removedDependencyNotation.moduleId.dependencyNotation(
-                    mapping = mapping,
+                    mapping = dependencyMapping,
                     ensureWrappedInParsedDependencyNotation = hasCallOnTheDependencyNotation
                 )
                 if (dependencyNotation.startsWith(dpdcNotationParse)) {

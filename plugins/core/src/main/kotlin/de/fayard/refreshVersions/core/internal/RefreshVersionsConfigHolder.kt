@@ -49,8 +49,13 @@ object RefreshVersionsConfigHolder {
         readVersionsMap()
     }
 
+    internal fun readVersionsPropertiesModel() = VersionsPropertiesModel.readFromFile(versionsPropertiesFile)
+
     fun readVersionsMap(): Map<String, String> {
-        val model = VersionsPropertiesModel.readFromFile(versionsPropertiesFile)
+        return readVersionsMap(readVersionsPropertiesModel())
+    }
+
+    internal fun readVersionsMap(model: VersionsPropertiesModel): Map<String, String> {
         return model.sections.filterIsInstance<VersionEntry>().associate { it.key to it.currentVersion }.also {
             lastlyReadVersionsMap = it
         }

@@ -75,7 +75,7 @@ class ReplacementOfRemovedDependencyNotationsTest {
         outputFile: File?
     ) {
         val output = revisionsHistory.replaceRemovedDependencyNotationReferencesIfAny(
-            mapping = mapping,
+            dependencyMapping = mapping,
             gradleBuildFileContent = inputFile.readText(),
             isKotlinDsl = inputFile.extension == "kts"
         )

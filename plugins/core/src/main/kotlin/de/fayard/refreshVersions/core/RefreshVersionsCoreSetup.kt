@@ -4,6 +4,8 @@ package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.internal.*
+import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
+import de.fayard.refreshVersions.core.internal.removals_replacement.replaceRemovedDependencyNotationReferencesIfNeeded
 import de.fayard.refreshVersions.core.internal.resolveVersion
 import de.fayard.refreshVersions.core.internal.setupVersionPlaceholdersResolving
 import org.gradle.api.artifacts.ExternalDependency
@@ -45,7 +47,9 @@ import java.io.File
 fun Settings.bootstrapRefreshVersionsCore(
     artifactVersionKeyRules: List<String> = emptyList(),
     versionsPropertiesFile: File = rootDir.resolve("versions.properties"),
-    getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }
+    getDependenciesMapping: () -> Map<ModuleId.Maven, String> = { emptyMap() },
+    getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() },
+    getRemovedDependencyNotationsReplacementInfo: (() -> RemovedDependencyNotationsReplacementInfo)? = null
 ) {
     checkGradleVersionIsSupported()
     require(settings.isBuildSrc.not()) {
@@ -53,13 +57,26 @@ fun Settings.bootstrapRefreshVersionsCore(
             "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
             "or RefreshVersionsCoreSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
     }
+    val versionsPropertiesModel = RefreshVersionsConfigHolder.readVersionsPropertiesModel()
+    getRemovedDependencyNotationsReplacementInfo?.let {
+        replaceRemovedDependencyNotationReferencesIfNeeded(
+            projectDir = rootDir,
+            versionsPropertiesFile = versionsPropertiesFile,
+            versionsPropertiesModel = versionsPropertiesModel,
+            dependencyMapping = getDependenciesMapping(),
+            getRemovedDependencyNotationsReplacementInfo = it
+        )
+    }
     RefreshVersionsConfigHolder.initialize(
         settings = settings,
         artifactVersionKeyRules = artifactVersionKeyRules,
         getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys,
         versionsPropertiesFile = versionsPropertiesFile
     )
-    setupRefreshVersions(settings = settings)
+    setupRefreshVersions(
+        settings = settings,
+        versionsMap = RefreshVersionsConfigHolder.readVersionsMap(versionsPropertiesModel),
+    )
 }
 
 /**
@@ -125,9 +142,10 @@ private fun checkGradleVersionIsSupported() {
  * This function also sets up the module for the Android and Fabric (Crashlytics) Gradle plugins, so you can avoid the
  * buildscript classpath configuration boilerplate.
  */
-private fun setupRefreshVersions(settings: Settings) {
-
-    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
+private fun setupRefreshVersions(
+    settings: Settings,
+    versionsMap: Map<String, String> = RefreshVersionsConfigHolder.readVersionsMap()
+) {
     @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(
         settings = settings,

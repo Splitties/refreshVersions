@@ -6,6 +6,8 @@ import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCore
 import de.fayard.refreshVersions.core.bootstrapRefreshVersionsCoreForBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
+import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
@@ -37,8 +39,26 @@ open class RefreshVersionsPlugin : Plugin<Any> {
         @JvmStatic
         val artifactVersionKeyRules: List<String> = artifactVersionKeyRulesFileNames.map {
             getBundledResourceAsStream("refreshVersions-rules/$it")!!
-                .bufferedReader()
-                .readText()
+                .bufferedReader().use { reader -> reader.readText() }
+        }
+
+        private fun removalsRevision(): Int {
+            val currentVersion = RefreshVersionsCorePlugin.currentVersion
+            return if (currentVersion.endsWith("-SNAPSHOT")) {
+                getBundledResourceAsStream("snapshot-dpdc-rm-rev.txt")!!.bufferedReader().useLines {
+                    it.first()
+                }.toInt()
+            } else {
+                removalsRevision(refreshVersionsRelease = currentVersion)
+            }
+        }
+
+        private fun removalsRevision(refreshVersionsRelease: String): Int {
+            require(refreshVersionsRelease.endsWith("-SNAPSHOT").not())
+            return getBundledResourceAsStream("version-to-removals-revision-mapping.txt")!!.bufferedReader().useLines {
+                val prefix = "$refreshVersionsRelease->"
+                it.firstOrNull { line -> line.startsWith(prefix) }?.substringAfter(prefix)?.toInt()
+            } ?: 0
         }
     }
 
@@ -76,6 +96,16 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             } ?: emptyMap()
     }
 
+    private fun getRemovedDependencyNotationsReplacementInfo(): RemovedDependencyNotationsReplacementInfo {
+        return RemovedDependencyNotationsReplacementInfo(
+            readRevisionOfLastRefreshVersionsRun = { lastVersion, snapshotRevision ->
+                snapshotRevision ?: removalsRevision(lastVersion)
+            },
+            currentRevision = removalsRevision(),
+            removalsListingResource = getBundledResourceAsStream("removals-revisions-history.md")!!
+        )
+    }
+
     private fun bootstrap(settings: Settings) {
         RefreshVersionsConfigHolder.markSetupViaSettingsPlugin()
         if (settings.extensions.findByName("refreshVersions") == null) {
@@ -102,7 +132,11 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 },
                 versionsPropertiesFile = extension.versionsPropertiesFile
                     ?: settings.rootDir.resolve("versions.properties"),
-                getRemovedDependenciesVersionsKeys = ::getRemovedDependenciesVersionsKeys
+                getDependenciesMapping = {
+                    getArtifactNameToConstantMapping().associateShortestByMavenCoordinate()
+                },
+                getRemovedDependenciesVersionsKeys = ::getRemovedDependenciesVersionsKeys,
+                getRemovedDependencyNotationsReplacementInfo = ::getRemovedDependencyNotationsReplacementInfo
             )
             if (extension.isBuildSrcLibsEnabled) gradle.beforeProject {
                 if (project != project.rootProject) return@beforeProject
@@ -171,4 +205,3 @@ open class RefreshVersionsPlugin : Plugin<Any> {
         }
     }
 }
-
