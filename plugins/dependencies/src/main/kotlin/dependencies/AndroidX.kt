@@ -620,20 +620,15 @@ object AndroidX : IsNotADependency {
 
         val watchFace = WatchFace
 
-        object WatchFace : DependencyNotationAndGroup(group = "androidx.wear", name = "wear-watchface") {
-            val client = module("wear-watchface-client")
-            val clientGuava = module("wear-watchface-client-guava")
+        object WatchFace : DependencyNotationAndGroup(group = "androidx.wear.watchface", name = "watchface") {
 
-            val complicationsRendering = module("wear-watchface-complications-rendering")
+            val complications = Complications
+            object Complications : DependencyGroup(group = group) {
+                val dataSource = module("watchface-complications-data-source")
+                val dataSourceKtx = module("watchface-complications-data-source-ktx")
+            }
 
-            val data = module("wear-watchface-data")
-
-            val editor = module("wear-watchface-editor")
-            val editorGuava = module("wear-watchface-editor-guava")
-
-            val guava = module("wear-watchface-guava")
-
-            val style = module("wear-watchface-style")
+            val editor = module("watchface-editor")
         }
     }
 

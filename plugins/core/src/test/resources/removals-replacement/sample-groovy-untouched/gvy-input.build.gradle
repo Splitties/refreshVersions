@@ -1,0 +1,27 @@
+import static de.fayard.refreshVersions.core.Versions.versionFor
+
+plugins {
+    id 'application'
+    id 'idea'
+    id 'java'
+}
+
+group = "de.fayard"
+
+repositories {
+    maven {
+        setUrl("../plugin/src/test/resources/maven")
+    }
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation("com.google.guava:guava:_")
+    implementation("com.google.inject:guice:_")
+    implementation(AndroidX.annotation)
+    implementation("org.jetbrains:annotations:_")
+}
+
+println("The version for artifact org.jetbrains:annotations:_ is " + versionFor("org.jetbrains:annotations:_"))
+println("The version for version key version.com.google.guava..guava is " + versionFor("version.com.google.guava..guava"))

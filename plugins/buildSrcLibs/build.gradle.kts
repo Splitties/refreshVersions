@@ -60,7 +60,7 @@ dependencies {
 }
 
 
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xopt-in=kotlin.RequiresOptIn",
@@ -68,7 +68,7 @@ tasks.withType<KotlinCompile> {
     )
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
@@ -76,8 +76,4 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
     withSourcesJar()
-}
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
 }

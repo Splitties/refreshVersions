@@ -164,7 +164,7 @@ internal object SettingsPluginsUpdater {
             if (indexOfComment == -1) return
             startIndex = indexOfComment
             val indexOfEndOfLine = indexOf(
-                "\n",
+                '\n',
                 startIndex = indexOfComment + startOfRefreshVersionsCommentLines.length
             ).takeIf { it >= 0 }
             val endIndex = indexOfEndOfLine ?: length

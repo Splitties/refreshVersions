@@ -43,9 +43,9 @@ publishing {
 dependencies {
     implementation(gradleKotlinDsl())
     implementation(KotlinX.coroutines.core)
-    implementation(Square.okHttp3.okHttp)
+    implementation(Square.okHttp3)
     implementation(Square.okHttp3.loggingInterceptor)
-    implementation(Square.retrofit2.retrofit) {
+    implementation(Square.retrofit2)!!.apply {
         because("It has ready to use HttpException class")
     }
     implementation(Square.moshi.kotlinReflect)
@@ -107,10 +107,13 @@ val copyVersionFile by tasks.registering {
     outputs.file(versionFileCopy)
     doFirst { versionFile.copyTo(versionFileCopy, overwrite = true) }
 }
-
-tasks.withType<KotlinCompile> {
+tasks.processResources {
     dependsOn(copyVersionFile)
+}
+
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.apiVersion = "1.4"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xinline-classes",
         "-Xmulti-platform", // Allow using expect and actual keywords.
@@ -119,7 +122,7 @@ tasks.withType<KotlinCompile> {
     )
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
@@ -127,8 +130,4 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
     withSourcesJar()
-}
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
 }
