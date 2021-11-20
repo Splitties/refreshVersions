@@ -90,7 +90,7 @@ internal fun withRemovedMigrationCall(
         append(postImportText)
         val postCallText = initialContent.substring(startIndex = migrationCallIndex + 2)
             .substringAfter('\n').removePrefix("\n")
-        appendln()
+        appendLine()
         append(postCallText)
     }
 }

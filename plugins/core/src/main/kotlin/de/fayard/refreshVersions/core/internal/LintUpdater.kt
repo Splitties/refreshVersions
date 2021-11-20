@@ -131,13 +131,13 @@ internal fun attemptGettingLintXmlWithMissingRules(
         val firstPart = lintXmlContent.substringUpTo("<lint>")
         val secondPart = lintXmlContent.substringAfter("<lint>")
         append(firstPart)
-        appendln()
-        appendln("    <!-- $commentText -->")
+        appendLine()
+        appendLine("    <!-- $commentText -->")
         if (agpErrorSuppressNodeOrNull == null) {
             append("""    <issue id="GradlePluginVersion" severity="ignore" />""")
         }
         if (libsVersionsWarningSuppressNode == null) {
-            if (agpErrorSuppressNodeOrNull == null) appendln()
+            if (agpErrorSuppressNodeOrNull == null) appendLine()
             append("""    <issue id="GradleDependency" severity="ignore" />""")
         }
 

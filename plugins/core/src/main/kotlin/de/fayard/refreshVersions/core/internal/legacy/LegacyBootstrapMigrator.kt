@@ -80,7 +80,7 @@ class LegacyBootstrapMigrator(
             return buildString {
                 append(this@withPluginDeclaration)
                 insert(pluginsBlockRange.endIndex, buildString {
-                    appendln("""    id("de.fayard.refreshVersions")$versionSuffix""")
+                    appendLine("""    id("de.fayard.refreshVersions")$versionSuffix""")
                 })
             }
         }
@@ -88,7 +88,7 @@ class LegacyBootstrapMigrator(
         return buildString {
             append(this@withPluginDeclaration)
             insert(bootstrapFunctionCallRange.startIndex, buildString {
-                appendln(
+                appendLine(
                     """
                     plugins {
                         id("de.fayard.refreshVersions")$versionSuffix
@@ -115,7 +115,7 @@ class LegacyBootstrapMigrator(
             return buildString {
                 append(text)
                 insert(targetBlockRange.endIndex, buildString {
-                    appendln("""    id("de.fayard.refreshVersions") version "$currentVersion"""")
+                    appendLine("""    id("de.fayard.refreshVersions") version "$currentVersion"""")
                     append("    ")
                 })
             }
@@ -183,21 +183,21 @@ class LegacyBootstrapMigrator(
         return buildString {
             append(this@withBoostrapParametersMovedToExtension)
             insert(pluginsBlockContentRange.endIndex + 1, buildString {
-                appendln()
-                appendln()
-                appendln("refreshVersions {")
+                appendLine()
+                appendLine()
+                appendLine("refreshVersions {")
                 extraArtifactVersionKeyRulesArg?.let {
                     append("    ")
                     append("extraArtifactVersionKeyRules = ")
                     append(it.expressionWithCommentsIfAny)
-                    if (versionsPropertiesFileArg != null) appendln()
+                    if (versionsPropertiesFileArg != null) appendLine()
                 }
                 versionsPropertiesFileArg?.let {
                     append("    ")
                     append("versionsPropertiesFile = ")
                     append(it.expressionWithCommentsIfAny)
                 }
-                appendln()
+                appendLine()
                 append('}')
             })
         }

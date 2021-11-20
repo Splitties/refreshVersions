@@ -148,7 +148,7 @@ internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationRef
                 val text = buildString {
                     commentLines.forEach { line ->
                         append(indent)
-                        appendln(line)
+                        appendLine(line)
                     }
                 }
                 insert(lineStartIndex, text)

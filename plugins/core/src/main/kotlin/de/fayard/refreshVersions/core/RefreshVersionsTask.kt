@@ -101,19 +101,19 @@ open class RefreshVersionsTask : DefaultTask() {
         if (gradleUpdates.isEmpty()) return
         val currentGradleVersion = GradleVersion.current()
         val message = buildString {
-            appendln("The Gradle version used in this project is not up to date.")
+            appendLine("The Gradle version used in this project is not up to date.")
             append("To update from version ${currentGradleVersion.version}, run ")
             if (gradleUpdates.size == 1) {
-                appendln("this command:")
+                appendLine("this command:")
             } else {
-                appendln("one of these commands:")
+                appendLine("one of these commands:")
             }
             gradleUpdates.forEach { version ->
-                appendln("./gradlew wrapper --gradle-version ${version.value}")
+                appendLine("./gradlew wrapper --gradle-version ${version.value}")
             }
-            appendln()
-            appendln("Be sure to read the migration guides to have a smooth upgrade process.")
-            appendln("Note that you can replace with a specific intermediate version if needed.")
+            appendLine()
+            appendLine("Be sure to read the migration guides to have a smooth upgrade process.")
+            appendLine("Note that you can replace with a specific intermediate version if needed.")
         }
         logger.warn(message)
     }

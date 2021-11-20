@@ -133,7 +133,7 @@ internal object SettingsPluginsUpdater {
             val availableVersionsComments = buildString {
                 val padding = offsetOfCurrentVersionFromLineStart - 8
                 pluginWithVersionCandidates.versionsCandidates.forEach { versionCandidate ->
-                    appendln()
+                    appendLine()
                     append("//// ")
                     append(availableComment.padStart((padding).coerceAtLeast(0)))
                     append(':')

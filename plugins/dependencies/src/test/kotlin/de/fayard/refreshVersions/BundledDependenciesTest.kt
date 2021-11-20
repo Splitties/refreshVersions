@@ -72,8 +72,8 @@ class BundledDependenciesTest {
                     append(lineBreaks)
                 }
                 if (hasWipHeading.not()) {
-                    appendln("## [WIP]")
-                    appendln()
+                    appendLine("## [WIP]")
+                    appendLine()
                 }
                 val removedEntriesText = removals.joinToString(
                     separator = "\n\n",

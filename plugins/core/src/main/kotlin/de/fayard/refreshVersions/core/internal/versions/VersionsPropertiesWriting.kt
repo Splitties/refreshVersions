@@ -104,17 +104,17 @@ internal val versionsPropertiesFileLock = Any()
 
 internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)
-    appendln(
+    appendLine(
         VersionsPropertiesModel.versionsPropertiesHeader(
             version = generatedByVersion,
             dependencyNotationRemovalsRevision = dependencyNotationRemovalsRevision
         )
     )
     if (RefreshVersionsConfigHolder.isUsingVersionRejection) {
-        appendln(isUsingVersionRejectionHeader)
+        appendLine(isUsingVersionRejectionHeader)
     }
     if (sections.isEmpty()) return@buildString
-    appendln()
+    appendLine()
     val sb = StringBuilder()
     sections.joinTo(buffer = this, separator = "\n") { it.toText(sb) }
 
@@ -125,19 +125,19 @@ internal fun VersionsPropertiesModel.toText(): String = buildString {
 private fun VersionsPropertiesModel.Section.toText(
     builder: StringBuilder
 ): CharSequence = when (this) {
-    is Comment -> builder.apply { clear(); appendln(lines) }
+    is Comment -> builder.apply { clear(); appendLine(lines) }
     is VersionEntry -> builder.apply {
         clear()
-        leadingCommentLines.forEach { appendln(it) }
+        leadingCommentLines.forEach { appendLine(it) }
 
         val paddedKey = key.padStart(availableComment.length + 2)
         val currentVersionLine = "$paddedKey=$currentVersion"
-        appendln(currentVersionLine)
+        appendLine(currentVersionLine)
         availableUpdates.forEach { versionCandidate ->
             append("##"); append(availableComment.padStart(key.length - 2))
-            append('='); appendln(versionCandidate)
+            append('='); appendLine(versionCandidate)
         }
 
-        trailingCommentLines.forEach { appendln(it) }
+        trailingCommentLines.forEach { appendLine(it) }
     }
 }
