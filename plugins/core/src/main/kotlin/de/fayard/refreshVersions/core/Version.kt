@@ -147,7 +147,7 @@ data class Version(val value: String) : Comparable<Version> {
 
         private fun Version.toComparableList(): List<Comparable<*>> {
             if (this.isRange) {
-                val lowerBound: Version = value.rangeComponents().min()
+                val lowerBound: Version = value.rangeComponents().minOrNull()
                     ?: error("no lower version bound found in range: '$value'")
                 return lowerBound.toComparableList()
             }
