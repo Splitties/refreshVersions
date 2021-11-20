@@ -8,6 +8,14 @@ We raised the minimum supported Gradle version to 6.8, because we started to use
 
 ### New features
 
+#### Repositories declared in `dependencyResolutionManagement` are now supported (Gradle 7+)
+
+Since Gradle 7, you can declare repositories of the entire Gradle project (including all subprojects and their buildscript)
+in the `dependencyResolutionManagement` block in the `settings.gradle[.kts]` file.
+Unfortunately, refreshVersions didn't support it, so, unless you also kept repositories declared with `allprojects`, or per project, you would end up with all version entries in the `versions.properties` file marked as unused after running the `refreshVersions` task, and you'd not see the newer updates.
+
+This release resolves this issue, and we are eager to use it in our projects ourselves.
+
 #### Update on built-in dependency notations
 
 Sometimes, libraries get deprecated, or the maintainers change the maven coordinates.
@@ -30,6 +38,7 @@ This change will enable us to keep the built-in dependency notations updated wit
 - The kotest extensions dependencies were previously wrongly sharing their version as per refreshVersions rules. Now, they each have their independent, own version key.
 - The `refreshVersionsMigrate` task wasn't inserting new entries in alphabetical order. Now it is.
 - The `refreshVersionsMigrate` task wasn't migrating buildscript dependencies. Now it is.
+- Repositories in declared in the `dependencyResolutionManagement` block were ignored. Now, they are taken into account.
 
 ### New dependency notations:
 
