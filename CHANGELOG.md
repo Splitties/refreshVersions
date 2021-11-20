@@ -2,9 +2,55 @@
 
 ## [Unreleased]
 
-## Bug fix
+### Potentially breaking change
 
-The kotest extensions dependencies were previously wrongly sharing their version as per refreshVersions rules. Now, they each have their independent, own version key.
+We raised the minimum supported Gradle version to 6.8, because we started to use Kotlin 1.4 features,
+and Gradle pins the stdlib version. Since at the time of writing, the latest Gradle version is 7.3,
+we believe it won't actually block any of our users. We have [a short section about updating Gradle
+on our website here](https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed),
+feel free to check it out if it can help you.
+
+### New features
+
+#### Update on built-in dependency notations
+
+Sometimes, libraries get deprecated, or the maintainers change the maven coordinates.
+When it happens, this fact is unfortunately not included in the `maven-metadata.xml` files,
+or any other standard metadata. That means tools like refreshVersions will believe you're on
+the latest versions, when you're not, because it lacks the necessary information.
+
+One example is Google that changed the maven coordinates of all their AndroidX Wear Watchface
+artifacts several weeks ago.
+
+It took us time to catch-up with this change because we wanted to
+design a generic mechanism for this recurrent problem, and provide the best experience for you,
+and ourselves.
+
+For now on, we have the ability to remove old or deprecated built-in dependency notations in refreshVersions,
+and doing so will not break your builds, nor will it change the dependencies of your project.
+However, it'll help you notice the deprecation, and it'll help you switch to the replacement
+dependencies, if any.
+
+The way it works is that we keep a versioned list of all the removals, and on refreshVersions upgrade,
+an automatic replacement will put back the hardcoded maven coordinates, using the version placeholder,
+and it will add our hand-written TODO/FIXME comments, along with a perfectly aligned replacement
+suggestion if there is any, so that moving to the newer artifact is as easy as upgrading to a
+newer version in the `versions.properties` file. We designed the system so that it cannot break
+your build, even if you were using `withVersion(…)` or other `DependencyNotation` extensions,
+even if you have code comments or special string literals.
+
+Because of this change, it's important that you check the git diff after upgrading refreshVersions
+and running the first Gradle reload/sync/build, so you can see if there's been any changes, and
+if you might want to switch to any replacement dependencies.
+
+This change will enable us to keep the built-in dependency notations updated with less effort,
+so we're very happy to have it ready, and fully tested.
+
+### Bug fixes
+
+- The kotest extensions dependencies were previously wrongly sharing their version as per refreshVersions rules. Now, they each have their independent, own version key.
+- The `refreshVersionsMigrate` task wasn't inserting new entries in alphabetical order. Now it is.
+- The `refreshVersionsMigrate` task wasn't migrating buildscript dependencies. Now it is.
 
 ### New dependency notations:
 
