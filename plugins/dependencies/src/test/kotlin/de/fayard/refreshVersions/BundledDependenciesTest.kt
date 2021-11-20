@@ -48,8 +48,8 @@ class BundledDependenciesTest {
     fun `Removed dependency notations should be tracked`() {
         val validatedMappingFile = testResources.resolve("dependencies-mapping-validated.txt")
 
-        val existingMapping = validatedMappingFile.readLines().mapNotNull { DependencyMapping.fromLine(it) }
-        val receivedMapping = getArtifactNameToConstantMapping()
+        val existingMapping = validatedMappingFile.readLines().mapNotNull { DependencyMapping.fromLine(it) }.toSet()
+        val receivedMapping = getArtifactNameToConstantMapping().toSet()
 
         if (receivedMapping == existingMapping) return
         if (isInCi()) withClue("Run the tests locally and commit the changes to fix this") {
@@ -113,11 +113,11 @@ class BundledDependenciesTest {
         val receivedKeys = testResources.resolve("dependencies-versions-key-received.txt")
         val removedKeys = mainResources.resolve("removed-dependencies-versions-keys.txt")
 
-        val existingMapping = existingKeys.readLines().mapNotNull { DependencyMapping.fromLine(it) }
+        val existingMapping = existingKeys.readLines().mapNotNull { DependencyMapping.fromLine(it) }.toSet()
         val receivedMapping = getArtifactNameToConstantMapping().map {
             val key = versionKeyReader.readVersionKey(it.group, it.artifact) ?: "NO-RULE"
             it.copy(constantName = "version.$key")
-        }.distinct()
+        }.toSet()
         receivedKeys.writeText(receivedMapping.joinToString(separator = "\n", postfix = "\n"))
 
         val breakingChanges = existingMapping - receivedMapping
