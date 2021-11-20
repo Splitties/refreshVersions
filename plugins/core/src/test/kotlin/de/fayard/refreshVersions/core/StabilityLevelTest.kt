@@ -9,7 +9,7 @@ class StabilityLevelTest {
 
     @Test
     fun `Test stability level comparisons`() {
-        assertTrue(StabilityLevel.values().minBy { it } == Stable)
+        assertTrue(StabilityLevel.values().minByOrNull { it } == Stable)
 
         testStabilityLevels(lessStable = Unknown, mostStable = Snapshot)
         testStabilityLevels(lessStable = Snapshot, mostStable = Preview)

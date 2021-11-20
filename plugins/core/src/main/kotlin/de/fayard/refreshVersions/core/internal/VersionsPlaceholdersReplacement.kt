@@ -304,7 +304,7 @@ internal fun `Write versions candidates using latest most stable version and get
         currentVersion = Version(""),
         resultMode = RefreshVersionsConfigHolder.resultMode
     ).let { versionCandidates ->
-        val bestStability = versionCandidates.minBy { it.stabilityLevel }!!.stabilityLevel
+        val bestStability = versionCandidates.minByOrNull { it.stabilityLevel }!!.stabilityLevel
         val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
         VersionsPropertiesModel.writeWithNewEntry(
             propertyName = propertyName,
