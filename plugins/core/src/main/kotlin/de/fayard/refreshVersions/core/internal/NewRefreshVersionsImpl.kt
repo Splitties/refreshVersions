@@ -167,7 +167,7 @@ private fun getUsedPluginsDependencyVersionFetchers(
     httpClient: OkHttpClient
 ): Sequence<DependencyVersionsFetcher> {
     return UsedPluginsHolder.read().flatMap { (dependency, repositories) ->
-        repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
+        repositories.withGlobalRepos().filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
             DependencyVersionsFetcher.forMaven(
                 httpClient = httpClient,
                 dependency = dependency,
@@ -182,19 +182,33 @@ private fun getDependencyVersionFetchers(
     configurations: ConfigurationContainer,
     repositories: RepositoryHandler,
     dependencyFilter: (Dependency) -> Boolean
+): Sequence<DependencyVersionsFetcher> = getDependencyVersionFetchers(
+    httpClient = httpClient,
+    configurations = configurations,
+    mavenRepositories = repositories.withGlobalRepos().filterIsInstance<MavenArtifactRepository>(),
+    npmRegistries = run { null /*Workaround useless warning*/ }, //TODO: Support custom npm registries.
+    dependencyFilter = dependencyFilter
+)
+
+private fun getDependencyVersionFetchers(
+    httpClient: OkHttpClient,
+    configurations: ConfigurationContainer,
+    mavenRepositories: List<MavenArtifactRepository>,
+    npmRegistries: List<String>?,
+    dependencyFilter: (Dependency) -> Boolean
 ): Sequence<DependencyVersionsFetcher> = configurations.asSequence().flatMap {
     it.dependencies.asSequence().filter(dependencyFilter)
 }.flatMap { dependency ->
     if (dependency::class.simpleName == "NpmDependency") {
-        sequenceOf(
+        (npmRegistries ?: listOf("https://registry.npmjs.org/")).map { registryUrl ->
             DependencyVersionsFetcher.forNpm(
                 httpClient = RefreshVersionsConfigHolder.httpClient,
                 npmDependency = dependency,
-                npmRegistry = "https://registry.npmjs.org/"
+                npmRegistry = registryUrl
             )
-        )
+        }.asSequence()
     } else {
-        repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
+        mavenRepositories.mapNotNull { repo ->
             DependencyVersionsFetcher.forMaven(
                 httpClient = httpClient,
                 dependency = dependency,

@@ -17,6 +17,13 @@ plugins {
     id 'de.fayard.refreshVersions'
 }
 
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
 gradleEnterprise {
     buildScan {
         termsOfServiceUrl = "https://gradle.com/terms-of-service"
