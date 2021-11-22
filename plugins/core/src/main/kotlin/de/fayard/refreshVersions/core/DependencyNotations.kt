@@ -4,23 +4,49 @@ import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyRule
 import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import org.gradle.kotlin.dsl.IsNotADependency
 
-abstract class DependencyGroup(
+abstract class DependencyGroup private constructor(
+    platformConstrainsDelegateGroup: AbstractDependencyGroup?,
     group: String,
     rawRule: String? = null,
-    usePlatformConstraints: Boolean = false
+    usePlatformConstraints: Boolean?
 ) : IsNotADependency, AbstractDependencyGroup(
+    platformConstrainsDelegateGroup = platformConstrainsDelegateGroup,
     group = group,
     rawRule = rawRule,
     usePlatformConstraints = usePlatformConstraints
-)
+) {
+    constructor(
+        group: String,
+        rawRule: String? = null,
+        usePlatformConstraints: Boolean = false
+    ) : this(
+        platformConstrainsDelegateGroup = null,
+        group = group,
+        rawRule = rawRule,
+        usePlatformConstraints = usePlatformConstraints
+    )
+
+    constructor(
+        platformConstrainsDelegateGroup: AbstractDependencyGroup,
+        group: String = platformConstrainsDelegateGroup.group,
+        rawRule: String? = null
+    ) : this(
+        platformConstrainsDelegateGroup = platformConstrainsDelegateGroup,
+        group = group,
+        rawRule = rawRule,
+        usePlatformConstraints = null
+    )
+}
 
 @OptIn(PrivateForImplementation::class)
-abstract class DependencyNotationAndGroup(
+abstract class DependencyNotationAndGroup private constructor(
+    platformConstrainsDelegateGroup: AbstractDependencyGroup?,
     group: String,
     name: String,
     rawRule: String? = null,
-    usePlatformConstraints: Boolean = false
+    usePlatformConstraints: Boolean?
 ) : AbstractDependencyGroup(
+    platformConstrainsDelegateGroup = platformConstrainsDelegateGroup,
     group = group,
     rawRule = rawRule,
     usePlatformConstraints = usePlatformConstraints
@@ -30,6 +56,33 @@ abstract class DependencyNotationAndGroup(
     isBom = false,
     usePlatformConstraints = null
 ) {
+
+    constructor(
+        group: String,
+        name: String,
+        rawRule: String? = null,
+        usePlatformConstraints: Boolean = false
+    ) : this(
+        platformConstrainsDelegateGroup = null,
+        group = group,
+        name = name,
+        rawRule = rawRule,
+        usePlatformConstraints = usePlatformConstraints
+    )
+
+    constructor(
+        platformConstrainsDelegateGroup: AbstractDependencyGroup,
+        group: String = platformConstrainsDelegateGroup.group,
+        name: String,
+        rawRule: String? = null
+    ) : this(
+        platformConstrainsDelegateGroup = platformConstrainsDelegateGroup,
+        group = group,
+        name = name,
+        rawRule = rawRule,
+        usePlatformConstraints = null
+    )
+
     val artifactPrefix: String get() = withoutVersion()
 
     init {
@@ -107,14 +160,14 @@ private class DependencyNotationImpl(
                 dependencyGroup.usePlatformConstraints = true
             } else when (usePlatformConstraints) {
                 null -> {
-                    if (dependencyGroup.usePlatformConstraints.not()) {
+                    if (dependencyGroup.shouldUsePlatformConstraints().not()) {
                         dependencyGroup.usedDependencyNotationsWithNoPlatformConstraints = true
                     }
                 }
             }
         }
 
-        return usePlatformConstraints ?: dependencyGroup.usePlatformConstraints
+        return usePlatformConstraints ?: dependencyGroup.shouldUsePlatformConstraints()
     }
 
     @PrivateForImplementation
@@ -144,11 +197,16 @@ private class DependencyNotationImpl(
 
 @OptIn(PrivateForImplementation::class)
 sealed class AbstractDependencyGroup(
+    private val platformConstrainsDelegateGroup: AbstractDependencyGroup?,
     val group: String,
-    rawRule: String? = null,
+    rawRule: String?,
     @property:InternalRefreshVersionsApi
-    var usePlatformConstraints: Boolean = false
+    var usePlatformConstraints: Boolean?
 ) {
+
+    internal fun shouldUsePlatformConstraints(): Boolean {
+        return usePlatformConstraints ?: platformConstrainsDelegateGroup?.shouldUsePlatformConstraints() ?: false
+    }
 
     private val usePlatformConstraintsInitialValue = usePlatformConstraints
 
@@ -206,4 +264,8 @@ sealed class AbstractDependencyGroup(
 
     @PrivateForImplementation
     internal var usedDependencyNotationsWithNoPlatformConstraints = false
+        get() {
+            if (field) return true
+            return platformConstrainsDelegateGroup?.usedDependencyNotationsWithNoPlatformConstraints ?: false
+        }
 }

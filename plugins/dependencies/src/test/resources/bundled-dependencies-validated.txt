@@ -796,6 +796,7 @@ org.junit.jupiter:junit-jupiter-api
 org.junit.jupiter:junit-jupiter-engine
 org.junit.jupiter:junit-jupiter-migrationsupport
 org.junit.jupiter:junit-jupiter-params
+org.junit:junit-bom
 org.kodein.di:kodein-di-conf-js
 org.kodein.di:kodein-di-conf-jvm
 org.kodein.di:kodein-di-framework-android-core

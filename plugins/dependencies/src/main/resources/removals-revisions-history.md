@@ -62,3 +62,20 @@ id:[androidx.wear:wear-watchface-style]
 //FIXME: Replace it with the new dependency notation below.
 moved:[androidx.wear.watchface:watchface]
 id:[androidx.wear:wear-watchface]
+
+## Revision 2
+
+~~Testing.junit.api~~
+id:[org.junit.jupiter:junit-jupiter-api]
+
+~~Testing.junit.engine~~
+id:[org.junit.jupiter:junit-jupiter-engine]
+
+~~Testing.junit.migrationSupport~~
+id:[org.junit.jupiter:junit-jupiter-migrationsupport]
+
+~~Testing.junit.params~~
+id:[org.junit.jupiter:junit-jupiter-params]
+
+~~Testing.junit~~
+id:[org.junit.jupiter:junit-jupiter]
