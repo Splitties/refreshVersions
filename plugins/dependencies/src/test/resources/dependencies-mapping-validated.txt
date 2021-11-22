@@ -818,6 +818,7 @@ org.jetbrains.kotlinx..kotlinx-cli=KotlinX.cli
 org.jetbrains.kotlinx..kotlinx-collections-immutable-jvm=KotlinX.collections.immutableJvmOnly
 org.jetbrains.kotlinx..kotlinx-collections-immutable=KotlinX.collections.immutable
 org.jetbrains.kotlinx..kotlinx-coroutines-android=KotlinX.coroutines.android
+org.jetbrains.kotlinx..kotlinx-coroutines-bom=KotlinX.coroutines.bom
 org.jetbrains.kotlinx..kotlinx-coroutines-core-common=KotlinX.coroutines.coreCommon
 org.jetbrains.kotlinx..kotlinx-coroutines-core-js=KotlinX.coroutines.coreJs
 org.jetbrains.kotlinx..kotlinx-coroutines-core-native=KotlinX.coroutines.coreNative

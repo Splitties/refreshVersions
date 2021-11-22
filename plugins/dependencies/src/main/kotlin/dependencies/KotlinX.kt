@@ -38,7 +38,9 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
      */
     val coroutines = Coroutines
 
-    object Coroutines : IsNotADependency {
+    object Coroutines : DependencyGroup(group = group), IsNotADependency {
+
+        val bom = module("kotlinx-coroutines-bom", isBom = true)
 
         val core = module("kotlinx-coroutines-core")
         val coreJs = module("kotlinx-coroutines-core-js")
