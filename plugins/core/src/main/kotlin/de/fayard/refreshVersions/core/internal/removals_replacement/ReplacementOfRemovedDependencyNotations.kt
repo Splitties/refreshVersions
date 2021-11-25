@@ -6,7 +6,10 @@ import de.fayard.refreshVersions.core.extensions.collections.forEachReversedWith
 import de.fayard.refreshVersions.core.extensions.ranges.contains
 import de.fayard.refreshVersions.core.extensions.text.indexOfFirst
 import de.fayard.refreshVersions.core.extensions.text.indexOfPrevious
+import de.fayard.refreshVersions.core.extensions.text.substringUntilEndOfLine
+import de.fayard.refreshVersions.core.internal.DependencyMapping
 import de.fayard.refreshVersions.core.internal.TaggedRange
+import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.core.internal.codeparsing.*
 import de.fayard.refreshVersions.core.internal.codeparsing.SourceCodeSection
 import de.fayard.refreshVersions.core.internal.codeparsing.findFirstImportStatement
@@ -21,7 +24,7 @@ internal fun replaceRemovedDependencyNotationReferencesIfNeeded(
     projectDir: File,
     versionsPropertiesFile: File,
     versionsPropertiesModel: VersionsPropertiesModel,
-    dependencyMapping: Map<ModuleId.Maven, String>,
+    dependencyMapping: List<DependencyMapping>,
     getRemovedDependencyNotationsReplacementInfo: () -> RemovedDependencyNotationsReplacementInfo
 ) {
     val currentVersion = RefreshVersionsCorePlugin.currentVersion
@@ -47,6 +50,13 @@ internal fun replaceRemovedDependencyNotationReferencesIfNeeded(
         )
     )
 
+    val shortestDependencyMapping: Map<ModuleId.Maven, String> by lazy {
+        dependencyMapping.associateShortestByMavenCoordinate()
+    }
+    val remainingDependencyNotations: Set<String> by lazy {
+        dependencyMapping.mapTo(mutableSetOf()) { it.constantName }
+    }
+
     projectDir.walk().onEnter {
         it.name != "src" && it.name != "build"
     }.filter {
@@ -57,7 +67,8 @@ internal fun replaceRemovedDependencyNotationReferencesIfNeeded(
         it.name != "settings.gradle" && it.name != "settings.gradle.kts"
     }.forEach { gradleFile ->
         history.replaceRemovedDependencyNotationReferencesIfAny(
-            dependencyMapping = dependencyMapping,
+            remainingDependencyNotations = { remainingDependencyNotations },
+            shortestDependencyMapping = { shortestDependencyMapping },
             gradleBuildFileContent = gradleFile.readText(),
             isKotlinDsl = gradleFile.extension == "kts"
         )?.let { newContent ->
@@ -71,7 +82,8 @@ internal fun replaceRemovedDependencyNotationReferencesIfNeeded(
 }
 
 internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationReferencesIfAny(
-    dependencyMapping: Map<ModuleId.Maven, String>,
+    remainingDependencyNotations: () -> Set<String>,
+    shortestDependencyMapping: () -> Map<ModuleId.Maven, String>,
     gradleBuildFileContent: String,
     isKotlinDsl: Boolean
 ): String? {
@@ -96,10 +108,33 @@ internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationRef
         }
 
         sortWith(comparator)
-        forEachReversedWithIndex { i, (_, range) ->
+        forEachReversedWithIndex { i, (removedDependencyNotation, range) ->
             getOrNull(i + 1)?.let { (_, previousRange) ->
                 // Removes overlapped ranges that need to be replaced.
-                if (range in previousRange) removeAt(i)
+                if (range in previousRange) {
+                    removeAt(i)
+                    return@forEachReversedWithIndex
+                }
+            }
+            val previousChar = gradleBuildFileContent.getOrElse(range.first - 1) { ' ' }
+            val subsequentChar = gradleBuildFileContent.getOrElse(range.last + 1) { ' ' }
+            // Ensure there's "padding" around the match to avoid contains-like behavior.
+            if (previousChar == '.' || previousChar.isLetterOrDigit() || subsequentChar.isLetterOrDigit()) {
+                removeAt(i)
+                return@forEachReversedWithIndex
+            }
+            if (subsequentChar == '.') {
+                // Ensure we are not replacing a still existing dependency notation.
+                // Handles the case where a removed one is contained in a remaining one.
+                val line = gradleBuildFileContent.substringUntilEndOfLine(range.first)
+                remainingDependencyNotations().forEach {
+                    if (removedDependencyNotation.dependencyNotation in it) {
+                        if (line.startsWith(it, ignoreCase = true)) {
+                            removeAt(i)
+                            return@forEachReversedWithIndex
+                        }
+                    }
+                }
             }
         }
         reverse()
@@ -109,13 +144,6 @@ internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationRef
         var edited = false
         var shallImportDependencyNotationClass = false
         reverseOrderedTargets.forEach { (removedDependencyNotation, range) ->
-            run {
-                // Ensure there's "padding" around the match to avoid contains-like behavior.
-                val previousChar = getOrElse(range.first - 1) { ' ' }
-                val subsequentChar = getOrElse(range.last + 1) { ' ' }
-                if (previousChar.isLetterOrDigit() || previousChar == '.') return@forEach
-                if (subsequentChar.isLetterOrDigit() || previousChar == '.') return@forEach
-            }
             //TODO: What if multiple deprecated dependency notations are on one line? Test it, at least.
             val lineStartIndex = indexOfPrevious('\n', startIndex = range.first).let {
                 if (it == -1) 0 else it + 1
@@ -145,7 +173,7 @@ internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationRef
                     }
                     append(prefix)
                     val dependencyNotation = moduleId.dependencyNotation(
-                        mapping = dependencyMapping,
+                        mapping = shortestDependencyMapping(),
                         ensureWrappedInParsedDependencyNotation = hasCallOnTheDependencyNotation
                     )
                     if (dependencyNotation.startsWith(dpdcNotationParse)) {
@@ -158,7 +186,7 @@ internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationRef
             }
             run {
                 val dependencyNotation = removedDependencyNotation.moduleId.dependencyNotation(
-                    mapping = dependencyMapping,
+                    mapping = shortestDependencyMapping(),
                     ensureWrappedInParsedDependencyNotation = hasCallOnTheDependencyNotation
                 )
                 if (dependencyNotation.startsWith(dpdcNotationParse)) {

@@ -3,7 +3,6 @@ package de.fayard.refreshVersions
 import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
-import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
@@ -132,9 +131,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 },
                 versionsPropertiesFile = extension.versionsPropertiesFile
                     ?: settings.rootDir.resolve("versions.properties"),
-                getDependenciesMapping = {
-                    getArtifactNameToConstantMapping().associateShortestByMavenCoordinate()
-                },
+                getDependenciesMapping = ::getArtifactNameToConstantMapping,
                 getRemovedDependenciesVersionsKeys = ::getRemovedDependenciesVersionsKeys,
                 getRemovedDependencyNotationsReplacementInfo = ::getRemovedDependencyNotationsReplacementInfo
             )

@@ -46,3 +46,10 @@ internal fun String.substringUpTo(delimiter: String, missingDelimiterValue: Stri
     val index = indexOf(delimiter)
     return if (index == -1) missingDelimiterValue else substring(0, index + delimiter.length)
 }
+
+internal fun String.substringUntilEndOfLine(startIndex: Int): String {
+    return substring(
+        startIndex = startIndex,
+        endIndex = indexOf('\n', startIndex = startIndex).let { if (it == -1) length else it }
+    )
+}

@@ -17,7 +17,7 @@ class ReplacementOfRemovedDependencyNotationsTest {
 
     private val testDataDir = testResources.resolve("removals-replacement")
     private val defaultHistoryFileContent = testDataDir.resolve("default-revisions-history.md").readText()
-    private val mapping: Map<ModuleId.Maven, String> = testResources.parentFile!!.parentFile!!.parentFile!!.parentFile!!
+    private val mapping: Pair<Set<String>, Map<ModuleId.Maven, String>> = testResources.parentFile!!.parentFile!!.parentFile!!.parentFile!!
         .resolveSibling("dependencies")
         .resolve("src/test/resources/dependencies-mapping-validated.txt")
         .let { readDependencyMappingFromFile(it) }
@@ -25,7 +25,9 @@ class ReplacementOfRemovedDependencyNotationsTest {
     private fun readDependencyMappingFromFile(file: File) = file.useLines { lines ->
         lines.mapNotNull {
             DependencyMapping.fromLine(it)
-        }.toList().associateShortestByMavenCoordinate()
+        }.toList().let { list ->
+            list.mapTo(mutableSetOf()) { it.constantName } to list.associateShortestByMavenCoordinate()
+        }
     }
 
     @TestFactory
@@ -49,6 +51,8 @@ class ReplacementOfRemovedDependencyNotationsTest {
         val dependencyMapping = dir.resolve("dependency-mapping.txt").takeIf {
             it.exists()
         }?.let { readDependencyMappingFromFile(it) } ?: mapping
+        val remainingDependencyNotations = dependencyMapping.first
+        val shortestDependencyMapping = dependencyMapping.second
         listOf(
             "kt-input.build.gradle.kts" to "kt-output.build.gradle.kts",
             "gvy-input.build.gradle" to "gvy-output.build.gradle"
@@ -60,7 +64,8 @@ class ReplacementOfRemovedDependencyNotationsTest {
             check(it.isNotEmpty())
         }.forEach { (inputFile, outputFile) ->
             `test replaceRemovedDependencyNotationReferencesIfAny`(
-                mapping = dependencyMapping,
+                remainingDependencyNotations = { remainingDependencyNotations },
+                shortestDependencyMapping = { shortestDependencyMapping },
                 revisionsHistory = revisionsHistory,
                 inputFile = inputFile,
                 outputFile = outputFile
@@ -69,13 +74,15 @@ class ReplacementOfRemovedDependencyNotationsTest {
     }
 
     private fun `test replaceRemovedDependencyNotationReferencesIfAny`(
-        mapping: Map<ModuleId.Maven, String>,
+        remainingDependencyNotations: () -> Set<String>,
+        shortestDependencyMapping: () -> Map<ModuleId.Maven, String>,
         revisionsHistory: List<RemovedDependencyNotation>,
         inputFile: File,
         outputFile: File?
     ) {
         val output = revisionsHistory.replaceRemovedDependencyNotationReferencesIfAny(
-            dependencyMapping = mapping,
+            remainingDependencyNotations = remainingDependencyNotations,
+            shortestDependencyMapping = shortestDependencyMapping,
             gradleBuildFileContent = inputFile.readText(),
             isKotlinDsl = inputFile.extension == "kts"
         )
