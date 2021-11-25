@@ -24,9 +24,20 @@ internal fun replaceRemovedDependencyNotationReferencesIfNeeded(
 ) {
     val currentVersion = RefreshVersionsCorePlugin.currentVersion
     val lastVersion = versionsPropertiesModel.generatedByVersion
-    if (currentVersion == lastVersion) return
+    if (currentVersion == lastVersion) {
+        if (versionsPropertiesModel.dependencyNotationRemovalsRevision == null) {
+            return // No revision in the versions.properties file means version alone is enough.
+        }
+    }
 
     val info = getRemovedDependencyNotationsReplacementInfo()
+
+    if (currentVersion == lastVersion) {
+        if (info.currentRevision == versionsPropertiesModel.dependencyNotationRemovalsRevision) {
+            return // Handles the case of matching revisions in snapshot to snapshot upgrade.
+        }
+    }
+
     val history = info.removalsListingResource.parseRemovedDependencyNotationsHistory(
         currentRevision = info.readRevisionOfLastRefreshVersionsRun(
             lastVersion,
