@@ -20,6 +20,23 @@ id:[com.somegroup:somegroup-one]
 moved:[com.anothergroup:anothergroup-two]
 id:[com.somegroup:somegroup-two]
 
+## Revision 4
+
+~~Testing.junit.api~~
+id:[org.junit.jupiter:junit-jupiter-api]
+
+~~Testing.junit.engine~~
+id:[org.junit.jupiter:junit-jupiter-engine]
+
+~~Testing.junit.migrationSupport~~
+id:[org.junit.jupiter:junit-jupiter-migrationsupport]
+
+~~Testing.junit.params~~
+id:[org.junit.jupiter:junit-jupiter-params]
+
+~~Testing.junit~~
+id:[org.junit.jupiter:junit-jupiter]
+
 ## [WIP]
 
 ~~SomeGroup.three~~

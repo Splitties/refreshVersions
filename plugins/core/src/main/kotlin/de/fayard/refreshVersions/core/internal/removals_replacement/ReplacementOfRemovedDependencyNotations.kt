@@ -2,6 +2,8 @@ package de.fayard.refreshVersions.core.internal.removals_replacement
 
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
+import de.fayard.refreshVersions.core.extensions.collections.forEachReversedWithIndex
+import de.fayard.refreshVersions.core.extensions.ranges.contains
 import de.fayard.refreshVersions.core.extensions.text.indexOfFirst
 import de.fayard.refreshVersions.core.extensions.text.indexOfPrevious
 import de.fayard.refreshVersions.core.internal.TaggedRange
@@ -75,7 +77,7 @@ internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationRef
 ): String? {
     val ranges = gradleBuildFileContent.extractGradleScriptSections(isKotlinDsl = isKotlinDsl)
 
-    val reverseOrderedTargets = flatMap { removedDependencyNotation ->
+    val reverseOrderedTargets: List<Pair<RemovedDependencyNotation, IntRange>> = flatMap { removedDependencyNotation ->
         gradleBuildFileContent.rangesOfCode(
             code = removedDependencyNotation.dependencyNotation,
             ignoreCase = true,
@@ -86,7 +88,22 @@ internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationRef
         }
     }.ifEmpty {
         return null
-    }.sortedByDescending { (_, range) -> range.last }
+    }.toMutableList().apply {
+        val comparator = compareBy<Pair<RemovedDependencyNotation, IntRange>> { (_, range) ->
+            range.last
+        }.thenBy { (removedDependencyNotation, _) ->
+            removedDependencyNotation.dependencyNotation.length
+        }
+
+        sortWith(comparator)
+        forEachReversedWithIndex { i, (_, range) ->
+            getOrNull(i + 1)?.let { (_, previousRange) ->
+                // Removes overlapped ranges that need to be replaced.
+                if (range in previousRange) removeAt(i)
+            }
+        }
+        reverse()
+    }
     return buildString gradleBuildFileContent@{
         append(gradleBuildFileContent)
         var edited = false
