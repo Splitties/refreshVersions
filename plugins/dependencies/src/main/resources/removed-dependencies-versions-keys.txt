@@ -30,3 +30,5 @@ org.junit.jupiter..junit-jupiter-engine=version.junit
 org.junit.jupiter..junit-jupiter-migrationsupport=version.junit
 org.junit.jupiter..junit-jupiter-params=version.junit
 org.junit.jupiter..junit-jupiter=version.junit
+androidx.wear.compose..compose-foundation=version.androidx.wear.compose-foundation
+androidx.wear.compose..compose-material=version.androidx.wear.compose-material

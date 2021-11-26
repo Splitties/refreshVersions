@@ -131,7 +131,7 @@ androidx.window:window-extensions
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^
 
 androidx.wear.compose:compose-*
-^^^^^^^^.^^^^.^^^^^^^        ^^
+^^^^^^^^.^^^^.^^^^^^^
 
 androidx.wear.compose:* // In case they add an artifact that doesn't start with "compose"
 ^^^^^^^^.^^^^.^^^^^^^.^
