@@ -28,7 +28,7 @@ internal class MavenDependencyVersionsFetcherGoogleCloudStorage(
             bucket.get(path)?.let { blob: Blob -> String(blob.getContent()) }
         } catch (e: BaseHttpServiceException) {
             if (e.code == 404) {
-                null // Also see https://github.com/googleapis/google-cloud-java/issues/3402
+                null // Also see https://github.com/googleapis/java-storage/issues/49
             } else throw IOException(
                 "Unable to load '$path' from Google Cloud Storage bucket '$bucketName'.",
                 e
