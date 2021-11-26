@@ -391,6 +391,8 @@ object AndroidX : IsNotADependency {
      * Support libraries for media use cases.
      *
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/media3)
+     *
+     * GitHub page: [androidx/media](https://github.com/androidx/media)
      */
     val media3 = Media3
 
