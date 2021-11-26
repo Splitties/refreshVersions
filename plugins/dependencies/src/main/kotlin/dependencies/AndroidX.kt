@@ -831,6 +831,7 @@ object AndroidX : IsNotADependency {
         object Tiles : DependencyNotationAndGroup(group = "androidx.wear.tiles", name = "tiles") {
             val proto = module("tiles-proto")
             val renderer = module("tiles-renderer")
+            val testing = module("tiles-testing")
         }
 
         /**

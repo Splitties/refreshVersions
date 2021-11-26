@@ -285,6 +285,7 @@ androidx.wear.compose..compose-material=version.androidx.wear.compose.compose-ma
 androidx.wear.compose..compose-navigation=version.androidx.wear.compose.compose-navigation
 androidx.wear.tiles..tiles-proto=version.androidx.wear.tiles
 androidx.wear.tiles..tiles-renderer=version.androidx.wear.tiles
+androidx.wear.tiles..tiles-testing=version.androidx.wear.tiles
 androidx.wear.tiles..tiles=version.androidx.wear.tiles
 androidx.wear.watchface..watchface-complications-data-source-ktx=version.androidx.wear.watchface-complications-data-source-ktx
 androidx.wear.watchface..watchface-complications-data-source=version.androidx.wear.watchface-complications-data-source

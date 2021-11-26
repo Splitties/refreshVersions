@@ -278,6 +278,7 @@ androidx.wear.compose:compose-navigation
 androidx.wear.tiles:tiles
 androidx.wear.tiles:tiles-proto
 androidx.wear.tiles:tiles-renderer
+androidx.wear.tiles:tiles-testing
 androidx.wear.watchface:watchface
 androidx.wear.watchface:watchface-complications-data-source
 androidx.wear.watchface:watchface-complications-data-source-ktx
