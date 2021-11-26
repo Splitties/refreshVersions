@@ -44,6 +44,18 @@ This change will enable us to keep the built-in dependency notations updated wit
 
 ### New dependency notations:
 
+- AndroidX.wear.watchFace:
+    - complications.dataSourceKtx
+    - complications.dataSource
+    - editor
+- KotlinX.coroutines.bom
+- Testing.junit:
+    - bom
+    - jupiter: _(moved from Testing.junit)_
+        - api _(moved from Testing.junit.api)_
+        - engine _(moved from Testing.junit.engine)_
+        - migrationSupport _(moved from Testing.junit.migrationSupport)_
+        - params _(moved from Testing.junit.params)_
 - Testing.kotest.framework:
     - api
     - dataset
