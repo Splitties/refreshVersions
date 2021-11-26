@@ -37,10 +37,10 @@ This change will enable us to keep the built-in dependency notations updated wit
 
 ### Bug fixes
 
+- Repositories declared in the `dependencyResolutionManagement` block were ignored. Now, they are taken into account.
 - The kotest extensions dependencies were previously wrongly sharing their version as per refreshVersions rules. Now, they each have their independent, own version key.
 - The `refreshVersionsMigrate` task wasn't inserting new entries in alphabetical order. Now it is.
 - The `refreshVersionsMigrate` task wasn't migrating buildscript dependencies. Now it is.
-- Repositories in declared in the `dependencyResolutionManagement` block were ignored. Now, they are taken into account.
 
 ### New dependency notations:
 
