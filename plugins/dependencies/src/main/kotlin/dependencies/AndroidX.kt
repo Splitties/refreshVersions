@@ -893,18 +893,45 @@ object AndroidX : IsNotADependency {
         val rxJava3 = module("window-rxjava3")
     }
 
-    val work = Work // TODO kdoc
+    /**
+     * The WorkManager API makes it easy to schedule deferrable, asynchronous tasks that must be run reliably.
+     * These APIs let you create a task and hand it off to WorkManager to run when the work constraints are met.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/work)
+     *
+     * Guide: [Schedule tasks with WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager)
+     *
+     * ### API reference:
+     * - [androidx.work](https://developer.android.com/reference/androidx/work/package-summary)
+     */
+    val work = Work
 
     object Work : DependencyGroup(group = "androidx.work") {
+
+        /** Kotlin + coroutines */
         val runtimeKtx = module("work-runtime-ktx")
 
+        /** Multiprocess support (optional) */
         val multiprocess = module("work-multiprocess")
+
+        /** GCMNetworkManager support (optional) */
         val gcm = module("work-gcm")
+
+        /**
+         * Test helpers
+         *
+         * ### API reference:
+         * - [androidx.work.testing](https://developer.android.com/reference/androidx/work/testing/package-summary)
+         */
         val testing = module("work-testing")
 
+        /** Java only. Use [runtimeKtx] for Kotlin + coroutines support. */
         val runtime = module("work-runtime")
 
+        /** RxJava2 support (optional) */
         val rxJava2 = module("work-rxjava2")
+
+        /** RxJava3 support (optional) */
         val rxJava3 = module("work-rxjava3")
     }
 }
