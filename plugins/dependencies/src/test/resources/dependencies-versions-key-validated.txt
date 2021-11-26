@@ -120,6 +120,7 @@ androidx.hilt..hilt-navigation-compose=version.androidx.hilt-navigation-compose
 androidx.hilt..hilt-navigation-fragment=version.androidx.hilt
 androidx.hilt..hilt-work=version.androidx.hilt
 androidx.interpolator..interpolator=version.androidx.interpolator
+androidx.leanback..leanback-grid=version.androidx.leanback-grid
 androidx.leanback..leanback-paging=version.androidx.leanback-paging
 androidx.leanback..leanback-preference=version.androidx.leanback
 androidx.leanback..leanback-tab=version.androidx.leanback-tab

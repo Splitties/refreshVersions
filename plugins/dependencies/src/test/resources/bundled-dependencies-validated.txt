@@ -121,6 +121,7 @@ androidx.hilt:hilt-navigation-fragment
 androidx.hilt:hilt-work
 androidx.interpolator:interpolator
 androidx.leanback:leanback
+androidx.leanback:leanback-grid
 androidx.leanback:leanback-paging
 androidx.leanback:leanback-preference
 androidx.leanback:leanback-tab

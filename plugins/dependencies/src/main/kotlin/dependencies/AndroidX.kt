@@ -328,6 +328,7 @@ object AndroidX : IsNotADependency {
         val preference = module("leanback-preference")
         val paging = module("leanback-paging")
         val tab = module("leanback-tab")
+        val grid = module("leanback-grid")
     }
 
     @Deprecated("Dependency notation moved", ReplaceWith("AndroidX.leanback.preference"))
