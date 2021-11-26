@@ -29,6 +29,8 @@ From now on, we have the ability to remove old or deprecated built-in dependency
 
 The way it works is that we keep a versioned list of all the removals, and on refreshVersions upgrade, an automatic replacement will put back the hardcoded maven coordinates, using the version placeholder, and it will add our hand-written TODO/FIXME comments, along with a perfectly aligned replacement suggestion if there is any, so that moving to the newer artifact is as easy as upgrading to a newer version in the `versions.properties` file. We designed the system so that it cannot break your build, even if you were using `withVersion(…)` or other `DependencyNotation` extensions, even if you have code comments or special string literals.
 
+It also supports the case where we just move a dependency notation to another place, or change its name, without changing the maven coordinates.
+
 Because of this change, it's important that you check the git diff after upgrading refreshVersions and running the first Gradle reload/sync/build, so you can see if there's been any changes, and if you might want to switch to any replacement dependencies.
 
 This change will enable us to keep the built-in dependency notations updated with less effort, so we're very happy to have it ready, and fully tested.
