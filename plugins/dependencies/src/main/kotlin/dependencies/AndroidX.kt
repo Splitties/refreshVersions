@@ -604,11 +604,45 @@ object AndroidX : IsNotADependency {
             val provider = module("wear-complications-provider")
         }
 
+        /**
+         * Write Jetpack Compose applications for Wearable devices by providing functionality to support
+         * wearable specific devices, sizes, shapes and navigation gestures.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/wear-compose)
+         *
+         * ### API reference:
+         * - [androidx.window.layout](https://developer.android.com/reference/androidx/window/layout/package-summary)
+         */
         val compose = Compose
 
         object Compose : DependencyGroup(group = "androidx.wear.compose") {
+
+            /**
+             * ### API reference:
+             * - [androidx.wear.compose.foundation](https://developer.android.com/reference/kotlin/androidx/wear/compose/foundation/package-summary)
+             */
             val foundation = module("compose-foundation")
+
+            /**
+             * _NOTE: DO NOT INCLUDE a dependency on `Androidx.compose.material`.
+             * `Androidx.wear.compose.material` is designed as a replacement,
+             * not an addition to `Androidx.compose.material`._
+             *
+             * _If there are features from that you feel are missing from
+             * `androidx.wear.compose:compose-material`, please [file an issue](https://issuetracker.google.com/issues/new?component=1077552&template=1598429)
+             * to let the AndroidX Wear team know._
+             *
+             * ### API reference:
+             * - [androidx.wear.compose.material](https://developer.android.com/reference/kotlin/androidx/wear/compose/material/package-summary)
+             */
             val material = module("compose-material")
+
+            /**
+             * Integration between Wear Compose and Androidx Navigation libraries.
+             *
+             * ### API reference:
+             * - [androidx.wear.compose.navigation](https://developer.android.com/reference/kotlin/androidx/wear/compose/navigation/package-summary)
+             */
             val navigation = module("compose-navigation")
         }
 
