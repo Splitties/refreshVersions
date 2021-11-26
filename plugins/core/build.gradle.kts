@@ -49,7 +49,8 @@ dependencies {
         because("It has ready to use HttpException class")
     }
     implementation(Square.moshi.kotlinReflect)
-    implementation("com.google.cloud:google-cloud-storage:_")
+    implementation(platform("com.google.cloud:libraries-bom:_"))
+    implementation("com.google.cloud:google-cloud-storage")
     constraints {
         implementation("com.google.guava:guava") {
             version {
