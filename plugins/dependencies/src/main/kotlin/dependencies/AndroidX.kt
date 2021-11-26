@@ -847,6 +847,16 @@ object AndroidX : IsNotADependency {
         }
     }
 
+    /**
+     * Work with modern WebView APIs on Android 5 and above.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/webkit)
+     *
+     * Guide: [Managing WebView objects](https://developer.android.com/guide/webapps/managing-webview)
+     *
+     * ### API reference:
+     * - [androidx.webkit](https://developer.android.com/reference/androidx/webkit/package-summary)
+     */
     val webkit = DependencyNotation(group = "androidx.webkit", name = "webkit")
 
     /**
