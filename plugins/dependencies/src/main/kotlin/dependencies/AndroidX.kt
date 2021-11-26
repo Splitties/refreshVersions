@@ -173,6 +173,20 @@ object AndroidX : IsNotADependency {
 
             val ripple = module("material-ripple")
         }
+
+        /**
+         * Build Jetpack Compose UIs with Material Design 3 Components, the next evolution of Material Design.
+         * Material 3 includes updated theming and components and Material You personalization features like
+         * dynamic color, and is designed to be cohesive with the new Android 12 visual style and system UI.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/compose-material3)
+         *
+         * ### API reference:
+         * - [androidx.compose.material3](https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary)
+         */
+        val material3 = Material3
+
+        object Material3 : DependencyNotationAndGroup(group = "androidx.compose.material3", name = "material3")
     }
 
     val concurrent = Concurrent // TODO kdoc

@@ -43,6 +43,7 @@ androidx.compose.material..material-icons-core=AndroidX.compose.material.icons.c
 androidx.compose.material..material-icons-extended=AndroidX.compose.material.icons.extended
 androidx.compose.material..material-ripple=AndroidX.compose.material.ripple
 androidx.compose.material..material=AndroidX.compose.material
+androidx.compose.material3..material3=AndroidX.compose.material3
 androidx.compose.runtime..runtime-dispatch=AndroidX.compose.runtime.dispatch
 androidx.compose.runtime..runtime-livedata=AndroidX.compose.runtime.liveData
 androidx.compose.runtime..runtime-rxjava2=AndroidX.compose.runtime.rxJava2
