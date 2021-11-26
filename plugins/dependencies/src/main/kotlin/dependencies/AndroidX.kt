@@ -833,16 +833,63 @@ object AndroidX : IsNotADependency {
             val renderer = module("tiles-renderer")
         }
 
+        /**
+         * Use this dependency to implement Watch Faces for WearOS
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/wear-watchface)
+         *
+         * ### API reference
+         * - [androidx.wear.watchface](https://developer.android.com/reference/kotlin/androidx/wear/watchface/package-summary)
+         * - [androidx.wear.watchface.style](https://developer.android.com/reference/kotlin/androidx/wear/watchface/style/package-summary)
+         */
         val watchFace = WatchFace
 
         object WatchFace : DependencyNotationAndGroup(group = "androidx.wear.watchface", name = "watchface") {
 
+            /**
+             * Use these dependencies to implement Watch Faces complications for WearOS
+             *
+             * ### API reference
+             * - [androidx.wear.watchface.complications](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/package-summary)
+             * - [androidx.wear.watchface.complications.data](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/data/package-summary)
+             * - [androidx.wear.watchface.complications.datasource](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/datasource/package-summary)
+             * - [androidx.wear.watchface.complications.datasource.rendering](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/rendering/package-summary)
+             */
             val complications = Complications
+
             object Complications : DependencyGroup(group = group) {
+
+                /**
+                 * Use this dependency to implement Watch Faces complications for WearOS in Java-only.
+                 * Use [dataSourceKtx] to also get Kotlin extensions.
+                 *
+                 * ### API reference
+                 * - [androidx.wear.watchface.complications](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/package-summary)
+                 * - [androidx.wear.watchface.complications.data](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/data/package-summary)
+                 * - [androidx.wear.watchface.complications.datasource](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/datasource/package-summary)
+                 * - [androidx.wear.watchface.complications.datasource.rendering](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/rendering/package-summary)
+                 */
                 val dataSource = module("watchface-complications-data-source")
+
+                /**
+                 * Use this dependency to implement Watch Faces complications for WearOS in Kotlin.
+                 *
+                 * ### API reference
+                 * - [androidx.wear.watchface.complications](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/package-summary)
+                 * - [androidx.wear.watchface.complications.data](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/data/package-summary)
+                 * - [androidx.wear.watchface.complications.datasource](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/datasource/package-summary)
+                 * - [androidx.wear.watchface.complications.datasource.rendering](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/rendering/package-summary)
+                 */
                 val dataSourceKtx = module("watchface-complications-data-source-ktx")
             }
 
+            /**
+             * Use this dependency to implement a watchface style and complication editor.
+             *
+             * ### API reference
+             * - [androidx.wear.watchface.editor](https://developer.android.com/reference/kotlin/androidx/wear/watchface/editor/package-summary)
+             * - [androidx.wear.watchface.client](https://developer.android.com/reference/kotlin/androidx/wear/watchface/client/package-summary)
+             */
             val editor = module("watchface-editor")
         }
     }
