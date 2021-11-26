@@ -73,7 +73,7 @@ dependencies {
     testImplementation(Kotlin.test.annotationsCommon)
     testImplementation(Kotlin.test.junit5)
 
-    testFixturesApi(Square.okHttp3.okHttp)
+    testFixturesApi(Square.okHttp3)
     testFixturesApi(Square.okHttp3.loggingInterceptor)
     testFixturesApi(KotlinX.coroutines.core)
     testFixturesApi(Kotlin.test.annotationsCommon)
