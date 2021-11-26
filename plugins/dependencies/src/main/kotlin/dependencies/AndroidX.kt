@@ -634,14 +634,47 @@ object AndroidX : IsNotADependency {
 
     val webkit = DependencyNotation(group = "androidx.webkit", name = "webkit")
 
-    val window = Window // TODO kdoc
+    /**
+     * The Jetpack WindowManager library enables application developers to support new
+     * device form factors and multi-window environments. The library provides a common
+     * API surface for API versions 14 and later.
+     *
+     * The initial release targets foldable devices,
+     * but future versions will extend to more display types and window features.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/window)
+     *
+     * ### API reference:
+     * - [androidx.window.layout](https://developer.android.com/reference/androidx/window/layout/package-summary)
+     */
+    val window = Window
 
     object Window : DependencyNotationAndGroup(group = "androidx.window", name = "window") {
+
+        /**
+         * ### API reference:
+         * - [androidx.window.testing.layout](https://developer.android.com/reference/androidx/window/testing/layout/package-summary)
+         */
         val testing = module("window-testing")
 
-        /** For Java-friendly APIs to register and unregister callbacks */
+        /**
+         * For Java-friendly APIs to register and unregister callbacks
+         *
+         * ### API reference:
+         * - [androidx.window.java.layout](https://developer.android.com/reference/androidx/window/java/layout/package-summary)
+         */
         val java = module("window-java")
+
+        /**
+         * ### API reference:
+         * - [androidx.window.rxjava2.layout](https://developer.android.com/reference/androidx/window/rxjava2/layout/package-summary)
+         */
         val rxJava2 = module("window-rxjava2")
+
+        /**
+         * ### API reference:
+         * - [androidx.window.rxjava3.layout](https://developer.android.com/reference/androidx/window/rxjava3/layout/package-summary)
+         */
         val rxJava3 = module("window-rxjava3")
     }
 
