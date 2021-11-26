@@ -322,12 +322,47 @@ object AndroidX : IsNotADependency {
 
     val interpolator = DependencyNotation("androidx.interpolator", "interpolator")
 
+    /**
+     * Write apps for Android TV devices using dpad-friendly widgets and template fragments.
+     *
+     * The initial release targets foldable devices,
+     * but future versions will extend to more display types and window features.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/leanback)
+     *
+     * Guide: [Get started with TV apps](https://developer.android.com/training/tv/start/start)
+     *
+     * ### API reference:
+     * - [androidx.leanback.app](https://developer.android.com/reference/androidx/leanback/app/package-summary)
+     * - [androidx.leanback.database](https://developer.android.com/reference/androidx/leanback/database/package-summary)
+     * - [androidx.leanback.graphics](https://developer.android.com/reference/androidx/leanback/graphics/package-summary)
+     * - [androidx.leanback.media](https://developer.android.com/reference/androidx/leanback/media/package-summary)
+     * - [androidx.leanback.system](https://developer.android.com/reference/androidx/leanback/system/package-summary)
+     * - [androidx.leanback.widget](https://developer.android.com/reference/androidx/leanback/widget/package-summary)
+     * - [androidx.leanback.widget.picker](https://developer.android.com/reference/androidx/leanback/widget/picker/package-summary)
+     */
     val leanback = Leanback
 
     object Leanback : DependencyNotationAndGroup(group = "androidx.leanback", name = "leanback") {
+
+        /**
+         * ### API reference:
+         * - [androidx.leanback.preference](https://developer.android.com/reference/androidx/leanback/preference/package-summary)
+         */
         val preference = module("leanback-preference")
+
+        /**
+         * ### API reference:
+         * - [androidx.leanback.paging](https://developer.android.com/reference/androidx/leanback/paging/package-summary)
+         */
         val paging = module("leanback-paging")
+
+        /**
+         * ### API reference:
+         * - [androidx.leanback.tab](https://developer.android.com/reference/androidx/leanback/tab/package-summary)
+         */
         val tab = module("leanback-tab")
+
         val grid = module("leanback-grid")
     }
 
