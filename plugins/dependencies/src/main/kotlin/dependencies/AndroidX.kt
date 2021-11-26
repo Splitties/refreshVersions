@@ -609,6 +609,7 @@ object AndroidX : IsNotADependency {
         object Compose : DependencyGroup(group = "androidx.wear.compose") {
             val foundation = module("compose-foundation")
             val material = module("compose-material")
+            val navigation = module("compose-navigation")
         }
 
         val tiles = Tiles

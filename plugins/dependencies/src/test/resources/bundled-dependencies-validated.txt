@@ -251,6 +251,7 @@ androidx.viewpager2:viewpager2
 androidx.viewpager:viewpager
 androidx.wear.compose:compose-foundation
 androidx.wear.compose:compose-material
+androidx.wear.compose:compose-navigation
 androidx.wear.tiles:tiles
 androidx.wear.tiles:tiles-proto
 androidx.wear.tiles:tiles-renderer

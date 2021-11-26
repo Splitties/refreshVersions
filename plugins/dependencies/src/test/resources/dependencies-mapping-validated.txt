@@ -261,6 +261,7 @@ androidx.wear..wear-remote-interactions=AndroidX.wear.remoteInteractions
 androidx.wear..wear=AndroidX.wear
 androidx.wear.compose..compose-foundation=AndroidX.wear.compose.foundation
 androidx.wear.compose..compose-material=AndroidX.wear.compose.material
+androidx.wear.compose..compose-navigation=AndroidX.wear.compose.navigation
 androidx.wear.tiles..tiles-proto=AndroidX.wear.tiles.proto
 androidx.wear.tiles..tiles-renderer=AndroidX.wear.tiles.renderer
 androidx.wear.tiles..tiles=AndroidX.wear.tiles
