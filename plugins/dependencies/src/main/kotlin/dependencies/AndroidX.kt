@@ -781,6 +781,8 @@ object AndroidX : IsNotADependency {
          * Write Jetpack Compose applications for Wearable devices by providing functionality to support
          * wearable specific devices, sizes, shapes and navigation gestures.
          *
+         * Codelab: [d.android.com/codelabs/compose-for-wear-os](https://developer.android.com/codelabs/compose-for-wear-os)
+         *
          * [Release notes](https://developer.android.com/jetpack/androidx/releases/wear-compose)
          *
          * ### API reference:
