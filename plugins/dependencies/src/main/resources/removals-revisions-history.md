@@ -79,3 +79,9 @@ id:[org.junit.jupiter:junit-jupiter-params]
 
 ~~Testing.junit~~
 id:[org.junit.jupiter:junit-jupiter]
+
+## [WIP]
+
+~~AndroidX.wear.tiles.proto~~
+//FIXME: Remove explicit dependency on this artifact designed for internals.
+id:[androidx.wear.tiles:tiles-proto]

@@ -839,7 +839,6 @@ object AndroidX : IsNotADependency {
         val tiles = Tiles
 
         object Tiles : DependencyNotationAndGroup(group = "androidx.wear.tiles", name = "tiles") {
-            val proto = module("tiles-proto")
 
             /**
              * Use to preview wear tiles in your own app.
