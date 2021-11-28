@@ -826,11 +826,35 @@ object AndroidX : IsNotADependency {
             val navigation = module("compose-navigation")
         }
 
+        /**
+         * Use this dependency to implement Wear OS Tiles.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/wear-tiles)
+         *
+         * Codelab: [d.android.com/codelabs/wear-tiles](https://developer.android.com/codelabs/wear-tiles)
+         *
+         * ### API reference
+         * - [androidx.wear.tiles](https://developer.android.com/reference/androidx/wear/tiles/package-summary)
+         */
         val tiles = Tiles
 
         object Tiles : DependencyNotationAndGroup(group = "androidx.wear.tiles", name = "tiles") {
             val proto = module("tiles-proto")
+
+            /**
+             * Use to preview wear tiles in your own app.
+             *
+             * ### API reference
+             * - [androidx.wear.tiles.renderer](https://developer.android.com/reference/kotlin/androidx/wear/tiles/renderer/package-summary)
+             */
             val renderer = module("tiles-renderer")
+
+            /**
+             * Use to test wear tiles.
+             *
+             * ### API reference
+             * - [androidx.wear.tiles.testing](https://developer.android.com/reference/kotlin/androidx/wear/tiles/testing/package-summary)
+             */
             val testing = module("tiles-testing")
         }
 
