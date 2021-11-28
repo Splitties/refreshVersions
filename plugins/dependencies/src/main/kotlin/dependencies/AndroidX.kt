@@ -866,6 +866,8 @@ object AndroidX : IsNotADependency {
             /**
              * Use these dependencies to implement Watch Faces complications for WearOS
              *
+             * Codelab: [d.android.com/codelabs/data-providers](https://developer.android.com/codelabs/data-providers)
+             *
              * ### API reference
              * - [androidx.wear.watchface.complications](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/package-summary)
              * - [androidx.wear.watchface.complications.data](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/data/package-summary)
