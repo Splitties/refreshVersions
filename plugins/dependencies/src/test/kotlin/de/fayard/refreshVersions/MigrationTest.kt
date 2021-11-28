@@ -222,7 +222,7 @@ class MigrationTest : StringSpec({
             gradle/libraries.gradle
             libraries.groovy
             libs.gradle
-        """.trimIndent().lines()
+        """.trimIndent().lines().map { File(it).path }
         val dir = testResources.resolve("migration.files")
         findFilesWithDependencyNotations(dir).map { it.relativeTo(dir).path }.sorted() shouldBe expected.sorted()
     }
