@@ -777,13 +777,6 @@ object AndroidX : IsNotADependency {
         val phoneInteractions = module("wear-phone-interactions")
         val remoteInteractions = module("wear-remote-interactions")
 
-        val complications = Complications
-
-        object Complications : DependencyGroup(group = group) {
-            val data = module("wear-complications-data")
-            val provider = module("wear-complications-provider")
-        }
-
         /**
          * Write Jetpack Compose applications for Wearable devices by providing functionality to support
          * wearable specific devices, sizes, shapes and navigation gestures.

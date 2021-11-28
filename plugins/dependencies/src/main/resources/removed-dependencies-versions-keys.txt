@@ -33,3 +33,5 @@ org.junit.jupiter..junit-jupiter=version.junit
 androidx.wear.compose..compose-foundation=version.androidx.wear.compose-foundation
 androidx.wear.compose..compose-material=version.androidx.wear.compose-material
 androidx.wear.tiles..tiles-proto=version.androidx.wear.tiles
+androidx.wear..wear-complications-data=version.androidx.wear-complications-data
+androidx.wear..wear-complications-provider=version.androidx.wear-complications-provider

@@ -85,3 +85,13 @@ id:[org.junit.jupiter:junit-jupiter]
 ~~AndroidX.wear.tiles.proto~~
 //FIXME: Remove explicit dependency on this artifact designed for internals.
 id:[androidx.wear.tiles:tiles-proto]
+
+~~AndroidX.wear.complications.data~~
+//FIXME: Migrate ComplicationProviderService to SuspendingComplicationDataSourceService or ComplicationDataSourceService
+moved:[androidx.wear.watchface..watchface-complications-data-source-ktx]
+id:[androidx.wear:wear-complications-data]
+
+~~AndroidX.wear.complications.provider~~
+//FIXME: Migrate ComplicationProviderService to SuspendingComplicationDataSourceService or ComplicationDataSourceService
+moved:[androidx.wear.watchface..watchface-complications-data-source-ktx]
+id:[androidx.wear:wear-complications-provider]
