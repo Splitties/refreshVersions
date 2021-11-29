@@ -744,9 +744,12 @@ object AndroidX : IsNotADependency {
 
     val tvProvider = DependencyNotation("androidx.tvprovider", "tvprovider")
 
-    val vectorDrawable = DependencyNotation("androidx.vectordrawable", "vectordrawable")
-    val vectorDrawableAnimated = DependencyNotation("androidx.vectordrawable", "vectordrawable-animated")
-    val vectorDrawableSeekable = DependencyNotation("androidx.vectordrawable", "vectordrawable-seekable")
+    val vectorDrawable = VectorDrawable
+
+    object VectorDrawable : DependencyNotationAndGroup("androidx.vectordrawable", "vectordrawable") {
+        val animated = module("vectordrawable-animated")
+        val seekable = module("vectordrawable-seekable")
+    }
 
     /**
      * Provides a stable and compact binary serialization format that can be passed across processes or persisted safely.

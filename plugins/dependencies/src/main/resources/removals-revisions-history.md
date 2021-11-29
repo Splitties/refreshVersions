@@ -105,3 +105,9 @@ id:[androidx.gaming:gaming-frame-pacing]
 //FIXME: androidx.gaming moved to androidx.games, use the newer artifact.
 moved:[androidx.games:games-performance-tuner]
 id:[androidx.gaming:gaming-performance-tuner]
+
+~~AndroidX.vectorDrawableAnimated~~
+id:[androidx.vectordrawable:vectordrawable-animated]
+
+~~AndroidX.vectorDrawableSeekable~~
+id:[androidx.vectordrawable:vectordrawable-seekable]
