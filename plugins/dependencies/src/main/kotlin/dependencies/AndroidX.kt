@@ -751,6 +751,18 @@ object AndroidX : IsNotADependency {
     val versionedParcelable = DependencyNotation("androidx.versionedparcelable", "versionedparcelable")
 
     val viewPager = DependencyNotation("androidx.viewpager", "viewpager")
+
+    /**
+     * Display Views or Fragments in a swipeable format.
+     *
+     * Guide: [Create swipe views with tabs using ViewPager2](https://developer.android.com/guide/navigation/navigation-swipe-view-2)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/viewpager2)
+     *
+     * ### API reference:
+     * - [androidx.viewpager2.adapter](https://developer.android.com/reference/androidx/viewpager2/adapter/package-summary)
+     * - [androidx.viewpager2.widget](https://developer.android.com/reference/androidx/viewpager2/widget/package-summary)
+     */
     val viewPager2 = DependencyNotation("androidx.viewpager2", "viewpager2")
 
     /**
