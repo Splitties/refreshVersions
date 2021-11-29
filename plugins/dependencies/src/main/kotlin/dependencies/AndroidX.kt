@@ -765,16 +765,70 @@ object AndroidX : IsNotADependency {
     val viewPager = DependencyNotation("androidx.viewpager", "viewpager")
     val viewPager2 = DependencyNotation("androidx.viewpager2", "viewpager2")
 
+    /**
+     * Wear OS base Jetpack library.
+     *
+     * Wear OS home page: [d.android.com/wear](https://developer.android.com/wear)
+     *
+     * Guide: [Get started with Wear OS](https://developer.android.com/training/wearables)
+     *
+     * Samples: [github.com/android/wear-os-samples](https://github.com/android/wear-os-samples)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/wear)
+     *
+     * ### API reference:
+     * - [androidx.wear.activity](https://developer.android.com/reference/androidx/wear/activity/package-summary)
+     * - [androidx.wear.ambient](https://developer.android.com/reference/androidx/wear/ambient/package-summary)
+     * - [androidx.wear.utils](https://developer.android.com/reference/androidx/wear/utils/package-summary)
+     * - [androidx.wear.widget](https://developer.android.com/reference/androidx/wear/widget/package-summary)
+     * - [androidx.wear.widget.drawer](https://developer.android.com/reference/androidx/wear/widget/drawer/package-summary)
+     */
     val wear = Wear
 
     object Wear : DependencyNotationAndGroup(group = "androidx.wear", name = "wear") {
 
+        /**
+         * Add support for wearable specific inputs.
+         *
+         * ### API reference:
+         * - [androidx.wear.input](https://developer.android.com/reference/androidx/wear/input/package-summary)
+         */
         val input = module("wear-input")
+
+        /**
+         * Test utilities for [input].
+         *
+         * ### API reference:
+         * - [androidx.wear.input.testing](https://developer.android.com/reference/androidx/wear/input/testing/package-summary)
+         */
         val inputTesting = module("wear-input-testing")
 
+        /**
+         * Use to implement wear ongoing activities.
+         *
+         * Codelab: [d.android.com/codelabs/ongoing-activity](https://developer.android.com/codelabs/ongoing-activity)
+         *
+         * ### API reference:
+         * - [androidx.wear.ongoing](https://developer.android.com/reference/androidx/wear/ongoing/package-summary)
+         */
         val ongoing = module("wear-ongoing")
 
+        /**
+         * Use to implement support for interactions from the Wearables to Phones.
+         *
+         * ### API reference:
+         * - [androidx.wear.phone.interactions](https://developer.android.com/reference/androidx/wear/phone/interactions/package-summary)
+         * - [androidx.wear.phone.interactions.authentication](https://developer.android.com/reference/androidx/wear/phone/interactions/authentication/package-summary)
+         * - [androidx.wear.phone.interactions.notifications](https://developer.android.com/reference/androidx/wear/phone/interactions/notifications/package-summary)
+         */
         val phoneInteractions = module("wear-phone-interactions")
+
+        /**
+         * Use to implement support for interactions between the Wearables and Phones.
+         *
+        * ### API reference:
+        * - [androidx.wear.remote.interactions](https://developer.android.com/reference/androidx/wear/remote/interactions/package-summary)
+        */
         val remoteInteractions = module("wear-remote-interactions")
 
         /**
