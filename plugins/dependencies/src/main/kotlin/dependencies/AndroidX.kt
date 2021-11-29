@@ -737,6 +737,14 @@ object AndroidX : IsNotADependency {
         }
     }
 
+    /**
+     * Identifies conversations, links, selections, and other similar constructs in text.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/textclassifier)
+     *
+     * ### API reference:
+     * - [androidx.textclassifier](https://developer.android.com/reference/androidx/textclassifier/package-summary)
+     */
     val textClassifier = DependencyNotation("androidx.textclassifier", "textclassifier")
 
     /**
