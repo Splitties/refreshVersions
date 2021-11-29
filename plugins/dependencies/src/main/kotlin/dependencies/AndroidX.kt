@@ -852,9 +852,9 @@ object AndroidX : IsNotADependency {
         /**
          * Use to implement support for interactions between the Wearables and Phones.
          *
-        * ### API reference:
-        * - [androidx.wear.remote.interactions](https://developer.android.com/reference/androidx/wear/remote/interactions/package-summary)
-        */
+         * ### API reference:
+         * - [androidx.wear.remote.interactions](https://developer.android.com/reference/androidx/wear/remote/interactions/package-summary)
+         */
         val remoteInteractions = module("wear-remote-interactions")
 
         /**
