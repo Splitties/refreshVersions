@@ -743,6 +743,15 @@ object AndroidX : IsNotADependency {
     val tracingKtx = DependencyNotation("androidx.tracing", "tracing-ktx")
 
     val transition = DependencyNotation("androidx.transition", "transition")
+
+    /**
+     * Animate motion in the UI with starting and ending layouts. Includes Kotlin extensions.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/transition)
+     *
+     * ### API reference:
+     * - [androidx.transition](https://developer.android.com/reference/androidx/transition/package-summary)
+     */
     val transitionKtx = DependencyNotation("androidx.transition", "transition-ktx")
 
     /**
