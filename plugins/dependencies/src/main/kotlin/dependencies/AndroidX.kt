@@ -745,6 +745,14 @@ object AndroidX : IsNotADependency {
     val transition = DependencyNotation("androidx.transition", "transition")
     val transitionKtx = DependencyNotation("androidx.transition", "transition-ktx")
 
+    /**
+     * Provide Android TV channels.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/tvprovider)
+     *
+     * ### API reference:
+     * - [androidx.tvprovider.media.tv](https://developer.android.com/reference/androidx/tvprovider/media/tv/package-summary)
+     */
     val tvProvider = DependencyNotation("androidx.tvprovider", "tvprovider")
 
     /**
