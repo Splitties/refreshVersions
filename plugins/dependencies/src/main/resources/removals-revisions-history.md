@@ -95,3 +95,13 @@ id:[androidx.wear:wear-complications-data]
 //FIXME: Migrate ComplicationProviderService to SuspendingComplicationDataSourceService or ComplicationDataSourceService
 moved:[androidx.wear.watchface..watchface-complications-data-source-ktx]
 id:[androidx.wear:wear-complications-provider]
+
+~~AndroidX.gaming.framePacing~~
+//FIXME: androidx.gaming moved to androidx.games, use the newer artifact.
+moved:[androidx.games:games-frame-pacing]
+id:[androidx.gaming:gaming-frame-pacing]
+
+~~AndroidX.gaming.performanceTuner~~
+//FIXME: androidx.gaming moved to androidx.games, use the newer artifact.
+moved:[androidx.games:games-performance-tuner]
+id:[androidx.gaming:gaming-performance-tuner]

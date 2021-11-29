@@ -282,18 +282,6 @@ object AndroidX : IsNotADependency {
         val textInput = module("games-text-input")
     }
 
-    val gaming = Gaming // TODO kdoc
-
-    object Gaming : DependencyGroup(group = "androidx.gaming") {
-
-        @Deprecated("Group was renamed", ReplaceWith("AndroidX.games.framePacing"))
-        val framePacing = module("gaming-frame-pacing")
-
-        @Deprecated("Group was renamed", ReplaceWith("AndroidX.games.performanceTuner"))
-        val performanceTuner = module("gaming-performance-tuner")
-
-    }
-
     val gridLayout = DependencyNotation("androidx.gridlayout", "gridlayout")
 
     val health = Health
