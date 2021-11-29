@@ -739,6 +739,16 @@ object AndroidX : IsNotADependency {
 
     val textClassifier = DependencyNotation("androidx.textclassifier", "textclassifier")
 
+    /**
+     * Write trace events to the system trace buffer.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/tracing)
+     *
+     * ### API reference:
+     * - [androidx.tracing](https://developer.android.com/reference/androidx/tracing/package-summary)
+     *
+     * @see tracingKtx
+     */
     val tracing = DependencyNotation("androidx.tracing", "tracing")
 
     /**
