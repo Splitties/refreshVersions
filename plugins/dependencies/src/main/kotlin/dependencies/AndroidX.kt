@@ -747,10 +747,27 @@ object AndroidX : IsNotADependency {
 
     val tvProvider = DependencyNotation("androidx.tvprovider", "tvprovider")
 
+    /**
+     * Render vector graphics.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/vectordrawable)
+     *
+     * ### API reference:
+     * - [androidx.vectordrawable.graphics.drawable](https://developer.android.com/reference/androidx/vectordrawable/graphics/drawable/package-summary)
+     */
     val vectorDrawable = VectorDrawable
 
     object VectorDrawable : DependencyNotationAndGroup("androidx.vectordrawable", "vectordrawable") {
+
+        /**
+         * Adds ability to animate properties of a VectorDrawable.
+         * Useful for illustration purposes or state changes in response to user events.
+         */
         val animated = module("vectordrawable-animated")
+
+        /**
+         * Adds a seekable alternative to [animated].
+         */
         val seekable = module("vectordrawable-seekable")
     }
 
