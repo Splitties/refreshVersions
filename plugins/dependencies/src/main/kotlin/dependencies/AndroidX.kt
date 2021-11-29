@@ -748,6 +748,14 @@ object AndroidX : IsNotADependency {
     val vectorDrawableAnimated = DependencyNotation("androidx.vectordrawable", "vectordrawable-animated")
     val vectorDrawableSeekable = DependencyNotation("androidx.vectordrawable", "vectordrawable-seekable")
 
+    /**
+     * Provides a stable and compact binary serialization format that can be passed across processes or persisted safely.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/versionedparcelable)
+     *
+     * ### API reference:
+     * - [androidx.versionedparcelable](https://developer.android.com/reference/androidx/versionedparcelable/package-summary)
+     */
     val versionedParcelable = DependencyNotation("androidx.versionedparcelable", "versionedparcelable")
 
     /**
