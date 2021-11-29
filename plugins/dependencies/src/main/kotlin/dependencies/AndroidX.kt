@@ -26,6 +26,7 @@ object AndroidX : IsNotADependency {
         val compose = module("activity-compose")
         val ktx = module("activity-ktx")
     }
+
     val activityKtx = DependencyNotation("androidx.activity", "activity-ktx")
 
     // androidx.ads intentionally not included because ads are mental pollution.
@@ -452,10 +453,12 @@ object AndroidX : IsNotADependency {
              * For HLS playback support with ExoPlayer
              */
             val hls = module("media3-exoplayer-hls")
+
             /**
              * For RTSP playback support with ExoPlayer
              */
             val rtsp = module("media3-exoplayer-rtsp")
+
             /**
              * For ad insertion using the Interactive Media Ads SDK with ExoPlayer
              */
