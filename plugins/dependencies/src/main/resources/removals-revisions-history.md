@@ -111,3 +111,6 @@ id:[androidx.vectordrawable:vectordrawable-animated]
 
 ~~AndroidX.vectorDrawableSeekable~~
 id:[androidx.vectordrawable:vectordrawable-seekable]
+
+~~AndroidX.test.jankTestHelper~~
+id:[androidx.test.janktesthelper:janktesthelper]

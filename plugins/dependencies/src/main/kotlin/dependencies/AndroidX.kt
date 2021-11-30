@@ -713,7 +713,6 @@ object AndroidX : IsNotADependency {
 
         val services = DependencyNotation("androidx.test.services", "test-services")
 
-        val jankTestHelper = DependencyNotation("androidx.test.janktesthelper", "janktesthelper")
         val uiAutomator = DependencyNotation("androidx.test.uiautomator", "uiautomator")
 
         val espresso = Espresso

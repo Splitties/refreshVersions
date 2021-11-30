@@ -255,7 +255,6 @@ androidx.test.espresso.idling..idling-net=version.androidx.test.espresso.idling
 androidx.test.ext..junit-ktx=version.androidx.test.ext.junit
 androidx.test.ext..junit=version.androidx.test.ext.junit
 androidx.test.ext..truth=version.androidx.test
-androidx.test.janktesthelper..janktesthelper=version.androidx.test.janktesthelper
 androidx.test.services..test-services=version.androidx.test.services
 androidx.test.uiautomator..uiautomator=version.androidx.test.uiautomator
 androidx.textclassifier..textclassifier=version.androidx.textclassifier
