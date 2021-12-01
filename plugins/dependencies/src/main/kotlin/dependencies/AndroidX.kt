@@ -689,6 +689,8 @@ object AndroidX : IsNotADependency {
      * harnessing the full power of SQLite, or [CashApp.sqlDelight] which generates Kotlin
      * multiplatform code from compile-time checked SQL queries.
      *
+     * Guide: [Save data using SQLite](https://developer.android.com/training/data-storage/sqlite)
+     *
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/sqlite)
      *
      * ### API reference:
