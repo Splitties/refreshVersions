@@ -681,7 +681,17 @@ object AndroidX : IsNotADependency {
     val sqliteFramework = DependencyNotation("androidx.sqlite", "sqlite-framework")
     val sqlite = DependencyNotation("androidx.sqlite", "sqlite")
 
-    val startup = Startup // TODO kdoc
+    /**
+     * Implement a straightforward, performant way to initialize components at app startup.
+     *
+     * User guide: [App Startup](https://developer.android.com/topic/libraries/app-startup)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/startup)
+     *
+     * ### API reference:
+     * - [androidx.startup](https://developer.android.com/reference/androidx/startup/package-summary)
+     */
+    val startup = Startup
 
     object Startup : DependencyGroup(group = "androidx.startup") {
         val runtime = module("startup-runtime")
