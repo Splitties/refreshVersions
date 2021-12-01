@@ -692,12 +692,22 @@ object AndroidX : IsNotADependency {
      *
      * ### API reference:
      * - [androidx.sqlite.db](https://developer.android.com/reference/androidx/sqlite/db/package-summary)
-     * - [androidx.sqlite.db.framework](https://developer.android.com/reference/androidx/sqlite/db/framework/package-summary)
+     *
+     * @see AndroidX.Sqlite.ktx
      */
     val sqlite = Sqlite
 
     object Sqlite : DependencyNotationAndGroup("androidx.sqlite", "sqlite") {
+
+        /** Kotlin extensions */
         val ktx = module("sqlite-ktx")
+
+        /**
+         * Implementation of the AndroidX SQLite interfaces via the Android framework APIs.
+         *
+         * ### API reference:
+         * - [androidx.sqlite.db.framework](https://developer.android.com/reference/androidx/sqlite/db/framework/package-summary)
+         */
         val framework = module("sqlite-framework")
     }
 
