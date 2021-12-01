@@ -687,6 +687,14 @@ object AndroidX : IsNotADependency {
         val runtime = module("startup-runtime")
     }
 
+    /**
+     * Implement the swipe-to-refresh UI pattern.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout)
+     *
+     * ### API reference:
+     * - [androidx.swiperefreshlayout.widget](https://developer.android.com/reference/androidx/swiperefreshlayout/widget/package-summary)
+     */
     val swipeRefreshLayout = DependencyNotation("androidx.swiperefreshlayout", "swiperefreshlayout")
 
     /**
