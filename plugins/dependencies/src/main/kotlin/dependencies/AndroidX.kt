@@ -689,14 +689,39 @@ object AndroidX : IsNotADependency {
 
     val swipeRefreshLayout = DependencyNotation("androidx.swiperefreshlayout", "swiperefreshlayout")
 
-    val test = Test // TODO kdoc
+    /**
+     * Testing in Android.
+     *
+     * Guide: [Test apps on Android](https://developer.android.com/training/testing)
+     *
+     * [Samples and codelabs](https://developer.android.com/training/testing/additional-resources#samples)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/test)
+     *
+     * ### API reference:
+     * - [androidx.test](https://developer.android.com/reference/androidx/test/packages)
+     */
+    val test = Test
 
     object Test : DependencyGroup(group = "androidx.test") {
 
+        /**
+         * androidx.test.code APIs. Includes Kotlin extensions.
+         */
         val coreKtx = module("core-ktx")
+
+        /**
+         * androidx.test.code APIs.
+         *
+         * @see coreKtx
+         */
         val core = module("core")
 
         val monitor = module("monitor")
+
+        /**
+         * Android test orchestrator.
+         */
         val orchestrator = module("orchestrator")
 
         val rules = module("rules")
@@ -705,26 +730,106 @@ object AndroidX : IsNotADependency {
         val ext = Ext
 
         object Ext : DependencyGroup(group = "androidx.test.ext") {
+
+            /**
+             * JUnit extensions APIs.
+             *
+             * @see junitKtx
+             */
             val junit = module("junit")
+
+            /**
+             * JUnit extensions APIs. Includes Kotlin extensions.
+             */
             val junitKtx = module("junit-ktx")
 
+            /**
+             * [Truth](https://github.com/google/truth) extensions APIs.
+             *
+             * @see junitKtx
+             */
             val truth = module("truth")
         }
 
         val services = DependencyNotation("androidx.test.services", "test-services")
 
+        /**
+         * UI Automator is a UI testing framework suitable for cross-app
+         * functional UI testing across system and installed apps.
+         *
+         * Guides:
+         * - [Test UI for multiple apps](https://developer.android.com/training/testing/ui-testing/uiautomator-testing)
+         * - [UI Automator](https://developer.android.com/training/testing/ui-automator)
+         *
+         * ### API reference:
+         * - [androidx.test.uiautomator](https://developer.android.com/reference/androidx/test/uiautomator/package-summary)
+         */
         val uiAutomator = DependencyNotation("androidx.test.uiautomator", "uiautomator")
 
+        /**
+         * Use Espresso to write concise, beautiful, and reliable Android UI tests.
+         *
+         * Guide: [Espresso](https://developer.android.com/training/testing/espresso)
+         */
         val espresso = Espresso
 
         object Espresso : DependencyGroup(group = "androidx.test.espresso") {
 
             val core = module("espresso-core")
+
+            /**
+             * Guide: [Espresso lists: Interact with recycler view list items](https://developer.android.com/training/testing/espresso/lists#recycler-view-list-items)
+             */
             val contrib = module("espresso-contrib")
+
+            /**
+             * An idling resource represents an asynchronous operation whose results affect subsequent operations in
+             * a UI test. By registering idling resources with Espresso, you can validate these asynchronous operations
+             * more reliably when testing your app.
+             *
+             * Guide: [Espresso idling resources](https://developer.android.com/training/testing/espresso/idling-resource)
+             */
             val idlingResource = module("espresso-idling-resource")
+
+            /**
+             * Espresso-Intents is an extension to Espresso, which enables validation and stubbing of
+             * intents sent out by the application under test. It’s like Mockito, but for Android Intents.
+             *
+             * If your app delegates functionality to other apps or the platform, you can use Espresso-Intents to
+             * focus on your own app's logic while assuming that other apps or the platform will function correctly.
+             * With Espresso-Intents, you can match and validate your outgoing intents or even provide
+             * stub responses in place of actual intent responses.
+             *
+             * Guide: [Espresso-Intents](https://developer.android.com/training/testing/espresso/intents)
+             */
             val intents = module("espresso-intents")
+
+            /**
+             * Testing for accessibility lets you experience your app from the perspective of your entire user base,
+             * including users with accessibility needs. This form of testing can reveal opportunities to
+             * make your app more powerful and versatile.
+             *
+             * Guide: [Accessibility checking](https://developer.android.com/training/testing/espresso/accessibility-checking)
+             */
             val accessibility = module("espresso-accessibility")
+
+            /**
+             * As your app grows, you might find it useful to place some of your app components in
+             * a process other than your app's main process. To test app components in these
+             * non-default processes, you can use the functionality of Multiprocess Espresso.
+             * This tool, available on Android 8.0 (API level 26) and higher, allows you to
+             * seamlessly test your app's UI interactions that cross your app's process boundaries
+             * while maintaining Espresso's synchronization guarantees.
+             *
+             * Guide: [Multiprocess Espresso](https://developer.android.com/training/testing/espresso/multiprocess)
+             */
             val remote = module("espresso-remote")
+
+            /**
+             * Espresso-Web is an entry point to work with Android WebView UI components.
+             *
+             * Guide: [Espresso Web](https://developer.android.com/training/testing/espresso/web)
+             */
             val web = module("espresso-web")
 
             val idling = Idling
