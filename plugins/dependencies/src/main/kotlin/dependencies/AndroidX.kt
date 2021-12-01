@@ -679,6 +679,22 @@ object AndroidX : IsNotADependency {
 
     val sqliteKtx = DependencyNotation("androidx.sqlite", "sqlite-ktx")
     val sqliteFramework = DependencyNotation("androidx.sqlite", "sqlite-framework")
+
+    /**
+     * The `androidx.sqlite` library contains abstract interfaces along with basic implementations
+     * which can be used to build your own libraries that access SQLite.
+     *
+     * You might want to consider using the [AndroidX.Room] library, which provides
+     * an abstraction layer over SQLite to allow for more robust database access while
+     * harnessing the full power of SQLite, or [CashApp.sqlDelight] which generates Kotlin
+     * multiplatform code from compile-time checked SQL queries.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/sqlite)
+     *
+     * ### API reference:
+     * - [androidx.sqlite.db](https://developer.android.com/reference/androidx/sqlite/db/package-summary)
+     * - [androidx.sqlite.db.framework](https://developer.android.com/reference/androidx/sqlite/db/framework/package-summary)
+     */
     val sqlite = DependencyNotation("androidx.sqlite", "sqlite")
 
     /**
