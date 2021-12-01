@@ -675,6 +675,14 @@ object AndroidX : IsNotADependency {
         val view = module("slice-view")
     }
 
+    /**
+     * Implement a sliding pane UI pattern.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/slidingpanelayout)
+     *
+     * ### API reference:
+     * - [androidx.slidingpanelayout.widget](https://developer.android.com/reference/androidx/slidingpanelayout/widget/package-summary)
+     */
     val slidingPaneLayout = DependencyNotation("androidx.slidingpanelayout", "slidingpanelayout")
 
     /**
