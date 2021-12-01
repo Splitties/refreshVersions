@@ -677,9 +677,6 @@ object AndroidX : IsNotADependency {
 
     val slidingPaneLayout = DependencyNotation("androidx.slidingpanelayout", "slidingpanelayout")
 
-    val sqliteKtx = DependencyNotation("androidx.sqlite", "sqlite-ktx")
-    val sqliteFramework = DependencyNotation("androidx.sqlite", "sqlite-framework")
-
     /**
      * The `androidx.sqlite` library contains abstract interfaces along with basic implementations
      * which can be used to build your own libraries that access SQLite.
@@ -697,7 +694,12 @@ object AndroidX : IsNotADependency {
      * - [androidx.sqlite.db](https://developer.android.com/reference/androidx/sqlite/db/package-summary)
      * - [androidx.sqlite.db.framework](https://developer.android.com/reference/androidx/sqlite/db/framework/package-summary)
      */
-    val sqlite = DependencyNotation("androidx.sqlite", "sqlite")
+    val sqlite = Sqlite
+
+    object Sqlite : DependencyNotationAndGroup("androidx.sqlite", "sqlite") {
+        val ktx = module("sqlite-ktx")
+        val framework = module("sqlite-framework")
+    }
 
     /**
      * Implement a straightforward, performant way to initialize components at app startup.

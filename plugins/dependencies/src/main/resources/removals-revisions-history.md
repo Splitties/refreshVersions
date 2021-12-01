@@ -114,3 +114,9 @@ id:[androidx.vectordrawable:vectordrawable-seekable]
 
 ~~AndroidX.test.jankTestHelper~~
 id:[androidx.test.janktesthelper:janktesthelper]
+
+~~AndroidX.sqliteFramework~~
+id:[androidx.sqlite:sqlite-framework]
+
+~~AndroidX.sqliteKtx~~
+id:[androidx.sqlite:sqlite-ktx]
