@@ -664,14 +664,44 @@ object AndroidX : IsNotADependency {
 
     val shareTarget = DependencyNotation("androidx.sharetarget", "sharetarget")
 
-    val slice = Slice // TODO kdoc
+    /**
+     * Display templated UI elements outside your app.
+     *
+     * Guide: [Slices](https://developer.android.com/guide/slices)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/slice)
+     *
+     * ### API reference:
+     * - [androidx.slice](https://developer.android.com/reference/androidx/slice/package-summary)
+     */
+    val slice = Slice
 
     object Slice : DependencyGroup(group = "androidx.slice") {
 
+        /**
+         * ### API reference:
+         * - [androidx.slice.builders](https://developer.android.com/reference/androidx/slice/builders/package-summary)
+         */
         val buildersKtx = module("slice-builders-ktx")
+
+        /**
+         * ### API reference:
+         * - [androidx.slice.builders](https://developer.android.com/reference/androidx/slice/builders/package-summary)
+         *
+         * @see buildersKtx
+         */
         val builders = module("slice-builders")
 
+        /**
+         * ### API reference:
+         * - [androidx.slice.core](https://developer.android.com/reference/androidx/slice/core/package-summary)
+         */
         val core = module("slice-core")
+
+        /**
+         * ### API reference:
+         * - [androidx.slice.widget](https://developer.android.com/reference/androidx/slice/widget/package-summary)
+         */
         val view = module("slice-view")
     }
 
