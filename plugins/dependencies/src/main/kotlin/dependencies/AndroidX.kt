@@ -662,6 +662,13 @@ object AndroidX : IsNotADependency {
         val identityCredential = module("security-identity-credential")
     }
 
+    /**
+     * Provide backwards compatibility for using shortcuts as direct share targets.
+     *
+     * Guide: [Receiving simple data from other apps -> Using AndroidX to provide both Sharing Shortcuts and ChooserTargets](https://developer.android.com/training/sharing/receive#androidx-compat-library)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/sharetarget)
+     */
     val shareTarget = DependencyNotation("androidx.sharetarget", "sharetarget")
 
     /**
