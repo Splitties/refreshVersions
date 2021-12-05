@@ -649,16 +649,54 @@ object AndroidX : IsNotADependency {
     val savedState = DependencyNotation("androidx.savedstate", "savedstate")
     val savedStateKtx = DependencyNotation("androidx.savedstate", "savedstate-ktx")
 
-    val security = Security // TODO kdoc
+    /**
+     * Safely manage keys and encrypt files and sharedpreferences.
+     *
+     * Guide: [Work with data more securely](https://developer.android.com/topic/security/data)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/security)
+     *
+     * ### API reference:
+     * - [androidx.security.crypto](https://developer.android.com/reference/androidx/security/crypto/package-summary)
+     */
+    val security = Security
 
     object Security : DependencyGroup(group = "androidx.security") {
 
+        /**
+         * ### API reference:
+         * - [androidx.security.crypto](https://developer.android.com/reference/androidx/security/crypto/package-summary)
+         */
         val crypto = module("security-crypto")
+
+        /**
+         * ### API reference:
+         * - [androidx.security.crypto](https://developer.android.com/reference/androidx/security/crypto/package-summary)
+         */
         val cryptoKtx = module("security-crypto-ktx")
 
+        /**
+         * App Authentication APIs
+         *
+         * ### API reference:
+         * - [androidx.security.app.authenticator](https://developer.android.com/reference/androidx/security/app/authenticator/package-summary)
+         */
         val appAuthenticator = module("security-app-authenticator")
+
+        /**
+         * App Authentication API testing
+         *
+         * ### API reference:
+         * - [androidx.security.app.authenticator](https://developer.android.com/reference/androidx/security/app/authenticator/package-summary)
+         */
         val appAuthenticatorTesting = module("security-app-authenticator-testing")
 
+        /**
+         * Identity Credential APIs
+         *
+         * ### API reference:
+         * - [androidx.security.identity](https://developer.android.com/reference/androidx/security/identity/package-summary)
+         */
         val identityCredential = module("security-identity-credential")
     }
 
