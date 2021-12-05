@@ -646,9 +646,23 @@ object AndroidX : IsNotADependency {
         val rxJava2 = module("room-rxjava2")
     }
 
+    /**
+     * Write pluggable components that save the UI state when a process dies, and restore it when the process restarts.
+     *
+     * Guide: [Saved State module for ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel-savedstate)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/savedstate)
+     *
+     * ### API reference:
+     * - [androidx.savedstate](https://developer.android.com/reference/androidx/savedstate/package-summary)
+     *
+     * @see AndroidX.savedState.ktx
+     */
     val savedState = SavedSate
 
     object SavedSate : DependencyNotationAndGroup("androidx.savedstate", "savedstate") {
+
+        /** Kotlin extensions */
         val ktx = module("savedstate-ktx")
     }
 
