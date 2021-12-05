@@ -120,3 +120,6 @@ id:[androidx.sqlite:sqlite-framework]
 
 ~~AndroidX.sqliteKtx~~
 id:[androidx.sqlite:sqlite-ktx]
+
+~~AndroidX.savedStateKtx~~
+id:[androidx.savedstate:savedstate-ktx]

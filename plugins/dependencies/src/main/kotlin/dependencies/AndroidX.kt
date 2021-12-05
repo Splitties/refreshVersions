@@ -646,8 +646,11 @@ object AndroidX : IsNotADependency {
         val rxJava2 = module("room-rxjava2")
     }
 
-    val savedState = DependencyNotation("androidx.savedstate", "savedstate")
-    val savedStateKtx = DependencyNotation("androidx.savedstate", "savedstate-ktx")
+    val savedState = SavedSate
+
+    object SavedSate : DependencyNotationAndGroup("androidx.savedstate", "savedstate") {
+        val ktx = module("savedstate-ktx")
+    }
 
     /**
      * Safely manage keys and encrypt files and sharedpreferences.
