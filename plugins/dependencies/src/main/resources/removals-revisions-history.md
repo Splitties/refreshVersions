@@ -123,3 +123,8 @@ id:[androidx.sqlite:sqlite-ktx]
 
 ~~AndroidX.savedStateKtx~~
 id:[androidx.savedstate:savedstate-ktx]
+
+~~AndroidX.room.coroutines~~
+// FIXME: Replace with Room KTX
+moved:[androidx.room:room-ktx]
+id:[androidx.room:room-coroutines]

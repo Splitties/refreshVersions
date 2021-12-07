@@ -212,7 +212,6 @@ androidx.remotecallback..remotecallback-processor=version.androidx.remotecallbac
 androidx.remotecallback..remotecallback=version.androidx.remotecallback
 androidx.room..room-common=version.androidx.room
 androidx.room..room-compiler=version.androidx.room
-androidx.room..room-coroutines=version.androidx.room-coroutines
 androidx.room..room-guava=version.androidx.room
 androidx.room..room-ktx=version.androidx.room
 androidx.room..room-migration=version.androidx.room

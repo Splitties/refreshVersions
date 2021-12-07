@@ -38,3 +38,4 @@ androidx.wear..wear-complications-provider=version.androidx.wear-complications-p
 androidx.gaming..gaming-frame-pacing=version.androidx.gaming-frame-pacing
 androidx.gaming..gaming-performance-tuner=version.androidx.gaming-performance-tuner
 androidx.test.janktesthelper..janktesthelper=version.androidx.test.janktesthelper
+androidx.room..room-coroutines=version.androidx.room-coroutines

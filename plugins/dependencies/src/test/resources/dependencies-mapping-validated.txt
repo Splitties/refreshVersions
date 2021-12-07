@@ -214,7 +214,6 @@ androidx.remotecallback..remotecallback-processor=AndroidX.remoteCallbackProcess
 androidx.remotecallback..remotecallback=AndroidX.remoteCallback
 androidx.room..room-common=AndroidX.room.common
 androidx.room..room-compiler=AndroidX.room.compiler
-androidx.room..room-coroutines=AndroidX.room.coroutines
 androidx.room..room-guava=AndroidX.room.guava
 androidx.room..room-ktx=AndroidX.room.ktx
 androidx.room..room-migration=AndroidX.room.migration

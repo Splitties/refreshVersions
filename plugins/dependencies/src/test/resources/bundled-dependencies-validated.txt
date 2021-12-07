@@ -212,7 +212,6 @@ androidx.remotecallback:remotecallback
 androidx.remotecallback:remotecallback-processor
 androidx.room:room-common
 androidx.room:room-compiler
-androidx.room:room-coroutines
 androidx.room:room-guava
 androidx.room:room-ktx
 androidx.room:room-migration

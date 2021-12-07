@@ -648,9 +648,6 @@ object AndroidX : IsNotADependency {
          */
         val ktx = module("room-ktx")
 
-        @Deprecated("Replaced by Room KTX", ReplaceWith("ktx"))
-        val coroutines = module("room-coroutines")
-
         /**
          * Room compiler, compatible with ksp, kapt, and Java annotation processors.
          */
