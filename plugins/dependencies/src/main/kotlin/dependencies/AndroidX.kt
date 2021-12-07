@@ -1,4 +1,4 @@
-@file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
+@file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused", "MemberVisibilityCanBePrivate")
 
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
