@@ -218,6 +218,7 @@ androidx.room..room-ktx=version.androidx.room
 androidx.room..room-migration=version.androidx.room
 androidx.room..room-runtime=version.androidx.room
 androidx.room..room-rxjava2=version.androidx.room
+androidx.room..room-rxjava3=version.androidx.room
 androidx.room..room-testing=version.androidx.room
 androidx.savedstate..savedstate-ktx=version.androidx.savedstate
 androidx.savedstate..savedstate=version.androidx.savedstate

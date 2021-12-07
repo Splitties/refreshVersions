@@ -644,6 +644,7 @@ object AndroidX : IsNotADependency {
 
         val guava = module("room-guava")
         val rxJava2 = module("room-rxjava2")
+        val rxJava3 = module("room-rxjava3")
     }
 
     /**
