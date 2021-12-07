@@ -161,30 +161,29 @@ class BundledDependenciesTest {
             "https://dl.google.com/dl/android/maven2/",
             "https://plugins.gradle.org/m2/"
         )
+        val mappingWithLines = getArtifactNameToConstantMapping().associateWith {
+            "${it.group}:${it.artifact}"
+        }
 
         val newValidatedMappings = runBlocking {
-
-            getArtifactNameToConstantMapping()
-                .filter { dependencyMapping ->
-                    "${dependencyMapping.group}:${dependencyMapping.artifact}" !in validatedDependencyMapping
-                }.map { dependencyMapping ->
-                    ModuleId.Maven(dependencyMapping.group, dependencyMapping.artifact)
+            mappingWithLines.filter {
+                it.value !in validatedDependencyMapping
+            }.keys.map { dependencyMapping ->
+                ModuleId.Maven(dependencyMapping.group, dependencyMapping.artifact)
+            }.distinct().onEach { mavenModuleId ->
+                launch {
+                    getVersionCandidates(
+                        httpClient = defaultHttpClient,
+                        mavenModuleId = mavenModuleId,
+                        repoUrls = reposUrls,
+                        currentVersion = Version("")
+                    )
                 }
-                .distinct()
-                .onEach { mavenModuleId ->
-                    launch {
-                        getVersionCandidates(
-                            httpClient = defaultHttpClient,
-                            mavenModuleId = mavenModuleId,
-                            repoUrls = reposUrls,
-                            currentVersion = Version("")
-                        )
-                    }
-                }
+            }
         }
 
         when {
-            newValidatedMappings.isEmpty() -> return
+            newValidatedMappings.isEmpty() && validatedDependencyMapping.size == mappingWithLines.size -> return
             isInCi() -> withClue(
                 "Unit tests must be run and changes to bundled-dependencies-validated.txt must be committed, " +
                     "but that wasn't the case for those dependency notations."
@@ -192,9 +191,7 @@ class BundledDependenciesTest {
                 newValidatedMappings shouldBe emptyList()
             }
             else -> {
-                val mappings = getArtifactNameToConstantMapping().map {
-                    "${it.group}:${it.artifact}"
-                }.distinct().sorted().joinToString(separator = "\n")
+                val mappings = mappingWithLines.values.distinct().sorted().joinToString(separator = "\n")
                 validatedDependencyMappingFile.writeText(mappings)
             }
         }

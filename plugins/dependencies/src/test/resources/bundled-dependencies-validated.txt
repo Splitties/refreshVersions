@@ -109,8 +109,6 @@ androidx.games:games-controller
 androidx.games:games-frame-pacing
 androidx.games:games-performance-tuner
 androidx.games:games-text-input
-androidx.gaming:gaming-frame-pacing
-androidx.gaming:gaming-performance-tuner
 androidx.gridlayout:gridlayout
 androidx.health:health-services-client
 androidx.heifwriter:heifwriter
@@ -251,7 +249,6 @@ androidx.test.espresso:espresso-web
 androidx.test.ext:junit
 androidx.test.ext:junit-ktx
 androidx.test.ext:truth
-androidx.test.janktesthelper:janktesthelper
 androidx.test.services:test-services
 androidx.test.uiautomator:uiautomator
 androidx.test:core
@@ -276,7 +273,6 @@ androidx.wear.compose:compose-foundation
 androidx.wear.compose:compose-material
 androidx.wear.compose:compose-navigation
 androidx.wear.tiles:tiles
-androidx.wear.tiles:tiles-proto
 androidx.wear.tiles:tiles-renderer
 androidx.wear.tiles:tiles-testing
 androidx.wear.watchface:watchface
@@ -284,8 +280,6 @@ androidx.wear.watchface:watchface-complications-data-source
 androidx.wear.watchface:watchface-complications-data-source-ktx
 androidx.wear.watchface:watchface-editor
 androidx.wear:wear
-androidx.wear:wear-complications-data
-androidx.wear:wear-complications-provider
 androidx.wear:wear-input
 androidx.wear:wear-input-testing
 androidx.wear:wear-ongoing
