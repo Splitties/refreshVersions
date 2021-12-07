@@ -627,23 +627,81 @@ object AndroidX : IsNotADependency {
     val remoteCallback = DependencyNotation("androidx.remotecallback", "remotecallback")
     val remoteCallbackProcessor = DependencyNotation("androidx.remotecallback", "remotecallback-processor")
 
-    val room = Room // TODO kdoc
+    /**
+     * The Room persistence library provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.
+     *
+     * Guide: [Save data in a local database using Room](https://developer.android.com/training/data-storage/room)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/room)
+     *
+     * ### API reference:
+     * - [androidx.room](https://developer.android.com/reference/androidx/room/package-summary)
+     *
+     * @see CashApp.sqlDelight
+     */
+    val room = Room
 
     object Room : DependencyGroup(group = "androidx.room") {
 
+        /**
+         * Kotlin Extensions and Coroutines support for Room
+         */
         val ktx = module("room-ktx")
 
         @Deprecated("Replaced by Room KTX", ReplaceWith("ktx"))
         val coroutines = module("room-coroutines")
+
+        /**
+         * Room compiler, compatible with ksp, kapt, and Java annotation processors.
+         */
         val compiler = module("room-compiler")
+
+        /**
+         * Test helpers
+         *
+         * ### API reference:
+         * - [androidx.room.testing](https://developer.android.com/reference/androidx/room/testing/package-summary)
+         * - [androidx.room.migration](https://developer.android.com/reference/androidx/room/migration/package-summary)
+         */
         val testing = module("room-testing")
 
         val migration = module("room-migration")
+
+        /**
+         * This is the main Room artifact. Use it for Java-only apps.
+         *
+         * @see AndroidX.Room.ktx
+         */
         val runtime = module("room-runtime")
+
+        /**
+         * Includes annotations and APIs that don't depend on Android.
+         * Useful if you need to annotate classes that are shared with other platforms,
+         * or to put your Room models in a JVM library that doesn't need to use Android
+         * specific APIs.
+         */
         val common = module("room-common")
 
+        /**
+         * Guava support for Room, including Optional and ListenableFuture
+         */
         val guava = module("room-guava")
+
+        /**
+         * RxJava2 support for Room
+         *
+         * _Note: There's no online API reference left for this RxJava2 artifact, but the API surface should be the same
+         * as for [rxJava3], so you can look at [androidx.room.rxjava3](https://developer.android.com/reference/androidx/room/rxjava3/package-summary)
+         * instead._
+         */
         val rxJava2 = module("room-rxjava2")
+
+        /**
+         * RxJava3 support for Room
+         *
+         * ### API reference:
+         * - [androidx.room.rxjava3](https://developer.android.com/reference/androidx/room/rxjava3/package-summary)
+         */
         val rxJava3 = module("room-rxjava3")
     }
 
