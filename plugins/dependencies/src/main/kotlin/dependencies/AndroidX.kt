@@ -657,11 +657,11 @@ object AndroidX : IsNotADependency {
      * ### API reference:
      * - [androidx.savedstate](https://developer.android.com/reference/androidx/savedstate/package-summary)
      *
-     * @see AndroidX.savedState.ktx
+     * @see AndroidX.SavedState.ktx
      */
-    val savedState = SavedSate
+    val savedState = SavedState
 
-    object SavedSate : DependencyNotationAndGroup("androidx.savedstate", "savedstate") {
+    object SavedState : DependencyNotationAndGroup("androidx.savedstate", "savedstate") {
 
         /** Kotlin extensions */
         val ktx = module("savedstate-ktx")
