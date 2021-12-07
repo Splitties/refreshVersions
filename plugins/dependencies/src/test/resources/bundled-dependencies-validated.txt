@@ -214,7 +214,6 @@ androidx.room:room-common
 androidx.room:room-compiler
 androidx.room:room-guava
 androidx.room:room-ktx
-androidx.room:room-migration
 androidx.room:room-runtime
 androidx.room:room-rxjava2
 androidx.room:room-rxjava3

@@ -128,3 +128,8 @@ id:[androidx.savedstate:savedstate-ktx]
 // FIXME: Replace with Room KTX
 moved:[androidx.room:room-ktx]
 id:[androidx.room:room-coroutines]
+
+~~AndroidX.room.migration~~
+// room-migration is already included in room-testing
+moved:[androidx.room:room-testing]
+id:[androidx.room:room-migration]

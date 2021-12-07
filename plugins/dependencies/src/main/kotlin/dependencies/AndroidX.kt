@@ -662,8 +662,6 @@ object AndroidX : IsNotADependency {
          */
         val testing = module("room-testing")
 
-        val migration = module("room-migration")
-
         /**
          * This is the main Room artifact. Use it for Java-only apps.
          *
