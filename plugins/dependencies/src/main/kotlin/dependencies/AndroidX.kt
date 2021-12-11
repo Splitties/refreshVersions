@@ -197,8 +197,11 @@ object AndroidX : IsNotADependency {
         val futuresKtx = module("concurrent-futures-ktx")
     }
 
-    val constraintLayout = DependencyNotation("androidx.constraintlayout", "constraintlayout")
-    val constraintLayoutCompose = DependencyNotation("androidx.constraintlayout", "constraintlayout-compose")
+    val constraintLayout = ConstraintLayout
+
+    object ConstraintLayout : DependencyNotationAndGroup("androidx.constraintlayout", "constraintlayout") {
+        val compose = module("constraintlayout-compose")
+    }
 
     val contentPager = DependencyNotation("androidx.contentpager", "contentpager")
 
