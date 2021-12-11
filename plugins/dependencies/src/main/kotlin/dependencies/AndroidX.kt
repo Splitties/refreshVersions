@@ -268,9 +268,12 @@ object AndroidX : IsNotADependency {
 
     val exifInterface = DependencyNotation("androidx.exifinterface", "exifinterface")
 
-    val fragmentKtx = DependencyNotation("androidx.fragment", "fragment-ktx")
-    val fragment = DependencyNotation("androidx.fragment", "fragment")
-    val fragmentTesting = DependencyNotation("androidx.fragment", "fragment-testing")
+    val fragment = Fragment
+
+    object Fragment : DependencyNotationAndGroup("androidx.fragment", "fragment") {
+        val ktx = DependencyNotation("androidx.fragment", "fragment-ktx")
+        val testing = DependencyNotation("androidx.fragment", "fragment-testing")
+    }
 
     val games = Games
 

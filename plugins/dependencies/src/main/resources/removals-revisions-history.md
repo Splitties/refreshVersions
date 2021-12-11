@@ -151,3 +151,9 @@ id:[androidx.multidex:multidex-instrumentation]
 
 ~~AndroidX.leanbackPreference~~
 id:[androidx.leanback:leanback-preference]
+
+~~AndroidX.fragmentKtx~~
+id:[androidx.fragment:fragment-ktx]
+
+~~AndroidX.fragmentTesting~~
+id:[androidx.fragment:fragment-testing]
