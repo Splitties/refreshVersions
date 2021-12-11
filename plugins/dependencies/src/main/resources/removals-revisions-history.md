@@ -157,3 +157,9 @@ id:[androidx.fragment:fragment-ktx]
 
 ~~AndroidX.fragmentTesting~~
 id:[androidx.fragment:fragment-testing]
+
+~~AndroidX.emojiAppCompat~~
+id:[androidx.emoji:emoji-appcompat]
+
+~~AndroidX.emojiBundled~~
+id:[androidx.emoji:emoji-bundled]

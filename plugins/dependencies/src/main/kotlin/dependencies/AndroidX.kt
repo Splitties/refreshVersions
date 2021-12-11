@@ -248,9 +248,12 @@ object AndroidX : IsNotADependency {
     val dynamicAnimationKtx = DependencyNotation("androidx.dynamicanimation", "dynamicanimation-ktx")
     val dynamicAnimation = DependencyNotation("androidx.dynamicanimation", "dynamicanimation")
 
-    val emoji = DependencyNotation("androidx.emoji", "emoji")
-    val emojiAppCompat = DependencyNotation("androidx.emoji", "emoji-appcompat")
-    val emojiBundled = DependencyNotation("androidx.emoji", "emoji-bundled")
+    val emoji = Emoji
+
+    object Emoji : DependencyNotationAndGroup("androidx.emoji", "emoji") {
+        val appCompat = module("emoji-appcompat")
+        val bundled = module("emoji-bundled")
+    }
 
     val emoji2 = Emoji2
 
