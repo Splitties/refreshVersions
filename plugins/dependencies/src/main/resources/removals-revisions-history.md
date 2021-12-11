@@ -163,3 +163,6 @@ id:[androidx.emoji:emoji-appcompat]
 
 ~~AndroidX.emojiBundled~~
 id:[androidx.emoji:emoji-bundled]
+
+~~AndroidX.dynamicAnimationKtx~~
+id:[androidx.dynamicanimation:dynamicanimation-ktx]

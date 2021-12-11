@@ -245,8 +245,11 @@ object AndroidX : IsNotADependency {
 
     val drawerLayout = DependencyNotation("androidx.drawerlayout", "drawerlayout")
 
-    val dynamicAnimationKtx = DependencyNotation("androidx.dynamicanimation", "dynamicanimation-ktx")
-    val dynamicAnimation = DependencyNotation("androidx.dynamicanimation", "dynamicanimation")
+    val dynamicAnimation = DynamicAnimation
+
+    object DynamicAnimation : DependencyNotationAndGroup("androidx.dynamicanimation", "dynamicanimation") {
+        val ktx = module("dynamicanimation-ktx")
+    }
 
     val emoji = Emoji
 
