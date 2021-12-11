@@ -355,9 +355,6 @@ object AndroidX : IsNotADependency {
         val grid = module("leanback-grid")
     }
 
-    @Deprecated("Dependency notation moved", ReplaceWith("AndroidX.leanback.preference"))
-    val leanbackPreference = DependencyNotation("androidx.leanback", "leanback-preference")
-
     val legacy = Legacy // TODO kdoc
 
     object Legacy : DependencyGroup(group = "androidx.legacy") {

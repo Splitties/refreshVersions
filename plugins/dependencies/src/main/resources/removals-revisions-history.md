@@ -148,3 +148,6 @@ id:[androidx.palette:palette-ktx]
 
 ~~AndroidX.multidexInstrumentation~~
 id:[androidx.multidex:multidex-instrumentation]
+
+~~AndroidX.leanbackPreference~~
+id:[androidx.leanback:leanback-preference]

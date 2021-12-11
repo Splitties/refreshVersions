@@ -122,7 +122,6 @@ androidx.interpolator..interpolator=AndroidX.interpolator
 androidx.leanback..leanback-grid=AndroidX.leanback.grid
 androidx.leanback..leanback-paging=AndroidX.leanback.paging
 androidx.leanback..leanback-preference=AndroidX.leanback.preference
-androidx.leanback..leanback-preference=AndroidX.leanbackPreference
 androidx.leanback..leanback-tab=AndroidX.leanback.tab
 androidx.leanback..leanback=AndroidX.leanback
 androidx.legacy..legacy-preference-v14=AndroidX.legacy.preferenceV14
