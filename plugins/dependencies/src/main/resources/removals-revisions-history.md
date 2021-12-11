@@ -145,3 +145,6 @@ id:[androidx.preference:preference-ktx]
 
 ~~AndroidX.paletteKtx~~
 id:[androidx.palette:palette-ktx]
+
+~~AndroidX.multidexInstrumentation~~
+id:[androidx.multidex:multidex-instrumentation]

@@ -560,8 +560,11 @@ object AndroidX : IsNotADependency {
 
     val mediaRouter = DependencyNotation("androidx.mediarouter", "mediarouter")
 
-    val multidex = DependencyNotation("androidx.multidex", "multidex")
-    val multidexInstrumentation = DependencyNotation("androidx.multidex", "multidex-instrumentation")
+    val multidex = MultiDex
+
+    object MultiDex : DependencyNotationAndGroup("androidx.multidex", "multidex") {
+        val instrumentation = module("multidex-instrumentation")
+    }
 
     val navigation = Navigation // TODO kdoc
 
