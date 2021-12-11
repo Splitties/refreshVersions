@@ -614,8 +614,11 @@ object AndroidX : IsNotADependency {
 
     val percentLayout = DependencyNotation("androidx.percentlayout", "percentlayout")
 
-    val preferenceKtx = DependencyNotation("androidx.preference", "preference-ktx")
-    val preference = DependencyNotation("androidx.preference", "preference")
+    val preference = Preference
+
+    object Preference : DependencyNotationAndGroup("androidx.preference", "preference") {
+        val ktx = module("preference-ktx")
+    }
 
     val print = DependencyNotation("androidx.print", "print")
 
