@@ -609,8 +609,11 @@ object AndroidX : IsNotADependency {
         val rxJava3 = module("paging-rxjava3")
     }
 
-    val paletteKtx = DependencyNotation("androidx.palette", "palette-ktx")
-    val palette = DependencyNotation("androidx.palette", "palette")
+    val palette = Palette
+
+    object Palette : DependencyNotationAndGroup("androidx.palette", "palette") {
+        val ktx = module("palette-ktx")
+    }
 
     val percentLayout = DependencyNotation("androidx.percentlayout", "percentlayout")
 

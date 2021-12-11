@@ -142,3 +142,6 @@ id:[androidx.recyclerview:recyclerview-selection]
 
 ~~AndroidX.preferenceKtx~~
 id:[androidx.preference:preference-ktx]
+
+~~AndroidX.paletteKtx~~
+id:[androidx.palette:palette-ktx]
