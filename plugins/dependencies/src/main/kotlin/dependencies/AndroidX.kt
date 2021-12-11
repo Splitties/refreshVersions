@@ -624,8 +624,11 @@ object AndroidX : IsNotADependency {
     val recyclerView = DependencyNotation("androidx.recyclerview", "recyclerview")
     val recyclerViewSelection = DependencyNotation("androidx.recyclerview", "recyclerview-selection")
 
-    val remoteCallback = DependencyNotation("androidx.remotecallback", "remotecallback")
-    val remoteCallbackProcessor = DependencyNotation("androidx.remotecallback", "remotecallback-processor")
+    val remoteCallback = RemoteCallback
+
+    object RemoteCallback : DependencyNotationAndGroup("androidx.remotecallback", "remotecallback") {
+        val processor = module("remotecallback-processor")
+    }
 
     /**
      * The Room persistence library provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.

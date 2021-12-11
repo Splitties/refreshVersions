@@ -133,3 +133,6 @@ id:[androidx.room:room-coroutines]
 // room-migration is already included in room-testing
 moved:[androidx.room:room-testing]
 id:[androidx.room:room-migration]
+
+~~AndroidX.remoteCallbackProcessor~~
+id:[androidx.remotecallback:remotecallback-processor]
