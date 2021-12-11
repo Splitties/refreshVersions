@@ -621,8 +621,11 @@ object AndroidX : IsNotADependency {
 
     val recommendation = DependencyNotation("androidx.recommendation", "recommendation")
 
-    val recyclerView = DependencyNotation("androidx.recyclerview", "recyclerview")
-    val recyclerViewSelection = DependencyNotation("androidx.recyclerview", "recyclerview-selection")
+    val recyclerView = RecyclerView
+
+    object RecyclerView : DependencyNotationAndGroup("androidx.recyclerview", "recyclerview") {
+        val selection = module("recyclerview-selection")
+    }
 
     val remoteCallback = RemoteCallback
 

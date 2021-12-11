@@ -136,3 +136,6 @@ id:[androidx.room:room-migration]
 
 ~~AndroidX.remoteCallbackProcessor~~
 id:[androidx.remotecallback:remotecallback-processor]
+
+~~AndroidX.recyclerViewSelection~~
+id:[androidx.recyclerview:recyclerview-selection]
