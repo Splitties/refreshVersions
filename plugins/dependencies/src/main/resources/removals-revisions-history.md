@@ -173,3 +173,6 @@ id:[androidx.constraintlayout:constraintlayout-solver]
 
 ~~AndroidX.constraintLayoutCompose~~
 id:[androidx.constraintlayout:constraintlayout-compose]
+
+~~AndroidX.collectionKtx~~
+id:[androidx.collection:collection-ktx]

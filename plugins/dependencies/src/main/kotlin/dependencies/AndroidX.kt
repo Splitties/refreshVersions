@@ -95,8 +95,11 @@ object AndroidX : IsNotADependency {
 
     val cardView = DependencyNotation("androidx.cardview", "cardview")
 
-    val collectionKtx = DependencyNotation("androidx.collection", "collection-ktx")
-    val collection = DependencyNotation("androidx.collection", "collection")
+    val collection = Collection
+
+    object Collection : DependencyNotationAndGroup("androidx.collection", "collection") {
+        val ktx = module("collection-ktx")
+    }
 
     @Incubating
     val compose = Compose // TODO kdoc
