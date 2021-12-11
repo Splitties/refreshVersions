@@ -166,3 +166,7 @@ id:[androidx.emoji:emoji-bundled]
 
 ~~AndroidX.dynamicAnimationKtx~~
 id:[androidx.dynamicanimation:dynamicanimation-ktx]
+
+~~AndroidX.constraintLayoutSolver~~
+// Removed from refreshVersions built-in dependency notations because not documented on d.android.com
+id:[androidx.constraintlayout:constraintlayout-solver]

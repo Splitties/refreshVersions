@@ -199,7 +199,6 @@ object AndroidX : IsNotADependency {
 
     val constraintLayout = DependencyNotation("androidx.constraintlayout", "constraintlayout")
     val constraintLayoutCompose = DependencyNotation("androidx.constraintlayout", "constraintlayout-compose")
-    val constraintLayoutSolver = DependencyNotation("androidx.constraintlayout", "constraintlayout-solver")
 
     val contentPager = DependencyNotation("androidx.contentpager", "contentpager")
 

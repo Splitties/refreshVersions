@@ -67,7 +67,6 @@ androidx.compose.ui..ui=version.androidx.compose.ui
 androidx.concurrent..concurrent-futures-ktx=version.androidx.concurrent
 androidx.concurrent..concurrent-futures=version.androidx.concurrent
 androidx.constraintlayout..constraintlayout-compose=version.androidx.constraintlayout-compose
-androidx.constraintlayout..constraintlayout-solver=version.androidx.constraintlayout
 androidx.constraintlayout..constraintlayout=version.androidx.constraintlayout
 androidx.contentpager..contentpager=version.androidx.contentpager
 androidx.coordinatorlayout..coordinatorlayout=version.androidx.coordinatorlayout

@@ -68,7 +68,6 @@ androidx.concurrent:concurrent-futures
 androidx.concurrent:concurrent-futures-ktx
 androidx.constraintlayout:constraintlayout
 androidx.constraintlayout:constraintlayout-compose
-androidx.constraintlayout:constraintlayout-solver
 androidx.contentpager:contentpager
 androidx.coordinatorlayout:coordinatorlayout
 androidx.core:core
