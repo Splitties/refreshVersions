@@ -176,3 +176,6 @@ id:[androidx.constraintlayout:constraintlayout-compose]
 
 ~~AndroidX.collectionKtx~~
 id:[androidx.collection:collection-ktx]
+
+~~AndroidX.carCluster~~
+id:[androidx.car:car-cluster]

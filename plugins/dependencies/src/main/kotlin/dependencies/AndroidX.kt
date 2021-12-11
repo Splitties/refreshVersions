@@ -83,15 +83,17 @@ object AndroidX : IsNotADependency {
         val view = module("camera-view")
     }
 
-    val car = DependencyNotation("androidx.car", "car")
+    val car = Car
+
+    object Car : DependencyNotationAndGroup("androidx.car", "car") {
+        val cluster = module("car-cluster")
+    }
 
     val carApp = CarApp
 
     object CarApp : DependencyNotationAndGroup(group = "androidx.car.app", name = "app") {
         val testing = module("app-testing")
     }
-
-    val carCluster = DependencyNotation("androidx.car", "car-cluster")
 
     val cardView = DependencyNotation("androidx.cardview", "cardview")
 
