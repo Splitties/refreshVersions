@@ -182,3 +182,6 @@ id:[androidx.car:car-cluster]
 
 ~~AndroidX.biometricKtx~~
 id:[androidx.biometric:biometric-ktx]
+
+~~AndroidX.appCompatResources~~
+id:[androidx.appcompat:appcompat-resources]

@@ -34,8 +34,11 @@ object AndroidX : IsNotADependency {
     val annotation = DependencyNotation("androidx.annotation", "annotation")
     val annotationExperimental = DependencyNotation("androidx.annotation", "annotation-experimental")
 
-    val appCompat = DependencyNotation("androidx.appcompat", "appcompat")
-    val appCompatResources = DependencyNotation("androidx.appcompat", "appcompat-resources")
+    val appCompat = AppCompat
+
+    object AppCompat : DependencyNotationAndGroup("androidx.appcompat", "appcompat") {
+        val resources = module("appcompat-resources")
+    }
 
     val appSearch = AppSearch
 
