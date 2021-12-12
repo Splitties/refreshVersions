@@ -27,8 +27,6 @@ object AndroidX : IsNotADependency {
         val ktx = module("activity-ktx")
     }
 
-    val activityKtx = DependencyNotation("androidx.activity", "activity-ktx")
-
     // androidx.ads intentionally not included because ads are mental pollution.
 
     val annotation = Annotation

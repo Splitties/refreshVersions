@@ -188,3 +188,6 @@ id:[androidx.appcompat:appcompat-resources]
 
 ~~AndroidX.annotationExperimental~~
 id:[androidx.annotation:annotation-experimental]
+
+~~AndroidX.activityKtx~~
+id:[androidx.activity:activity-ktx]
