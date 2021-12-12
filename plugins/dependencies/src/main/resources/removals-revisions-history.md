@@ -185,3 +185,6 @@ id:[androidx.biometric:biometric-ktx]
 
 ~~AndroidX.appCompatResources~~
 id:[androidx.appcompat:appcompat-resources]
+
+~~AndroidX.annotationExperimental~~
+id:[androidx.annotation:annotation-experimental]

@@ -31,8 +31,11 @@ object AndroidX : IsNotADependency {
 
     // androidx.ads intentionally not included because ads are mental pollution.
 
-    val annotation = DependencyNotation("androidx.annotation", "annotation")
-    val annotationExperimental = DependencyNotation("androidx.annotation", "annotation-experimental")
+    val annotation = Annotation
+
+    object Annotation : DependencyNotationAndGroup("androidx.annotation", "annotation") {
+        val experimental = module("annotation-experimental")
+    }
 
     val appCompat = AppCompat
 
