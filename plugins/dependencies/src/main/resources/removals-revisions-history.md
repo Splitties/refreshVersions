@@ -179,3 +179,6 @@ id:[androidx.collection:collection-ktx]
 
 ~~AndroidX.carCluster~~
 id:[androidx.car:car-cluster]
+
+~~AndroidX.biometricKtx~~
+id:[androidx.biometric:biometric-ktx]

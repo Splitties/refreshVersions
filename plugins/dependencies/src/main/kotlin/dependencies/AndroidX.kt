@@ -68,8 +68,11 @@ object AndroidX : IsNotADependency {
         val common = module(name = "benchmark-common")
     }
 
-    val biometric = DependencyNotation("androidx.biometric", "biometric")
-    val biometricKtx = DependencyNotation("androidx.biometric", "biometric-ktx")
+    val biometric = Biometric
+
+    object Biometric : DependencyNotationAndGroup("androidx.biometric", "biometric") {
+        val ktx = module("biometric-ktx")
+    }
 
     val browser = DependencyNotation("androidx.browser", "browser")
 
