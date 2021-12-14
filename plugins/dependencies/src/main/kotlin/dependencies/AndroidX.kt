@@ -648,6 +648,14 @@ object AndroidX : IsNotADependency {
 
     val print = DependencyNotation("androidx.print", "print")
 
+    /**
+     * Promote content to the Android TV Launcher home screen.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/recommendation)
+     *
+     * ### API reference:
+     * - [androidx.recommendation.app](https://developer.android.com/reference/androidx/recommendation/app/package-summary)
+     */
     val recommendation = DependencyNotation("androidx.recommendation", "recommendation")
 
     /**
