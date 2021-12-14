@@ -656,6 +656,14 @@ object AndroidX : IsNotADependency {
         val selection = module("recyclerview-selection")
     }
 
+    /**
+     * Create a wrapper that makes it easier for developers to provide a PendingIntent.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/remotecallback)
+     *
+     * ### API reference:
+     * - [androidx.remotecallback](https://developer.android.com/reference/androidx/remotecallback/package-summary)
+     */
     val remoteCallback = RemoteCallback
 
     object RemoteCallback : DependencyNotationAndGroup("androidx.remotecallback", "remotecallback") {
