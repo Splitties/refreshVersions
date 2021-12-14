@@ -650,9 +650,26 @@ object AndroidX : IsNotADependency {
 
     val recommendation = DependencyNotation("androidx.recommendation", "recommendation")
 
+    /**
+     * Display large sets of data in your UI while minimizing memory usage.
+     *
+     * Guide: [Create dynamic lists with RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/recyclerview)
+     *
+     * ### API reference:
+     * - [androidx.recyclerview.widget](https://developer.android.com/reference/androidx/recyclerview/widget/package-summary)
+     */
     val recyclerView = RecyclerView
 
     object RecyclerView : DependencyNotationAndGroup("androidx.recyclerview", "recyclerview") {
+
+        /**
+         * For control over item selection of both touch and mouse driven selection
+         *
+         * ### API reference:
+         * - [androidx.recyclerview.selection](https://developer.android.com/reference/androidx/recyclerview/selection/package-summary)
+         */
         val selection = module("recyclerview-selection")
     }
 
