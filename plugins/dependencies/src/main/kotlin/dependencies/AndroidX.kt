@@ -646,6 +646,14 @@ object AndroidX : IsNotADependency {
         val ktx = module("preference-ktx")
     }
 
+    /**
+     * Print photos, docs, and other graphics and images from your app.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/print)
+     *
+     * ### API reference:
+     * - [androidx.print](https://developer.android.com/reference/androidx/print/package-summary)
+     */
     val print = DependencyNotation("androidx.print", "print")
 
     /**
