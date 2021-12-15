@@ -578,6 +578,17 @@ object AndroidX : IsNotADependency {
         val common = module("media3-common")
     }
 
+    /**
+     * Enable media display and playback on remote receiver devices using a common user interface.
+     *
+     * Guide: [MediaRouter overview](https://developer.android.com/guide/topics/media/mediarouter)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/mediarouter)
+     *
+     * ### API reference:
+     * - [androidx.mediarouter.app](https://developer.android.com/reference/kotlin/androidx/mediarouter/app/package-summary)
+     * - [androidx.mediarouter.media](https://developer.android.com/reference/kotlin/androidx/mediarouter/media/package-summary)
+     */
     val mediaRouter = DependencyNotation("androidx.mediarouter", "mediarouter")
 
     /**
