@@ -332,6 +332,16 @@ object AndroidX : IsNotADependency {
         val lifecycleViewModel = module("hilt-lifecycle-viewmodel")
     }
 
+    /**
+     * Use animation interpolators on older platforms.
+     *
+     * Guide: [Property Animation Overview -> Use Interpolators](https://developer.android.com/guide/topics/graphics/prop-animation#interpolators)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/interpolator)
+     *
+     * ### API reference:
+     * - [androidx.interpolator.view.animation](https://developer.android.com/reference/kotlin/androidx/interpolator/view/animation/package-summary)
+     */
     val interpolator = DependencyNotation("androidx.interpolator", "interpolator")
 
     /**
