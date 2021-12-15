@@ -433,6 +433,22 @@ object AndroidX : IsNotADependency {
     @Deprecated("Confusing developer experience, use coroutines + Flows and/or LiveData instead.")
     val localBroadcastManager = DependencyNotation("androidx.localbroadcastmanager", "localbroadcastmanager")
 
+    /**
+     * Share media contents and controls with other apps. Superseded by media2.
+     *
+     * Guide: [Media app architecture overview](https://developer.android.com/guide/topics/media-apps/media-apps-overview)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/media)
+     *
+     * ### API reference:
+     * - [androidx.media](https://developer.android.com/reference/kotlin/androidx/media/package-summary)
+     * - [androidx.media.app](https://developer.android.com/reference/kotlin/androidx/media/app/package-summary)
+     * - [androidx.media.session](https://developer.android.com/reference/kotlin/androidx/media/session/package-summary)
+     * - [androidx.media.utils](https://developer.android.com/reference/kotlin/androidx/media/utils/package-summary)
+     *
+     * @see AndroidX.media2
+     * @see AndroidX.media3
+     */
     val media = DependencyNotation("androidx.media", "media")
 
     /**
