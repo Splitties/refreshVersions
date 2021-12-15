@@ -358,23 +358,51 @@ object AndroidX : IsNotADependency {
     object Leanback : DependencyNotationAndGroup(group = "androidx.leanback", name = "leanback") {
 
         /**
+         * Add-on that provides a settings UI for TV apps.
+         *
          * ### API reference:
          * - [androidx.leanback.preference](https://developer.android.com/reference/kotlin/androidx/leanback/preference/package-summary)
          */
         val preference = module("leanback-preference")
 
         /**
+         * Add-on that simplifies adding paging support to a RecyclerView Adapter.
+         *
          * ### API reference:
          * - [androidx.leanback.paging](https://developer.android.com/reference/kotlin/androidx/leanback/paging/package-summary)
          */
         val paging = module("leanback-paging")
 
         /**
+         * Add-on that provides customized TabLayout to be used as the top navigation bar.
+         *
          * ### API reference:
          * - [androidx.leanback.tab](https://developer.android.com/reference/kotlin/androidx/leanback/tab/package-summary)
          */
         val tab = module("leanback-tab")
 
+        /**
+         * The base [leanback] library already depends on this library.
+         *
+         * Use this one if you want to just use the grid view components of leanback.
+         *
+         * Contains the following grid related classes and interfaces:
+         * - `BaseGridView`
+         * - `FacetProvider`
+         * - `FacetProviderAdapter`
+         * - `GridLayoutManager`
+         * - `HorizontalGridView`
+         * - `ItemAlignmentFacet`
+         * - `OnChildLaidOutListener`
+         * - `OnChildSelectedListener`
+         * - `OnChildViewHolderSelectedListener`
+         * - `VerticalGridView`
+         * - `ViewHolderTask`
+         * - `Visibility`
+         *
+         * ### API reference:
+         * - [androidx.leanback.widget](https://developer.android.com/reference/kotlin/androidx/leanback/widget/package-summary)
+         */
         val grid = module("leanback-grid")
     }
 
