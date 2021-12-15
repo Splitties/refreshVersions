@@ -307,6 +307,26 @@ object AndroidX : IsNotADependency {
     }
 
     /**
+     * Build layouts for remote surfaces using a Jetpack Compose-style API.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/glance)
+     *
+     * ### API reference:
+     * - [androidx.glance](https://developer.android.com/reference/kotlin/androidx/glance/package-summary)
+     * - [androidx.glance.action](https://developer.android.com/reference/kotlin/androidx/glance/action/package-summary)
+     * - [androidx.glance.appwidget](https://developer.android.com/reference/kotlin/androidx/glance/appwidget/package-summary)
+     * - [androidx.glance.appwidget.action](https://developer.android.com/reference/kotlin/androidx/glance/appwidget/action/package-summary)
+     * - [androidx.glance.appwidget.lazy](https://developer.android.com/reference/kotlin/androidx/glance/appwidget/lazy/package-summary)
+     * - [androidx.glance.appwidget.state](https://developer.android.com/reference/kotlin/androidx/glance/appwidget/state/package-summary)
+     * - [androidx.glance.appwidget.unit](https://developer.android.com/reference/kotlin/androidx/glance/appwidget/unit/package-summary)
+     * - [androidx.glance.layout](https://developer.android.com/reference/kotlin/androidx/glance/layout/package-summary)
+     * - [androidx.glance.state](https://developer.android.com/reference/kotlin/androidx/glance/state/package-summary)
+     * - [androidx.glance.text](https://developer.android.com/reference/kotlin/androidx/glance/text/package-summary)
+     * - [androidx.glance.unit](https://developer.android.com/reference/kotlin/androidx/glance/unit/package-summary)
+     */
+    val glance = DependencyNotation("androidx.glance", "glance")
+
+    /**
      * Implement a grid layout.
      *
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/gridlayout)
