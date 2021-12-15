@@ -640,9 +640,23 @@ object AndroidX : IsNotADependency {
 
     val percentLayout = DependencyNotation("androidx.percentlayout", "percentlayout")
 
+    /**
+     * Build interactive settings screens without needing to interact with device storage or manage the UI.
+     *
+     * Guide: [Settings](https://developer.android.com/guide/topics/ui/settings)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/preference)
+     *
+     * ### API reference:
+     * - [androidx.preference](https://developer.android.com/jetpack/androidx/releases/preference)
+     *
+     * @see AndroidX.Preference.ktx
+     */
     val preference = Preference
 
     object Preference : DependencyNotationAndGroup("androidx.preference", "preference") {
+
+        /** Kotlin extensions */
         val ktx = module("preference-ktx")
     }
 
