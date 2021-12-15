@@ -288,10 +288,30 @@ object AndroidX : IsNotADependency {
 
     val exifInterface = DependencyNotation("androidx.exifinterface", "exifinterface")
 
+    /**
+     * Segment your app into multiple, independent screens that are hosted within an Activity.
+     *
+     * Guide: [Fragments](https://developer.android.com/guide/fragments)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/fragment)
+     *
+     * ### API reference:
+     * - [androidx.fragment.app](https://developer.android.com/reference/kotlin/androidx/fragment/app/package-summary)
+     */
     val fragment = Fragment
 
     object Fragment : DependencyNotationAndGroup("androidx.fragment", "fragment") {
+
+        /** Kotlin extensions */
         val ktx = DependencyNotation("androidx.fragment", "fragment-ktx")
+
+        /**
+         * Testing Fragments in isolation.
+         *
+         * ### API reference:
+         * - [androidx.fragment.app.testing](https://developer.android.com/reference/kotlin/androidx/fragment/app/testing/package-summary)
+         * - [androidx.fragment.app.strictmode](https://developer.android.com/reference/kotlin/androidx/fragment/app/strictmode/package-summary)
+         */
         val testing = DependencyNotation("androidx.fragment", "fragment-testing")
     }
 
