@@ -395,7 +395,6 @@ object AndroidX : IsNotADependency {
 
         val runtimeKtx = module("lifecycle-runtime-ktx")
         val liveDataKtx = module("lifecycle-livedata-ktx")
-        val liveDataCoreKtx = module("lifecycle-livedata-core-ktx")
         val viewModelKtx = module("lifecycle-viewmodel-ktx")
 
         val process = module("lifecycle-process")
@@ -407,7 +406,6 @@ object AndroidX : IsNotADependency {
         val runtime = module("lifecycle-runtime")
         val viewModel = module("lifecycle-viewmodel")
         val liveData = module("lifecycle-livedata")
-        val liveDataCore = module("lifecycle-livedata-core")
 
         val common = module("lifecycle-common")
         val commonJava8 = module("lifecycle-common-java8")

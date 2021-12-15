@@ -132,8 +132,6 @@ androidx.lifecycle:lifecycle-common-java8
 androidx.lifecycle:lifecycle-compiler
 androidx.lifecycle:lifecycle-extensions
 androidx.lifecycle:lifecycle-livedata
-androidx.lifecycle:lifecycle-livedata-core
-androidx.lifecycle:lifecycle-livedata-core-ktx
 androidx.lifecycle:lifecycle-livedata-ktx
 androidx.lifecycle:lifecycle-process
 androidx.lifecycle:lifecycle-reactivestreams

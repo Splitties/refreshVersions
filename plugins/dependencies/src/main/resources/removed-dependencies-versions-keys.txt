@@ -41,3 +41,5 @@ androidx.test.janktesthelper..janktesthelper=version.androidx.test.janktesthelpe
 androidx.room..room-coroutines=version.androidx.room-coroutines
 androidx.room..room-migration=version.androidx.room
 androidx.percentlayout..percentlayout=version.androidx.percentlayout
+androidx.lifecycle..lifecycle-livedata-core-ktx=version.androidx.lifecycle
+androidx.lifecycle..lifecycle-livedata-core=version.androidx.lifecycle

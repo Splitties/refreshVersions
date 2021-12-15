@@ -196,3 +196,11 @@ id:[androidx.activity:activity-ktx]
 // PercentLayout is deprecated.
 //TODO: Replace with AndroidX ConstraintLayout
 id:[androidx.percentlayout:percentlayout]
+
+~~AndroidX.lifecycle.liveDataCoreKtx~~
+// Removed from refreshVersions built-in dependency notations because not documented on d.android.com
+id:[androidx.lifecycle:lifecycle-livedata-core-ktx]
+
+~~AndroidX.lifecycle.liveDataCore~~
+// Removed from refreshVersions built-in dependency notations because not documented on d.android.com
+id:[androidx.lifecycle:lifecycle-livedata-core]
