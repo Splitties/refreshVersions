@@ -314,6 +314,14 @@ object AndroidX : IsNotADependency {
         val servicesClient = module("health-services-client")
     }
 
+    /**
+     * Encode an image or image collection in HEIF format using the available codecs on the Android device.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/heifwriter)
+     *
+     * ### API reference:
+     * - [androidx.heifwriter](https://developer.android.com/reference/kotlin/androidx/heifwriter/package-summary)
+     */
     val heifWriter = DependencyNotation("androidx.heifwriter", "heifwriter")
 
     /**
