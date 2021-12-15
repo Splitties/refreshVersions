@@ -427,7 +427,7 @@ object AndroidX : IsNotADependency {
      * **DEPRECATED**, [see reason here](https://developer.android.com/jetpack/androidx/releases/localbroadcastmanager)
      *
      * Consider using one of these better alternatives:
-     * - `Flow` from kotlinx.coroutines (possibly in conjunction with `BroadcastChannel`)
+     * - `Flow`, `SharedFlow`, and `StateFlow` from kotlinx.coroutines
      * - ` LiveData` from AndroidX (which can interop with `Flow` from kotlinx.coroutines with [Lifecycle.liveDataKtx])
      */
     @Deprecated("Confusing developer experience, use coroutines + Flows and/or LiveData instead.")
