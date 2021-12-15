@@ -308,9 +308,20 @@ object AndroidX : IsNotADependency {
 
     val gridLayout = DependencyNotation("androidx.gridlayout", "gridlayout")
 
+    /**
+     * Create performant health applications in a platform-agnostic way.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/health)
+     */
     val health = Health
 
     object Health : DependencyGroup(group = "androidx.health") {
+
+        /**
+         * ### API reference:
+         * - [androidx.health.services.client](https://developer.android.com/reference/kotlin/androidx/health/services/client/package-summary)
+         * - [androidx.health.services.client.data](https://developer.android.com/reference/kotlin/androidx/health/services/client/data/package-summary)
+         */
         val servicesClient = module("health-services-client")
     }
 
