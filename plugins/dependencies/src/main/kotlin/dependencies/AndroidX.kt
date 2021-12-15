@@ -345,13 +345,13 @@ object AndroidX : IsNotADependency {
      * Guide: [Get started with TV apps](https://developer.android.com/training/tv/start/start)
      *
      * ### API reference:
-     * - [androidx.leanback.app](https://developer.android.com/reference/androidx/leanback/app/package-summary)
-     * - [androidx.leanback.database](https://developer.android.com/reference/androidx/leanback/database/package-summary)
-     * - [androidx.leanback.graphics](https://developer.android.com/reference/androidx/leanback/graphics/package-summary)
-     * - [androidx.leanback.media](https://developer.android.com/reference/androidx/leanback/media/package-summary)
-     * - [androidx.leanback.system](https://developer.android.com/reference/androidx/leanback/system/package-summary)
-     * - [androidx.leanback.widget](https://developer.android.com/reference/androidx/leanback/widget/package-summary)
-     * - [androidx.leanback.widget.picker](https://developer.android.com/reference/androidx/leanback/widget/picker/package-summary)
+     * - [androidx.leanback.app](https://developer.android.com/reference/kotlin/androidx/leanback/app/package-summary)
+     * - [androidx.leanback.database](https://developer.android.com/reference/kotlin/androidx/leanback/database/package-summary)
+     * - [androidx.leanback.graphics](https://developer.android.com/reference/kotlin/androidx/leanback/graphics/package-summary)
+     * - [androidx.leanback.media](https://developer.android.com/reference/kotlin/androidx/leanback/media/package-summary)
+     * - [androidx.leanback.system](https://developer.android.com/reference/kotlin/androidx/leanback/system/package-summary)
+     * - [androidx.leanback.widget](https://developer.android.com/reference/kotlin/androidx/leanback/widget/package-summary)
+     * - [androidx.leanback.widget.picker](https://developer.android.com/reference/kotlin/androidx/leanback/widget/picker/package-summary)
      */
     val leanback = Leanback
 
@@ -359,19 +359,19 @@ object AndroidX : IsNotADependency {
 
         /**
          * ### API reference:
-         * - [androidx.leanback.preference](https://developer.android.com/reference/androidx/leanback/preference/package-summary)
+         * - [androidx.leanback.preference](https://developer.android.com/reference/kotlin/androidx/leanback/preference/package-summary)
          */
         val preference = module("leanback-preference")
 
         /**
          * ### API reference:
-         * - [androidx.leanback.paging](https://developer.android.com/reference/androidx/leanback/paging/package-summary)
+         * - [androidx.leanback.paging](https://developer.android.com/reference/kotlin/androidx/leanback/paging/package-summary)
          */
         val paging = module("leanback-paging")
 
         /**
          * ### API reference:
-         * - [androidx.leanback.tab](https://developer.android.com/reference/androidx/leanback/tab/package-summary)
+         * - [androidx.leanback.tab](https://developer.android.com/reference/kotlin/androidx/leanback/tab/package-summary)
          */
         val tab = module("leanback-tab")
 
@@ -664,7 +664,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/print)
      *
      * ### API reference:
-     * - [androidx.print](https://developer.android.com/reference/androidx/print/package-summary)
+     * - [androidx.print](https://developer.android.com/reference/kotlin/androidx/print/package-summary)
      */
     val print = DependencyNotation("androidx.print", "print")
 
@@ -674,7 +674,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/recommendation)
      *
      * ### API reference:
-     * - [androidx.recommendation.app](https://developer.android.com/reference/androidx/recommendation/app/package-summary)
+     * - [androidx.recommendation.app](https://developer.android.com/reference/kotlin/androidx/recommendation/app/package-summary)
      */
     val recommendation = DependencyNotation("androidx.recommendation", "recommendation")
 
@@ -686,7 +686,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/recyclerview)
      *
      * ### API reference:
-     * - [androidx.recyclerview.widget](https://developer.android.com/reference/androidx/recyclerview/widget/package-summary)
+     * - [androidx.recyclerview.widget](https://developer.android.com/reference/kotlin/androidx/recyclerview/widget/package-summary)
      */
     val recyclerView = RecyclerView
 
@@ -696,7 +696,7 @@ object AndroidX : IsNotADependency {
          * For control over item selection of both touch and mouse driven selection
          *
          * ### API reference:
-         * - [androidx.recyclerview.selection](https://developer.android.com/reference/androidx/recyclerview/selection/package-summary)
+         * - [androidx.recyclerview.selection](https://developer.android.com/reference/kotlin/androidx/recyclerview/selection/package-summary)
          */
         val selection = module("recyclerview-selection")
     }
@@ -707,7 +707,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/remotecallback)
      *
      * ### API reference:
-     * - [androidx.remotecallback](https://developer.android.com/reference/androidx/remotecallback/package-summary)
+     * - [androidx.remotecallback](https://developer.android.com/reference/kotlin/androidx/remotecallback/package-summary)
      */
     val remoteCallback = RemoteCallback
 
@@ -723,7 +723,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/room)
      *
      * ### API reference:
-     * - [androidx.room](https://developer.android.com/reference/androidx/room/package-summary)
+     * - [androidx.room](https://developer.android.com/reference/kotlin/androidx/room/package-summary)
      *
      * @see CashApp.sqlDelight
      */
@@ -745,8 +745,8 @@ object AndroidX : IsNotADependency {
          * Test helpers
          *
          * ### API reference:
-         * - [androidx.room.testing](https://developer.android.com/reference/androidx/room/testing/package-summary)
-         * - [androidx.room.migration](https://developer.android.com/reference/androidx/room/migration/package-summary)
+         * - [androidx.room.testing](https://developer.android.com/reference/kotlin/androidx/room/testing/package-summary)
+         * - [androidx.room.migration](https://developer.android.com/reference/kotlin/androidx/room/migration/package-summary)
          */
         val testing = module("room-testing")
 
@@ -774,7 +774,7 @@ object AndroidX : IsNotADependency {
          * RxJava2 support for Room
          *
          * _Note: There's no online API reference left for this RxJava2 artifact, but the API surface should be the same
-         * as for [rxJava3], so you can look at [androidx.room.rxjava3](https://developer.android.com/reference/androidx/room/rxjava3/package-summary)
+         * as for [rxJava3], so you can look at [androidx.room.rxjava3](https://developer.android.com/reference/kotlin/androidx/room/rxjava3/package-summary)
          * instead._
          */
         val rxJava2 = module("room-rxjava2")
@@ -783,7 +783,7 @@ object AndroidX : IsNotADependency {
          * RxJava3 support for Room
          *
          * ### API reference:
-         * - [androidx.room.rxjava3](https://developer.android.com/reference/androidx/room/rxjava3/package-summary)
+         * - [androidx.room.rxjava3](https://developer.android.com/reference/kotlin/androidx/room/rxjava3/package-summary)
          */
         val rxJava3 = module("room-rxjava3")
     }
@@ -796,7 +796,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/savedstate)
      *
      * ### API reference:
-     * - [androidx.savedstate](https://developer.android.com/reference/androidx/savedstate/package-summary)
+     * - [androidx.savedstate](https://developer.android.com/reference/kotlin/androidx/savedstate/package-summary)
      *
      * @see AndroidX.SavedState.ktx
      */
@@ -816,7 +816,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/security)
      *
      * ### API reference:
-     * - [androidx.security.crypto](https://developer.android.com/reference/androidx/security/crypto/package-summary)
+     * - [androidx.security.crypto](https://developer.android.com/reference/kotlin/androidx/security/crypto/package-summary)
      */
     val security = Security
 
@@ -824,13 +824,13 @@ object AndroidX : IsNotADependency {
 
         /**
          * ### API reference:
-         * - [androidx.security.crypto](https://developer.android.com/reference/androidx/security/crypto/package-summary)
+         * - [androidx.security.crypto](https://developer.android.com/reference/kotlin/androidx/security/crypto/package-summary)
          */
         val crypto = module("security-crypto")
 
         /**
          * ### API reference:
-         * - [androidx.security.crypto](https://developer.android.com/reference/androidx/security/crypto/package-summary)
+         * - [androidx.security.crypto](https://developer.android.com/reference/kotlin/androidx/security/crypto/package-summary)
          */
         val cryptoKtx = module("security-crypto-ktx")
 
@@ -838,7 +838,7 @@ object AndroidX : IsNotADependency {
          * App Authentication APIs
          *
          * ### API reference:
-         * - [androidx.security.app.authenticator](https://developer.android.com/reference/androidx/security/app/authenticator/package-summary)
+         * - [androidx.security.app.authenticator](https://developer.android.com/reference/kotlin/androidx/security/app/authenticator/package-summary)
          */
         val appAuthenticator = module("security-app-authenticator")
 
@@ -846,7 +846,7 @@ object AndroidX : IsNotADependency {
          * App Authentication API testing
          *
          * ### API reference:
-         * - [androidx.security.app.authenticator](https://developer.android.com/reference/androidx/security/app/authenticator/package-summary)
+         * - [androidx.security.app.authenticator](https://developer.android.com/reference/kotlin/androidx/security/app/authenticator/package-summary)
          */
         val appAuthenticatorTesting = module("security-app-authenticator-testing")
 
@@ -854,7 +854,7 @@ object AndroidX : IsNotADependency {
          * Identity Credential APIs
          *
          * ### API reference:
-         * - [androidx.security.identity](https://developer.android.com/reference/androidx/security/identity/package-summary)
+         * - [androidx.security.identity](https://developer.android.com/reference/kotlin/androidx/security/identity/package-summary)
          */
         val identityCredential = module("security-identity-credential")
     }
@@ -876,7 +876,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/slice)
      *
      * ### API reference:
-     * - [androidx.slice](https://developer.android.com/reference/androidx/slice/package-summary)
+     * - [androidx.slice](https://developer.android.com/reference/kotlin/androidx/slice/package-summary)
      */
     val slice = Slice
 
@@ -884,13 +884,13 @@ object AndroidX : IsNotADependency {
 
         /**
          * ### API reference:
-         * - [androidx.slice.builders](https://developer.android.com/reference/androidx/slice/builders/package-summary)
+         * - [androidx.slice.builders](https://developer.android.com/reference/kotlin/androidx/slice/builders/package-summary)
          */
         val buildersKtx = module("slice-builders-ktx")
 
         /**
          * ### API reference:
-         * - [androidx.slice.builders](https://developer.android.com/reference/androidx/slice/builders/package-summary)
+         * - [androidx.slice.builders](https://developer.android.com/reference/kotlin/androidx/slice/builders/package-summary)
          *
          * @see buildersKtx
          */
@@ -898,13 +898,13 @@ object AndroidX : IsNotADependency {
 
         /**
          * ### API reference:
-         * - [androidx.slice.core](https://developer.android.com/reference/androidx/slice/core/package-summary)
+         * - [androidx.slice.core](https://developer.android.com/reference/kotlin/androidx/slice/core/package-summary)
          */
         val core = module("slice-core")
 
         /**
          * ### API reference:
-         * - [androidx.slice.widget](https://developer.android.com/reference/androidx/slice/widget/package-summary)
+         * - [androidx.slice.widget](https://developer.android.com/reference/kotlin/androidx/slice/widget/package-summary)
          */
         val view = module("slice-view")
     }
@@ -915,7 +915,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/slidingpanelayout)
      *
      * ### API reference:
-     * - [androidx.slidingpanelayout.widget](https://developer.android.com/reference/androidx/slidingpanelayout/widget/package-summary)
+     * - [androidx.slidingpanelayout.widget](https://developer.android.com/reference/kotlin/androidx/slidingpanelayout/widget/package-summary)
      */
     val slidingPaneLayout = DependencyNotation("androidx.slidingpanelayout", "slidingpanelayout")
 
@@ -933,7 +933,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/sqlite)
      *
      * ### API reference:
-     * - [androidx.sqlite.db](https://developer.android.com/reference/androidx/sqlite/db/package-summary)
+     * - [androidx.sqlite.db](https://developer.android.com/reference/kotlin/androidx/sqlite/db/package-summary)
      *
      * @see AndroidX.Sqlite.ktx
      */
@@ -948,7 +948,7 @@ object AndroidX : IsNotADependency {
          * Implementation of the AndroidX SQLite interfaces via the Android framework APIs.
          *
          * ### API reference:
-         * - [androidx.sqlite.db.framework](https://developer.android.com/reference/androidx/sqlite/db/framework/package-summary)
+         * - [androidx.sqlite.db.framework](https://developer.android.com/reference/kotlin/androidx/sqlite/db/framework/package-summary)
          */
         val framework = module("sqlite-framework")
     }
@@ -961,7 +961,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/startup)
      *
      * ### API reference:
-     * - [androidx.startup](https://developer.android.com/reference/androidx/startup/package-summary)
+     * - [androidx.startup](https://developer.android.com/reference/kotlin/androidx/startup/package-summary)
      */
     val startup = Startup
 
@@ -975,7 +975,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout)
      *
      * ### API reference:
-     * - [androidx.swiperefreshlayout.widget](https://developer.android.com/reference/androidx/swiperefreshlayout/widget/package-summary)
+     * - [androidx.swiperefreshlayout.widget](https://developer.android.com/reference/kotlin/androidx/swiperefreshlayout/widget/package-summary)
      */
     val swipeRefreshLayout = DependencyNotation("androidx.swiperefreshlayout", "swiperefreshlayout")
 
@@ -989,7 +989,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/test)
      *
      * ### API reference:
-     * - [androidx.test](https://developer.android.com/reference/androidx/test/packages)
+     * - [androidx.test](https://developer.android.com/reference/kotlin/androidx/test/packages)
      */
     val test = Test
 
@@ -1052,7 +1052,7 @@ object AndroidX : IsNotADependency {
          * - [UI Automator](https://developer.android.com/training/testing/ui-automator)
          *
          * ### API reference:
-         * - [androidx.test.uiautomator](https://developer.android.com/reference/androidx/test/uiautomator/package-summary)
+         * - [androidx.test.uiautomator](https://developer.android.com/reference/kotlin/androidx/test/uiautomator/package-summary)
          */
         val uiAutomator = DependencyNotation("androidx.test.uiautomator", "uiautomator")
 
@@ -1137,7 +1137,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/textclassifier)
      *
      * ### API reference:
-     * - [androidx.textclassifier](https://developer.android.com/reference/androidx/textclassifier/package-summary)
+     * - [androidx.textclassifier](https://developer.android.com/reference/kotlin/androidx/textclassifier/package-summary)
      */
     val textClassifier = DependencyNotation("androidx.textclassifier", "textclassifier")
 
@@ -1147,7 +1147,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/tracing)
      *
      * ### API reference:
-     * - [androidx.tracing](https://developer.android.com/reference/androidx/tracing/package-summary)
+     * - [androidx.tracing](https://developer.android.com/reference/kotlin/androidx/tracing/package-summary)
      *
      * @see tracingKtx
      */
@@ -1159,7 +1159,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/tracing)
      *
      * ### API reference:
-     * - [androidx.tracing](https://developer.android.com/reference/androidx/tracing/package-summary)
+     * - [androidx.tracing](https://developer.android.com/reference/kotlin/androidx/tracing/package-summary)
      */
     val tracingKtx = DependencyNotation("androidx.tracing", "tracing-ktx")
 
@@ -1169,7 +1169,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/transition)
      *
      * ### API reference:
-     * - [androidx.transition](https://developer.android.com/reference/androidx/transition/package-summary)
+     * - [androidx.transition](https://developer.android.com/reference/kotlin/androidx/transition/package-summary)
      *
      * @see transitionKtx
      */
@@ -1181,7 +1181,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/transition)
      *
      * ### API reference:
-     * - [androidx.transition](https://developer.android.com/reference/androidx/transition/package-summary)
+     * - [androidx.transition](https://developer.android.com/reference/kotlin/androidx/transition/package-summary)
      */
     val transitionKtx = DependencyNotation("androidx.transition", "transition-ktx")
 
@@ -1191,7 +1191,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/tvprovider)
      *
      * ### API reference:
-     * - [androidx.tvprovider.media.tv](https://developer.android.com/reference/androidx/tvprovider/media/tv/package-summary)
+     * - [androidx.tvprovider.media.tv](https://developer.android.com/reference/kotlin/androidx/tvprovider/media/tv/package-summary)
      */
     val tvProvider = DependencyNotation("androidx.tvprovider", "tvprovider")
 
@@ -1201,7 +1201,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/vectordrawable)
      *
      * ### API reference:
-     * - [androidx.vectordrawable.graphics.drawable](https://developer.android.com/reference/androidx/vectordrawable/graphics/drawable/package-summary)
+     * - [androidx.vectordrawable.graphics.drawable](https://developer.android.com/reference/kotlin/androidx/vectordrawable/graphics/drawable/package-summary)
      */
     val vectorDrawable = VectorDrawable
 
@@ -1225,7 +1225,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/versionedparcelable)
      *
      * ### API reference:
-     * - [androidx.versionedparcelable](https://developer.android.com/reference/androidx/versionedparcelable/package-summary)
+     * - [androidx.versionedparcelable](https://developer.android.com/reference/kotlin/androidx/versionedparcelable/package-summary)
      */
     val versionedParcelable = DependencyNotation("androidx.versionedparcelable", "versionedparcelable")
 
@@ -1237,7 +1237,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/viewpager2)
      *
      * ### API reference:
-     * - [androidx.viewpager.widget](https://developer.android.com/reference/androidx/viewpager/widget/package-summary)
+     * - [androidx.viewpager.widget](https://developer.android.com/reference/kotlin/androidx/viewpager/widget/package-summary)
      *
      * @see viewPager2
      */
@@ -1251,8 +1251,8 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/viewpager2)
      *
      * ### API reference:
-     * - [androidx.viewpager2.adapter](https://developer.android.com/reference/androidx/viewpager2/adapter/package-summary)
-     * - [androidx.viewpager2.widget](https://developer.android.com/reference/androidx/viewpager2/widget/package-summary)
+     * - [androidx.viewpager2.adapter](https://developer.android.com/reference/kotlin/androidx/viewpager2/adapter/package-summary)
+     * - [androidx.viewpager2.widget](https://developer.android.com/reference/kotlin/androidx/viewpager2/widget/package-summary)
      */
     val viewPager2 = DependencyNotation("androidx.viewpager2", "viewpager2")
 
@@ -1268,11 +1268,11 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/wear)
      *
      * ### API reference:
-     * - [androidx.wear.activity](https://developer.android.com/reference/androidx/wear/activity/package-summary)
-     * - [androidx.wear.ambient](https://developer.android.com/reference/androidx/wear/ambient/package-summary)
-     * - [androidx.wear.utils](https://developer.android.com/reference/androidx/wear/utils/package-summary)
-     * - [androidx.wear.widget](https://developer.android.com/reference/androidx/wear/widget/package-summary)
-     * - [androidx.wear.widget.drawer](https://developer.android.com/reference/androidx/wear/widget/drawer/package-summary)
+     * - [androidx.wear.activity](https://developer.android.com/reference/kotlin/androidx/wear/activity/package-summary)
+     * - [androidx.wear.ambient](https://developer.android.com/reference/kotlin/androidx/wear/ambient/package-summary)
+     * - [androidx.wear.utils](https://developer.android.com/reference/kotlin/androidx/wear/utils/package-summary)
+     * - [androidx.wear.widget](https://developer.android.com/reference/kotlin/androidx/wear/widget/package-summary)
+     * - [androidx.wear.widget.drawer](https://developer.android.com/reference/kotlin/androidx/wear/widget/drawer/package-summary)
      */
     val wear = Wear
 
@@ -1282,7 +1282,7 @@ object AndroidX : IsNotADependency {
          * Add support for wearable specific inputs.
          *
          * ### API reference:
-         * - [androidx.wear.input](https://developer.android.com/reference/androidx/wear/input/package-summary)
+         * - [androidx.wear.input](https://developer.android.com/reference/kotlin/androidx/wear/input/package-summary)
          */
         val input = module("wear-input")
 
@@ -1290,7 +1290,7 @@ object AndroidX : IsNotADependency {
          * Test utilities for [input].
          *
          * ### API reference:
-         * - [androidx.wear.input.testing](https://developer.android.com/reference/androidx/wear/input/testing/package-summary)
+         * - [androidx.wear.input.testing](https://developer.android.com/reference/kotlin/androidx/wear/input/testing/package-summary)
          */
         val inputTesting = module("wear-input-testing")
 
@@ -1300,7 +1300,7 @@ object AndroidX : IsNotADependency {
          * Codelab: [d.android.com/codelabs/ongoing-activity](https://developer.android.com/codelabs/ongoing-activity)
          *
          * ### API reference:
-         * - [androidx.wear.ongoing](https://developer.android.com/reference/androidx/wear/ongoing/package-summary)
+         * - [androidx.wear.ongoing](https://developer.android.com/reference/kotlin/androidx/wear/ongoing/package-summary)
          */
         val ongoing = module("wear-ongoing")
 
@@ -1308,9 +1308,9 @@ object AndroidX : IsNotADependency {
          * Use to implement support for interactions from the Wearables to Phones.
          *
          * ### API reference:
-         * - [androidx.wear.phone.interactions](https://developer.android.com/reference/androidx/wear/phone/interactions/package-summary)
-         * - [androidx.wear.phone.interactions.authentication](https://developer.android.com/reference/androidx/wear/phone/interactions/authentication/package-summary)
-         * - [androidx.wear.phone.interactions.notifications](https://developer.android.com/reference/androidx/wear/phone/interactions/notifications/package-summary)
+         * - [androidx.wear.phone.interactions](https://developer.android.com/reference/kotlin/androidx/wear/phone/interactions/package-summary)
+         * - [androidx.wear.phone.interactions.authentication](https://developer.android.com/reference/kotlin/androidx/wear/phone/interactions/authentication/package-summary)
+         * - [androidx.wear.phone.interactions.notifications](https://developer.android.com/reference/kotlin/androidx/wear/phone/interactions/notifications/package-summary)
          */
         val phoneInteractions = module("wear-phone-interactions")
 
@@ -1318,7 +1318,7 @@ object AndroidX : IsNotADependency {
          * Use to implement support for interactions between the Wearables and Phones.
          *
          * ### API reference:
-         * - [androidx.wear.remote.interactions](https://developer.android.com/reference/androidx/wear/remote/interactions/package-summary)
+         * - [androidx.wear.remote.interactions](https://developer.android.com/reference/kotlin/androidx/wear/remote/interactions/package-summary)
          */
         val remoteInteractions = module("wear-remote-interactions")
 
@@ -1331,7 +1331,7 @@ object AndroidX : IsNotADependency {
          * [Release notes](https://developer.android.com/jetpack/androidx/releases/wear-compose)
          *
          * ### API reference:
-         * - [androidx.window.layout](https://developer.android.com/reference/androidx/window/layout/package-summary)
+         * - [androidx.window.layout](https://developer.android.com/reference/kotlin/androidx/window/layout/package-summary)
          */
         val compose = Compose
 
@@ -1374,7 +1374,7 @@ object AndroidX : IsNotADependency {
          * Codelab: [d.android.com/codelabs/wear-tiles](https://developer.android.com/codelabs/wear-tiles)
          *
          * ### API reference
-         * - [androidx.wear.tiles](https://developer.android.com/reference/androidx/wear/tiles/package-summary)
+         * - [androidx.wear.tiles](https://developer.android.com/reference/kotlin/androidx/wear/tiles/package-summary)
          */
         val tiles = Tiles
 
@@ -1468,7 +1468,7 @@ object AndroidX : IsNotADependency {
      * Guide: [Managing WebView objects](https://developer.android.com/guide/webapps/managing-webview)
      *
      * ### API reference:
-     * - [androidx.webkit](https://developer.android.com/reference/androidx/webkit/package-summary)
+     * - [androidx.webkit](https://developer.android.com/reference/kotlin/androidx/webkit/package-summary)
      */
     val webkit = DependencyNotation(group = "androidx.webkit", name = "webkit")
 
@@ -1483,7 +1483,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/window)
      *
      * ### API reference:
-     * - [androidx.window.layout](https://developer.android.com/reference/androidx/window/layout/package-summary)
+     * - [androidx.window.layout](https://developer.android.com/reference/kotlin/androidx/window/layout/package-summary)
      */
     val window = Window
 
@@ -1491,7 +1491,7 @@ object AndroidX : IsNotADependency {
 
         /**
          * ### API reference:
-         * - [androidx.window.testing.layout](https://developer.android.com/reference/androidx/window/testing/layout/package-summary)
+         * - [androidx.window.testing.layout](https://developer.android.com/reference/kotlin/androidx/window/testing/layout/package-summary)
          */
         val testing = module("window-testing")
 
@@ -1499,19 +1499,19 @@ object AndroidX : IsNotADependency {
          * For Java-friendly APIs to register and unregister callbacks
          *
          * ### API reference:
-         * - [androidx.window.java.layout](https://developer.android.com/reference/androidx/window/java/layout/package-summary)
+         * - [androidx.window.java.layout](https://developer.android.com/reference/kotlin/androidx/window/java/layout/package-summary)
          */
         val java = module("window-java")
 
         /**
          * ### API reference:
-         * - [androidx.window.rxjava2.layout](https://developer.android.com/reference/androidx/window/rxjava2/layout/package-summary)
+         * - [androidx.window.rxjava2.layout](https://developer.android.com/reference/kotlin/androidx/window/rxjava2/layout/package-summary)
          */
         val rxJava2 = module("window-rxjava2")
 
         /**
          * ### API reference:
-         * - [androidx.window.rxjava3.layout](https://developer.android.com/reference/androidx/window/rxjava3/layout/package-summary)
+         * - [androidx.window.rxjava3.layout](https://developer.android.com/reference/kotlin/androidx/window/rxjava3/layout/package-summary)
          */
         val rxJava3 = module("window-rxjava3")
     }
@@ -1525,7 +1525,7 @@ object AndroidX : IsNotADependency {
      * Guide: [Schedule tasks with WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager)
      *
      * ### API reference:
-     * - [androidx.work](https://developer.android.com/reference/androidx/work/package-summary)
+     * - [androidx.work](https://developer.android.com/reference/kotlin/androidx/work/package-summary)
      */
     val work = Work
 
@@ -1544,7 +1544,7 @@ object AndroidX : IsNotADependency {
          * Test helpers
          *
          * ### API reference:
-         * - [androidx.work.testing](https://developer.android.com/reference/androidx/work/testing/package-summary)
+         * - [androidx.work.testing](https://developer.android.com/reference/kotlin/androidx/work/testing/package-summary)
          */
         val testing = module("work-testing")
 
