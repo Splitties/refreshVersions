@@ -421,6 +421,19 @@ object AndroidX : IsNotADependency {
         val extensions = module("lifecycle-extensions")
     }
 
+    /**
+     * Load data for your UI that survives configuration changes.
+     *
+     * **NOTE: This library is obsolete. New code should not need this library. Use ViewModel and SharedFlow or LiveData instead.**
+     *
+     * Guide: [Loaders](https://developer.android.com/guide/components/loaders)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/loader)
+     *
+     * ### API reference:
+     * - [androidx.loader.app](https://developer.android.com/reference/kotlin/androidx/loader/app/package-summary)
+     * - [androidx.loader.content](https://developer.android.com/reference/kotlin/androidx/loader/content/package-summary)
+     */
     val loader = DependencyNotation("androidx.loader", "loader")
 
     /**
