@@ -586,31 +586,100 @@ object AndroidX : IsNotADependency {
         val instrumentation = module("multidex-instrumentation")
     }
 
-    val navigation = Navigation // TODO kdoc
+    /**
+     * Navigation is a framework for navigating between 'destinations' within an Android application that
+     * provides a consistent API whether destinations are implemented as Fragments, Activities,
+     * or other components.
+     *
+     * Guide: [Navigation](https://developer.android.com/guide/navigation)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/navigation)
+     *
+     * ### API reference:
+     * - [androidx.navigation](https://developer.android.com/reference/kotlin/androidx/navigation/package-summary)
+     */
+    val navigation = Navigation
 
     object Navigation : DependencyGroup(group = "androidx.navigation") {
 
+        /**
+         * Support for Fragment destinations, with Kotlin extensions.
+         *
+         * ### API reference:
+         * - [androidx.navigation.fragment](https://developer.android.com/reference/kotlin/androidx/navigation/fragment/package-summary)
+         */
         val fragmentKtx = module("navigation-fragment-ktx")
+
+        /**
+         * NavigationUI, with Kotlin extensions.
+         *
+         * ### API reference:
+         * - [androidx.navigation.ui](https://developer.android.com/reference/kotlin/androidx/navigation/ui/package-summary)
+         */
         val uiKtx = module("navigation-ui-ktx")
 
+        /**
+         * Jetpack Compose integration
+         *
+         * Guide: [Navigating with Compose](https://developer.android.com/jetpack/compose/navigation)
+         *
+         * ### API reference:
+         * - [androidx.navigation.compose](https://developer.android.com/reference/kotlin/androidx/navigation/compose/package-summary)
+         */
         val compose = module("navigation-compose")
 
+        /**
+         * Feature module support
+         *
+         * ### API reference:
+         * - [androidx.navigation.dynamicfeatures.fragment](https://developer.android.com/reference/kotlin/androidx/navigation/dynamicfeatures/fragment/package-summary)
+         * - [androidx.navigation.dynamicfeatures.ui](https://developer.android.com/reference/kotlin/androidx/navigation/dynamicfeatures/ui/package-summary)
+         */
         val dynamicFeaturesFragment = module("navigation-dynamic-features-fragment")
 
         val safeArgsGenerator = module("navigation-safe-args-generator")
         val safeArgsGradlePlugin = module("navigation-safe-args-gradle-plugin")
 
+        /**
+         * Testing Navigation
+         *
+         * ### API reference:
+         * - [androidx.navigation](https://developer.android.com/reference/kotlin/androidx/navigation/package-summary)
+         */
         val testing = module("navigation-testing")
 
         // All the Navigation artifacts below are transitively included in fragmentKtx and uiKtx.
 
+        /** Included in other Navigation KTX and Compose artifacts. */
         val commonKtx = module("navigation-common-ktx")
+
+        /** Included in other Navigation KTX and Compose artifacts. */
         val runtimeKtx = module("navigation-runtime-ktx")
 
+        /**
+         * Support for Fragment destinations, includes only Java APIs.
+         *
+         * ### API reference:
+         * - [androidx.navigation.fragment](https://developer.android.com/reference/kotlin/androidx/navigation/fragment/package-summary)
+         *
+         * @see AndroidX.Navigation.fragmentKtx
+         */
         val fragment = module("navigation-fragment")
+
+        /**
+         * NavigationUI, includes only Java APIs.
+         *
+         * ### API reference:
+         * - [androidx.navigation.ui](https://developer.android.com/reference/androidx/navigation/ui/package-summary)
+         *
+         * @see AndroidX.Navigation.uiKtx
+         */
         val ui = module("navigation-ui")
 
+        /** Included in other Navigation artifacts. */
         val runtime = module("navigation-runtime")
+
+        /** Included in other Navigation artifacts. */
         val common = module("navigation-common")
     }
 
