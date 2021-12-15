@@ -193,6 +193,7 @@ androidx.navigation..navigation-ui=AndroidX.navigation.ui
 androidx.paging..paging-common-ktx=AndroidX.paging.commonKtx
 androidx.paging..paging-common=AndroidX.paging.common
 androidx.paging..paging-compose=AndroidX.paging.compose
+androidx.paging..paging-guava=AndroidX.paging.guava
 androidx.paging..paging-runtime-ktx=AndroidX.paging.runtimeKtx
 androidx.paging..paging-runtime=AndroidX.paging.runtime
 androidx.paging..paging-rxjava2-ktx=AndroidX.paging.rxJava2Ktx

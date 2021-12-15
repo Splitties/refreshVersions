@@ -653,6 +653,9 @@ object AndroidX : IsNotADependency {
          */
         val rxJava2Ktx = module("paging-rxjava2-ktx")
 
+        /** Guava ListenableFuture support */
+        val guava = module("paging-guava")
+
         /**
          * Without Android dependencies, for tests
          *
