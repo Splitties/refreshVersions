@@ -632,9 +632,21 @@ object AndroidX : IsNotADependency {
         val rxJava3 = module("paging-rxjava3")
     }
 
+    /**
+     * Extract representative color palettes from images.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/palette)
+     *
+     * ### API reference:
+     * - [androidx.palette.graphics](https://developer.android.com/reference/kotlin/androidx/palette/graphics/package-summary)
+     *
+     * @see AndroidX.Palette.ktx
+     */
     val palette = Palette
 
     object Palette : DependencyNotationAndGroup("androidx.palette", "palette") {
+
+        /** Kotlin extensions */
         val ktx = module("palette-ktx")
     }
 
