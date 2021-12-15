@@ -316,13 +316,54 @@ object AndroidX : IsNotADependency {
 
     val heifWriter = DependencyNotation("androidx.heifwriter", "heifwriter")
 
-    val hilt = Hilt // TODO kdoc
+    /**
+     * Extend the functionality of [Dagger Hilt](https://dagger.dev/hilt/) to enable dependency injection of certain classes from the androidx libraries.
+     *
+     * Guide: [Dependency injection with Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/hilt)
+     *
+     * @see Google.Dagger.Hilt.Android.gradlePlugin
+     * @see Google.Dagger.Hilt.android
+     * @see Google.Dagger.Hilt.compiler
+     */
+    val hilt = Hilt
 
     object Hilt : DependencyGroup(group = "androidx.hilt") {
 
+        /**
+         * Inject WorkManager with Hilt.
+         *
+         * Guide: [Hilt and Jetpack integrations -> Inject WorkManager with Hilt](https://developer.android.com/training/dependency-injection/hilt-jetpack#workmanager)
+         *
+         * ### API reference:
+         * - [androidx.hilt.work](https://developer.android.com/reference/kotlin/androidx/hilt/work/package-summary)
+         */
         val work = module("hilt-work")
+
+        /**
+         * Integration with the Jetpack navigation library
+         *
+         * Guide: [Hilt and Jetpack integrations -> Integration with the Jetpack navigation library](https://developer.android.com/training/dependency-injection/hilt-jetpack#viewmodel-navigation)
+         *
+         * ### API reference:
+         * - [androidx.hilt.navigation.fragment](https://developer.android.com/reference/kotlin/androidx/hilt/navigation/fragment/package-summary)
+         * - [androidx.hilt.navigation](https://developer.android.com/reference/kotlin/androidx/hilt/navigation/package-summary)
+         */
         val navigationFragment = module("hilt-navigation-fragment")
+
+        /**
+         * Integration with navigation for Jetpack Compose.
+         *
+         * Guide: [Compose and other libraries -> Hilt and Navigation](https://developer.android.com/jetpack/compose/libraries#hilt-navigation)
+         *
+         * ### API reference:
+         * - [androidx.hilt.navigation.compose](https://developer.android.com/reference/kotlin/androidx/hilt/navigation/compose/package-summary)
+         * - [androidx.hilt.navigation](https://developer.android.com/reference/kotlin/androidx/hilt/navigation/package-summary)
+         */
         val navigationCompose = module("hilt-navigation-compose")
+
+        /** Annotation processor */
         val compiler = module("hilt-compiler")
 
         @Deprecated(
