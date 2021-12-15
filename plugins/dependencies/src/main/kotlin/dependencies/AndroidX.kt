@@ -306,6 +306,14 @@ object AndroidX : IsNotADependency {
         val textInput = module("games-text-input")
     }
 
+    /**
+     * Implement a grid layout.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/gridlayout)
+     *
+     * ### API reference:
+     * - [androidx.gridlayout.widget](https://developer.android.com/reference/kotlin/androidx/gridlayout/widget/package-summary)
+     */
     val gridLayout = DependencyNotation("androidx.gridlayout", "gridlayout")
 
     /**
