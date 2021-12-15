@@ -414,7 +414,7 @@ object AndroidX : IsNotADependency {
      *
      * Guide: [Handling Lifecycles with Lifecycle-Aware Components](https://developer.android.com/topic/libraries/architecture/lifecycle)
      *
-     * [Release notes](https://developer.android.com/jetpack/androidx/releases/lifecycle )
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/lifecycle)
      *
      * ### API reference:
      * - [androidx.lifecycle](https://developer.android.com/reference/kotlin/androidx/lifecycle/package-summary)
