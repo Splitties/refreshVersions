@@ -410,6 +410,7 @@ object AndroidX : IsNotADependency {
         val common = module("lifecycle-common")
         val commonJava8 = module("lifecycle-common-java8")
 
+        @Deprecated("@OnLifecycleEvent was deprecated. LifecycleEventObserver or DefaultLifecycleObserver should be used instead.")
         val compiler = module("lifecycle-compiler")
 
         val reactiveStreams = module("lifecycle-reactivestreams")
