@@ -295,6 +295,18 @@ object AndroidX : IsNotADependency {
         val testing = DependencyNotation("androidx.fragment", "fragment-testing")
     }
 
+    /**
+     * The android games library mirrors the Android Game SDK which is available as a binary download.
+     *
+     * You can use the androidx library instead of manually downloading and integrating the Android Game SDK into your build.
+     *
+     * For more information about the Android Game SDK, see the [SDK documentation](https://developer.android.com/games/sdk)
+     * and the [SDK release notes](https://developer.android.com/games/sdk/release-notes).
+     *
+     * [Setup instructions & release notes](https://developer.android.com/jetpack/androidx/releases/games)
+     *
+     * Guide: [Android Game Development Kit](https://developer.android.com/games/agdk)
+     */
     val games = Games
 
     object Games : DependencyGroup(group = "androidx.games") {
