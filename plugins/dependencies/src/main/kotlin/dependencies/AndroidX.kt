@@ -580,6 +580,13 @@ object AndroidX : IsNotADependency {
 
     val mediaRouter = DependencyNotation("androidx.mediarouter", "mediarouter")
 
+    /**
+     * Deploy applications with multiple dex files on pre-Android 5 devices.
+     *
+     * Guide: [Enable multidex for apps with over 64K methods](https://developer.android.com/studio/build/multidex)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/multidex)
+     */
     val multidex = MultiDex
 
     object MultiDex : DependencyNotationAndGroup("androidx.multidex", "multidex") {
