@@ -122,11 +122,6 @@ androidx.leanback:leanback-grid
 androidx.leanback:leanback-paging
 androidx.leanback:leanback-preference
 androidx.leanback:leanback-tab
-androidx.legacy:legacy-preference-v14
-androidx.legacy:legacy-support-core-ui
-androidx.legacy:legacy-support-core-utils
-androidx.legacy:legacy-support-v13
-androidx.legacy:legacy-support-v4
 androidx.lifecycle:lifecycle-common
 androidx.lifecycle:lifecycle-common-java8
 androidx.lifecycle:lifecycle-compiler

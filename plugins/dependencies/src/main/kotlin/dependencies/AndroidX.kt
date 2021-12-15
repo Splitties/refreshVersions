@@ -378,17 +378,6 @@ object AndroidX : IsNotADependency {
         val grid = module("leanback-grid")
     }
 
-    val legacy = Legacy // TODO kdoc
-
-    object Legacy : DependencyGroup(group = "androidx.legacy") {
-
-        val preferenceV14 = module("legacy-preference-v14")
-        val supportCoreUi = module("legacy-support-core-ui")
-        val supportCoreUtils = module("legacy-support-core-utils")
-        val supportV13 = module("legacy-support-v13")
-        val supportV4 = module("legacy-support-v4")
-    }
-
     /**
      * Lifecycle-aware components perform actions in response to a change in the lifecycle status of another component,
      * such as activities and fragments.

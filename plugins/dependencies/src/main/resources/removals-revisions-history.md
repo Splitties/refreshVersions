@@ -204,3 +204,23 @@ id:[androidx.lifecycle:lifecycle-livedata-core-ktx]
 ~~AndroidX.lifecycle.liveDataCore~~
 // Removed from refreshVersions built-in dependency notations because not documented on d.android.com
 id:[androidx.lifecycle:lifecycle-livedata-core]
+
+~~AndroidX.legacy.preferenceV14~~
+// Deprecated. TODO: Stop using this artifact.
+id:[androidx.legacy:legacy-preference-v14]
+
+~~AndroidX.legacy.supportCoreUi~~
+// Deprecated. TODO: Stop using this artifact.
+id:[androidx.legacy:legacy-support-core-ui]
+
+~~AndroidX.legacy.supportCoreUtils~~
+// Deprecated. TODO: Stop using this artifact.
+id:[androidx.legacy:legacy-support-core-utils]
+
+~~AndroidX.legacy.supportV13~~
+// Deprecated. TODO: Stop using this artifact.
+id:[androidx.legacy:legacy-support-v13]
+
+~~AndroidX.legacy.supportV4~~
+// Deprecated. TODO: Stop using this artifact.
+id:[androidx.legacy:legacy-support-v4]
