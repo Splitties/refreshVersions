@@ -394,6 +394,16 @@ object AndroidX : IsNotADependency {
     object Lifecycle : DependencyGroup(group = "androidx.lifecycle") {
 
         val runtimeKtx = module("lifecycle-runtime-ktx")
+
+        /**
+         * Provides a `TestlifecycleOwner` that implements `LifecycleOwner` and
+         * provides a thread safe mutable `Lifcycle`.
+         *
+         * ### API reference:
+         * - [androidx.lifecycle.testing](https://developer.android.com/reference/kotlin/androidx/lifecycle/testing/package-summary)
+         */
+        val runtimeTesting = module("lifecycle-runtime-testing")
+
         val liveDataKtx = module("lifecycle-livedata-ktx")
         val viewModelKtx = module("lifecycle-viewmodel-ktx")
 

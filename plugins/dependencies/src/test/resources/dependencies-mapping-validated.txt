@@ -137,6 +137,7 @@ androidx.lifecycle..lifecycle-process=AndroidX.lifecycle.process
 androidx.lifecycle..lifecycle-reactivestreams-ktx=AndroidX.lifecycle.reactiveStreamsKtx
 androidx.lifecycle..lifecycle-reactivestreams=AndroidX.lifecycle.reactiveStreams
 androidx.lifecycle..lifecycle-runtime-ktx=AndroidX.lifecycle.runtimeKtx
+androidx.lifecycle..lifecycle-runtime-testing=AndroidX.lifecycle.runtimeTesting
 androidx.lifecycle..lifecycle-runtime=AndroidX.lifecycle.runtime
 androidx.lifecycle..lifecycle-service=AndroidX.lifecycle.service
 androidx.lifecycle..lifecycle-viewmodel-compose=AndroidX.lifecycle.viewModelCompose
