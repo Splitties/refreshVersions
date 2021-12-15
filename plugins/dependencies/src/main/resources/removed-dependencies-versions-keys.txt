@@ -40,3 +40,4 @@ androidx.gaming..gaming-performance-tuner=version.androidx.gaming-performance-tu
 androidx.test.janktesthelper..janktesthelper=version.androidx.test.janktesthelper
 androidx.room..room-coroutines=version.androidx.room-coroutines
 androidx.room..room-migration=version.androidx.room
+androidx.percentlayout..percentlayout=version.androidx.percentlayout

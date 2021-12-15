@@ -638,8 +638,6 @@ object AndroidX : IsNotADependency {
         val ktx = module("palette-ktx")
     }
 
-    val percentLayout = DependencyNotation("androidx.percentlayout", "percentlayout")
-
     /**
      * Build interactive settings screens without needing to interact with device storage or manage the UI.
      *

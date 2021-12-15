@@ -200,7 +200,6 @@ androidx.paging:paging-rxjava2-ktx
 androidx.paging:paging-rxjava3
 androidx.palette:palette
 androidx.palette:palette-ktx
-androidx.percentlayout:percentlayout
 androidx.preference:preference
 androidx.preference:preference-ktx
 androidx.print:print

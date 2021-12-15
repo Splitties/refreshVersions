@@ -191,3 +191,8 @@ id:[androidx.annotation:annotation-experimental]
 
 ~~AndroidX.activityKtx~~
 id:[androidx.activity:activity-ktx]
+
+~~AndroidX.percentLayout~~
+// PercentLayout is deprecated.
+//TODO: Replace with AndroidX ConstraintLayout
+id:[androidx.percentlayout:percentlayout]
