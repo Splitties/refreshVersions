@@ -614,21 +614,74 @@ object AndroidX : IsNotADependency {
         val common = module("navigation-common")
     }
 
-    val paging = Paging // TODO kdoc
+    /**
+     * The Paging Library makes it easier for you to load data gradually and gracefully within your app's RecyclerView,
+     * LazyColumn, or LazyRow.
+     *
+     * Guide: [Paging library overview](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
+     *
+     * Codelab: [d.android.com/codelabs/android-paging](https://developer.android.com/codelabs/android-paging)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/paging)
+     *
+     * ### API reference:
+     * - [androidx.paging](https://developer.android.com/reference/kotlin/androidx/paging/package-summary)
+     */
+    val paging = Paging
 
     object Paging : DependencyGroup(group = "androidx.paging") {
 
+        /** Kotlin extensions, without Android dependencies, for tests */
         val commonKtx = module("paging-common-ktx")
+
+        /** Runtime with Kotlin extensions */
         val runtimeKtx = module("paging-runtime-ktx")
 
+        /**
+         * Jetpack Compose integration
+         *
+         * ### API reference:
+         * - [androidx.paging.compose](https://developer.android.com/reference/kotlin/androidx/paging/compose/package-summary)
+         */
         val compose = module("paging-compose")
 
+        /**
+         * RxJava2 support with Kotlin extensions
+         *
+         * ### API reference:
+         * - [androidx.paging.rxjava2](https://developer.android.com/reference/kotlin/androidx/paging/rxjava2/package-summary)
+         */
         val rxJava2Ktx = module("paging-rxjava2-ktx")
 
+        /**
+         * Without Android dependencies, for tests
+         *
+         * @see AndroidX.Paging.commonKtx
+         */
         val common = module("paging-common")
+
+        /**
+         * Runtime
+         *
+         * @see AndroidX.Paging.runtimeKtx
+         */
         val runtime = module("paging-runtime")
 
+        /**
+         * RxJava2 support
+         *
+         * ### API reference:
+         * - [androidx.paging.rxjava2](https://developer.android.com/reference/kotlin/androidx/paging/rxjava2/package-summary)
+         *
+         * @see AndroidX.Paging.rxJava2Ktx
+         */
         val rxJava2 = module("paging-rxjava2")
+
+        /** RxJava3 support
+         *
+         * ### API reference:
+         * - [androidx.paging.rxjava3](https://developer.android.com/reference/kotlin/androidx/paging/rxjava3/package-summary)
+         */
         val rxJava3 = module("paging-rxjava3")
     }
 
