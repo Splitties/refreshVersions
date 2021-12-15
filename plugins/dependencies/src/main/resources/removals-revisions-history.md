@@ -224,3 +224,9 @@ id:[androidx.legacy:legacy-support-v13]
 ~~AndroidX.legacy.supportV4~~
 // Deprecated. TODO: Stop using this artifact.
 id:[androidx.legacy:legacy-support-v4]
+
+~~AndroidX.hilt.lifecycleViewModel~~
+//TODO: Remove usage of this dependency.
+// Use @HiltViewModel instead of @ViewModelInject and remove this dependency.
+// See docs here: https://dagger.dev/hilt/view-model
+id:[androidx.hilt:hilt-lifecycle-viewmodel]

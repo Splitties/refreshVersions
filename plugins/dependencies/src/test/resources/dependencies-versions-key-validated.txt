@@ -112,7 +112,6 @@ androidx.gridlayout..gridlayout=version.androidx.gridlayout
 androidx.health..health-services-client=version.androidx.health
 androidx.heifwriter..heifwriter=version.androidx.heifwriter
 androidx.hilt..hilt-compiler=version.androidx.hilt
-androidx.hilt..hilt-lifecycle-viewmodel=version.androidx.hilt-lifecycle-viewmodel
 androidx.hilt..hilt-navigation-compose=version.androidx.hilt-navigation-compose
 androidx.hilt..hilt-navigation-fragment=version.androidx.hilt
 androidx.hilt..hilt-work=version.androidx.hilt

@@ -365,12 +365,6 @@ object AndroidX : IsNotADependency {
 
         /** Annotation processor */
         val compiler = module("hilt-compiler")
-
-        @Deprecated(
-            "Use @HiltViewModel instead of @ViewModelInject and remove this dependency. " +
-                "See docs here: https://dagger.dev/hilt/view-model"
-        )
-        val lifecycleViewModel = module("hilt-lifecycle-viewmodel")
     }
 
     /**

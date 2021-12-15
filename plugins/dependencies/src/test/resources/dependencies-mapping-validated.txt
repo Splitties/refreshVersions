@@ -112,7 +112,6 @@ androidx.gridlayout..gridlayout=AndroidX.gridLayout
 androidx.health..health-services-client=AndroidX.health.servicesClient
 androidx.heifwriter..heifwriter=AndroidX.heifWriter
 androidx.hilt..hilt-compiler=AndroidX.hilt.compiler
-androidx.hilt..hilt-lifecycle-viewmodel=AndroidX.hilt.lifecycleViewModel
 androidx.hilt..hilt-navigation-compose=AndroidX.hilt.navigationCompose
 androidx.hilt..hilt-navigation-fragment=AndroidX.hilt.navigationFragment
 androidx.hilt..hilt-work=AndroidX.hilt.work
