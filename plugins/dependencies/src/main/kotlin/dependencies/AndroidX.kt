@@ -435,14 +435,59 @@ object AndroidX : IsNotADependency {
 
     val media = DependencyNotation("androidx.media", "media")
 
+    /**
+     * Share media contents and controls with other apps.
+     *
+     * Guide: [Media app architecture overview](https://developer.android.com/guide/topics/media-apps/media-apps-overview)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/media2)
+     *
+     * ### API reference:
+     * - [androidx.media2.common](https://developer.android.com/reference/kotlin/androidx/media2/common/package-summary)
+     *
+     * @see AndroidX.media3
+     */
     val media2 = Media2
 
     object Media2 : DependencyGroup(group = "androidx.media2") {
+
+        /**
+         * Interacting with MediaSessions
+         *
+         * ### API reference:
+         * - [androidx.media2.session](https://developer.android.com/reference/kotlin/androidx/media2/session/package-summary)
+         */
         val session = module("media2-session")
+
+        /**
+         * UI widgets for VideoView and MediaControlView
+         *
+         * ### API reference:
+         * - [androidx.media2.widget](https://developer.android.com/reference/kotlin/androidx/media2/widget/package-summary)
+         */
         val widget = module("media2-widget")
+
+        /**
+         * Implementation of a SessionPlayer
+         *
+         * ### API reference:
+         * - [androidx.media2.player](https://developer.android.com/reference/kotlin/androidx/media2/player/package-summary)
+         */
         val player = module("media2-player")
+
+        /**
+         * Repackaged ExoPlayer for 'media2' artifact
+         *
+         * @see AndroidX.Media3.exoPlayer
+         */
         val exoplayer = module("media2-exoplayer")
 
+        /**
+         * Common APIs, included in other Media2 artifacts.
+         *
+         * ### API reference:
+         * - [androidx.media2.common](https://developer.android.com/reference/kotlin/androidx/media2/common/package-summary)
+         */
         val common = module("media2-common")
     }
 
