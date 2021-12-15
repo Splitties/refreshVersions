@@ -389,10 +389,24 @@ object AndroidX : IsNotADependency {
         val supportV4 = module("legacy-support-v4")
     }
 
-    val lifecycle = Lifecycle // TODO kdoc
+    /**
+     * Lifecycle-aware components perform actions in response to a change in the lifecycle status of another component,
+     * such as activities and fragments.
+     *
+     * These components help you produce better-organized, and often lighter-weight code, that is easier to maintain.
+     *
+     * Guide: [Handling Lifecycles with Lifecycle-Aware Components](https://developer.android.com/topic/libraries/architecture/lifecycle)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/lifecycle )
+     *
+     * ### API reference:
+     * - [androidx.lifecycle](https://developer.android.com/reference/kotlin/androidx/lifecycle/package-summary)
+     */
+    val lifecycle = Lifecycle
 
     object Lifecycle : DependencyGroup(group = "androidx.lifecycle") {
 
+        /** Lifecyclew only (without ViewModel or LiveData), with Kotlin extensions. */
         val runtimeKtx = module("lifecycle-runtime-ktx")
 
         /**
@@ -404,26 +418,67 @@ object AndroidX : IsNotADependency {
          */
         val runtimeTesting = module("lifecycle-runtime-testing")
 
+        /** LiveData, with Kotlin extensions. */
         val liveDataKtx = module("lifecycle-livedata-ktx")
+
+        /** ViewModel, with Kotlin extensions. */
         val viewModelKtx = module("lifecycle-viewmodel-ktx")
 
+        /** ProcessLifecycleOwner provides a lifecycle for the whole application process. */
         val process = module("lifecycle-process")
+
+        /** Helpers for implementing LifecycleOwner in a Service */
         val service = module("lifecycle-service")
+
+        /** Saved state module for ViewModel */
         val viewModelSavedState = module("lifecycle-viewmodel-savedstate")
 
+        /**
+         * ViewModel utilities for Compose
+         *
+         * ### API reference:
+         * - [androidx.lifecycle.viewmodel.compose](https://developer.android.com/reference/kotlin/androidx/lifecycle/viewmodel/compose/package-summary)
+         */
         val viewModelCompose = module("lifecycle-viewmodel-compose")
 
+        /**
+         * Lifecyclew only (without ViewModel or LiveData), includes only Java APIs.
+         *
+         * @see AndroidX.Lifecycle.runtimeKtx
+         */
         val runtime = module("lifecycle-runtime")
+
+        /**
+         * ViewModel, includes only Java APIs.
+         *
+         * @see AndroidX.Lifecycle.viewModelKtx
+         */
         val viewModel = module("lifecycle-viewmodel")
+
+        /**
+         * LiveData, includes only Java APIs.
+         *
+         * @see AndroidX.Lifecycle.liveDataKtx
+         */
         val liveData = module("lifecycle-livedata")
 
         val common = module("lifecycle-common")
+
+        /** Alternative to [compiler] if using Java 8 or newer. */
         val commonJava8 = module("lifecycle-common-java8")
 
+        /** Annotation processor. */
         @Deprecated("@OnLifecycleEvent was deprecated. LifecycleEventObserver or DefaultLifecycleObserver should be used instead.")
         val compiler = module("lifecycle-compiler")
 
+        /**
+         * ReactiveStreams support for LiveData, includes only Java APIs.
+         *
+         * @see AndroidX.Lifecycle.reactiveStreamsKtx
+         */
         val reactiveStreams = module("lifecycle-reactivestreams")
+
+        /** ReactiveStreams support for LiveData, with Kotlin extensions. */
         val reactiveStreamsKtx = module("lifecycle-reactivestreams-ktx")
 
         @Deprecated("Replaced by more specific artifacts. Last available version is 2.2.0")
