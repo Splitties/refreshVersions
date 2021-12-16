@@ -286,6 +286,14 @@ object AndroidX : IsNotADependency {
         val feedbackTesting = module("enterprise-feedback-testing")
     }
 
+    /**
+     * Read and write image file EXIF tags.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/exifinterface)
+     *
+     * ### API reference:
+     * - [androidx.exifinterface.media](https://developer.android.com/reference/kotlin/androidx/exifinterface/media/package-summary)
+     */
     val exifInterface = DependencyNotation("androidx.exifinterface", "exifinterface")
 
     /**
