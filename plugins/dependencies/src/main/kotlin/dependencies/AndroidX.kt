@@ -1171,6 +1171,11 @@ object AndroidX : IsNotADependency {
         val ktx = module("room-ktx")
 
         /**
+         * Paging 3 Integration
+         */
+        val paging = module("room-paging")
+
+        /**
          * Room compiler, compatible with ksp, kapt, and Java annotation processors.
          */
         val compiler = module("room-compiler")

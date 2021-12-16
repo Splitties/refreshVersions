@@ -207,6 +207,7 @@ androidx.room..room-common=version.androidx.room
 androidx.room..room-compiler=version.androidx.room
 androidx.room..room-guava=version.androidx.room
 androidx.room..room-ktx=version.androidx.room
+androidx.room..room-paging=version.androidx.room
 androidx.room..room-runtime=version.androidx.room
 androidx.room..room-rxjava2=version.androidx.room
 androidx.room..room-rxjava3=version.androidx.room
