@@ -277,6 +277,8 @@ object AndroidX : IsNotADependency {
     object Emoji2 : DependencyNotationAndGroup(group = "androidx.emoji2", name = "emoji2") {
         val views = module("emoji2-views")
         val viewsHelper = module("emoji2-views-helper")
+
+        val bundled = module("emoji2-bundled")
     }
 
     /**

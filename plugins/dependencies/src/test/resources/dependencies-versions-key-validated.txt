@@ -94,6 +94,7 @@ androidx.dynamicanimation..dynamicanimation=version.androidx.dynamicanimation
 androidx.emoji..emoji-appcompat=version.androidx.emoji
 androidx.emoji..emoji-bundled=version.androidx.emoji
 androidx.emoji..emoji=version.androidx.emoji
+androidx.emoji2..emoji2-bundled=version.androidx.emoji2
 androidx.emoji2..emoji2-views-helper=version.androidx.emoji2
 androidx.emoji2..emoji2-views=version.androidx.emoji2
 androidx.emoji2..emoji2=version.androidx.emoji2
