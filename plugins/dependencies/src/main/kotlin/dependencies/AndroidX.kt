@@ -255,6 +255,16 @@ object AndroidX : IsNotADependency {
         val rxJava3 = module("datastore-rxJava3")
     }
 
+    /**
+     * View a file document.
+     *
+     * Guide: [Open files using storage access framework](https://developer.android.com/guide/topics/providers/document-provider)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/documentfile)
+     *
+     * ## API reference:
+     * - [androidx.documentfile.provider](https://developer.android.com/reference/kotlin/androidx/documentfile/provider/package-summary)
+     */
     val documentFile = DependencyNotation("androidx.documentfile", "documentfile")
 
     /**
