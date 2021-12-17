@@ -209,9 +209,23 @@ object AndroidX : IsNotADependency {
         val futuresKtx = module("concurrent-futures-ktx")
     }
 
+    /**
+     * Position and size widgets in a flexible way with relative positioning.
+     *
+     * Guide: [Build a Responsive UI with ConstraintLayout](https://developer.android.com/training/constraint-layout)
+     *
+     * GitHub page: [androidx/constraintlayout](https://github.com/androidx/constraintlayout)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/constraintlayout)
+     *
+     * ## API reference:
+     * - [androidx.constraintlayout](https://developer.android.com/reference/androidx/constraintlayout/packages)
+     */
     val constraintLayout = ConstraintLayout
 
     object ConstraintLayout : DependencyNotationAndGroup("androidx.constraintlayout", "constraintlayout") {
+
+        /** Jetpack Compose support */
         val compose = module("constraintlayout-compose")
     }
 
