@@ -215,6 +215,14 @@ object AndroidX : IsNotADependency {
         val compose = module("constraintlayout-compose")
     }
 
+    /**
+     * Load and page across ContentProvider data in a background thread.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/contentpager)
+     *
+     * ## API reference:
+     * - [androidx.contentpager.content](https://developer.android.com/reference/kotlin/androidx/contentpager/content/package-summary)
+     */
     val contentPager = DependencyNotation("androidx.contentpager", "contentpager")
 
     /**
