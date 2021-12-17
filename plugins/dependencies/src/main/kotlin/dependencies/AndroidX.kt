@@ -219,20 +219,99 @@ object AndroidX : IsNotADependency {
 
     val coordinatorLayout = DependencyNotation("androidx.coordinatorlayout", "coordinatorlayout")
 
-    val core = Core // TODO kdoc
+    /**
+     * Target the latest platform features and APIs while also supporting older devices.
+     *
+     * Guide: [Animate movement using spring physics](https://developer.android.com/guide/topics/graphics/spring-animation)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/core)
+     *
+     * ## API reference:
+     * - [androidx.core.accessibilityservice](https://developer.android.com/reference/kotlin/androidx/core/accessibilityservice/package-summary)
+     * - [androidx.core.app](https://developer.android.com/reference/kotlin/androidx/core/app/package-summary)
+     * - [androidx.core.content](https://developer.android.com/reference/kotlin/androidx/core/content/package-summary)
+     * - [androidx.core.content.pm](https://developer.android.com/reference/kotlin/androidx/core/content/pm/package-summary)
+     * - [androidx.core.content.res](https://developer.android.com/reference/kotlin/androidx/core/content/res/package-summary)
+     * - [androidx.core.database](https://developer.android.com/reference/kotlin/androidx/core/database/package-summary)
+     * - [androidx.core.database.sqlite](https://developer.android.com/reference/kotlin/androidx/core/database/sqlite/package-summary)
+     * - [androidx.core.graphics](https://developer.android.com/reference/kotlin/androidx/core/graphics/package-summary)
+     * - [androidx.core.graphics.drawable](https://developer.android.com/reference/kotlin/androidx/core/graphics/drawable/package-summary)
+     * - [androidx.core.hardware.display](https://developer.android.com/reference/kotlin/androidx/core/hardware/display/package-summary)
+     * - [androidx.core.hardware.fingerprint](https://developer.android.com/reference/kotlin/androidx/core/hardware/fingerprint/package-summary)
+     * - [androidx.core.location](https://developer.android.com/reference/kotlin/androidx/core/location/package-summary)
+     * - [androidx.core.math](https://developer.android.com/reference/kotlin/androidx/core/math/package-summary)
+     * - [androidx.core.net](https://developer.android.com/reference/kotlin/androidx/core/net/package-summary)
+     * - [androidx.core.os](https://developer.android.com/reference/kotlin/androidx/core/os/package-summary)
+     * - [androidx.core.provider](https://developer.android.com/reference/kotlin/androidx/core/provider/package-summary)
+     * - [androidx.core.telephony](https://developer.android.com/reference/kotlin/androidx/core/telephony/package-summary)
+     * - [androidx.core.text](https://developer.android.com/reference/kotlin/androidx/core/text/package-summary)
+     * - [androidx.core.util](https://developer.android.com/reference/kotlin/androidx/core/util/package-summary)
+     * - [androidx.core.view](https://developer.android.com/reference/kotlin/androidx/core/view/package-summary)
+     * - [androidx.core.view.accessibility](https://developer.android.com/reference/kotlin/androidx/core/view/accessibility/package-summary)
+     * - [androidx.core.view.animation](https://developer.android.com/reference/kotlin/androidx/core/view/animation/package-summary)
+     * - [androidx.core.view.inputmethod](https://developer.android.com/reference/kotlin/androidx/core/view/inputmethod/package-summary)
+     * - [androidx.core.widget](https://developer.android.com/reference/kotlin/androidx/core/widget/package-summary)
+     *
+     * @see AndroidX.Core.ktx
+     */
+    val core = Core
 
     object Core : DependencyNotationAndGroup(group = "androidx.core", name = "core") {
 
+        /**
+         * Kotlin extensions
+         *
+         * ## API reference:
+         * - [androidx.core.content](https://developer.android.com/reference/kotlin/androidx/core/content/package-summary)
+         * - [androidx.core.database](https://developer.android.com/reference/kotlin/androidx/core/database/package-summary)
+         * - [androidx.core.graphics](https://developer.android.com/reference/kotlin/androidx/core/graphics/package-summary)
+         * - [androidx.core.location](https://developer.android.com/reference/kotlin/androidx/core/location/package-summary)
+         * - [androidx.core.net](https://developer.android.com/reference/kotlin/androidx/core/net/package-summary)
+         * - [androidx.core.os](https://developer.android.com/reference/kotlin/androidx/core/os/package-summary)
+         * - [androidx.core.text](https://developer.android.com/reference/kotlin/androidx/core/text/package-summary)
+         * - [androidx.core.transition](https://developer.android.com/reference/kotlin/androidx/core/transition/package-summary)
+         * - [androidx.core.util](https://developer.android.com/reference/kotlin/androidx/core/util/package-summary)
+         * - [androidx.core.view](https://developer.android.com/reference/kotlin/androidx/core/view/package-summary)
+         * - [androidx.core.widget](https://developer.android.com/reference/kotlin/androidx/core/widget/package-summary)
+         */
         val ktx = module("core-ktx")
+
+        /**
+         * To use RoleManagerCompat
+         *
+         * ## API reference:
+         * - [androidx.core.role](https://developer.android.com/reference/kotlin/androidx/core/role/package-summary)
+         */
         val role = module("core-role")
 
+        /**
+         * This library provides functionalities for creating and manipulating animations for API 14 and above.
+         *
+         * ### API reference:
+         * - [androidx.core.animation](https://developer.android.com/reference/kotlin/androidx/core/animation/package-summary)
+         */
         val animation = module("core-animation")
+
+        /**
+         * This library provides functionalities for testing animations for API 14 and above.
+         *
+         * ### API reference:
+         * - [androidx.core.animation](https://developer.android.com/reference/kotlin/androidx/core/animation/package-summary)
+         */
         val animationTesting = module("core-animation-testing")
 
+        /**
+         * To use ShortcutManagerCompat to donate shortcuts to be used by Google
+         */
         val googleShortcuts = module("core-google-shortcuts")
 
+        /**
+         * This library provides the compatibility APIs for SplashScreen and helper method to enable a
+         * splashscreen on devices prior Android 12.
+         */
         val splashscreen = module("core-splashscreen")
 
+        /** AndroidX RemoteViews Support */
         val remoteViews = module("core-remoteviews")
     }
 
