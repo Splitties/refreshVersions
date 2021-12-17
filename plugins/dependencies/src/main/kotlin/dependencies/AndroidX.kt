@@ -279,10 +279,32 @@ object AndroidX : IsNotADependency {
         val viewsHelper = module("emoji2-views-helper")
     }
 
-    val enterprise = Enterprise // TODO kdoc
+    /**
+     * Create enterprise-ready applications.
+     *
+     * Guide: [Build for Enterprise -> Developer overview](https://developer.android.com/work/overview)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/enterprise)
+     */
+    val enterprise = Enterprise
 
     object Enterprise : DependencyGroup(group = "androidx.enterprise") {
+
+        /**
+         * Allow sending app feedback to EMMs (Enterprise Mobile Management providers)
+         *
+         * Guide: [Build for Enterprise -> App feedback -> Send app feedback to EMMs](https://developer.android.com/work/app-feedback/overview)
+         *
+         * ### API reference:
+         * - [androidx.enterprise.feedback](https://developer.android.com/reference/kotlin/androidx/enterprise/feedback/package-summary)
+         */
         val feedback = module("enterprise-feedback")
+
+        /**
+         * For testing enterprise feedback in isolation
+         *
+         * Guide: [Build for Enterprise -> App feedback -> Test app feedback](https://developer.android.com/work/app-feedback/testing)
+         */
         val feedbackTesting = module("enterprise-feedback-testing")
     }
 
