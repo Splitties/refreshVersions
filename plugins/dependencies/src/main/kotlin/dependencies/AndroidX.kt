@@ -236,6 +236,15 @@ object AndroidX : IsNotADependency {
 
     val cursorAdapter = DependencyNotation("androidx.cursoradapter", "cursoradapter")
 
+    /**
+     * Implement custom views.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/customview)
+     *
+     * ## API reference:
+     * - [androidx.customview.view](https://developer.android.com/reference/kotlin/androidx/customview/view/package-summary)
+     * - [androidx.customview.widget](https://developer.android.com/reference/kotlin/androidx/customview/widget/package-summary)
+     */
     val customView = DependencyNotation("androidx.customview", "customview")
 
     /**
