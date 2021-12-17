@@ -258,6 +258,16 @@ object AndroidX : IsNotADependency {
     val documentFile = DependencyNotation("androidx.documentfile", "documentfile")
 
     /**
+     * Accept drag-and-drop data from another app or within an app, and show a consistent drop target affordance.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/draganddrop)
+     *
+     * ## API reference:
+     * - [androidx.draganddrop](https://developer.android.com/reference/kotlin/androidx/draganddrop/package-summary)
+     */
+    val dragAndDrop = DependencyNotation("androidx.draganddrop", "draganddrop")
+
+    /**
      * Implement a Material Design drawer widget.
      *
      * Guide: [Update UI components with NavigationUI -> Add a navigation drawer](https://developer.android.com/guide/navigation/navigation-ui#add_a_navigation_drawer)

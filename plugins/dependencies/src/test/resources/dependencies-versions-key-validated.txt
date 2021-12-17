@@ -88,6 +88,7 @@ androidx.datastore..datastore-rxJava2=version.androidx.datastore
 androidx.datastore..datastore-rxJava3=version.androidx.datastore
 androidx.datastore..datastore=version.androidx.datastore
 androidx.documentfile..documentfile=version.androidx.documentfile
+androidx.draganddrop..draganddrop=version.androidx.draganddrop
 androidx.drawerlayout..drawerlayout=version.androidx.drawerlayout
 androidx.dynamicanimation..dynamicanimation-ktx=version.androidx.dynamicanimation-ktx
 androidx.dynamicanimation..dynamicanimation=version.androidx.dynamicanimation

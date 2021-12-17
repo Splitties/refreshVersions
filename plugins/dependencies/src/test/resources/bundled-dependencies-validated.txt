@@ -88,6 +88,7 @@ androidx.datastore:datastore-preferences-rxJava3
 androidx.datastore:datastore-rxJava2
 androidx.datastore:datastore-rxJava3
 androidx.documentfile:documentfile
+androidx.draganddrop:draganddrop
 androidx.drawerlayout:drawerlayout
 androidx.dynamicanimation:dynamicanimation
 androidx.dynamicanimation:dynamicanimation-ktx
