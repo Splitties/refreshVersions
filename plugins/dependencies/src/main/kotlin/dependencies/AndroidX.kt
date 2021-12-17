@@ -272,12 +272,50 @@ object AndroidX : IsNotADependency {
         val bundled = module("emoji-bundled")
     }
 
+    /**
+     * Display emoji in current and older devices.
+     *
+     * Guide: [Support modern emoji](https://developer.android.com/guide/topics/ui/look-and-feel/emoji2)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/emoji2)
+     *
+     * ### API reference:
+     * - [androidx.emoji2.text](https://developer.android.com/reference/kotlin/androidx/emoji2/text/package-summary)
+     * - [androidx.emoji2.widget](https://developer.android.com/reference/kotlin/androidx/emoji2/widget/package-summary)
+     * - [androidx.emoji2.viewsintegration](https://developer.android.com/reference/kotlin/androidx/emoji2/viewsintegration/package-summary)
+     */
     val emoji2 = Emoji2
 
     object Emoji2 : DependencyNotationAndGroup(group = "androidx.emoji2", name = "emoji2") {
+
+        /**
+         * Support emoji without AppCompat
+         *
+         * Guide: [Support modern emoji -> Support emoji without AppCompat](https://developer.android.com/guide/topics/ui/look-and-feel/emoji2#support-without-appcompat)
+         *
+         * ### API reference:
+         * - [androidx.emoji2.widget](https://developer.android.com/reference/kotlin/androidx/emoji2/widget/package-summary)
+         */
         val views = module("emoji2-views")
+
+        /**
+         * Add custom views for apps without AppCompat
+         *
+         * Guide: [Support modern emoji -> Add custom views for apps without AppCompat](https://developer.android.com/guide/topics/ui/look-and-feel/emoji2#custom-views-no-appcompat)
+         *
+         * ### API reference:
+         * - [androidx.emoji2.viewsintegration](https://developer.android.com/reference/kotlin/androidx/emoji2/viewsintegration/package-summary)
+         */
         val viewsHelper = module("emoji2-views-helper")
 
+        /**
+         * Support bundled fonts with emoji2
+         *
+         * Guide: [Support modern emoji -> Support bundled fonts with emoji2](https://developer.android.com/guide/topics/ui/look-and-feel/emoji2#support-bundled-fonts)
+         *
+         * ### API reference:
+         * - [androidx.emoji2.bundled](https://developer.android.com/reference/kotlin/androidx/emoji2/bundled/package-summary)
+         */
         val bundled = module("emoji2-bundled")
     }
 
