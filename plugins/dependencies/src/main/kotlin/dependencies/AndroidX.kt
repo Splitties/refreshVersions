@@ -265,10 +265,38 @@ object AndroidX : IsNotADependency {
         val ktx = module("dynamicanimation-ktx")
     }
 
+    /**
+     * Display emoji in current and older devices.
+     *
+     * Guide: [Emoji Compatibility](https://developer.android.com/guide/topics/ui/look-and-feel/emoji-compat)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/emoji)
+     *
+     * ### API reference:
+     * - [androidx.emoji.widget](https://developer.android.com/reference/kotlin/androidx/emoji/widget/package-summary)
+     * - [androidx.emoji.text](https://developer.android.com/reference/kotlin/androidx/emoji/text/package-summary)
+     *
+     * @see AndroidX.emoji2
+     */
+    @Deprecated(
+        "Deprecated in favor of Emoji2, because it simplifies backward-compativility with lower versions of Android",
+        ReplaceWith("AndroidX.emoji2")
+    )
     val emoji = Emoji
 
     object Emoji : DependencyNotationAndGroup("androidx.emoji", "emoji") {
+
+        @Deprecated("Deprecated in favor of Emoji2, which is already included in AppCompat 1.4.0+")
         val appCompat = module("emoji-appcompat")
+
+        /**
+         * ### API reference:
+         * - [androidx.emoji.bundled](https://developer.android.com/reference/kotlin/androidx/emoji/bundled/package-summary)
+         */
+        @Deprecated(
+            "Deprecated in favor of Emoji2, because it simplifies backward-compativility with lower versions of Android",
+            ReplaceWith("AndroidX.emoji2.bundled")
+        )
         val bundled = module("emoji-bundled")
     }
 
