@@ -202,10 +202,31 @@ object AndroidX : IsNotADependency {
         object Material3 : DependencyNotationAndGroup(group = "androidx.compose.material3", name = "material3")
     }
 
-    val concurrent = Concurrent // TODO kdoc
+    /**
+     * Move tasks off the main thread with coroutines and take advantage of ListenableFuture, includes Kotlin extensions.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/concurrent)
+     */
+    val concurrent = Concurrent
 
     object Concurrent : DependencyGroup(group = "androidx.concurrent") {
+
+        /**
+         * Androidx implementation of Guava's ListenableFuture.
+         *
+         * ### API reference:
+         * - [androidx.concurrent.futures](https://developer.android.com/reference/kotlin/androidx/concurrent/futures/package-summary)
+         *
+         * @see AndroidX.Concurrent.futuresKtx
+         */
         val futures = module("concurrent-futures")
+
+        /**
+         * Kotlin Extensions for Androidx implementation of Guava's ListenableFuture.
+         *
+         * ### API reference:
+         * - [androidx.concurrent.futures](https://developer.android.com/reference/kotlin/androidx/concurrent/futures/package-summary)
+         */
         val futuresKtx = module("concurrent-futures-ktx")
     }
 
