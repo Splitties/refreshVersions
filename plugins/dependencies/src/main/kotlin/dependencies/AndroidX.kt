@@ -234,6 +234,16 @@ object AndroidX : IsNotADependency {
         val splashscreen = module("core-splashscreen")
     }
 
+    /**
+     * Expose Cursor data to a ListView widget.
+     *
+     * Guide: [Content providers](https://developer.android.com/guide/topics/providers/content-providers)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/cursoradapter)
+     *
+     * ## API reference:
+     * - [androidx.cursoradapter.widget](https://developer.android.com/reference/kotlin/androidx/cursoradapter/widget/package-summary)
+     */
     val cursorAdapter = DependencyNotation("androidx.cursoradapter", "cursoradapter")
 
     /**
