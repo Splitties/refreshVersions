@@ -217,6 +217,14 @@ object AndroidX : IsNotADependency {
 
     val contentPager = DependencyNotation("androidx.contentpager", "contentpager")
 
+    /**
+     * Position top-level application widgets, such as AppBarLayout and FloatingActionButton.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/coordinatorlayout)
+     *
+     * ## API reference:
+     * - [androidx.coordinatorlayout.widget](https://developer.android.com/reference/kotlin/androidx/coordinatorlayout/widget/package-summary)
+     */
     val coordinatorLayout = DependencyNotation("androidx.coordinatorlayout", "coordinatorlayout")
 
     /**
