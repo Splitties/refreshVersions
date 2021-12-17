@@ -259,9 +259,23 @@ object AndroidX : IsNotADependency {
 
     val drawerLayout = DependencyNotation("androidx.drawerlayout", "drawerlayout")
 
+    /**
+     * Create smooth animations with a physics-based animation API.
+     *
+     * Guide: [Animate movement using spring physics](https://developer.android.com/guide/topics/graphics/spring-animation)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/dynamicanimation)
+     *
+     * ## API reference:
+     * - [androidx.dynamicanimation.animation](https://developer.android.com/reference/kotlin/androidx/dynamicanimation/animation/package-summary)
+     *
+     * @see AndroidX.DynamicAnimation.ktx
+     */
     val dynamicAnimation = DynamicAnimation
 
     object DynamicAnimation : DependencyNotationAndGroup("androidx.dynamicanimation", "dynamicanimation") {
+
+        /** Kotlin extensions */
         val ktx = module("dynamicanimation-ktx")
     }
 
