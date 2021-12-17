@@ -257,6 +257,16 @@ object AndroidX : IsNotADependency {
 
     val documentFile = DependencyNotation("androidx.documentfile", "documentfile")
 
+    /**
+     * Implement a Material Design drawer widget.
+     *
+     * Guide: [Update UI components with NavigationUI -> Add a navigation drawer](https://developer.android.com/guide/navigation/navigation-ui#add_a_navigation_drawer)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/drawerlayout)
+     *
+     * ## API reference:
+     * - [androidx.drawerlayout.widget](https://developer.android.com/reference/kotlin/androidx/drawerlayout/widget/package-summary)
+     */
     val drawerLayout = DependencyNotation("androidx.drawerlayout", "drawerlayout")
 
     /**
