@@ -232,6 +232,8 @@ object AndroidX : IsNotADependency {
         val googleShortcuts = module("core-google-shortcuts")
 
         val splashscreen = module("core-splashscreen")
+
+        val remoteViews = module("core-remoteviews")
     }
 
     /**
