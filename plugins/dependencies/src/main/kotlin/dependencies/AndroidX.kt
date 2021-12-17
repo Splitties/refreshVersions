@@ -238,20 +238,88 @@ object AndroidX : IsNotADependency {
 
     val customView = DependencyNotation("androidx.customview", "customview")
 
+    /**
+     * Store data asynchronously, consistently, and transactionally, overcoming some of the drawbacks of SharedPreferences.
+     *
+     * This artifact is for Typed DataStore (Typed API surface, such as Proto).
+     *
+     * See [AndroidX.DataStore.preferences] if you want a SharedPreferences like API.
+     *
+     * Guide: [DataStore](https://developer.android.com/topic/libraries/architecture/datastore)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/datastore)
+     *
+     * ## API reference:
+     * - [androidx.datastore](https://developer.android.com/reference/kotlin/androidx/datastore/package-summary)
+     * - [androidx.datastore.core](https://developer.android.com/reference/kotlin/androidx/datastore/core/package-summary)
+     * - [androidx.datastore.core.handlers](https://developer.android.com/reference/kotlin/androidx/datastore/core/handlers/package-summary)
+     * - [androidx.datastore.migrations](https://developer.android.com/reference/kotlin/androidx/datastore/migrations/package-summary)
+     */
     val dataStore = DataStore
 
     object DataStore : DependencyNotationAndGroup(group = "androidx.datastore", name = "datastore") {
 
+        /**
+         * Preferences DataStore (SharedPreferences like APIs).
+         *
+         * Use [AndroidX.dataStore] for Typed DataStore (Typed API surface, such as Proto).
+         *
+         * ## API reference:
+         * - [androidx.datastore.preferences](https://developer.android.com/reference/kotlin/androidx/datastore/preferences/package-summary)
+         * - [androidx.datastore.preferences.core](https://developer.android.com/reference/kotlin/androidx/datastore/preferences/core/package-summary)
+         */
         val preferences = Preferences
 
         object Preferences : DependencyNotationAndGroup(group = "androidx.datastore", name = "datastore-preferences") {
+
+            /**
+             * Android independent artifact
+             *
+             * ## API reference:
+             * - [androidx.datastore.preferences.core](https://developer.android.com/reference/kotlin/androidx/datastore/preferences/core/package-summary)
+             */
             val core = module("datastore-preferences-core")
+
+            /**
+             * RxJava 2 support
+             *
+             * ## API reference:
+             * - [androidx.datastore.preferences.rxjava2](https://developer.android.com/reference/kotlin/androidx/datastore/preferences/rxjava2/package-summary)
+             */
             val rxJava2 = module("datastore-preferences-rxJava2")
+
+            /**
+             * RxJava 3 support
+             *
+             * ## API reference:
+             * - [androidx.datastore.preferences.rxjava3](https://developer.android.com/reference/kotlin/androidx/datastore/preferences/rxjava3/package-summary)
+             */
             val rxJava3 = module("datastore-preferences-rxJava3")
         }
 
+        /**
+         * Android independent artifact
+         *
+         * ## API reference:
+         * - [androidx.datastore.core](https://developer.android.com/reference/kotlin/androidx/datastore/core/package-summary)
+         * - [androidx.datastore.core.handlers](https://developer.android.com/reference/kotlin/androidx/datastore/core/handlers/package-summary)
+         */
         val core = module("datastore-core")
+
+        /**
+         * RxJava 2 support
+         *
+         * ## API reference:
+         * - [androidx.datastore.rxjava2](https://developer.android.com/reference/kotlin/androidx/datastore/rxjava2/package-summary)
+         */
         val rxJava2 = module("datastore-rxJava2")
+
+        /**
+         * RxJava 3 support
+         *
+         * ## API reference:
+         * - [androidx.datastore.rxjava3](https://developer.android.com/reference/kotlin/androidx/datastore/rxjava3/package-summary)
+         */
         val rxJava3 = module("datastore-rxJava3")
     }
 
