@@ -395,6 +395,8 @@ object AndroidX : IsNotADependency {
      *
      * ### API reference:
      * - [androidx.fragment.app](https://developer.android.com/reference/kotlin/androidx/fragment/app/package-summary)
+     *
+     * @see AndroidX.Fragment.ktx
      */
     val fragment = Fragment
 
