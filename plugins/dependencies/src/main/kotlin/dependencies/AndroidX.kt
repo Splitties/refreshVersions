@@ -20,10 +20,45 @@ object AndroidX : IsNotADependency {
     // LibraryGroups.kt: https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryGroups.kt
     // LibraryVersions.kt: https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryVersions.kt
 
+    /**
+     * Provides the base Activity subclass and the relevant hooks to build a composable structure on top.
+     *
+     * Guide: [Introduction to Activities](https://developer.android.com/guide/components/activities/intro-activities)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/activity)
+     *
+     * ### API reference:
+     * - [androidx.activity](https://developer.android.com/reference/kotlin/androidx/activity/package-summary)
+     * - [androidx.activity.contextaware](https://developer.android.com/reference/kotlin/androidx/activity/contextaware/package-summary)
+     * - [androidx.activity.result](https://developer.android.com/reference/kotlin/androidx/activity/result/package-summary)
+     * - [androidx.activity.result.contract](https://developer.android.com/reference/kotlin/androidx/activity/result/contract/package-summary)
+     *
+     * @see AndroidX.Activity.compose
+     * @see AndroidX.Activity.ktx
+     */
     val activity = Activity
 
     object Activity : DependencyNotationAndGroup(group = "androidx.activity", name = "activity") {
+
+        /**
+         * Compose integration with Activity.
+         *
+         * ### API reference:
+         * - [androidx.activity.compose](https://developer.android.com/reference/kotlin/androidx/activity/compose/package-summary)
+         */
         val compose = module("activity-compose")
+
+        /**
+         * Kotlin extensions
+         *
+         * ### API reference:
+         * - [androidx.activity](https://developer.android.com/reference/kotlin/androidx/activity/package-summary)
+         * - [androidx.activity.contextaware](https://developer.android.com/reference/kotlin/androidx/activity/contextaware/package-summary)
+         * - [androidx.activity.result](https://developer.android.com/reference/kotlin/androidx/activity/result/package-summary)
+         * - [androidx.activity.result.contract](https://developer.android.com/reference/kotlin/androidx/activity/result/contract/package-summary)
+         *
+         * @see AndroidX.Activity.compose
+         */
         val ktx = module("activity-ktx")
     }
 
