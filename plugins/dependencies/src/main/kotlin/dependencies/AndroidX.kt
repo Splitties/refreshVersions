@@ -96,14 +96,63 @@ object AndroidX : IsNotADependency {
         val cluster = module("car-cluster")
     }
 
+    /**
+     * Build navigation, parking, and charging apps for Android Auto.
+     *
+     * Guide: [Android for Cars overview](https://developer.android.com/training/cars)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/car-app)
+     *
+     * ### API reference:
+     * - [androidx.car.app](https://developer.android.com/reference/kotlin/androidx/car/app/package-summary)
+     * - [androidx.car.app.annotations](https://developer.android.com/reference/kotlin/androidx/car/app/annotations/package-summary)
+     * - [androidx.car.app.connection](https://developer.android.com/reference/kotlin/androidx/car/app/connection/package-summary)
+     * - [androidx.car.app.constraints](https://developer.android.com/reference/kotlin/androidx/car/app/constraints/package-summary)
+     * - [androidx.car.app.hardware](https://developer.android.com/reference/kotlin/androidx/car/app/hardware/package-summary)
+     * - [androidx.car.app.hardware.common](https://developer.android.com/reference/kotlin/androidx/car/app/hardware/common/package-summary)
+     * - [androidx.car.app.managers](https://developer.android.com/reference/kotlin/androidx/car/app/managers/package-summary)
+     * - [androidx.car.app.model](https://developer.android.com/reference/kotlin/androidx/car/app/model/package-summary)
+     * - [androidx.car.app.model.signin](https://developer.android.com/reference/kotlin/androidx/car/app/model/signin/package-summary)
+     * - [androidx.car.app.navigation](https://developer.android.com/reference/kotlin/androidx/car/app/navigation/package-summary)
+     * - [androidx.car.app.navigation.model](https://developer.android.com/reference/kotlin/androidx/car/app/navigation/model/package-summary)
+     * - [androidx.car.app.notification](https://developer.android.com/reference/kotlin/androidx/car/app/notification/package-summary)
+     * - [androidx.car.app.serialization](https://developer.android.com/reference/kotlin/androidx/car/app/serialization/package-summary)
+     * - [androidx.car.app.validation](https://developer.android.com/reference/kotlin/androidx/car/app/validation/package-summary)
+     * - [androidx.car.app.versioning](https://developer.android.com/reference/kotlin/androidx/car/app/versioning/package-summary)
+     */
     val carApp = CarApp
 
     object CarApp : DependencyNotationAndGroup(group = "androidx.car.app", name = "app") {
 
+        /**
+         * Automotive OS specific functionality to build navigation, parking, and charging apps for cars.
+         *
+         * ### API reference:
+         * - [androidx.car.app.activity](https://developer.android.com/reference/kotlin/androidx/car/app/activity/package-summary)
+         * - [androidx.car.app.activity.renderer.surface](https://developer.android.com/reference/kotlin/androidx/car/app/activity/renderer/surface/package-summary)
+         * - [androidx.car.app.hardware](https://developer.android.com/reference/kotlin/androidx/car/app/hardware/package-summary)
+         * - [androidx.car.app.hardware.common](https://developer.android.com/reference/kotlin/androidx/car/app/hardware/common/package-summary)
+         * - [androidx.car.app.hardware.info](https://developer.android.com/reference/kotlin/androidx/car/app/hardware/info/package-summary)
+         */
         val automotive = module("app-automotive")
 
+        /**
+         * Android Auto Projected specific funationality to build navigation, parking, and charging apps for cars.
+         *
+         * ### API reference:
+         * - [androidx.car.app.hardware](https://developer.android.com/reference/kotlin/androidx/car/app/hardware/package-summary)
+         * - [androidx.car.app.hardware.common](https://developer.android.com/reference/kotlin/androidx/car/app/hardware/common/package-summary)
+         * - [androidx.car.app.hardware.info](https://developer.android.com/reference/kotlin/androidx/car/app/hardware/info/package-summary)
+         */
         val projected = module("app-projected")
 
+        /**
+         * Utilities to test car apps.
+         *
+         * ### API reference:
+         * - [androidx.car.app.testing](https://developer.android.com/reference/kotlin/androidx/car/app/testing/package-summary)
+         * - [androidx.car.app.testing.navigation](https://developer.android.com/reference/kotlin/androidx/car/app/testing/navigation/package-summary)
+         */
         val testing = module("app-testing")
     }
 
