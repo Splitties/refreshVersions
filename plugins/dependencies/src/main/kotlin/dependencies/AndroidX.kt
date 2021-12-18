@@ -35,9 +35,29 @@ object AndroidX : IsNotADependency {
         val experimental = module("annotation-experimental")
     }
 
+    /**
+     * Allows access to new APIs on older API versions of the platform (many using Material Design).
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/appcompat)
+     *
+     * ### API reference:
+     * - [androidx.appcompat.app](https://developer.android.com/reference/kotlin/androidx/appcompat/app/package-summary)
+     * - [androidx.appcompat.graphics.drawable](https://developer.android.com/reference/kotlin/androidx/appcompat/graphics/drawable/package-summary)
+     * - [androidx.appcompat.view](https://developer.android.com/reference/kotlin/androidx/appcompat/view/package-summary)
+     * - [androidx.appcompat.widget](https://developer.android.com/reference/kotlin/androidx/appcompat/widget/package-summary)
+     */
     val appCompat = AppCompat
 
     object AppCompat : DependencyNotationAndGroup("androidx.appcompat", "appcompat") {
+
+        /**
+         * For loading and tinting drawables on older versions of the platform.
+         *
+         * ### API reference:
+         * - [androidx.appcompat.content.res](https://developer.android.com/reference/kotlin/androidx/appcompat/content/res/package-summary)
+         * - [androidx.appcompat.graphics.drawable](https://developer.android.com/reference/kotlin/androidx/appcompat/graphics/drawable/package-summary)
+         * - [androidx.appcompat.widget](https://developer.android.com/reference/kotlin/androidx/appcompat/widget/package-summary)
+         */
         val resources = module("appcompat-resources")
     }
 
