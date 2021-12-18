@@ -125,7 +125,6 @@ object AndroidX : IsNotADependency {
 
             val dispatch = module("runtime-dispatch")
             val saveable = module("runtime-saveable")
-            val savedInstanceState = module("runtime-saved-instance-state")
 
             val liveData = module("runtime-livedata")
             val rxJava2 = module("runtime-rxjava2")

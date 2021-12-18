@@ -242,3 +242,8 @@ id:[androidx.compose.foundation:foundation-text]
 // TODO: Remove this usage.
 moved:[androidx.compose.ui:ui-text]
 id:[androidx.compose.ui:ui-text-android]
+
+~~AndroidX.compose.runtime.savedInstanceState~~
+// TODO: Replace this discontinued artifact.
+moved:[androidx.compose.runtime:runtime-saveable]
+id:[androidx.compose.runtime:runtime-saved-instance-state]

@@ -48,7 +48,6 @@ androidx.compose.runtime..runtime-livedata=AndroidX.compose.runtime.liveData
 androidx.compose.runtime..runtime-rxjava2=AndroidX.compose.runtime.rxJava2
 androidx.compose.runtime..runtime-rxjava3=AndroidX.compose.runtime.rxJava3
 androidx.compose.runtime..runtime-saveable=AndroidX.compose.runtime.saveable
-androidx.compose.runtime..runtime-saved-instance-state=AndroidX.compose.runtime.savedInstanceState
 androidx.compose.runtime..runtime=AndroidX.compose.runtime
 androidx.compose.ui..ui-geometry=AndroidX.compose.ui.geometry
 androidx.compose.ui..ui-graphics=AndroidX.compose.ui.graphics

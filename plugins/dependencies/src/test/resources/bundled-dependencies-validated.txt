@@ -49,7 +49,6 @@ androidx.compose.runtime:runtime-livedata
 androidx.compose.runtime:runtime-rxjava2
 androidx.compose.runtime:runtime-rxjava3
 androidx.compose.runtime:runtime-saveable
-androidx.compose.runtime:runtime-saved-instance-state
 androidx.compose.ui:ui
 androidx.compose.ui:ui-geometry
 androidx.compose.ui:ui-graphics
