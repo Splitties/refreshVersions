@@ -115,7 +115,6 @@ object AndroidX : IsNotADependency {
 
     @Incubating
     object Compose : IsNotADependency {
-        private const val groupPrefix = "androidx.compose"
 
         @Incubating
         val compiler = DependencyNotation("androidx.compose.compiler", "compiler")
