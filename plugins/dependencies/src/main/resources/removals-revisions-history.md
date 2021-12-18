@@ -259,3 +259,6 @@ id:[androidx.car:car-cluster]
 //TODO: Use androidx.car.app instead.
 moved:[androidx.car.app:app]
 id:[androidx.car:car]
+
+~~AndroidX.tracingKtx~~
+id:[androidx.tracing:tracing-ktx]

@@ -2584,19 +2584,15 @@ object AndroidX : IsNotADependency {
      * ### API reference:
      * - [androidx.tracing](https://developer.android.com/reference/kotlin/androidx/tracing/package-summary)
      *
-     * @see tracingKtx
+     * @see AndroidX.Tracing.ktx
      */
-    val tracing = DependencyNotation("androidx.tracing", "tracing")
+    val tracing = Tracing
 
-    /**
-     * Write trace events to the system trace buffer. Includes Kotlin extensions.
-     *
-     * [Release notes](https://developer.android.com/jetpack/androidx/releases/tracing)
-     *
-     * ### API reference:
-     * - [androidx.tracing](https://developer.android.com/reference/kotlin/androidx/tracing/package-summary)
-     */
-    val tracingKtx = DependencyNotation("androidx.tracing", "tracing-ktx")
+    object Tracing : DependencyNotationAndGroup("androidx.tracing", "tracing") {
+
+        /** Kotlin extensions */
+        val ktx = module("tracing-ktx")
+    }
 
     /**
      * Animate motion in the UI with starting and ending layouts.
