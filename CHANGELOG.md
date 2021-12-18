@@ -35,6 +35,8 @@ Because of this change, it's important that you check the git diff after upgradi
 
 This change will enable us to keep the built-in dependency notations updated with less effort, so we're very happy to have it ready, and fully tested.
 
+We've already started to take advantage of it to clean up all the discontinued artifacts we found in AndroidX.
+
 ### Bug fixes
 
 - Repositories declared in the `dependencyResolutionManagement` block were ignored. Now, they are taken into account.
@@ -44,6 +46,50 @@ This change will enable us to keep the built-in dependency notations updated wit
 
 ### New dependency notations:
 
+- AndroidX.appSearch.platformStorage
+- AndroidX.benchmark.macro
+- AndroidX.camera.video
+- AndroidX.carApp:
+    - automotive
+    - projected
+- AndroidX.compose:
+    - animation.graphics
+    - material3
+- AndroidX.core.remoteViews
+- AndroidX.dragAndDrop
+- AndroidX.emoji2.bundled
+- AndroidX.glance.appWidget
+- AndroidX.glance
+- AndroidX.leanback.grid
+- AndroidX.lifecycle.runtimeTesting
+- AndroidX.media3:
+    - cast
+    - common
+    - database
+    - datasource:
+        - cronet
+        - okhttp
+        - rtmp
+    - decoder
+    - exoPlayer:
+        - dash
+        - hls
+        - ima
+        - rtsp
+        - workmanager
+    - extractor
+    - session
+    - testUtils.robolectric
+    - testUtils
+    - transformer
+    - ui.leanback
+    - ui
+- AndroidX.multidex.instrumentation
+- AndroidX.paging.guava
+- AndroidX.room:
+    - paging
+    - rxJava3
+- AndroidX.wear.tiles.testing
 - AndroidX.wear.watchFace:
     - complications.dataSourceKtx
     - complications.dataSource
@@ -61,6 +107,7 @@ This change will enable us to keep the built-in dependency notations updated wit
     - dataset
 
 Thanks to [Emil Kantis](https://github.com/Kantis) for [the kotest dependencies fixes](https://github.com/jmfayard/refreshVersions/pull/446)!
+Thanks to [Kamalesh](https://github.com/imashnake0) for [the help in updating AndroidX dependency notations](https://github.com/jmfayard/refreshVersions/pull/460#issuecomment-995768730)!
 
 ## Version 0.23.0 (2021-09-28)
 
