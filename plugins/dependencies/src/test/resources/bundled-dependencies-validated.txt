@@ -26,6 +26,7 @@ androidx.camera:camera-extensions
 androidx.camera:camera-lifecycle
 androidx.camera:camera-view
 androidx.car.app:app
+androidx.car.app:app-automotive
 androidx.car.app:app-testing
 androidx.car:car
 androidx.car:car-cluster

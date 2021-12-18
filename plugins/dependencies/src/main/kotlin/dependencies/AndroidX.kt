@@ -99,6 +99,9 @@ object AndroidX : IsNotADependency {
     val carApp = CarApp
 
     object CarApp : DependencyNotationAndGroup(group = "androidx.car.app", name = "app") {
+
+        val automotive = module("app-automotive")
+
         val testing = module("app-testing")
     }
 
