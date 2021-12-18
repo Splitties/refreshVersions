@@ -34,6 +34,7 @@ androidx.collection:collection
 androidx.collection:collection-ktx
 androidx.compose.animation:animation
 androidx.compose.animation:animation-core
+androidx.compose.animation:animation-graphics
 androidx.compose.compiler:compiler
 androidx.compose.foundation:foundation
 androidx.compose.foundation:foundation-layout

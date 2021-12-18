@@ -136,6 +136,8 @@ object AndroidX : IsNotADependency {
 
         object Animation : DependencyNotationAndGroup(group = "androidx.compose.animation", name = "animation") {
             val core = module("animation-core")
+
+            val graphics = module("animation-graphics")
         }
 
         val ui = Ui // TODO kdoc

@@ -33,6 +33,7 @@ androidx.cardview..cardview=version.androidx.cardview
 androidx.collection..collection-ktx=version.androidx.collection
 androidx.collection..collection=version.androidx.collection
 androidx.compose.animation..animation-core=version.androidx.compose.animation
+androidx.compose.animation..animation-graphics=version.androidx.compose.animation
 androidx.compose.animation..animation=version.androidx.compose.animation
 androidx.compose.compiler..compiler=version.androidx.compose.compiler
 androidx.compose.foundation..foundation-layout=version.androidx.compose.foundation
