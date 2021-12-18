@@ -72,9 +72,24 @@ object AndroidX : IsNotADependency {
         val common = module(name = "benchmark-common")
     }
 
+    /**
+     * Authenticate with biometrics or device credentials, and perform cryptographic operations.
+     *
+     * Guide: [Show a biometric authentication dialog](https://developer.android.com/training/sign-in/biometric-auth)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/biometric)
+     *
+     * ### API reference:
+     * - [androidx.biometric](https://developer.android.com/reference/kotlin/androidx/biometric/package-summary)
+     * - [androidx.biometric.auth](https://developer.android.com/reference/kotlin/androidx/biometric/auth/package-summary)
+     *
+     * @see AndroidX.Biometric.ktx
+     */
     val biometric = Biometric
 
     object Biometric : DependencyNotationAndGroup("androidx.biometric", "biometric") {
+
+        /** Kotlin extensions */
         val ktx = module("biometric-ktx")
     }
 
