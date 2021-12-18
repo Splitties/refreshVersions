@@ -121,10 +121,8 @@ object AndroidX : IsNotADependency {
      *
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/compose)
      */
-    @Incubating
     val compose = Compose
 
-    @Incubating
     object Compose : IsNotADependency {
 
         /**
@@ -132,7 +130,6 @@ object AndroidX : IsNotADependency {
          *
          * [Release notes](https://developer.android.com/jetpack/androidx/releases/compose-compiler)
          */
-        @Incubating
         val compiler = DependencyNotation("androidx.compose.compiler", "compiler")
 
         /**
