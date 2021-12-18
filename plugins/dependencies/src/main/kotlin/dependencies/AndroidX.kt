@@ -104,9 +104,21 @@ object AndroidX : IsNotADependency {
 
     val cardView = DependencyNotation("androidx.cardview", "cardview")
 
+    /**
+     * Reduce the memory impact of existing and new collections that are small.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/collection)
+     *
+     * ### API reference:
+     * - [androidx.collection](https://developer.android.com/reference/kotlin/androidx/collection/package-summary)
+     *
+     * @see AndroidX.Collection.ktx
+     */
     val collection = Collection
 
     object Collection : DependencyNotationAndGroup("androidx.collection", "collection") {
+
+        /** Kotlin extensions */
         val ktx = module("collection-ktx")
     }
 
