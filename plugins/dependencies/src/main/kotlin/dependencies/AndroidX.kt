@@ -87,6 +87,9 @@ object AndroidX : IsNotADependency {
         val camera2 = module("camera-camera2")
         val extensions = module("camera-extensions")
         val lifecycle = module("camera-lifecycle")
+
+        val video = module("camera-video")
+
         val view = module("camera-view")
     }
 
