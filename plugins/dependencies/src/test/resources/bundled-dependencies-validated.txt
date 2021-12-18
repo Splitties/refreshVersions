@@ -516,6 +516,7 @@ com.squareup.leakcanary:shark-hprof
 com.squareup.moshi:moshi
 com.squareup.moshi:moshi-kotlin
 com.squareup.moshi:moshi-kotlin-codegen
+com.squareup.moshi:moshi-adapters
 com.squareup.okhttp3:logging-interceptor
 com.squareup.okhttp3:mockwebserver
 com.squareup.okhttp3:okhttp

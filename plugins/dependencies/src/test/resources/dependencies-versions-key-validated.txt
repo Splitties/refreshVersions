@@ -516,6 +516,7 @@ com.squareup.leakcanary..shark-cli=version.leakcanary
 com.squareup.leakcanary..shark-graph=version.leakcanary
 com.squareup.leakcanary..shark-hprof=version.leakcanary
 com.squareup.leakcanary..shark=version.leakcanary
+com.squareup.moshi..moshi-adapters=version.moshi
 com.squareup.moshi..moshi-kotlin-codegen=version.moshi
 com.squareup.moshi..moshi-kotlin=version.moshi
 com.squareup.moshi..moshi=version.moshi
