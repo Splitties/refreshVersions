@@ -236,3 +236,9 @@ id:[androidx.hilt:hilt-lifecycle-viewmodel]
 // TODO: Remove this usage.
 moved:[androidx.compose.foundation:foundation]
 id:[androidx.compose.foundation:foundation-text]
+
+~~AndroidX.compose.ui.textAndroid~~
+// Included in the main compose ui library.
+// TODO: Remove this usage.
+moved:[androidx.compose.ui:ui-text]
+id:[androidx.compose.ui:ui-text-android]

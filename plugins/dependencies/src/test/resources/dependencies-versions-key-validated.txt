@@ -54,7 +54,6 @@ androidx.compose.ui..ui-graphics=version.androidx.compose.ui
 androidx.compose.ui..ui-test-junit4=version.androidx.compose.ui
 androidx.compose.ui..ui-test-manifest=version.androidx.compose.ui
 androidx.compose.ui..ui-test=version.androidx.compose.ui
-androidx.compose.ui..ui-text-android=version.androidx.compose.ui
 androidx.compose.ui..ui-text=version.androidx.compose.ui
 androidx.compose.ui..ui-tooling-data=version.androidx.compose.ui
 androidx.compose.ui..ui-tooling-preview=version.androidx.compose.ui

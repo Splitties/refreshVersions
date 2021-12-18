@@ -149,7 +149,6 @@ object AndroidX : IsNotADependency {
             val testManifest = module("ui-test-manifest")
 
             val text = module("ui-text")
-            val textAndroid = module("ui-text-android")
 
             val tooling = module("ui-tooling")
             val toolingData = module("ui-tooling-data")
