@@ -110,73 +110,360 @@ object AndroidX : IsNotADependency {
         val ktx = module("collection-ktx")
     }
 
+    /**
+     * Define your UI programmatically with composable functions that describe its shape and data dependencies.
+     *
+     * Guides:
+     * - [Overview](https://developer.android.com/jetpack/compose/)
+     * - [Why adopt Compose](https://developer.android.com/jetpack/compose/why-adopt)
+     * - [Get started with Jetpack Compose](https://developer.android.com/jetpack/compose/documentation)
+     * - [Jetpack Compose Tutorial](https://developer.android.com/jetpack/compose/tutorial)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/compose)
+     */
     @Incubating
-    val compose = Compose // TODO kdoc
+    val compose = Compose
 
     @Incubating
     object Compose : IsNotADependency {
 
+        /**
+         * Transform @Composable functions and enable optimizations with a Kotlin compiler plugin.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/compose-compiler)
+         */
         @Incubating
         val compiler = DependencyNotation("androidx.compose.compiler", "compiler")
 
+        /**
+         * Fundamental building blocks of Compose's programming model and state management,
+         * and core runtime for the Compose Compiler Plugin to target.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/compose-runtime)
+         *
+         * ### API reference:
+         * - [androidx.compose.runtime](https://developer.android.com/reference/kotlin/androidx/compose/runtime/package-summary)
+         * - [androidx.compose.runtime.collection](https://developer.android.com/reference/kotlin/androidx/compose/runtime/collection/package-summary)
+         * - [androidx.compose.runtime.internal](https://developer.android.com/reference/kotlin/androidx/compose/runtime/internal/package-summary)
+         * - [androidx.compose.runtime.saveable](https://developer.android.com/reference/kotlin/androidx/compose/runtime/saveable/package-summary)
+         * - [androidx.compose.runtime.snapshots](https://developer.android.com/reference/kotlin/androidx/compose/runtime/snapshots/package-summary)
+         * - [androidx.compose.runtime.tooling](https://developer.android.com/reference/kotlin/androidx/compose/runtime/tooling/package-summary)
+         */
         val runtime = Runtime
 
         object Runtime : DependencyNotationAndGroup(group = "androidx.compose.runtime", name = "runtime") {
 
             val dispatch = module("runtime-dispatch")
+
+            /**
+             * Compose components that allow saving and restoring the local ui state.
+             *
+             * ### API reference:
+             * - [androidx.compose.runtime.saveable](https://developer.android.com/reference/kotlin/androidx/compose/runtime/saveable/package-summary)
+             */
             val saveable = module("runtime-saveable")
 
+            /**
+             * Compose integration with LiveData.
+             *
+             * ### API reference:
+             * - [androidx.compose.runtime.livedata](https://developer.android.com/reference/kotlin/androidx/compose/runtime/livedata/package-summary)
+             */
             val liveData = module("runtime-livedata")
+
+            /**
+             * Compose integration with RxJava 2.
+             *
+             * ### API reference:
+             * - [androidx.compose.runtime.rxjava2](https://developer.android.com/reference/kotlin/androidx/compose/runtime/rxjava2/package-summary)
+             */
             val rxJava2 = module("runtime-rxjava2")
+
+            /**
+             * Compose integration with RxJava 3.
+             *
+             * ### API reference:
+             * - [androidx.compose.runtime.rxjava3](https://developer.android.com/reference/kotlin/androidx/compose/runtime/rxjava3/package-summary)
+             */
             val rxJava3 = module("runtime-rxjava3")
         }
 
+        /**
+         * Build animations in their Jetpack Compose applications to enrich the user experience.
+         *
+         * Guide: [Animation](https://developer.android.com/jetpack/compose/animation)
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/compose-animation)
+         *
+         * ### API reference:
+         * - [androidx.compose.animation](https://developer.android.com/reference/kotlin/androidx/compose/animation/package-summary)
+         * - [androidx.compose.animation.core](https://developer.android.com/reference/kotlin/androidx/compose/animation/core/package-summary)
+         */
         val animation = Animation
 
         object Animation : DependencyNotationAndGroup(group = "androidx.compose.animation", name = "animation") {
+
+            /**
+             * Animation engine and animation primitives that are the building blocks of the Compose animation library.
+             *
+             * Included in the main [AndroidX.Compose.animation] artifact.
+             *
+             * ## API reference:
+             * - [androidx.compose.animation.core](https://developer.android.com/reference/kotlin/androidx/compose/animation/core/package-summary)
+             */
             val core = module("animation-core")
 
+            /**
+             * Compose Animation Graphics Library for using animated-vector resources in Compose
+             *
+             * ## API reference:
+             * - [androidx.compose.animation.graphics](https://developer.android.com/reference/kotlin/androidx/compose/animation/graphics/package-summary)
+             * - [androidx.compose.animation.res](https://developer.android.com/reference/kotlin/androidx/compose/animation/res/package-summary)
+             * - [androidx.compose.animation.vector](https://developer.android.com/reference/kotlin/androidx/compose/animation/vector/package-summary)
+             */
             val graphics = module("animation-graphics")
         }
 
-        val ui = Ui // TODO kdoc
+        /**
+         * Fundamental components of compose UI needed to interact with the device, including layout, drawing, and input.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/compose-ui)
+         *
+         * ## API reference:
+         * - [androidx.compose.ui](https://developer.android.com/reference/kotlin/androidx/compose/ui/package-summary)
+         * - [androidx.compose.ui.autofill](https://developer.android.com/reference/kotlin/androidx/compose/ui/autofill/package-summary)
+         * - [androidx.compose.ui.draw](https://developer.android.com/reference/kotlin/androidx/compose/ui/draw/package-summary)
+         * - [androidx.compose.ui.focus](https://developer.android.com/reference/kotlin/androidx/compose/ui/focus/package-summary)
+         * - [androidx.compose.ui.geometry](https://developer.android.com/reference/kotlin/androidx/compose/ui/geometry/package-summary)
+         * - [androidx.compose.ui.graphics](https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/package-summary)
+         * - [androidx.compose.ui.graphics.colorspace](https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/colorspace/package-summary)
+         * - [androidx.compose.ui.graphics.drawscope](https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/drawscope/package-summary)
+         * - [androidx.compose.ui.graphics.painter](https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/painter/package-summary)
+         * - [androidx.compose.ui.graphics.vector](https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/vector/package-summary)
+         * - [androidx.compose.ui.hapticfeedback](https://developer.android.com/reference/kotlin/androidx/compose/ui/hapticfeedback/package-summary)
+         * - [androidx.compose.ui.input](https://developer.android.com/reference/kotlin/androidx/compose/ui/input/package-summary)
+         * - [androidx.compose.ui.input.key](https://developer.android.com/reference/kotlin/androidx/compose/ui/input/key/package-summary)
+         * - [androidx.compose.ui.input.nestedscroll](https://developer.android.com/reference/kotlin/androidx/compose/ui/input/nestedscroll/package-summary)
+         * - [androidx.compose.ui.input.pointer](https://developer.android.com/reference/kotlin/androidx/compose/ui/input/pointer/package-summary)
+         * - [androidx.compose.ui.input.pointer.util](https://developer.android.com/reference/kotlin/androidx/compose/ui/input/pointer/util/package-summary)
+         * - [androidx.compose.ui.layout](https://developer.android.com/reference/kotlin/androidx/compose/ui/layout/package-summary)
+         * - [androidx.compose.ui.modifier](https://developer.android.com/reference/kotlin/androidx/compose/ui/modifier/package-summary)
+         * - [androidx.compose.ui.node](https://developer.android.com/reference/kotlin/androidx/compose/ui/node/package-summary)
+         * - [androidx.compose.ui.platform](https://developer.android.com/reference/kotlin/androidx/compose/ui/platform/package-summary)
+         * - [androidx.compose.ui.res](https://developer.android.com/reference/kotlin/androidx/compose/ui/res/package-summary)
+         * - [androidx.compose.ui.semantics](https://developer.android.com/reference/kotlin/androidx/compose/ui/semantics/package-summary)
+         * - [androidx.compose.ui.state](https://developer.android.com/reference/kotlin/androidx/compose/ui/state/package-summary)
+         * - [androidx.compose.ui.text](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/package-summary)
+         * - [androidx.compose.ui.text.android](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/android/package-summary)
+         * - [androidx.compose.ui.text.font](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/font/package-summary)
+         * - [androidx.compose.ui.text.input](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/input/package-summary)
+         * - [androidx.compose.ui.text.intl](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/intl/package-summary)
+         * - [androidx.compose.ui.text.platform.extensions](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/platform/extensions/package-summary)
+         * - [androidx.compose.ui.text.style](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/style/package-summary)
+         * - [androidx.compose.ui.tooling](https://developer.android.com/reference/kotlin/androidx/compose/ui/tooling/package-summary)
+         * - [androidx.compose.ui.tooling.data](https://developer.android.com/reference/kotlin/androidx/compose/ui/tooling/data/package-summary)
+         * - [androidx.compose.ui.tooling.preview](https://developer.android.com/reference/kotlin/androidx/compose/ui/tooling/preview/package-summary)
+         * - [androidx.compose.ui.tooling.preview.datasource](https://developer.android.com/reference/kotlin/androidx/compose/ui/tooling/preview/datasource/package-summary)
+         * - [androidx.compose.ui.unit](https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/package-summary)
+         * - [androidx.compose.ui.util](https://developer.android.com/reference/kotlin/androidx/compose/ui/util/package-summary)
+         * - [androidx.compose.ui.viewinterop](https://developer.android.com/reference/kotlin/androidx/compose/ui/viewinterop/package-summary)
+         * - [androidx.compose.ui.window](https://developer.android.com/reference/kotlin/androidx/compose/ui/window/package-summary)
+         */
+        val ui = Ui
 
         object Ui : DependencyNotationAndGroup(group = "androidx.compose.ui", name = "ui") {
+
+            /**
+             * Compose classes related to dimensions without units
+             *
+             * ### API reference:
+             * - [androidx.compose.ui.geometry](https://developer.android.com/reference/kotlin/androidx/compose/ui/geometry/package-summary)
+             */
             val geometry = module("ui-geometry")
+
+            /**
+             * Compose graphics
+             *
+             * ### API reference:
+             * - [androidx.compose.ui.graphics](https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/package-summary)
+             * - [androidx.compose.ui.graphics.colorspace](https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/colorspace/package-summary)
+             * - [androidx.compose.ui.graphics.drawscope](https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/drawscope/package-summary)
+             * - [androidx.compose.ui.graphics.painter](https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/painter/package-summary)
+             * - [androidx.compose.ui.graphics.vector](https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/vector/package-summary)
+             */
             val graphics = module("ui-graphics")
 
+            /**
+             * Compose testing library
+             *
+             * ### API reference:
+             * - [androidx.compose.ui.test](https://developer.android.com/reference/kotlin/androidx/compose/ui/test/package-summary)
+             */
             val test = module("ui-test")
+
+            /**
+             * Compose testing integration with JUnit4
+             *
+             * ### API reference:
+             * - [androidx.compose.ui.test.junit4](https://developer.android.com/reference/kotlin/androidx/compose/ui/test/junit4/package-summary)
+             * - [androidx.compose.ui.test.junit4.android](https://developer.android.com/reference/kotlin/androidx/compose/ui/test/junit4/android/package-summary)
+             */
             val testJunit4 = module("ui-test-junit4")
+
+            /**
+             * Compose testing library that should be added as a debugImplementation dependency to
+             * add properties to the debug manifest necessary for testing an application.
+             */
             val testManifest = module("ui-test-manifest")
 
+            /**
+             * Compose Text primitives and utilities
+             *
+             * ### API reference:
+             * - [androidx.compose.ui.text](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/package-summary)
+             * - [androidx.compose.ui.text.android](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/android/package-summary)
+             * - [androidx.compose.ui.text.font](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/font/package-summary)
+             * - [androidx.compose.ui.text.input](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/input/package-summary)
+             * - [androidx.compose.ui.text.intl](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/intl/package-summary)
+             * - [androidx.compose.ui.text.platform.extensions](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/platform/extensions/package-summary)
+             * - [androidx.compose.ui.text.style](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/style/package-summary)
+             */
             val text = module("ui-text")
 
+            /**
+             * Compose tooling library. This library exposes information to our tools for better IDE support.
+             *
+             * ### API reference:
+             * - [androidx.compose.ui.tooling](https://developer.android.com/reference/kotlin/androidx/compose/ui/tooling/package-summary)
+             */
             val tooling = module("ui-tooling")
+
+            /**
+             * 	Compose tooling library data. This library provides data about compose for different tooling purposes.
+             *
+             * ### API reference:
+             * - [androidx.compose.ui.tooling.data](https://developer.android.com/reference/kotlin/androidx/compose/ui/tooling/data/package-summary)
+             */
             val toolingData = module("ui-tooling-data")
+
+            /**
+             * Compose tooling library API. This library provides the API required to declare @Preview composables in user apps.
+             *
+             * ### API reference:
+             * - [androidx.compose.ui.tooling.preview](https://developer.android.com/reference/kotlin/androidx/compose/ui/tooling/preview/package-summary)
+             * - [androidx.compose.ui.tooling.preview.datasource](https://developer.android.com/reference/kotlin/androidx/compose/ui/tooling/preview/datasource/package-summary)
+             */
             val toolingPreview = module("ui-tooling-preview")
 
+            /**
+             * Compose classes for simple units.
+             *
+             * ### API reference:
+             * - [androidx.compose.ui.unit](https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/package-summary)
+             */
             val unit = module("ui-unit")
+
+            /**
+             * Internal Compose utilities used by other modules.
+             *
+             * ### API reference:
+             * - [androidx.compose.ui.util](https://developer.android.com/reference/kotlin/androidx/compose/ui/util/package-summary)
+             */
             val util = module("ui-util")
+
+            /**
+             * Compose integration with ViewBinding
+             */
             val viewBinding = module("ui-viewbinding")
         }
 
+        /**
+         * Write Jetpack Compose applications with ready to use building blocks and extend foundation to
+         * build your own design system pieces.
+         *
+         * Guide: [Layouts in Compose](https://developer.android.com/jetpack/compose/layouts)
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/compose-foundation)
+         *
+         * ## API reference:
+         * - [androidx.compose.foundation](https://developer.android.com/reference/kotlin/androidx/compose/foundation/package-summary)
+         * - [androidx.compose.foundation.gestures](https://developer.android.com/reference/kotlin/androidx/compose/foundation/gestures/package-summary)
+         * - [androidx.compose.foundation.interaction](https://developer.android.com/reference/kotlin/androidx/compose/foundation/interaction/package-summary)
+         * - [androidx.compose.foundation.layout](https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/package-summary)
+         * - [androidx.compose.foundation.lazy](https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/package-summary)
+         * - [androidx.compose.foundation.relocation](https://developer.android.com/reference/kotlin/androidx/compose/foundation/relocation/package-summary)
+         * - [androidx.compose.foundation.selection](https://developer.android.com/reference/kotlin/androidx/compose/foundation/selection/package-summary)
+         * - [androidx.compose.foundation.shape](https://developer.android.com/reference/kotlin/androidx/compose/foundation/shape/package-summary)
+         * - [androidx.compose.foundation.text](https://developer.android.com/reference/kotlin/androidx/compose/foundation/text/package-summary)
+         * - [androidx.compose.foundation.text.selection](https://developer.android.com/reference/kotlin/androidx/compose/foundation/text/selection/package-summary)
+         */
         val foundation = Foundation
 
         object Foundation : DependencyNotationAndGroup(group = "androidx.compose.foundation", name = "foundation") {
+
+            /**
+             * Compose layout implementations
+             *
+             * Guide: [Layouts in Compose](https://developer.android.com/jetpack/compose/layouts)
+             *
+             * ## API reference:
+             * - [androidx.compose.foundation.layout](https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/package-summary)
+             */
             val layout = module("foundation-layout")
         }
 
+        /**
+         * Build Jetpack Compose UIs with ready to use Material Design Components.
+         *
+         * This is the higher level entry point of Compose, designed to provide components that match those described at
+         * [material.io](https://material.io).
+         *
+         * Guide: [Material Theming in Compose](https://developer.android.com/jetpack/compose/themes/material)
+         *
+         * ### API reference:
+         * - [androidx.compose.material](https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary)
+         * - [androidx.compose.material.icons](https://developer.android.com/reference/kotlin/androidx/compose/material/icons/package-summary)
+         */
         val material = Material
 
         object Material : DependencyNotationAndGroup(group = "androidx.compose.material", name = "material") {
 
+            /**
+             * Material icons
+             *
+             * ### API reference
+             * - [androidx.compose.material.icons](https://developer.android.com/reference/kotlin/androidx/compose/material/icons/package-summary)
+             */
             val icons = Icons
 
             object Icons : IsNotADependency {
+
+                /**
+                 * Contains the most commonly used set of Material icons.
+                 *
+                 * Included in the main [AndroidX.Compose.material] artifact.
+                 *
+                 * The [AndroidX.Compose.Material.Icons.extended] library contains the full set of Material Icons.
+                 */
                 val core = module("material-icons-core")
+
+                /**
+                 * Contains the full set of Material Icons.
+                 *
+                 * Due to the very large size of this library, make sure to use R8/Proguard to strip unused icons if
+                 * you are including this library as a direct dependency. Alternatively you can make a
+                 * local copy (by copy and pasting) the icon(s) you wish to keep,
+                 * or using Android Studio's 'Import vector asset' feature.
+                 */
                 val extended = module("material-icons-extended")
             }
 
+            /**
+             * Material ripple used to build interactive components.
+             *
+             * ### API reference
+             * - [androidx.compose.material.ripple](https://developer.android.com/reference/kotlin/androidx/compose/material/ripple/package-summary)
+             */
             val ripple = module("material-ripple")
         }
 
