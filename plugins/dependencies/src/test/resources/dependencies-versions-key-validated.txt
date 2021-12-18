@@ -28,6 +28,7 @@ androidx.camera..camera-view=version.androidx.camera.view
 androidx.car..car-cluster=version.androidx.car-cluster
 androidx.car..car=version.androidx.car
 androidx.car.app..app-automotive=version.androidx.car.app
+androidx.car.app..app-projected=version.androidx.car.app
 androidx.car.app..app-testing=version.androidx.car.app-testing
 androidx.car.app..app=version.androidx.car.app
 androidx.cardview..cardview=version.androidx.cardview

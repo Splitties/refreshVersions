@@ -102,6 +102,8 @@ object AndroidX : IsNotADependency {
 
         val automotive = module("app-automotive")
 
+        val projected = module("app-projected")
+
         val testing = module("app-testing")
     }
 
