@@ -56,6 +56,14 @@ object AndroidX : IsNotADependency {
         val testing = module("core-testing")
     }
 
+    /**
+     * Inflate layouts asynchronously to avoid jank in the UI.
+     *
+     * [Release Notes](https://developer.android.com/jetpack/androidx/releases/asynclayoutinflater)
+     *
+     * ### API reference:
+     * - [androidx.asynclayoutinflater.view](https://developer.android.com/reference/kotlin/androidx/asynclayoutinflater/view/package-summary)
+     */
     val asyncLayoutInflater = DependencyNotation("androidx.asynclayoutinflater", "asynclayoutinflater")
 
     /**
