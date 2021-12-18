@@ -102,6 +102,16 @@ object AndroidX : IsNotADependency {
         val testing = module("app-testing")
     }
 
+    /**
+     * Implement the Material Design card pattern with round corners and drop shadows.
+     *
+     * Guide: [Create a Card-Based Layout](https://developer.android.com/guide/topics/ui/layout/cardview)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/cardview)
+     *
+     * ### API reference:
+     * - [androidx.cardview.widget](https://developer.android.com/reference/kotlin/androidx/cardview/widget/package-summary)
+     */
     val cardView = DependencyNotation("androidx.cardview", "cardview")
 
     /**
