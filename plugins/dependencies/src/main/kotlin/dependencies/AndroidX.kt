@@ -60,18 +60,54 @@ object AndroidX : IsNotADependency {
 
     val autoFill = DependencyNotation("androidx.autofill", "autofill")
 
-    val benchmark = Benchmark // TODO kdoc
+    /**
+     * Accurately measure your code's performance within Android Studio.
+     *
+     * Guide: [Introduction to the Jetpack Benchmark library](https://developer.android.com/studio/profile/benchmark)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/benchmark)
+     */
+    val benchmark = Benchmark
 
     object Benchmark : DependencyGroup(group = "androidx.benchmark") {
 
+        /** Android Benchmark Gradle Plugin */
         val gradlePlugin = module(name = "benchmark-gradle-plugin")
 
+        /**
+         * Android Benchmark - JUnit4.
+         *
+         * ### API reference:
+         * - [androidx.benchmark.junit4](https://developer.android.com/reference/kotlin/androidx/benchmark/junit4/package-summary)
+         */
         val junit4 = module(name = "benchmark-junit4")
 
+        /**
+         * Android Benchmark - Macrobenchmark.
+         *
+         * ### API reference:
+         * - [androidx.benchmark.macro](https://developer.android.com/reference/kotlin/androidx/benchmark/macro/package-summary)
+         *
+         * @see AndroidX.Benchmark.macroJunit4
+         */
         val macro = module(name = "benchmark-macro")
 
+        /**
+         * Android Benchmark - Macrobenchmark JUnit4.
+         *
+         * ### API reference:
+         * - [androidx.benchmark.macro](https://developer.android.com/reference/kotlin/androidx/benchmark/macro/package-summary)
+         * - [androidx.benchmark.macro.junit4](https://developer.android.com/reference/kotlin/androidx/benchmark/macro/junit4/package-summary)
+         */
         val macroJunit4 = module(name = "benchmark-macro-junit4")
 
+        /**
+         * Android Benchmark - Common.
+         *
+         * ### API reference:
+         * - [androidx.benchmark](https://developer.android.com/reference/kotlin/androidx/benchmark/package-summary)
+         * - [androidx.benchmark.perfetto](https://developer.android.com/reference/kotlin/androidx/benchmark/perfetto/package-summary)
+         */
         val common = module(name = "benchmark-common")
     }
 
