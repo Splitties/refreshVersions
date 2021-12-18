@@ -78,6 +78,20 @@ object AndroidX : IsNotADependency {
         val ktx = module("biometric-ktx")
     }
 
+    /**
+     * Android Support Custom Tabs.
+     *
+     * Guide: [Custom Tabs](https://developer.chrome.com/docs/android/custom-tabs/)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/browser)
+     *
+     * ### API reference:
+     * - [androidx.browser.browseractions](https://developer.android.com/reference/kotlin/androidx/browser/browseractions/package-summary)
+     * - [androidx.browser.customtabs](https://developer.android.com/reference/androidx/browser/customtabs/package-summary)
+     * - [androidx.browser.trusted](https://developer.android.com/reference/androidx/browser/trusted/package-summary)
+     * - [androidx.browser.trusted.sharing](https://developer.android.com/reference/kotlin/androidx/browser/trusted/sharing/package-summary)
+     * - [androidx.browser.trusted.splashscreens](https://developer.android.com/reference/kotlin/androidx/browser/trusted/splashscreens/package-summary)
+     */
     val browser = DependencyNotation("androidx.browser", "browser")
 
     /**
