@@ -41,12 +41,42 @@ object AndroidX : IsNotADependency {
         val resources = module("appcompat-resources")
     }
 
+    /**
+     * AppSearch is an on-device search library for managing locally stored structured data, with APIs for indexing data
+     * and retrieving data using full-text search. Use it to build custom in-app search capabilities for your users.
+     *
+     * Guide: [AppSearch](https://developer.android.com/guide/topics/search/appsearch)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/appsearch)
+     *
+     * ### API reference:
+     * - [androidx.appsearch.annotation](https://developer.android.com/reference/kotlin/androidx/appsearch/annotation/package-summary)
+     * - [androidx.appsearch.app](https://developer.android.com/reference/kotlin/androidx/appsearch/app/package-summary)
+     * - [androidx.appsearch.exceptions](https://developer.android.com/reference/kotlin/androidx/appsearch/exceptions/package-summary)
+     */
     val appSearch = AppSearch
 
     object AppSearch : DependencyNotationAndGroup(group = "androidx.appsearch", name = "appsearch") {
+
+        /** Compiler for classes annotated with @androidx.appsearch.annotation.Document */
         val compiler = module("appsearch-compiler")
+
+        /**
+         * An implementation of AppSearchSession which uses local app storage and a local copy of the search library.
+         *
+         * ### API reference:
+         * - [androidx.appsearch.localstorage](https://developer.android.com/reference/kotlin/androidx/appsearch/localstorage/package-summary)
+         *
+         * @see AndroidX.AppSearch.platformStorage
+         */
         val localStorage = module("appsearch-local-storage")
 
+        /**
+         * An implementation of AppSearchSession which uses the AppSearch service on Android 12+.
+         *
+         * ### API reference:
+         * - [androidx.appsearch.platformstorage](https://developer.android.com/reference/kotlin/androidx/appsearch/platformstorage/package-summary)
+         */
         val platformStorage = module("appsearch-platform-storage")
     }
 
