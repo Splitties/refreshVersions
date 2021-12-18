@@ -80,16 +80,82 @@ object AndroidX : IsNotADependency {
 
     val browser = DependencyNotation("androidx.browser", "browser")
 
+    /**
+     * CameraX is an addition to Jetpack that makes it easier to add camera capabilities to your app.
+     *
+     * The library provides a number of compatibility fixes and workarounds to help make the developer experience
+     * consistent across many devices.
+     *
+     * Guide: [CameraX overview](https://developer.android.com/training/camerax)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/camera)
+     */
     val camera = Camera
 
     object Camera : DependencyGroup(group = "androidx.camera") {
+
+        /**
+         * Core components for the Jetpack Camera Library.
+         *
+         * ### API reference:
+         * - [androidx.camera.core](https://developer.android.com/reference/kotlin/androidx/camera/core/package-summary)
+         */
         val core = module("camera-core")
+
+        /**
+         * Camera2 implementation and extensions for the Jetpack Camera Library.
+         *
+         * ### API reference:
+         * - [androidx.camera.camera2](https://developer.android.com/reference/kotlin/androidx/camera/camera2/package-summary)
+         * - [androidx.camera.camera2.interop](https://developer.android.com/reference/kotlin/androidx/camera/camera2/interop/package-summary)
+         */
         val camera2 = module("camera-camera2")
+
+        /**
+         * OEM Extensions for the Jetpack Camera Library, a library providing interfaces to integrate with OEM specific camera features.
+         *
+         * ### API reference:
+         * - [androidx.camera.extensions](https://developer.android.com/reference/kotlin/androidx/camera/extensions/package-summary)
+         * - [androidx.camera.extensions.internal](https://developer.android.com/reference/kotlin/androidx/camera/extensions/internal/package-summary)
+         * - [androidx.camera.extensions.internal.compat.quirk](https://developer.android.com/reference/kotlin/androidx/camera/extensions/internal/compat/quirk/package-summary)
+         * - [androidx.camera.extensions.internal.compat.workaround](https://developer.android.com/reference/kotlin/androidx/camera/extensions/internal/compat/workaround/package-summary)
+         * - [androidx.camera.extensions.internal.sessionprocessor](https://developer.android.com/reference/kotlin/androidx/camera/extensions/internal/sessionprocessor/package-summary)
+         */
         val extensions = module("camera-extensions")
+
+        /**
+         * Lifecycle components for the Jetpack Camera Library.
+         *
+         * ### API reference:
+         * - [androidx.camera.lifecycle](https://developer.android.com/reference/kotlin/androidx/camera/lifecycle/package-summary)
+         */
         val lifecycle = module("camera-lifecycle")
 
+        /**
+         * Video components for the Jetpack Camera Library.
+         *
+         * ### API reference:
+         * - [androidx.camera.video](https://developer.android.com/reference/kotlin/androidx/camera/video/package-summary)
+         * - [androidx.camera.video.impl](https://developer.android.com/reference/kotlin/androidx/camera/video/impl/package-summary)
+         * - [androidx.camera.video.internal](https://developer.android.com/reference/kotlin/androidx/camera/video/internal/package-summary)
+         * - [androidx.camera.video.internal.compat](https://developer.android.com/reference/kotlin/androidx/camera/video/internal/compat/package-summary)
+         * - [androidx.camera.video.internal.compat.quirk](https://developer.android.com/reference/kotlin/androidx/camera/video/internal/compat/quirk/package-summary)
+         * - [androidx.camera.video.internal.config](https://developer.android.com/reference/kotlin/androidx/camera/video/internal/config/package-summary)
+         * - [androidx.camera.video.internal.encoder](https://developer.android.com/reference/kotlin/androidx/camera/video/internal/encoder/package-summary)
+         * - [androidx.camera.video.internal.utils](https://developer.android.com/reference/kotlin/androidx/camera/video/internal/utils/package-summary)
+         * - [androidx.camera.video.internal.workaround](https://developer.android.com/reference/kotlin/androidx/camera/video/internal/workaround/package-summary)
+         */
         val video = module("camera-video")
 
+        /**
+         * UI tools for the Jetpack Camera Library.
+         *
+         * ### API reference:
+         * - [androidx.camera.view](https://developer.android.com/reference/kotlin/androidx/camera/view/package-summary)
+         * - [androidx.camera.view.internal.compat.quirk](https://developer.android.com/reference/kotlin/androidx/camera/view/internal/compat/quirk/package-summary)
+         * - [androidx.camera.view.transform](https://developer.android.com/reference/kotlin/androidx/camera/view/transform/package-summary)
+         * - [androidx.camera.view.video](https://developer.android.com/reference/kotlin/androidx/camera/view/video/package-summary)
+         */
         val view = module("camera-view")
     }
 
