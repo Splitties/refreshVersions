@@ -246,7 +246,11 @@ object AndroidX : IsNotADependency {
 
     object ConstraintLayout : DependencyNotationAndGroup("androidx.constraintlayout", "constraintlayout") {
 
-        /** Jetpack Compose support */
+        /**
+         * Jetpack Compose support
+         *
+         * Guide: [ConstraintLayout in Compose](https://developer.android.com/jetpack/compose/layouts/constraintlayout)
+         */
         val compose = module("constraintlayout-compose")
     }
 
