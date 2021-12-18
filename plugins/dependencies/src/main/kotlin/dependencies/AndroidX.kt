@@ -29,9 +29,25 @@ object AndroidX : IsNotADependency {
 
     // androidx.ads intentionally not included because ads are mental pollution.
 
+    /**
+     * Expose metadata that helps tools and other developers understand your app's code.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/annotation)
+     *
+     * ### API reference:
+     * - [androidx.annotation](https://developer.android.com/reference/kotlin/androidx/annotation/package-summary)
+     */
     val annotation = Annotation
 
     object Annotation : DependencyNotationAndGroup("androidx.annotation", "annotation") {
+
+        /**
+         * Java annotation for use on unstable Android API surfaces. When used in conjunction with the Experimental
+         * annotation lint checks, this annotation provides functional parity with Kotlin's Experimental annotation.
+         *
+         * ### API reference:
+         * - [androidx.annotation.experimental](https://developer.android.com/reference/kotlin/androidx/annotation/experimental/package-summary)
+         */
         val experimental = module("annotation-experimental")
     }
 
