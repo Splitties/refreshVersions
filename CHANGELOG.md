@@ -95,6 +95,7 @@ We've already started to take advantage of it to clean up all the discontinued a
     - complications.dataSource
     - editor
 - KotlinX.coroutines.bom
+- Square.moshi.adapters
 - Testing.junit:
     - bom
     - jupiter: _(moved from Testing.junit)_
@@ -108,6 +109,7 @@ We've already started to take advantage of it to clean up all the discontinued a
 
 Thanks to [Emil Kantis](https://github.com/Kantis) for [the kotest dependencies fixes](https://github.com/jmfayard/refreshVersions/pull/446)!
 Thanks to [Kamalesh](https://github.com/imashnake0) for [the help in updating AndroidX dependency notations](https://github.com/jmfayard/refreshVersions/pull/460#issuecomment-995768730)!
+Thanks to [Simon Marquis](https://github.com/SimonMarquis) for [adding Square.moshi.adapters](https://github.com/jmfayard/refreshVersions/pull/462), and [helping contributors using Windows](https://github.com/jmfayard/refreshVersions/pull/464)!
 
 ## Version 0.23.0 (2021-09-28)
 
