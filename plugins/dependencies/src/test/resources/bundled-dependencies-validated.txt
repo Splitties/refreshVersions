@@ -8,6 +8,7 @@ androidx.appcompat:appcompat-resources
 androidx.appsearch:appsearch
 androidx.appsearch:appsearch-compiler
 androidx.appsearch:appsearch-local-storage
+androidx.appsearch:appsearch-platform-storage
 androidx.arch.core:core-common
 androidx.arch.core:core-runtime
 androidx.arch.core:core-testing

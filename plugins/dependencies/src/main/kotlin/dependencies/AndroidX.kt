@@ -46,6 +46,8 @@ object AndroidX : IsNotADependency {
     object AppSearch : DependencyNotationAndGroup(group = "androidx.appsearch", name = "appsearch") {
         val compiler = module("appsearch-compiler")
         val localStorage = module("appsearch-local-storage")
+
+        val platformStorage = module("appsearch-platform-storage")
     }
 
     /**

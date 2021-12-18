@@ -7,6 +7,7 @@ androidx.appcompat..appcompat-resources=version.androidx.appcompat
 androidx.appcompat..appcompat=version.androidx.appcompat
 androidx.appsearch..appsearch-compiler=version.androidx.appsearch
 androidx.appsearch..appsearch-local-storage=version.androidx.appsearch
+androidx.appsearch..appsearch-platform-storage=version.androidx.appsearch
 androidx.appsearch..appsearch=version.androidx.appsearch
 androidx.arch.core..core-common=version.androidx.arch.core
 androidx.arch.core..core-runtime=version.androidx.arch.core
