@@ -10,9 +10,6 @@ androidx.camera:camera-extensions(-*)
 androidx.camera:camera-view(-*)
 ^^^^^^^^.       ^^^^^^.^^^^
 
-androidx.car:car-cluster(-*)
-^^^^^^^^.    ^^^^^^^^^^^
-
 androidx.car.app:app-testing(-*)
 ^^^^^^^^.^^^.    ^^^^^^^^^^^
 
@@ -60,6 +57,9 @@ androidx.leanback:leanback-paging(-*)
 
 androidx.leanback:leanback-tab(-*)
 ^^^^^^^^.         ^^^^^^^^^^^^
+
+androidx.leanback:leanback-grid(-*)
+^^^^^^^^.         ^^^^^^^^^^^^^
 
 androidx.lifecycle:lifecycle-extensions // Deprecated artifact, no longer updated with its family.
 ^^^^^^^^.          ^^^^^^^^^^^^^^^^^^^^
@@ -131,7 +131,7 @@ androidx.window:window-extensions
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^
 
 androidx.wear.compose:compose-*
-^^^^^^^^.^^^^.^^^^^^^        ^^
+^^^^^^^^.^^^^.^^^^^^^
 
 androidx.wear.compose:* // In case they add an artifact that doesn't start with "compose"
 ^^^^^^^^.^^^^.^^^^^^^.^
