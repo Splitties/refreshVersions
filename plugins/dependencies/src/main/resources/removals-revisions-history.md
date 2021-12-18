@@ -247,3 +247,15 @@ id:[androidx.compose.ui:ui-text-android]
 // TODO: Replace this discontinued artifact.
 moved:[androidx.compose.runtime:runtime-saveable]
 id:[androidx.compose.runtime:runtime-saved-instance-state]
+
+~~AndroidX.car.cluster~~
+// The androidx.car:car-cluster library has been deprecated and no further versions will be shipped.
+//TODO: Use androidx.car.app instead.
+moved:[androidx.car.app:app]
+id:[androidx.car:car-cluster]
+
+~~AndroidX.car~~
+// The androidx.car:car library has been deprecated and no further versions will be shipped.
+//TODO: Use androidx.car.app instead.
+moved:[androidx.car.app:app]
+id:[androidx.car:car]

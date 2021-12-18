@@ -10,9 +10,6 @@ androidx.camera:camera-extensions(-*)
 androidx.camera:camera-view(-*)
 ^^^^^^^^.       ^^^^^^.^^^^
 
-androidx.car:car-cluster(-*)
-^^^^^^^^.    ^^^^^^^^^^^
-
 androidx.car.app:app-testing(-*)
 ^^^^^^^^.^^^.    ^^^^^^^^^^^
 

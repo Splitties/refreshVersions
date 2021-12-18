@@ -29,8 +29,6 @@ androidx.car.app:app
 androidx.car.app:app-automotive
 androidx.car.app:app-projected
 androidx.car.app:app-testing
-androidx.car:car
-androidx.car:car-cluster
 androidx.cardview:cardview
 androidx.collection:collection
 androidx.collection:collection-ktx

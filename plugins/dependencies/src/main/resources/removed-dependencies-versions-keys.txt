@@ -49,3 +49,5 @@ androidx.legacy..legacy-support-core-utils=version.androidx.legacy
 androidx.legacy..legacy-support-v13=version.androidx.legacy
 androidx.legacy..legacy-support-v4=version.androidx.legacy
 androidx.hilt..hilt-lifecycle-viewmodel=version.androidx.hilt-lifecycle-viewmodel
+androidx.car..car-cluster=version.androidx.car-cluster
+androidx.car..car=version.androidx.car

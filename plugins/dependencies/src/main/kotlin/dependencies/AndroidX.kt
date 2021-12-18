@@ -90,12 +90,6 @@ object AndroidX : IsNotADependency {
         val view = module("camera-view")
     }
 
-    val car = Car
-
-    object Car : DependencyNotationAndGroup("androidx.car", "car") {
-        val cluster = module("car-cluster")
-    }
-
     /**
      * Build navigation, parking, and charging apps for Android Auto.
      *
