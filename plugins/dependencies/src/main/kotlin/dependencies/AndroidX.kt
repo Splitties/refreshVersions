@@ -165,12 +165,6 @@ object AndroidX : IsNotADependency {
 
         object Foundation : DependencyNotationAndGroup(group = "androidx.compose.foundation", name = "foundation") {
             val layout = module("foundation-layout")
-
-            @Deprecated(
-                "Symbols moved into the main artifact in 1.0.0-alpha08",
-                ReplaceWith("AndroidX.compose.foundation")
-            )
-            val text = module("foundation-text")
         }
 
         val material = Material

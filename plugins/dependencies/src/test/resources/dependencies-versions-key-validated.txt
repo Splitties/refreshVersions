@@ -36,7 +36,6 @@ androidx.compose.animation..animation-core=version.androidx.compose.animation
 androidx.compose.animation..animation=version.androidx.compose.animation
 androidx.compose.compiler..compiler=version.androidx.compose.compiler
 androidx.compose.foundation..foundation-layout=version.androidx.compose.foundation
-androidx.compose.foundation..foundation-text=version.androidx.compose.foundation-text
 androidx.compose.foundation..foundation=version.androidx.compose.foundation
 androidx.compose.material..material-icons-core=version.androidx.compose.material
 androidx.compose.material..material-icons-extended=version.androidx.compose.material

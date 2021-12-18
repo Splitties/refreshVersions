@@ -230,3 +230,9 @@ id:[androidx.legacy:legacy-support-v4]
 // Use @HiltViewModel instead of @ViewModelInject and remove this dependency.
 // See docs here: https://dagger.dev/hilt/view-model
 id:[androidx.hilt:hilt-lifecycle-viewmodel]
+
+~~AndroidX.compose.foundation.text~~
+// Included in the main compose foundation library.
+// TODO: Remove this usage.
+moved:[androidx.compose.foundation:foundation]
+id:[androidx.compose.foundation:foundation-text]

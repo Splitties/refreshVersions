@@ -36,7 +36,6 @@ androidx.compose.animation..animation-core=AndroidX.compose.animation.core
 androidx.compose.animation..animation=AndroidX.compose.animation
 androidx.compose.compiler..compiler=AndroidX.compose.compiler
 androidx.compose.foundation..foundation-layout=AndroidX.compose.foundation.layout
-androidx.compose.foundation..foundation-text=AndroidX.compose.foundation.text
 androidx.compose.foundation..foundation=AndroidX.compose.foundation
 androidx.compose.material..material-icons-core=AndroidX.compose.material.icons.core
 androidx.compose.material..material-icons-extended=AndroidX.compose.material.icons.extended
