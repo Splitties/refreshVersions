@@ -48,11 +48,32 @@ object AndroidX : IsNotADependency {
         val localStorage = module("appsearch-local-storage")
     }
 
+    /**
+     * Helper for other arch dependencies, including JUnit test rules that can be used with LiveData.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/arch-core)
+     */
     val archCore = ArchCore
 
     object ArchCore : DependencyGroup(group = "androidx.arch.core") {
+
+        /**
+         * Android Arch-Common
+         *
+         * ### API reference:
+         * - [androidx.arch.core.util](https://developer.android.com/reference/kotlin/androidx/arch/core/util/package-summary)
+         */
         val common = module("core-common")
+
+        /** Android Arch-Runtime */
         val runtime = module("core-runtime")
+
+        /**
+         * Android Core-Testing
+         *
+         * ### API reference:
+         * - [androidx.arch.core.executor.testing](https://developer.android.com/reference/kotlin/androidx/arch/core/executor/testing/package-summary)
+         */
         val testing = module("core-testing")
     }
 
