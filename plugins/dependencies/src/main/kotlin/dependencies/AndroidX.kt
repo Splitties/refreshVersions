@@ -58,6 +58,19 @@ object AndroidX : IsNotADependency {
 
     val asyncLayoutInflater = DependencyNotation("androidx.asynclayoutinflater", "asynclayoutinflater")
 
+    /**
+     * Improve autofill accuracy via extending hints.
+     *
+     * Guide: [Autofill framework](hhttps://developer.android.com/guide/topics/text/autofill)
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/autofill)
+     *
+     * ### API reference:
+     * - [androidx.autofill](https://developer.android.com/reference/kotlin/androidx/autofill/package-summary)
+     * - [androidx.autofill.inline](https://developer.android.com/reference/kotlin/androidx/autofill/inline/package-summary)
+     * - [androidx.autofill.inline.common](https://developer.android.com/reference/kotlin/androidx/autofill/inline/common/package-summary)
+     * - [androidx.autofill.inline.v1](https://developer.android.com/reference/kotlin/androidx/autofill/inline/v1/package-summary)
+     */
     val autoFill = DependencyNotation("androidx.autofill", "autofill")
 
     /**
