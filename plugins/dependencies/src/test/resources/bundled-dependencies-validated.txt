@@ -113,6 +113,7 @@ androidx.games:games-frame-pacing
 androidx.games:games-performance-tuner
 androidx.games:games-text-input
 androidx.glance:glance
+androidx.glance:glance-appwidget
 androidx.gridlayout:gridlayout
 androidx.health:health-services-client
 androidx.heifwriter:heifwriter

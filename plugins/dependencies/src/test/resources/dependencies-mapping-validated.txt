@@ -112,6 +112,7 @@ androidx.games..games-controller=AndroidX.games.controller
 androidx.games..games-frame-pacing=AndroidX.games.framePacing
 androidx.games..games-performance-tuner=AndroidX.games.performanceTuner
 androidx.games..games-text-input=AndroidX.games.textInput
+androidx.glance..glance-appwidget=AndroidX.glance.appWidget
 androidx.glance..glance=AndroidX.glance
 androidx.gridlayout..gridlayout=AndroidX.gridLayout
 androidx.health..health-services-client=AndroidX.health.servicesClient
