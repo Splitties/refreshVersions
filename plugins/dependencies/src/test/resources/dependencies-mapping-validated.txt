@@ -17,6 +17,7 @@ androidx.benchmark..benchmark-common=AndroidX.benchmark.common
 androidx.benchmark..benchmark-gradle-plugin=AndroidX.benchmark.gradlePlugin
 androidx.benchmark..benchmark-junit4=AndroidX.benchmark.junit4
 androidx.benchmark..benchmark-macro-junit4=AndroidX.benchmark.macroJunit4
+androidx.benchmark..benchmark-macro=AndroidX.benchmark.macro
 androidx.biometric..biometric-ktx=AndroidX.biometric.ktx
 androidx.biometric..biometric=AndroidX.biometric
 androidx.browser..browser=AndroidX.browser

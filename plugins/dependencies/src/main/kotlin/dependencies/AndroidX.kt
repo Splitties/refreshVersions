@@ -67,6 +67,9 @@ object AndroidX : IsNotADependency {
         val gradlePlugin = module(name = "benchmark-gradle-plugin")
 
         val junit4 = module(name = "benchmark-junit4")
+
+        val macro = module(name = "benchmark-macro")
+
         val macroJunit4 = module(name = "benchmark-macro-junit4")
 
         val common = module(name = "benchmark-common")

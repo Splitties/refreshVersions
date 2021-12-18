@@ -16,6 +16,7 @@ androidx.autofill:autofill
 androidx.benchmark:benchmark-common
 androidx.benchmark:benchmark-gradle-plugin
 androidx.benchmark:benchmark-junit4
+androidx.benchmark:benchmark-macro
 androidx.benchmark:benchmark-macro-junit4
 androidx.biometric:biometric
 androidx.biometric:biometric-ktx
