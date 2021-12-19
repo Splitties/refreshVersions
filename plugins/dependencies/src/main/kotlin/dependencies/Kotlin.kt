@@ -1,6 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 
@@ -40,4 +41,7 @@ object Kotlin {
         val junit5 = module("kotlin-test-junit5")
         val testng = module("kotlin-test-testng")
     }
+
+    /** Kotlin Script Runtime */
+    val scriptRuntime = DependencyNotation("org.jetbrains.kotlin", "kotlin-script-runtime")
 }
