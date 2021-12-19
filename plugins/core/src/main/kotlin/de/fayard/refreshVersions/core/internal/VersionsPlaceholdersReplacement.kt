@@ -10,7 +10,10 @@ import de.fayard.refreshVersions.core.internal.versions.readFromFile
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewEntry
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.Project
-import org.gradle.api.artifacts.*
+import org.gradle.api.artifacts.Configuration
+import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.ExternalDependency
+import org.gradle.api.artifacts.repositories.ArtifactRepository
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.invocation.Gradle
 import kotlin.reflect.full.memberFunctions
@@ -128,8 +131,10 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
     initialVersionsMap: Map<String, String>,
     refreshVersionsMap: (updatedMap: Map<String, String>) -> Unit
 ) {
-
-    val repositories = if (isFromBuildscript) project.buildscript.repositories else project.repositories
+    val repositories = when {
+        isFromBuildscript -> project.buildscript.repositories
+        else -> project.repositories
+    }.withGlobalRepos()
     var properties = initialVersionsMap
 
     val dependenciesToReplace = mutableListOf<Pair<Dependency, Dependency>>()
@@ -266,7 +271,7 @@ private fun findAnyPreviouslyMatchingVersionEntry(
 
 @Suppress("FunctionName")
 private fun `Write versions candidates using latest most stable version and get it`(
-    repositories: ArtifactRepositoryContainer,
+    repositories: List<ArtifactRepository>,
     propertyName: String,
     dependency: Dependency,
     moduleId: ModuleId
@@ -284,7 +289,7 @@ private fun `Write versions candidates using latest most stable version and get 
             DependencyVersionsFetcher.forNpm(
                 httpClient = RefreshVersionsConfigHolder.httpClient,
                 npmDependency = dependency,
-                npmRegistry = "https://registry.npmjs.org/"
+                npmRegistry = "https://registry.npmjs.org/" //TODO: Support custom npm registries.
             )
         )
     }
@@ -299,7 +304,7 @@ internal fun `Write versions candidates using latest most stable version and get
         currentVersion = Version(""),
         resultMode = RefreshVersionsConfigHolder.resultMode
     ).let { versionCandidates ->
-        val bestStability = versionCandidates.minBy { it.stabilityLevel }!!.stabilityLevel
+        val bestStability = versionCandidates.minByOrNull { it.stabilityLevel }!!.stabilityLevel
         val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
         VersionsPropertiesModel.writeWithNewEntry(
             propertyName = propertyName,

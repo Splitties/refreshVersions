@@ -1,6 +1,8 @@
 package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.internal.DependencyMapping
+import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.ints.shouldBeExactly
@@ -178,7 +180,12 @@ class MigrationTest : StringSpec({
             "com.squareup.okio:okio" to "Square.okio",
             "com.squareup.moshi:moshi" to "Square.moshi",
             "com.google.firebase:firebase-analytics" to "Firebase.analytics"
-        )
+        ).mapKeys { (key, _) ->
+            ModuleId.Maven(
+                group = key.substringBefore(':'),
+                name = key.substringAfter(':')
+            )
+        }
         val input = """
             implementation 'com.squareup.okio:okio:1.2'
             implementation("com.squareup.moshi:moshi:_")
@@ -215,7 +222,7 @@ class MigrationTest : StringSpec({
             gradle/libraries.gradle
             libraries.groovy
             libs.gradle
-        """.trimIndent().lines()
+        """.trimIndent().lines().map { File(it).path }
         val dir = testResources.resolve("migration.files")
         findFilesWithDependencyNotations(dir).map { it.relativeTo(dir).path }.sorted() shouldBe expected.sorted()
     }
@@ -256,10 +263,11 @@ class MigrationTest : StringSpec({
     }
 
     "The shortest dependency constant should be picked" {
-        val a = DependencyMapping("com.example", "artifact", "Firebase.analytics")
-        val b = DependencyMapping("com.example", "artifact", "Firebase.no-BoM.analytics")
-        listOf(a, b).associateShortestByMavenCoordinate() shouldBe mapOf("com.example:artifact" to "Firebase.analytics")
-        listOf(b, a).associateShortestByMavenCoordinate() shouldBe mapOf("com.example:artifact" to "Firebase.analytics")
+        val moduleId = ModuleId.Maven("com.example", "artifact")
+        val a = DependencyMapping(moduleId, "Firebase.analytics")
+        val b = DependencyMapping(moduleId, "Firebase.no-BoM.analytics")
+        listOf(a, b).associateShortestByMavenCoordinate() shouldBe mapOf(moduleId to "Firebase.analytics")
+        listOf(b, a).associateShortestByMavenCoordinate() shouldBe mapOf(moduleId to "Firebase.analytics")
     }
 })
 

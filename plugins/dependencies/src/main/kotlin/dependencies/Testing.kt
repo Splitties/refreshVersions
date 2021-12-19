@@ -45,17 +45,28 @@ object Testing {
      *
      * [API reference (JavaDoc)](https://junit.org/junit5/docs/current/api/)
      */
-    val junit = JunitJupiter
+    val junit = Junit
 
-    object JunitJupiter : DependencyNotationAndGroup(group = "org.junit.jupiter", name = "junit-jupiter") {
+    object Junit : DependencyGroup(group = "org.junit") {
 
-        val api = module("junit-jupiter-api")
+        val bom = module("junit-bom", isBom = true)
 
-        val engine = module("junit-jupiter-engine")
+        val jupiter = Jupiter
 
-        val params = module("junit-jupiter-params")
+        object Jupiter : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Junit,
+            group = "org.junit.jupiter",
+            name = "junit-jupiter"
+        ) {
 
-        val migrationSupport = module("junit-jupiter-migrationsupport")
+            val api = module("junit-jupiter-api")
+
+            val engine = module("junit-jupiter-engine")
+
+            val params = module("junit-jupiter-params")
+
+            val migrationSupport = module("junit-jupiter-migrationsupport")
+        }
     }
 
     /**
@@ -97,6 +108,14 @@ object Testing {
             replaceWith = ReplaceWith("Testing.kotestExtensions")
         )
         val extensions = Extensions
+
+        val framework = Framework
+
+        object Framework : IsNotADependency {
+
+            val api = module("kotest-framework-api")
+            val datatest = module("kotest-framework-datatest")
+        }
 
         @Deprecated(
             message = "Since Kotest 4.5.0 extensions have a separate lifecycle per extension",
@@ -230,7 +249,7 @@ object Testing {
 
     object MockK : DependencyNotationAndGroup(group = "io.mockk", name = "mockk") {
         val android = module("mockk-android")
-        val common  = module("mockk-common")
+        val common = module("mockk-common")
     }
 
     /**

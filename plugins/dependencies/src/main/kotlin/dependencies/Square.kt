@@ -122,6 +122,7 @@ object Square {
     object Moshi : DependencyNotationAndGroup(group = "com.squareup.moshi", name = "moshi") {
         val kotlinReflect = module("moshi-kotlin")
         val kotlinCodegen = module("moshi-kotlin-codegen")
+        val adapters = module("moshi-adapters")
         val javaReflect = module("moshi")
     }
 

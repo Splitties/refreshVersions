@@ -1,0 +1,6 @@
+org.junit..junit-bom=Testing.junit.bom
+org.junit.jupiter..junit-jupiter-api=Testing.junit.jupiter.api
+org.junit.jupiter..junit-jupiter-engine=Testing.junit.jupiter.engine
+org.junit.jupiter..junit-jupiter-migrationsupport=Testing.junit.jupiter.migrationSupport
+org.junit.jupiter..junit-jupiter-params=Testing.junit.jupiter.params
+org.junit.jupiter..junit-jupiter=Testing.junit.jupiter

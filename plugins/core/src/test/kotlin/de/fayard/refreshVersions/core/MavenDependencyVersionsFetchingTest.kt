@@ -13,6 +13,7 @@ import testutils.getVersionCandidates
 class MavenDependencyVersionsFetchingTest {
 
     @Test
+    @Disabled("Because it's too slow (usually about 7 seconds)")
     fun fetchGradleVersion() = runBlocking {
         val checker = GradleUpdateChecker(defaultHttpClient)
         GradleUpdateChecker.VersionType.values().filterNot {

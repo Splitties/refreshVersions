@@ -1,14 +1,17 @@
 junit:junit
 ^^^^^.^^^^^ // Allow to add digits/numbers in artifact rules if not too complicated
 
-org.junit.jupiter:junit-jupiter(-*)
+org.junit:junit-bom
     ^^^^^
+
+org.junit.jupiter:junit-jupiter(-*)
+    ^^^^^^^^^^^^^
 
 io.kotest:*
    ^^^^^^
 
 io.kotest.extensions:kotest-extensions-*
-                     ^^^^^^^^^^^^^^^^^
+                     ^^^^^^.^^^^^^^^^^.^
 
 org.spekframework.spek2:spek-*
                         ^^^^

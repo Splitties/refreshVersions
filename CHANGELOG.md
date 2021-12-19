@@ -1,5 +1,116 @@
 # Change log for refreshVersions
 
+## Version 0.30.0 (2021-12-19)
+
+### Potentially breaking change
+
+We raised the minimum supported Gradle version to 6.8, because we started to use Kotlin 1.4 features, and Gradle pins the stdlib version. Since at the time of writing, the latest Gradle version is 7.3, we believe it won't actually block any of our users. We have [a short section about updating Gradle on our website here](https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed), feel free to check it out if it can help you.
+
+### New features
+
+#### Repositories declared in `dependencyResolutionManagement` are now supported (Gradle 7+)
+
+Since Gradle 7, you can declare repositories of the entire Gradle project (including all subprojects and their buildscript)
+in the `dependencyResolutionManagement` block in the `settings.gradle[.kts]` file.
+Unfortunately, refreshVersions didn't support it, so, unless you also kept repositories declared with `allprojects`, or per project, you would end up with all version entries in the `versions.properties` file marked as unused after running the `refreshVersions` task, and you'd not see the newer updates.
+
+This release resolves this issue, and we are eager to use it in our projects ourselves.
+
+#### Update on built-in dependency notations
+
+Sometimes, libraries get deprecated, or the maintainers change the maven coordinates.
+When it happens, this fact is unfortunately not included in the `maven-metadata.xml` files, or any other standard metadata. That means tools like refreshVersions will believe you're on the latest versions, when you're not, because it lacks the necessary information.
+
+One example is Google that changed the maven coordinates of all their AndroidX Wear Watchface artifacts several weeks ago.
+
+It took us time to catch-up with this change because we wanted to design a generic mechanism for this recurrent problem, and provide the best experience for you, and ourselves.
+
+From now on, we have the ability to remove old or deprecated built-in dependency notations in refreshVersions, and doing so will not break your builds, nor will it change the dependencies of your project. However, it'll help you notice the deprecation, and it'll help you switch to the replacement dependencies, if any.
+
+The way it works is that we keep a versioned list of all the removals, and on refreshVersions upgrade, an automatic replacement will put back the hardcoded maven coordinates, using the version placeholder, and it will add our hand-written TODO/FIXME comments, along with a perfectly aligned replacement suggestion if there is any, so that moving to the newer artifact is as easy as upgrading to a newer version in the `versions.properties` file. We designed the system so that it cannot break your build, even if you were using `withVersion(…)` or other `DependencyNotation` extensions, even if you have code comments or special string literals.
+
+It also supports the case where we just move a dependency notation to another place, or change its name, without changing the maven coordinates.
+
+Because of this change, it's important that you check the git diff after upgrading refreshVersions and running the first Gradle reload/sync/build, so you can see if there's been any changes, and if you might want to switch to any replacement dependencies.
+
+This change will enable us to keep the built-in dependency notations updated with less effort, so we're very happy to have it ready, and fully tested.
+
+We've already started to take advantage of it to clean up all the discontinued artifacts we found in AndroidX.
+
+### Bug fixes
+
+- Repositories declared in the `dependencyResolutionManagement` block were ignored. Now, they are taken into account.
+- The kotest extensions dependencies were previously wrongly sharing their version as per refreshVersions rules. Now, they each have their independent, own version key.
+- The `refreshVersionsMigrate` task wasn't inserting new entries in alphabetical order. Now it is.
+- The `refreshVersionsMigrate` task wasn't migrating buildscript dependencies. Now it is.
+
+### New dependency notations:
+
+- AndroidX.appSearch.platformStorage
+- AndroidX.benchmark.macro
+- AndroidX.camera.video
+- AndroidX.carApp:
+    - automotive
+    - projected
+- AndroidX.compose:
+    - animation.graphics
+    - material3
+- AndroidX.core.remoteViews
+- AndroidX.dragAndDrop
+- AndroidX.emoji2.bundled
+- AndroidX.glance.appWidget
+- AndroidX.glance
+- AndroidX.leanback.grid
+- AndroidX.lifecycle.runtimeTesting
+- AndroidX.media3:
+    - cast
+    - common
+    - database
+    - datasource:
+        - cronet
+        - okhttp
+        - rtmp
+    - decoder
+    - exoPlayer:
+        - dash
+        - hls
+        - ima
+        - rtsp
+        - workmanager
+    - extractor
+    - session
+    - testUtils.robolectric
+    - testUtils
+    - transformer
+    - ui.leanback
+    - ui
+- AndroidX.multidex.instrumentation
+- AndroidX.paging.guava
+- AndroidX.room:
+    - paging
+    - rxJava3
+- AndroidX.wear.tiles.testing
+- AndroidX.wear.watchFace:
+    - complications.dataSourceKtx
+    - complications.dataSource
+    - editor
+- KotlinX.coroutines.bom
+- Square.moshi.adapters
+- Testing.junit:
+    - bom
+    - jupiter: _(moved from Testing.junit)_
+        - api _(moved from Testing.junit.api)_
+        - engine _(moved from Testing.junit.engine)_
+        - migrationSupport _(moved from Testing.junit.migrationSupport)_
+        - params _(moved from Testing.junit.params)_
+- Testing.kotest.framework:
+    - api
+    - dataset
+
+Thanks to [Emil Kantis](https://github.com/Kantis) for [the kotest dependencies fixes](https://github.com/jmfayard/refreshVersions/pull/446)!
+Thanks to [Kamalesh](https://github.com/imashnake0) for [the help in updating AndroidX dependency notations](https://github.com/jmfayard/refreshVersions/pull/460#issuecomment-995768730)!
+Thanks to [Simon Marquis](https://github.com/SimonMarquis) for [adding Square.moshi.adapters](https://github.com/jmfayard/refreshVersions/pull/462), and [helping contributors using Windows](https://github.com/jmfayard/refreshVersions/pull/464)!
+
 ## Version 0.23.0 (2021-09-28)
 
 ### Bug fix

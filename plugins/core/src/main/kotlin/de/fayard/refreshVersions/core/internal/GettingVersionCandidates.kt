@@ -74,8 +74,8 @@ private suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
     }.awaitAll().filterNotNull().also { results ->
         if (results.isEmpty()) throw NoSuchElementException(buildString {
             append("$moduleId not found. ")
-            appendln("Searched the following repositories:")
-            this@getVersionCandidates.forEach { appendln("- ${it.repoKey}") }
+            appendLine("Searched the following repositories:")
+            this@getVersionCandidates.forEach { appendLine("- ${it.repoKey}") }
         })
     }.distinctBy {
         it.availableVersions

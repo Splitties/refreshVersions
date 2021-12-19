@@ -1,0 +1,21 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm"
+}
+
+dependencies {
+    implementation(AndroidX.wear.watchFace.client)
+    implementation("AndroidX.wear.watchFace.client")
+    implementation(SomeGroup.something)
+    implementation(SomeGroup.one)
+    implementation ( SomeGroup.two )
+    implementation SomeGroup.two
+    implementation   SomeGroup.two
+    implementation    SomeGroup.two.withoutVersion()
+    implementation     SomeGroup.two.withVersion("0.1.0")
+    implementation(     SomeGroup.two.withVersion("SomeGroup.two.withVersion"))
+    implementation(     SomeGroup.two.withVersion(versionFor("whatever")))
+    implementation(SomeGroup.two.withVersionPlaceholder())
+    implementation(AndroidX.wear.watchFace.client.withVersionPlaceholder())
+    implementation (" SomeGroup.two ")
+    implementation " SomeGroup.two "
+}

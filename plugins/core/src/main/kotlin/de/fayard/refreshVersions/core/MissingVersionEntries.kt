@@ -1,24 +1,11 @@
 package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.*
-import de.fayard.refreshVersions.core.internal.versions.writeNewEntriesInVersionProperties
-import org.gradle.api.DefaultTask
-import org.gradle.api.Incubating
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
+import de.fayard.refreshVersions.core.internal.versions.writeWithNewEntries
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ExternalDependency
-import org.gradle.api.tasks.TaskAction
-
-@Suppress("UnstableApiUsage")
-@Incubating
-open class MissingEntriesTask : DefaultTask() {
-
-
-    @TaskAction
-    fun refreshVersionsMissingEntries() {
-        addMissingEntriesInVersionsProperties(project)
-    }
-}
 
 @InternalRefreshVersionsApi
 fun addMissingEntriesInVersionsProperties(project: Project) {
@@ -32,14 +19,13 @@ fun addMissingEntriesInVersionsProperties(project: Project) {
         configurations = configurationsWithHardcodedDependencies,
         versionsMap = versionsMap,
         versionKeyReader = versionKeyReader
-    )
-    val plugins = UsedPluginsHolder.usedPluginsWithoutEntryInVersionsFile
+    ) + UsedPluginsHolder.usedPluginsWithoutEntryInVersionsFile
         .associateBy { d -> pluginDependencyNotationToVersionKey(d.name) }
         .filterKeys { key -> key != null && key !in versionsMap }
         .mapKeys { (k, _) -> k!! }
 
 
-    writeNewEntriesInVersionProperties(plugins + newEntries)
+    VersionsPropertiesModel.writeWithNewEntries(newEntries)
     OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 }
 
@@ -55,7 +41,7 @@ fun Configuration.countDependenciesWithHardcodedVersions(
 @InternalRefreshVersionsApi
 fun Project.countDependenciesWithHardcodedVersions(versionsMap: Map<String, String>): Int {
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-    return configurations.sumBy { configuration ->
+    return (buildscript.configurations + configurations).sumBy { configuration ->
         if (configuration.shouldBeIgnored()) 0 else {
             configuration.countDependenciesWithHardcodedVersions(versionsMap, versionKeyReader)
         }
@@ -69,7 +55,7 @@ internal fun Project.findHardcodedDependencies(): List<Configuration> {
     }
 
     return projectsWithHardcodedDependenciesVersions.flatMap { project ->
-        project.configurations.filterNot { configuration ->
+        (project.buildscript.configurations + project.configurations).filterNot { configuration ->
             configuration.shouldBeIgnored() || 0 == configuration.countDependenciesWithHardcodedVersions(
                 versionsMap = versionsMap,
                 versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
@@ -107,7 +93,7 @@ internal fun findMissingEntries(
                 }
                 .map { dependency: ExternalDependency ->
                     val versionKey = getVersionPropertyName(
-                        ModuleId.Maven(group = dependency.group!!, name = dependency.name),
+                        ModuleId.Maven(group = dependency.group, name = dependency.name),
                         versionKeyReader
                     )
                     versionKey to dependency
@@ -120,6 +106,6 @@ internal fun findMissingEntries(
             versionKey !in versionsMap
         }
         .mapValues { (_, dependencies) ->
-            dependencies.maxBy { it.version!! }!!
+            dependencies.maxByOrNull { it.version!! }!!
         }
 }

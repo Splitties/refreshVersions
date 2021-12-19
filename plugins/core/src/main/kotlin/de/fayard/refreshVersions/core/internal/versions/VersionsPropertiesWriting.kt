@@ -13,16 +13,15 @@ import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.
 import org.gradle.api.artifacts.Dependency
 import java.io.File
 
-internal fun writeNewEntriesInVersionProperties(newEntries: Map<String, Dependency>) {
-    VersionsPropertiesModel.update { model ->
-        val newSections = newEntries.map { (key, d: Dependency) ->
+internal fun VersionsPropertiesModel.Companion.writeWithNewEntries(newEntries: Map<String, Dependency>) {
+    update { model ->
+        model + newEntries.map { (key, d: Dependency) ->
             VersionEntry(
                 key = key,
                 currentVersion = d.version!!,
                 availableUpdates = emptyList()
             )
         }.sortedBy { it.key }
-        model.copy(sections = model.sections + newSections)
     }
 }
 
@@ -105,16 +104,17 @@ internal val versionsPropertiesFileLock = Any()
 
 internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)
-    appendln(
+    appendLine(
         VersionsPropertiesModel.versionsPropertiesHeader(
-            version = generatedByVersion
+            version = generatedByVersion,
+            dependencyNotationRemovalsRevision = dependencyNotationRemovalsRevision
         )
     )
     if (RefreshVersionsConfigHolder.isUsingVersionRejection) {
-        appendln(isUsingVersionRejectionHeader)
+        appendLine(isUsingVersionRejectionHeader)
     }
     if (sections.isEmpty()) return@buildString
-    appendln()
+    appendLine()
     val sb = StringBuilder()
     sections.joinTo(buffer = this, separator = "\n") { it.toText(sb) }
 
@@ -125,19 +125,19 @@ internal fun VersionsPropertiesModel.toText(): String = buildString {
 private fun VersionsPropertiesModel.Section.toText(
     builder: StringBuilder
 ): CharSequence = when (this) {
-    is Comment -> builder.apply { clear(); appendln(lines) }
+    is Comment -> builder.apply { clear(); appendLine(lines) }
     is VersionEntry -> builder.apply {
         clear()
-        leadingCommentLines.forEach { appendln(it) }
+        leadingCommentLines.forEach { appendLine(it) }
 
         val paddedKey = key.padStart(availableComment.length + 2)
         val currentVersionLine = "$paddedKey=$currentVersion"
-        appendln(currentVersionLine)
+        appendLine(currentVersionLine)
         availableUpdates.forEach { versionCandidate ->
             append("##"); append(availableComment.padStart(key.length - 2))
-            append('='); appendln(versionCandidate)
+            append('='); appendLine(versionCandidate)
         }
 
-        trailingCommentLines.forEach { appendln(it) }
+        trailingCommentLines.forEach { appendLine(it) }
     }
 }

@@ -1,0 +1,4 @@
+com.somegroup..somegroup-subgroup-artifact1=SomeGroup.subGroup.artifact1
+com.somegroup..somegroup-subgroup-artifact1.artifact3=SomeGroup.subGroup.artifact1.artifact3
+com.somegroup..somegroup-subgroup-artifact2=SomeGroup.subGroup.artifact2
+com.somegroup..somegroup-subgroup=SomeGroup.anotherGroup

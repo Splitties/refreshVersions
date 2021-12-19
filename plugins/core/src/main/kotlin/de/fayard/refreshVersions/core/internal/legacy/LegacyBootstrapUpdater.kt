@@ -172,13 +172,13 @@ private fun getSettingsWithSelfUpdates(
     }
 
     return buildString {
-        appendln(initialContent.substring(startIndex = 0, endIndex = dependencyDeclarationLineEnd))
+        appendLine(initialContent.substring(startIndex = 0, endIndex = dependencyDeclarationLineEnd))
         selfUpdates.versionsCandidates.forEach { versionCandidate ->
             append(commentStart)
             append(availableComment.padStart(currentVersionPrefixLength - commentStart.length - 1))
             append(':')
             append(versionCandidate.value)
-            appendln(declarationLine.substringAfter(currentVersion))
+            appendLine(declarationLine.substringAfter(currentVersion))
         }
         append(initialContent.substring(startIndex = indexAfterPreviousAvailableComments))
     }

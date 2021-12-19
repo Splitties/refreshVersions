@@ -23,17 +23,17 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 11
-      - uses: gradle/gradle-build-action@v1
+      - uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: plugins/gradlew
           build-root-directory: plugins
           arguments: check publishToMavenLocal --stacktrace
-      - uses: gradle/gradle-build-action@v1
+      - uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-android/gradlew
           build-root-directory: sample-android
           arguments: refreshVersions --stacktrace
-      - uses: gradle/gradle-build-action@v1
+      - uses: gradle/gradle-build-action@v2
         with:
           wrapper-directory: sample-android/gradlew
           build-root-directory: sample-android

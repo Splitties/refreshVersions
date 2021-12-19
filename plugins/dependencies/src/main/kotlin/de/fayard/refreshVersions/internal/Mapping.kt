@@ -58,7 +58,7 @@ private fun getArtifactNameToConstantMappingFromObject(
         }
     }.flatMap { kProperty ->
         when (kProperty.name) {
-            "rule", "length", "externalImplementationGuard" -> return@flatMap emptySequence()
+            "rule", "length", "externalImplementationGuard", "usePlatformConstraints" -> return@flatMap emptySequence()
         }
         @Suppress("unchecked_cast")
         val nestedObjectInstance = (kProperty as KProperty1<Any?, Any>).get(objectInstance)
