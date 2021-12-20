@@ -42,6 +42,9 @@ object RefreshVersionsConfigHolder {
 
     val buildSrc: Project? get() = buildSrcSettings?.gradle?.rootProject
 
+    /**
+     * Not initialized when the IDE syncs the buildSrc of the project alone (without the host project)
+     */
     internal var settings: Settings by resettableDelegates.LateInit()
         private set
 
