@@ -1,5 +1,12 @@
 # Change log for refreshVersions
 
+## Version 0.30.1 (2021-12-21)
+
+### Bug fixes
+
+- Fix Gradle sync for projects using buildSrc ([#474](https://github.com/jmfayard/refreshVersions/issues/474))
+- Support buildSrc modules that have no plugin declared
+
 ## Version 0.30.0 (2021-12-19)
 
 ### Potentially breaking change
