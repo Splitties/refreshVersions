@@ -47,12 +47,6 @@ jobs:
           gradle-executable: sample-kotlin/gradlew
           build-root-directory: sample-kotlin
           arguments: check --stacktrace
-      - name: Check buildSrc of sample-kotlin (simulates IDE Gradle sync)
-        uses: gradle/gradle-build-action@v2
-        with:
-          gradle-executable: sample-kotlin/gradlew
-          build-root-directory: sample-kotlin/buildSrc
-          arguments: help --stacktrace
       - name: Check sample-groovy
         uses: gradle/gradle-build-action@v2
         with:
