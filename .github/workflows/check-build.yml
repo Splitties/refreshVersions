@@ -53,6 +53,12 @@ jobs:
           gradle-executable: sample-groovy/gradlew
           build-root-directory: sample-groovy
           arguments: check --stacktrace
+      - name: Check buildSrc of sample-groovy (simulates IDE Gradle sync)
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-groovy/gradlew
+          build-root-directory: sample-groovy/buildSrc
+          arguments: help --stacktrace
       - name: Check sample-multi-modules
         uses: gradle/gradle-build-action@v2
         with:

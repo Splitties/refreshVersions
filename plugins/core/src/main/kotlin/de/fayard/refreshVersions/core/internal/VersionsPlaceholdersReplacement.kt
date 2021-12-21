@@ -131,10 +131,12 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
     initialVersionsMap: Map<String, String>,
     refreshVersionsMap: (updatedMap: Map<String, String>) -> Unit
 ) {
-    val repositories = when {
-        isFromBuildscript -> project.buildscript.repositories
-        else -> project.repositories
-    }.withGlobalRepos()
+    val repositories by lazy {
+        when {
+            isFromBuildscript -> project.buildscript.repositories
+            else -> project.repositories
+        }.withGlobalRepos()
+    }
     var properties = initialVersionsMap
 
     val dependenciesToReplace = mutableListOf<Pair<Dependency, Dependency>>()

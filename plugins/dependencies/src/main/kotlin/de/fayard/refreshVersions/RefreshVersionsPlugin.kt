@@ -190,14 +190,19 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     private fun addDependencyToBuildSrcForGroovyDsl(settings: Settings) {
         require(settings.isBuildSrc)
         settings.gradle.rootProject {
-            repositories.addAll(settings.pluginManagement.repositories)
+            afterEvaluate {
+                if (configurations.none { it.name == "implementation" }) {
+                    apply(plugin = "java")
+                }
+                repositories.addAll(settings.pluginManagement.repositories)
 
-            fun plugin(id: String, version: String): String {
-                return "$id:$id.gradle.plugin:$version"
-            }
+                fun plugin(id: String, version: String): String {
+                    return "$id:$id.gradle.plugin:$version"
+                }
 
-            dependencies {
-                "implementation"(plugin("de.fayard.refreshVersions", RefreshVersionsCorePlugin.currentVersion))
+                dependencies {
+                    "implementation"(plugin("de.fayard.refreshVersions", RefreshVersionsCorePlugin.currentVersion))
+                }
             }
         }
     }
