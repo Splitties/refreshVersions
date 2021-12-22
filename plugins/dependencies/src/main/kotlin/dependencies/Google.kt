@@ -101,6 +101,9 @@ object Google {
             /** Google Location and Activity Recognition */
             val location = module("play-services-location")
 
+            /** Google Maps */
+            val maps = module("play-services-maps")
+
             // Play Services Ads intentionally not included because ads are mental pollution.
 
             /**
