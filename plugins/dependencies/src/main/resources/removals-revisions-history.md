@@ -262,3 +262,11 @@ id:[androidx.car:car]
 
 ~~AndroidX.tracingKtx~~
 id:[androidx.tracing:tracing-ktx]
+
+## [WIP]
+
+~~ReactiveX.rxJava2~~
+// The 2.x version is end-of-life as of February 28, 2021. No further development, support, maintenance, PRs and updates will happen.
+// TODO: Migrate to io.reactivex.rxjava3
+moved:[io.reactivex.rxjava3:rxjava3]
+id:[io.reactivex.rxjava2:rxjava2]

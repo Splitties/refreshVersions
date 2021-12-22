@@ -1,0 +1,5 @@
+io.reactivex:*
+             ^
+
+io.reactivex.*:*
+               ^
