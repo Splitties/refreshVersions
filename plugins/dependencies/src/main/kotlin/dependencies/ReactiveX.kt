@@ -8,9 +8,11 @@ import org.gradle.kotlin.dsl.IsNotADependency
 @Incubating
 object ReactiveX : IsNotADependency {
 
-    val rxJava1 = DependencyNotation(group = "io.reactivex", name = "rxjava")
+    val rxJava = DependencyNotation(group = "io.reactivex", name = "rxjava")
 
-    val rxKotlin1 = DependencyNotation(group = "io.reactivex", name = "rxkotlin")
+    val rxAndroid = DependencyNotation(group = "io.reactivex", name = "rxandroid")
+
+    val rxKotlin = DependencyNotation(group = "io.reactivex", name = "rxkotlin")
 
     val rxJava2 = RxJava2
 
