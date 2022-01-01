@@ -1,7 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.api.Incubating
 
 /**
@@ -25,6 +24,24 @@ object Touchlab {
         val concurrency = module("stately-concurrency")
         val isolate = module("stately-isolate")
         val isoCollections = module("stately-iso-collections")
+    }
+
+    val kermit = Kermit
+
+    object Kermit : DependencyGroup(
+        group = "co.touchlab",
+        rawRule = """
+        co.touchlab:kermit*
+                    ^^^^^^^
+        """.trimIndent()
+    ) {
+        val kermit = module("kermit")
+        val test = module("kermit-test")
+        val crashlytics = module("kermit-crashlytics")
+        val crashlyticsTest = module("kermit-crashlytics-test")
+        val bugsnag = module("kermit-bugsnag")
+        val bugsnagTest = module("kermit-bugsnag-test")
+        val gradlePlugin = module("kermit-gradle-plugin")
     }
 }
 
