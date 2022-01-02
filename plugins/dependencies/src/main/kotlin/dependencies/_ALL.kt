@@ -15,6 +15,7 @@ import Koin
 import Kotlin
 import KotlinX
 import Ktor
+import NativeCoroutines
 import Orchid
 import RussHWolf
 import Splitties
@@ -38,6 +39,7 @@ internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     Kotlin,
     KotlinX,
     Ktor,
+    NativeCoroutines,
     RussHWolf,
     Orchid,
     Splitties,

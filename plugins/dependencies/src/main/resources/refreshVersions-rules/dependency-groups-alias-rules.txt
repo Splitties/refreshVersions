@@ -25,5 +25,8 @@ com.louiscad.splitties:splitties-*
 org.kodein.di:kodein-di(-*)
     ^^^^^^^^^
 
+com.rickclephas.kmp:kmp-nativecoroutines(-*)
+                        ^^^^^^^^^^^^^^^^
+
 com.russhwolf:multiplatform-settings(-*)
               ^^^^^^^^^^^^^^^^^^^^^^
