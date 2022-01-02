@@ -3,14 +3,15 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import org.gradle.api.Incubating
 
-/**
- * Multithreaded Kotlin Multiplatform Utilities
- *
- * - GitHub page: [Stately](https://github.com/touchlab/Stately)
- * - [GitHub Releases here](https://github.com/touchlab/Stately/releases)
- */
 @Incubating
 object Touchlab {
+
+    /**
+     * Multithreaded Kotlin Multiplatform Utilities
+     *
+     * - GitHub repo: https://github.com/touchlab/Stately
+     * - Releases: https://github.com/touchlab/Stately/releases
+     */
     val stately = Stately
 
     object Stately : DependencyGroup(
@@ -28,6 +29,15 @@ object Touchlab {
 
     val kermit = Kermit
 
+    /**
+     * Kermit is a Kotlin Multiplatform logging utility with composable log outputs.
+     * The library provides prebuilt loggers for outputting to platform logging tools
+     * such as Logcat and NSLog.
+     *
+     * Github repo: https://github.com/touchlab/Kermit
+     * Releases: https://github.com/touchlab/Kermit/releases
+     * 1.0 release blog: https://medium.com/@kpgalligan/kermit-kmp-logging-1-0-196bf799b738
+     */
     object Kermit : DependencyGroup(
         group = "co.touchlab",
         rawRule = """
