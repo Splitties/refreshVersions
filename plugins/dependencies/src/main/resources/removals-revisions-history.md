@@ -287,3 +287,13 @@ id:[org.jetbrains.kotlinx:kotlinx-serialization-runtime-native]
 // TODO: Use the core artifact directly.
 moved:[org.jetbrains.kotlinx:kotlinx-serialization-core]
 id:[org.jetbrains.kotlinx:kotlinx-serialization-runtime]
+
+~~KotlinX.html.js~~
+// TODO: Replace this platform-specific artifact with the multiplatform artifact.
+moved:[org.jetbrains.kotlinx:kotlinx-html]
+id:[org.jetbrains.kotlinx:kotlinx-html-js]
+
+~~KotlinX.html.jvm~~
+// TODO: Replace this platform-specific artifact with the multiplatform artifact.
+moved:[org.jetbrains.kotlinx:kotlinx-html]
+id:[org.jetbrains.kotlinx:kotlinx-html-jvm]

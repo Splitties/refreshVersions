@@ -803,8 +803,6 @@ org.jetbrains.kotlinx:kotlinx-coroutines-swing
 org.jetbrains.kotlinx:kotlinx-coroutines-test
 org.jetbrains.kotlinx:kotlinx-datetime
 org.jetbrains.kotlinx:kotlinx-html
-org.jetbrains.kotlinx:kotlinx-html-js
-org.jetbrains.kotlinx:kotlinx-html-jvm
 org.jetbrains.kotlinx:kotlinx-io-jvm
 org.jetbrains.kotlinx:kotlinx-nodejs
 org.jetbrains.kotlinx:kotlinx-serialization-cbor

@@ -129,14 +129,7 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
      */
     val html = Html
 
-    object Html : DependencyNotationAndGroup(group = group, name = "kotlinx-html") {
-
-        @Deprecated("Use the base artifact instead", ReplaceWith("KotlinX.html"))
-        val jvm = module("kotlinx-html-jvm")
-
-        @Deprecated("Use the base artifact instead", ReplaceWith("KotlinX.html"))
-        val js = module("kotlinx-html-js")
-    }
+    object Html : DependencyNotationAndGroup(group = group, name = "kotlinx-html")
 
     /**
      * Kotlin multiplatform I/O library. (Experimental as of 2020-09-14)
