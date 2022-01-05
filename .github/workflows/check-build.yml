@@ -1,8 +1,43 @@
 # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
+
+# Yes, booleans used here are 'strings' despite the type of input being declared as boolean because… well, see here:
+# https://docs.github.com/en/actions/learn-github-actions/expressions
+
 # https://github.com/marketplace/actions/gradle-build-action
 name: Check build and tests of plugins and samples
 on:
   workflow_dispatch:
+    inputs:
+      run-refreshVersions-task:
+        description: "Run the refreshVersions task"
+        required: true
+        type: boolean
+        default: 'false'
+      sample-kotlin:
+        description: "Enable sample-kotlin"
+        required: true
+        type: boolean
+        default: 'true'
+      sample-groovy:
+        description: "Enable sample-groovy"
+        required: true
+        type: boolean
+        default: 'true'
+      sample-multi-modules:
+        description: "Enable sample-multi-modules"
+        required: true
+        type: boolean
+        default: 'true'
+      sample-kotlin-js:
+        description: "Enable sample-kotlin-js"
+        required: true
+        type: boolean
+        default: 'true'
+      sample-android:
+        description: "Enable sample-android"
+        required: true
+        type: boolean
+        default: 'false'
   pull_request:
     paths:
       - 'plugins/**'
@@ -30,44 +65,91 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Configure JDK
+      - name: "Configure JDK"
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
           java-version: '11'
-      - name: Check plugins and publish them to MavenLocal
+      - name: "Check plugins and publish them to MavenLocal"
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: plugins/gradlew
           build-root-directory: plugins
           arguments: check publishToMavenLocal --stacktrace
-      - name: Check sample-kotlin
+      - name: "Run refreshVersions on sample-kotlin"
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.sample-kotlin == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-kotlin/gradlew
+          build-root-directory: sample-kotlin
+          arguments: refreshVersions --stacktrace
+      - name: "Check sample-kotlin"
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.sample-kotlin == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-kotlin/gradlew
           build-root-directory: sample-kotlin
           arguments: check --stacktrace
-      - name: Check sample-groovy
+      - name: "Run refreshVersions on sample-groovy"
+        if: ${{ github.event.inputs.sample-groovy == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-groovy/gradlew
+          build-root-directory: sample-groovy
+          arguments: refreshVersions --stacktrace
+      - name: "Check sample-groovy"
+        if: ${{ github.event.inputs.sample-groovy == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-groovy/gradlew
           build-root-directory: sample-groovy
           arguments: check --stacktrace
-      - name: Check buildSrc of sample-groovy (simulates IDE Gradle sync)
+      - name: "Check buildSrc of sample-groovy (simulates IDE Gradle sync)"
+        if: ${{ github.event.inputs.sample-groovy == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-groovy/gradlew
           build-root-directory: sample-groovy/buildSrc
           arguments: help --stacktrace
-      - name: Check sample-multi-modules
+      - name: "Run refreshVersions on sample-multi-modules"
+        if: ${{ github.event.inputs.sample-multi-modules == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-multi-modules/gradlew
+          build-root-directory: sample-multi-modules
+          arguments: refreshVersions --stacktrace
+      - name: "Check sample-multi-modules"
+        if: ${{ github.event.inputs.sample-multi-modules == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-multi-modules/gradlew
           build-root-directory: sample-multi-modules
           arguments: check --stacktrace
-      - name: Check sample-kotlin-js
+      - name: "Run refreshVersions on sample-kotlin-js"
+        if: ${{ github.event.inputs.sample-kotlin-js == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-kotlin-js/gradlew
           build-root-directory: sample-kotlin-js
+          arguments: refreshVersions --stacktrace
+      - name: "Check sample-kotlin-js"
+        if: ${{ github.event.inputs.sample-kotlin-js == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-kotlin-js/gradlew
+          build-root-directory: sample-kotlin-js
+          arguments: check --stacktrace
+      - name: "Run refreshVersions on sample-android"
+        if: ${{ github.event.inputs.sample-android == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-android/gradlew
+          build-root-directory: sample-android
+          arguments: refreshVersions --stacktrace
+      - name: "Check sample-android"
+        if: ${{ github.event.inputs.sample-android == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          wrapper-directory: sample-android/gradlew
+          build-root-directory: sample-android
           arguments: check --stacktrace
