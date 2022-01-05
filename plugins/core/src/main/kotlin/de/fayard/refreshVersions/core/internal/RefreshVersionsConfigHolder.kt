@@ -7,6 +7,7 @@ import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
 import de.fayard.refreshVersions.core.internal.versions.readFromFile
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.gradle.api.Project
@@ -145,6 +146,7 @@ object RefreshVersionsConfigHolder {
 
     private fun clearStaticState() {
         httpClient.dispatcher.executorService.shutdown()
+        Dispatchers.shutdown()
         resettableDelegates.reset()
         // Clearing static state is needed because Gradle holds onto previous builds, yet,
         // duplicates static state.
