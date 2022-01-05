@@ -3,13 +3,15 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
-/**
- * Multithreaded Kotlin Multiplatform Utilities
- *
- * - GitHub page: [Stately](https://github.com/touchlab/Stately)
- * - [GitHub Releases here](https://github.com/touchlab/Stately/releases)
- */
 object Touchlab : IsNotADependency {
+
+    /**
+     * Multithreaded Kotlin Multiplatform Utilities
+     *
+     * [GitHub releases](https://github.com/touchlab/Stately/releases)
+     *
+     * GitHub repo: [touchlab/Stately](https://github.com/touchlab/Stately)
+     */
     val stately = Stately
 
     object Stately : DependencyGroup(
