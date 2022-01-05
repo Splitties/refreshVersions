@@ -1,6 +1,5 @@
-# .github/workflows/gradle-build-pr.yml
-# https://github.com/marketplace/actions/gradle-command
-name: sample-android
+# # https://github.com/marketplace/actions/gradle-build-action
+name: Check sample-android
 on:
   push:
     branches:

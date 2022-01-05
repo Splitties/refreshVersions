@@ -1,5 +1,5 @@
-# https://help.github.com/en/github/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions
-# https://github.com/marketplace/actions/gradle-command
+# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
+# https://github.com/marketplace/actions/gradle-build-action
 name: Check build and tests of plugins and samples
 on:
   workflow_dispatch:
