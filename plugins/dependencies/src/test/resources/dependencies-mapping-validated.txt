@@ -889,7 +889,6 @@ org.mockito..mockito-core=Testing.mockito.core
 org.mockito..mockito-errorprone=Testing.mockito.errorProne
 org.mockito..mockito-inline=Testing.mockito.inline
 org.mockito..mockito-junit-jupiter=Testing.mockito.junitJupiter
-org.robolectric..robolectric=Testing.roboElectric
 org.robolectric..robolectric=Testing.robolectric
 org.spekframework.spek2..spek-dsl-js=Testing.spek.dsl.js
 org.spekframework.spek2..spek-dsl-jvm=Testing.spek.dsl.jvm

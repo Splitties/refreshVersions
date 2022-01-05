@@ -28,10 +28,6 @@ object Testing {
      */
     val robolectric = DependencyNotation("org.robolectric", "robolectric")
 
-    @Deprecated("Wrong spelling", ReplaceWith("robolectric"))
-    val roboElectric = robolectric
-
-
     /**
      * JUnit 5: The new major version of the programmer-friendly testing framework for Java
      *
