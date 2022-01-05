@@ -9,8 +9,9 @@ object Touchlab {
     /**
      * Multithreaded Kotlin Multiplatform Utilities
      *
-     * - GitHub repo: https://github.com/touchlab/Stately
-     * - Releases: https://github.com/touchlab/Stately/releases
+     * [GitHub releases](https://github.com/touchlab/Stately/releases)
+     *
+     * GitHub repo: [touchlab/Stately](https://github.com/touchlab/Stately)
      */
     val stately = Stately
 
@@ -34,15 +35,17 @@ object Touchlab {
      * The library provides prebuilt loggers for outputting to platform logging tools
      * such as Logcat and NSLog.
      *
-     * Github repo: https://github.com/touchlab/Kermit
-     * Releases: https://github.com/touchlab/Kermit/releases
-     * 1.0 release blog: https://medium.com/@kpgalligan/kermit-kmp-logging-1-0-196bf799b738
+     * [GitHub Releases](https://github.com/touchlab/Kermit/releases)
+     *
+     * Github repo: [touchlab/Kermit](https://github.com/touchlab/Kermit)
+     *
+     * [1.0 release blog](https://medium.com/@kpgalligan/kermit-kmp-logging-1-0-196bf799b738)
      */
     object Kermit : DependencyGroup(
         group = "co.touchlab",
         rawRule = """
-        co.touchlab:kermit*
-                    ^^^^^^^
+        co.touchlab:kermit(-*)
+                    ^^^^^^^^^^
         """.trimIndent()
     ) {
         val kermit = module("kermit")
