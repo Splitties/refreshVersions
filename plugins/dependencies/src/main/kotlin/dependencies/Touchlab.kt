@@ -6,7 +6,7 @@ import org.gradle.kotlin.dsl.IsNotADependency
 object Touchlab : IsNotADependency {
 
     /**
-     * Multithreaded Kotlin Multiplatform Utilities
+     * Stately is a state utility library to facilitate state management in Kotlin Multiplatform.
      *
      * [GitHub releases](https://github.com/touchlab/Stately/releases)
      *
