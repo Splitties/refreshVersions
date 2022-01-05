@@ -45,7 +45,7 @@ object Touchlab {
         group = "co.touchlab",
         rawRule = """
         co.touchlab:kermit(-*)
-                    ^^^^^^^^^^
+                    ^^^^^^
         """.trimIndent()
     ) {
         val kermit = module("kermit")

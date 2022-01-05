@@ -11,7 +11,7 @@ org.http4k:http4k-*
     ^^^^^^
 
 co.touchlab:kermit(-*)
-            ^^^^^^^^^^
+            ^^^^^^
 
 co.touchlab:stately-*
             ^^^^^^^
