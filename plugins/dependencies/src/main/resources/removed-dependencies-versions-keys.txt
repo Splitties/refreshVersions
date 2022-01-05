@@ -57,3 +57,4 @@ org.jetbrains.kotlinx..kotlinx-serialization-runtime-native=version.kotlinx.seri
 org.jetbrains.kotlinx..kotlinx-serialization-runtime=version.kotlinx.serialization
 org.jetbrains.kotlinx..kotlinx-html-js=version.kotlinx.html
 org.jetbrains.kotlinx..kotlinx-html-jvm=version.kotlinx.html
+com.louiscad.splitties..splitties-views-dsl-ide-preview=version.splitties

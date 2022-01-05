@@ -492,7 +492,6 @@ com.louiscad.splitties:splitties-views-dsl
 com.louiscad.splitties:splitties-views-dsl-appcompat
 com.louiscad.splitties:splitties-views-dsl-constraintlayout
 com.louiscad.splitties:splitties-views-dsl-coordinatorlayout
-com.louiscad.splitties:splitties-views-dsl-ide-preview
 com.louiscad.splitties:splitties-views-dsl-material
 com.louiscad.splitties:splitties-views-dsl-recyclerview
 com.louiscad.splitties:splitties-views-material

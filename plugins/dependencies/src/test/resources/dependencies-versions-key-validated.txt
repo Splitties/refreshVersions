@@ -490,7 +490,6 @@ com.louiscad.splitties..splitties-views-coroutines=version.splitties
 com.louiscad.splitties..splitties-views-dsl-appcompat=version.splitties
 com.louiscad.splitties..splitties-views-dsl-constraintlayout=version.splitties
 com.louiscad.splitties..splitties-views-dsl-coordinatorlayout=version.splitties
-com.louiscad.splitties..splitties-views-dsl-ide-preview=version.splitties
 com.louiscad.splitties..splitties-views-dsl-material=version.splitties
 com.louiscad.splitties..splitties-views-dsl-recyclerview=version.splitties
 com.louiscad.splitties..splitties-views-dsl=version.splitties

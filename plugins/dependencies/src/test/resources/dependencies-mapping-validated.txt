@@ -538,7 +538,6 @@ com.louiscad.splitties..splitties-views-coroutines=Splitties.viewsCoroutines
 com.louiscad.splitties..splitties-views-dsl-appcompat=Splitties.viewsDslAppcompat
 com.louiscad.splitties..splitties-views-dsl-constraintlayout=Splitties.viewsDslConstraintlayout
 com.louiscad.splitties..splitties-views-dsl-coordinatorlayout=Splitties.viewsDslCoordinatorlayout
-com.louiscad.splitties..splitties-views-dsl-ide-preview=Splitties.viewsDslIdePreview
 com.louiscad.splitties..splitties-views-dsl-material=Splitties.viewsDslMaterial
 com.louiscad.splitties..splitties-views-dsl-recyclerview=Splitties.viewsDslRecyclerview
 com.louiscad.splitties..splitties-views-dsl=Splitties.viewsDsl

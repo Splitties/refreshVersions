@@ -297,3 +297,8 @@ id:[org.jetbrains.kotlinx:kotlinx-html-js]
 // TODO: Replace this platform-specific artifact with the multiplatform artifact.
 moved:[org.jetbrains.kotlinx:kotlinx-html]
 id:[org.jetbrains.kotlinx:kotlinx-html-jvm]
+
+~~Splitties.viewsDslIdePreview~~
+// TODO: Remove this dependency as its content moved into the main artifact.
+moved:[com.louiscad.splitties:splitties-views-dsl]
+id:[com.louiscad.splitties:splitties-views-dsl-ide-preview]

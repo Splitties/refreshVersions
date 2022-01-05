@@ -63,7 +63,6 @@ object Splitties : DependencyGroup(
     val viewsDslAppcompat = module("splitties-views-dsl-appcompat")
     val viewsDslConstraintlayout = module("splitties-views-dsl-constraintlayout")
     val viewsDslCoordinatorlayout = module("splitties-views-dsl-coordinatorlayout")
-    val viewsDslIdePreview = module("splitties-views-dsl-ide-preview")
     val viewsDslMaterial = module("splitties-views-dsl-material")
     val viewsDslRecyclerview = module("splitties-views-dsl-recyclerview")
     val viewsMaterial = module("splitties-views-material")
