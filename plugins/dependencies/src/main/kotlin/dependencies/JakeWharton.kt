@@ -6,8 +6,9 @@
 
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
+import org.gradle.kotlin.dsl.IsNotADependency
 
-object JakeWharton {
+object JakeWharton : IsNotADependency {
 
     /**
      * A logger with a small, extensible API which provides utility on top of Android's normal Log class.
