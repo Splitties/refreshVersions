@@ -812,10 +812,6 @@ org.jetbrains.kotlinx:kotlinx-serialization-core
 org.jetbrains.kotlinx:kotlinx-serialization-json
 org.jetbrains.kotlinx:kotlinx-serialization-properties
 org.jetbrains.kotlinx:kotlinx-serialization-protobuf
-org.jetbrains.kotlinx:kotlinx-serialization-runtime
-org.jetbrains.kotlinx:kotlinx-serialization-runtime-common
-org.jetbrains.kotlinx:kotlinx-serialization-runtime-js
-org.jetbrains.kotlinx:kotlinx-serialization-runtime-native
 org.jetbrains.kotlinx:kotlinx.reflect.lite
 org.junit.jupiter:junit-jupiter
 org.junit.jupiter:junit-jupiter-api

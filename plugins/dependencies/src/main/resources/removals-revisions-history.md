@@ -267,3 +267,23 @@ id:[androidx.tracing:tracing-ktx]
 
 ~~Testing.roboElectric~~
 id:[org.robolectric:robolectric]
+
+~~KotlinX.serialization.runtimeCommon~~
+// TODO: Use the core artifact directly.
+moved:[org.jetbrains.kotlinx:kotlinx-serialization-core]
+id:[org.jetbrains.kotlinx:kotlinx-serialization-runtime-common]
+
+~~KotlinX.serialization.runtimeJs~~
+// TODO: Use the core artifact directly.
+moved:[org.jetbrains.kotlinx:kotlinx-serialization-core]
+id:[org.jetbrains.kotlinx:kotlinx-serialization-runtime-js]
+
+~~KotlinX.serialization.runtimeNative~~
+// TODO: Use the core artifact directly.
+moved:[org.jetbrains.kotlinx:kotlinx-serialization-core]
+id:[org.jetbrains.kotlinx:kotlinx-serialization-runtime-native]
+
+~~KotlinX.serialization.runtime~~
+// TODO: Use the core artifact directly.
+moved:[org.jetbrains.kotlinx:kotlinx-serialization-core]
+id:[org.jetbrains.kotlinx:kotlinx-serialization-runtime]

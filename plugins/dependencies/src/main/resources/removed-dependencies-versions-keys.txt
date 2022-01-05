@@ -51,3 +51,7 @@ androidx.legacy..legacy-support-v4=version.androidx.legacy
 androidx.hilt..hilt-lifecycle-viewmodel=version.androidx.hilt-lifecycle-viewmodel
 androidx.car..car-cluster=version.androidx.car-cluster
 androidx.car..car=version.androidx.car
+org.jetbrains.kotlinx..kotlinx-serialization-runtime-common=version.kotlinx.serialization
+org.jetbrains.kotlinx..kotlinx-serialization-runtime-js=version.kotlinx.serialization
+org.jetbrains.kotlinx..kotlinx-serialization-runtime-native=version.kotlinx.serialization
+org.jetbrains.kotlinx..kotlinx-serialization-runtime=version.kotlinx.serialization

@@ -89,20 +89,6 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
         val cbor = module("kotlinx-serialization-cbor")
         val properties = module("kotlinx-serialization-properties")
         //TODO: Add hocon artifact once documented.
-
-        //region Pre v1.0.0 deprecated artifacts.
-        @Deprecated("Use core instead and upgrade to version 1.0.0-RC or newer")
-        val runtime = module("kotlinx-serialization-runtime")
-
-        @Deprecated("No longer needed")
-        val runtimeJs = module("kotlinx-serialization-runtime-js")
-
-        @Deprecated("No longer needed")
-        val runtimeCommon = module("kotlinx-serialization-runtime-common")
-
-        @Deprecated("No longer needed")
-        val runtimeNative = module("kotlinx-serialization-runtime-native")
-        //endregion
     }
 
     val collections = Collections
