@@ -302,3 +302,18 @@ id:[org.jetbrains.kotlinx:kotlinx-html-jvm]
 // TODO: Remove this dependency as its content moved into the main artifact.
 moved:[com.louiscad.splitties:splitties-views-dsl]
 id:[com.louiscad.splitties:splitties-views-dsl-ide-preview]
+
+~~KotlinX.coroutines.coreCommon~~
+// TODO: Use core instead, since this artifact is no longer published since version 1.3.9.
+moved:[org.jetbrains.kotlinx:kotlinx-coroutines-core]
+id:[org.jetbrains.kotlinx:kotlinx-coroutines-core-common]
+
+~~KotlinX.coroutines.coreJs~~
+// TODO: Use core instead, since this artifact is no longer published since version 1.3.9.
+moved:[org.jetbrains.kotlinx:kotlinx-coroutines-core]
+id:[org.jetbrains.kotlinx:kotlinx-coroutines-core-js]
+
+~~KotlinX.coroutines.coreNative~~
+// TODO: Use core instead, since this artifact is no longer published since version 1.3.9.
+moved:[org.jetbrains.kotlinx:kotlinx-coroutines-core]
+id:[org.jetbrains.kotlinx:kotlinx-coroutines-core-native]

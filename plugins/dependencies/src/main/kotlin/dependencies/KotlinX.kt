@@ -41,13 +41,6 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
         val bom = module("kotlinx-coroutines-bom", isBom = true)
 
         val core = module("kotlinx-coroutines-core")
-        val coreJs = module("kotlinx-coroutines-core-js")
-
-        @Deprecated("No longer published since version 1.3.9. Use core instead.")
-        val coreCommon = module("kotlinx-coroutines-core-common")
-
-        @Deprecated("No longer published since version 1.3.9. Use core instead.")
-        val coreNative = module("kotlinx-coroutines-core-native")
 
         val android = module("kotlinx-coroutines-android")
         val javaFx = module("kotlinx-coroutines-javafx")
