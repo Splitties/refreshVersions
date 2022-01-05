@@ -38,6 +38,21 @@ on:
         required: true
         type: boolean
         default: 'false'
+      run-on:
+        type: choice
+        description: "Where to run this workflow"
+        default: 'ubuntu-latest'
+        required: true
+        options:
+          - windows-2022
+          - windows-2019
+          - windows-latest
+          - macos-11
+          - macos-10.5
+          - macos-latest
+          - ubuntu-20.04
+          - ubuntu-18.04
+          - ubuntu-latest
   pull_request:
     paths:
       - 'plugins/**'
@@ -62,7 +77,7 @@ on:
       - '!docs/**'
 jobs:
   check-all:
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event.inputs.run-on || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@v2
       - name: "Configure JDK"
