@@ -1,9 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import org.gradle.api.Incubating
 
-@Incubating
 /**
  * Build and deploy beautiful documentation sites that grow with you.
  *

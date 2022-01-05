@@ -1,8 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 
 /**
  * Multithreaded Kotlin Multiplatform Utilities
@@ -10,7 +8,6 @@ import org.gradle.api.Incubating
  * - GitHub page: [Stately](https://github.com/touchlab/Stately)
  * - [GitHub Releases here](https://github.com/touchlab/Stately/releases)
  */
-@Incubating
 object Touchlab {
     val stately = Stately
 

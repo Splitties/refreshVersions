@@ -2,10 +2,8 @@
 
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
-@Incubating
 object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
 
     /**

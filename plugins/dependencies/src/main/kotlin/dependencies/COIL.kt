@@ -1,7 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 
 /**
  * COIL stands for **Co**routine **I**mage **L**oader.
@@ -12,7 +11,6 @@ import org.gradle.api.Incubating
  *
  * GitHub Page: [coil-kt/coil](https://github.com/coil-kt/coil/)
  */
-@Incubating
 object COIL : DependencyNotationAndGroup(group = "io.coil-kt", name = "coil",
 rawRule = """
     io.coil-kt:coil(-*)

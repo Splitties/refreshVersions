@@ -6,9 +6,7 @@
 
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
-import org.gradle.api.Incubating
 
-@Incubating
 object JakeWharton {
 
     /**

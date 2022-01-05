@@ -1,7 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import org.gradle.api.Incubating
 
 /**
  * A pragmatic lightweight dependency injection framework for Kotlin developers.
@@ -11,7 +10,6 @@ import org.gradle.api.Incubating
  * - GitHub page: [Koin](https://github.com/InsertKoinIO/koin)
  * - [GitHub Releases here](https://github.com/InsertKoinIO/koin/releases)
  */
-@Incubating
 object Koin : DependencyGroup(
     group = "io.insert-koin",
     rawRule = """

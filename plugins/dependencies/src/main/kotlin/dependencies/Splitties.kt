@@ -1,10 +1,8 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
-@Incubating
 object Splitties : DependencyGroup(
     "com.louiscad.splitties",
     rawRule = """
