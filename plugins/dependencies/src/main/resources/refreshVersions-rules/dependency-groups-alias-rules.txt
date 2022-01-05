@@ -4,6 +4,9 @@ io.insert-koin:koin-*
 io.ktor:*
    ^^^^
 
+co.touchlab:kermit(-*)
+            ^^^^^^
+
 io.github.javaeden.orchid:*
                    ^^^^^^
 

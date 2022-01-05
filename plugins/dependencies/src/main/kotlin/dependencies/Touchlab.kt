@@ -26,5 +26,34 @@ object Touchlab : IsNotADependency {
         val isolate = module("stately-isolate")
         val isoCollections = module("stately-iso-collections")
     }
+
+    val kermit = Kermit
+
+    /**
+     * Kermit is a Kotlin Multiplatform logging utility with composable log outputs.
+     * The library provides prebuilt loggers for outputting to platform logging tools
+     * such as Logcat and NSLog.
+     *
+     * [GitHub Releases](https://github.com/touchlab/Kermit/releases)
+     *
+     * Github repo: [touchlab/Kermit](https://github.com/touchlab/Kermit)
+     *
+     * [1.0 release blog](https://medium.com/@kpgalligan/kermit-kmp-logging-1-0-196bf799b738)
+     */
+    object Kermit : DependencyGroup(
+        group = "co.touchlab",
+        rawRule = """
+        co.touchlab:kermit(-*)
+                    ^^^^^^
+        """.trimIndent()
+    ) {
+        val kermit = module("kermit")
+        val test = module("kermit-test")
+        val crashlytics = module("kermit-crashlytics")
+        val crashlyticsTest = module("kermit-crashlytics-test")
+        val bugsnag = module("kermit-bugsnag")
+        val bugsnagTest = module("kermit-bugsnag-test")
+        val gradlePlugin = module("kermit-gradle-plugin")
+    }
 }
 
