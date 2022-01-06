@@ -337,6 +337,8 @@ com.google.android.gms:play-services-location
 com.google.android.gms:play-services-mlkit-barcode-scanning
 com.google.android.gms:play-services-mlkit-face-detection
 com.google.android.gms:play-services-mlkit-image-labeling
+com.google.android.gms:play-services-mlkit-image-labeling-custom
+com.google.android.gms:play-services-mlkit-language-id
 com.google.android.gms:play-services-mlkit-text-recognition
 com.google.android.gms:play-services-nearby
 com.google.android.gms:play-services-panorama

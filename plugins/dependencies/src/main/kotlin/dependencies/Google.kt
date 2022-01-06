@@ -129,9 +129,19 @@ object Google : IsNotADependency {
 
             object MlKit : IsNotADependency {
 
+                val naturalLanguage = NaturalLanguage
+
+                object NaturalLanguage : IsNotADependency {
+
+                    /**
+                     * [Overview](https://developers.google.com/ml-kit/language/identification)
+                     */
+                    val languageIdentification = module("play-services-mlkit-language-id")
+                }
+
                 val vision = Vision
 
-                object Vision {
+                object Vision : IsNotADependency {
 
                     /**
                      * Unbundled version of [Google.MlKit.Vision.barcodeScanning]
@@ -152,7 +162,20 @@ object Google : IsNotADependency {
                      *
                      * [Overview](https://developers.google.com/ml-kit/vision/image-labeling)
                      */
-                    val imageLabeling = module("play-services-mlkit-image-labeling")
+                    val imageLabeling = ImageLabeling
+
+                    object ImageLabeling : DependencyNotationAndGroup(
+                        group = group,
+                        name = "play-services-mlkit-image-labeling"
+                    ) {
+
+                        /**
+                         * Unbundled version of [Google.MlKit.Vision.ImageLabeling.custom]
+                         *
+                         * [Overview](https://developers.google.com/ml-kit/vision/image-labeling)
+                         */
+                        val custom = module("play-services-mlkit-image-labeling-custom")
+                    }
 
                     /**
                      * [Overview](https://developers.google.com/ml-kit/vision/text-recognition)
@@ -330,6 +353,8 @@ object Google : IsNotADependency {
                 val autoMl = module("image-labeling-automl")
 
                 /**
+                 * Bundled version of [Google.Android.PlayServices.MlKit.Vision.ImageLabeling.custom]
+                 *
                  * [Official documentation](https://developers.google.com/ml-kit/vision/image-labeling/custom-models/android)
                  */
                 val custom = module("image-labeling-custom")
