@@ -328,3 +328,121 @@ id:[com.google.firebase:firebase-crashlytics-gradle]
 
 ~~Google.firebase.no-BoM.crashlyticsGradlePlugin~~
 id:[com.google.firebase:firebase-crashlytics-gradle]
+
+~~Firebase.mlKit.vision~~
+// FIXME: Use Google ML Kit instead.
+// Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit.
+// See migration page: https://developers.google.com/ml-kit/migration/android
+// Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit
+id:[com.google.firebase:firebase-ml-vision]
+
+~~Google.firebase.mlKit.vision~~
+// FIXME: Use Google ML Kit instead.
+// Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit.
+// See migration page: https://developers.google.com/ml-kit/migration/android
+// Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit
+id:[com.google.firebase:firebase-ml-vision]
+
+~~Firebase.mlKit.models.naturalLanguage.languageIdentification~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.android.gms:play-services-mlkit-language-id]
+id:[com.google.firebase:firebase-ml-natural-language-language-id-model]
+
+~~Google.firebase.mlKit.models.naturalLanguage.languageIdentification~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.android.gms:play-services-mlkit-language-id]
+id:[com.google.firebase:firebase-ml-natural-language-language-id-model]
+
+~~Firebase.mlKit.models.naturalLanguage.smartReply~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.mlkit:smart-reply]
+id:[com.google.firebase:firebase-ml-natural-language-smart-reply-model]
+
+~~Google.firebase.mlKit.models.naturalLanguage.smartReply~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.mlkit:smart-reply]
+id:[com.google.firebase:firebase-ml-natural-language-smart-reply-model]
+
+~~Firebase.mlKit.models.naturalLanguage.translate~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.mlkit:translate]
+id:[com.google.firebase:firebase-ml-natural-language-translate-model]
+
+~~Google.firebase.mlKit.models.naturalLanguage.translate~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.mlkit:translate]
+id:[com.google.firebase:firebase-ml-natural-language-translate-model]
+
+~~Firebase.mlKit.naturalLanguage~~
+// FIXME: Use Google ML Kit instead.
+// Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit.
+// See migration page: https://developers.google.com/ml-kit/migration/android
+// Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit
+id:[com.google.firebase:firebase-ml-natural-language]
+
+~~Google.firebase.mlKit.naturalLanguage~~
+// FIXME: Use Google ML Kit instead.
+// Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit.
+// See migration page: https://developers.google.com/ml-kit/migration/android
+// Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit
+id:[com.google.firebase:firebase-ml-natural-language]
+
+~~Firebase.mlKit.models.vision.autoMl~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.mlkit:image-labeling-automl]
+id:[com.google.firebase:firebase-ml-vision-automl]
+
+~~Google.firebase.mlKit.models.vision.autoMl~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.mlkit:image-labeling-automl]
+id:[com.google.firebase:firebase-ml-vision-automl]
+
+~~Firebase.mlKit.models.vision.barcodeScanning~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.android.gms:play-services-mlkit-barcode-scanning]
+id:[com.google.firebase:firebase-ml-vision-barcode-model]
+
+~~Google.firebase.mlKit.models.vision.barcodeScanning~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.android.gms:play-services-mlkit-barcode-scanning]
+id:[com.google.firebase:firebase-ml-vision-barcode-model]
+
+~~Firebase.mlKit.models.vision.faceDetection~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.android.gms:play-services-mlkit-face-detection]
+id:[com.google.firebase:firebase-ml-vision-face-model]
+
+~~Google.firebase.mlKit.models.vision.faceDetection~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.android.gms:play-services-mlkit-face-detection]
+id:[com.google.firebase:firebase-ml-vision-face-model]
+
+~~Firebase.mlKit.models.vision.imageLabelling~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.android.gms:play-services-mlkit-image-labeling]
+id:[com.google.firebase:firebase-ml-vision-image-label-model]
+
+~~Google.firebase.mlKit.models.vision.imageLabelling~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.android.gms:play-services-mlkit-image-labeling]
+id:[com.google.firebase:firebase-ml-vision-image-label-model]
+
+~~Firebase.mlKit.models.vision.objectDetectionAndTracking~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.mlkit:object-detection]
+id:[com.google.firebase:firebase-ml-vision-object-detection-model]
+
+~~Google.firebase.mlKit.models.vision.objectDetectionAndTracking~~
+// FIXME: Use Google ML Kit instead.
+moved:[com.google.mlkit:object-detection]
+id:[com.google.firebase:firebase-ml-vision-object-detection-model]
+
+~~Firebase.mlKit.models.custom~~
+// FIXME: Replace with the Firebase ML model downloader.
+moved:[com.google.firebase:firebase-ml-modeldownloader-ktx]
+id:[com.google.firebase:firebase-ml-model-interpreter]
+
+~~Google.firebase.mlKit.models.custom~~
+// FIXME: Replace with the Firebase ML model downloader.
+moved:[com.google.firebase:firebase-ml-modeldownloader-ktx]
+id:[com.google.firebase:firebase-ml-model-interpreter]

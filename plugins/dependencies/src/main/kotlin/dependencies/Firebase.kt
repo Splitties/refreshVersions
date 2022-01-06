@@ -1,7 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "ObjectPropertyName", "SpellCheckingInspection")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
  * Firebase Android libraries.
@@ -73,67 +72,4 @@ object Firebase : DependencyGroup(
 
     val remoteConfig = module("firebase-config")
     val remoteConfigKtx = module("firebase-config-ktx")
-
-    @Deprecated("Use Google ML Kit and Firebase ML model donwloader instead. " +
-        "Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit, " +
-        "plus Firebase.mlModelDownloaderKtx or Firebase.mlModelDownloader." +
-        "See migration page: https://developers.google.com/ml-kit/migration/android")
-    val mlKit = MlKit
-
-    object MlKit : IsNotADependency {
-        private const val deprecationMessage = "Use Google ML Kit instead. " +
-            "Find new dependency notations in Google.mlKit and Google.android.playServices.mlKit. " +
-            "See migration page: https://developers.google.com/ml-kit/migration/android"
-
-        @Deprecated(deprecationMessage)
-        val vision = module("firebase-ml-vision")
-
-        @Deprecated(deprecationMessage)
-        val naturalLanguage = module("firebase-ml-natural-language", usePlatformConstraints = false)
-
-        @Deprecated(deprecationMessage)
-        val models = Models
-
-        object Models : IsNotADependency {
-
-            @Deprecated("Replaced with the Firebase ML model downloader", ReplaceWith("Firebase.mlModelDownloaderKtx"))
-            val custom = module("firebase-ml-model-interpreter", usePlatformConstraints = false)
-
-            @Deprecated(deprecationMessage)
-            val vision = Vision
-
-            object Vision : IsNotADependency {
-
-                @Deprecated(deprecationMessage)
-                val imageLabelling = module("firebase-ml-vision-image-label-model", usePlatformConstraints = false)
-
-                @Deprecated(deprecationMessage)
-                val objectDetectionAndTracking = module("firebase-ml-vision-object-detection-model", usePlatformConstraints = false)
-
-                @Deprecated(deprecationMessage)
-                val faceDetection = module("firebase-ml-vision-face-model", usePlatformConstraints = false)
-
-                @Deprecated(deprecationMessage)
-                val barcodeScanning = module("firebase-ml-vision-barcode-model", usePlatformConstraints = false)
-
-                @Deprecated(deprecationMessage)
-                val autoMl = module("firebase-ml-vision-automl", usePlatformConstraints = false)
-            }
-
-            @Deprecated(deprecationMessage)
-            val naturalLanguage = NaturalLanguage
-
-            object NaturalLanguage : IsNotADependency {
-
-                @Deprecated(deprecationMessage)
-                val languageIdentification = module("firebase-ml-natural-language-language-id-model", usePlatformConstraints = false)
-
-                @Deprecated(deprecationMessage)
-                val translate = module("firebase-ml-natural-language-translate-model", usePlatformConstraints = false)
-
-                @Deprecated(deprecationMessage)
-                val smartReply = module("firebase-ml-natural-language-smart-reply-model", usePlatformConstraints = false)
-            }
-        }
-    }
 }
