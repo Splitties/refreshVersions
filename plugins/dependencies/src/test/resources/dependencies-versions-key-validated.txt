@@ -794,6 +794,7 @@ org.jetbrains.kotlinx..kotlinx-io-jvm=version.kotlinx.io
 org.jetbrains.kotlinx..kotlinx-nodejs=version.kotlinx.nodejs
 org.jetbrains.kotlinx..kotlinx-serialization-cbor=version.kotlinx.serialization
 org.jetbrains.kotlinx..kotlinx-serialization-core=version.kotlinx.serialization
+org.jetbrains.kotlinx..kotlinx-serialization-hocon=version.kotlinx.serialization
 org.jetbrains.kotlinx..kotlinx-serialization-json=version.kotlinx.serialization
 org.jetbrains.kotlinx..kotlinx-serialization-properties=version.kotlinx.serialization
 org.jetbrains.kotlinx..kotlinx-serialization-protobuf=version.kotlinx.serialization

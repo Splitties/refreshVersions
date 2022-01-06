@@ -839,6 +839,7 @@ org.jetbrains.kotlinx..kotlinx-io-jvm=KotlinX.io.jvm
 org.jetbrains.kotlinx..kotlinx-nodejs=KotlinX.nodeJs
 org.jetbrains.kotlinx..kotlinx-serialization-cbor=KotlinX.serialization.cbor
 org.jetbrains.kotlinx..kotlinx-serialization-core=KotlinX.serialization.core
+org.jetbrains.kotlinx..kotlinx-serialization-hocon=KotlinX.serialization.hocon
 org.jetbrains.kotlinx..kotlinx-serialization-json=KotlinX.serialization.json
 org.jetbrains.kotlinx..kotlinx-serialization-properties=KotlinX.serialization.properties
 org.jetbrains.kotlinx..kotlinx-serialization-protobuf=KotlinX.serialization.protobuf

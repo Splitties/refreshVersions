@@ -81,7 +81,7 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
         val protobuf = module("kotlinx-serialization-protobuf")
         val cbor = module("kotlinx-serialization-cbor")
         val properties = module("kotlinx-serialization-properties")
-        //TODO: Add hocon artifact once documented.
+        val hocon = module("kotlinx-serialization-hocon")
     }
 
     val collections = Collections
