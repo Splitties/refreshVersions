@@ -136,12 +136,4 @@ object Firebase : DependencyGroup(
             }
         }
     }
-
-    @Deprecated("No longer supported.")
-    val `no-BoM`: OldNoBom get() = OldNoBom
-
-    object OldNoBom : IsNotADependency {
-    @Deprecated("The Crashlytics Gradle plugin dependency notation moved", ReplaceWith("Firebase.crashlyticsGradlePlugin"))
-        val crashlyticsGradlePlugin = "com.google.firebase:firebase-crashlytics-gradle:_"
-    }
 }

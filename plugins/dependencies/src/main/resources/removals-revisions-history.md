@@ -322,3 +322,9 @@ id:[org.jetbrains.kotlinx:kotlinx-coroutines-core-native]
 // TODO: Use COIL.compose directly.
 moved:[io.coil-kt:coil-compose]
 id:[com.google.accompanist:accompanist-coil]
+
+~~Firebase.no-BoM.crashlyticsGradlePlugin~~
+id:[com.google.firebase:firebase-crashlytics-gradle]
+
+~~Google.firebase.no-BoM.crashlyticsGradlePlugin~~
+id:[com.google.firebase:firebase-crashlytics-gradle]
