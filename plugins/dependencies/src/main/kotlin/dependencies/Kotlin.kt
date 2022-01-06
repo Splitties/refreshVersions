@@ -2,10 +2,8 @@
 
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 
-@Incubating
-object Kotlin {
+object Kotlin : DependencyGroup(group = "org.jetbrains.kotlin") {
     /**
      * Kotlin Standard Library
      *
@@ -13,7 +11,7 @@ object Kotlin {
      */
     val stdlib = Stdlib
 
-    object Stdlib : DependencyNotationAndGroup(group = "org.jetbrains.kotlin", name = "kotlin-stdlib") {
+    object Stdlib : DependencyNotationAndGroup(group = group, name = "kotlin-stdlib") {
         val jdk7 = module("kotlin-stdlib-jdk7")
         val jdk8 = module("kotlin-stdlib-jdk8")
         val js = module("kotlin-stdlib-js")
@@ -29,7 +27,7 @@ object Kotlin {
      */
     val test = Test
 
-    object Test : DependencyNotationAndGroup(group = "org.jetbrains.kotlin", name = "kotlin-test") {
+    object Test : DependencyNotationAndGroup(group = group, name = "kotlin-test") {
 
         val annotationsCommon = module("kotlin-test-annotations-common")
         val common = module("kotlin-test-common")
@@ -40,4 +38,7 @@ object Kotlin {
         val junit5 = module("kotlin-test-junit5")
         val testng = module("kotlin-test-testng")
     }
+
+    /** Kotlin Script Runtime */
+    val scriptRuntime = module("kotlin-script-runtime")
 }

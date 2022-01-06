@@ -765,6 +765,7 @@ org.http4k..http4k-testing-kotest=version.http4k
 org.http4k..http4k-testing-servirtium=version.http4k
 org.http4k..http4k-testing-strikt=version.http4k
 org.http4k..http4k-testing-webdriver=version.http4k
+org.jetbrains.kotlin..kotlin-script-runtime=version.kotlin
 org.jetbrains.kotlin..kotlin-stdlib-common=version.kotlin
 org.jetbrains.kotlin..kotlin-stdlib-jdk7=version.kotlin
 org.jetbrains.kotlin..kotlin-stdlib-jdk8=version.kotlin

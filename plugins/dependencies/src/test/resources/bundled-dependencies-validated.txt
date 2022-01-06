@@ -765,6 +765,7 @@ org.http4k:http4k-testing-kotest
 org.http4k:http4k-testing-servirtium
 org.http4k:http4k-testing-strikt
 org.http4k:http4k-testing-webdriver
+org.jetbrains.kotlin:kotlin-script-runtime
 org.jetbrains.kotlin:kotlin-stdlib
 org.jetbrains.kotlin:kotlin-stdlib-common
 org.jetbrains.kotlin:kotlin-stdlib-jdk7

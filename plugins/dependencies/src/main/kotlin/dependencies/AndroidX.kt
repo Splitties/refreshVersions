@@ -3,7 +3,6 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
@@ -15,7 +14,6 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * - As of 2021 August the 23rd, AndroidX is made of **91 sub-families** of artifacts with their own version.
  * - Back in 2019 November the 18th, AndroidX was made of **187 artifacts**.
  */
-@Incubating
 object AndroidX : IsNotADependency {
     // LibraryGroups.kt: https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryGroups.kt
     // LibraryVersions.kt: https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryVersions.kt

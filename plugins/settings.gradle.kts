@@ -1,6 +1,6 @@
 plugins {
-    id("com.gradle.enterprise").version("3.7.2")
-    id("de.fayard.refreshVersions") version "0.23.0"
+    id("com.gradle.enterprise").version("3.8")
+    id("de.fayard.refreshVersions") version "0.30.1"
 }
 
 gradleEnterprise {

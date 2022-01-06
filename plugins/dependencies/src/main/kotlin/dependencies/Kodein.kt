@@ -1,7 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
@@ -11,7 +10,6 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * - GitHub page: [Kodein-Framework/Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI)
  * - [GitHub Releases here](https://github.com/Kodein-Framework/Kodein-DI/releases)
  */
-@Incubating
 object Kodein : IsNotADependency {
 
     val di = DI

@@ -1,7 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "ObjectPropertyName", "SpellCheckingInspection")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
@@ -19,7 +18,6 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * implementation(Firebase.cloudMessagingKtx)
  * ```
  */
-@Incubating
 object Firebase : DependencyGroup(
     group = "com.google.firebase",
     usePlatformConstraints = true

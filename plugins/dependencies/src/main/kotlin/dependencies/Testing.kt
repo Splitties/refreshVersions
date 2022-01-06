@@ -7,11 +7,9 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
-@Incubating
-object Testing {
+object Testing : IsNotADependency {
 
     /**
      * JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks.
@@ -27,10 +25,6 @@ object Testing {
      * GitHub page: [robolectric/robolectric](https://github.com/robolectric/robolectric)
      */
     val robolectric = DependencyNotation("org.robolectric", "robolectric")
-
-    @Deprecated("Wrong spelling", ReplaceWith("robolectric"))
-    val roboElectric = robolectric
-
 
     /**
      * JUnit 5: The new major version of the programmer-friendly testing framework for Java

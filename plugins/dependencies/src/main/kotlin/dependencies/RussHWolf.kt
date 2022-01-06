@@ -1,7 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
+import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
  * This is a Kotlin library for Multiplatform apps, so that common code can persist key-value data.
@@ -9,8 +9,8 @@ import org.gradle.api.Incubating
  * - GitHub page: [MultiplatformSettings](https://github.com/russhwolf/multiplatform-settings)
  * - [GitHub Releases here](https://github.com/russhwolf/multiplatform-settings/releases)
  */
-@Incubating
-object RussHWolf {
+object RussHWolf : IsNotADependency {
+
     val multiplatformSettings = MultiplatformSettings
 
     object MultiplatformSettings : DependencyNotationAndGroup(

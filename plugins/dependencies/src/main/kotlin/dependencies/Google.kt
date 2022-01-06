@@ -3,11 +3,9 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
-@Incubating
-object Google {
+object Google : IsNotADependency {
 
     val playServicesGradlePlugin = DependencyNotation("com.google.gms", "google-services")
 
