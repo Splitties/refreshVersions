@@ -334,6 +334,7 @@ com.google.android.gms..play-services-games=Google.android.playServices.games
 com.google.android.gms..play-services-gcm=Google.android.playServices.gcm
 com.google.android.gms..play-services-identity=Google.android.playServices.identity
 com.google.android.gms..play-services-location=Google.android.playServices.location
+com.google.android.gms..play-services-maps=Google.android.playServices.maps
 com.google.android.gms..play-services-mlkit-barcode-scanning=Google.android.playServices.mlKit.vision.barcodeScanning
 com.google.android.gms..play-services-mlkit-face-detection=Google.android.playServices.mlKit.vision.faceDetection
 com.google.android.gms..play-services-mlkit-image-labeling-custom=Google.android.playServices.mlKit.vision.imageLabeling.custom

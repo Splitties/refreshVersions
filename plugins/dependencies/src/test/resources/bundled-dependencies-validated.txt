@@ -334,6 +334,7 @@ com.google.android.gms:play-services-games
 com.google.android.gms:play-services-gcm
 com.google.android.gms:play-services-identity
 com.google.android.gms:play-services-location
+com.google.android.gms:play-services-maps
 com.google.android.gms:play-services-mlkit-barcode-scanning
 com.google.android.gms:play-services-mlkit-face-detection
 com.google.android.gms:play-services-mlkit-image-labeling
