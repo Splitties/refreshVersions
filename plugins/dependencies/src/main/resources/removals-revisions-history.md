@@ -446,3 +446,13 @@ id:[com.google.firebase:firebase-ml-model-interpreter]
 // FIXME: Replace with the Firebase ML model downloader.
 moved:[com.google.firebase:firebase-ml-modeldownloader-ktx]
 id:[com.google.firebase:firebase-ml-model-interpreter]
+
+~~Ktor.client.darwin~~
+//FIXME: Use the darwin artifact for ktor 2.0+
+moved:[io.ktor:ktor-client-darwin]
+id:[io.ktor:ktor-client-ios]
+
+~~Ktor.client.ios~~
+//FIXME: Use the darwin artifact for ktor 2.0+
+moved:[io.ktor:ktor-client-darwin]
+id:[io.ktor:ktor-client-ios]

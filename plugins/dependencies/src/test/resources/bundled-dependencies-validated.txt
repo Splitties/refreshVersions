@@ -642,8 +642,8 @@ io.ktor:ktor-client-auth-basic
 io.ktor:ktor-client-cio
 io.ktor:ktor-client-core
 io.ktor:ktor-client-curl
+io.ktor:ktor-client-darwin
 io.ktor:ktor-client-encoding
-io.ktor:ktor-client-ios
 io.ktor:ktor-client-jetty
 io.ktor:ktor-client-json
 io.ktor:ktor-client-json-tests
