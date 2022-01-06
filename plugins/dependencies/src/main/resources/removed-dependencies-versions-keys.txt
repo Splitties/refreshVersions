@@ -61,3 +61,4 @@ com.louiscad.splitties..splitties-views-dsl-ide-preview=version.splitties
 org.jetbrains.kotlinx..kotlinx-coroutines-core-common=version.kotlinx.coroutines
 org.jetbrains.kotlinx..kotlinx-coroutines-core-js=version.kotlinx.coroutines
 org.jetbrains.kotlinx..kotlinx-coroutines-core-native=version.kotlinx.coroutines
+com.google.accompanist..accompanist-coil=version.google.accompanist

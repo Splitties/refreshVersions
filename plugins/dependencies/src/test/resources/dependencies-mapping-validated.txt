@@ -314,7 +314,6 @@ co.touchlab..stately-isolate=Touchlab.stately.isolate
 com.github.chuckerteam.chucker..library-no-op=Chucker.libraryNoOp
 com.github.chuckerteam.chucker..library=Chucker.library
 com.google.accompanist..accompanist-appcompat-theme=Google.accompanist.appcompatTheme
-com.google.accompanist..accompanist-coil=Google.accompanist.coil
 com.google.accompanist..accompanist-flowlayout=Google.accompanist.flowlayout
 com.google.accompanist..accompanist-glide=Google.accompanist.glide
 com.google.accompanist..accompanist-imageloading-core=Google.accompanist.imageloadingCore

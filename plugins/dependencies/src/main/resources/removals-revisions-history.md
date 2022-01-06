@@ -317,3 +317,8 @@ id:[org.jetbrains.kotlinx:kotlinx-coroutines-core-js]
 // TODO: Use core instead, since this artifact is no longer published since version 1.3.9.
 moved:[org.jetbrains.kotlinx:kotlinx-coroutines-core]
 id:[org.jetbrains.kotlinx:kotlinx-coroutines-core-native]
+
+~~Google.accompanist.coil~~
+// TODO: Use COIL.compose directly.
+moved:[io.coil-kt:coil-compose]
+id:[com.google.accompanist:accompanist-coil]

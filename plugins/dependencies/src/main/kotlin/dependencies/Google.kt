@@ -23,9 +23,6 @@ object Google : IsNotADependency {
 
     object Accompanist : DependencyGroup(group = "com.google.accompanist") {
 
-        @Deprecated("Moved to COIL.compose", ReplaceWith("COIL.compose"))
-        val coil = module("accompanist-coil")
-
         val glide = module("accompanist-glide")
         val imageloadingCore = module("accompanist-imageloading-core")
 
