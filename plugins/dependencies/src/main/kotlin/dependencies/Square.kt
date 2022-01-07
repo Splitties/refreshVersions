@@ -92,7 +92,11 @@ object Square : IsNotADependency {
 
         val gradlePlugin = module("gradle-plugin")
 
-        val coroutinesExtensions = module("coroutines-extensions")
+        val extensions = Extensions
+
+        object Extensions : IsNotADependency {
+            val coroutines = module("coroutines-extensions")
+        }
 
         val drivers = Drivers
 

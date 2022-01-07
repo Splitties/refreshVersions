@@ -456,3 +456,11 @@ id:[io.ktor:ktor-client-ios]
 //FIXME: Use the darwin artifact for ktor 2.0+
 moved:[io.ktor:ktor-client-darwin]
 id:[io.ktor:ktor-client-ios]
+
+## Revision 5
+
+~~CashApp.sqlDelight.coroutinesExtensions~~
+id:[com.squareup.sqldelight:coroutines-extensions]
+
+~~Square.sqlDelight.coroutinesExtensions~~
+id:[com.squareup.sqldelight:coroutines-extensions]
