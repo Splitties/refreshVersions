@@ -549,6 +549,7 @@ com.squareup.leakcanary..shark-cli=Square.leakCanary.shark.cli
 com.squareup.leakcanary..shark-graph=Square.leakCanary.shark.graph
 com.squareup.leakcanary..shark-hprof=Square.leakCanary.shark.hprof
 com.squareup.leakcanary..shark=Square.leakCanary.shark
+com.squareup.logcat..logcat=Square.logcat
 com.squareup.moshi..moshi-adapters=Square.moshi.adapters
 com.squareup.moshi..moshi-kotlin-codegen=Square.moshi.kotlinCodegen
 com.squareup.moshi..moshi-kotlin=Square.moshi.kotlinReflect

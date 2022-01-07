@@ -510,6 +510,7 @@ com.squareup.leakcanary:shark-android
 com.squareup.leakcanary:shark-cli
 com.squareup.leakcanary:shark-graph
 com.squareup.leakcanary:shark-hprof
+com.squareup.logcat:logcat
 com.squareup.moshi:moshi
 com.squareup.moshi:moshi-adapters
 com.squareup.moshi:moshi-kotlin

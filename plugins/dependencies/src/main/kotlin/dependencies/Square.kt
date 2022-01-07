@@ -8,6 +8,15 @@ import org.gradle.kotlin.dsl.IsNotADependency
 object Square : IsNotADependency {
 
     /**
+     * A tiny Kotlin API for cheap logging on top of Android's normal `Log` class.
+     *
+     * [Change log](https://github.com/square/logcat/blob/main/CHANGELOG.md)
+     *
+     * GitHub page: [square/logcat](https://github.com/square/logcat)
+     */
+    val logcat = DependencyNotation("com.squareup.logcat", "logcat")
+
+    /**
      * A modern I/O library for Kotlin Multiplatform (JVM/Android, Linux, iOS, macOS, JS) and Java.
      *
      * Official website: [square.github.io/okio](https://square.github.io/okio/)
