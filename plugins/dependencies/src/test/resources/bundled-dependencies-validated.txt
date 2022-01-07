@@ -534,10 +534,14 @@ com.squareup.retrofit2:converter-wire
 com.squareup.retrofit2:retrofit
 com.squareup.retrofit2:retrofit-mock
 com.squareup.sqldelight:android-driver
+com.squareup.sqldelight:android-paging-extensions
+com.squareup.sqldelight:android-paging3-extensions
 com.squareup.sqldelight:coroutines-extensions
 com.squareup.sqldelight:gradle-plugin
 com.squareup.sqldelight:jdbc-driver
 com.squareup.sqldelight:native-driver
+com.squareup.sqldelight:rxjava2-extensions
+com.squareup.sqldelight:rxjava3-extensions
 com.squareup.sqldelight:sqlite-driver
 com.squareup.wire:wire-gradle-plugin
 com.squareup.wire:wire-grpc-client

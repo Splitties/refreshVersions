@@ -96,6 +96,10 @@ object Square : IsNotADependency {
 
         object Extensions : IsNotADependency {
             val coroutines = module("coroutines-extensions")
+            val androidPaging3 = module("android-paging3-extensions")
+            val androidPaging = module("android-paging-extensions")
+            val rxJava3 = module("rxjava3-extensions")
+            val rxJava2 = module("rxjava2-extensions")
         }
 
         val drivers = Drivers
