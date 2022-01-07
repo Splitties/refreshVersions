@@ -106,6 +106,7 @@ object Square : IsNotADependency {
 
         object Drivers : IsNotADependency {
             val android = module("android-driver")
+            val sqlJs = module("sqljs-driver")
 
             val jdbc = module("jdbc-driver")
             val jdbcSqlite = module("sqlite-driver")

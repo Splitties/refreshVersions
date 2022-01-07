@@ -546,6 +546,7 @@ com.squareup.sqldelight..native-driver=version.sqldelight
 com.squareup.sqldelight..rxjava2-extensions=version.sqldelight
 com.squareup.sqldelight..rxjava3-extensions=version.sqldelight
 com.squareup.sqldelight..sqlite-driver=version.sqldelight
+com.squareup.sqldelight..sqljs-driver=version.sqldelight
 com.squareup.wire..wire-gradle-plugin=version.wire
 com.squareup.wire..wire-grpc-client=version.wire
 com.squareup.wire..wire-runtime=version.wire

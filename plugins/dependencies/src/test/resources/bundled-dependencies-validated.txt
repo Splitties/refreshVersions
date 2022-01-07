@@ -543,6 +543,7 @@ com.squareup.sqldelight:native-driver
 com.squareup.sqldelight:rxjava2-extensions
 com.squareup.sqldelight:rxjava3-extensions
 com.squareup.sqldelight:sqlite-driver
+com.squareup.sqldelight:sqljs-driver
 com.squareup.wire:wire-gradle-plugin
 com.squareup.wire:wire-grpc-client
 com.squareup.wire:wire-runtime
