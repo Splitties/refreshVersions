@@ -1,4 +1,4 @@
-mkdocs
-mkdocs-material>=5.1.0
-mkdocs-markdownextradata-plugin
-pymdown-extensions>=7.0
+mkdocs==1.2.3
+mkdocs-material==7.3.6 # Don't update to 8+ because it'll break content tabs.
+mkdocs-markdownextradata-plugin==0.2.5
+pymdown-extensions==9.1
