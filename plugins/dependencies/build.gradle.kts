@@ -79,7 +79,7 @@ val copyDependencyNotationsRemovalsRevisionNumber by tasks.registering {
     doFirst {
         val version = versionFile.useLines { it.first() }
         val removalsRevision: Int? = removalsRevisionHistoryFile.useLines { lines ->
-            lines.lastOrNull { it.startsWith("## ") }?.takeUnless { it == "## [WIP]" }
+            lines.lastOrNull { it.startsWith("## ") }?.takeUnless { it.startsWith("## [WIP]") }
         }?.substringAfter("## Revision ")?.toInt()
         if (version.endsWith("-SNAPSHOT")) {
             snapshotDependencyNotationsRemovalsRevisionNumberFile.let {

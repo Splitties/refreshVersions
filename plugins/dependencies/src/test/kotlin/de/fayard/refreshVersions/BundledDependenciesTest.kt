@@ -66,7 +66,7 @@ class BundledDependenciesTest {
         if (removals.isNotEmpty()) {
             val removalsRevisionsHistoryFile = mainResources.resolve("removals-revisions-history.md")
             val removalsRevisionsHistory = removalsRevisionsHistoryFile.readText()
-            val hasWipHeading = removalsRevisionsHistory.lineSequence().any { it == "## [WIP]" }
+            val hasWipHeading = removalsRevisionsHistory.lineSequence().any { it.startsWith("## [WIP]") }
             val extraText = buildString {
                 run {
                     val lineBreaks = when {
@@ -77,7 +77,10 @@ class BundledDependenciesTest {
                     append(lineBreaks)
                 }
                 if (hasWipHeading.not()) {
-                    appendLine("## [WIP]")
+                    val lastRevision = removalsRevisionsHistory.lineSequence().last {
+                        it.startsWith("## Revision ")
+                    }.substringAfter("## Revision ").toInt()
+                    appendLine("## [WIP] Revision ${lastRevision + 1}")
                     appendLine()
                 }
                 val removedEntriesText = removals.joinToString(

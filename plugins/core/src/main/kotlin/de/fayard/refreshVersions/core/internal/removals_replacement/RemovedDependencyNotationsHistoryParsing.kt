@@ -79,7 +79,7 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
                 commentLines.clear()
                 list.add(newElement)
             }
-            line == "## [WIP]" -> {
+            line.startsWith("## [WIP]") -> {
                 check(dependencyNotation == null)
                 check(commentLines.isEmpty())
                 check(replacementMavenCoordinates == null)
