@@ -375,7 +375,7 @@ object Google : IsNotADependency {
             val faceDetection = module("face-detection")
 
             /**
-             * Add downloading of the models instead of having to bundle them in the app for [ImageLabeling.autoMl].
+             * Add downloading of the models instead of having to bundle them in the app.
              *
              * [Official documentation](https://firebase.google.com/docs/ml/android/label-images-with-automl)
              */
