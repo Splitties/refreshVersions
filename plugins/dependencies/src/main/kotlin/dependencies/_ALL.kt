@@ -2,6 +2,7 @@
 
 package dependencies
 
+import Android
 import AndroidX
 import COIL
 import CashApp
@@ -25,6 +26,7 @@ import Touchlab
 
 // All top-level objects holding dependency notations shall be added in this list.
 internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
+    Android,
     AndroidX,
     CashApp,
     Chucker,

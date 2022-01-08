@@ -28,5 +28,8 @@ com.louiscad.splitties:splitties-*
 org.kodein.di:kodein-di(-*)
     ^^^^^^^^^
 
+com.android.billingclient:billing(-*)
+    ^^^^^^^^^^^^^^^^^^^^^
+
 com.russhwolf:multiplatform-settings(-*)
               ^^^^^^^^^^^^^^^^^^^^^^
