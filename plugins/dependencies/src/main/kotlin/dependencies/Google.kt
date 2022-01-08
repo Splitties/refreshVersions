@@ -390,15 +390,19 @@ object Google : IsNotADependency {
                 val accurate = module("pose-detection-accurate")
             }
 
-            @Deprecated(
-                message = "There's no bundled version of ML Kit text recognition. Use the Play Services based one.",
-                level = DeprecationLevel.ERROR,
-                replaceWith = ReplaceWith("Google.android.playServices.mlKit.vision.textRecognition")
-            )
-            val textRecognition: Nothing
-                get() = throw UnsupportedOperationException(
-                    "Use Google.android.playServices.mlKit.vision.textRecognition instead."
-                )
+            /**
+             * Bundled version of [Google.Android.PlayServices.MlKit.Vision.textRecognition]
+             *
+             * [Overview](https://developers.google.com/ml-kit/vision/text-recognition/v2)
+             */
+            val textRecognition = TextRecognition
+
+            object TextRecognition : DependencyNotationAndGroup(group = group, name = "text-recognition") {
+                val chinese = module("text-recognition-chinese")
+                val devanagari = module("text-recognition-devanagari")
+                val japanese = module("text-recognition-japanese")
+                val korean = module("text-recognition-korean")
+            }
         }
 
         val naturalLanguage = NaturalLanguage
