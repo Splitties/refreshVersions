@@ -260,7 +260,7 @@ object Google : IsNotADependency {
             /** Mobile Vision */
             val vision = module("play-services-vision")
 
-            /** Google Pay */
+            /** Google Pay for Payments */
             val wallet = module("play-services-wallet")
 
             /** Wear OS by Google */
