@@ -427,6 +427,7 @@ com.google.mlkit:language-id
 com.google.mlkit:linkfirebase
 com.google.mlkit:object-detection
 com.google.mlkit:object-detection-custom
+com.google.mlkit:playstore-dynamic-feature-support
 com.google.mlkit:pose-detection
 com.google.mlkit:pose-detection-accurate
 com.google.mlkit:smart-reply

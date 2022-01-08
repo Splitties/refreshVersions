@@ -309,6 +309,11 @@ object Google : IsNotADependency {
 
     object MlKit : DependencyGroup(group = "com.google.mlkit") {
 
+        /**
+         * Guide: [Reduce the size of your ML Kit Android app's APKs](https://developers.google.com/ml-kit/tips/reduce-app-size)
+         */
+        val playStoreDynamicFeatureSupport = module("playstore-dynamic-feature-support")
+
         val vision = Vision
 
         object Vision : IsNotADependency {

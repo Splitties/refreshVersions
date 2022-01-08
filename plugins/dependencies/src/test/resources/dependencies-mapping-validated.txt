@@ -462,6 +462,7 @@ com.google.mlkit..language-id=Google.mlKit.naturalLanguage.languageIdentificatio
 com.google.mlkit..linkfirebase=Google.mlKit.vision.linkFirebase
 com.google.mlkit..object-detection-custom=Google.mlKit.vision.objectDetection.custom
 com.google.mlkit..object-detection=Google.mlKit.vision.objectDetection
+com.google.mlkit..playstore-dynamic-feature-support=Google.mlKit.playStoreDynamicFeatureSupport
 com.google.mlkit..pose-detection-accurate=Google.mlKit.vision.poseDetection.accurate
 com.google.mlkit..pose-detection=Google.mlKit.vision.poseDetection
 com.google.mlkit..smart-reply=Google.mlKit.naturalLanguage.smartReply
