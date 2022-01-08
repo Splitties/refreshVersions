@@ -483,4 +483,11 @@ object Google : IsNotADependency {
             val entityExtraction = module("entity-extraction")
         }
     }
+
+    /**
+     * Oboe is a C++ library that makes it easy to build high-performance audio apps on Android.
+     *
+     * GitHub repo: [google/oboe](https://github.com/google/oboe)
+     */
+    val oboe = DependencyNotation("com.google.oboe", "oboe")
 }

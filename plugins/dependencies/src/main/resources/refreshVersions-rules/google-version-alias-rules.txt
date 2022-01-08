@@ -30,3 +30,6 @@ com.google.androidbrowserhelper:androidbrowserhelper
 
 com.google.mlkit:*
     ^^^^^^^^^^^^.^
+
+com.google.oboe:oboe
+    ^^^^^^^^^^^

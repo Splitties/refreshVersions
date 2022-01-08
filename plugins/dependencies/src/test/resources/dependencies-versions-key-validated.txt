@@ -447,6 +447,7 @@ com.google.mlkit..text-recognition-japanese=version.google.mlkit.text-recognitio
 com.google.mlkit..text-recognition-korean=version.google.mlkit.text-recognition-korean
 com.google.mlkit..text-recognition=version.google.mlkit.text-recognition
 com.google.mlkit..translate=version.google.mlkit.translate
+com.google.oboe..oboe=version.google.oboe
 com.jakewharton.confundus..confundus-gradle=version.jakewharton.confundus
 com.jakewharton.moshi..shimo=version.jakewharton.moshi.shimo
 com.jakewharton.picnic..picnic=version.jakewharton.picnic
