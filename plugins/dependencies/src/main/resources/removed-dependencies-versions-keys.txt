@@ -73,3 +73,4 @@ com.google.firebase..firebase-ml-vision-face-model=version.firebase-ml-vision-fa
 com.google.firebase..firebase-ml-vision-image-label-model=version.firebase-ml-vision-image-label-model
 com.google.firebase..firebase-ml-vision-object-detection-model=version.firebase-ml-vision-object-detection-model
 com.google.firebase..firebase-ml-model-interpreter=version.firebase-ml-model-interpreter
+com.google.mlkit..image-labeling-automl=version.google.mlkit.image-labeling-automl

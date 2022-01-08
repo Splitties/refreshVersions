@@ -354,13 +354,6 @@ object Google : IsNotADependency {
             object ImageLabeling : DependencyNotationAndGroup(group = group, name = "image-labeling") {
 
                 /**
-                 * [ML Kit documentation](https://developers.google.com/ml-kit/vision/image-labeling/automl/android)
-                 *
-                 * [Firebase documentation](https://firebase.google.com/docs/ml/android/label-images-with-automl)
-                 */
-                val autoMl = module("image-labeling-automl")
-
-                /**
                  * Bundled version of [Google.Android.PlayServices.MlKit.Vision.ImageLabeling.custom]
                  *
                  * [Official documentation](https://developers.google.com/ml-kit/vision/image-labeling/custom-models/android)

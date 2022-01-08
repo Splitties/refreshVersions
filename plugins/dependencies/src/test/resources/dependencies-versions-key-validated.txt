@@ -420,7 +420,6 @@ com.google.mlkit..barcode-scanning=version.google.mlkit.barcode-scanning
 com.google.mlkit..digital-ink-recognition=version.google.mlkit.digital-ink-recognition
 com.google.mlkit..entity-extraction=version.google.mlkit.entity-extraction
 com.google.mlkit..face-detection=version.google.mlkit.face-detection
-com.google.mlkit..image-labeling-automl=version.google.mlkit.image-labeling-automl
 com.google.mlkit..image-labeling-custom=version.google.mlkit.image-labeling-custom
 com.google.mlkit..image-labeling=version.google.mlkit.image-labeling
 com.google.mlkit..language-id=version.google.mlkit.language-id

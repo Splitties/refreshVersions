@@ -464,3 +464,12 @@ id:[com.squareup.sqldelight:coroutines-extensions]
 
 ~~Square.sqlDelight.coroutinesExtensions~~
 id:[com.squareup.sqldelight:coroutines-extensions]
+
+## Revision 6
+
+~~Google.mlKit.vision.imageLabeling.autoMl~~
+// The AutoML Vision Edge specific API is no longer available.
+// TODO: Instead, use the Custom Image Labelling API, which now supports these models natively.
+// Follow this guide to migrate: https://developers.google.com/ml-kit/vision/image-labeling/automl/migrate-automl
+moved:[com.google.mlkit:image-labeling-custom]
+id:[com.google.mlkit:image-labeling-automl]

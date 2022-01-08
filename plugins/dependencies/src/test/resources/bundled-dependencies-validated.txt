@@ -421,7 +421,6 @@ com.google.mlkit:digital-ink-recognition
 com.google.mlkit:entity-extraction
 com.google.mlkit:face-detection
 com.google.mlkit:image-labeling
-com.google.mlkit:image-labeling-automl
 com.google.mlkit:image-labeling-custom
 com.google.mlkit:language-id
 com.google.mlkit:linkfirebase
