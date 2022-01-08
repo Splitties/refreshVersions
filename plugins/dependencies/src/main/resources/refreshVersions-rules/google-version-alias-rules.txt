@@ -33,3 +33,6 @@ com.google.mlkit:*
 
 com.google.oboe:oboe
     ^^^^^^^^^^^
+
+com.google.modernstorage:modernstorage-*
+    ^^^^^^^^^^^^^^^^^^^^

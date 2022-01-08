@@ -485,6 +485,30 @@ object Google : IsNotADependency {
     }
 
     /**
+     * Official website: [google.github.io/modernstorage](https://google.github.io/modernstorage/)
+     *
+     * GitHub repo: [google/modernstorage](https://github.com/google/modernstorage)
+     */
+    val modernStorage = ModernStorage
+
+    object ModernStorage : DependencyGroup(group = "com.google.modernstorage") {
+
+        /**
+         * For MediaStore interactions
+         *
+         * Guide: [MediaStore](https://google.github.io/modernstorage/mediastore/)
+         */
+        val mediaStore = module("modernstorage-mediastore")
+
+        /**
+         * For Storage Access Framework interactions on API 26+
+         *
+         * Guide: [FileSystem](https://google.github.io/modernstorage/filesystem/)
+         */
+        val fileSystem = module("modernstorage-filesystem")
+    }
+
+    /**
      * Oboe is a C++ library that makes it easy to build high-performance audio apps on Android.
      *
      * GitHub repo: [google/oboe](https://github.com/google/oboe)
