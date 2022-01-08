@@ -58,27 +58,30 @@ object Google : IsNotADependency {
             val composeThemeAdapter = module("compose-theme-adapter")
         }
 
-        val wearable = DependencyNotation("com.google.android.wearable", "wearable")
-        val supportWearable = DependencyNotation("com.google.android.support", "wearable")
+        val play = Play
+
+        object Play : DependencyGroup(group = "com.google.android.play") {
+            val core = module("core")
+            val coreKtx = module("core-ktx")
+        }
 
         val playServices = PlayServices
 
         object PlayServices : DependencyGroup(group = "com.google.android.gms") {
 
-            /** Google Account Login */
-            val auth = module("play-services-auth")
-
-            /** Base client library and Google Actions */
-            val base = module("play-services-base")
-
-            /** Google Sign In */
-            val identity = module("play-services-identity")
+            // Play Services Ads intentionally not included because ads are mental pollution.
 
             /** Google Analytics */
             val analytics = module("play-services-analytics")
 
+            /** Google Account Login */
+            val auth = module("play-services-auth")
+
             /** Google Awareness */
             val awareness = module("play-services-awareness")
+
+            /** Base client library and Google Actions */
+            val base = module("play-services-base")
 
             /**
              * Extend your app to the big screen with Google Cast.
@@ -112,53 +115,27 @@ object Google : IsNotADependency {
                 val tv = module("play-services-cast-tv")
             }
 
-            /** Google Cloud Messaging */
-            @Deprecated("Use Firebase Cloud Messaging instead")
-            val gcm = module("play-services-gcm")
-
             /** Google Drive */
             val drive = module("play-services-drive")
 
             /** Google Fit */
             val fitness = module("play-services-fitness")
 
+            /** Google Play Game services */
+            val games = module("play-services-games")
+
+            /** Google Cloud Messaging */
+            @Deprecated("Use Firebase Cloud Messaging instead")
+            val gcm = module("play-services-gcm")
+
+            /** Google Sign In */
+            val identity = module("play-services-identity")
+
             /** Google Location and Activity Recognition */
             val location = module("play-services-location")
 
             /** Google Maps */
             val maps = module("play-services-maps")
-
-            // Play Services Ads intentionally not included because ads are mental pollution.
-
-            /**
-             * Google Tasks API (yet another "Future" type, because they're not using Kotlin coroutines yet).
-             * We recommend to use it with [KotlinX.Coroutines.playServices].
-             */
-            val tasks = module("play-services-tasks")
-
-            /** Mobile Vision */
-            val vision = module("play-services-vision")
-
-            /** Google Nearby */
-            val nearby = module("play-services-nearby")
-
-            /** Google Panorama Viewer */
-            val panorama = module("play-services-panorama")
-
-            /** Google Play Game services */
-            val games = module("play-services-games")
-
-            /** SafetyNet */
-            val safetynet = module("play-services-safetynet")
-
-            /** Google Pay for Passes */
-            val pay = module("play-services-pay")
-
-            /** Google Pay */
-            val wallet = module("play-services-wallet")
-
-            /** Wear OS by Google */
-            val wearOS = module("play-services-wearable")
 
             val mlKit = MlKit
 
@@ -220,14 +197,37 @@ object Google : IsNotADependency {
                     val textRecognition = module("play-services-mlkit-text-recognition")
                 }
             }
+
+            /** Google Nearby */
+            val nearby = module("play-services-nearby")
+
+            /** Google Panorama Viewer */
+            val panorama = module("play-services-panorama")
+
+            /** Google Pay for Passes */
+            val pay = module("play-services-pay")
+
+            /** SafetyNet */
+            val safetynet = module("play-services-safetynet")
+
+            /**
+             * Google Tasks API (yet another "Future" type, because they're not using Kotlin coroutines yet).
+             * We recommend to use it with [KotlinX.Coroutines.playServices].
+             */
+            val tasks = module("play-services-tasks")
+
+            /** Mobile Vision */
+            val vision = module("play-services-vision")
+
+            /** Google Pay */
+            val wallet = module("play-services-wallet")
+
+            /** Wear OS by Google */
+            val wearOS = module("play-services-wearable")
         }
 
-        val play = Play
-
-        object Play : DependencyGroup(group = "com.google.android.play") {
-            val core = module("core")
-            val coreKtx = module("core-ktx")
-        }
+        val wearable = DependencyNotation("com.google.android.wearable", "wearable")
+        val supportWearable = DependencyNotation("com.google.android.support", "wearable")
     }
 
     /***
