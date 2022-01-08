@@ -49,7 +49,6 @@ object Google : IsNotADependency {
     val android = Android
 
     object Android : IsNotADependency {
-        private const val artifactBase = "com.google.android"
 
         val browserHelper = DependencyNotation("com.google.androidbrowserhelper", "androidbrowserhelper")
 
