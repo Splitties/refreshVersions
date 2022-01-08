@@ -80,6 +80,16 @@ object Google : IsNotADependency {
             val workflow = module("workflow")
         }
 
+        /**
+         * FlexboxLayout is a library project which brings the similar capabilities of
+         * [CSS Flexible Box Layout Module](https://www.w3.org/TR/css-flexbox-1) to Android.
+         *
+         * GitHub repo: [google/flexbox-layout](https://github.com/google/flexbox-layout)
+         *
+         * [GitHub Releases](https://github.com/google/flexbox-layout/releases)
+         */
+        val flexbox = DependencyNotation("com.google.android.flexbox", "flexbox")
+
         val material = Material
 
         object Material : DependencyNotationAndGroup(group = "com.google.android.material", name = "material") {

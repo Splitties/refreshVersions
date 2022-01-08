@@ -332,6 +332,7 @@ com.google.accompanist..accompanist-systemuicontroller=version.google.accompanis
 com.google.android.fhir..data-capture=version.google.android.fhir.data-capture
 com.google.android.fhir..engine=version.google.android.fhir.engine
 com.google.android.fhir..workflow=version.google.android.fhir.workflow
+com.google.android.flexbox..flexbox=version.google.android.flexbox
 com.google.android.gms..play-services-analytics=version.google.android.play-services-analytics
 com.google.android.gms..play-services-auth=version.google.android.play-services-auth
 com.google.android.gms..play-services-awareness=version.google.android.play-services-awareness
