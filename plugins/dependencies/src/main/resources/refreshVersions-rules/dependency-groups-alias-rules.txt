@@ -28,6 +28,9 @@ com.louiscad.splitties:splitties-*
 org.kodein.di:kodein-di(-*)
     ^^^^^^^^^
 
+com.android.tools:*
+    ^^^^^^^^^^^^^.^
+
 com.android.billingclient:billing(-*)
     ^^^^^^^^^^^^^^^^^^^^^
 
