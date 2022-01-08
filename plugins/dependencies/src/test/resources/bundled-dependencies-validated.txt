@@ -313,6 +313,7 @@ co.touchlab:stately-iso-collections
 co.touchlab:stately-isolate
 com.android.billingclient:billing
 com.android.billingclient:billing-ktx
+com.android.installreferrer:installreferrer
 com.github.chuckerteam.chucker:library
 com.github.chuckerteam.chucker:library-no-op
 com.google.accompanist:accompanist-appcompat-theme

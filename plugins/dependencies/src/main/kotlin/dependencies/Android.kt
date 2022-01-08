@@ -1,5 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused", "MemberVisibilityCanBePrivate")
 
+import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
@@ -17,4 +18,6 @@ object Android : IsNotADependency {
     ) {
         val ktx = module("billing-ktx")
     }
+
+    val installReferrer = DependencyNotation(group = "com.android.installreferrer", name = "installreferrer")
 }
