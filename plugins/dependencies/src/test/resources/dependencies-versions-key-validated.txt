@@ -430,6 +430,7 @@ com.google.mlkit..object-detection=version.google.mlkit.object-detection
 com.google.mlkit..playstore-dynamic-feature-support=version.google.mlkit.playstore-dynamic-feature-support
 com.google.mlkit..pose-detection-accurate=version.google.mlkit.pose-detection-accurate
 com.google.mlkit..pose-detection=version.google.mlkit.pose-detection
+com.google.mlkit..segmentation-selfie=version.google.mlkit.segmentation-selfie
 com.google.mlkit..smart-reply=version.google.mlkit.smart-reply
 com.google.mlkit..text-recognition-chinese=version.google.mlkit.text-recognition-chinese
 com.google.mlkit..text-recognition-devanagari=version.google.mlkit.text-recognition-devanagari

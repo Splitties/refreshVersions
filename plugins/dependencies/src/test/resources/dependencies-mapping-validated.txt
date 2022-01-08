@@ -465,6 +465,7 @@ com.google.mlkit..object-detection=Google.mlKit.vision.objectDetection
 com.google.mlkit..playstore-dynamic-feature-support=Google.mlKit.playStoreDynamicFeatureSupport
 com.google.mlkit..pose-detection-accurate=Google.mlKit.vision.poseDetection.accurate
 com.google.mlkit..pose-detection=Google.mlKit.vision.poseDetection
+com.google.mlkit..segmentation-selfie=Google.mlKit.vision.selfieSegmentation
 com.google.mlkit..smart-reply=Google.mlKit.naturalLanguage.smartReply
 com.google.mlkit..text-recognition-chinese=Google.mlKit.vision.textRecognition.chinese
 com.google.mlkit..text-recognition-devanagari=Google.mlKit.vision.textRecognition.devanagari

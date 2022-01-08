@@ -430,6 +430,7 @@ com.google.mlkit:object-detection-custom
 com.google.mlkit:playstore-dynamic-feature-support
 com.google.mlkit:pose-detection
 com.google.mlkit:pose-detection-accurate
+com.google.mlkit:segmentation-selfie
 com.google.mlkit:smart-reply
 com.google.mlkit:text-recognition
 com.google.mlkit:text-recognition-chinese

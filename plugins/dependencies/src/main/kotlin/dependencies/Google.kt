@@ -391,6 +391,11 @@ object Google : IsNotADependency {
             }
 
             /**
+             * [Official documentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)
+             */
+            val selfieSegmentation = module("segmentation-selfie")
+
+            /**
              * Bundled version of [Google.Android.PlayServices.MlKit.Vision.textRecognition]
              *
              * [Overview](https://developers.google.com/ml-kit/vision/text-recognition/v2)
