@@ -176,6 +176,8 @@ object Google : IsNotADependency {
                          * Unbundled version of [Google.MlKit.Vision.ImageLabeling.custom]
                          *
                          * [Overview](https://developers.google.com/ml-kit/vision/image-labeling)
+                         *
+                         * @see Google.MlKit.Vision.linkFirebase
                          */
                         val custom = module("play-services-mlkit-image-labeling-custom")
                     }
@@ -357,6 +359,8 @@ object Google : IsNotADependency {
                  * Bundled version of [Google.Android.PlayServices.MlKit.Vision.ImageLabeling.custom]
                  *
                  * [Official documentation](https://developers.google.com/ml-kit/vision/image-labeling/custom-models/android)
+                 *
+                 * @see Google.MlKit.Vision.linkFirebase
                  */
                 val custom = module("image-labeling-custom")
             }
@@ -370,6 +374,8 @@ object Google : IsNotADependency {
 
                 /**
                  * [Official documentation](https://developers.google.com/ml-kit/vision/object-detection/custom-models/android)
+                 *
+                 * @see Google.MlKit.Vision.linkFirebase
                  */
                 val custom = module("object-detection-custom")
             }
