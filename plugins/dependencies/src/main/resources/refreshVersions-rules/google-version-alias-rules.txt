@@ -36,3 +36,6 @@ com.google.oboe:oboe
 
 com.google.modernstorage:modernstorage-*
     ^^^^^^^^^^^^^^^^^^^^
+
+com.google.android.fhir:*
+    ^^^^^^^^^^^^^^^^^^^.^

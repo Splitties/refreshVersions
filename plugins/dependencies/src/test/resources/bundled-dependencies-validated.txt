@@ -329,6 +329,9 @@ com.google.accompanist:accompanist-pager
 com.google.accompanist:accompanist-pager-indicators
 com.google.accompanist:accompanist-swiperefresh
 com.google.accompanist:accompanist-systemuicontroller
+com.google.android.fhir:data-capture
+com.google.android.fhir:engine
+com.google.android.fhir:workflow
 com.google.android.gms:play-services-analytics
 com.google.android.gms:play-services-auth
 com.google.android.gms:play-services-awareness

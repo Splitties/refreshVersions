@@ -52,6 +52,34 @@ object Google : IsNotADependency {
 
         val browserHelper = DependencyNotation("com.google.androidbrowserhelper", "androidbrowserhelper")
 
+        /**
+         * Android FHIR (Fast Healthcare Interoperability Resources) SDK
+         *
+         * The Android [FHIR](https://www.hl7.org/fhir/) SDK is a set of Kotlin libraries for building offline-capable,
+         * mobile-first healthcare applications using FHIR resources on Android.
+         *
+         * GitHub repo: [google/android-fhir](https://github.com/google/android-fhir)
+         */
+        val fhir = Fhir
+
+        object Fhir : DependencyGroup(group = "com.google.android.fhir") {
+
+            /**
+             * Wiki page: [FHIR Engine Library](https://github.com/google/android-fhir/wiki/FHIR-Engine-Library)
+             */
+            val engine = module("engine")
+
+            /**
+             * Wiki page: [Structured Data Capture Library](https://github.com/google/android-fhir/wiki/Structured-Data-Capture-Library)
+             */
+            val dataCapture = module("data-capture")
+
+            /**
+             * Wiki page: [Workflow Library](https://github.com/google/android-fhir/wiki/Workflow-Library)
+             */
+            val workflow = module("workflow")
+        }
+
         val material = Material
 
         object Material : DependencyNotationAndGroup(group = "com.google.android.material", name = "material") {
