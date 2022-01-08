@@ -153,7 +153,7 @@ object Google : IsNotADependency {
             val safetynet = module("play-services-safetynet")
 
             /** Google Pay */
-            val pay = module("play-services-wallet")
+            val wallet = module("play-services-wallet")
 
             /** Wear OS by Google */
             val wearOS = module("play-services-wearable")

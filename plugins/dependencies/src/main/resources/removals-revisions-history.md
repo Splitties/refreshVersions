@@ -473,3 +473,8 @@ id:[com.squareup.sqldelight:coroutines-extensions]
 // Follow this guide to migrate: https://developers.google.com/ml-kit/vision/image-labeling/automl/migrate-automl
 moved:[com.google.mlkit:image-labeling-custom]
 id:[com.google.mlkit:image-labeling-automl]
+
+## Revision 7
+
+~~Google.android.playServices.pay~~
+id:[com.google.android.gms:play-services-wallet]
