@@ -401,6 +401,8 @@ object Google : IsNotADependency {
         object NaturalLanguage : IsNotADependency {
 
             /**
+             * Bundled version of [Google.Android.PlayServices.MlKit.NaturalLanguage.languageIdentification]
+             *
              * [Overview](https://developers.google.com/ml-kit/language/identification)
              */
             val languageIdentification = module("language-id")
