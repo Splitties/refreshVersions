@@ -31,6 +31,7 @@ object Google : IsNotADependency {
         object Insets : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-insets") {
             val ui = module("accompanist-insets-ui")
         }
+
         val systemuicontroller = module("accompanist-systemuicontroller")
 
         val appcompatTheme = module("accompanist-appcompat-theme")
@@ -80,8 +81,37 @@ object Google : IsNotADependency {
             /** Google Awareness */
             val awareness = module("play-services-awareness")
 
-            /** Google Cast */
-            val cast = module("play-services-cast")
+            /**
+             * Extend your app to the big screen with Google Cast.
+             *
+             * Guide: [Google Cast SDK](https://developers.google.com/cast)
+             *
+             * ## Important:
+             *
+             * This dependency notation is intended for Android/Google TV **Receiver applications**.
+             * For sender applications, use the [Google.Android.PlayServices.Cast.framework] dependency.
+             */
+            val cast = Cast
+
+            object Cast : DependencyNotationAndGroup(group = group, name = "play-services-cast") {
+
+                /**
+                 * Google Cast framework for sender apps.
+                 *
+                 * Guide: [Setup for Developing with the Cast Application Framework (CAF) for Android](https://developers.google.com/cast/docs/android_sender)
+                 *
+                 * @see AndroidX.mediaRouter
+                 * @see AndroidX.appCompat
+                 */
+                val framework = module("play-services-cast-framework")
+
+                /**
+                 * Guide: [Android TV Receiver Overview](https://developers.google.com/cast/docs/android_tv_receiver)
+                 *
+                 * @see Google.Android.PlayServices.cast
+                 */
+                val tv = module("play-services-cast-tv")
+            }
 
             /** Google Cloud Messaging */
             @Deprecated("Use Firebase Cloud Messaging instead")

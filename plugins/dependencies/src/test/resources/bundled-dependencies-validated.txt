@@ -328,6 +328,8 @@ com.google.android.gms:play-services-auth
 com.google.android.gms:play-services-awareness
 com.google.android.gms:play-services-base
 com.google.android.gms:play-services-cast
+com.google.android.gms:play-services-cast-framework
+com.google.android.gms:play-services-cast-tv
 com.google.android.gms:play-services-drive
 com.google.android.gms:play-services-fitness
 com.google.android.gms:play-services-games
