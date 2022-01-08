@@ -299,6 +299,7 @@ androidx.work..work-testing=version.androidx.work
 app.cash.copper..copper-flow=version.app.cash.copper
 app.cash.copper..copper-rx2=version.app.cash.copper
 app.cash.copper..copper-rx3=version.app.cash.copper
+app.cash.licensee..licensee-gradle-plugin=version.app.cash.licensee
 app.cash.turbine..turbine=version.app.cash.turbine
 co.touchlab..kermit-bugsnag-test=version.kermit
 co.touchlab..kermit-bugsnag=version.kermit

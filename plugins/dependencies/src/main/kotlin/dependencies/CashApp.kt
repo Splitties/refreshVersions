@@ -6,6 +6,15 @@ import de.fayard.refreshVersions.core.DependencyNotation
 object CashApp {
 
     /**
+     * A Gradle plugin which validates the licenses of your dependency graph match what you expect, or it fails your build!
+     *
+     * GitHub page: [cashapp/licensee](https://github.com/cashapp/licensee)
+     *
+     * Id of the Gradle plugin: **`app.cash.licensee`**
+     */
+    val licenseeGradlePlugin = DependencyNotation("app.cash.licensee", "licensee-gradle-plugin")
+
+    /**
      * SQLDelight generates typesafe kotlin APIs from your SQL statements.
      *
      * Official Website: [cashapp.github.io/sqldelight](https://cashapp.github.io/sqldelight/)
