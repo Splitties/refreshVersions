@@ -345,6 +345,7 @@ com.google.android.gms..play-services-mlkit-language-id=version.google.android.p
 com.google.android.gms..play-services-mlkit-text-recognition=version.google.android.play-services-mlkit-text-recognition
 com.google.android.gms..play-services-nearby=version.google.android.play-services-nearby
 com.google.android.gms..play-services-panorama=version.google.android.play-services-panorama
+com.google.android.gms..play-services-pay=version.google.android.play-services-pay
 com.google.android.gms..play-services-safetynet=version.google.android.play-services-safetynet
 com.google.android.gms..play-services-tasks=version.google.android.play-services-tasks
 com.google.android.gms..play-services-vision=version.google.android.play-services-vision

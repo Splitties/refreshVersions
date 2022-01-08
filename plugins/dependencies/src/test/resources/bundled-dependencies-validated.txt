@@ -345,6 +345,7 @@ com.google.android.gms:play-services-mlkit-language-id
 com.google.android.gms:play-services-mlkit-text-recognition
 com.google.android.gms:play-services-nearby
 com.google.android.gms:play-services-panorama
+com.google.android.gms:play-services-pay
 com.google.android.gms:play-services-safetynet
 com.google.android.gms:play-services-tasks
 com.google.android.gms:play-services-vision
