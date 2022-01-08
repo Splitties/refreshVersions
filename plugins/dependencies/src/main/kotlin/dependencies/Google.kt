@@ -414,6 +414,11 @@ object Google : IsNotADependency {
              * [Overview](https://developers.google.com/ml-kit/language/smart-reply)
              */
             val smartReply = module("smart-reply")
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/language/entity-extraction)
+             */
+            val entityExtraction = module("entity-extraction")
         }
     }
 }

@@ -418,6 +418,7 @@ com.google.firebase:perf-plugin
 com.google.gms:google-services
 com.google.mlkit:barcode-scanning
 com.google.mlkit:digital-ink-recognition
+com.google.mlkit:entity-extraction
 com.google.mlkit:face-detection
 com.google.mlkit:image-labeling
 com.google.mlkit:image-labeling-automl
