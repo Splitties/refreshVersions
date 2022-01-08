@@ -412,6 +412,18 @@ object Google : IsNotADependency {
 
             /**
              * [Overview](https://developers.google.com/ml-kit/language/smart-reply)
+             *
+             * ## Important:
+             * You also need to disable compression of `tflite` files in the **app-level** `build.gradle[.kts]` file:
+             *
+             * ```kts
+             * android {
+             *     // ...
+             *     aaptOptions {
+             *         noCompress("tflite")
+             *     }
+             * }
+             * ```
              */
             val smartReply = module("smart-reply")
 
