@@ -131,6 +131,9 @@ object Google : IsNotADependency {
             /** Google Sign In */
             val identity = module("play-services-identity")
 
+            /** Google Play Instant APIs */
+            val instantApps = module("play-services-instantapps")
+
             /** Google Location and Activity Recognition */
             val location = module("play-services-location")
 

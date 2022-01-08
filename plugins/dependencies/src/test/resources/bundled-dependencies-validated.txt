@@ -335,6 +335,7 @@ com.google.android.gms:play-services-fitness
 com.google.android.gms:play-services-games
 com.google.android.gms:play-services-gcm
 com.google.android.gms:play-services-identity
+com.google.android.gms:play-services-instantapps
 com.google.android.gms:play-services-location
 com.google.android.gms:play-services-maps
 com.google.android.gms:play-services-mlkit-barcode-scanning

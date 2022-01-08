@@ -335,6 +335,7 @@ com.google.android.gms..play-services-fitness=version.google.android.play-servic
 com.google.android.gms..play-services-games=version.google.android.play-services-games
 com.google.android.gms..play-services-gcm=version.google.android.play-services-gcm
 com.google.android.gms..play-services-identity=version.google.android.play-services-identity
+com.google.android.gms..play-services-instantapps=version.google.android.play-services-instantapps
 com.google.android.gms..play-services-location=version.google.android.play-services-location
 com.google.android.gms..play-services-maps=version.google.android.play-services-maps
 com.google.android.gms..play-services-mlkit-barcode-scanning=version.google.android.play-services-mlkit-barcode-scanning
