@@ -10,7 +10,7 @@
 // settings.gradle(.kts)
 plugins {
     // See https://jmfayard.github.io/refreshVersions
-    id("de.fayard.refreshVersions") version "0.30.1"
+    id("de.fayard.refreshVersions") version "0.30.2"
 }
 
 refreshVersions { // Optional: configure the plugin
