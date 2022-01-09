@@ -12,7 +12,7 @@ object Android : IsNotADependency {
     object BillingClient : DependencyNotationAndGroup(
         group = "com.android.billingclient",
         name = "billing",
-        rawRule = """
+        rawRules = """
             com.android.billingclient:billing(-*)
                 ^^^^^^^^^^^^^^^^^^^^^
         """.trimIndent()

@@ -60,13 +60,13 @@ abstract class DependencyNotationAndGroup private constructor(
     constructor(
         group: String,
         name: String,
-        rawRule: String? = null,
+        rawRules: String? = null,
         usePlatformConstraints: Boolean = false
     ) : this(
         platformConstrainsDelegateGroup = null,
         group = group,
         name = name,
-        rawRules = rawRule,
+        rawRules = rawRules,
         usePlatformConstraints = usePlatformConstraints
     )
 
@@ -74,12 +74,12 @@ abstract class DependencyNotationAndGroup private constructor(
         platformConstrainsDelegateGroup: AbstractDependencyGroup,
         group: String = platformConstrainsDelegateGroup.group,
         name: String,
-        rawRule: String? = null
+        rawRules: String? = null
     ) : this(
         platformConstrainsDelegateGroup = platformConstrainsDelegateGroup,
         group = group,
         name = name,
-        rawRules = rawRule,
+        rawRules = rawRules,
         usePlatformConstraints = null
     )
 

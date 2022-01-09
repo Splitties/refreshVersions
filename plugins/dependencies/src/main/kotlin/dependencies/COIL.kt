@@ -12,7 +12,7 @@ import de.fayard.refreshVersions.core.DependencyNotationAndGroup
  * GitHub Page: [coil-kt/coil](https://github.com/coil-kt/coil/)
  */
 object COIL : DependencyNotationAndGroup(group = "io.coil-kt", name = "coil",
-rawRule = """
+rawRules = """
     io.coil-kt:coil(-*)
        ^^^^^^^
 """.trimIndent()) {

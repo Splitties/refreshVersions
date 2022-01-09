@@ -15,7 +15,7 @@ object RussHWolf : IsNotADependency {
 
     object MultiplatformSettings : DependencyNotationAndGroup(
         group = "com.russhwolf",
-        rawRule = """
+        rawRules = """
         com.russhwolf:multiplatform-settings(-*)
                       ^^^^^^^^^^^^^^^^^^^^^^
     """.trimIndent(),
