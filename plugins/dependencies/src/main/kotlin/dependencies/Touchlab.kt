@@ -16,7 +16,7 @@ object Touchlab : IsNotADependency {
 
     object Stately : DependencyGroup(
         group = "co.touchlab",
-        rawRule = """
+        rawRules = """
         co.touchlab:stately-*
                     ^^^^^^^
         """.trimIndent()
@@ -42,7 +42,7 @@ object Touchlab : IsNotADependency {
      */
     object Kermit : DependencyGroup(
         group = "co.touchlab",
-        rawRule = """
+        rawRules = """
         co.touchlab:kermit(-*)
                     ^^^^^^
         """.trimIndent()

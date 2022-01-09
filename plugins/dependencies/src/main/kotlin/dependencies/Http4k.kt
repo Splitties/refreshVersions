@@ -4,7 +4,7 @@ import de.fayard.refreshVersions.core.DependencyGroup
 object Http4k : DependencyGroup(
     group = "org.http4k",
     usePlatformConstraints = false,
-    rawRule = """
+    rawRules = """
         org.http4k:http4k-*
             ^^^^^^
     """.trimIndent()

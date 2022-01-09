@@ -12,7 +12,7 @@ import de.fayard.refreshVersions.core.DependencyGroup
  */
 object Koin : DependencyGroup(
     group = "io.insert-koin",
-    rawRule = """
+    rawRules = """
         io.insert-koin:koin-*
                   ^^^^
     """.trimIndent()

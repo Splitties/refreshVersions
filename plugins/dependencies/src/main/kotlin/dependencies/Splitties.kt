@@ -5,7 +5,7 @@ import org.gradle.kotlin.dsl.IsNotADependency
 
 object Splitties : DependencyGroup(
     "com.louiscad.splitties",
-    rawRule = """
+    rawRules = """
     com.louiscad.splitties:splitties-*
                  ^^^^^^^^^
     """.trimIndent()

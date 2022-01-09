@@ -17,7 +17,7 @@ object Kodein : IsNotADependency {
     object DI : DependencyGroup(
         group = "org.kodein.di",
         usePlatformConstraints = false,
-        rawRule = """
+        rawRules = """
             org.kodein.di:kodein-di(-*)
                 ^^^^^^^^^
         """.trimIndent()

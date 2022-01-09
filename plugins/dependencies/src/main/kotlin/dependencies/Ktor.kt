@@ -18,7 +18,7 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * TODO: Finish KDoc of undocumented artifact constants. Also link to their KDoc.
  */
 object Ktor : DependencyGroup("io.ktor",
-    rawRule = """
+    rawRules = """
         io.ktor:*
            ^^^^
     """.trimIndent()

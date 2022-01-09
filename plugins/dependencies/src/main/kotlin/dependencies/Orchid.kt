@@ -17,7 +17,7 @@ import de.fayard.refreshVersions.core.DependencyGroup
  */
 object Orchid : DependencyGroup(
     group = "io.github.javaeden.orchid",
-    rawRule = """
+    rawRules = """
         io.github.javaeden.orchid:*
                            ^^^^^^
     """.trimIndent()

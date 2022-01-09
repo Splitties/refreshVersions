@@ -26,7 +26,7 @@ object Android : IsNotADependency {
 
     object Tools : DependencyGroup(
         group = "com.android.tools",
-        rawRule = """
+        rawRules = """
             com.android.tools:*
                 ^^^^^^^^^^^^^.^
         """.trimIndent()

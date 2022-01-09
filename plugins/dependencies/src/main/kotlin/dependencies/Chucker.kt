@@ -10,7 +10,7 @@ import de.fayard.refreshVersions.core.DependencyGroup
  */
 object Chucker : DependencyGroup(
     group = "com.github.chuckerteam.chucker",
-    rawRule = """
+    rawRules = """
         com.github.chuckerteam.chucker:library(-*)
                                ^^^^^^^
     """.trimIndent()
