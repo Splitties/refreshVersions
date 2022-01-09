@@ -165,6 +165,6 @@ jobs:
         if: ${{ github.event.inputs.sample-android == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
-          wrapper-directory: sample-android/gradlew
+          gradle-executable: sample-android/gradlew
           build-root-directory: sample-android
           arguments: check --stacktrace
