@@ -1,5 +1,66 @@
 # Change log for refreshVersions
 
+## [Unreleased]
+
+### New dependency notations:
+
+- Android.billingClient
+- Android.billingClient.ktx
+- Android.installReferrer
+- Android.tools:
+    - desugarJdkLibs
+    - r8
+    - build.gradlePlugin
+- CashApp.licenseeGradlePlugin
+- CashApp.sqlDelight:
+    - extensions:
+        - androidPaging3
+        - androidPaging
+        - rxJava3
+        - rxJava2
+    - drivers.sqlJs
+- Google.android.fhir:
+    - dataCapture
+    - engine
+    - workflow
+- Google.android.flexbox
+- Google.android.playServices:
+    - cast:
+        - framework
+        - tv
+    - instantApps
+    - maps
+    - mlKit.vision.imageLabeling.custom
+    - mlKit.naturalLanguage.languageIdentification
+    - pay
+    - wallet
+- Google.mlKit:
+    - playStoreDynamicFeatureSupport
+    - naturalLanguage.entityExtraction
+    - vision:
+        - selfieSegmentation
+        - textRecognition
+            - chinese
+            - devanagari
+            - japanese
+            - korean
+- Google.modernStorage:
+    - fileSystem
+    - mediaStore
+- Google.oboe
+- Ktor.client.darwin
+- Kotlin.scriptRuntime
+- KotlinX.serialization.hocon
+- Square.logcat
+- Square.moshi.adapters
+- Touchlab.kermit
+    - bugsnagTest
+    - bugsnag
+    - crashlyticsTest
+    - crashlytics
+    - gradlePlugin
+    - test
+
 ## Version 0.30.1 (2021-12-21)
 
 ### Bug fixes
