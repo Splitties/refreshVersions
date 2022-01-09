@@ -478,3 +478,8 @@ id:[com.google.mlkit:image-labeling-automl]
 
 ~~Google.android.playServices.pay~~
 id:[com.google.android.gms:play-services-wallet]
+
+## Revision 8
+
+~~Touchlab.kermit.kermit~~
+id:[co.touchlab:kermit]

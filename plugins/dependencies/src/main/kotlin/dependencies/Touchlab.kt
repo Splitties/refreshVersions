@@ -1,6 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
 object Touchlab : IsNotADependency {
@@ -36,18 +37,18 @@ object Touchlab : IsNotADependency {
      *
      * [GitHub Releases](https://github.com/touchlab/Kermit/releases)
      *
-     * Github repo: [touchlab/Kermit](https://github.com/touchlab/Kermit)
+     * GitHub repo: [touchlab/Kermit](https://github.com/touchlab/Kermit)
      *
      * [1.0 release blog](https://medium.com/@kpgalligan/kermit-kmp-logging-1-0-196bf799b738)
      */
-    object Kermit : DependencyGroup(
+    object Kermit : DependencyNotationAndGroup(
         group = "co.touchlab",
+        name = "kermit",
         rawRules = """
         co.touchlab:kermit(-*)
                     ^^^^^^
         """.trimIndent()
     ) {
-        val kermit = module("kermit")
         val test = module("kermit-test")
         val crashlytics = module("kermit-crashlytics")
         val crashlyticsTest = module("kermit-crashlytics-test")
