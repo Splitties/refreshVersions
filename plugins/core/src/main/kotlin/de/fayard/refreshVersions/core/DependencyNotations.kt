@@ -7,33 +7,33 @@ import org.gradle.kotlin.dsl.IsNotADependency
 abstract class DependencyGroup private constructor(
     platformConstrainsDelegateGroup: AbstractDependencyGroup?,
     group: String,
-    rawRule: String? = null,
+    rawRules: String? = null,
     usePlatformConstraints: Boolean?
 ) : IsNotADependency, AbstractDependencyGroup(
     platformConstrainsDelegateGroup = platformConstrainsDelegateGroup,
     group = group,
-    rawRule = rawRule,
+    rawRules = rawRules,
     usePlatformConstraints = usePlatformConstraints
 ) {
     constructor(
         group: String,
-        rawRule: String? = null,
+        rawRules: String? = null,
         usePlatformConstraints: Boolean = false
     ) : this(
         platformConstrainsDelegateGroup = null,
         group = group,
-        rawRule = rawRule,
+        rawRules = rawRules,
         usePlatformConstraints = usePlatformConstraints
     )
 
     constructor(
         platformConstrainsDelegateGroup: AbstractDependencyGroup,
         group: String = platformConstrainsDelegateGroup.group,
-        rawRule: String? = null
+        rawRules: String? = null
     ) : this(
         platformConstrainsDelegateGroup = platformConstrainsDelegateGroup,
         group = group,
-        rawRule = rawRule,
+        rawRules = rawRules,
         usePlatformConstraints = null
     )
 }
@@ -43,12 +43,12 @@ abstract class DependencyNotationAndGroup private constructor(
     platformConstrainsDelegateGroup: AbstractDependencyGroup?,
     group: String,
     name: String,
-    rawRule: String? = null,
+    rawRules: String? = null,
     usePlatformConstraints: Boolean?
 ) : AbstractDependencyGroup(
     platformConstrainsDelegateGroup = platformConstrainsDelegateGroup,
     group = group,
-    rawRule = rawRule,
+    rawRules = rawRules,
     usePlatformConstraints = usePlatformConstraints
 ), DependencyNotation by DependencyNotationImpl(
     group = group,
@@ -60,13 +60,13 @@ abstract class DependencyNotationAndGroup private constructor(
     constructor(
         group: String,
         name: String,
-        rawRule: String? = null,
+        rawRules: String? = null,
         usePlatformConstraints: Boolean = false
     ) : this(
         platformConstrainsDelegateGroup = null,
         group = group,
         name = name,
-        rawRule = rawRule,
+        rawRules = rawRules,
         usePlatformConstraints = usePlatformConstraints
     )
 
@@ -74,12 +74,12 @@ abstract class DependencyNotationAndGroup private constructor(
         platformConstrainsDelegateGroup: AbstractDependencyGroup,
         group: String = platformConstrainsDelegateGroup.group,
         name: String,
-        rawRule: String? = null
+        rawRules: String? = null
     ) : this(
         platformConstrainsDelegateGroup = platformConstrainsDelegateGroup,
         group = group,
         name = name,
-        rawRule = rawRule,
+        rawRules = rawRules,
         usePlatformConstraints = null
     )
 
@@ -199,7 +199,7 @@ private class DependencyNotationImpl(
 sealed class AbstractDependencyGroup(
     private val platformConstrainsDelegateGroup: AbstractDependencyGroup?,
     val group: String,
-    rawRule: String?,
+    private val rawRules: String?,
     @property:InternalRefreshVersionsApi
     var usePlatformConstraints: Boolean?
 ) {
@@ -210,16 +210,17 @@ sealed class AbstractDependencyGroup(
 
     private val usePlatformConstraintsInitialValue = usePlatformConstraints
 
-    private val rule: ArtifactVersionKeyRule? = rawRule?.let {
-        val lines = it.lines()
-        assert(lines.size == 2) {
-            "2 lines were expected, but ${lines.size} were found: $it"
+    private val rule: List<ArtifactVersionKeyRule>?
+        get() = rawRules?.lines()?.also { lines ->
+            assert(lines.size % 2 == 0) {
+                "An even number of lines was expected, but ${lines.size} were found: $lines"
+            }
+        }?.chunked(size = 2) { lines ->
+            ArtifactVersionKeyRule(
+                artifactPattern = lines.first(),
+                versionKeyPattern = lines.last()
+            )
         }
-        ArtifactVersionKeyRule(
-            artifactPattern = lines.first(),
-            versionKeyPattern = lines.last()
-        )
-    }
 
 
     companion object {
@@ -227,7 +228,7 @@ sealed class AbstractDependencyGroup(
 
         @InternalRefreshVersionsApi
         val ALL_RULES: List<ArtifactVersionKeyRule>
-            get() = ALL.mapNotNull { it.rule }
+            get() = ALL.flatMap { it.rule ?: emptyList() }
 
         @InternalRefreshVersionsApi
         var disableBomCheck: Boolean = false

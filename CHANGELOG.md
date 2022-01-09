@@ -1,5 +1,83 @@
 # Change log for refreshVersions
 
+## Version 0.30.2 (2022-01-09)
+
+### Bug fixes
+
+- We are now shutting down the thread-pool from kotlinx.coroutines that we're using when the build finishes (`Dispatchers.shutdown()`). We believe it caused memory leaks in the Gradle Daemon, and this change, made possible since kotlinx.coroutines 1.6.0 should fix the last memory leak cause.
+- The versions of dependencies from the `androidx.test` family started diverging, so we changed replaced the `version.androidx.test` version key with more specific ones. The migration will be done automatically on upgrade of refreshVersions, without upgrading the versions of `androidx.tests` dependencies themselves.
+
+### New feature
+
+- We now support fetching updates on plain-text http repositories. We evaluated the security risks, and for the case of refreshVersions itself, there is none that is significant (the worst possibility is crashing the build under attack), and if you're not using plain-text http repositories in the first place in your project, this doesn't apply at all anyway. We added support for this because some of our users need it for local maven repositories.
+
+### New dependency notations:
+
+- Android.billingClient
+- Android.billingClient.ktx
+- Android.installReferrer
+- Android.tools:
+    - desugarJdkLibs
+    - r8
+    - build.gradlePlugin
+- CashApp.licenseeGradlePlugin
+- CashApp.sqlDelight:
+    - extensions:
+        - androidPaging3
+        - androidPaging
+        - rxJava3
+        - rxJava2
+    - drivers.sqlJs
+- Google.android.fhir:
+    - dataCapture
+    - engine
+    - workflow
+- Google.android.flexbox
+- Google.android.playServices:
+    - cast:
+        - framework
+        - tv
+    - instantApps
+    - maps
+    - mlKit.vision.imageLabeling.custom
+    - mlKit.naturalLanguage.languageIdentification
+    - pay
+    - wallet
+- Google.mlKit:
+    - playStoreDynamicFeatureSupport
+    - naturalLanguage.entityExtraction
+    - vision:
+        - selfieSegmentation
+        - textRecognition
+            - chinese
+            - devanagari
+            - japanese
+            - korean
+- Google.modernStorage:
+    - fileSystem
+    - mediaStore
+- Google.oboe
+- Ktor.client.darwin
+- Kotlin.scriptRuntime
+- KotlinX.serialization.hocon
+- Square.logcat
+- Square.moshi.adapters
+- Touchlab.kermit
+    - bugsnagTest
+    - bugsnag
+    - crashlyticsTest
+    - crashlytics
+    - gradlePlugin
+    - test
+
+### Other changes
+
+We also removed many obsolete dependency notations from refreshVersions. Just like for the 0.30.0 release, this should not break your build as we implemented a robust replacement mechanism that also inserts migration guidance comments. ✨
+
+### Credits
+
+Thanks to [Brady Aiello](https://github.com/brady-aiello), [Mike Gray](https://github.com/mgray88), and [Kamalesh](https://github.com/imashnake0) for their contributions in adding dependency notations!
+
 ## Version 0.30.1 (2021-12-21)
 
 ### Bug fixes

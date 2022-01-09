@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import testutils.getVersionCandidates
 import testutils.isInCi
@@ -25,16 +26,20 @@ import testutils.parseRemovedDependencyNotations
 
 class BundledDependenciesTest {
 
-    @Test
-    fun `Generate rule files for dependency groups with a rawRule`() {
-        ALL_DEPENDENCIES_NOTATIONS // Ensure all objects are initialized.
-        val rulesDir = mainResources.resolve("refreshVersions-rules")
-        val file = rulesDir.resolve("dependency-groups-alias-rules.txt")
-        val content = AbstractDependencyGroup.ALL_RULES
-            .sorted()
-            .distinct()
-            .joinToString(separator = "\n\n")
-        if (file.readText() != content) file.writeText(content)
+    companion object {
+
+        @JvmStatic // Required for @BeforeAll
+        @BeforeAll
+        fun `Generate rule files for dependency groups with a rawRule`() {
+            ALL_DEPENDENCIES_NOTATIONS // Ensure all objects are initialized.
+            val rulesDir = mainResources.resolve("refreshVersions-rules")
+            val file = rulesDir.resolve("dependency-groups-alias-rules.txt")
+            val content = AbstractDependencyGroup.ALL_RULES
+                .sorted()
+                .distinct()
+                .joinToString(separator = "\n\n")
+            if (file.readText() != content) file.writeText(content)
+        }
     }
 
     @Test
@@ -61,7 +66,7 @@ class BundledDependenciesTest {
         if (removals.isNotEmpty()) {
             val removalsRevisionsHistoryFile = mainResources.resolve("removals-revisions-history.md")
             val removalsRevisionsHistory = removalsRevisionsHistoryFile.readText()
-            val hasWipHeading = removalsRevisionsHistory.lineSequence().any { it == "## [WIP]" }
+            val hasWipHeading = removalsRevisionsHistory.lineSequence().any { it.startsWith("## [WIP]") }
             val extraText = buildString {
                 run {
                     val lineBreaks = when {
@@ -72,7 +77,10 @@ class BundledDependenciesTest {
                     append(lineBreaks)
                 }
                 if (hasWipHeading.not()) {
-                    appendLine("## [WIP]")
+                    val lastRevision = removalsRevisionsHistory.lineSequence().last {
+                        it.startsWith("## Revision ")
+                    }.substringAfter("## Revision ").toInt()
+                    appendLine("## [WIP] Revision ${lastRevision + 1}")
                     appendLine()
                 }
                 val removedEntriesText = removals.joinToString(

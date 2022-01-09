@@ -2,10 +2,8 @@
 
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
-@Incubating
 object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
 
     /**
@@ -43,13 +41,6 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
         val bom = module("kotlinx-coroutines-bom", isBom = true)
 
         val core = module("kotlinx-coroutines-core")
-        val coreJs = module("kotlinx-coroutines-core-js")
-
-        @Deprecated("No longer published since version 1.3.9. Use core instead.")
-        val coreCommon = module("kotlinx-coroutines-core-common")
-
-        @Deprecated("No longer published since version 1.3.9. Use core instead.")
-        val coreNative = module("kotlinx-coroutines-core-native")
 
         val android = module("kotlinx-coroutines-android")
         val javaFx = module("kotlinx-coroutines-javafx")
@@ -90,21 +81,7 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
         val protobuf = module("kotlinx-serialization-protobuf")
         val cbor = module("kotlinx-serialization-cbor")
         val properties = module("kotlinx-serialization-properties")
-        //TODO: Add hocon artifact once documented.
-
-        //region Pre v1.0.0 deprecated artifacts.
-        @Deprecated("Use core instead and upgrade to version 1.0.0-RC or newer")
-        val runtime = module("kotlinx-serialization-runtime")
-
-        @Deprecated("No longer needed")
-        val runtimeJs = module("kotlinx-serialization-runtime-js")
-
-        @Deprecated("No longer needed")
-        val runtimeCommon = module("kotlinx-serialization-runtime-common")
-
-        @Deprecated("No longer needed")
-        val runtimeNative = module("kotlinx-serialization-runtime-native")
-        //endregion
+        val hocon = module("kotlinx-serialization-hocon")
     }
 
     val collections = Collections
@@ -145,14 +122,7 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
      */
     val html = Html
 
-    object Html : DependencyNotationAndGroup(group = group, name = "kotlinx-html") {
-
-        @Deprecated("Use the base artifact instead", ReplaceWith("KotlinX.html"))
-        val jvm = module("kotlinx-html-jvm")
-
-        @Deprecated("Use the base artifact instead", ReplaceWith("KotlinX.html"))
-        val js = module("kotlinx-html-js")
-    }
+    object Html : DependencyNotationAndGroup(group = group, name = "kotlinx-html")
 
     /**
      * Kotlin multiplatform I/O library. (Experimental as of 2020-09-14)

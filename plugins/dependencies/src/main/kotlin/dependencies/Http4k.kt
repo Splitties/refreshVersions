@@ -4,9 +4,11 @@ import de.fayard.refreshVersions.core.DependencyGroup
 object Http4k : DependencyGroup(
     group = "org.http4k",
     usePlatformConstraints = false,
-    rawRule = """
+    rawRules = """
         org.http4k:http4k-*
             ^^^^^^
+        org.http4k:http4k-connect-*
+                   ^^^^^^^^^^^^^^
     """.trimIndent()
 ) {
     val bom = module("http4k-bom", isBom = true)

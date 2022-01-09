@@ -3,11 +3,9 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
-@Incubating
-object Google {
+object Google : IsNotADependency {
 
     val playServicesGradlePlugin = DependencyNotation("com.google.gms", "google-services")
 
@@ -25,9 +23,6 @@ object Google {
 
     object Accompanist : DependencyGroup(group = "com.google.accompanist") {
 
-        @Deprecated("Moved to COIL.compose", ReplaceWith("COIL.compose"))
-        val coil = module("accompanist-coil")
-
         val glide = module("accompanist-glide")
         val imageloadingCore = module("accompanist-imageloading-core")
 
@@ -36,6 +31,7 @@ object Google {
         object Insets : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-insets") {
             val ui = module("accompanist-insets-ui")
         }
+
         val systemuicontroller = module("accompanist-systemuicontroller")
 
         val appcompatTheme = module("accompanist-appcompat-theme")
@@ -53,9 +49,46 @@ object Google {
     val android = Android
 
     object Android : IsNotADependency {
-        private const val artifactBase = "com.google.android"
 
         val browserHelper = DependencyNotation("com.google.androidbrowserhelper", "androidbrowserhelper")
+
+        /**
+         * Android FHIR (Fast Healthcare Interoperability Resources) SDK
+         *
+         * The Android [FHIR](https://www.hl7.org/fhir/) SDK is a set of Kotlin libraries for building offline-capable,
+         * mobile-first healthcare applications using FHIR resources on Android.
+         *
+         * GitHub repo: [google/android-fhir](https://github.com/google/android-fhir)
+         */
+        val fhir = Fhir
+
+        object Fhir : DependencyGroup(group = "com.google.android.fhir") {
+
+            /**
+             * Wiki page: [FHIR Engine Library](https://github.com/google/android-fhir/wiki/FHIR-Engine-Library)
+             */
+            val engine = module("engine")
+
+            /**
+             * Wiki page: [Structured Data Capture Library](https://github.com/google/android-fhir/wiki/Structured-Data-Capture-Library)
+             */
+            val dataCapture = module("data-capture")
+
+            /**
+             * Wiki page: [Workflow Library](https://github.com/google/android-fhir/wiki/Workflow-Library)
+             */
+            val workflow = module("workflow")
+        }
+
+        /**
+         * FlexboxLayout is a library project which brings the similar capabilities of
+         * [CSS Flexible Box Layout Module](https://www.w3.org/TR/css-flexbox-1) to Android.
+         *
+         * GitHub repo: [google/flexbox-layout](https://github.com/google/flexbox-layout)
+         *
+         * [GitHub Releases](https://github.com/google/flexbox-layout/releases)
+         */
+        val flexbox = DependencyNotation("com.google.android.flexbox", "flexbox")
 
         val material = Material
 
@@ -63,34 +96,62 @@ object Google {
             val composeThemeAdapter = module("compose-theme-adapter")
         }
 
-        val wearable = DependencyNotation("com.google.android.wearable", "wearable")
-        val supportWearable = DependencyNotation("com.google.android.support", "wearable")
+        val play = Play
+
+        object Play : DependencyGroup(group = "com.google.android.play") {
+            val core = module("core")
+            val coreKtx = module("core-ktx")
+        }
 
         val playServices = PlayServices
 
         object PlayServices : DependencyGroup(group = "com.google.android.gms") {
 
-            /** Google Account Login */
-            val auth = module("play-services-auth")
-
-            /** Base client library and Google Actions */
-            val base = module("play-services-base")
-
-            /** Google Sign In */
-            val identity = module("play-services-identity")
+            // Play Services Ads intentionally not included because ads are mental pollution.
 
             /** Google Analytics */
             val analytics = module("play-services-analytics")
 
+            /** Google Account Login */
+            val auth = module("play-services-auth")
+
             /** Google Awareness */
             val awareness = module("play-services-awareness")
 
-            /** Google Cast */
-            val cast = module("play-services-cast")
+            /** Base client library and Google Actions */
+            val base = module("play-services-base")
 
-            /** Google Cloud Messaging */
-            @Deprecated("Use Firebase Cloud Messaging instead")
-            val gcm = module("play-services-gcm")
+            /**
+             * Extend your app to the big screen with Google Cast.
+             *
+             * Guide: [Google Cast SDK](https://developers.google.com/cast)
+             *
+             * ## Important:
+             *
+             * This dependency notation is intended for Android/Google TV **Receiver applications**.
+             * For sender applications, use the [Google.Android.PlayServices.Cast.framework] dependency.
+             */
+            val cast = Cast
+
+            object Cast : DependencyNotationAndGroup(group = group, name = "play-services-cast") {
+
+                /**
+                 * Google Cast framework for sender apps.
+                 *
+                 * Guide: [Setup for Developing with the Cast Application Framework (CAF) for Android](https://developers.google.com/cast/docs/android_sender)
+                 *
+                 * @see AndroidX.mediaRouter
+                 * @see AndroidX.appCompat
+                 */
+                val framework = module("play-services-cast-framework")
+
+                /**
+                 * Guide: [Android TV Receiver Overview](https://developers.google.com/cast/docs/android_tv_receiver)
+                 *
+                 * @see Google.Android.PlayServices.cast
+                 */
+                val tv = module("play-services-cast-tv")
+            }
 
             /** Google Drive */
             val drive = module("play-services-drive")
@@ -98,45 +159,42 @@ object Google {
             /** Google Fit */
             val fitness = module("play-services-fitness")
 
-            /** Google Location and Activity Recognition */
-            val location = module("play-services-location")
-
-            // Play Services Ads intentionally not included because ads are mental pollution.
-
-            /**
-             * Google Tasks API (yet another "Future" type, because they're not using Kotlin coroutines yet).
-             * We recommend to use it with [KotlinX.Coroutines.playServices].
-             */
-            val tasks = module("play-services-tasks")
-
-            /** Mobile Vision */
-            val vision = module("play-services-vision")
-
-            /** Google Nearby */
-            val nearby = module("play-services-nearby")
-
-            /** Google Panorama Viewer */
-            val panorama = module("play-services-panorama")
-
             /** Google Play Game services */
             val games = module("play-services-games")
 
-            /** SafetyNet */
-            val safetynet = module("play-services-safetynet")
+            /** Google Cloud Messaging */
+            @Deprecated("Use Firebase Cloud Messaging instead")
+            val gcm = module("play-services-gcm")
 
-            /** Google Pay */
-            val pay = module("play-services-wallet")
+            /** Google Sign In */
+            val identity = module("play-services-identity")
 
-            /** Wear OS by Google */
-            val wearOS = module("play-services-wearable")
+            /** Google Play Instant APIs */
+            val instantApps = module("play-services-instantapps")
+
+            /** Google Location and Activity Recognition */
+            val location = module("play-services-location")
+
+            /** Google Maps */
+            val maps = module("play-services-maps")
 
             val mlKit = MlKit
 
             object MlKit : IsNotADependency {
 
+                val naturalLanguage = NaturalLanguage
+
+                object NaturalLanguage : IsNotADependency {
+
+                    /**
+                     * [Overview](https://developers.google.com/ml-kit/language/identification)
+                     */
+                    val languageIdentification = module("play-services-mlkit-language-id")
+                }
+
                 val vision = Vision
 
-                object Vision {
+                object Vision : IsNotADependency {
 
                     /**
                      * Unbundled version of [Google.MlKit.Vision.barcodeScanning]
@@ -157,7 +215,22 @@ object Google {
                      *
                      * [Overview](https://developers.google.com/ml-kit/vision/image-labeling)
                      */
-                    val imageLabeling = module("play-services-mlkit-image-labeling")
+                    val imageLabeling = ImageLabeling
+
+                    object ImageLabeling : DependencyNotationAndGroup(
+                        group = group,
+                        name = "play-services-mlkit-image-labeling"
+                    ) {
+
+                        /**
+                         * Unbundled version of [Google.MlKit.Vision.ImageLabeling.custom]
+                         *
+                         * [Overview](https://developers.google.com/ml-kit/vision/image-labeling)
+                         *
+                         * @see Google.MlKit.Vision.linkFirebase
+                         */
+                        val custom = module("play-services-mlkit-image-labeling-custom")
+                    }
 
                     /**
                      * [Overview](https://developers.google.com/ml-kit/vision/text-recognition)
@@ -165,14 +238,37 @@ object Google {
                     val textRecognition = module("play-services-mlkit-text-recognition")
                 }
             }
+
+            /** Google Nearby */
+            val nearby = module("play-services-nearby")
+
+            /** Google Panorama Viewer */
+            val panorama = module("play-services-panorama")
+
+            /** Google Pay for Passes */
+            val pay = module("play-services-pay")
+
+            /** SafetyNet */
+            val safetynet = module("play-services-safetynet")
+
+            /**
+             * Google Tasks API (yet another "Future" type, because they're not using Kotlin coroutines yet).
+             * We recommend to use it with [KotlinX.Coroutines.playServices].
+             */
+            val tasks = module("play-services-tasks")
+
+            /** Mobile Vision */
+            val vision = module("play-services-vision")
+
+            /** Google Pay for Payments */
+            val wallet = module("play-services-wallet")
+
+            /** Wear OS by Google */
+            val wearOS = module("play-services-wearable")
         }
 
-        val play = Play
-
-        object Play : DependencyGroup(group = "com.google.android.play") {
-            val core = module("core")
-            val coreKtx = module("core-ktx")
-        }
+        val wearable = DependencyNotation("com.google.android.wearable", "wearable")
+        val supportWearable = DependencyNotation("com.google.android.support", "wearable")
     }
 
     /***
@@ -288,6 +384,11 @@ object Google {
 
     object MlKit : DependencyGroup(group = "com.google.mlkit") {
 
+        /**
+         * Guide: [Reduce the size of your ML Kit Android app's APKs](https://developers.google.com/ml-kit/tips/reduce-app-size)
+         */
+        val playStoreDynamicFeatureSupport = module("playstore-dynamic-feature-support")
+
         val vision = Vision
 
         object Vision : IsNotADependency {
@@ -312,7 +413,7 @@ object Google {
             val faceDetection = module("face-detection")
 
             /**
-             * Add downloading of the models instead of having to bundle them in the app for [ImageLabeling.autoMl].
+             * Add downloading of the models instead of having to bundle them in the app.
              *
              * [Official documentation](https://firebase.google.com/docs/ml/android/label-images-with-automl)
              */
@@ -328,14 +429,11 @@ object Google {
             object ImageLabeling : DependencyNotationAndGroup(group = group, name = "image-labeling") {
 
                 /**
-                 * [ML Kit documentation](https://developers.google.com/ml-kit/vision/image-labeling/automl/android)
+                 * Bundled version of [Google.Android.PlayServices.MlKit.Vision.ImageLabeling.custom]
                  *
-                 * [Firebase documentation](https://firebase.google.com/docs/ml/android/label-images-with-automl)
-                 */
-                val autoMl = module("image-labeling-automl")
-
-                /**
                  * [Official documentation](https://developers.google.com/ml-kit/vision/image-labeling/custom-models/android)
+                 *
+                 * @see Google.MlKit.Vision.linkFirebase
                  */
                 val custom = module("image-labeling-custom")
             }
@@ -349,6 +447,8 @@ object Google {
 
                 /**
                  * [Official documentation](https://developers.google.com/ml-kit/vision/object-detection/custom-models/android)
+                 *
+                 * @see Google.MlKit.Vision.linkFirebase
                  */
                 val custom = module("object-detection-custom")
             }
@@ -362,15 +462,24 @@ object Google {
                 val accurate = module("pose-detection-accurate")
             }
 
-            @Deprecated(
-                message = "There's no bundled version of ML Kit text recognition. Use the Play Services based one.",
-                level = DeprecationLevel.ERROR,
-                replaceWith = ReplaceWith("Google.android.playServices.mlKit.vision.textRecognition")
-            )
-            val textRecognition: Nothing
-                get() = throw UnsupportedOperationException(
-                    "Use Google.android.playServices.mlKit.vision.textRecognition instead."
-                )
+            /**
+             * [Official documentation](https://developers.google.com/ml-kit/vision/selfie-segmentation)
+             */
+            val selfieSegmentation = module("segmentation-selfie")
+
+            /**
+             * Bundled version of [Google.Android.PlayServices.MlKit.Vision.textRecognition]
+             *
+             * [Overview](https://developers.google.com/ml-kit/vision/text-recognition/v2)
+             */
+            val textRecognition = TextRecognition
+
+            object TextRecognition : DependencyNotationAndGroup(group = group, name = "text-recognition") {
+                val chinese = module("text-recognition-chinese")
+                val devanagari = module("text-recognition-devanagari")
+                val japanese = module("text-recognition-japanese")
+                val korean = module("text-recognition-korean")
+            }
         }
 
         val naturalLanguage = NaturalLanguage
@@ -378,6 +487,8 @@ object Google {
         object NaturalLanguage : IsNotADependency {
 
             /**
+             * Bundled version of [Google.Android.PlayServices.MlKit.NaturalLanguage.languageIdentification]
+             *
              * [Overview](https://developers.google.com/ml-kit/language/identification)
              */
             val languageIdentification = module("language-id")
@@ -389,8 +500,56 @@ object Google {
 
             /**
              * [Overview](https://developers.google.com/ml-kit/language/smart-reply)
+             *
+             * ## Important:
+             * You also need to disable compression of `tflite` files in the **app-level** `build.gradle[.kts]` file:
+             *
+             * ```kts
+             * android {
+             *     // ...
+             *     aaptOptions {
+             *         noCompress("tflite")
+             *     }
+             * }
+             * ```
              */
             val smartReply = module("smart-reply")
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/language/entity-extraction)
+             */
+            val entityExtraction = module("entity-extraction")
         }
     }
+
+    /**
+     * Official website: [google.github.io/modernstorage](https://google.github.io/modernstorage/)
+     *
+     * GitHub repo: [google/modernstorage](https://github.com/google/modernstorage)
+     */
+    val modernStorage = ModernStorage
+
+    object ModernStorage : DependencyGroup(group = "com.google.modernstorage") {
+
+        /**
+         * For MediaStore interactions
+         *
+         * Guide: [MediaStore](https://google.github.io/modernstorage/mediastore/)
+         */
+        val mediaStore = module("modernstorage-mediastore")
+
+        /**
+         * For Storage Access Framework interactions on API 26+
+         *
+         * Guide: [FileSystem](https://google.github.io/modernstorage/filesystem/)
+         */
+        val fileSystem = module("modernstorage-filesystem")
+    }
+
+    /**
+     * Oboe is a C++ library that makes it easy to build high-performance audio apps on Android.
+     *
+     * GitHub repo: [google/oboe](https://github.com/google/oboe)
+     */
+    val oboe = DependencyNotation("com.google.oboe", "oboe")
 }

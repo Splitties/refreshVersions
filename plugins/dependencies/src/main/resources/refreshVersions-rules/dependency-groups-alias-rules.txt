@@ -4,6 +4,9 @@ io.insert-koin:koin-*
 io.ktor:*
    ^^^^
 
+co.touchlab:kermit(-*)
+            ^^^^^^
+
 io.github.javaeden.orchid:*
                    ^^^^^^
 
@@ -24,6 +27,15 @@ com.louiscad.splitties:splitties-*
 
 org.kodein.di:kodein-di(-*)
     ^^^^^^^^^
+
+org.http4k:http4k-connect-*
+           ^^^^^^^^^^^^^^
+
+com.android.tools:*
+    ^^^^^^^^^^^^^.^
+
+com.android.billingclient:billing(-*)
+    ^^^^^^^^^^^^^^^^^^^^^
 
 com.russhwolf:multiplatform-settings(-*)
               ^^^^^^^^^^^^^^^^^^^^^^

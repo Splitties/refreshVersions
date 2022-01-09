@@ -18,7 +18,7 @@ internal fun DependencyVersionsFetcher.Companion.forMaven(
     val group = dependency.group ?: return null // TODO: Support NPM dependencies from Kotlin/JS
     val name = dependency.name
     return when (repository.url.scheme) {
-        "https" -> MavenDependencyVersionsFetcherHttp(
+        "https", "http" -> MavenDependencyVersionsFetcherHttp(
             httpClient = httpClient,
             moduleId = ModuleId.Maven(group, name),
             repoUrl = repository.url.toString().let { if (it.endsWith('/')) it else "$it/" },
@@ -37,7 +37,6 @@ internal fun DependencyVersionsFetcher.Companion.forMaven(
             moduleId = ModuleId.Maven(group, name),
             repoUrl = repository.url.toString()
         )
-        "http" -> null //TODO: Show non fatal error that http is not supported for security reasons.
         else -> null //TODO: Support more transport protocols. Here's what Gradle supports:
         // https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:supported_transport_protocols
         // We should trigger a warning that it's not supported yet, with link to relevant issue,

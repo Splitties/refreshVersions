@@ -1,7 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import org.gradle.api.Incubating
 
 /**
  * An HTTP inspector for Android & OkHTTP (like Charles but on device)
@@ -9,10 +8,9 @@ import org.gradle.api.Incubating
  * - GitHub page: [Chucker](https://github.com/ChuckerTeam/chucker)
  * - [GitHub Releases here](https://github.com/ChuckerTeam/chucker/releases)
  */
-@Incubating
 object Chucker : DependencyGroup(
     group = "com.github.chuckerteam.chucker",
-    rawRule = """
+    rawRules = """
         com.github.chuckerteam.chucker:library(-*)
                                ^^^^^^^
     """.trimIndent()

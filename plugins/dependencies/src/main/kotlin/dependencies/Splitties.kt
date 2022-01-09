@@ -1,13 +1,11 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
-@Incubating
 object Splitties : DependencyGroup(
     "com.louiscad.splitties",
-    rawRule = """
+    rawRules = """
     com.louiscad.splitties:splitties-*
                  ^^^^^^^^^
     """.trimIndent()
@@ -65,7 +63,6 @@ object Splitties : DependencyGroup(
     val viewsDslAppcompat = module("splitties-views-dsl-appcompat")
     val viewsDslConstraintlayout = module("splitties-views-dsl-constraintlayout")
     val viewsDslCoordinatorlayout = module("splitties-views-dsl-coordinatorlayout")
-    val viewsDslIdePreview = module("splitties-views-dsl-ide-preview")
     val viewsDslMaterial = module("splitties-views-dsl-material")
     val viewsDslRecyclerview = module("splitties-views-dsl-recyclerview")
     val viewsMaterial = module("splitties-views-material")

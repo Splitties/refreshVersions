@@ -3,11 +3,18 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
-@Incubating
-object Square {
+object Square : IsNotADependency {
+
+    /**
+     * A tiny Kotlin API for cheap logging on top of Android's normal `Log` class.
+     *
+     * [Change log](https://github.com/square/logcat/blob/main/CHANGELOG.md)
+     *
+     * GitHub page: [square/logcat](https://github.com/square/logcat)
+     */
+    val logcat = DependencyNotation("com.squareup.logcat", "logcat")
 
     /**
      * A modern I/O library for Kotlin Multiplatform (JVM/Android, Linux, iOS, macOS, JS) and Java.
@@ -94,12 +101,21 @@ object Square {
 
         val gradlePlugin = module("gradle-plugin")
 
-        val coroutinesExtensions = module("coroutines-extensions")
+        val extensions = Extensions
+
+        object Extensions : IsNotADependency {
+            val coroutines = module("coroutines-extensions")
+            val androidPaging3 = module("android-paging3-extensions")
+            val androidPaging = module("android-paging-extensions")
+            val rxJava3 = module("rxjava3-extensions")
+            val rxJava2 = module("rxjava2-extensions")
+        }
 
         val drivers = Drivers
 
         object Drivers : IsNotADependency {
             val android = module("android-driver")
+            val sqlJs = module("sqljs-driver")
 
             val jdbc = module("jdbc-driver")
             val jdbcSqlite = module("sqlite-driver")

@@ -30,3 +30,15 @@ com.google.androidbrowserhelper:androidbrowserhelper
 
 com.google.mlkit:*
     ^^^^^^^^^^^^.^
+
+com.google.oboe:oboe
+    ^^^^^^^^^^^
+
+com.google.modernstorage:modernstorage-*
+    ^^^^^^^^^^^^^^^^^^^^
+
+com.google.android.fhir:*
+    ^^^^^^^^^^^^^^^^^^^.^
+
+com.google.android.flexbox:flexbox
+    ^^^^^^^^^^^^^^^^^^^^^^

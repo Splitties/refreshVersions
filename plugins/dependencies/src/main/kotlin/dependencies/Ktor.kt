@@ -1,7 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused", "MemberVisibilityCanBePrivate")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
@@ -18,9 +17,8 @@ import org.gradle.kotlin.dsl.IsNotADependency
  *
  * TODO: Finish KDoc of undocumented artifact constants. Also link to their KDoc.
  */
-@Incubating
 object Ktor : DependencyGroup("io.ktor",
-    rawRule = """
+    rawRules = """
         io.ktor:*
            ^^^^
     """.trimIndent()
@@ -56,10 +54,7 @@ object Ktor : DependencyGroup("io.ktor",
         val jetty = module("ktor-client-jetty")
 
         /** Supports iOS, macOS, watchOS and tvOS. */
-        val darwin = module("ktor-client-ios") // Named ios but actually supports watchOS, tvOS and macOS too
-
-        @Deprecated("The artifact supports more than just iOS.", ReplaceWith("darwin"))
-        val ios = darwin
+        val darwin = module("ktor-client-darwin")
 
         /** Supports Linux X64, Windows X64 and macOS. */
         val curl = module ("ktor-client-curl")
