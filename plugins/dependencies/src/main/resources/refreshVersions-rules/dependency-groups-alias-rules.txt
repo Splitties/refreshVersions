@@ -28,6 +28,9 @@ com.louiscad.splitties:splitties-*
 org.kodein.di:kodein-di(-*)
     ^^^^^^^^^
 
+org.http4k:http4k-connect-*
+           ^^^^^^^^^^^^^^
+
 com.android.tools:*
     ^^^^^^^^^^^^^.^
 

@@ -7,6 +7,8 @@ object Http4k : DependencyGroup(
     rawRules = """
         org.http4k:http4k-*
             ^^^^^^
+        org.http4k:http4k-connect-*
+                   ^^^^^^^^^^^^^^
     """.trimIndent()
 ) {
     val bom = module("http4k-bom", isBom = true)
