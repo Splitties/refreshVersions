@@ -294,8 +294,10 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
     `Request GitHub release publication` -> {
         printInfo("It's now time to publish the release on GitHub, so people get notified.")
         printInfo("Copy the section of this release from the CHANGELOG file, and head over to the following url to proceed:")
-        printInfo("$gitHubRepoUrl/releases/new")
-        requestManualAction("Publish the release ${OngoingRelease.newVersion} on GitHub with the changelog.")
+        val newVersion = OngoingRelease.newVersion
+        // https://docs.github.com/en/repositories/releasing-projects-on-github/automation-for-release-forms-with-query-parameters
+        printInfo("$gitHubRepoUrl/releases/new?tag=${tagOfVersionBeingReleased()}&title=$newVersion")
+        requestManualAction("Publish the release $newVersion on GitHub with the changelog.")
     }
     `Change this library version back to a SNAPSHOT` -> {
         val newVersion = Version(OngoingRelease.newVersion)
