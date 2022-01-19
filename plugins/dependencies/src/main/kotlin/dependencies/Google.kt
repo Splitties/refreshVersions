@@ -363,7 +363,7 @@ object Google : IsNotADependency {
 
             /**
              * Google Tasks API (yet another "Future" type, because they're not using Kotlin coroutines yet).
-             * We recommend to use it with [KotlinX.Coroutines.playServices].
+             * We recommend using it with [KotlinX.Coroutines.playServices].
              */
             val tasks = module("play-services-tasks")
 
