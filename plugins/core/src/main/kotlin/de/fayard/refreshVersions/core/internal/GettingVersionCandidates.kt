@@ -12,7 +12,6 @@ internal suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
     currentVersion: Version,
     resultMode: VersionCandidatesResultMode
 ): Pair<List<Version>, List<DependencyVersionsFetcher.Result.Failure>> {
-    //TODO: Change return type to also carry the list of failures, and info regarding their origin.
 
     val results = getVersionCandidates(versionFilter = { it > currentVersion })
     val versionsList = results.filterIsInstance<DependencyVersionsFetcher.Result.Success>()
