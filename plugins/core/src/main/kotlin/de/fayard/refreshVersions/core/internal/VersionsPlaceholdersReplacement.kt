@@ -5,10 +5,12 @@ import de.fayard.refreshVersions.core.FeatureFlag
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.moduleId
+import de.fayard.refreshVersions.core.internal.failures.oneLineSummary
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.readFromFile
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewEntry
 import kotlinx.coroutines.runBlocking
+import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
@@ -302,10 +304,11 @@ private fun `Write versions candidates using latest most stable version and get 
             resultMode = RefreshVersionsConfigHolder.resultMode
         ).let { (versionCandidates, failures) ->
             if (versionCandidates.isEmpty()) {
-                TODO("Handle no versions found with a precise and helpful error message")
-                //TODO: Mention to moduleId or dependency in a readable way
-                // Specify the failures count
-                // List all the failures, along with stacktrace from the exception/throwable, if any.
+                val errorMessage = noVersionsFoundErrorMessage(
+                    moduleId = moduleId,
+                    failures = failures
+                )
+                throw GradleException(errorMessage)
             }
             val bestStability = versionCandidates.minByOrNull { it.stabilityLevel }!!.stabilityLevel
             val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
@@ -316,5 +319,31 @@ private fun `Write versions candidates using latest most stable version and get 
             )
             versionToUse.value
         }
+    }
+}
+
+private fun noVersionsFoundErrorMessage(
+    moduleId: ModuleId,
+    failures: List<DependencyVersionsFetcher.Result.Failure>
+): String = buildString {
+    append("Unable to find ")
+    append(moduleId.notation())
+    when (failures.size) {
+        0 -> append(" because no repository was found.")
+        1 -> appendLine(" in the following repository:")
+        else -> appendLine(" in the following repositories:")
+    }
+    failures.forEach { failure ->
+        append(failure.repoUrlOrKey)
+        append(" -> ")
+        appendLine(failure.cause.oneLineSummary())
+    }
+}
+
+private fun ModuleId.notation(): String = when (this) {
+    is ModuleId.Maven -> "$group:$name"
+    is ModuleId.Npm -> when (group) {
+        null -> name
+        else -> "@$group/$name"
     }
 }

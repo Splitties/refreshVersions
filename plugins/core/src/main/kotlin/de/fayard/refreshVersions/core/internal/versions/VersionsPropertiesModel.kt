@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core.internal.versions
 
 import de.fayard.refreshVersions.core.DependencyVersionsFetcher
+import de.fayard.refreshVersions.core.internal.failures.oneLineSummary
 
 /**
  * @property dependencyNotationRemovalsRevision Designed to be used only for snapshot publications.
@@ -76,18 +77,7 @@ internal actual data class VersionsPropertiesModel(
             append(failureComment)
             append(failure.repoUrlOrKey)
             append(" Cause: ")
-            val detail = when (val cause = failure.cause) {
-                is DependencyVersionsFetcher.FailureCause.CommunicationIssue.HttpResponse -> {
-                    "http status code ${cause.statusCode}"
-                }
-                is DependencyVersionsFetcher.FailureCause.CommunicationIssue.NetworkIssue -> {
-                    "network or server issue(${cause.exception})"
-                }
-                is DependencyVersionsFetcher.FailureCause.ParsingIssue -> {
-                    "error while parsing metadata (${cause.exception})"
-                }
-            }
-            append(detail)
+            append(failure.cause.oneLineSummary())
         }
 
 
