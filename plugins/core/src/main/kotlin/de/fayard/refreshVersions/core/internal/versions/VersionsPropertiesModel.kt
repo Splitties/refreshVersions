@@ -1,5 +1,8 @@
 package de.fayard.refreshVersions.core.internal.versions
 
+import de.fayard.refreshVersions.core.DependencyVersionsFetcher
+import de.fayard.refreshVersions.core.internal.failures.oneLineSummary
+
 /**
  * @property dependencyNotationRemovalsRevision Designed to be used only for snapshot publications.
  */
@@ -67,6 +70,15 @@ internal actual data class VersionsPropertiesModel(
         const val availableComment = "# available"
 
         const val unusedEntryComment = "## unused"
+
+        const val failureComment = "## failed to check repo "
+
+        fun failureComment(failure: DependencyVersionsFetcher.Result.Failure): String = buildString {
+            append(failureComment)
+            append(failure.repoUrlOrKey)
+            append(" Cause: ")
+            append(failure.cause.oneLineSummary())
+        }
 
         val versionKeysPrefixes = listOf("plugin", "version")
 

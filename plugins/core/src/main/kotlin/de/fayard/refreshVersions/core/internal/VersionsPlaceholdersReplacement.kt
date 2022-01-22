@@ -5,10 +5,12 @@ import de.fayard.refreshVersions.core.FeatureFlag
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.moduleId
+import de.fayard.refreshVersions.core.internal.failures.oneLineSummary
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.readFromFile
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewEntry
 import kotlinx.coroutines.runBlocking
+import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.Dependency
@@ -226,7 +228,8 @@ fun Project.writeCurrentVersionInProperties(
 ) {
     VersionsPropertiesModel.writeWithNewEntry(
         propertyName = versionKey,
-        versionsCandidates = listOf(Version(currentVersion))
+        versionsCandidates = listOf(Version(currentVersion)),
+        failures = emptyList()
     )
 }
 
@@ -250,7 +253,8 @@ private fun `Copy previously matching version entry, if any, and get its version
                 0 -> Version(previouslyMatchingEntry.currentVersion)
                 else -> Version(previouslyMatchingEntry.availableUpdates[index -1])
             }
-        }
+        },
+        failures = emptyList()
     )
     return previouslyMatchingEntry.currentVersion
 }
@@ -277,9 +281,8 @@ private fun `Write versions candidates using latest most stable version and get 
     propertyName: String,
     dependency: Dependency,
     moduleId: ModuleId
-): String = `Write versions candidates using latest most stable version and get it`(
-    propertyName = propertyName,
-    dependencyVersionsFetchers = when (moduleId) {
+): String {
+    val dependencyVersionsFetchers = when (moduleId) {
         is ModuleId.Maven -> repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
             DependencyVersionsFetcher.forMaven(
                 httpClient = RefreshVersionsConfigHolder.httpClient,
@@ -295,23 +298,63 @@ private fun `Write versions candidates using latest most stable version and get 
             )
         )
     }
-)
+    return runBlocking {
+        dependencyVersionsFetchers.getVersionCandidates(
+            currentVersion = Version(""),
+            resultMode = RefreshVersionsConfigHolder.resultMode
+        ).let { (versionCandidates, failures) ->
+            if (versionCandidates.isEmpty()) {
+                val errorMessage = noVersionsFoundErrorMessage(
+                    moduleId = moduleId,
+                    fetchers = dependencyVersionsFetchers,
+                    failures = failures
+                )
+                throw GradleException(errorMessage)
+            }
+            val versionToUse = versionCandidates.latestMostStable()
+            VersionsPropertiesModel.writeWithNewEntry(
+                propertyName = propertyName,
+                versionsCandidates = versionCandidates.dropWhile { it != versionToUse },
+                failures = failures
+            )
+            versionToUse.value
+        }
+    }
+}
 
-@Suppress("FunctionName")
-internal fun `Write versions candidates using latest most stable version and get it`(
-    propertyName: String,
-    dependencyVersionsFetchers: List<DependencyVersionsFetcher>
-): String = runBlocking {
-    dependencyVersionsFetchers.getVersionCandidates(
-        currentVersion = Version(""),
-        resultMode = RefreshVersionsConfigHolder.resultMode
-    ).let { versionCandidates ->
-        val bestStability = versionCandidates.minByOrNull { it.stabilityLevel }!!.stabilityLevel
-        val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
-        VersionsPropertiesModel.writeWithNewEntry(
-            propertyName = propertyName,
-            versionsCandidates = versionCandidates.dropWhile { it != versionToUse }
-        )
-        versionToUse.value
+internal fun List<Version>.latestMostStable(): Version {
+    val bestStability = minByOrNull { it.stabilityLevel }?.stabilityLevel
+        ?: throw NoSuchElementException("Can't get latest most stable version in an empty list")
+    return last { it.stabilityLevel == bestStability }
+}
+
+private fun noVersionsFoundErrorMessage(
+    moduleId: ModuleId,
+    fetchers: List<DependencyVersionsFetcher>,
+    failures: List<DependencyVersionsFetcher.Result.Failure>
+): String = buildString {
+    append("Unable to find the ")
+    append(moduleId.notation())
+    append(" dependency ")
+    when (failures.size) {
+        0 ->  when (fetchers.size) {
+            0 -> append("because no repository was found.")
+            else -> append("because none of the configured repositories contain it.")
+        }
+        1 -> appendLine("because of a failure in the following repository:")
+        else -> appendLine("because of a failure in the following repositories:")
+    }
+    failures.forEach { failure ->
+        append(failure.repoUrlOrKey)
+        append(" -> ")
+        appendLine(failure.cause.oneLineSummary())
+    }
+}
+
+private fun ModuleId.notation(): String = when (this) {
+    is ModuleId.Maven -> "$group:$name"
+    is ModuleId.Npm -> when (group) {
+        null -> name
+        else -> "@$group/$name"
     }
 }

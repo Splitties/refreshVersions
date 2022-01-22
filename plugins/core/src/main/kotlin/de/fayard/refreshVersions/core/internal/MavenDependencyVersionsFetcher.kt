@@ -3,6 +3,7 @@ package de.fayard.refreshVersions.core.internal
 import de.fayard.refreshVersions.core.DependencyVersionsFetcher
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
+import de.fayard.refreshVersions.core.internal.xor.Xor
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -11,16 +12,27 @@ internal abstract class MavenDependencyVersionsFetcher(
     repoUrl: String
 ) : DependencyVersionsFetcher(
     moduleId = moduleId,
-    repoKey = repoUrl
+    repoUrlOrKey = repoUrl
 ) {
-    protected abstract suspend fun getXmlMetadataOrNull(): String?
 
-    override suspend fun getAvailableVersionsOrNull(versionFilter: ((Version) -> Boolean)?): SuccessfulResult? {
+    /**
+     * Shall return `Xor.First(null)` if the metadata is not found on the repo (404 or file not found).
+     */
+    protected abstract suspend fun attemptGettingXmlMetadata(): Xor<String?, FailureCause.CommunicationIssue>
 
-        val xml = getXmlMetadataOrNull() ?: return null
+    override suspend fun attemptGettingAvailableVersions(versionFilter: ((Version) -> Boolean)?): Result {
 
-        val allVersions = parseVersionsFromMavenMetaData(xml)
-        return SuccessfulResult(
+        val xml: String = when (val result = attemptGettingXmlMetadata()) {
+            is Xor.First -> result.value ?: return Result.NotFound
+            is Xor.Second -> return failure(result.value)
+        }
+
+        val allVersions = runCatching {
+            parseVersionsFromMavenMetaData(xml)
+        }.getOrElse {
+            return failure(FailureCause.ParsingIssue(it))
+        }
+        return Result.Success(
             lastUpdateTimestampMillis = parseLastUpdatedFromMavenMetaData(xml),
             availableVersions = if (versionFilter == null) {
                 allVersions

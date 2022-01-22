@@ -66,22 +66,22 @@ internal suspend fun lookupVersionCandidates(
             val resolvedVersion = resolveVersion(
                 properties = versionMap,
                 key = propertyName
-            ) ?: `Write versions candidates using latest most stable version and get it`(
-                propertyName = propertyName,
-                dependencyVersionsFetchers = versionFetchers
-            )
-            val selection = DependencySelection(moduleId, Version(resolvedVersion), propertyName)
+            )?.let { Version(it) }
             async {
+                val (versions, failures) = versionFetchers.getVersionCandidates(
+                    currentVersion = resolvedVersion ?: Version(""),
+                    resultMode = resultMode
+                )
+                val currentVersion = resolvedVersion ?: versions.latestMostStable()
+                val selection = DependencySelection(moduleId, currentVersion, propertyName)
                 DependencyWithVersionCandidates(
                     moduleId = moduleId,
-                    currentVersion = resolvedVersion,
-                    versionsCandidates = versionFetchers.getVersionCandidates(
-                        currentVersion = Version(resolvedVersion),
-                        resultMode = resultMode
-                    ).filterNot { version ->
+                    currentVersion = currentVersion.value,
+                    versionsCandidates = versions.filterNot { version ->
                         selection.candidate = version
                         versionRejectionFilter(selection)
-                    }
+                    },
+                    failures = failures
                 )
             }
         }

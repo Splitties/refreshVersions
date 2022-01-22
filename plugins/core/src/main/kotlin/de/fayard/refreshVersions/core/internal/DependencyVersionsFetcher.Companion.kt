@@ -15,7 +15,7 @@ internal fun DependencyVersionsFetcher.Companion.forMaven(
     dependency: Dependency,
     repository: MavenArtifactRepository // TODO: Support Ivy repositories
 ): DependencyVersionsFetcher? {
-    val group = dependency.group ?: return null // TODO: Support NPM dependencies from Kotlin/JS
+    val group = dependency.group ?: return null
     val name = dependency.name
     return when (repository.url.scheme) {
         "https", "http" -> MavenDependencyVersionsFetcherHttp(

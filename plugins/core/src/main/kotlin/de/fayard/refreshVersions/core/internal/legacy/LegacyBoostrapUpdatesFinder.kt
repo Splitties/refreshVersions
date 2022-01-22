@@ -27,13 +27,15 @@ internal object LegacyBoostrapUpdatesFinder {
 
         val currentVersion = RefreshVersionsCorePlugin.currentVersion
 
+        val (versions, failures) = versionsFetchers.getVersionCandidates(
+            currentVersion = Version(currentVersion),
+            resultMode = resultMode
+        )
         return DependencyWithVersionCandidates(
             moduleId = moduleId,
             currentVersion = currentVersion,
-            versionsCandidates = versionsFetchers.getVersionCandidates(
-                currentVersion = Version(currentVersion),
-                resultMode = resultMode
-            )
+            versionsCandidates = versions,
+            failures = failures
         )
     }
 }

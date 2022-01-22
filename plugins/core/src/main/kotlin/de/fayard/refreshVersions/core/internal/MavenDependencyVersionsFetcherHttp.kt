@@ -2,10 +2,12 @@ package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.extensions.okhttp.await
+import de.fayard.refreshVersions.core.internal.xor.Xor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
 
 internal class MavenDependencyVersionsFetcherHttp(
     private val httpClient: OkHttpClient,
@@ -32,21 +34,33 @@ internal class MavenDependencyVersionsFetcherHttp(
         )
     }.build()
 
-    override suspend fun getXmlMetadataOrNull(): String? {
-        return httpClient.newCall(request).await().use { response ->
+    override suspend fun attemptGettingXmlMetadata(): Xor<String?, FailureCause.CommunicationIssue> = runCatching {
+        httpClient.newCall(request).await().use { response ->
             if (response.isSuccessful) {
-                response.use { it.body!!.string() }
+                Xor.First(response.use { it.body!!.string() })
             } else when (response.code) {
                 403 -> when {
                     repoUrl.let {
                         it.startsWith("https://dl.bintray.com") || it.startsWith("https://jcenter.bintray.com")
-                    } -> null // Artifact not available on jcenter nor bintray, post "sunset" announcement.
-                    else -> throw HttpException(Response.error<Any?>(response.code, response.body!!))
+                    } -> Xor.First(null) // Artifact not available on jcenter nor bintray, post "sunset" announcement.
+                    else -> Xor.Second(
+                        FailureCause.CommunicationIssue.HttpResponse(
+                            statusCode = response.code,
+                            exception = HttpException(Response.error<Any?>(response.code, response.body!!))
+                        )
+                    )
                 }
-                404 -> null // Normal not found result
-                401 -> null // Returned by some repositories that have optional authentication (like jitpack.io)
-                else -> throw HttpException(Response.error<Any?>(response.code, response.body!!))
+                404 -> Xor.First(null) // Normal not found result
+                401 -> Xor.First(null) // Returned by some repositories that have optional authentication (like jitpack.io)
+                else -> Xor.Second(
+                    FailureCause.CommunicationIssue.HttpResponse(
+                        statusCode = response.code,
+                        exception = HttpException(Response.error<Any?>(response.code, response.body!!))
+                    )
+                )
             }
         }
+    }.getOrElse {
+        Xor.Second(FailureCause.CommunicationIssue.NetworkIssue(it as? IOException ?: IOException(it)))
     }
 }
