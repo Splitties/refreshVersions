@@ -27,4 +27,7 @@ suspend fun getVersionCandidates(
         filterMode = VersionCandidatesResultMode.FilterMode.LatestByStabilityLevel,
         sortingMode = VersionCandidatesResultMode.SortingMode.ByVersion
     )
-)
+).let { (versions, failures) ->
+    check(failures.isEmpty())
+    versions
+}

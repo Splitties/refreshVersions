@@ -11,36 +11,39 @@ import kotlinx.coroutines.coroutineScope
 internal suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
     currentVersion: Version,
     resultMode: VersionCandidatesResultMode
-): List<Version> {
+): Pair<List<Version>, List<DependencyVersionsFetcher.Result.Failure>> {
+    //TODO: Change return type to also carry the list of failures, and info regarding their origin.
 
     val results = getVersionCandidates(versionFilter = { it > currentVersion })
+    val versionsList = results.filterIsInstance<DependencyVersionsFetcher.Result.Success>()
+    val failures = results.filterIsInstance<DependencyVersionsFetcher.Result.Failure>()
     return when (resultMode.filterMode) {
         AllIntermediateVersions -> when (resultMode.sortingMode) {
-            is ByRepo -> results.byRepoSorting(resultMode.sortingMode).flatMap {
+            is ByRepo -> versionsList.byRepoSorting(resultMode.sortingMode).flatMap {
                 it.availableVersions.asSequence()
             }
-            ByVersion -> results.flatMap { it.availableVersions.asSequence() }.sorted()
+            ByVersion -> versionsList.flatMap { it.availableVersions.asSequence() }.sorted()
         }.distinct().toList()
         LatestByStabilityLevel -> when (resultMode.sortingMode) {
-            is ByRepo -> results.byRepoSorting(resultMode.sortingMode).flatMap {
+            is ByRepo -> versionsList.byRepoSorting(resultMode.sortingMode).flatMap {
                 it.availableVersions.filterLatestByStabilityLevel().asSequence()
             }
-            ByVersion -> results.flatMap {
+            ByVersion -> versionsList.flatMap {
                 it.availableVersions.filterLatestByStabilityLevel().asSequence()
             }.sorted()
         }.distinct().toList()
         Latest -> when (resultMode.sortingMode) {
-            is ByRepo -> results.byRepoSorting(resultMode.sortingMode).map {
+            is ByRepo -> versionsList.byRepoSorting(resultMode.sortingMode).map {
                 it.availableVersions.last()
             }.distinct().toList()
-            is ByVersion -> listOf(results.flatMap { it.availableVersions.asSequence() }.sorted().last())
+            is ByVersion -> listOf(versionsList.flatMap { it.availableVersions.asSequence() }.sorted().last())
         }
-    }
+    } to failures
 }
 
-private fun Sequence<DependencyVersionsFetcher.SuccessfulResult>.byRepoSorting(
+private fun List<DependencyVersionsFetcher.Result.Success>.byRepoSorting(
     sortingMode: ByRepo
-): Sequence<DependencyVersionsFetcher.SuccessfulResult> = when (sortingMode) {
+): List<DependencyVersionsFetcher.Result.Success> = when (sortingMode) {
     ByRepo -> this
     ByRepo.LastUpdated -> sortedBy { it.lastUpdateTimestampMillis }
     ByRepo.LastVersionComparison -> sortedBy { it.availableVersions.last() }
@@ -58,7 +61,7 @@ private fun List<Version>.filterLatestByStabilityLevel(): List<Version> {
 
 private suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
     versionFilter: ((Version) -> Boolean)? = null
-): Sequence<DependencyVersionsFetcher.SuccessfulResult> {
+): List<DependencyVersionsFetcher.Result> {
 
     require(isNotEmpty()) { "Cannot get version candidates with an empty fetchers list." }
     val moduleId = first().moduleId
@@ -67,17 +70,19 @@ private suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
     return coroutineScope {
         map { fetcher ->
             async {
-                @Suppress("BlockingMethodInNonBlockingContext") // False positive.
-                fetcher.getAvailableVersionsOrNull(versionFilter = versionFilter)
+                fetcher.attemptGettingAvailableVersions(versionFilter = versionFilter)
             }
         }
-    }.awaitAll().filterNotNull().also { results ->
+    }.awaitAll().also { results ->
         if (results.isEmpty()) throw NoSuchElementException(buildString {
             append("$moduleId not found. ")
             appendLine("Searched the following repositories:")
-            this@getVersionCandidates.forEach { appendLine("- ${it.repoKey}") }
+            this@getVersionCandidates.forEach { appendLine("- ${it.repoUrlOrKey}") }
         })
     }.distinctBy {
-        it.availableVersions
-    }.asSequence()
+        when (it) {
+            is DependencyVersionsFetcher.Result.Success -> it.availableVersions
+            else -> it
+        }
+    }
 }

@@ -72,16 +72,18 @@ internal suspend fun lookupVersionCandidates(
             )
             val selection = DependencySelection(moduleId, Version(resolvedVersion), propertyName)
             async {
+                val (versions, failures) = versionFetchers.getVersionCandidates(
+                    currentVersion = Version(resolvedVersion),
+                    resultMode = resultMode
+                )
                 DependencyWithVersionCandidates(
                     moduleId = moduleId,
                     currentVersion = resolvedVersion,
-                    versionsCandidates = versionFetchers.getVersionCandidates(
-                        currentVersion = Version(resolvedVersion),
-                        resultMode = resultMode
-                    ).filterNot { version ->
+                    versionsCandidates = versions.filterNot { version ->
                         selection.candidate = version
                         versionRejectionFilter(selection)
-                    }
+                    },
+                    failures = failures
                 )
             }
         }

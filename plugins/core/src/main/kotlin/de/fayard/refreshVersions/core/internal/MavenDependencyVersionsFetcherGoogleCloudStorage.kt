@@ -9,6 +9,7 @@ import com.google.cloud.storage.Bucket
 import com.google.cloud.storage.Storage
 import com.google.cloud.storage.StorageOptions
 import de.fayard.refreshVersions.core.ModuleId
+import de.fayard.refreshVersions.core.internal.xor.Xor
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -20,20 +21,28 @@ internal class MavenDependencyVersionsFetcherGoogleCloudStorage(
     moduleId = moduleId,
     repoUrl = repoUrl
 ) {
-    override suspend fun getXmlMetadataOrNull(): String? {
+    override suspend fun attemptGettingXmlMetadata(): Xor<String?, FailureCause.CommunicationIssue> = runCatching {
         val path: String = with(moduleId) {
             "$repoPath/${group!!.replace('.', '/')}/$name/maven-metadata.xml"
         }
         return try {
-            bucket.get(path)?.let { blob: Blob -> String(blob.getContent()) }
+            Xor.First(bucket.get(path)?.let { blob: Blob -> String(blob.getContent()) })
         } catch (e: BaseHttpServiceException) {
             if (e.code == 404) {
-                null // Also see https://github.com/googleapis/java-storage/issues/49
-            } else throw IOException(
-                "Unable to load '$path' from Google Cloud Storage bucket '$bucketName'.",
-                e
-            )
+                Xor.First(null) // Also see https://github.com/googleapis/java-storage/issues/49
+            } else {
+                val failure = FailureCause.CommunicationIssue.HttpResponse(
+                    statusCode = e.code,
+                    exception = IOException(
+                        "Unable to load '$path' from Google Cloud Storage bucket '$bucketName'.",
+                        e
+                    )
+                )
+                Xor.Second(failure)
+            }
         }
+    }.getOrElse {
+        Xor.Second(FailureCause.CommunicationIssue.NetworkIssue(it as? IOException ?: IOException(it)))
     }
 
     private val bucketName = repoUrl.substringAfter("gcs://").substringBefore("/")

@@ -226,7 +226,8 @@ fun Project.writeCurrentVersionInProperties(
 ) {
     VersionsPropertiesModel.writeWithNewEntry(
         propertyName = versionKey,
-        versionsCandidates = listOf(Version(currentVersion))
+        versionsCandidates = listOf(Version(currentVersion)),
+        failures = emptyList()
     )
 }
 
@@ -250,7 +251,8 @@ private fun `Copy previously matching version entry, if any, and get its version
                 0 -> Version(previouslyMatchingEntry.currentVersion)
                 else -> Version(previouslyMatchingEntry.availableUpdates[index -1])
             }
-        }
+        },
+        failures = emptyList()
     )
     return previouslyMatchingEntry.currentVersion
 }
@@ -277,9 +279,8 @@ private fun `Write versions candidates using latest most stable version and get 
     propertyName: String,
     dependency: Dependency,
     moduleId: ModuleId
-): String = `Write versions candidates using latest most stable version and get it`(
-    propertyName = propertyName,
-    dependencyVersionsFetchers = when (moduleId) {
+): String {
+    val dependencyVersionsFetchers = when (moduleId) {
         is ModuleId.Maven -> repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
             DependencyVersionsFetcher.forMaven(
                 httpClient = RefreshVersionsConfigHolder.httpClient,
@@ -295,23 +296,25 @@ private fun `Write versions candidates using latest most stable version and get 
             )
         )
     }
-)
-
-@Suppress("FunctionName")
-internal fun `Write versions candidates using latest most stable version and get it`(
-    propertyName: String,
-    dependencyVersionsFetchers: List<DependencyVersionsFetcher>
-): String = runBlocking {
-    dependencyVersionsFetchers.getVersionCandidates(
-        currentVersion = Version(""),
-        resultMode = RefreshVersionsConfigHolder.resultMode
-    ).let { versionCandidates ->
-        val bestStability = versionCandidates.minByOrNull { it.stabilityLevel }!!.stabilityLevel
-        val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
-        VersionsPropertiesModel.writeWithNewEntry(
-            propertyName = propertyName,
-            versionsCandidates = versionCandidates.dropWhile { it != versionToUse }
-        )
-        versionToUse.value
+    return runBlocking {
+        dependencyVersionsFetchers.getVersionCandidates(
+            currentVersion = Version(""),
+            resultMode = RefreshVersionsConfigHolder.resultMode
+        ).let { (versionCandidates, failures) ->
+            if (versionCandidates.isEmpty()) {
+                TODO("Handle no versions found with a precise and helfpul error message")
+                //TODO: Mention to moduleId or dependency in a readable way
+                // Specify the failures count
+                // List all the failures, along with stacktrace from the exception/throwable, if any.
+            }
+            val bestStability = versionCandidates.minByOrNull { it.stabilityLevel }!!.stabilityLevel
+            val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
+            VersionsPropertiesModel.writeWithNewEntry(
+                propertyName = propertyName,
+                versionsCandidates = versionCandidates.dropWhile { it != versionToUse },
+                failures = failures
+            )
+            versionToUse.value
+        }
     }
 }
