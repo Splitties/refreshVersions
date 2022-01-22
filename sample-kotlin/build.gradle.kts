@@ -60,7 +60,7 @@ getKotlinPluginVersion().let {
 }
 
 tasks.register<JavaExec>("run") {
-    this.main = "de.fayard.GuavaTest"
+    mainClass.set("de.fayard.GuavaTest")
 }
 
 tasks.withType<KotlinCompile>().configureEach {
