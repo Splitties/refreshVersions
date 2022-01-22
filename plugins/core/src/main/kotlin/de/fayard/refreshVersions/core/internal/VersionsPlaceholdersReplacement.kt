@@ -310,8 +310,7 @@ private fun `Write versions candidates using latest most stable version and get 
                 )
                 throw GradleException(errorMessage)
             }
-            val bestStability = versionCandidates.minByOrNull { it.stabilityLevel }!!.stabilityLevel
-            val versionToUse = versionCandidates.last { it.stabilityLevel == bestStability }
+            val versionToUse = versionCandidates.latestMostStable()
             VersionsPropertiesModel.writeWithNewEntry(
                 propertyName = propertyName,
                 versionsCandidates = versionCandidates.dropWhile { it != versionToUse },
@@ -320,6 +319,12 @@ private fun `Write versions candidates using latest most stable version and get 
             versionToUse.value
         }
     }
+}
+
+internal fun List<Version>.latestMostStable(): Version {
+    val bestStability = minByOrNull { it.stabilityLevel }?.stabilityLevel
+        ?: throw NoSuchElementException("Can't get latest most stable version in an empty list")
+    return last { it.stabilityLevel == bestStability }
 }
 
 private fun noVersionsFoundErrorMessage(
