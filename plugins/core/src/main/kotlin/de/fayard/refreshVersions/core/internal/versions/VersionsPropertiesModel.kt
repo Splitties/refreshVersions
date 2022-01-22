@@ -80,7 +80,6 @@ internal actual data class VersionsPropertiesModel(
             append(failure.cause.oneLineSummary())
         }
 
-
         val versionKeysPrefixes = listOf("plugin", "version")
 
         fun versionsPropertiesHeader(

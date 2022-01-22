@@ -39,7 +39,6 @@ internal class NpmDependencyVersionsFetcherHttp(
         url(metadataUrlForArtifact)
     }.build()
 
-
     override suspend fun attemptGettingAvailableVersions(versionFilter: ((Version) -> Boolean)?): Result {
 
         val metadata: NpmMetadata = when (val result = attemptGettingNpmMetadata()) {
