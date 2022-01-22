@@ -306,6 +306,7 @@ private fun `Write versions candidates using latest most stable version and get 
             if (versionCandidates.isEmpty()) {
                 val errorMessage = noVersionsFoundErrorMessage(
                     moduleId = moduleId,
+                    fetchers = dependencyVersionsFetchers,
                     failures = failures
                 )
                 throw GradleException(errorMessage)
@@ -329,14 +330,19 @@ internal fun List<Version>.latestMostStable(): Version {
 
 private fun noVersionsFoundErrorMessage(
     moduleId: ModuleId,
+    fetchers: List<DependencyVersionsFetcher>,
     failures: List<DependencyVersionsFetcher.Result.Failure>
 ): String = buildString {
-    append("Unable to find ")
+    append("Unable to find the ")
     append(moduleId.notation())
+    append(" dependency ")
     when (failures.size) {
-        0 -> append(" because no repository was found.")
-        1 -> appendLine(" in the following repository:")
-        else -> appendLine(" in the following repositories:")
+        0 ->  when (fetchers.size) {
+            0 -> append("because no repository was found.")
+            else -> append("because none of the configured repositories contain it.")
+        }
+        1 -> appendLine("because of a failure in the following repository:")
+        else -> appendLine("because of a failure in the following repositories:")
     }
     failures.forEach { failure ->
         append(failure.repoUrlOrKey)
