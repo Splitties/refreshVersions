@@ -302,7 +302,7 @@ private fun `Write versions candidates using latest most stable version and get 
             resultMode = RefreshVersionsConfigHolder.resultMode
         ).let { (versionCandidates, failures) ->
             if (versionCandidates.isEmpty()) {
-                TODO("Handle no versions found with a precise and helfpul error message")
+                TODO("Handle no versions found with a precise and helpful error message")
                 //TODO: Mention to moduleId or dependency in a readable way
                 // Specify the failures count
                 // List all the failures, along with stacktrace from the exception/throwable, if any.
