@@ -31,13 +31,6 @@ object RefreshVersionsConfigHolder {
 
     var versionRejectionFilter: (DependencySelection.() -> Boolean)? by resettableDelegates.NullableDelegate()
 
-    fun markSetupViaSettingsPlugin() {
-        isSetupViaPlugin = true
-    }
-
-    internal var isSetupViaPlugin = false
-        private set
-
     private val versionKeyReaderDelegate = resettableDelegates.LateInit<ArtifactVersionKeyReader>()
 
     var versionKeyReader: ArtifactVersionKeyReader by versionKeyReaderDelegate

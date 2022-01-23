@@ -7,8 +7,6 @@ import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.hasDynamicVersion
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
-import de.fayard.refreshVersions.core.internal.legacy.LegacyBoostrapUpdatesFinder
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -90,11 +88,6 @@ internal suspend fun lookupVersionCandidates(
             SettingsPluginsUpdatesFinder.getSettingsPluginUpdates(httpClient, resultMode)
         }
 
-        val selfUpdateAsync: Deferred<DependencyWithVersionCandidates>? = when {
-            RefreshVersionsConfigHolder.isSetupViaPlugin -> null
-            else -> async { LegacyBoostrapUpdatesFinder.getSelfUpdates(httpClient, resultMode) }
-        }
-
         val gradleUpdatesAsync = async {
             if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions() else emptyList()
         }
@@ -105,10 +98,9 @@ internal suspend fun lookupVersionCandidates(
             dependenciesUpdates = dependenciesWithVersionCandidates,
             dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
             dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
-            settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
-            buildSrcSettingsPluginsUpdates = settingsPluginsUpdatesAsync.await().buildSrcSettings,
             gradleUpdates = gradleUpdatesAsync.await(),
-            selfUpdatesForLegacyBootstrap = selfUpdateAsync?.await()
+            settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
+            buildSrcSettingsPluginsUpdates = settingsPluginsUpdatesAsync.await().buildSrcSettings
         )
         TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
     }

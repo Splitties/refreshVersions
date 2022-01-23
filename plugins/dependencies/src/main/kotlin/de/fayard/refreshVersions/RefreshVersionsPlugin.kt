@@ -2,7 +2,6 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
-import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
@@ -106,7 +105,6 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     }
 
     private fun bootstrap(settings: Settings) {
-        RefreshVersionsConfigHolder.markSetupViaSettingsPlugin()
         if (settings.extensions.findByName("refreshVersions") == null) {
             // If using legacy bootstrap, the extension has already been created.
             settings.extensions.create<RefreshVersionsExtension>("refreshVersions")

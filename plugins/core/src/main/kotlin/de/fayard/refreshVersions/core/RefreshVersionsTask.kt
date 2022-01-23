@@ -4,7 +4,6 @@ import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
 import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
 import de.fayard.refreshVersions.core.internal.configureLintIfRunningOnAnAndroidProject
-import de.fayard.refreshVersions.core.internal.legacy.LegacyBootstrapUpdater
 import de.fayard.refreshVersions.core.internal.lookupVersionCandidates
 import de.fayard.refreshVersions.core.internal.problems.log
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
@@ -73,12 +72,6 @@ open class RefreshVersionsTask : DefaultTask() {
                 settingsPluginsUpdates = result.settingsPluginsUpdates,
                 buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
             )
-            result.selfUpdatesForLegacyBootstrap?.let {
-                LegacyBootstrapUpdater.updateGradleSettingsWithUpdates(
-                    rootProject = project,
-                    selfUpdates = it
-                )
-            }
 
             warnAboutRefreshVersionsIfSettingIfAny()
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
