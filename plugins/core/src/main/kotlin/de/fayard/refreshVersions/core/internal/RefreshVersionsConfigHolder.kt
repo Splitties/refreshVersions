@@ -112,7 +112,7 @@ object RefreshVersionsConfigHolder {
 
         // The buildSrc will be built a second time as a standalone project by IntelliJ or
         // Android Studio after running initially properly after host project settings evaluation.
-        // To workaround this, we persist the configuration and attempt restoring it if needed,
+        // To work around this, we persist the configuration and attempt restoring it if needed,
         // to not fail the second build (since it'd display errors, and
         // prevent from seeing resolved dependencies in buildSrc sources in the IDE).
         //
