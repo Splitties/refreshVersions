@@ -16,8 +16,8 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
         check(project.isRootProject) { "ERROR: de.fayard.refreshVersions.core should not be applied manually" }
         if (project.isBuildSrc.not()) {
             // In the case where this runs in includedBuilds, the task configuration lambda may (will) run
-            // after the `Gradle.buildFinished { … }` callback is executed, which means the
-            // RefreshVersionsConfigHolder content will be cleared, so we get the value before.
+            // after RefreshVersionsConfigHolder content is cleared (via its ClearStaticStateBuildService),
+            // so we get the value before.
             val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
 
             project.tasks.register<RefreshVersionsTask>(name = "refreshVersions") {
