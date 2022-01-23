@@ -79,6 +79,9 @@ jobs:
   check-all:
     runs-on: ${{ github.event.inputs.run-on || 'ubuntu-latest' }}
     steps:
+      - name: "Enable long paths for git Windows"
+        if: ${{ runner.os == 'Windows' }}
+        run: git config --global core.longpaths true
       - uses: actions/checkout@v2
       - name: "Configure JDK"
         uses: actions/setup-java@v2
