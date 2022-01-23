@@ -24,7 +24,6 @@ import java.io.ObjectOutputStream
 @InternalRefreshVersionsApi
 object RefreshVersionsConfigHolder {
 
-
     internal val resettableDelegates = ResettableDelegates()
 
     internal val isUsingVersionRejection: Boolean get() = versionRejectionFilter != null
