@@ -14,6 +14,23 @@
     - permissions
     - photoPicker
     - storage
+- Google.android.openSourceLicensesPlugin
+- Google.android.playServices:
+    - appset
+    - auth.apiPhone
+    - auth.blockstore
+    - basement
+    - cronet
+    - fido
+    - openSourceLicenses
+    - passwordComplexity
+    - recaptcha
+    - tagmanager
+- Google.android.versionMatcherPlugin
+
+### Credits
+
+Thanks to [Kamalesh](https://github.com/imashnake0) for the contribution in adding dependency notations!
 
 ## Version 0.30.2 (2022-01-09)
 
