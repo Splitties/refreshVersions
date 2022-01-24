@@ -9,6 +9,7 @@ import de.fayard.refreshVersions.core.internal.removals_replacement.replaceRemov
 import de.fayard.refreshVersions.core.internal.resolveVersion
 import de.fayard.refreshVersions.core.internal.setupVersionPlaceholdersResolving
 import org.gradle.api.artifacts.ExternalDependency
+import org.gradle.api.file.RegularFile
 import org.gradle.api.initialization.Settings
 import org.gradle.api.internal.artifacts.dependencies.DefaultClientModule
 import org.gradle.kotlin.dsl.apply
@@ -56,6 +57,16 @@ fun Settings.bootstrapRefreshVersionsCore(
         "This bootstrap is only for the root project. For buildSrc, please call " +
             "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
             "or RefreshVersionsCoreSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
+    }
+
+    gradle.rootProject {
+        // This ensures configuration cache is invalidated if versionsPropertiesFile is edited.
+        // Without that, changes to dependencies versions would be ignored after the initial caching.
+        val regularFile: RegularFile = layout.projectDirectory.file(versionsPropertiesFile.path)
+        val provider = providers.fileContents(regularFile).asBytes.forUseAtConfigurationTime()
+        provider.isPresent // Checking the isPresent property marks the provider as used.
+        // If we didn't do it, the provider would be treated as unused,
+        // and changes to the underlying file would not invalidate the configuration cache.
     }
     RefreshVersionsConfigHolder.initialize(
         settings = settings,

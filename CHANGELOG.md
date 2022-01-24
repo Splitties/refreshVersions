@@ -1,5 +1,37 @@
 # Change log for refreshVersions
 
+## Version 0.40.0 (2022-01-24)
+
+### New features
+
+- We are very happy to announce that **refreshVersions now supports [Gradle configuration cache](https://docs.gradle.org/7.3.3/userguide/configuration_cache.html)!** Gradle configuration is all about saving time, which is also the mission of refreshVersions, albeit in a different situation, so it made a lot of sense to not step on that feature Gradle engineers worked hard on. _Note that the `refreshVersions` task itself is not compatible with configuration cache because it's impossible with the current Gradle APIs._
+- **Error tolerance**: The `refreshVersions` task will no longer fail if there's a problem getting versions from a repository. Now, it will add contextual comments in the `versions.properties` file, so you know what failed, and don't get fully blocked next time jcenter or another repository undergoes an outage. This should also help if you're running the `refreshVersions` task through an unstable internet connection and some network calls fail because of that.
+
+### New dependency notations:
+
+- Google.modernStorage:
+    - bom
+    - permissions
+    - photoPicker
+    - storage
+- Google.android.openSourceLicensesPlugin
+- Google.android.playServices:
+    - appset
+    - auth.apiPhone
+    - auth.blockstore
+    - basement
+    - cronet
+    - fido
+    - openSourceLicenses
+    - passwordComplexity
+    - recaptcha
+    - tagmanager
+- Google.android.versionMatcherPlugin
+
+### Credits
+
+Thanks to [Kamalesh](https://github.com/imashnake0) for the contribution in adding dependency notations!
+
 ## Version 0.30.2 (2022-01-09)
 
 ### Bug fixes

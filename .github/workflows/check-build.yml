@@ -79,6 +79,9 @@ jobs:
   check-all:
     runs-on: ${{ github.event.inputs.run-on || 'ubuntu-latest' }}
     steps:
+      - name: "Enable long paths for git Windows"
+        if: ${{ runner.os == 'Windows' }}
+        run: git config --global core.longpaths true
       - uses: actions/checkout@v2
       - name: "Configure JDK"
         uses: actions/setup-java@v2
@@ -104,7 +107,7 @@ jobs:
         with:
           gradle-executable: sample-kotlin/gradlew
           build-root-directory: sample-kotlin
-          arguments: check --stacktrace
+          arguments: check --stacktrace --configuration-cache
       - name: "Run refreshVersions on sample-groovy"
         if: ${{ github.event.inputs.sample-groovy == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
         uses: gradle/gradle-build-action@v2

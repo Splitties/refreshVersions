@@ -1,6 +1,6 @@
 plugins {
     java
-    kotlin("jvm") version "1.4-M2"
+    kotlin("jvm")
     id("org.gradle.hello-world")
 }
 
@@ -13,7 +13,6 @@ repositories {
 useDependency()
 
 dependencies {
-    implementation(kotlin("stdlib"))
     implementation(Square.okHttp3.okHttp)
     testImplementation("junit", "junit", "4.12")
 }

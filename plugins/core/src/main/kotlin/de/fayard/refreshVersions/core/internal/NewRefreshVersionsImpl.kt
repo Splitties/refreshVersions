@@ -7,8 +7,6 @@ import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.hasDynamicVersion
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
-import de.fayard.refreshVersions.core.internal.legacy.LegacyBoostrapUpdatesFinder
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -66,33 +64,28 @@ internal suspend fun lookupVersionCandidates(
             val resolvedVersion = resolveVersion(
                 properties = versionMap,
                 key = propertyName
-            ) ?: `Write versions candidates using latest most stable version and get it`(
-                propertyName = propertyName,
-                dependencyVersionsFetchers = versionFetchers
-            )
-            val selection = DependencySelection(moduleId, Version(resolvedVersion), propertyName)
+            )?.let { Version(it) }
             async {
+                val (versions, failures) = versionFetchers.getVersionCandidates(
+                    currentVersion = resolvedVersion ?: Version(""),
+                    resultMode = resultMode
+                )
+                val currentVersion = resolvedVersion ?: versions.latestMostStable()
+                val selection = DependencySelection(moduleId, currentVersion, propertyName)
                 DependencyWithVersionCandidates(
                     moduleId = moduleId,
-                    currentVersion = resolvedVersion,
-                    versionsCandidates = versionFetchers.getVersionCandidates(
-                        currentVersion = Version(resolvedVersion),
-                        resultMode = resultMode
-                    ).filterNot { version ->
+                    currentVersion = currentVersion.value,
+                    versionsCandidates = versions.filterNot { version ->
                         selection.candidate = version
                         versionRejectionFilter(selection)
-                    }
+                    },
+                    failures = failures
                 )
             }
         }
 
         val settingsPluginsUpdatesAsync = async {
             SettingsPluginsUpdatesFinder.getSettingsPluginUpdates(httpClient, resultMode)
-        }
-
-        val selfUpdateAsync: Deferred<DependencyWithVersionCandidates>? = when {
-            RefreshVersionsConfigHolder.isSetupViaPlugin -> null
-            else -> async { LegacyBoostrapUpdatesFinder.getSelfUpdates(httpClient, resultMode) }
         }
 
         val gradleUpdatesAsync = async {
@@ -105,10 +98,9 @@ internal suspend fun lookupVersionCandidates(
             dependenciesUpdates = dependenciesWithVersionCandidates,
             dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
             dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
-            settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
-            buildSrcSettingsPluginsUpdates = settingsPluginsUpdatesAsync.await().buildSrcSettings,
             gradleUpdates = gradleUpdatesAsync.await(),
-            selfUpdatesForLegacyBootstrap = selfUpdateAsync?.await()
+            settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
+            buildSrcSettingsPluginsUpdates = settingsPluginsUpdatesAsync.await().buildSrcSettings
         )
         TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
     }

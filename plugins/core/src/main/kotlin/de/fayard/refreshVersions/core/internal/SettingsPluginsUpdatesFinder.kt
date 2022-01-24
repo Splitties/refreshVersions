@@ -67,13 +67,15 @@ internal object SettingsPluginsUpdatesFinder {
             }.mapNotNull { (moduleId: ModuleId, currentVersion, versionsFetchers) ->
                 val pluginId = moduleId.group ?: return@mapNotNull null
                 async {
+                    val (versions, failures) = versionsFetchers.getVersionCandidates(
+                        currentVersion = Version(currentVersion),
+                        resultMode = mode
+                    )
                     PluginWithVersionCandidates(
                         pluginId = pluginId,
                         currentVersion = currentVersion,
-                        versionsCandidates = versionsFetchers.getVersionCandidates(
-                            currentVersion = Version(currentVersion),
-                            resultMode = mode
-                        )
+                        versionsCandidates = versions,
+                        failures = failures
                     )
                 }
             }.awaitAll().let { pluginsWithVersionCandidates ->

@@ -483,3 +483,19 @@ id:[com.google.android.gms:play-services-wallet]
 
 ~~Touchlab.kermit.kermit~~
 id:[co.touchlab:kermit]
+
+## Revision 9
+
+~~Google.modernStorage.fileSystem~~
+// The filesystem module is deprecated.
+// You should use the new storage module which is relying on Okio Filesystem API.
+// TODO: Replace with the storage module.
+moved:[com.google.modernstorage:modernstorage-storage]
+id:[com.google.modernstorage:modernstorage-filesystem]
+
+~~Google.modernStorage.mediaStore~~
+// The mediastore module is deprecated.
+// You should use the new storage module which is relying on Okio Filesystem API.
+// TODO: Replace with the storage module.
+moved:[com.google.modernstorage:modernstorage-storage]
+id:[com.google.modernstorage:modernstorage-mediastore]

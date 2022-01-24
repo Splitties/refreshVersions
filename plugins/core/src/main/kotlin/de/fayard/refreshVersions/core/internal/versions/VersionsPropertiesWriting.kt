@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core.internal.versions
 
+import de.fayard.refreshVersions.core.DependencyVersionsFetcher
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
@@ -41,12 +42,11 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
                     is Comment -> section
                     is VersionEntry -> {
                         if (section.currentVersion.isAVersionAlias()) return@map section
-
-                        when (val versionsCandidates = candidatesMap[section.key]?.versionsCandidates) {
+                        when (val data = candidatesMap[section.key]) {
                             null -> section.asUnused(isUnused = true)
                             else -> section.copy(
-                                availableUpdates = versionsCandidates.map { it.value }
-                            ).asUnused(isUnused = false)
+                                availableUpdates = data.versionsCandidates.map { it.value },
+                            ).asUnused(isUnused = false).withFailures(data.failures)
                         }
                     }
                 }
@@ -66,16 +66,40 @@ private fun VersionEntry.asUnused(isUnused: Boolean): VersionEntry {
     }
 }
 
+private fun VersionEntry.withFailures(failures: List<DependencyVersionsFetcher.Result.Failure>): VersionEntry {
+    val hasExistingFailureComments = this.leadingCommentLines.any {
+        it.startsWith(VersionsPropertiesModel.failureComment)
+    }
+    if (hasExistingFailureComments.not() && failures.isEmpty()) return this
+
+    val cleanedUpLeadingCommentLines: List<String> = this.leadingCommentLines.let { commentsList ->
+        when {
+            hasExistingFailureComments -> commentsList.filterNot { commentLine ->
+                commentLine.startsWith(VersionsPropertiesModel.failureComment)
+            }
+            else -> commentsList
+        }
+    }
+    if (failures.isEmpty()) {
+        return copy(leadingCommentLines = cleanedUpLeadingCommentLines)
+    }
+    val newLeadingCommentLines = cleanedUpLeadingCommentLines + failures.map {
+        VersionsPropertiesModel.failureComment(it)
+    }
+    return copy(leadingCommentLines = newLeadingCommentLines)
+}
+
 internal fun VersionsPropertiesModel.Companion.writeWithNewEntry(
     propertyName: String,
-    versionsCandidates: List<Version>
+    versionsCandidates: List<Version>,
+    failures: List<DependencyVersionsFetcher.Result.Failure>
 ) {
     VersionsPropertiesModel.update { model ->
         model + VersionEntry(
             key = propertyName,
             currentVersion = versionsCandidates.first().value,
             availableUpdates = versionsCandidates.drop(1).map { it.value }
-        )
+        ).withFailures(failures)
     }
 }
 
