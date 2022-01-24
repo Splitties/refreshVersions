@@ -531,19 +531,29 @@ object Google : IsNotADependency {
 
     object ModernStorage : DependencyGroup(group = "com.google.modernstorage") {
 
-        /**
-         * For MediaStore interactions
-         *
-         * Guide: [MediaStore](https://google.github.io/modernstorage/mediastore/)
-         */
-        val mediaStore = module("modernstorage-mediastore")
+        val bom = module("modernstorage-bom", isBom = true)
 
         /**
-         * For Storage Access Framework interactions on API 26+
+         * For storage permissions checking
          *
-         * Guide: [FileSystem](https://google.github.io/modernstorage/filesystem/)
+         * Guide: [Permissions](https://google.github.io/modernstorage/permissions/)
          */
-        val fileSystem = module("modernstorage-filesystem")
+        val permissions = module("modernstorage-permissions")
+
+        /**
+         * For storage interactions using Okio FileSystem API
+         *
+         * Guide: [Storage Interactions](https://google.github.io/modernstorage/storage/)
+         */
+        val storage = module("modernstorage-storage")
+
+        /**
+         * Provides an `ActivityResultContract` to launch the Photo Picker intent when available
+         * on device, or rely on the existing file picker using the `ACTION_OPEN_DOCUMENT` intent.
+         *
+         * Guide: [Photo Picker](https://google.github.io/modernstorage/photopicker/)
+         */
+        val photoPicker = module("modernstorage-photopicker")
     }
 
     /**

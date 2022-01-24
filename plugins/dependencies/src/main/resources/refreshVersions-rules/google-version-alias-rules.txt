@@ -37,6 +37,12 @@ com.google.oboe:oboe
 com.google.modernstorage:modernstorage-*
     ^^^^^^^^^^^^^^^^^^^^
 
+com.google.modernstorage:modernstorage-mediastore
+    ^^^^^^.              ^^^^^^^^^^^^^^^^^^^^^^^^
+
+com.google.modernstorage:modernstorage-filesystem
+    ^^^^^^.              ^^^^^^^^^^^^^^^^^^^^^^^^
+
 com.google.android.fhir:*
     ^^^^^^^^^^^^^^^^^^^.^
 

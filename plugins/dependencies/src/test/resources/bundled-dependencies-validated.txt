@@ -452,8 +452,10 @@ com.google.mlkit:text-recognition-devanagari
 com.google.mlkit:text-recognition-japanese
 com.google.mlkit:text-recognition-korean
 com.google.mlkit:translate
-com.google.modernstorage:modernstorage-filesystem
-com.google.modernstorage:modernstorage-mediastore
+com.google.modernstorage:modernstorage-bom
+com.google.modernstorage:modernstorage-permissions
+com.google.modernstorage:modernstorage-photopicker
+com.google.modernstorage:modernstorage-storage
 com.google.oboe:oboe
 com.jakewharton.confundus:confundus-gradle
 com.jakewharton.moshi:shimo

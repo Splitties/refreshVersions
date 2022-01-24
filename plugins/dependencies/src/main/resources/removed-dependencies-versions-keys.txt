@@ -79,3 +79,5 @@ androidx.test..orchestrator=version.androidx.test
 androidx.test..rules=version.androidx.test
 androidx.test..runner=version.androidx.test
 androidx.test.ext..truth=version.androidx.test
+com.google.modernstorage..modernstorage-filesystem=version.google.modernstorage
+com.google.modernstorage..modernstorage-mediastore=version.google.modernstorage
