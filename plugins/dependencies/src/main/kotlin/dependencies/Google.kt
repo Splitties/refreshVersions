@@ -50,6 +50,25 @@ object Google : IsNotADependency {
 
     object Android : IsNotADependency {
 
+        /**
+         * Strict version checking plugin
+         *
+         * Use this plugin if you're not using the Google Services plugin, but still want strict version checking
+         * of your dependencies.
+         *
+         * Guide: [Strict version matching](https://developers.google.com/android/guides/versioning#strict-version-matching)
+         *
+         * @see playServicesGradlePlugin
+         */
+        val versionMatcherPlugin = DependencyNotation("com.google.android.gms", "strict-version-matcher-plugin")
+
+        /**
+         * Open-source licenses plugin
+         *
+         * @see PlayServices.openSourceLicenses
+         */
+        val openSourceLicensesPlugin = DependencyNotation("com.google.android.gms", "oss-licenses-plugin")
+
         val browserHelper = DependencyNotation("com.google.androidbrowserhelper", "androidbrowserhelper")
 
         /**
@@ -112,14 +131,40 @@ object Google : IsNotADependency {
             /** Google Analytics */
             val analytics = module("play-services-analytics")
 
+            /**
+             * Google App Set API
+             *
+             * The app set ID API returns an ID scoped to the set of apps published under
+             * the same Google Play developer account.
+             *
+             * Guide: [Identify developer-owned apps](https://developer.android.com/training/articles/app-set-id)
+             */
+            val appset = module("play-services-appset")
+
             /** Google Account Login */
-            val auth = module("play-services-auth")
+            val auth = Auth
+
+            object Auth : DependencyNotationAndGroup(group = group, name = "play-services-auth") {
+
+                /** Google SMS Retriever */
+                val apiPhone = module("play-services-auth-api-phone")
+
+                /** Google Block Store */
+                val blockstore = module("play-services-auth-blockstore")
+            }
 
             /** Google Awareness */
             val awareness = module("play-services-awareness")
 
             /** Base client library and Google Actions */
             val base = module("play-services-base")
+
+            /**
+             * Extends the base client library.
+             *
+             * @see PlayServices.base
+             */
+            val basement = module("play-services-basement")
 
             /**
              * Extend your app to the big screen with Google Cast.
@@ -152,6 +197,30 @@ object Google : IsNotADependency {
                  */
                 val tv = module("play-services-cast-tv")
             }
+
+            /**
+             * Chromium network stack (Cronet)
+             *
+             * Cronet takes advantage of multiple technologies that reduce the latency
+             * and increase the throughput of the network requests that your app needs to work.
+             *
+             * Guide: [Perform network operations using Cronet](https://developer.android.com/guide/topics/connectivity/cronet)
+             *
+             * GitHub sample: [GoogleChromeLabs/cronet-sample](https://github.com/GoogleChromeLabs/cronet-sample)
+             */
+            val cronet = module("play-services-cronet")
+
+            /**
+             * Fast IDentity Online (FIDO) Authentication
+             *
+             * FIDO is a set of standards for fast, simple, strong authentication.
+             * It enables app and web developers to use simple APIs to securely authenticate users.
+             *
+             * Guide: [FIDO Authentication](https://developers.google.com/identity/fido)
+             *
+             * Codelab: [Build your first WebAuthn app](https://developers.google.com/codelabs/webauthn-reauth/#0)
+             */
+            val fido = module("play-services-fido")
 
             /** Google Drive */
             val drive = module("play-services-drive")
@@ -242,18 +311,59 @@ object Google : IsNotADependency {
             /** Google Nearby */
             val nearby = module("play-services-nearby")
 
+            /**
+             * Open-source Licenses
+             *
+             * Set of tools designed to give developers an easier way to express the open source software notices
+             * of libraries used in their apps.
+             *
+             * Guide: [Include open source notices](https://developers.google.com/android/guides/opensource)
+             *
+             * GitHub page: [google/play-services-plugins](https://github.com/google/play-services-plugins)
+             *
+             * @see openSourceLicensesPlugin
+             */
+            val openSourceLicenses = module("play-services-oss-licenses")
+
+            /**
+             * Screen lock quality check
+             *
+             * [Usage](https://developer.android.com/work/versions/android-10#screen_lock_quality_check)
+             */
+            val passwordComplexity = module("play-services-password-complexity")
+
             /** Google Panorama Viewer */
             val panorama = module("play-services-panorama")
 
             /** Google Pay for Passes */
             val pay = module("play-services-pay")
 
+            /**
+             * reCAPTCHA Enterprise for app instrumentation
+             *
+             * Guide: [Integrate reCAPTCHA Enterprise with Android apps](https://cloud.google.com/recaptcha-enterprise/docs/instrument-android-apps)
+             *
+             * ### API reference:
+             * - [com.google.android.gms.recaptcha](https://developers.google.com/android/reference/com/google/android/gms/recaptcha/package-summary)
+             */
+            val recaptcha = module("play-services-recaptcha")
+
             /** SafetyNet */
             val safetynet = module("play-services-safetynet")
 
             /**
+             * Google Tag Manager
+             *
+             * The Google Tag Manager interface can be used to implement and manage measurement tags and pixels
+             * in mobile applications without having to rebuild and resubmit application binaries to app marketplaces.
+             *
+             * Guides: [Google Tag Manager](https://developers.google.com/tag-platform/tag-manager/android/v5#next_steps)
+             */
+            val tagmanager = module("play-services-tagmanager")
+
+            /**
              * Google Tasks API (yet another "Future" type, because they're not using Kotlin coroutines yet).
-             * We recommend to use it with [KotlinX.Coroutines.playServices].
+             * We recommend using it with [KotlinX.Coroutines.playServices].
              */
             val tasks = module("play-services-tasks")
 
