@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased]
+## Version 0.40.0 (2022-01-24)
 
 ### New features
 
