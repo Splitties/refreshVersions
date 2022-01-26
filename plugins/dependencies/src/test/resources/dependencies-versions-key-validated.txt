@@ -113,6 +113,7 @@ androidx.games..games-frame-pacing=version.androidx.games-frame-pacing
 androidx.games..games-performance-tuner=version.androidx.games-performance-tuner
 androidx.games..games-text-input=version.androidx.games-text-input
 androidx.glance..glance-appwidget=version.androidx.glance
+androidx.glance..glance-wear-tiles=version.androidx.glance
 androidx.glance..glance=version.androidx.glance
 androidx.gridlayout..gridlayout=version.androidx.gridlayout
 androidx.health..health-services-client=version.androidx.health

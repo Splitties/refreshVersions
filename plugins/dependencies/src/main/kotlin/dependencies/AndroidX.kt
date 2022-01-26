@@ -1360,6 +1360,15 @@ object AndroidX : IsNotADependency {
          * - [androidx.glance.appwidget.unit](https://developer.android.com/reference/kotlin/androidx/glance/appwidget/unit/package-summary)
          */
         val appWidget = module("glance-appwidget")
+
+        /**
+         * Glance allows developers to build layouts for Wear Tiles using a Jetpack Compose-style API.
+         *
+         * ### API reference:
+         * - [androidx.glance.wear.tiles](https://developer.android.com/reference/kotlin/androidx/glance/wear/tiles/package-summary)
+         * - [androidx.glance.wear.tiles.curved](https://developer.android.com/reference/kotlin/androidx/glance/wear/tiles/curved/package-summary)
+         */
+        val wearTiles = module("glance-wear-tiles")
     }
 
     /**
