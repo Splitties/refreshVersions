@@ -116,7 +116,7 @@ private suspend fun lookupAvailableGradleVersions(): List<Version> = coroutineSc
             currentGradleVersion.isSnapshot -> types
             else -> types.filterNot {
                 it == GradleUpdateChecker.VersionType.ReleaseNightly ||
-                        it == GradleUpdateChecker.VersionType.Nightly
+                    it == GradleUpdateChecker.VersionType.Nightly
             }
         }
     }.map { type ->
