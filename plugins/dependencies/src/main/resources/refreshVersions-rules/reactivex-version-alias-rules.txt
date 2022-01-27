@@ -1,5 +1,2 @@
-io.reactivex:*
-             ^
-
 io.reactivex.*:*
-               ^
+             ^.^
