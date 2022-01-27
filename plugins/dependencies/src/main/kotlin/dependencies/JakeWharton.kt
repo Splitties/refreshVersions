@@ -74,8 +74,18 @@ object JakeWharton : IsNotADependency {
         val shimo = module("shimo")
     }
 
+    /**
+     * RxJava binding APIs for Android's UI widgets. This dependency group is for RxJava2.
+     *
+     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding/)
+     */
     val rxBinding3 = RxBinding3
 
+    /**
+     * RxJava binding APIs for Android's UI widgets. This dependency group is for RxJava2.
+     *
+     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding/)
+     */
     object RxBinding3 : DependencyNotationAndGroup(group = "com.jakewharton.rxbinding3", name = "rxbinding") {
 
         val core = module("rxbinding-core")
@@ -99,8 +109,18 @@ object JakeWharton : IsNotADependency {
         val material = module("rxbinding-material")
     }
 
+    /**
+     * RxJava binding APIs for Android's UI widgets. This dependency group is for RxJava3.
+     *
+     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding/)
+     */
     val rxBinding4 = RxBinding4
 
+    /**
+     * RxJava binding APIs for Android's UI widgets. This dependency group is for RxJava3.
+     *
+     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding/)
+     */
     object RxBinding4 : DependencyNotationAndGroup(group = "com.jakewharton.rxbinding4", name = "rxbinding") {
 
         val core = module("rxbinding-core")
@@ -124,7 +144,17 @@ object JakeWharton : IsNotADependency {
         val material = module("rxbinding-material")
     }
 
+    /**
+     * RxJava types that are both an Observable and a Consumer. This dependency group is for RxJava2
+     *
+     * GitHub page: [JakeWharton/RxRelay](https://github.com/JakeWharton/RxRelay/)
+     */
     val rxRelay2 = DependencyNotation(group = "com.jakewharton.rxrelay2", name = "rxrelay")
 
+    /**
+     * RxJava types that are both an Observable and a Consumer. This dependency group is for RxJava3
+     *
+     * GitHub page: [JakeWharton/RxRelay](https://github.com/JakeWharton/RxRelay/)
+     */
     val rxRelay3 = DependencyNotation(group = "com.jakewharton.rxrelay3", name = "rxrelay")
 }
