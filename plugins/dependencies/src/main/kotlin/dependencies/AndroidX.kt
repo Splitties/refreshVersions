@@ -2829,6 +2829,14 @@ object AndroidX : IsNotADependency {
         object Tiles : DependencyNotationAndGroup(group = "androidx.wear.tiles", name = "tiles") {
 
             /**
+             * Material components library for Android Wear Tiles.
+             */
+            val material = module("titles-material")
+
+            /**
+             * Android Wear Tiles Renderer components.
+             * These components can be used to parse and render an already constructed Wear Tile.
+             *
              * Use to preview wear tiles in your own app.
              *
              * ### API reference
@@ -2837,6 +2845,8 @@ object AndroidX : IsNotADependency {
             val renderer = module("tiles-renderer")
 
             /**
+             * Android Wear Tiles Testing Utilities.
+             *
              * Use to test wear tiles.
              *
              * ### API reference
