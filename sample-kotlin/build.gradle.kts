@@ -20,13 +20,17 @@ plugins {
 
 group = "de.fayard"
 
+val testGcs = providers.gradleProperty("refreshVersions.testGcs").forUseAtConfigurationTime().get().toBoolean()
+
 repositories {
     mavenLocal()
     mavenCentral()
     google()
+    if (testGcs) maven(url = "gcs://refreshversions-testing/maven")
 }
 
 dependencies {
+    if (testGcs) implementation("com.example:dummy-library-for-testing:_")
     implementation(AndroidX.core)
     testImplementation(KotlinX.coroutines.core)
     testImplementation(KotlinX.coroutines.jdk8)
