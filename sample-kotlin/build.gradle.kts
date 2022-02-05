@@ -20,7 +20,7 @@ plugins {
 
 group = "de.fayard"
 
-val testGcs = providers.gradleProperty("refreshVersions.testGcs").forUseAtConfigurationTime().get().toBoolean()
+val testGcs = providers.gradleProperty("refreshVersions.testGcs").forUseAtConfigurationTime().orNull.toBoolean()
 
 repositories {
     mavenLocal()
