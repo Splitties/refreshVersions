@@ -15,4 +15,4 @@ internal fun DependencyVersionsFetcher.FailureCause.oneLineSummary(): String = w
         val message = exception.message ?: exception.cause?.message ?: ""
         "error while parsing metadata (${exception.javaClass} ${message})"
     }
-}
+}.replace('\n', ' ').replace("\r", "")
