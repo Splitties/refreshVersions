@@ -64,8 +64,6 @@ internal class MavenDependencyVersionsFetcherGoogleCloudStorage(
             }
         }
     }.getOrElse {
-        System.err.println(errorMessage())
-        it.printStackTrace()
         Xor.Second(FailureCause.CommunicationIssue.NetworkIssue(it as? IOException ?: IOException(it)))
     }
 
