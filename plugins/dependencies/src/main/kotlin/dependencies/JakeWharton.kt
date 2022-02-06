@@ -77,7 +77,7 @@ object JakeWharton : IsNotADependency {
     /**
      * RxJava binding APIs for Android's UI widgets. This dependency group is for RxJava2.
      *
-     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding/)
+     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding)
      */
     val rxBinding3 = RxBinding3
 
@@ -107,7 +107,7 @@ object JakeWharton : IsNotADependency {
     /**
      * RxJava binding APIs for Android's UI widgets. This dependency group is for RxJava3.
      *
-     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding/)
+     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding)
      */
     val rxBinding4 = RxBinding4
 
@@ -137,14 +137,14 @@ object JakeWharton : IsNotADependency {
     /**
      * RxJava types that are both an Observable and a Consumer. This dependency group is for RxJava2
      *
-     * GitHub page: [JakeWharton/RxRelay](https://github.com/JakeWharton/RxRelay/)
+     * GitHub page: [JakeWharton/RxRelay](https://github.com/JakeWharton/RxRelay)
      */
     val rxRelay2 = DependencyNotation(group = "com.jakewharton.rxrelay2", name = "rxrelay")
 
     /**
      * RxJava types that are both an Observable and a Consumer. This dependency group is for RxJava3
      *
-     * GitHub page: [JakeWharton/RxRelay](https://github.com/JakeWharton/RxRelay/)
+     * GitHub page: [JakeWharton/RxRelay](https://github.com/JakeWharton/RxRelay)
      */
     val rxRelay3 = DependencyNotation(group = "com.jakewharton.rxrelay3", name = "rxrelay")
 }
