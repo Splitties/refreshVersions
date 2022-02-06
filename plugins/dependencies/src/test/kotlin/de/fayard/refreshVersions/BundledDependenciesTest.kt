@@ -137,6 +137,7 @@ class BundledDependenciesTest {
                 (receivedMapping - existingMapping) should haveSize(0)
             }
         } else if (breakingChanges.isNotEmpty()) {
+            //TODO: Should we filter out the "NO-RULE" ones?
             removedKeys.appendText(
                 text = breakingChanges.joinToString(separator = "\n", postfix = "\n")
             )
