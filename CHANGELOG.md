@@ -11,6 +11,15 @@
 
 - AndroidX.glance.wearTiles
 - AndroidX.wear.tiles.material
+- Google.android.maps
+    - compose
+    - utils
+    - utils.ktx
+    - ktx
+    - rx
+    - places
+        - ktx
+        - rx
 - ReactiveX
     - rxJava2
         - rxAndroid
