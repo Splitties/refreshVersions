@@ -41,7 +41,7 @@ publishing {
 }
 
 dependencies {
-    implementation(gradleKotlinDsl())
+    compileOnly(gradleKotlinDsl())
     implementation(KotlinX.coroutines.core)
     implementation(Square.okHttp3)
     implementation(Square.okHttp3.loggingInterceptor)
