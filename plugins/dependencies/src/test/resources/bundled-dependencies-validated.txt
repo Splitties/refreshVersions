@@ -377,6 +377,7 @@ com.google.android.gms:play-services-vision
 com.google.android.gms:play-services-wallet
 com.google.android.gms:play-services-wearable
 com.google.android.gms:strict-version-matcher-plugin
+com.google.android.libraries.places:places
 com.google.android.material:compose-theme-adapter
 com.google.android.material:material
 com.google.android.play:core
@@ -445,6 +446,11 @@ com.google.firebase:firebase-storage
 com.google.firebase:firebase-storage-ktx
 com.google.firebase:perf-plugin
 com.google.gms:google-services
+com.google.maps.android:android-maps-utils
+com.google.maps.android:maps-compose
+com.google.maps.android:maps-ktx
+com.google.maps.android:maps-rx
+com.google.maps.android:maps-utils-ktx
 com.google.mlkit:barcode-scanning
 com.google.mlkit:digital-ink-recognition
 com.google.mlkit:entity-extraction

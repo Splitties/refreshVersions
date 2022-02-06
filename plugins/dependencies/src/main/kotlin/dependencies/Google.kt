@@ -109,6 +109,117 @@ object Google : IsNotADependency {
          */
         val flexbox = DependencyNotation("com.google.android.flexbox", "flexbox")
 
+        /**
+         * Contains extension libraries for Google Maps for Android.
+         *
+         * @see Google.Android.PlayServices.maps
+         */
+        val maps = Maps
+
+        object Maps : DependencyGroup(group = "com.google.maps.android") {
+
+            /**
+             * Kotlin extensions for Google Maps
+             *
+             * Make sure to also add a dependency on `Google.android.playServices.maps` because it is updated
+             * separately from this library.
+             *
+             * GitHub repo: [googlemaps/android-maps-ktx](https://github.com/googlemaps/android-maps-ktx)
+             *
+             * @see Google.Android.PlayServices.maps
+             */
+            val ktx = module("maps-ktx")
+
+            /**
+             * Jetpack Compose components for the Maps SDK for Android
+             *
+             * Make sure to also add a dependency on `Google.android.playServices.maps` because it is updated
+             * separately from this library.
+             *
+             * GitHub repo: [googlemaps/android-maps-compose](https://github.com/googlemaps/android-maps-compose)
+             *
+             * @see Google.Android.PlayServices.maps
+             */
+            val compose = module("maps-compose")
+
+            /**
+             * RxJava bindings for the Maps SDK for Android
+             *
+             * Make sure to also add a dependency on `Google.android.playServices.maps` because it is updated
+             * separately from this library.
+             *
+             * GitHub repo: [googlemaps/android-maps-rx](https://github.com/googlemaps/android-maps-rx)
+             *
+             * @see Google.Android.PlayServices.maps
+             * @see Google.Android.Maps.ktx
+             */
+            val rx = module("maps-rx")
+
+            /**
+             * Maps SDK for Android Utility Library
+             *
+             * Make sure to also add a dependency on `Google.android.playServices.maps` because it is updated
+             * separately from this library.
+             *
+             * GitHub repo: [googlemaps/android-maps-utils](https://github.com/googlemaps/android-maps-utils)
+             *
+             * @see Google.Android.Maps.Utils.ktx
+             */
+            val utils = Utils
+
+            object Utils : DependencyNotationAndGroup(group = group, name = "android-maps-utils") {
+
+                /**
+                 * Kotlin extensions for the [Google.Android.Maps.utils] library.
+                 *
+                 * Make sure to also add a dependency on `Google.android.maps.utils` because it is updated
+                 * separately from the KTX library.
+                 *
+                 * GitHub repo: [googlemaps/android-maps-ktx](https://github.com/googlemaps/android-maps-ktx)
+                 *
+                 * @see Google.Android.Maps.utils
+                 */
+                val ktx = module("maps-utils-ktx")
+            }
+
+            /**
+             * Places SDK for Android
+             *
+             * [Overview](https://developers.google.com/maps/documentation/places/android-sdk/overview)
+             */
+            val places = Places
+
+            object Places : DependencyNotationAndGroup(group = "com.google.android.libraries.places", name = "places") {
+
+                /**
+                 * Kotlin extensions for the Places SDK for Android
+                 *
+                 * Make sure to also add a dependency on `Google.android.maps.places` because it is updated
+                 * separately from this library.
+                 *
+                 * [Official webpage](https://developers.google.com/maps/documentation/places/android-sdk/ktx)
+                 *
+                 * GitHub repo: [googlemaps/android-maps-ktx](https://github.com/googlemaps/android-maps-ktx)
+                 *
+                 * @see Google.Android.Maps.places
+                 */
+                val ktx = DependencyNotation(Maps.group, "maps-ktx")
+
+                /**
+                 * RxJava bindings for the Places SDK for Android
+                 *
+                 * Make sure to also add a dependency on `Google.android.maps.places` because it is updated
+                 * separately from this library.
+                 *
+                 * GitHub repo: [googlemaps/android-maps-rx](https://github.com/googlemaps/android-maps-rx)
+                 *
+                 * @see Google.Android.Maps.places
+                 * @see Google.Android.Maps.Places.ktx
+                 */
+                val rx = DependencyNotation(Maps.group, "maps-rx")
+            }
+        }
+
         val material = Material
 
         object Material : DependencyNotationAndGroup(group = "com.google.android.material", name = "material") {
