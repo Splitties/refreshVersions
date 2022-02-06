@@ -6,6 +6,7 @@
 
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
 object JakeWharton : IsNotADependency {
@@ -72,4 +73,78 @@ object JakeWharton : IsNotADependency {
          */
         val shimo = module("shimo")
     }
+
+    /**
+     * RxJava binding APIs for Android's UI widgets. This dependency group is for RxJava2.
+     *
+     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding)
+     */
+    val rxBinding3 = RxBinding3
+
+    object RxBinding3 : DependencyNotationAndGroup(group = "com.jakewharton.rxbinding3", name = "rxbinding") {
+
+        val core = module("rxbinding-core")
+
+        val appcompat = module("rxbinding-appcompat")
+
+        val drawerLayout = module("rxbinding-drawerlayout")
+
+        val leanback = module("rxbinding-leanback")
+
+        val recyclerview = module("rxbinding-recyclerview")
+
+        val slidingPaneLayout = module("rxbinding-slidingpanelayout")
+
+        val swipeRefreshLayout = module("rxbinding-swiperefreshlayout")
+
+        val viewPager = module("rxbinding-viewpager")
+
+        val viewPager2 = module("rxbinding-viewpager2")
+
+        val material = module("rxbinding-material")
+    }
+
+    /**
+     * RxJava binding APIs for Android's UI widgets. This dependency group is for RxJava3.
+     *
+     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding)
+     */
+    val rxBinding4 = RxBinding4
+
+    object RxBinding4 : DependencyNotationAndGroup(group = "com.jakewharton.rxbinding4", name = "rxbinding") {
+
+        val core = module("rxbinding-core")
+
+        val appcompat = module("rxbinding-appcompat")
+
+        val drawerLayout = module("rxbinding-drawerlayout")
+
+        val leanback = module("rxbinding-leanback")
+
+        val recyclerview = module("rxbinding-recyclerview")
+
+        val slidingPaneLayout = module("rxbinding-slidingpanelayout")
+
+        val swipeRefreshLayout = module("rxbinding-swiperefreshlayout")
+
+        val viewPager = module("rxbinding-viewpager")
+
+        val viewPager2 = module("rxbinding-viewpager2")
+
+        val material = module("rxbinding-material")
+    }
+
+    /**
+     * RxJava types that are both an Observable and a Consumer. This dependency group is for RxJava2
+     *
+     * GitHub page: [JakeWharton/RxRelay](https://github.com/JakeWharton/RxRelay)
+     */
+    val rxRelay2 = DependencyNotation(group = "com.jakewharton.rxrelay2", name = "rxrelay")
+
+    /**
+     * RxJava types that are both an Observable and a Consumer. This dependency group is for RxJava3
+     *
+     * GitHub page: [JakeWharton/RxRelay](https://github.com/JakeWharton/RxRelay)
+     */
+    val rxRelay3 = DependencyNotation(group = "com.jakewharton.rxrelay3", name = "rxrelay")
 }
