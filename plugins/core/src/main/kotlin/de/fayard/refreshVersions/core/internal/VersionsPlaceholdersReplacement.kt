@@ -10,6 +10,7 @@ import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.readFromFile
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewEntry
 import kotlinx.coroutines.runBlocking
+import okhttp3.OkHttpClient
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
@@ -281,18 +282,35 @@ private fun `Write versions candidates using latest most stable version and get 
     propertyName: String,
     dependency: Dependency,
     moduleId: ModuleId
+): String = RefreshVersionsConfigHolder.withHttpClient { httpClient ->
+    `Write versions candidates using latest most stable version and get it`(
+        httpClient = httpClient,
+        repositories = repositories,
+        propertyName = propertyName,
+        dependency = dependency,
+        moduleId = moduleId
+    )
+}
+
+@Suppress("FunctionName")
+private fun `Write versions candidates using latest most stable version and get it`(
+    httpClient: OkHttpClient,
+    repositories: List<ArtifactRepository>,
+    propertyName: String,
+    dependency: Dependency,
+    moduleId: ModuleId
 ): String {
     val dependencyVersionsFetchers = when (moduleId) {
         is ModuleId.Maven -> repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
             DependencyVersionsFetcher.forMaven(
-                httpClient = RefreshVersionsConfigHolder.httpClient,
+                httpClient = httpClient,
                 dependency = dependency,
                 repository = repo
             )
         }
         is ModuleId.Npm -> listOf(
             DependencyVersionsFetcher.forNpm(
-                httpClient = RefreshVersionsConfigHolder.httpClient,
+                httpClient = httpClient,
                 npmDependency = dependency,
                 npmRegistry = "https://registry.npmjs.org/" //TODO: Support custom npm registries.
             )

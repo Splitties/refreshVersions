@@ -2,13 +2,11 @@ package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
-import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
-import de.fayard.refreshVersions.core.internal.configureLintIfRunningOnAnAndroidProject
-import de.fayard.refreshVersions.core.internal.lookupVersionCandidates
 import de.fayard.refreshVersions.core.internal.problems.log
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
-import kotlinx.coroutines.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.tasks.Input
@@ -60,12 +58,16 @@ open class RefreshVersionsTask : DefaultTask() {
             val lintUpdatingProblemsAsync = async {
                 configureLintIfRunningOnAnAndroidProject(settings, RefreshVersionsConfigHolder.readVersionsMap())
             }
-            val result = lookupVersionCandidates(
-                httpClient = RefreshVersionsConfigHolder.httpClient,
-                project = project,
-                versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
-                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-            )
+            val result = RefreshVersionsConfigHolder.withHttpClient({ message ->
+                logger.info(message)
+            }) { httpClient ->
+                lookupVersionCandidates(
+                    httpClient = httpClient,
+                    project = project,
+                    versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
+                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+                )
+            }
             VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
             SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
                 rootProject = project,
