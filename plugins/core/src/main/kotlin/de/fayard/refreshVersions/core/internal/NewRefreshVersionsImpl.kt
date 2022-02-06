@@ -89,7 +89,7 @@ internal suspend fun lookupVersionCandidates(
         }
 
         val gradleUpdatesAsync = async {
-            if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions() else emptyList()
+            if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions(httpClient) else emptyList()
         }
 
         val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
@@ -106,8 +106,8 @@ internal suspend fun lookupVersionCandidates(
     }
 }
 
-private suspend fun lookupAvailableGradleVersions(): List<Version> = coroutineScope {
-    val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient)
+private suspend fun lookupAvailableGradleVersions(httpClient: OkHttpClient): List<Version> = coroutineScope {
+    val checker = GradleUpdateChecker(httpClient)
     val currentGradleVersion = GradleVersion.current()
     GradleUpdateChecker.VersionType.values().filterNot {
         it == GradleUpdateChecker.VersionType.All
@@ -116,7 +116,7 @@ private suspend fun lookupAvailableGradleVersions(): List<Version> = coroutineSc
             currentGradleVersion.isSnapshot -> types
             else -> types.filterNot {
                 it == GradleUpdateChecker.VersionType.ReleaseNightly ||
-                        it == GradleUpdateChecker.VersionType.Nightly
+                    it == GradleUpdateChecker.VersionType.Nightly
             }
         }
     }.map { type ->
@@ -194,7 +194,7 @@ private fun getDependencyVersionFetchers(
     if (dependency::class.simpleName == "NpmDependency") {
         (npmRegistries ?: listOf("https://registry.npmjs.org/")).map { registryUrl ->
             DependencyVersionsFetcher.forNpm(
-                httpClient = RefreshVersionsConfigHolder.httpClient,
+                httpClient = httpClient,
                 npmDependency = dependency,
                 npmRegistry = registryUrl
             )

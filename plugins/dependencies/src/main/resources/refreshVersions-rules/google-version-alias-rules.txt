@@ -7,6 +7,21 @@ com.google.firebase:firebase-*
 com.google.accompanist:accompanist-*
     ^^^^^^.^^^^^^^^^^^
 
+com.google.android.libraries.places:places
+    ^^^^^^.^^^^^^^.          ^^^^^^
+
+com.google.maps.android:*
+    ^^^^^^.     ^^^^^^^.^
+
+com.google.maps.android:android-maps-utils
+    ^^^^^^.     ^^^^^^^.        ^^^^^^^^^^
+
+com.google.maps.android:maps-ktx
+    ^^^^^^.     ^^^^^^^.^^^^^^^^
+
+com.google.maps.android:maps-utils-ktx
+    ^^^^^^.     ^^^^^^^.^^^^^      ^^^
+
 com.google.android.material:material
     ^^^^^^^^^^^^^^^^^^^^^^^
 

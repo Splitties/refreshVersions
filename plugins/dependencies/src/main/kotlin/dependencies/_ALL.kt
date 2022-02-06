@@ -17,6 +17,7 @@ import Kotlin
 import KotlinX
 import Ktor
 import Orchid
+import ReactiveX
 import RussHWolf
 import Splitties
 import Spring
@@ -40,6 +41,7 @@ internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     Kotlin,
     KotlinX,
     Ktor,
+    ReactiveX,
     RussHWolf,
     Orchid,
     Splitties,

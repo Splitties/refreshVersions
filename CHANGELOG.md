@@ -1,5 +1,53 @@
 # Change log for refreshVersions
 
+## Version 0.40.1 (2022-02-06)
+
+### Fixes
+
+- Improved support of Gradle configuration cache. In the previous release, if you ran the `refreshVersions` task twice in a row with configuration cache enabled, the second run would fail, even in warning mode. It's now fixed.
+- To make refreshVersions compatible with GCS (Google Cloud Storage) hosted maven repositories (which can be helpful for company/team internal libraries), we were using the official library from Google. Unfortunately, this led to dependency hell to some of our users because it then requires a specific version of Guava, which could be different from the one required by other plugins, and the one from refreshVersions would prevail. So, to resolve these problems, we replaced our implementation with one that reuses Gradle's built-in `GcsClient`, and we're very happy with that because it also has the benefit of reducing the total size of refreshVersions when we include its dependencies. Note that this is using internal Gradle APIs, but we've seen that they didn't change in 5 years, and the code path is executed only if you have gcs backed repositories in your project.
+
+### New dependency notations:
+
+- AndroidX.glance.wearTiles
+- AndroidX.wear.tiles.material
+- ReactiveX
+    - rxJava2
+        - rxAndroid
+        - rxKotlin
+    - rxJava3
+        - rxAndroid
+        - rxKotlin
+- JakeWharton
+    - rxBinding3
+        - appcompat
+        - core
+        - drawerLayout
+        - leanback
+        - material
+        - recyclerview
+        - slidingPaneLayout
+        - swipeRefreshLayout
+        - viewPager2
+        - viewPager
+    - rxBinding4
+        - appcompat
+        - core
+        - drawerLayout
+        - leanback
+        - material
+        - recyclerview
+        - slidingPaneLayout
+        - swipeRefreshLayout
+        - viewPager2
+        - viewPager
+    - rxRelay2
+    - rxRelay3
+
+### Credits
+
+Thanks to [Mike Gray](https://github.com/mgray88) for the contribution in adding ReactiveX, RxBinding, and RxRelay dependency notations!
+
 ## Version 0.40.0 (2022-01-24)
 
 ### New features

@@ -7,16 +7,10 @@ import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
 import de.fayard.refreshVersions.core.internal.versions.readFromFile
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
-import org.gradle.api.invocation.Gradle
-import org.gradle.api.services.BuildService
-import org.gradle.api.services.BuildServiceParameters
-import org.gradle.kotlin.dsl.registerIfAbsent
 import java.io.File
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
@@ -73,14 +67,21 @@ object RefreshVersionsConfigHolder {
         sortingMode = VersionCandidatesResultMode.SortingMode.ByVersion
     )
 
-    internal val httpClient: OkHttpClient by resettableDelegates.Lazy {
-        OkHttpClient.Builder()
-            .addInterceptor( //TODO: Allow disabling/configuring logging.
-                HttpLoggingInterceptor { message ->
-                    println(message)
-                }.setLevel(HttpLoggingInterceptor.Level.BASIC)
+    internal inline fun <R> withHttpClient(
+        noinline logHttpCall: ((String) -> Unit)? = { message -> println(message) },
+        block: (httpClient: OkHttpClient) -> R
+    ): R {
+        val client = OkHttpClient.Builder().let { builder ->
+            if (logHttpCall == null) builder
+            else builder.addInterceptor( //TODO: Allow disabling/configuring logging.
+                HttpLoggingInterceptor(logHttpCall).setLevel(HttpLoggingInterceptor.Level.BASIC)
             )
-            .build()
+        }.build()
+        try {
+            return block(client)
+        } finally {
+            client.dispatcher.executorService.shutdown()
+        }
     }
 
     internal fun initialize(
@@ -90,7 +91,6 @@ object RefreshVersionsConfigHolder {
         versionsPropertiesFile: File
     ) {
         require(settings.isBuildSrc.not())
-        ClearStaticStateBuildService.ensureRegistered(settings.gradle)
         this.settings = settings
 
         this.versionsPropertiesFile = versionsPropertiesFile.also {
@@ -131,7 +131,6 @@ object RefreshVersionsConfigHolder {
                     e
                 )
             }
-            ClearStaticStateBuildService.ensureRegistered(settings.gradle)
         }
     }
 
@@ -190,27 +189,4 @@ object RefreshVersionsConfigHolder {
 
     private val Settings.versionsPropertiesFileFile: File
         get() = rootDir.resolve("build").resolve("refreshVersions_versionsPropertiesFilePath.bin")
-
-    @Suppress("UnstableApiUsage")
-    internal abstract class ClearStaticStateBuildService : BuildService<BuildServiceParameters.None>, AutoCloseable {
-
-        companion object {
-            fun ensureRegistered(gradle: Gradle) {
-                gradle.sharedServices.registerIfAbsent(
-                    name = Companion::class.java.name,
-                    implementationType = ClearStaticStateBuildService::class
-                ) {}.get()
-            }
-        }
-
-        override fun close() {
-            httpClient.dispatcher.executorService.shutdown()
-            @OptIn(DelicateCoroutinesApi::class)
-            Dispatchers.shutdown()
-            resettableDelegates.reset()
-            // Clearing static state is needed because Gradle holds onto previous builds, yet,
-            // duplicates static state.
-            // We need to beware of never retaining Gradle objects.
-        }
-    }
 }
