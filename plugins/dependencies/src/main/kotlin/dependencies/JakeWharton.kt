@@ -81,11 +81,6 @@ object JakeWharton : IsNotADependency {
      */
     val rxBinding3 = RxBinding3
 
-    /**
-     * RxJava binding APIs for Android's UI widgets. This dependency group is for RxJava2.
-     *
-     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding/)
-     */
     object RxBinding3 : DependencyNotationAndGroup(group = "com.jakewharton.rxbinding3", name = "rxbinding") {
 
         val core = module("rxbinding-core")
@@ -116,11 +111,6 @@ object JakeWharton : IsNotADependency {
      */
     val rxBinding4 = RxBinding4
 
-    /**
-     * RxJava binding APIs for Android's UI widgets. This dependency group is for RxJava3.
-     *
-     * GitHub page: [JakeWharton/RxBinding](https://github.com/JakeWharton/RxBinding/)
-     */
     object RxBinding4 : DependencyNotationAndGroup(group = "com.jakewharton.rxbinding4", name = "rxbinding") {
 
         val core = module("rxbinding-core")
