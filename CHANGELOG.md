@@ -11,6 +11,42 @@
 
 - AndroidX.glance.wearTiles
 - AndroidX.wear.tiles.material
+- ReactiveX
+    - rxJava2
+        - rxAndroid
+        - rxKotlin
+    - rxJava3
+        - rxAndroid
+        - rxKotlin
+- JakeWharton
+    - rxBinding3
+        - appcompat
+        - core
+        - drawerLayout
+        - leanback
+        - material
+        - recyclerview
+        - slidingPaneLayout
+        - swipeRefreshLayout
+        - viewPager2
+        - viewPager
+    - rxBinding4
+        - appcompat
+        - core
+        - drawerLayout
+        - leanback
+        - material
+        - recyclerview
+        - slidingPaneLayout
+        - swipeRefreshLayout
+        - viewPager2
+        - viewPager
+    - rxRelay2
+    - rxRelay3
+
+### Credits
+
+Thanks to [Mike Gray](https://github.com/mgray88) for the contribution in adding ReactiveX, RxBinding, and RxRelay dependency notations!
 
 ## Version 0.40.0 (2022-01-24)
 
