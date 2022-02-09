@@ -17,6 +17,7 @@ import org.gradle.kotlin.dsl.IsNotADependency
  *
  * TODO: Finish KDoc of undocumented artifact constants. Also link to their KDoc.
  */
+@Deprecated("Replace by Ktor2 if you use version >= 2.0.0", ReplaceWith("Ktor2"))
 object Ktor : DependencyGroup("io.ktor",
     rawRules = """
         io.ktor:*
