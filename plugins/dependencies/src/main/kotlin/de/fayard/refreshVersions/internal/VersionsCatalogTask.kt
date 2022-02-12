@@ -1,12 +1,14 @@
-package de.fayard.refreshVersions.core
+package de.fayard.refreshVersions.internal
 
+import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.internal.Case
 import de.fayard.refreshVersions.core.internal.Deps
+import de.fayard.refreshVersions.core.internal.Library
 import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
+import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.checkModeAndNames
 import de.fayard.refreshVersions.core.internal.computeUseFqdnFor
 import de.fayard.refreshVersions.core.internal.findDependencies
-import de.fayard.refreshVersions.core.internal.OutputFile
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.tasks.TaskAction
@@ -39,13 +41,22 @@ open class VersionsCatalogTask : DefaultTask() {
     fun taskUpdateVersionsCatalog() {
         val catalog = OutputFile.GRADLE_VERSIONS_CATALOG
 
-        val allDependencies = project.findDependencies()
+        val builtInDependencies = getArtifactNameToConstantMapping()
+            .map { Library(it.group, it.artifact, "_") }
+            .toSet()
+
+        val allDependencies: List<Library> = project.findDependencies()
+
+        val nonBuiltInDependencies = allDependencies
+            .filter { it.copy(version = "_") !in builtInDependencies }
+
         val resolvedUseFqdn: List<String> = computeUseFqdnFor(
-            libraries = allDependencies,
+            libraries = nonBuiltInDependencies,
             configured = emptyList(),
             byDefault = MEANING_LESS_NAMES
         )
-        val deps: Deps = allDependencies.checkModeAndNames(resolvedUseFqdn, Case.`kebab-case`)
+
+        val deps: Deps = nonBuiltInDependencies.checkModeAndNames(resolvedUseFqdn, Case.`kebab-case`)
         val currentText = if (catalog.existed) catalog.readText(project) else ""
         val newText = versionsCatalog(deps, currentText)
         catalog.writeText(newText, project)
