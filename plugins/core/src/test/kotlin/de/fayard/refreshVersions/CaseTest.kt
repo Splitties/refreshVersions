@@ -15,9 +15,9 @@ class CaseTest : StringSpec({
         "dagger_compiler" to "dagger-compiler"
     )
 
-    "From snake_case to dot.case" {
-        transformations.forAll { (snake, dot) ->
-            Case.`kebab-case`.convert(snake) shouldBe dot
+    "From snake_case to kebab-case" {
+        transformations.forAll { (snake, kebab) ->
+            Case.`kebab-case`.convert(snake) shouldBe kebab
         }
     }
 

@@ -11,7 +11,6 @@ import org.gradle.api.initialization.Settings
 import org.gradle.api.invocation.Gradle
 import org.gradle.kotlin.dsl.*
 import java.io.InputStream
-import de.fayard.refreshVersions.internal.VersionsCatalogTask
 
 open class RefreshVersionsPlugin : Plugin<Any> {
 
