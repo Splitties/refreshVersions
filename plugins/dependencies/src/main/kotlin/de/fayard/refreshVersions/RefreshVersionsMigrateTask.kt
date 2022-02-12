@@ -42,7 +42,7 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
         val versionCatalog = try {
             project.extensions.getByType<VersionCatalogsExtension>().named("libs")
         } catch (e: UnknownDomainObjectException) {
-            println("w: refreshVersionsMigrate ignoring error $e")
+            // File gradle/libs.versions.toml does not exist
             return emptyMap()
         }
 

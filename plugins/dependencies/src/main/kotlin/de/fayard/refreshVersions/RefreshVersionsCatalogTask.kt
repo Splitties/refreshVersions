@@ -17,30 +17,25 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.util.GradleVersion
 
 @Suppress("UnstableApiUsage")
-open class VersionsCatalogTask : DefaultTask() {
+open class RefreshVersionsCatalogTask : DefaultTask() {
 
     @TaskAction
-    fun checkGradleVersion() {
+    fun refreshVersionsCatalogAction() {
+        // Check Gradle version
         if (currentGradleVersion < versionWithVersionsCatalog) {
             throw GradleException(
                 """
                 |Gradle versions catalogs are not supported in $currentGradleVersion
                 |Upgrade Gradle with this command
-                |     ./gradlew wrapper --gradle-version $versionWithVersionsCatalog
+                |     ./gradlew wrapper --gradle-version ${versionWithVersionsCatalog.version}
             """.trimMargin()
             )
         }
-    }
 
-
-    @TaskAction
-    fun addMissingEntries() {
+        // Update versions.properties
         addMissingEntriesInVersionsProperties(project)
-    }
 
-
-    @TaskAction
-    fun taskUpdateVersionsCatalog() {
+        // Generate gradle/libs.versions.toml
         val catalog = OutputFile.GRADLE_VERSIONS_CATALOG
 
         val builtInDependencies = getArtifactNameToConstantMapping()
@@ -72,8 +67,8 @@ open class VersionsCatalogTask : DefaultTask() {
     }
 
     companion object {
-        val currentGradleVersion = GradleVersion.current()
-        val versionWithVersionsCatalog = GradleVersion.version("7.4")
+        val currentGradleVersion: GradleVersion = GradleVersion.current()
+        val versionWithVersionsCatalog: GradleVersion = GradleVersion.version("7.4")
     }
 }
 

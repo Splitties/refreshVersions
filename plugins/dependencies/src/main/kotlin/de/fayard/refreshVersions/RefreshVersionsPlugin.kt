@@ -177,7 +177,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 println(getArtifactNameToConstantMapping().joinToString("\n"))
             }
         }
-        project.tasks.register<VersionsCatalogTask>(
+        project.tasks.register<RefreshVersionsCatalogTask>(
             name = "refreshVersionsCatalog"
         ) {
             group = "refreshVersions"
