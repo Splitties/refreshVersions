@@ -2,40 +2,51 @@
 
 package dependencies
 
+import Android
 import AndroidX
 import COIL
 import CashApp
+import Chucker
 import Firebase
 import Google
 import Http4k
 import JakeWharton
 import Kodein
+import Koin
 import Kotlin
 import KotlinX
 import Ktor
 import Orchid
+import ReactiveX
+import RussHWolf
 import Splitties
 import Spring
 import Square
 import Testing
+import Touchlab
 
 // All top-level objects holding dependency notations shall be added in this list.
 internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
+    Android,
     AndroidX,
     CashApp,
-    Google,
-    JakeWharton,
+    Chucker,
+    COIL,
     Firebase,
+    Google,
+    Http4k,
+    JakeWharton,
     Kodein,
+    Koin,
     Kotlin,
     KotlinX,
-    Splitties,
-    Square,
     Ktor,
-    Testing,
-    COIL,
-    Kodein,
+    ReactiveX,
+    RussHWolf,
     Orchid,
+    Splitties,
     Spring,
-    Http4k
+    Square,
+    Testing,
+    Touchlab
 )

@@ -1,6 +1,7 @@
 pluginManagement {
     repositories {
         mavenLocal()
+        mavenCentral()
         gradlePluginPortal()
     }
 
@@ -14,7 +15,7 @@ pluginManagement {
 }
 
 plugins {
-    id("com.gradle.enterprise").version("3.1.1")
+    id("com.gradle.enterprise").version("3.8")
     id("de.fayard.refreshVersions")
 }
 

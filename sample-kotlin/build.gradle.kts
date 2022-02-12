@@ -20,23 +20,20 @@ plugins {
 
 group = "de.fayard"
 
+val testGcs = providers.gradleProperty("refreshVersions.testGcs").forUseAtConfigurationTime().orNull == "true"
+
 repositories {
     mavenLocal()
     mavenCentral()
     google()
+    if (testGcs) maven(url = "gcs://refreshversions-testing/maven")
 }
 
-fun DependencyHandler.implementations(deps: List<String>) =
-    deps.forEach { implementation(it) }
-
-fun DependencyHandler.testImplementations(deps: List<String>) =
-    deps.forEach { testImplementation(it) }
-
 dependencies {
-
-    implementations(listOf(AndroidX.browser, AndroidX.cardView))
+    if (testGcs) implementation("com.example:dummy-library-for-testing:_")
     implementation(AndroidX.core)
-    testImplementations(listOf(KotlinX.coroutines.core, KotlinX.coroutines.jdk8))
+    testImplementation(KotlinX.coroutines.core)
+    testImplementation(KotlinX.coroutines.jdk8)
     testImplementation(Testing.kotest.runner.junit4)
     testImplementation("junit:junit:4.12")
     implementation("com.google.guava:guava:15.0")
@@ -66,15 +63,15 @@ getKotlinPluginVersion().let {
     }
 }
 
-tasks.register("run", JavaExec::class.java) {
-    this.main = "de.fayard.GuavaTest"
+tasks.register<JavaExec>("run") {
+    mainClass.set("de.fayard.GuavaTest")
 }
 
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-tasks.withType(JavaExec::class.java) {
+tasks.withType<JavaExec>().configureEach {
     classpath = sourceSets["main"].runtimeClasspath
 }
 

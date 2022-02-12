@@ -1,7 +1,58 @@
-# https://help.github.com/en/github/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions
-# https://github.com/marketplace/actions/gradle-command
+# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
+
+# Yes, booleans used here are 'strings' despite the type of input being declared as boolean because… well, see here:
+# https://docs.github.com/en/actions/learn-github-actions/expressions
+
+# https://github.com/marketplace/actions/gradle-build-action
 name: Check build and tests of plugins and samples
 on:
+  workflow_dispatch:
+    inputs:
+      run-refreshVersions-task:
+        description: "Run the refreshVersions task"
+        required: true
+        type: boolean
+        default: 'false'
+      sample-kotlin:
+        description: "Enable sample-kotlin"
+        required: true
+        type: boolean
+        default: 'true'
+      sample-groovy:
+        description: "Enable sample-groovy"
+        required: true
+        type: boolean
+        default: 'true'
+      sample-multi-modules:
+        description: "Enable sample-multi-modules"
+        required: true
+        type: boolean
+        default: 'true'
+      sample-kotlin-js:
+        description: "Enable sample-kotlin-js"
+        required: true
+        type: boolean
+        default: 'true'
+      sample-android:
+        description: "Enable sample-android"
+        required: true
+        type: boolean
+        default: 'false'
+      run-on:
+        type: choice
+        description: "Where to run this workflow"
+        default: 'ubuntu-latest'
+        required: true
+        options:
+          - windows-2022
+          - windows-2019
+          - windows-latest
+          - macos-11
+          - macos-10.5
+          - macos-latest
+          - ubuntu-20.04
+          - ubuntu-18.04
+          - ubuntu-latest
   pull_request:
     paths:
       - 'plugins/**'
@@ -26,29 +77,97 @@ on:
       - '!docs/**'
 jobs:
   check-all:
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event.inputs.run-on || 'ubuntu-latest' }}
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-java@v1
+      - name: "Enable long paths for git Windows"
+        if: ${{ runner.os == 'Windows' }}
+        run: git config --global core.longpaths true
+      - uses: actions/checkout@v2
+      - name: "Configure JDK"
+        uses: actions/setup-java@v2
         with:
-          java-version: 11
-      - uses: eskatos/gradle-command-action@v1
+          distribution: 'adopt'
+          java-version: '11'
+      - name: "Check plugins and publish them to MavenLocal"
+        uses: gradle/gradle-build-action@v2
         with:
-          wrapper-directory: plugins
+          gradle-executable: plugins/gradlew
           build-root-directory: plugins
           arguments: check publishToMavenLocal --stacktrace
-      - uses: eskatos/gradle-command-action@v1
+      - name: "Run refreshVersions on sample-kotlin"
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.sample-kotlin == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
+        uses: gradle/gradle-build-action@v2
         with:
-          wrapper-directory: sample-kotlin
+          gradle-executable: sample-kotlin/gradlew
           build-root-directory: sample-kotlin
-          arguments: check --stacktrace
-      - uses: eskatos/gradle-command-action@v1
+          arguments: refreshVersions --stacktrace
+      - name: "Check sample-kotlin"
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.sample-kotlin == 'true' }}
+        uses: gradle/gradle-build-action@v2
         with:
-          wrapper-directory: sample-groovy
+          gradle-executable: sample-kotlin/gradlew
+          build-root-directory: sample-kotlin
+          arguments: check --stacktrace --configuration-cache
+      - name: "Run refreshVersions on sample-groovy"
+        if: ${{ github.event.inputs.sample-groovy == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-groovy/gradlew
+          build-root-directory: sample-groovy
+          arguments: refreshVersions --stacktrace
+      - name: "Check sample-groovy"
+        if: ${{ github.event.inputs.sample-groovy == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-groovy/gradlew
           build-root-directory: sample-groovy
           arguments: check --stacktrace
-      - uses: eskatos/gradle-command-action@v1
+      - name: "Check buildSrc of sample-groovy (simulates IDE Gradle sync)"
+        if: ${{ github.event.inputs.sample-groovy == 'true' }}
+        uses: gradle/gradle-build-action@v2
         with:
-          wrapper-directory: sample-multi-modules
+          gradle-executable: sample-groovy/gradlew
+          build-root-directory: sample-groovy/buildSrc
+          arguments: help --stacktrace
+      - name: "Run refreshVersions on sample-multi-modules"
+        if: ${{ github.event.inputs.sample-multi-modules == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-multi-modules/gradlew
           build-root-directory: sample-multi-modules
+          arguments: refreshVersions --stacktrace
+      - name: "Check sample-multi-modules"
+        if: ${{ github.event.inputs.sample-multi-modules == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-multi-modules/gradlew
+          build-root-directory: sample-multi-modules
+          arguments: check --stacktrace
+      - name: "Run refreshVersions on sample-kotlin-js"
+        if: ${{ github.event.inputs.sample-kotlin-js == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-kotlin-js/gradlew
+          build-root-directory: sample-kotlin-js
+          arguments: refreshVersions --stacktrace
+      - name: "Check sample-kotlin-js"
+        if: ${{ github.event.inputs.sample-kotlin-js == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-kotlin-js/gradlew
+          build-root-directory: sample-kotlin-js
+          arguments: check --stacktrace
+      - name: "Run refreshVersions on sample-android"
+        if: ${{ github.event.inputs.sample-android == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-android/gradlew
+          build-root-directory: sample-android
+          arguments: refreshVersions --stacktrace
+      - name: "Check sample-android"
+        if: ${{ github.event.inputs.sample-android == 'true' }}
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-executable: sample-android/gradlew
+          build-root-directory: sample-android
           arguments: check --stacktrace

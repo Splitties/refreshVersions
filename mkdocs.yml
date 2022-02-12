@@ -20,13 +20,13 @@ extra:
     gradlePluginPortal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
-    gradle: 6.9
-    refreshVersions: '0.11.0'
-    snapshot: '0.11.1-SNAPSHOT'
+    gradle: 7.3.3
+    refreshVersions: '0.40.1'
+    snapshot: '0.40.2-SNAPSHOT'
   keyboard_shortcuts:
     find_actions: <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>A</kbd>
 
-copyright: 'Copyright &copy; 2020 jmfayard'
+copyright: 'Copyright &copy; 2020-2021 jmfayard'
 
 theme:
   name: 'material'
@@ -58,6 +58,7 @@ markdown_extensions:
   - pymdownx.tilde
   - pymdownx.tabbed
   - tables
+  - admonition
 
 nav:
   - 'Overview': index.md

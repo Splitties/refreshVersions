@@ -13,6 +13,7 @@ import testutils.getVersionCandidates
 class MavenDependencyVersionsFetchingTest {
 
     @Test
+    @Disabled("Because it's too slow (usually about 7 seconds)")
     fun fetchGradleVersion() = runBlocking {
         val checker = GradleUpdateChecker(defaultHttpClient)
         GradleUpdateChecker.VersionType.values().filterNot {
@@ -30,7 +31,7 @@ class MavenDependencyVersionsFetchingTest {
     fun testKotlin() {
         runBlocking {
             val versions = getVersionCandidates(
-                moduleId = ModuleId(
+                moduleId = ModuleId.Maven(
                     group = "org.jetbrains.kotlin",
                     name = "kotlin-stdlib"
                 ),
@@ -45,12 +46,12 @@ class MavenDependencyVersionsFetchingTest {
     }
 
     private suspend fun getVersionCandidates(
-        moduleId: ModuleId,
+        moduleId: ModuleId.Maven,
         currentVersion: Version,
         repoUrls: List<String>
     ): List<Version> = getVersionCandidates(
         httpClient = defaultHttpClient,
-        moduleId = moduleId,
+        mavenModuleId = moduleId,
         currentVersion = currentVersion,
         repoUrls = repoUrls
     )

@@ -8,14 +8,6 @@ plugins {
 
 group = "de.fayard"
 
-repositories {
-    maven {
-        setUrl("../plugin/src/test/resources/maven")
-    }
-    mavenCentral()
-    google()
-}
-
 dependencies {
     implementation("com.google.guava:guava:_")
     implementation("com.google.inject:guice:_")

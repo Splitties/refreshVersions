@@ -133,7 +133,7 @@ internal object SettingsPluginsUpdater {
             val availableVersionsComments = buildString {
                 val padding = offsetOfCurrentVersionFromLineStart - 8
                 pluginWithVersionCandidates.versionsCandidates.forEach { versionCandidate ->
-                    appendln()
+                    appendLine()
                     append("//// ")
                     append(availableComment.padStart((padding).coerceAtLeast(0)))
                     append(':')
@@ -164,7 +164,7 @@ internal object SettingsPluginsUpdater {
             if (indexOfComment == -1) return
             startIndex = indexOfComment
             val indexOfEndOfLine = indexOf(
-                "\n",
+                '\n',
                 startIndex = indexOfComment + startOfRefreshVersionsCommentLines.length
             ).takeIf { it >= 0 }
             val endIndex = indexOfEndOfLine ?: length

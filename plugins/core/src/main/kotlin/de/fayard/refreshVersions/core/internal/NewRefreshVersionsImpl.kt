@@ -1,11 +1,15 @@
 package de.fayard.refreshVersions.core.internal
 
-import de.fayard.refreshVersions.core.*
+import de.fayard.refreshVersions.core.DependencySelection
+import de.fayard.refreshVersions.core.DependencyVersionsFetcher
 import de.fayard.refreshVersions.core.FeatureFlag.GRADLE_UPDATES
+import de.fayard.refreshVersions.core.ModuleId
+import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.hasDynamicVersion
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
-import de.fayard.refreshVersions.core.internal.legacy.LegacyBoostrapUpdatesFinder
-import kotlinx.coroutines.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import okhttp3.OkHttpClient
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
@@ -52,6 +56,7 @@ internal suspend fun lookupVersionCandidates(
     return coroutineScope {
 
         val resultMode = RefreshVersionsConfigHolder.resultMode
+        val versionRejectionFilter = RefreshVersionsConfigHolder.versionRejectionFilter ?: { false }
         val dependenciesWithVersionCandidatesAsync = dependencyVersionsFetchers.groupBy {
             it.moduleId
         }.map { (moduleId: ModuleId, versionFetchers: List<DependencyVersionsFetcher>) ->
@@ -59,18 +64,22 @@ internal suspend fun lookupVersionCandidates(
             val resolvedVersion = resolveVersion(
                 properties = versionMap,
                 key = propertyName
-            ) ?: `Write versions candidates using latest most stable version and get it`(
-                propertyName = propertyName,
-                dependencyVersionsFetchers = versionFetchers
-            )
+            )?.let { Version(it) }
             async {
+                val (versions, failures) = versionFetchers.getVersionCandidates(
+                    currentVersion = resolvedVersion ?: Version(""),
+                    resultMode = resultMode
+                )
+                val currentVersion = resolvedVersion ?: versions.latestMostStable()
+                val selection = DependencySelection(moduleId, currentVersion, propertyName)
                 DependencyWithVersionCandidates(
                     moduleId = moduleId,
-                    currentVersion = resolvedVersion,
-                    versionsCandidates = versionFetchers.getVersionCandidates(
-                        currentVersion = Version(resolvedVersion),
-                        resultMode = resultMode
-                    )
+                    currentVersion = currentVersion.value,
+                    versionsCandidates = versions.filterNot { version ->
+                        selection.candidate = version
+                        versionRejectionFilter(selection)
+                    },
+                    failures = failures
                 )
             }
         }
@@ -79,13 +88,8 @@ internal suspend fun lookupVersionCandidates(
             SettingsPluginsUpdatesFinder.getSettingsPluginUpdates(httpClient, resultMode)
         }
 
-        val selfUpdateAsync: Deferred<DependencyWithVersionCandidates>? = when {
-            RefreshVersionsConfigHolder.isSetupViaPlugin -> null
-            else -> async { LegacyBoostrapUpdatesFinder.getSelfUpdates(httpClient, resultMode) }
-        }
-
         val gradleUpdatesAsync = async {
-            if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions() else emptyList()
+            if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions(httpClient) else emptyList()
         }
 
         val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
@@ -94,17 +98,16 @@ internal suspend fun lookupVersionCandidates(
             dependenciesUpdates = dependenciesWithVersionCandidates,
             dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
             dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
-            settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
-            buildSrcSettingsPluginsUpdates = settingsPluginsUpdatesAsync.await().buildSrcSettings,
             gradleUpdates = gradleUpdatesAsync.await(),
-            selfUpdatesForLegacyBootstrap = selfUpdateAsync?.await()
+            settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
+            buildSrcSettingsPluginsUpdates = settingsPluginsUpdatesAsync.await().buildSrcSettings
         )
         TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
     }
 }
 
-private suspend fun lookupAvailableGradleVersions(): List<Version> = coroutineScope {
-    val checker = GradleUpdateChecker(RefreshVersionsConfigHolder.httpClient)
+private suspend fun lookupAvailableGradleVersions(httpClient: OkHttpClient): List<Version> = coroutineScope {
+    val checker = GradleUpdateChecker(httpClient)
     val currentGradleVersion = GradleVersion.current()
     GradleUpdateChecker.VersionType.values().filterNot {
         it == GradleUpdateChecker.VersionType.All
@@ -113,7 +116,7 @@ private suspend fun lookupAvailableGradleVersions(): List<Version> = coroutineSc
             currentGradleVersion.isSnapshot -> types
             else -> types.filterNot {
                 it == GradleUpdateChecker.VersionType.ReleaseNightly ||
-                        it == GradleUpdateChecker.VersionType.Nightly
+                    it == GradleUpdateChecker.VersionType.Nightly
             }
         }
     }.map { type ->
@@ -156,8 +159,8 @@ private fun getUsedPluginsDependencyVersionFetchers(
     httpClient: OkHttpClient
 ): Sequence<DependencyVersionsFetcher> {
     return UsedPluginsHolder.read().flatMap { (dependency, repositories) ->
-        repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
-            DependencyVersionsFetcher(
+        repositories.withGlobalRepos().filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
+            DependencyVersionsFetcher.forMaven(
                 httpClient = httpClient,
                 dependency = dependency,
                 repository = repo
@@ -171,14 +174,38 @@ private fun getDependencyVersionFetchers(
     configurations: ConfigurationContainer,
     repositories: RepositoryHandler,
     dependencyFilter: (Dependency) -> Boolean
+): Sequence<DependencyVersionsFetcher> = getDependencyVersionFetchers(
+    httpClient = httpClient,
+    configurations = configurations,
+    mavenRepositories = repositories.withGlobalRepos().filterIsInstance<MavenArtifactRepository>(),
+    npmRegistries = run { null /*Workaround useless warning*/ }, //TODO: Support custom npm registries.
+    dependencyFilter = dependencyFilter
+)
+
+private fun getDependencyVersionFetchers(
+    httpClient: OkHttpClient,
+    configurations: ConfigurationContainer,
+    mavenRepositories: List<MavenArtifactRepository>,
+    npmRegistries: List<String>?,
+    dependencyFilter: (Dependency) -> Boolean
 ): Sequence<DependencyVersionsFetcher> = configurations.asSequence().flatMap {
     it.dependencies.asSequence().filter(dependencyFilter)
 }.flatMap { dependency ->
-    repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
-        DependencyVersionsFetcher(
-            httpClient = httpClient,
-            dependency = dependency,
-            repository = repo
-        )
-    }.asSequence()
+    if (dependency::class.simpleName == "NpmDependency") {
+        (npmRegistries ?: listOf("https://registry.npmjs.org/")).map { registryUrl ->
+            DependencyVersionsFetcher.forNpm(
+                httpClient = httpClient,
+                npmDependency = dependency,
+                npmRegistry = registryUrl
+            )
+        }.asSequence()
+    } else {
+        mavenRepositories.mapNotNull { repo ->
+            DependencyVersionsFetcher.forMaven(
+                httpClient = httpClient,
+                dependency = dependency,
+                repository = repo
+            )
+        }.asSequence()
+    }
 }

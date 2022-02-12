@@ -3,10 +3,11 @@ package de.fayard.refreshVersions.core.internal.versions
 import de.fayard.refreshVersions.core.extensions.sequences.uniqueBy
 import de.fayard.refreshVersions.core.extensions.text.substringAfterLastLineStartingWith
 import de.fayard.refreshVersions.core.extensions.text.substringBetween
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import java.io.File
 
-internal fun VersionsPropertiesModel.Companion.readFrom(
-    versionsPropertiesFile: File
+internal fun VersionsPropertiesModel.Companion.readFromFile(
+    versionsPropertiesFile: File = RefreshVersionsConfigHolder.versionsPropertiesFile
 ): VersionsPropertiesModel {
     val text = synchronized(versionsPropertiesFileLock) { versionsPropertiesFile.readText() }
     return readFromText(text)
@@ -30,16 +31,19 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
 ): VersionsPropertiesModel {
     val preHeaderContent: String
     val generatedByVersion: String
+    val dependencyNotationRemovalsRevision: Int?
     val sectionsText: String
     when {
         fileContent.startsWith(oldFileHeader) -> {
             preHeaderContent = ""
             generatedByVersion = "0.9.7" // Might be actually older, but it doesn't matter.
+            dependencyNotationRemovalsRevision = null
             sectionsText = fileContent.substringAfter(oldFileHeader)
         }
         fileContent.isBlank() -> {
             preHeaderContent = ""
             generatedByVersion = ""
+            dependencyNotationRemovalsRevision = null
             sectionsText = ""
         }
         else -> {
@@ -50,6 +54,16 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
                 }
             } catch (e: NoSuchElementException) {
                 throw IllegalStateException(missingGeneratedByVersionErrorMessage())
+            }
+            dependencyNotationRemovalsRevision = try {
+                fileContent.substringBetween(removalsRevisionLineStart, "\n").let {
+                    it.toIntOrNull() ?: throw IllegalStateException(
+                        "Expected an integer for the revision of dependency notations removals in " +
+                            "the versions.properties file, but found the following instead: $it"
+                    )
+                }
+            } catch (e: NoSuchElementException) {
+                null
             }
             sectionsText = fileContent.substringAfterLastLineStartingWith(headerLinesPrefix)
         }
@@ -76,6 +90,7 @@ private fun VersionsPropertiesModel.Companion.readFromTextInternal(
     return VersionsPropertiesModel(
         preHeaderContent = preHeaderContent,
         generatedByVersion = generatedByVersion,
+        dependencyNotationRemovalsRevision = dependencyNotationRemovalsRevision,
         sections = sections
     )
 }
@@ -170,5 +185,5 @@ private val oldFileHeader = """
 """.trimMargin()
 
 private fun missingGeneratedByVersionErrorMessage() = "Unable to find the version of " +
-        "refreshVersions that generated the versions.properties file. " +
-        "Please, revert the removal."
+    "refreshVersions that generated the versions.properties file. " +
+    "Please, revert the removal."

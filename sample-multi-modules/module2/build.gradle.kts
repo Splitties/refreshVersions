@@ -1,6 +1,6 @@
 plugins {
     java
-    kotlin("jvm") version "1.4-M2"
+    kotlin("jvm")
 }
 
 version = "unspecified"
@@ -44,10 +44,10 @@ dependencies {
     implementation(Ktor.server.core)
     implementation(Ktor.utils)
 
-    testImplementation(Testing.junit.api)
-    testImplementation(Testing.junit.engine)
-    testImplementation(Testing.junit)
-    testImplementation(Testing.junit.params)
+    testImplementation(Testing.junit.jupiter.api)
+    testImplementation(Testing.junit.jupiter.engine)
+    testImplementation(Testing.junit.jupiter)
+    testImplementation(Testing.junit.jupiter.params)
     testImplementation(Testing.kotest.assertions.core)
     testImplementation(Testing.kotest.assertions.json)
     testImplementation(Testing.kotest.assertions.jsoup)

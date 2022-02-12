@@ -1,10 +1,12 @@
 package de.fayard.refreshVersions.core.internal
 
+import de.fayard.refreshVersions.core.DependencySelection
+import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
-import de.fayard.refreshVersions.core.internal.versions.readFrom
+import de.fayard.refreshVersions.core.internal.versions.readFromFile
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.gradle.api.Project
@@ -18,12 +20,9 @@ object RefreshVersionsConfigHolder {
 
     internal val resettableDelegates = ResettableDelegates()
 
-    fun markSetupViaSettingsPlugin() {
-        isSetupViaPlugin = true
-    }
+    internal val isUsingVersionRejection: Boolean get() = versionRejectionFilter != null
 
-    internal var isSetupViaPlugin = false
-        private set
+    var versionRejectionFilter: (DependencySelection.() -> Boolean)? by resettableDelegates.NullableDelegate()
 
     private val versionKeyReaderDelegate = resettableDelegates.LateInit<ArtifactVersionKeyReader>()
 
@@ -35,6 +34,9 @@ object RefreshVersionsConfigHolder {
 
     val buildSrc: Project? get() = buildSrcSettings?.gradle?.rootProject
 
+    /**
+     * Not initialized when the IDE syncs the buildSrc of the project alone (without the host project)
+     */
     internal var settings: Settings by resettableDelegates.LateInit()
         private set
 
@@ -42,8 +44,13 @@ object RefreshVersionsConfigHolder {
         readVersionsMap()
     }
 
+    internal fun readVersionsPropertiesModel() = VersionsPropertiesModel.readFromFile(versionsPropertiesFile)
+
     fun readVersionsMap(): Map<String, String> {
-        val model = VersionsPropertiesModel.readFrom(versionsPropertiesFile)
+        return readVersionsMap(readVersionsPropertiesModel())
+    }
+
+    internal fun readVersionsMap(model: VersionsPropertiesModel): Map<String, String> {
         return model.sections.filterIsInstance<VersionEntry>().associate { it.key to it.currentVersion }.also {
             lastlyReadVersionsMap = it
         }
@@ -60,43 +67,52 @@ object RefreshVersionsConfigHolder {
         sortingMode = VersionCandidatesResultMode.SortingMode.ByVersion
     )
 
-    internal val httpClient: OkHttpClient by resettableDelegates.Lazy {
-        OkHttpClient.Builder()
-            .addInterceptor( //TODO: Allow disabling/configuring logging.
-                HttpLoggingInterceptor(logger = object : HttpLoggingInterceptor.Logger {
-                    override fun log(message: String) {
-                        println(message)
-                    }
-                }).setLevel(HttpLoggingInterceptor.Level.BASIC)
+    internal inline fun <R> withHttpClient(
+        noinline logHttpCall: ((String) -> Unit)? = { message -> println(message) },
+        block: (httpClient: OkHttpClient) -> R
+    ): R {
+        val client = OkHttpClient.Builder().let { builder ->
+            if (logHttpCall == null) builder
+            else builder.addInterceptor( //TODO: Allow disabling/configuring logging.
+                HttpLoggingInterceptor(logHttpCall).setLevel(HttpLoggingInterceptor.Level.BASIC)
             )
-            .build()
+        }.build()
+        try {
+            return block(client)
+        } finally {
+            client.dispatcher.executorService.shutdown()
+        }
     }
 
     internal fun initialize(
         settings: Settings,
         artifactVersionKeyRules: List<String>,
+        getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String>,
         versionsPropertiesFile: File
     ) {
         require(settings.isBuildSrc.not())
-        settings.gradle.buildFinished {
-            clearStaticState()
-        }
         this.settings = settings
 
         this.versionsPropertiesFile = versionsPropertiesFile.also {
             it.createNewFile() // Creates the file if it doesn't exist yet
         }
         this.artifactVersionKeyRules = artifactVersionKeyRules
-        versionKeyReader = ArtifactVersionKeyReader.fromRules(filesContent = artifactVersionKeyRules)
+        versionKeyReader = ArtifactVersionKeyReader.fromRules(
+            filesContent = artifactVersionKeyRules,
+            getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys
+        )
     }
 
-    internal fun initializeBuildSrc(settings: Settings) {
+    internal fun initializeBuildSrc(
+        settings: Settings,
+        getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String>
+    ) {
         require(settings.isBuildSrc)
         buildSrcSettings = settings
 
         // The buildSrc will be built a second time as a standalone project by IntelliJ or
         // Android Studio after running initially properly after host project settings evaluation.
-        // To workaround this, we persist the configuration and attempt restoring it if needed,
+        // To work around this, we persist the configuration and attempt restoring it if needed,
         // to not fail the second build (since it'd display errors, and
         // prevent from seeing resolved dependencies in buildSrc sources in the IDE).
         //
@@ -107,27 +123,15 @@ object RefreshVersionsConfigHolder {
             persistInitData(settings)
         } else {
             runCatching {
-                restorePersistedInitData(settings)
+                restorePersistedInitData(settings, getRemovedDependenciesVersionsKeys)
             }.onFailure { e ->
                 throw IllegalStateException(
                     "You also need to bootstrap refreshVersions in the " +
-                            "settings.gradle[.kts] file of the root project",
+                        "settings.gradle[.kts] file of the root project",
                     e
                 )
             }
-            settings.gradle.buildFinished {
-                clearStaticState()
-            }
         }
-    }
-
-    private fun clearStaticState() {
-        httpClient.dispatcher.executorService.shutdown()
-        resettableDelegates.reset()
-        // Clearing static state is needed because Gradle holds onto previous builds, yet,
-        // duplicates static state.
-        // We need to beware of never retaining Gradle objects.
-        // This must be called in gradle.buildFinished { }.
     }
 
     private var artifactVersionKeyRules: List<String> by resettableDelegates.LateInit()
@@ -161,7 +165,10 @@ object RefreshVersionsConfigHolder {
         }
     }
 
-    private fun restorePersistedInitData(settings: Settings) {
+    private fun restorePersistedInitData(
+        settings: Settings,
+        getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }
+    ) {
         versionsPropertiesFile = settings.versionsPropertiesFileFile.let { file ->
             ObjectInputStream(file.inputStream()).use { it.readObject() as File }
         }
@@ -171,7 +178,10 @@ object RefreshVersionsConfigHolder {
                 (it.readObject() as Array<String>).asList()
             }
         }
-        versionKeyReader = ArtifactVersionKeyReader.fromRules(filesContent = artifactVersionKeyRules)
+        versionKeyReader = ArtifactVersionKeyReader.fromRules(
+            filesContent = artifactVersionKeyRules,
+            getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys
+        )
     }
 
     private val Settings.artifactVersionKeyRulesFile: File

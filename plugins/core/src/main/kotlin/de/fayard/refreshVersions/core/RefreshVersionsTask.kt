@@ -2,14 +2,11 @@ package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
-import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
-import de.fayard.refreshVersions.core.internal.configureLintIfRunningOnAnAndroidProject
-import de.fayard.refreshVersions.core.internal.legacy.LegacyBootstrapUpdater
-import de.fayard.refreshVersions.core.internal.lookupVersionCandidates
 import de.fayard.refreshVersions.core.internal.problems.log
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
-import kotlinx.coroutines.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.tasks.Input
@@ -61,25 +58,24 @@ open class RefreshVersionsTask : DefaultTask() {
             val lintUpdatingProblemsAsync = async {
                 configureLintIfRunningOnAnAndroidProject(settings, RefreshVersionsConfigHolder.readVersionsMap())
             }
-            val result = lookupVersionCandidates(
-                httpClient = RefreshVersionsConfigHolder.httpClient,
-                project = project,
-                versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
-                versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-            )
+            val result = RefreshVersionsConfigHolder.withHttpClient({ message ->
+                logger.info(message)
+            }) { httpClient ->
+                lookupVersionCandidates(
+                    httpClient = httpClient,
+                    project = project,
+                    versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
+                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+                )
+            }
             VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
             SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
                 rootProject = project,
                 settingsPluginsUpdates = result.settingsPluginsUpdates,
                 buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
             )
-            result.selfUpdatesForLegacyBootstrap?.let {
-                LegacyBootstrapUpdater.updateGradleSettingsWithUpdates(
-                    rootProject = project,
-                    selfUpdates = it
-                )
-            }
 
+            warnAboutRefreshVersionsIfSettingIfAny()
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
             warnAboutDynamicVersionsIfAny(result.dependenciesWithDynamicVersions)
             warnAboutGradleUpdateAvailableIfAny(result.gradleUpdates)
@@ -90,23 +86,29 @@ open class RefreshVersionsTask : DefaultTask() {
         }
     }
 
+    private fun warnAboutRefreshVersionsIfSettingIfAny() {
+        if (RefreshVersionsConfigHolder.isUsingVersionRejection) {
+            logger.warn("NOTE: Some versions are filtered by the rejectVersionsIf predicate. See the settings.gradle.kts file.")
+        }
+    }
+
     private fun warnAboutGradleUpdateAvailableIfAny(gradleUpdates: List<Version>) {
         if (gradleUpdates.isEmpty()) return
         val currentGradleVersion = GradleVersion.current()
         val message = buildString {
-            appendln("The Gradle version used in this project is not up to date.")
+            appendLine("The Gradle version used in this project is not up to date.")
             append("To update from version ${currentGradleVersion.version}, run ")
             if (gradleUpdates.size == 1) {
-                appendln("this command:")
+                appendLine("this command:")
             } else {
-                appendln("one of these commands:")
+                appendLine("one of these commands:")
             }
             gradleUpdates.forEach { version ->
-                appendln("./gradlew wrapper --gradle-version ${version.value}")
+                appendLine("./gradlew wrapper --gradle-version ${version.value}")
             }
-            appendln()
-            appendln("Be sure to read the migration guides to have a smooth upgrade process.")
-            appendln("Note that you can replace with a specific intermediate version if needed.")
+            appendLine()
+            appendLine("Be sure to read the migration guides to have a smooth upgrade process.")
+            appendLine("Note that you can replace with a specific intermediate version if needed.")
         }
         logger.warn(message)
     }
