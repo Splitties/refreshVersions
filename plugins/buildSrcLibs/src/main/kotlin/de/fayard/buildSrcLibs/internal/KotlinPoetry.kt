@@ -1,9 +1,15 @@
 package de.fayard.buildSrcLibs.internal
 
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeSpec
+import de.fayard.refreshVersions.core.internal.Deps
+import de.fayard.refreshVersions.core.internal.Library
 
 internal fun kotlinpoet(
-    deps: Deps
+    deps: Deps,
 ): FileSpec {
     val libraries: List<Library> = deps.libraries
     val indent = "    "
@@ -36,11 +42,10 @@ internal fun kotlinpoet(
 }
 
 
-
 internal fun constStringProperty(
     name: String,
     initializer: CodeBlock,
-    kdoc: CodeBlock? = null
+    kdoc: CodeBlock? = null,
 ): PropertySpec = PropertySpec.builder(name, String::class)
     .addModifiers(KModifier.CONST)
     .initializer(initializer)

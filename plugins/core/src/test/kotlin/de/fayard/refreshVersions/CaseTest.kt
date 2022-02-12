@@ -1,4 +1,6 @@
-import de.fayard.buildSrcLibs.internal.Case
+package de.fayard.refreshVersions
+
+import de.fayard.refreshVersions.core.internal.Case
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe

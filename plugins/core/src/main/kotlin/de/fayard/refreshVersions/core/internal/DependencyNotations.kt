@@ -1,13 +1,14 @@
-package de.fayard.buildSrcLibs.internal
+package de.fayard.refreshVersions.core.internal
 
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ExternalDependency
 
-internal enum class Case {
+@InternalRefreshVersionsApi
+enum class Case {
     camelCase, snake_case; //, PascalCase, `kebab-case`
 
     companion object {
-        internal fun toCamelCase(input: String): String = buildString {
+        @InternalRefreshVersionsApi fun toCamelCase(input: String): String = buildString {
             var wasWordBreak = false
             val wordBreaks = setOf(' ', '-', '_')
             for (c in input) {
@@ -28,13 +29,15 @@ internal enum class Case {
  *
  * Found many inspiration for bad libs here https://developer.android.com/jetpack/androidx/migrate
  * **/
-internal val MEANING_LESS_NAMES: MutableList<String> = mutableListOf(
+@InternalRefreshVersionsApi
+val MEANING_LESS_NAMES: MutableList<String> = mutableListOf(
     "common", "core", "testing", "runtime", "extensions",
     "compiler", "migration", "db", "rules", "runner", "monitor", "loader",
     "media", "print", "io", "collection", "gradle", "android"
 )
 
-internal fun computeUseFqdnFor(
+@InternalRefreshVersionsApi
+fun computeUseFqdnFor(
     libraries: List<Library>,
     configured: List<String>,
     byDefault: List<String> = MEANING_LESS_NAMES
@@ -45,7 +48,8 @@ internal fun computeUseFqdnFor(
     return (configured + byDefault + ambiguities + depsFromGroups - groups).distinct().sorted()
 }
 
-internal fun escapeLibsKt(name: String): String {
+@InternalRefreshVersionsApi
+fun escapeLibsKt(name: String): String {
     val escapedChars = listOf('-', '.', ':')
     return buildString {
         for (c in name) {
@@ -54,7 +58,8 @@ internal fun escapeLibsKt(name: String): String {
     }
 }
 
-internal fun Project.findDependencies(): List<Library> {
+@InternalRefreshVersionsApi
+fun Project.findDependencies(): List<Library> {
     val allDependencies = mutableListOf<Library>()
     allprojects {
         (configurations + buildscript.configurations)
@@ -74,7 +79,8 @@ internal fun Project.findDependencies(): List<Library> {
 }
 
 
-internal data class Library(
+@InternalRefreshVersionsApi
+data class Library(
     val group: String = "",
     val module: String = "",
     val version: String = ""
@@ -97,17 +103,20 @@ internal data class Library(
     override fun toString() = groupModuleVersion()
 }
 
-internal class Deps(
+@InternalRefreshVersionsApi
+class Deps(
     val libraries: List<Library>,
     val names: Map<Library, String>
 )
 
 
-internal enum class VersionMode {
+@InternalRefreshVersionsApi
+enum class VersionMode {
     GROUP, GROUP_MODULE, MODULE
 }
 
-internal fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>, case: Case): Deps {
+@InternalRefreshVersionsApi
+fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>, case: Case): Deps {
     val dependencies = this
 
     val modes: Map<Library, VersionMode> =

@@ -3,7 +3,12 @@ package de.fayard.buildSrcLibs
 import com.squareup.kotlinpoet.FileSpec
 import de.fayard.buildSrcLibs.internal.*
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
+import de.fayard.refreshVersions.core.internal.Case
+import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
 import de.fayard.refreshVersions.core.internal.OutputFile
+import de.fayard.refreshVersions.core.internal.checkModeAndNames
+import de.fayard.refreshVersions.core.internal.computeUseFqdnFor
+import de.fayard.refreshVersions.core.internal.findDependencies
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 

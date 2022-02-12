@@ -1,7 +1,11 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.buildSrcLibs.internal.*
-import de.fayard.buildSrcLibs.internal.Case
+import de.fayard.refreshVersions.core.internal.Case
+import de.fayard.refreshVersions.core.internal.Deps
+import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
+import de.fayard.refreshVersions.core.internal.checkModeAndNames
+import de.fayard.refreshVersions.core.internal.computeUseFqdnFor
+import de.fayard.refreshVersions.core.internal.findDependencies
 import de.fayard.refreshVersions.core.internal.OutputFile
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
