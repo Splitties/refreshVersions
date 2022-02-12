@@ -5,11 +5,21 @@ import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.TaskAction
+import org.gradle.kotlin.dsl.getByType
 import org.intellij.lang.annotations.Language
 import java.io.File
 
 open class RefreshVersionsMigrateTask : DefaultTask() {
+
+    @TaskAction
+    fun versionsCatalog() {
+        // TODO: doesn't work
+        // https://gradle-community.slack.com/archives/CA745PZHN/p1644681759879269
+        val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+        println("Library aliases: ${versionCatalog.dependencyAliases}")
+    }
 
     @TaskAction
     fun refreshVersionsMissingEntries() {
