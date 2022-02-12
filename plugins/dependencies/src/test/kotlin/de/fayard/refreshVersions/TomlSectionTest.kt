@@ -1,7 +1,6 @@
 package de.fayard.refreshVersions
 
-import de.fayard.refreshVersions.VersionsCatalogTask.Companion.parseTomlInSection
-import de.fayard.refreshVersions.VersionsCatalogTask.Companion.tomlSectionsToString
+import de.fayard.refreshVersions.internal.Toml
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -49,11 +48,11 @@ class TomlSectionTest : StringSpec({
     val expected = mapOf("root" to a, "versions" to b, "libraries" to c, "bundles" to d)
 
     "Parse Toml in Sections" {
-        parseTomlInSection(toml) shouldBe expected
+        Toml.parseTomlInSection(toml) shouldBe expected
     }
 
     "Sections to Toml" {
-        tomlSectionsToString(expected) shouldBe toml
+        Toml.tomlSectionsToString(expected) shouldBe toml
     }
 
 })
