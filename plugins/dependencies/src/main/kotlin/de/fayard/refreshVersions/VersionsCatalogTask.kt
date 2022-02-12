@@ -63,6 +63,12 @@ open class VersionsCatalogTask : DefaultTask() {
         val newText = versionsCatalog(deps, currentText)
         catalog.writeText(newText, project)
         catalog.logFileWasModified()
+
+        println("""
+            You can now automatically migrate your build.gradle/build.gradle.kts file with the command:
+            
+                $ANSI_GREEN./gradlew refreshVersionsMigrate$ANSI_RESET
+        """.trimIndent())
     }
 
     companion object {

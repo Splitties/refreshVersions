@@ -5,6 +5,8 @@ import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
+import org.gradle.api.UnknownDomainObjectException
+import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.getByType
@@ -14,25 +16,19 @@ import java.io.File
 open class RefreshVersionsMigrateTask : DefaultTask() {
 
     @TaskAction
-    fun versionsCatalog() {
-        // TODO: doesn't work
-        // https://gradle-community.slack.com/archives/CA745PZHN/p1644681759879269
-        val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
-        println("Library aliases: ${versionCatalog.dependencyAliases}")
-    }
-
-    @TaskAction
     fun refreshVersionsMissingEntries() {
         addMissingEntriesInVersionsProperties(project)
     }
 
     @TaskAction
     fun migrateBuild() {
-        val dependencyMapping = getArtifactNameToConstantMapping()
+        val versionsCatalogMapping: Map<ModuleId.Maven, String> = getVersionsCatalogMapping()
+
+        val dependencyMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
             .associateShortestByMavenCoordinate()
 
         findFilesWithDependencyNotations(project.rootDir).forEach { buildFile ->
-            migrateFileIfNeeded(buildFile, dependencyMapping)
+            migrateFileIfNeeded(buildFile, versionsCatalogMapping + dependencyMapping)
         }
         println()
         println("""
@@ -40,6 +36,24 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 
                 $ANSI_GREEN./gradlew refreshVersions$ANSI_RESET
             """.trimIndent())
+    }
+
+    private fun getVersionsCatalogMapping(): Map<ModuleId.Maven, String> {
+        val versionCatalog = try {
+            project.extensions.getByType<VersionCatalogsExtension>().named("libs")
+        } catch (e: UnknownDomainObjectException) {
+            println("w: refreshVersionsMigrate ignoring error $e")
+            return emptyMap()
+        }
+
+        return versionCatalog.dependencyAliases.mapNotNull { alias ->
+            versionCatalog.findDependency(alias)
+                .orElse(null)
+                ?.orNull
+                ?.let { dependency: MinimalExternalModuleDependency ->
+                    ModuleId.Maven(dependency.module.group, dependency.module.name) to "libs.$alias"
+                }
+        }.toMap()
     }
 }
 
@@ -75,9 +89,9 @@ internal fun migrateFileIfNeeded(file: File, dependencyMapping: Map<ModuleId.Mav
     }
 }
 
-private const val ANSI_RESET = "\u001B[0m"
+internal const val ANSI_RESET = "\u001B[0m"
 private const val ANSI_BLUE = "\u001B[34m"
-private const val ANSI_GREEN = "\u001B[36m"
+internal const val ANSI_GREEN = "\u001B[36m"
 
 @Language("RegExp")
 private val versionRegex =
