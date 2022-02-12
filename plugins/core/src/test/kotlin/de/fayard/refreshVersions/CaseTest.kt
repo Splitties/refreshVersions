@@ -7,17 +7,17 @@ import io.kotest.matchers.shouldBe
 
 class CaseTest : StringSpec({
     val transformations = listOf(
-        "hoplite_yaml" to "hopliteYaml",
+        "hoplite_yaml" to "hoplite-yaml",
         "picnic" to "picnic",
-        "h2_ok" to "h2Ok",
-        "mockito_kotlin" to "mockitoKotlin",
-        "retrofit2_kotlinx_serialization_converter" to "retrofit2KotlinxSerializationConverter",
-        "dagger_compiler" to "daggerCompiler"
+        "h2_ok" to "h2-ok",
+        "mockito_kotlin" to "mockito-kotlin",
+        "retrofit2_kotlinx_serialization_converter" to "retrofit2-kotlinx-serialization-converter",
+        "dagger_compiler" to "dagger-compiler"
     )
 
-    "From snake_case to camelCase" {
-        transformations.forAll { (snake, caml) ->
-            Case.toCamelCase(snake) shouldBe caml
+    "From snake_case to dot.case" {
+        transformations.forAll { (snake, dot) ->
+            Case.`kebab-case`.convert(snake) shouldBe dot
         }
     }
 

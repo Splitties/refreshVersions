@@ -45,7 +45,7 @@ open class VersionsCatalogTask : DefaultTask() {
             configured = emptyList(),
             byDefault = MEANING_LESS_NAMES
         )
-        val deps: Deps = allDependencies.checkModeAndNames(resolvedUseFqdn, Case.camelCase)
+        val deps: Deps = allDependencies.checkModeAndNames(resolvedUseFqdn, Case.`kebab-case`)
         val currentText = if (catalog.existed) catalog.readText(project) else ""
         val newText = versionsCatalog(deps, currentText)
         catalog.writeText(newText, project)

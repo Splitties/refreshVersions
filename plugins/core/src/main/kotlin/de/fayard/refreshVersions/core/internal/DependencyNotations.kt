@@ -1,26 +1,23 @@
 package de.fayard.refreshVersions.core.internal
 
+import de.fayard.refreshVersions.core.internal.Case.*
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ExternalDependency
 
+@Suppress("EnumEntryName")
 @InternalRefreshVersionsApi
-enum class Case {
-    camelCase, snake_case; //, PascalCase, `kebab-case`
+enum class Case(
+    val convert: (String) -> String
+) {
+    snake_case({ it }),
+    `kebab-case`({
+        it.map { c->
+            if (c in separators) '-' else c
+        }.joinToString(separator = "")
+    });
 
     companion object {
-        @InternalRefreshVersionsApi fun toCamelCase(input: String): String = buildString {
-            var wasWordBreak = false
-            val wordBreaks = setOf(' ', '-', '_')
-            for (c in input) {
-                when {
-                    c in wordBreaks -> {
-                    }
-                    wasWordBreak -> append(c.toUpperCase())
-                    else -> append(c)
-                }
-                wasWordBreak = c in wordBreaks
-            }
-        }
+        val separators = setOf('.', '-', '_')
     }
 }
 
@@ -89,16 +86,18 @@ data class Library(
     fun groupModuleVersion() = "$group:$module:$version"
     fun groupModuleUnderscore() = "$group:$module:_"
     fun groupModule() = "$group:$module"
-    fun versionNameCamelCase(mode: VersionMode): String =
-        Case.toCamelCase(versionNameSnakeCase(mode))
 
-    fun versionNameSnakeCase(mode: VersionMode): String = escapeLibsKt(
-        when (mode) {
-            VersionMode.MODULE -> module
-            VersionMode.GROUP -> group
-            VersionMode.GROUP_MODULE -> "${group}_$module"
-        }
-    )
+    @Suppress("LocalVariableName")
+    fun versionName(mode: VersionMode, case: Case): String {
+        val name_with_underscores = escapeLibsKt(
+            when (mode) {
+                VersionMode.MODULE -> module
+                VersionMode.GROUP -> group
+                VersionMode.GROUP_MODULE -> "${group}_$module"
+            }
+        )
+        return case.convert(name_with_underscores)
+    }
 
     override fun toString() = groupModuleVersion()
 }
@@ -130,10 +129,7 @@ fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>, case: Case):
 
     val versionNames = dependencies.associateWith { d ->
         val mode = modes.getValue(d)
-        when (case) {
-            Case.camelCase -> d.versionNameCamelCase(mode)
-            Case.snake_case -> d.versionNameSnakeCase(mode)
-        }
+        d.versionName(mode, case)
     }
     val sortedDependencies = dependencies.sortedBy { d: Library -> d.groupModule() }
     return Deps(sortedDependencies, versionNames)
