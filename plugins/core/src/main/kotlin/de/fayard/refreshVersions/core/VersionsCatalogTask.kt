@@ -16,37 +16,22 @@ import org.gradle.util.GradleVersion
 open class VersionsCatalogTask : DefaultTask() {
 
     @TaskAction
-    fun addMissingEntries() {
-        addMissingEntriesInVersionsProperties(project)
-    }
-
-    @TaskAction
-    fun taskActionEnableSupport() {
-        OutputFile.checkWhichFilesExist(project.rootDir)
-
-        if (GradleVersion.current() < GradleVersion.version("7.0")) {
+    fun checkGradleVersion() {
+        if (currentGradleVersion < versionWithVersionsCatalog) {
             throw GradleException(
                 """
-                |Gradle versions catalogs are only supported in Gradle 7+
-                |Upgrade first with this command
-                |     ./gradlew wrapper --gradle-version 7.0
+                |Gradle versions catalogs are not supported in $currentGradleVersion
+                |Upgrade Gradle with this command
+                |     ./gradlew wrapper --gradle-version $versionWithVersionsCatalog
             """.trimMargin()
             )
         }
-        val file =
-            if (OutputFile.SETTINGS_GRADLE.existed) OutputFile.SETTINGS_GRADLE else OutputFile.SETTINGS_GRADLE_KTS
-        val settingsText = file.readText(project)
-        val alreadyConfigured = settingsText.lines().any { it.containsVersionsCatalogDeclaration() }
-        if (!alreadyConfigured) {
-            val newText = ("""
-                |${settingsText}
-                |// Enable Gradle's version catalog support https://docs.gradle.org/current/userguide/platforms.html
-                |enableFeaturePreview("VERSION_CATALOGS")
-                |""".trimMargin())
-            file.writeText(newText, project)
-            file.logFileWasModified()
-        }
+    }
 
+
+    @TaskAction
+    fun addMissingEntries() {
+        addMissingEntriesInVersionsProperties(project)
     }
 
 
@@ -68,6 +53,9 @@ open class VersionsCatalogTask : DefaultTask() {
     }
 
     companion object {
+        val currentGradleVersion = GradleVersion.current()
+        val versionWithVersionsCatalog = GradleVersion.version("7.4")
+
         internal fun parseTomlInSection(toml: String): Map<String, String> {
             val result = mutableMapOf<String, StringBuilder>()
             result["root"] = StringBuilder()
@@ -115,10 +103,6 @@ open class VersionsCatalogTask : DefaultTask() {
                 append("\n")
             }
             append("\n")
-        }
-
-        internal fun String.containsVersionsCatalogDeclaration(): Boolean {
-            return this.substringBefore("//").contains("enableFeaturePreview.*VERSION_CATALOGS".toRegex())
         }
     }
 }
