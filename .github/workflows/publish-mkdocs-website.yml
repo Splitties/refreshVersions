@@ -1,17 +1,28 @@
+# This file was generated using Kotlin DSL (website.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
 name: Publish MkDocs website to GitHub pages
+
 on:
   push:
     branches:
-      - release
+      - 'release'
   workflow_dispatch:
+
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  "deploy-mkdocs":
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v2
-      - run: ./docs/DocsCopier.main.kts
-      - uses: actions/setup-python@v2
+      - name: check-out
+        uses: actions/checkout@v2
+      - name: kotlin-script
+        run: ./docs/DocsCopier.main.kts
+      - name: setup-python
+        uses: actions/setup-python@v2
         with:
           python-version: 3.x
-      - run: pip install -r docs/requirements.txt
-      - run: mkdocs gh-deploy --force
+      - name: pip-install
+        run: pip install -r docs/requirements.txt
+      - name: publish-website
+        run: mkdocs gh-deploy --force

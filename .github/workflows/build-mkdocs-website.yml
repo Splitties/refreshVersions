@@ -1,25 +1,32 @@
+# This file was generated using Kotlin DSL (website.main.kts).
+# If you want to modify the workflow, please change the Kotlin file and regenerate this YAML file.
+# Generated with https://github.com/krzema12/github-actions-kotlin-dsl
+
 name: Build MkDocs website as artifacts
+
 on:
   push:
     branches-ignore:
-      - release
-    paths:
-      - 'docs/**'
-      - 'mkdocs.yml'
-      - 'CHANGELOG.md'
-      # Any additional files/dirs that take part in updating the website must be added here.
+      - 'release'
+
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  "build-mkdocs":
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v2
-      - run: ./docs/DocsCopier.main.kts
-      - uses: actions/setup-python@v2
+      - name: check-out
+        uses: actions/checkout@v2
+      - name: kotlin-script
+        run: ./docs/DocsCopier.main.kts
+      - name: setup-python
+        uses: actions/setup-python@v2
         with:
           python-version: 3.x
-      - run: pip install -r docs/requirements.txt
-      - run: mkdocs build --site-dir public
-      - uses: actions/upload-artifact@v2
+      - name: pip-install
+        run: pip install -r docs/requirements.txt
+      - name: build-website
+        run: mkdocs build --site-dir public
+      - name: upload-website
+        uses: actions/upload-artifact@v2
         with:
           name: docs-static-website
           path: public
