@@ -100,6 +100,10 @@ val releasePlugins = workflow(
             //TODO:     types = listOf(opened)
         ),
     )) {
+    println("""
+        Warning: in ${Files.releasePlugins} you should add manually:
+        on:  pull_request:  types: [opened]
+           """.trimIndent())
     job("gradle-plugins-publishing", RunnerType.UbuntuLatest) {
         step(Steps.checkout())
         step(Steps.setupJava)
