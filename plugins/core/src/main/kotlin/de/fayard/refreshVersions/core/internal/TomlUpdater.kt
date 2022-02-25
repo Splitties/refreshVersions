@@ -14,10 +14,6 @@ internal class TomlUpdater(val toml: String, val dependenciesUpdates: List<Depen
     }
 
     fun updateNewVersions(actual: File) {
-        val currentGradleVersion: GradleVersion = GradleVersion.current()
-        val versionWithVersionsCatalog: GradleVersion = GradleVersion.version("7.4")
-        if (currentGradleVersion < versionWithVersionsCatalog) return
-
         if (toml.isBlank()) return
 
         val newSectionsText = sections.mapValues { (key, lines) ->

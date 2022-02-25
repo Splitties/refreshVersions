@@ -80,7 +80,9 @@ open class RefreshVersionsTask : DefaultTask() {
                 buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
             )
             val libsToml = project.file("gradle/libs.versions.toml")
-            TomlUpdater(libsToml, result.dependenciesUpdates).updateNewVersions(libsToml)
+            if (GradleVersion.current() >= GradleVersion.version("7.4")) {
+                TomlUpdater(libsToml, result.dependenciesUpdates).updateNewVersions(libsToml)
+            }
 
             warnAboutRefreshVersionsIfSettingIfAny()
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
