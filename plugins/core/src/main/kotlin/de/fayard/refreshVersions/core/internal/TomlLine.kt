@@ -3,19 +3,19 @@ package de.fayard.refreshVersions.core.internal
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.*
 import de.fayard.refreshVersions.core.internal.TomlLine.Section.*
 
-data class TomlLine(
+internal data class TomlLine(
     val section: Section,
     val text: String,
 ) {
 
     @Suppress("EnumEntryName")
-    enum class Section { versions, libraries, bundles, plugins, others ;
+    internal enum class Section { versions, libraries, bundles, plugins, others ;
         companion object {
             fun from(name: String): Section = values().firstOrNull { it.name == name } ?: others
         }
     }
 
-    enum class Kind { Ignore, Delete, Libs, LibsUnderscore, LibsVersionRef, Version, Plugin, PluginVersionRef }
+    internal enum class Kind { Ignore, Delete, Libs, LibsUnderscore, LibsVersionRef, Version, Plugin, PluginVersionRef }
 
     val textWithoutComment = text.substringBefore("#")
 
@@ -52,8 +52,6 @@ data class TomlLine(
 }
 
 private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
-
-
     val splitSemicolon = value.split(":")
 
     val map: MutableMap<String, String> = when {

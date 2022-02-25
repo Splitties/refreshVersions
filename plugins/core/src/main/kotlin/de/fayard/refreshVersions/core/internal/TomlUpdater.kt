@@ -1,14 +1,13 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.*
-import org.gradle.util.GradleVersion
 import java.io.File
 import de.fayard.refreshVersions.core.Version as MavenVersion
 
 internal class TomlUpdater(val toml: String, val dependenciesUpdates: List<DependencyWithVersionCandidates>) {
-    val sectionsMap = Toml.parseTomlInSection(toml)
+    private val sectionsMap: Map<String, String> = Toml.parseTomlInSection(toml)
 
-    val sections = sectionsMap.mapValues { (key, text) ->
+    private val sections: Map<String, List<TomlLine>> = sectionsMap.mapValues { (key, text) ->
         val section = TomlLine.Section.from(key)
         text.lines().map { TomlLine(section, it) }
     }
@@ -22,7 +21,7 @@ internal class TomlUpdater(val toml: String, val dependenciesUpdates: List<Depen
         actual.writeText(Toml.tomlSectionsToString(newSectionsText))
     }
 
-    fun updateNewVersions(lines: List<TomlLine>): List<TomlLine> {
+    private fun updateNewVersions(lines: List<TomlLine>): List<TomlLine> {
         return lines.flatMap { line ->
             val noop = listOf(line)
             when (line.kind) {
@@ -41,18 +40,17 @@ internal class TomlUpdater(val toml: String, val dependenciesUpdates: List<Depen
         }
     }
 
-    fun findLineReferencing(version: TomlLine): DependencyWithVersionCandidates? {
+    private fun findLineReferencing(version: TomlLine): DependencyWithVersionCandidates? {
         val libOrPlugin = sections.values.flatten().firstOrNull { line ->
             line.versionRef == version.key
         } ?: return null
 
         return dependenciesUpdates.firstOrNull { (moduleId) ->
-            val nameOk = moduleId.name == libOrPlugin.name
-            nameOk && moduleId.group == libOrPlugin.group
+            (moduleId.name == libOrPlugin.name) && (moduleId.group == libOrPlugin.group)
         }
     }
 
-    fun linesForUpdate(line: TomlLine, update: DependencyWithVersionCandidates?): List<TomlLine> {
+    private fun linesForUpdate(line: TomlLine, update: DependencyWithVersionCandidates?): List<TomlLine> {
         val result = mutableListOf(line)
         val versions = update?.versionsCandidates ?: return result
         val version = line.version
