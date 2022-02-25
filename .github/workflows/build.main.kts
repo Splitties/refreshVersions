@@ -270,12 +270,23 @@ fun conditionOf(project: String, arguments: String): String? {
 
 
 /*******************/
+// Hopefully this will become part of github-actions-kotlin-dsl
 
 data class Step(
     val name: String,
     val action: Action,
     val env: Map<String, String> = emptyMap(),
     val condition: String? = null
+) {
+    fun env(env: Map<String, String>) = copy(env = env)
+    fun condition(condition: String?) = copy(condition = condition)
+}
+
+data class Command(
+    val name: String,
+    val command: String,
+    val env: Map<String, String> = emptyMap(),
+    val condition: String? = null,
 ) {
     fun env(env: Map<String, String>) = copy(env = env)
     fun condition(condition: String?) = copy(condition = condition)
@@ -307,4 +318,7 @@ object Util {
         uses(step.name, step.action, LinkedHashMap(step.env), step.condition)
 
     fun Action.named(name: String) = Step(name, this)
+
+    fun JobBuilder.run(command: Command) =
+        run(command.name, command.command, LinkedHashMap(command.env), command.condition)
 }
