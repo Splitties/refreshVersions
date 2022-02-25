@@ -1,4 +1,4 @@
-package de.fayard.refreshVersions
+package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.Case
 import io.kotest.core.spec.style.StringSpec

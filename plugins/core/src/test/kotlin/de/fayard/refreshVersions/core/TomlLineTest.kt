@@ -1,4 +1,4 @@
-package de.fayard.refreshVersions
+package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.TomlLine
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Delete

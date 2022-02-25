@@ -1,6 +1,5 @@
-package de.fayard.refreshVersions
+package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
 import de.fayard.refreshVersions.core.internal.TomlUpdater
 import io.kotest.core.spec.style.FunSpec
@@ -40,7 +39,7 @@ private data class FolderInput(
 )
 
 private fun FolderInput(folder: String): FolderInput {
-    val file = File("src/test/resources/$folder")
+    val file = testResources.resolve(folder)
     require(file.canRead()) { "Invalid folder ${file.absolutePath}" }
     val dependencies = file.resolve("dependencies.txt")
         .readText().lines()
