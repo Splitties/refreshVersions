@@ -9,7 +9,7 @@ import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.checkModeAndNames
 import de.fayard.refreshVersions.core.internal.computeUseFqdnFor
 import de.fayard.refreshVersions.core.internal.findDependencies
-import de.fayard.refreshVersions.internal.Toml.versionsCatalog
+import de.fayard.refreshVersions.core.internal.Toml.versionsCatalog
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException

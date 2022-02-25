@@ -1,8 +1,7 @@
-package de.fayard.refreshVersions.internal
+package de.fayard.refreshVersions.core.internal
 
-import de.fayard.refreshVersions.core.internal.Deps
-
-internal object Toml {
+@InternalRefreshVersionsApi
+object Toml {
 
     fun parseTomlInSection(toml: String): Map<String, String> {
         val result = mutableMapOf<String, StringBuilder>()

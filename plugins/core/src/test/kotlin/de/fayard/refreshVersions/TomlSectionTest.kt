@@ -1,6 +1,6 @@
 package de.fayard.refreshVersions
 
-import de.fayard.refreshVersions.internal.Toml
+import de.fayard.refreshVersions.core.internal.Toml
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
