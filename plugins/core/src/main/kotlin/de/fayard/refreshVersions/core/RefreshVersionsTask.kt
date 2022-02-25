@@ -8,11 +8,15 @@ import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
+import org.gradle.api.UnknownDomainObjectException
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.MinimalExternalModuleDependency
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.util.GradleVersion
 
 /**
@@ -65,7 +69,8 @@ open class RefreshVersionsTask : DefaultTask() {
                     httpClient = httpClient,
                     project = project,
                     versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
-                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader,
+                    versionsCatalogMapping = getVersionsCatalogMapping(),
                 )
             }
             VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
@@ -74,6 +79,8 @@ open class RefreshVersionsTask : DefaultTask() {
                 settingsPluginsUpdates = result.settingsPluginsUpdates,
                 buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
             )
+            val libsToml = project.file("gradle/libs.versions.toml")
+            TomlUpdater(libsToml, result.dependenciesUpdates).updateNewVersions(libsToml)
 
             warnAboutRefreshVersionsIfSettingIfAny()
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
@@ -83,6 +90,9 @@ open class RefreshVersionsTask : DefaultTask() {
                 logger.log(problem)
             }
             OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
+            if (libsToml.canRead()) {
+                OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
+            }
         }
     }
 
@@ -153,5 +163,23 @@ open class RefreshVersionsTask : DefaultTask() {
             )
             //TODO: Replace issue link above with stable link to explanation in documentation.
         }
+    }
+
+    private fun getVersionsCatalogMapping(): Set<ModuleId.Maven> {
+        val versionCatalog = try {
+            project.extensions.getByType<VersionCatalogsExtension>().named("libs")
+        } catch (e: UnknownDomainObjectException) {
+            // File gradle/libs.versions.toml does not exist
+            return emptySet()
+        }
+
+        return versionCatalog.dependencyAliases.mapNotNull { alias ->
+            versionCatalog.findDependency(alias)
+                .orElse(null)
+                ?.orNull
+                ?.let { dependency: MinimalExternalModuleDependency ->
+                    ModuleId.Maven(dependency.module.group, dependency.module.name)
+                }
+        }.toSet()
     }
 }

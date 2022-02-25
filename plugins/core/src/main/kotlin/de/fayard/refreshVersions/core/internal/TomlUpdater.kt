@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.*
+import org.gradle.util.GradleVersion
 import java.io.File
 import de.fayard.refreshVersions.core.Version as MavenVersion
 
@@ -13,6 +14,10 @@ internal class TomlUpdater(val toml: String, val dependenciesUpdates: List<Depen
     }
 
     fun updateNewVersions(actual: File) {
+        val currentGradleVersion: GradleVersion = GradleVersion.current()
+        val versionWithVersionsCatalog: GradleVersion = GradleVersion.version("7.4")
+        if (currentGradleVersion < versionWithVersionsCatalog) return
+
         if (toml.isBlank()) return
 
         val newSectionsText = sections.mapValues { (key, lines) ->
@@ -42,9 +47,8 @@ internal class TomlUpdater(val toml: String, val dependenciesUpdates: List<Depen
 
     fun findLineReferencing(version: TomlLine): DependencyWithVersionCandidates? {
         val libOrPlugin = sections.values.flatten().firstOrNull { line ->
-            println(line)
             line.versionRef == version.key
-        }?: return null
+        } ?: return null
 
         return dependenciesUpdates.firstOrNull { (moduleId) ->
             val nameOk = moduleId.name == libOrPlugin.name
@@ -61,7 +65,7 @@ internal class TomlUpdater(val toml: String, val dependenciesUpdates: List<Depen
 
         fun suffix(v: MavenVersion) = when {
             isObject -> """ = "${v.value}" }"""
-            line.section == TomlLine.Section.versions ->  """ = "${v.value}""""
+            line.section == TomlLine.Section.versions -> """ = "${v.value}""""
             else -> """:${v.value}""""
         }
 
