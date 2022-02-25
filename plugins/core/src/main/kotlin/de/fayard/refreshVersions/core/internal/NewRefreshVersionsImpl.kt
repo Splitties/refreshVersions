@@ -95,9 +95,11 @@ internal suspend fun lookupVersionCandidates(
 
         val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
 
+        val dependenciesFromVersionsCatalog = versionsCatalogMapping.map(ModuleId.Maven::toDependency)
+
         return@coroutineScope VersionCandidatesLookupResult(
             dependenciesUpdates = dependenciesWithVersionCandidates,
-            dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
+            dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions - dependenciesFromVersionsCatalog,
             dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
             gradleUpdates = gradleUpdatesAsync.await(),
             settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
@@ -106,6 +108,9 @@ internal suspend fun lookupVersionCandidates(
         TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
     }
 }
+
+private fun ModuleId.toDependency() =
+    UsedPluginsHolder.ConfigurationLessDependency("$group:$name:_")
 
 private suspend fun lookupAvailableGradleVersions(httpClient: OkHttpClient): List<Version> = coroutineScope {
     val checker = GradleUpdateChecker(httpClient)
