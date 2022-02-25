@@ -7,7 +7,7 @@ import de.fayard.refreshVersions.core.internal.Case
 import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
 import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.checkModeAndNames
-import de.fayard.refreshVersions.core.internal.computeUseFqdnFor
+import de.fayard.refreshVersions.core.internal.computeAliases
 import de.fayard.refreshVersions.core.internal.findDependencies
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
@@ -50,8 +50,7 @@ open class BuildSrcLibsTask : DefaultTask() {
         val outputDir = project.file(OutputFile.OUTPUT_DIR.path)
 
         val allDependencies = project.findDependencies()
-        val resolvedUseFqdn = computeUseFqdnFor(
-            libraries = allDependencies,
+        val resolvedUseFqdn = allDependencies.computeAliases(
             configured = emptyList(),
             byDefault = MEANING_LESS_NAMES
         )

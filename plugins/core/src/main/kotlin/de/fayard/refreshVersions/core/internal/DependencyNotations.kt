@@ -1,6 +1,5 @@
 package de.fayard.refreshVersions.core.internal
 
-import de.fayard.refreshVersions.core.internal.Case.*
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ExternalDependency
 
@@ -34,14 +33,13 @@ val MEANING_LESS_NAMES: MutableList<String> = mutableListOf(
 )
 
 @InternalRefreshVersionsApi
-fun computeUseFqdnFor(
-    libraries: List<Library>,
+fun List<Library>.computeAliases(
     configured: List<String>,
     byDefault: List<String> = MEANING_LESS_NAMES
 ): List<String> {
     val groups = (configured + byDefault).filter { it.contains(".") }.distinct()
-    val depsFromGroups = libraries.filter { it.group in groups }.map { it.module }
-    val ambiguities = libraries.groupBy { it.module }.filter { it.value.size > 1 }.map { it.key }
+    val depsFromGroups = filter { it.group in groups }.map { it.module }
+    val ambiguities = groupBy { it.module }.filter { it.value.size > 1 }.map { it.key }
     return (configured + byDefault + ambiguities + depsFromGroups - groups).distinct().sorted()
 }
 

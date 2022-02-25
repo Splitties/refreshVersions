@@ -7,17 +7,27 @@ import de.fayard.refreshVersions.core.internal.Library
 import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
 import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.checkModeAndNames
-import de.fayard.refreshVersions.core.internal.computeUseFqdnFor
+import de.fayard.refreshVersions.core.internal.computeAliases
 import de.fayard.refreshVersions.core.internal.findDependencies
 import de.fayard.refreshVersions.core.internal.Toml.versionsCatalog
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.options.Option
 import org.gradle.util.GradleVersion
 
 @Suppress("UnstableApiUsage")
 open class RefreshVersionsCatalogTask : DefaultTask() {
+
+    @Input
+    @Option(option = "versions", description = "Add the versions in gradle/libs.versions.toml")
+    var withVersions: Boolean = false
+
+    @Input
+    @Option(option = "all", description = "Add all libraries in gradle/libs.versions.toml")
+    var withAllLibraries: Boolean = false
 
     @TaskAction
     fun refreshVersionsCatalogAction() {
@@ -44,18 +54,21 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
 
         val allDependencies: List<Library> = project.findDependencies()
 
-        val nonBuiltInDependencies = allDependencies
-            .filter { it.copy(version = "_") !in builtInDependencies }
+        val dependenciesToUse = if (withAllLibraries) {
+            allDependencies
+        } else {
+            allDependencies.filter { it.copy(version = "_") !in builtInDependencies }
+        }
 
-        val resolvedUseFqdn: List<String> = computeUseFqdnFor(
-            libraries = nonBuiltInDependencies,
+        val versionCatalogAliases: List<String> = dependenciesToUse.computeAliases(
             configured = emptyList(),
             byDefault = MEANING_LESS_NAMES
         )
 
-        val deps: Deps = nonBuiltInDependencies.checkModeAndNames(resolvedUseFqdn, Case.`kebab-case`)
+        val deps: Deps = dependenciesToUse.checkModeAndNames(versionCatalogAliases, Case.`kebab-case`)
+
         val currentText = if (catalog.existed) catalog.readText(project) else ""
-        val newText = versionsCatalog(deps, currentText)
+        val newText = versionsCatalog(deps, currentText, withVersions)
         catalog.writeText(newText, project)
         catalog.logFileWasModified()
 
