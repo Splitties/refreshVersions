@@ -1,21 +1,22 @@
 <!-- Thanks for taking the time to write this Pull Request ❤️ -->
 <!-- Be sure to read the guidelines for the development process => https://jmfayard.github.io/refreshVersions/contributing/submitting-prs/dev-process -->
 
-# Issue https://github.com/jmfayard/refreshVersions/issues/XX
+Hello/bonjour,
 
-## 🚀 What?
+## What?
 
-Fill out a short description about the ticket.
+Resolves #XX <!-- remove if there's no existing issue -->
 
-## 📄 Why?
+Tell us what these changes are doing.
 
-Fill out why this feature is needed. Kind of the same stuff that is usually mentioned in the jira ticket.
+## Why?
 
-## 📦 How?
+Tell us why those changes are needed.
 
-Explain in short terms what you did here, what your solution/implementation is doing.
+## How?
 
+Tell us briefly what you did here, and what your solution/implementation is doing.
 
-## ✅ Testing?
+## Testing?
 
-Tell us the test cases you did in order to prove that this feature is working.
+Tell us how you tested these changes. We will test as well.
