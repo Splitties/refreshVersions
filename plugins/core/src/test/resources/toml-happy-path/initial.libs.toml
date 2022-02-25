@@ -6,8 +6,8 @@ key = "some key"
 # some comment
 
 groovy = "3.0.5"
-## available: "1.5"
-## available: "1.6"
+### available="1.5"
+### available="1.6"
 
 checkstyle = "8.37"
 common = "3.4"
@@ -27,7 +27,7 @@ my-lib = "com.mycompany:mylib:1.4"
 my-other-lib = { module = "com.mycompany:other", version = "1.4" }
 
 my-other-lib2 = { group = "com.mycompany", name = "alternate", version = "1.4" }
-##                                                         # available = "1.5" }
+##                                                          # available="1.5" }
 
 [bundles]
 
@@ -41,8 +41,8 @@ short-notation = "some.plugin.id:1.4"
 # yet another comment
 
 long-notation = { id = "some.plugin.id", version = "1.4" }
-##                                     # available:"1.5" }
-##                                     # available:"1.6" }
+##                                    # available="1.5" }
+##                                    # available="1.6" }
 
-reference-notation = { id = "some.plugin.id", version.ref = "common" }
+reference-notation = { id = "other.plugin.id", version.ref = "common" }
 

@@ -9,9 +9,13 @@ data class TomlLine(
 ) {
 
     @Suppress("EnumEntryName")
-    enum class Section { versions, libraries, bundles, plugins, others }
+    enum class Section { versions, libraries, bundles, plugins, others ;
+        companion object {
+            fun from(name: String): Section = values().firstOrNull { it.name == name } ?: others
+        }
+    }
 
-    enum class Kind { Ignore, Available, Libs, LibsUnderscore, LibsVersionRef, Version, Plugin, PluginVersionRef }
+    enum class Kind { Ignore, Delete, Libs, LibsUnderscore, LibsVersionRef, Version, Plugin, PluginVersionRef }
 
     val textWithoutComment = text.substringBefore("#")
 
@@ -27,14 +31,22 @@ data class TomlLine(
 
     val kind: Kind = this.guessTomlLineKind()
 
-    val map: Map<String, String> = parseTomlMap(kind)
+    val map: Map<String, String> = parseTomlMap(kind).withDefault { "" }
 
     val versionRef get() =  map["version.ref"]
+
     val module get() = "$group:$name"
-    val version: String? by map
-    val group: String? by map
-    val name: String? by map
-    val id: String? by  map
+
+    val version: String get() =
+        if (section == versions) value else map["version"]!!
+
+    val group: String get() =
+        if (section == plugins) id else map["group"]!!
+
+    val name: String get() =
+        if (section == plugins) "$id.gradle.plugin" else map["name"]!!
+
+    val id: String by  map
 
     override fun toString(): String = "TomlLine(section=$section, kind=$kind, key=$key, value=$value, map=$map)\n$text"
 }
@@ -57,7 +69,7 @@ private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
 
     return when(kind) {
         Ignore -> emptyMap()
-        Available -> emptyMap()
+        Delete -> emptyMap()
         LibsUnderscore -> emptyMap()
         Version -> emptyMap()
         Plugin, PluginVersionRef -> when {
@@ -90,20 +102,24 @@ private fun lineMap(group: String, name: String, version: String?, versionRef: S
         .toMap()
 
 private fun TomlLine.guessTomlLineKind(): TomlLine.Kind {
+    when {
+        text.contains("# available") -> return Delete
+        text.startsWith("## unused") -> return Delete
+        text.startsWith("## error") -> return Delete
+        text.startsWith("## warning") -> return Delete
+    }
+
     val hasVersionRef = textWithoutComment.contains("version.ref")
-    val containsAvailable = text.contains("# available")
 
     return when (section) {
         bundles -> Ignore
         others -> Ignore
         versions -> when {
-            containsAvailable -> Available
             hasKey -> Version
             else -> Ignore
         }
         libraries -> {
             when {
-                containsAvailable -> Available
                 hasKey.not() -> Ignore
                 textWithoutComment.endsWith(":_\"") -> LibsUnderscore
                 hasVersionRef -> LibsVersionRef
@@ -111,7 +127,6 @@ private fun TomlLine.guessTomlLineKind(): TomlLine.Kind {
             }
         }
         plugins -> when {
-            containsAvailable -> Available
             hasKey.not() -> Ignore
             hasVersionRef -> PluginVersionRef
             else -> Plugin

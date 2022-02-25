@@ -1,8 +1,7 @@
 package de.fayard.refreshVersions
 
-import de.fayard.refreshVersions.core.internal.Toml
 import de.fayard.refreshVersions.core.internal.TomlLine
-import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Available
+import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Delete
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Ignore
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Libs
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.LibsUnderscore
@@ -12,8 +11,8 @@ import de.fayard.refreshVersions.core.internal.TomlLine.Kind.PluginVersionRef
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Version
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
+import io.kotest.inspectors.forAny
 import io.kotest.matchers.shouldBe
-import java.io.File
 
 class TomlLineTest : FunSpec({
 
@@ -42,7 +41,7 @@ class TomlLineTest : FunSpec({
             LibsVersionRef, LibsVersionRef, LibsVersionRef,
             Ignore, Ignore, Ignore,
             LibsUnderscore, Ignore,
-            Libs, Available, Ignore,
+            Libs, Delete, Ignore,
             Libs, Ignore,
             Libs, Ignore,
         )
@@ -69,7 +68,7 @@ class TomlLineTest : FunSpec({
 
         val expectedKinds: List<TomlLine.Kind> = listOf(
             Ignore, Ignore,
-            Version, Available, Available, Ignore,
+            Version, Delete, Delete, Ignore,
             Version, Version,
         )
 
@@ -92,7 +91,7 @@ class TomlLineTest : FunSpec({
         """.trimIndent().lines()
 
         val expectedKinds: List<TomlLine.Kind> = listOf(
-            Plugin, Available, Ignore, Ignore,
+            Plugin, Delete, Ignore, Ignore,
             Plugin, PluginVersionRef
         )
 
@@ -168,22 +167,17 @@ class TomlLineTest : FunSpec({
         }
     }
 
-    test("Parse whole file") {
-        val fileText = File("src/test/resources/toml-happy-path/initial.libs.toml").readText()
-        Toml.parseTomlInSection(fileText).forEach { (key, text) ->
-            val section = try {
-                TomlLine.Section.valueOf(key)
-            } catch (e: IllegalArgumentException) {
-                TomlLine.Section.others
-            }
-            text.lines().forAll { text ->
-                val line = TomlLine(section, text)
-                println(line)
-            }
+    test("Parsing for warning or error messages") {
+        val lines = """
+            ## error: something happened
+            ## warning: just a warning
+            ## unused
+        """.trimIndent().lines()
+
+        lines.forAny {
+            TomlLine(TomlLine.Section.libraries, it).kind shouldBe Delete
         }
     }
-
-
 })
 
 
