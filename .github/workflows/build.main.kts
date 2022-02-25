@@ -8,6 +8,8 @@ import Build_main.GradleTasks.HELP
 import Build_main.GradleTasks.PUBLISH_PLUGINS
 import Build_main.GradleTasks.PUBLISH_TO_MAVEN_LOCAL
 import Build_main.GradleTasks.REFRESH_VERSIONS
+import Build_main.Util.step
+import Build_main.Util.named
 import it.krzeminski.githubactions.actions.Action
 import it.krzeminski.githubactions.actions.actions.CheckoutV2
 import it.krzeminski.githubactions.actions.actions.SetupJavaV2
@@ -60,7 +62,7 @@ val checkBuild = workflow(
 
         step(Steps.checkout())
 
-        step(Steps.setupJava)
+        step(Steps.setupJava())
 
         val stepWithBuildSrc = "Run refreshVersions on sample-multi-modules"
 
@@ -79,10 +81,12 @@ val checkBuild = workflow(
             Triple("Check sample-android", Project.`sample-android`, CHECK),
         )
         for ((stepName, project, arguments) in projectTaskMap) {
-            step(
-                step = Steps.gradle( "$arguments --stacktrace", project, stepName, buildSrc = stepName == stepWithBuildSrc),
-                condition = conditionOf(project.name, arguments),
-            )
+            step(Steps.gradle(
+                "$arguments --stacktrace",
+                project,
+                stepName,
+                buildSrc = stepName == stepWithBuildSrc
+            ).condition(conditionOf(project.name, arguments)))
         }
     }
 }
@@ -106,7 +110,7 @@ val releasePlugins = workflow(
            """.trimIndent())
     job("gradle-plugins-publishing", RunnerType.UbuntuLatest) {
         step(Steps.checkout())
-        step(Steps.setupJava)
+        step(Steps.setupJava())
 
         val secrets = "${'$'}{{ secrets"
         val properties = """-Pgradle.publish.key=$secrets.gradle_publish_key }} -Pgradle.publish.secret=$secrets.gradle_publish_secret }}"""
@@ -114,7 +118,7 @@ val releasePlugins = workflow(
         step(Steps.gradle(
             arguments = "$PUBLISH_PLUGINS --scan $properties",
             project = Project.plugins,
-        ), env = Env.sonatypeCredentials)
+        ).env(Env.sonatypeCredentials))
     }
 }
 
@@ -127,11 +131,10 @@ val publishToSonatypeSnapshots = workflow(
     )) {
     job("build-and-upload", RunnerType.UbuntuLatest) {
         step(Steps.checkout())
-        step(Steps.setupJava)
+        step(Steps.setupJava())
         step(
-            step = Steps.gradle(GradleTasks.publishToSonatype, Project.plugins),
-            env = Env.sonatypeCredentials,
-        )
+            Steps.gradle(GradleTasks.publishToSonatype, Project.plugins)
+                .env(Env.sonatypeCredentials))
     }
 }
 
@@ -225,23 +228,19 @@ object Steps {
         )
     )
 
-    val setupJava: Step = Step(
-        "setup-java",
-        SetupJavaV2(
-            distribution = SetupJavaV2.Distribution.Adopt, javaVersion = "11"
-        )
-    )
+    fun setupJava(): Step = SetupJavaV2(
+        distribution = SetupJavaV2.Distribution.Adopt,
+        javaVersion = "11"
+    ).named("setup-java")
 
     fun gradle(arguments: String, project: Project, stepName: String? = null, buildSrc: Boolean = false): Step {
         val firstArg = arguments.split(" ").first()
-        return Step(
-            name = stepName ?: "$project gradle $firstArg",
-            action = GradleBuildActionV2(
-                arguments = arguments,
-                gradleExecutable = "$project/gradlew",
-                buildRootDirectory = if (buildSrc) "${project.name}/buidSrc" else project.name,
-            )
-        )
+
+        return GradleBuildActionV2(
+            arguments = arguments,
+            gradleExecutable = "$project/gradlew",
+            buildRootDirectory = if (buildSrc) "${project.name}/buidSrc" else project.name,
+        ).named(stepName ?: "$project gradle $firstArg")
     }
 }
 
@@ -270,20 +269,42 @@ fun conditionOf(project: String, arguments: String): String? {
 }
 
 
+/*******************/
 
-/***
- * Below this comment are things that should hopefully become part of kotlin-dsl-github-actions
- */
+data class Step(
+    val name: String,
+    val action: Action,
+    val env: Map<String, String> = emptyMap(),
+    val condition: String? = null
+) {
+    fun env(env: Map<String, String>) = copy(env = env)
+    fun condition(condition: String?) = copy(condition = condition)
+}
 
-data class Step(val name: String, val action: Action)
+/*******************/
 
-data class Command(val name: String, val command: String)
+// Kotlin Scripts do not support using top-level functions in objects
+// See: https://youtrack.jetbrains.com/issue/KT-51329
+object Util {
+    fun requireRegex(input: String, regex: String) {
+        require(input.matches(Regex(regex))) { "Invalid input=[$input] does not mach regex $regex" }
+    }
 
-fun JobBuilder.step(name: String, env: Map<String, String> = emptyMap(), condition: String? = null, action: () -> Action) =
-    uses(name, action(), LinkedHashMap(env), condition)
+    fun secret(variable: String): String {
+        requireRegex(variable, "[A-Z_-]+")
+        return "\${{ secrets.$variable }}"
+    }
 
-fun JobBuilder.step(step: Step, env: Map<String, String> = emptyMap(), condition: String? = null) =
-    uses(step.name, step.action, LinkedHashMap(env), condition)
+    fun env(variable: String): String {
+        requireRegex(variable, "[A-Z_-]+")
+        return "\$$variable"
+    }
 
-fun JobBuilder.run(command: Command, env: Map<String, String> = emptyMap(), condition: String? = null) =
-    run(command.name, command.command, LinkedHashMap(env), condition)
+    fun JobBuilder.step(name: String, env: Map<String, String> = emptyMap(), action: () -> Action) =
+        uses(name, action(), LinkedHashMap(env))
+
+    fun JobBuilder.step(step: Step) =
+        uses(step.name, step.action, LinkedHashMap(step.env), step.condition)
+
+    fun Action.named(name: String) = Step(name, this)
+}
