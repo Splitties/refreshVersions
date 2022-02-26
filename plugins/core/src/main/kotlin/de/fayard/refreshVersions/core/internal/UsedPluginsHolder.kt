@@ -5,7 +5,8 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.internal.artifacts.dependencies.AbstractDependency
 
-internal object UsedPluginsHolder {
+@InternalRefreshVersionsApi
+object UsedPluginsHolder {
 
     fun noteUsedPluginDependency(
         dependencyNotation: String,

@@ -10,6 +10,7 @@ import de.fayard.refreshVersions.core.internal.checkModeAndNames
 import de.fayard.refreshVersions.core.internal.computeAliases
 import de.fayard.refreshVersions.core.internal.findDependencies
 import de.fayard.refreshVersions.core.internal.Toml.versionsCatalog
+import de.fayard.refreshVersions.core.internal.UsedPluginsHolder
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
@@ -50,7 +51,6 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
 
         val builtInDependencies = getArtifactNameToConstantMapping()
             .map { Library(it.group, it.artifact, "_") }
-            .toSet()
 
         val allDependencies: List<Library> = project.findDependencies()
 
@@ -60,6 +60,9 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
             allDependencies.filter { it.copy(version = "_") !in builtInDependencies }
         }
 
+        val plugins = UsedPluginsHolder.usedPluginsWithoutEntryInVersionsFile +
+                UsedPluginsHolder.read().map { it.first }
+
         val versionCatalogAliases: List<String> = dependenciesToUse.computeAliases(
             configured = emptyList(),
             byDefault = MEANING_LESS_NAMES
@@ -68,7 +71,7 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         val deps: Deps = dependenciesToUse.checkModeAndNames(versionCatalogAliases, Case.`kebab-case`)
 
         val currentText = if (catalog.existed) catalog.readText(project) else ""
-        val newText = versionsCatalog(deps, currentText, withVersions)
+        val newText = versionsCatalog(deps, currentText, withVersions, plugins)
         catalog.writeText(newText, project)
         catalog.logFileWasModified()
 
