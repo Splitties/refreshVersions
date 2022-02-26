@@ -2,16 +2,18 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
+import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
+import org.gradle.api.Project
 import org.gradle.api.UnknownDomainObjectException
-import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.getByType
 import org.intellij.lang.annotations.Language
 import java.io.File
+import de.fayard.refreshVersions.core.internal.VersionCatalogs
 
 open class RefreshVersionsMigrateTask : DefaultTask() {
 
@@ -22,7 +24,8 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 
     @TaskAction
     fun migrateBuild() {
-        val versionsCatalogMapping: Map<ModuleId.Maven, String> = getVersionsCatalogMapping()
+        val versionsCatalogMapping: Map<ModuleId.Maven, String> =
+            VersionCatalogs.dependencyAliases(project.getVersionsCatalog())
 
         val dependencyMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
             .associateShortestByMavenCoordinate()
@@ -37,25 +40,8 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
                 $ANSI_GREEN./gradlew refreshVersions$ANSI_RESET
             """.trimIndent())
     }
-
-    private fun getVersionsCatalogMapping(): Map<ModuleId.Maven, String> {
-        val versionCatalog = try {
-            project.extensions.getByType<VersionCatalogsExtension>().named("libs")
-        } catch (e: UnknownDomainObjectException) {
-            // File gradle/libs.versions.toml does not exist
-            return emptyMap()
-        }
-
-        return versionCatalog.dependencyAliases.mapNotNull { alias ->
-            versionCatalog.findDependency(alias)
-                .orElse(null)
-                ?.orNull
-                ?.let { dependency: MinimalExternalModuleDependency ->
-                    ModuleId.Maven(dependency.module.group, dependency.module.name) to "libs.$alias"
-                }
-        }.toMap()
-    }
 }
+
 
 //TODO: Don't replace random versions in build.gradle(.kts) files to avoid breaking plugins.
 //TODO: Don't rely on a regex to extract the version so we detect absolutely any version string literal.
@@ -113,7 +99,7 @@ internal fun withVersionPlaceholder(
     line: String,
     isInsidePluginsBlock: Boolean,
     isBuildFile: Boolean,
-    dependencyMapping: Map<ModuleId.Maven, String> = emptyMap()
+    dependencyMapping: Map<ModuleId.Maven, String> = emptyMap(),
 ): String? = when {
     isInsidePluginsBlock -> line.replace(pluginVersionRegex, "")
     isBuildFile -> when {

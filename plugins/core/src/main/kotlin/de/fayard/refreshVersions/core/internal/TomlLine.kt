@@ -1,20 +1,13 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.*
-import de.fayard.refreshVersions.core.internal.TomlLine.Section.*
+import de.fayard.refreshVersions.core.internal.TomlSection.*
 import org.gradle.api.artifacts.Dependency
 
 internal data class TomlLine(
-    val section: Section,
+    val section: TomlSection,
     val text: String,
 ) {
-
-    @Suppress("EnumEntryName")
-    internal enum class Section { versions, libraries, bundles, plugins, others ;
-        companion object {
-            fun from(name: String): Section = values().firstOrNull { it.name == name } ?: others
-        }
-    }
 
     internal enum class Kind { Ignore, Delete, Libs, LibsUnderscore, LibsVersionRef, Version, Plugin, PluginVersionRef }
 
@@ -39,33 +32,33 @@ internal data class TomlLine(
     val module get() = "$group:$name"
 
     val version: String get() =
-        if (section == versions) value else map["version"]!!
+        if (section == Versions) value else map["version"]!!
 
     val group: String get() =
-        if (section == plugins) id else map["group"]!!
+        if (section == Plugins) id else map["group"]!!
 
     val name: String get() =
-        if (section == plugins) "$id.gradle.plugin" else map["name"]!!
+        if (section == Plugins) "$id.gradle.plugin" else map["name"]!!
 
     val id: String by  map
 
     override fun toString(): String = "TomlLine(section=$section, kind=$kind, key=$key, value=$value, map=$map)\n$text"
 
     internal companion object {
-        val newLine = TomlLine(TomlLine.Section.others, "")
+        val newLine = TomlLine(TomlSection.Custom("blank"), "")
     }
 }
 
 internal fun List<TomlLine>.toText(): String
     = joinToString("\n", postfix = "\n", prefix = "\n") { it.text }
 
-internal fun TomlLine(section: TomlLine.Section, key: String, value: String): TomlLine =
+internal fun TomlLine(section: TomlSection, key: String, value: String): TomlLine =
     TomlLine(section, """$key = "$value"""" )
 
-internal fun TomlLine(section: TomlLine.Section, key: String, dependency: Dependency): TomlLine =
+internal fun TomlLine(section: TomlSection, key: String, dependency: Dependency): TomlLine =
     TomlLine(section, key, """${dependency.group}:${dependency.name}:${dependency.version}""")
 
-internal fun TomlLine(section: TomlLine.Section, key: String, map: Map<String, String>): TomlLine {
+internal fun TomlLine(section: TomlSection, key: String, map: Map<String, String>): TomlLine {
     require((map.keys - validKeys).isEmpty()) { "Map $map has invalid keys. Valid: $validKeys"}
     val formatMap = map.entries
         .joinToString(", ") { (key, value) -> """$key = "$value"""" }
@@ -133,13 +126,14 @@ private fun TomlLine.guessTomlLineKind(): TomlLine.Kind {
     val hasVersionRef = textWithoutComment.contains("version.ref")
 
     return when (section) {
-        bundles -> Ignore
-        others -> Ignore
-        versions -> when {
+        is Custom -> Ignore
+        Root -> Ignore
+        Bundles -> Ignore
+        Versions -> when {
             hasKey -> Version
             else -> Ignore
         }
-        libraries -> {
+        Libraries -> {
             when {
                 hasKey.not() -> Ignore
                 textWithoutComment.endsWith(":_\"") -> LibsUnderscore
@@ -147,7 +141,7 @@ private fun TomlLine.guessTomlLineKind(): TomlLine.Kind {
                 else -> Libs
             }
         }
-        plugins -> when {
+        Plugins -> when {
             hasKey.not() -> Ignore
             hasVersionRef -> PluginVersionRef
             else -> Plugin

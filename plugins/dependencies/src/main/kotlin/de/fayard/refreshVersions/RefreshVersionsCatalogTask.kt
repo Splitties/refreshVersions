@@ -9,8 +9,10 @@ import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.checkModeAndNames
 import de.fayard.refreshVersions.core.internal.computeAliases
 import de.fayard.refreshVersions.core.internal.findDependencies
-import de.fayard.refreshVersions.core.internal.Toml.versionsCatalog
+import de.fayard.refreshVersions.core.internal.VersionCatalogs.versionsCatalog
 import de.fayard.refreshVersions.core.internal.UsedPluginsHolder
+import de.fayard.refreshVersions.core.internal.VersionCatalogs
+import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
@@ -23,22 +25,22 @@ import org.gradle.util.GradleVersion
 open class RefreshVersionsCatalogTask : DefaultTask() {
 
     @Input
-    @Option(option = "versions", description = "Add the versions in gradle/libs.versions.toml")
+    @Option(option = "versions", description = "Add the versions in $LIBS_VERSIONS_TOML")
     var withVersions: Boolean = false
 
     @Input
-    @Option(option = "all", description = "Add all libraries in gradle/libs.versions.toml")
+    @Option(option = "all", description = "Add all libraries in $LIBS_VERSIONS_TOML")
     var withAllLibraries: Boolean = false
 
     @TaskAction
     fun refreshVersionsCatalogAction() {
         // Check Gradle version
-        if (currentGradleVersion < versionWithVersionsCatalog) {
+        if (VersionCatalogs.isSupported().not()) {
             throw GradleException(
                 """
-                |Gradle versions catalogs are not supported in $currentGradleVersion
+                |Gradle versions catalogs are not supported in ${GradleVersion.current()}
                 |Upgrade Gradle with this command
-                |     ./gradlew wrapper --gradle-version ${versionWithVersionsCatalog.version}
+                |     ./gradlew wrapper --gradle-version ${VersionCatalogs.NEEDS_GRADLE_VERSION.version}
             """.trimMargin()
             )
         }
@@ -46,7 +48,7 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         // Update versions.properties
         addMissingEntriesInVersionsProperties(project)
 
-        // Generate gradle/libs.versions.toml
+        // Generate LIBS_VERSIONS_TOML
         val catalog = OutputFile.GRADLE_VERSIONS_CATALOG
 
         val builtInDependencies = getArtifactNameToConstantMapping()
@@ -80,11 +82,6 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
             
                 $ANSI_GREEN./gradlew refreshVersionsMigrate$ANSI_RESET
         """.trimIndent())
-    }
-
-    companion object {
-        val currentGradleVersion: GradleVersion = GradleVersion.current()
-        val versionWithVersionsCatalog: GradleVersion = GradleVersion.version("7.4")
     }
 }
 

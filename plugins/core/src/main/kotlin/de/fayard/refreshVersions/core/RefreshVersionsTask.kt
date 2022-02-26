@@ -1,13 +1,16 @@
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
+import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.problems.log
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
+import org.gradle.api.Project
 import org.gradle.api.UnknownDomainObjectException
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
@@ -58,6 +61,9 @@ open class RefreshVersionsTask : DefaultTask() {
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
 
+        val versionsCatalogMapping: Set<ModuleId.Maven> =
+            VersionCatalogs.dependencyAliases(project.getVersionsCatalog()).keys
+
         runBlocking {
             val lintUpdatingProblemsAsync = async {
                 configureLintIfRunningOnAnAndroidProject(settings, RefreshVersionsConfigHolder.readVersionsMap())
@@ -70,7 +76,7 @@ open class RefreshVersionsTask : DefaultTask() {
                     project = project,
                     versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
                     versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader,
-                    versionsCatalogMapping = getVersionsCatalogMapping(),
+                    versionsCatalogMapping = versionsCatalogMapping,
                 )
             }
             VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
@@ -79,8 +85,8 @@ open class RefreshVersionsTask : DefaultTask() {
                 settingsPluginsUpdates = result.settingsPluginsUpdates,
                 buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
             )
-            val libsToml = project.file("gradle/libs.versions.toml")
-            if (GradleVersion.current() >= GradleVersion.version("7.4")) {
+            val libsToml = project.file(LIBS_VERSIONS_TOML)
+            if (VersionCatalogs.isSupported()) {
                 TomlUpdater(libsToml, result.dependenciesUpdates).updateNewVersions(libsToml)
             }
 
@@ -165,23 +171,5 @@ open class RefreshVersionsTask : DefaultTask() {
             )
             //TODO: Replace issue link above with stable link to explanation in documentation.
         }
-    }
-
-    private fun getVersionsCatalogMapping(): Set<ModuleId.Maven> {
-        val versionCatalog = try {
-            project.extensions.getByType<VersionCatalogsExtension>().named("libs")
-        } catch (e: UnknownDomainObjectException) {
-            // File gradle/libs.versions.toml does not exist
-            return emptySet()
-        }
-
-        return versionCatalog.dependencyAliases.mapNotNull { alias ->
-            versionCatalog.findDependency(alias)
-                .orElse(null)
-                ?.orNull
-                ?.let { dependency: MinimalExternalModuleDependency ->
-                    ModuleId.Maven(dependency.module.group, dependency.module.name)
-                }
-        }.toSet()
     }
 }

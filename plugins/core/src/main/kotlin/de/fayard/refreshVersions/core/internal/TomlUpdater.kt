@@ -4,21 +4,16 @@ import de.fayard.refreshVersions.core.internal.TomlLine.Kind.*
 import java.io.File
 import de.fayard.refreshVersions.core.Version as MavenVersion
 
-internal class TomlUpdater(val toml: String, val dependenciesUpdates: List<DependencyWithVersionCandidates>) {
-    private val sectionsMap: Map<String, String> = Toml.parseTomlInSection(toml)
-
-    private val sections: Map<String, List<TomlLine>> = sectionsMap.mapValues { (key, text) ->
-        val section = TomlLine.Section.from(key)
-        text.lines().map { TomlLine(section, it) }
-    }
+internal class TomlUpdater(val fileContent: String, val dependenciesUpdates: List<DependencyWithVersionCandidates>) {
+    private val toml = VersionCatalogs.parseToml(fileContent)
 
     fun updateNewVersions(actual: File) {
-        if (toml.isBlank()) return
+        if (fileContent.isBlank()) return
 
-        val newSectionsText = sections.mapValues { (key, lines) ->
-            updateNewVersions(lines).joinToString(separator = "\n") { it.text }
+        toml.sections.forEach { (section, lines) ->
+            toml[section] = updateNewVersions(lines)
         }
-        actual.writeText(Toml.tomlSectionsToString(newSectionsText))
+        actual.writeText(toml.toString())
     }
 
     private fun updateNewVersions(lines: List<TomlLine>): List<TomlLine> {
@@ -41,7 +36,7 @@ internal class TomlUpdater(val toml: String, val dependenciesUpdates: List<Depen
     }
 
     private fun findLineReferencing(version: TomlLine): DependencyWithVersionCandidates? {
-        val libOrPlugin = sections.values.flatten().firstOrNull { line ->
+        val libOrPlugin = toml.sections.values.flatten().firstOrNull { line ->
             line.versionRef == version.key
         } ?: return null
 
@@ -59,7 +54,7 @@ internal class TomlUpdater(val toml: String, val dependenciesUpdates: List<Depen
 
         fun suffix(v: MavenVersion) = when {
             isObject -> """ = "${v.value}" }"""
-            line.section == TomlLine.Section.versions -> """ = "${v.value}""""
+            line.section == TomlSection.Versions -> """ = "${v.value}""""
             else -> """:${v.value}""""
         }
 

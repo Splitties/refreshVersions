@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core.internal
 
+import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
 import org.gradle.api.Project
 import java.io.File
 
@@ -13,7 +14,7 @@ enum class OutputFile(var path: String, var existed: Boolean = false, val altern
     VERSIONS_PROPERTIES("versions.properties"),
     SETTINGS_GRADLE("settings.gradle"),
     SETTINGS_GRADLE_KTS("settings.gradle.kts"),
-    GRADLE_VERSIONS_CATALOG("gradle/libs.versions.toml"),
+    GRADLE_VERSIONS_CATALOG(LIBS_VERSIONS_TOML),
     ;
 
 

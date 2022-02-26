@@ -2,6 +2,7 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
+import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
@@ -181,7 +182,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             name = "refreshVersionsCatalog"
         ) {
             group = "refreshVersions"
-            description = "Update gradle/libs.versions.toml"
+            description = "Update $LIBS_VERSIONS_TOML"
             outputs.upToDateWhen { false }
         }
 
