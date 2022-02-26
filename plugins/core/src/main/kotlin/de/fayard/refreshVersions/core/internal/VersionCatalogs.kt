@@ -58,40 +58,89 @@ object VersionCatalogs {
     }
 
     fun versionsCatalog(deps: Deps, currentText: String, withVersions: Boolean, plugins: List<Dependency>): String {
+        val map = dependenciesMap(deps)
+
         val toml = parseToml(currentText)
-        toml.merge(TomlSection.Plugins, addPlugins(plugins))
-        toml.merge(TomlSection.Libraries, versionsCatalogLibraries(deps, withVersions))
+        toml.merge(TomlSection.Plugins, addPlugins(plugins, map))
+        toml.merge(TomlSection.Libraries, versionsCatalogLibraries(deps, map, withVersions))
+        toml.merge(TomlSection.Versions, addVersions(deps, map))
         return toml.toString()
     }
 
-    private fun addPlugins(plugins: List<Dependency>): List<TomlLine> =
-        plugins
+    private fun addPlugins(plugins: List<Dependency>, map: Map<Library, Pair<String, String>>): List<TomlLine> {
+        return plugins
             .distinctBy { d -> "${d.group}:${d.name}" }
             .map { d ->
-                val pluginId = d.name.removeSuffix(".gradle.plugin")
-                val map = mapOf(
-                    "id" to pluginId,
+                val lib = Library(d.group!!, d.name, d.version!!)
+
+                val pair = if (lib in map) {
+                    "version.ref" to map[lib]!!.first
+                } else {
                     "version" to (d.version ?: "_")
+                }
+
+                val pluginId = d.name.removeSuffix(".gradle.plugin")
+                TomlLine(
+                    TomlSection.Plugins,
+                    pluginId.replace(".", "-"),
+                    mapOf("id" to pluginId, pair)
                 )
-                TomlLine(TomlSection.Plugins, pluginId.replace(".", "-"), map)
 
             }.flatMap {
                 listOf(TomlLine.newLine, it)
             }
+    }
 
-    private fun versionsCatalogLibraries(deps: Deps, withVersions: Boolean): List<TomlLine> {
+    private fun addVersions(deps: Deps, map: Map<Library, Pair<String, String>>): List<TomlLine> {
+        return deps.libraries
+            .distinctBy { lib -> map[lib]?.first }
+            .flatMap { lib ->
+                val (versionName, versionValue) = map[lib] ?: return@flatMap emptyList()
+
+                val versionLine = TomlLine(TomlSection.Versions, versionName, versionValue)
+                listOf(TomlLine.newLine, versionLine)
+            }
+    }
+
+    private fun dependenciesMap(deps: Deps): Map<Library, Pair<String, String>> {
         val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
         val versionKeyReader: ArtifactVersionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
 
-        return deps.libraries.flatMap { lib ->
-            val versionKey = getVersionPropertyName(ModuleId.Maven(lib.group, lib.name), versionKeyReader)
-            val version = versionsMap[versionKey] ?: "_"
+        return deps.libraries.mapNotNull { lib ->
+            val name = getVersionPropertyName(ModuleId.Maven(lib.group, lib.name), versionKeyReader)
 
-            val value = lib.groupModule() + ":" + if (withVersions) version else "_"
-            listOf(
-                TomlLine.newLine,
+            if (name.contains("..") || name.startsWith("plugin")) {
+                return@mapNotNull  null
+            }
+            val tomlName = name.removePrefix("version.").replace(".", "-")
+
+            lib to Pair(tomlName, versionsMap[name] ?: lib.version)
+        }.toMap()
+    }
+
+    private fun versionsCatalogLibraries(
+        deps: Deps,
+        map: Map<Library, Pair<String, String>>,
+        withVersions: Boolean,
+    ): List<TomlLine> {
+        val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
+        val versionKeyReader: ArtifactVersionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+
+        return deps.libraries
+            .filterNot { lib -> lib.name.endsWith("gradle.plugin") }
+            .flatMap { lib ->
+            val line: TomlLine = if (lib in map) {
+                val versionName = map[lib]!!.first
+                val refVersion = mapOf("group" to lib.group, "name" to lib.name, "version.ref" to versionName)
+                TomlLine(TomlSection.Libraries, deps.names[lib]!!, refVersion)
+            } else {
+                val versionKey = getVersionPropertyName(ModuleId.Maven(lib.group, lib.name), versionKeyReader)
+                val version = versionsMap[versionKey] ?: "_"
+                val value = lib.groupModule() + ":" + if (withVersions) version else "_"
                 TomlLine(TomlSection.Libraries, deps.names[lib]!!, value)
-            )
+            }
+
+            listOf(TomlLine.newLine, line)
         }
     }
 }

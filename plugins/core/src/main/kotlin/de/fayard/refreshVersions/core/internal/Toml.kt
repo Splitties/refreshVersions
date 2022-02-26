@@ -11,9 +11,12 @@ internal data class Toml(
     }
 
     fun merge(section: TomlSection, newLines: List<TomlLine>) {
-        val existingKeys = get(section).map { it.key }.toSet()
-        val filteredLines = newLines.filterNot { it.section.name != "blank" && it.key in existingKeys }
-        sections[section] = get(section) + filteredLines
+        val existingKeys = get(section).map { it.key }.toSet() - ""
+        val filteredLines = newLines.filterNot { it.key in existingKeys }
+        val updateExistingLines = get(section).map { line ->
+            newLines.firstOrNull { it.key == line.key } ?: line
+        }
+        sections[section] = updateExistingLines + filteredLines
     }
 
     internal operator fun get(section: TomlSection): List<TomlLine> =
