@@ -2,36 +2,6 @@
 
 key = "some key"
 
-[versions]
-# some comment
-
-groovy = "3.0.5"
-### available = "3.1.0"
-### available = "3.2.0"
-
-checkstyle = "8.37"
-common = "3.4"
-### available = "3.5"
-### available = "3.6"
-
-[libraries]
-groovy-core = { module = "org.codehaus.groovy:groovy", version.ref = "groovy" }
-groovy-json = { module = "org.codehaus.groovy:groovy-json", version.ref = "groovy" }
-groovy-nio = { module = "org.codehaus.groovy:groovy-nio", version.ref = "groovy" }
-
-# another comment
-
-refreshVersionsLib = "de.fayard:lib:_"
-
-my-lib = "com.mycompany:mylib:1.4"
-
-my-other-lib = { module = "com.mycompany:other", version = "1.4" }
-##                                           # available = "1.5" }
-##                                           # available = "1.6" }
-
-my-other-lib2 = { group = "com.mycompany", name = "alternate", version = "1.4" }
-##                                                         # available = "1.5" }
-
 [bundles]
 
 groovy = ["groovy-core", "groovy-json", "groovy-nio"]
@@ -52,3 +22,34 @@ long-notation = { id = "some.plugin.id", version = "1.4" }
 
 reference-notation = { id = "other.plugin.id", version.ref = "common" }
 
+[versions]
+
+# some comment
+
+groovy = "3.0.5"
+### available = "3.1.0"
+### available = "3.2.0"
+
+checkstyle = "8.37"
+common = "3.4"
+### available = "3.5"
+### available = "3.6"
+
+[libraries]
+
+groovy-core = { module = "org.codehaus.groovy:groovy", version.ref = "groovy" }
+groovy-json = { module = "org.codehaus.groovy:groovy-json", version.ref = "groovy" }
+groovy-nio = { module = "org.codehaus.groovy:groovy-nio", version.ref = "groovy" }
+
+# another comment
+
+refreshVersionsLib = "de.fayard:lib:_"
+
+my-lib = "com.mycompany:mylib:1.4"
+
+my-other-lib = { module = "com.mycompany:other", version = "1.4" }
+##                                           # available = "1.5" }
+##                                           # available = "1.6" }
+
+my-other-lib2 = { group = "com.mycompany", name = "alternate", version = "1.4" }
+##                                                         # available = "1.5" }

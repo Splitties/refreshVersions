@@ -51,10 +51,6 @@ class TomlSectionTest : StringSpec({
         VersionCatalogs.parseTomlInSection(toml) shouldBe expected
     }
 
-    "Sections to Toml" {
-        VersionCatalogs.tomlSectionsToString(expected) shouldBe toml
-    }
-
 })
 
 

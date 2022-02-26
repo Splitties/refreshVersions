@@ -46,7 +46,7 @@ class TomlLineTest : FunSpec({
             LibsUnderscore, Ignore,
             Libs, Delete, Ignore,
             Libs, Ignore,
-            Libs, Ignore,
+            Libs, Delete,
         )
 
         val testCases = lines.zip(expectedKinds)
