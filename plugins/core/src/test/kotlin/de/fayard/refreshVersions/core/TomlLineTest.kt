@@ -9,6 +9,9 @@ import de.fayard.refreshVersions.core.internal.TomlLine.Kind.LibsVersionRef
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Plugin
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.PluginVersionRef
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Version
+import de.fayard.refreshVersions.core.internal.UsedPluginsHolder
+import de.fayard.refreshVersions.core.internal.UsedPluginsHolder.ConfigurationLessDependency
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
 import io.kotest.inspectors.forAny
@@ -176,6 +179,20 @@ class TomlLineTest : FunSpec({
 
         lines.forAny {
             TomlLine(TomlLine.Section.libraries, it).kind shouldBe Delete
+        }
+    }
+
+    test("Constructors for TomlLine") {
+        assertSoftly {
+            TomlLine(TomlLine.Section.plugins, "org-jetbrains-kotlin-jvm", mapOf("id" to "org.jetbrains.kotlin.jvm", "version" to "1.6.10"))
+                .text shouldBe """org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "1.6.10" }"""
+
+            TomlLine(TomlLine.Section.libraries, "my-lib", "com.example:name:1.0")
+                .text shouldBe """my-lib = "com.example:name:1.0""""
+
+            val d = ConfigurationLessDependency("com.example:name:1.0")
+            TomlLine(TomlLine.Section.libraries, "my-lib", d)
+                .text shouldBe """my-lib = "com.example:name:1.0""""
         }
     }
 })

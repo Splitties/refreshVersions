@@ -2,6 +2,7 @@ package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.*
 import de.fayard.refreshVersions.core.internal.TomlLine.Section.*
+import org.gradle.api.artifacts.Dependency
 
 internal data class TomlLine(
     val section: Section,
@@ -49,7 +50,29 @@ internal data class TomlLine(
     val id: String by  map
 
     override fun toString(): String = "TomlLine(section=$section, kind=$kind, key=$key, value=$value, map=$map)\n$text"
+
+    internal companion object {
+        val newLine = TomlLine(TomlLine.Section.others, "")
+    }
 }
+
+internal fun List<TomlLine>.toText(): String
+    = joinToString("\n", postfix = "\n", prefix = "\n") { it.text }
+
+internal fun TomlLine(section: TomlLine.Section, key: String, value: String): TomlLine =
+    TomlLine(section, """$key = "$value"""" )
+
+internal fun TomlLine(section: TomlLine.Section, key: String, dependency: Dependency): TomlLine =
+    TomlLine(section, key, """${dependency.group}:${dependency.name}:${dependency.version}""")
+
+internal fun TomlLine(section: TomlLine.Section, key: String, map: Map<String, String>): TomlLine {
+    require((map.keys - validKeys).isEmpty()) { "Map $map has invalid keys. Valid: $validKeys"}
+    val formatMap = map.entries
+        .joinToString(", ") { (key, value) -> """$key = "$value"""" }
+    return TomlLine(section, "$key = { $formatMap }")
+}
+
+private val validKeys = listOf("module", "group", "name", "version.ref", "version", "id")
 
 private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
     val splitSemicolon = value.split(":")
