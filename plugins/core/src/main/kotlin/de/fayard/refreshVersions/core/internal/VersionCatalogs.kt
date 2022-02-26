@@ -59,8 +59,8 @@ object VersionCatalogs {
 
     fun versionsCatalog(deps: Deps, currentText: String, withVersions: Boolean, plugins: List<Dependency>): String {
         val toml = parseToml(currentText)
-        toml[TomlSection.Plugins] = addPlugins(plugins)
-        toml[TomlSection.Libraries] = versionsCatalogLibraries(deps, withVersions)
+        toml.merge(TomlSection.Plugins, addPlugins(plugins))
+        toml.merge(TomlSection.Libraries, versionsCatalogLibraries(deps, withVersions))
         return toml.toString()
     }
 

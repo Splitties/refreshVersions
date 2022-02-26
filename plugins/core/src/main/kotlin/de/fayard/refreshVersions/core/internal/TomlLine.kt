@@ -116,12 +116,7 @@ private fun lineMap(group: String, name: String, version: String?, versionRef: S
         .toMap()
 
 private fun TomlLine.guessTomlLineKind(): TomlLine.Kind {
-    when {
-        text.contains("# available") -> return Delete
-        text.startsWith("## unused") -> return Delete
-        text.startsWith("## error") -> return Delete
-        text.startsWith("## warning") -> return Delete
-    }
+    if (text.startsWith("##")) return Delete
 
     val hasVersionRef = textWithoutComment.contains("version.ref")
 

@@ -10,6 +10,12 @@ internal data class Toml(
         sections[section] = lines
     }
 
+    fun merge(section: TomlSection, newLines: List<TomlLine>) {
+        val existingKeys = get(section).map { it.key }.toSet()
+        val filteredLines = newLines.filterNot { it.section.name != "blank" && it.key in existingKeys }
+        sections[section] = get(section) + filteredLines
+    }
+
     internal operator fun get(section: TomlSection): List<TomlLine> =
         sections.get(section) ?: emptyList()
 
@@ -17,16 +23,27 @@ internal data class Toml(
         initializeRoot()
         for (section in sortedSections()) {
             val lines = get(section)
+
             if (lines.isNotEmpty()) {
                 if (section != TomlSection.Root) append("\n[$section]\n\n")
-                append(lines.toText().trim())
+                append(lines.removeDuplicateBlanks().toText().trim())
                 append("\n")
             }
         }
     }
 
+    private fun List<TomlLine>.removeDuplicateBlanks(): List<TomlLine> {
+        return filterIndexed { index, tomlLine ->
+            if (index == 0) return@filterIndexed true
+            val previous = this[index - 1]
+            tomlLine.text.isNotBlank() || previous.text.isNotBlank()
+        }
+    }
+
     private fun sortedSections() =
         (TomlSection.sectionOrder + sections.keys).toSet()
+
+
 
     private fun initializeRoot() {
         if (get(TomlSection.Root).isEmpty()) {

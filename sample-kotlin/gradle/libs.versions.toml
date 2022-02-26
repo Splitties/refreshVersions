@@ -6,35 +6,40 @@ org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "1.6.10"
 
 org-jetbrains-kotlinx-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version = "0.4.2" }
 
+patrick = { id = "org.jetbrains.patrick", version = "0.4.2" }
+
 [versions]
 
 groovy = "3.0.5"
 
 [libraries]
 
+mongo-java-driver = "org.mongodb:mongo-java-driver:3.11.0"
+
 androidx-core-core = "androidx.core:core:1.3.1"
 
 guava = "com.google.guava:guava:15.0"
 
-guice = "com.google.inject:guice:2.0"
-
-okhttp = "com.squareup.okhttp3:okhttp:3.10.0"
+patrick = "com.google.guava:guava:15.0"
 
 okhttp-urlconnection = "com.squareup.okhttp3:okhttp-urlconnection:3.10.0"
 
 kotest-runner-junit4 = "io.kotest:kotest-runner-junit4:5.1.0"
 
 junit = "junit:junit:4.12"
-
-poi = "org.apache.poi:poi:4.0.0"
-
-poi-ooxml = "org.apache.poi:poi-ooxml:4.0.0"
-
 gradle-hello-world-plugin = "org.gradle:gradle-hello-world-plugin:0.1"
 
 org-jetbrains-kotlin-jvm-gradle-plugin = "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.6.10"
 
 kotlin-script-runtime = "org.jetbrains.kotlin:kotlin-script-runtime:1.6.10"
+
+guice = "com.google.inject:guice:2.0"
+
+okhttp = "com.squareup.okhttp3:okhttp:3.10.0"
+
+poi = "org.apache.poi:poi:4.0.0"
+
+poi-ooxml = "org.apache.poi:poi-ooxml:4.0.0"
 
 kotlin-scripting-compiler-embeddable = "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.6.10"
 
@@ -45,5 +50,3 @@ org-jetbrains-kotlinx-benchmark-gradle-plugin = "org.jetbrains.kotlinx.benchmark
 kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
 
 kotlinx-coroutines-jdk8 = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.0"
-
-mongo-java-driver = "org.mongodb:mongo-java-driver:3.11.0"
