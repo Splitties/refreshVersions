@@ -1,0 +1,27 @@
+# See https://docs.gradle.org/current/userguide/platforms.html#sub:conventional-dependencies-toml
+
+key = "some key"
+
+[bundles]
+
+groovy = ["groovy-core", "groovy-json", "groovy-nio"]
+
+[plugins]
+
+short-notation = "some.plugin.id:1.4"
+
+# yet another comment
+
+[versions]
+
+# some comment
+
+groovy = "3.0.5"
+
+[libraries]
+
+# another comment
+
+my-lib = "com.mycompany:mylib:1.4"
+
+my-other-lib2 = { group = "com.mycompany", name = "alternate", version = "1.4" }

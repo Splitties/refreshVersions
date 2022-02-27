@@ -14,6 +14,8 @@ enum class OutputFile(var path: String, var existed: Boolean = false, val altern
     VERSIONS_PROPERTIES("versions.properties"),
     SETTINGS_GRADLE("settings.gradle"),
     SETTINGS_GRADLE_KTS("settings.gradle.kts"),
+    BUILD_SETTINGS_GRADLE("build/settings.gradle"),
+    BUILD_SETTINGS_GRADLE_KTS("build/settings.gradle.kts"),
     GRADLE_VERSIONS_CATALOG(LIBS_VERSIONS_TOML),
     ;
 
@@ -44,6 +46,8 @@ enum class OutputFile(var path: String, var existed: Boolean = false, val altern
     }
 
     companion object {
+        val settingsFiles = listOf(SETTINGS_GRADLE, SETTINGS_GRADLE_KTS, BUILD_SETTINGS_GRADLE, BUILD_SETTINGS_GRADLE_KTS)
+
         // COLORS
         private const val ANSI_RESET = "\u001B[0m"
         private const val ANSI_GREEN = "\u001B[32m"

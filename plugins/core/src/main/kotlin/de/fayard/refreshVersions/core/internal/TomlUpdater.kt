@@ -16,6 +16,15 @@ internal class TomlUpdater(val fileContent: String, val dependenciesUpdates: Lis
         actual.writeText(toml.toString())
     }
 
+    fun cleanupComments(actual: File) {
+        if (fileContent.isBlank()) return
+
+        toml.sections.forEach { (section, lines) ->
+            toml[section] = lines.filter { it.kind != Delete }
+        }
+        actual.writeText(toml.toString())
+    }
+
     private fun updateNewVersions(lines: List<TomlLine>): List<TomlLine> {
         return lines.flatMap { line ->
             val noop = listOf(line)

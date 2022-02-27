@@ -9,23 +9,32 @@ import de.fayard.refreshVersions.core.Version as MavenVersion
 
 class TomlUpdaterTest : FunSpec({
 
-    val folders = listOf("toml-happy-path")
+    test("Folder toml-refreshversions - update new versions") {
+        val input = FolderInput("toml-refreshversions")
 
-    folders.forEach { folder ->
-        test("Test for folder $folder") {
-            val input = FolderInput(folder)
-            val expectedText = input.expected.readText()
+        TomlUpdater(input.initial, input.dependenciesUpdates).updateNewVersions(input.actual)
+        input.actual.readText() shouldBe input.expectedText
 
-            TomlUpdater(input.initial, input.dependenciesUpdates).updateNewVersions(input.actual)
-            expectedText shouldBe input.actual.readText()
+        // check idempotent
+        TomlUpdater(input.expected, input.dependenciesUpdates).updateNewVersions(input.expected)
+        input.actual.readText()  shouldBe input.expectedText
 
-            // check idempotent
-            TomlUpdater(input.expected, input.dependenciesUpdates).updateNewVersions(input.expected)
-            expectedText shouldBe input.actual.readText()
+        // delete actual file if successful
+        input.actual.delete()
+    }
 
-            // delete actual file if successfull
-            input.actual.delete()
-        }
+    test("Folder toml-cleanup - remove refreshVersions comments") {
+        val input = FolderInput("toml-cleanup")
+
+        TomlUpdater(input.initial, input.dependenciesUpdates).cleanupComments(input.actual)
+        input.actual.readText() shouldBe input.expectedText
+
+        // check idempotent
+        TomlUpdater(input.expected, input.dependenciesUpdates).cleanupComments(input.expected)
+        input.actual.readText()  shouldBe input.expectedText
+
+        // delete actual file if successful
+        input.actual.delete()
     }
 })
 
@@ -36,13 +45,30 @@ private data class FolderInput(
     val expected: File,
     val actual: File,
     val dependenciesUpdates: List<DependencyWithVersionCandidates>
-)
+) {
+    val expectedText = expected.readText()
+}
 
-private fun FolderInput(folder: String): FolderInput {
-    val file = testResources.resolve(folder)
-    require(file.canRead()) { "Invalid folder ${file.absolutePath}" }
-    val dependencies = file.resolve("dependencies.txt")
-        .readText().lines()
+private fun FolderInput(folderName: String): FolderInput {
+    val folder = testResources.resolve(folderName)
+    require(folder.canRead()) { "Invalid folder ${folder.absolutePath}" }
+    val dependencies = dependencyWithVersionCandidates(folder)
+    return FolderInput(
+        folder = folderName,
+        initial = folder.resolve("initial.libs.toml"),
+        actual = folder.resolve("actual.libs.toml"),
+        expected = folder.resolve("expected.libs.toml"),
+        dependenciesUpdates = dependencies
+    )
+}
+
+private fun dependencyWithVersionCandidates(folder: File): List<DependencyWithVersionCandidates> {
+    val file = folder.resolve("dependencies.txt")
+        .takeIf { it.canRead() }
+        ?: return emptyList()
+
+    val dependencies = file.readText()
+        .lines()
         .map { line ->
             val (group, name, version, available) = line.split(":")
             DependencyWithVersionCandidates(
@@ -52,11 +78,5 @@ private fun FolderInput(folder: String): FolderInput {
                 failures = emptyList()
             )
         }
-    return FolderInput(
-        folder = folder,
-        initial = file.resolve("initial.libs.toml"),
-        actual = file.resolve("actual.libs.toml"),
-        expected = file.resolve("expected.libs.toml"),
-        dependenciesUpdates = dependencies
-    )
+    return dependencies
 }
