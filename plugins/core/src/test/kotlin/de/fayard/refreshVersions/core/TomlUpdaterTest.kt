@@ -1,7 +1,11 @@
 package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
+import de.fayard.refreshVersions.core.internal.Toml
+import de.fayard.refreshVersions.core.internal.TomlLine
+import de.fayard.refreshVersions.core.internal.TomlSection
 import de.fayard.refreshVersions.core.internal.TomlUpdater
+import de.fayard.refreshVersions.core.internal.VersionCatalogs
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import java.io.File
@@ -33,6 +37,31 @@ class TomlUpdaterTest : FunSpec({
         TomlUpdater(input.expected, input.dependenciesUpdates).cleanupComments(input.expected)
         input.actual.readText()  shouldBe input.expectedText
 
+        // delete actual file if successful
+        input.actual.delete()
+    }
+
+    test("Folder toml-merge-properties - modify file incrementally") {
+        val input = FolderInput("toml-merge-properties")
+
+        val toml = VersionCatalogs.parseToml(input.initial.readText())
+        toml.merge(TomlSection.Versions, listOf(
+            TomlLine(TomlSection.Versions, "groovy", "3.0.6"),
+            TomlLine(TomlSection.Versions, "ktor", "2.0"),
+        ))
+
+        toml.merge(TomlSection.Libraries, listOf(
+            TomlLine(TomlSection.Libraries, "my-lib", "com.mycompany:mylib:1.5"),
+            TomlLine(TomlSection.Libraries, "other-lib", "com.mycompany:other:1.5"),
+        ))
+
+        toml.merge(TomlSection.Plugins, listOf(
+            TomlLine(TomlSection.Plugins, "short-notation", "some.plugin.id:1.6"),
+            TomlLine(TomlSection.Plugins, "ben-manes", "ben.manes:versions:1.0"),
+        ))
+
+        input.actual.writeText(toml.toString())
+        toml.toString() shouldBe input.expectedText
         // delete actual file if successful
         input.actual.delete()
     }

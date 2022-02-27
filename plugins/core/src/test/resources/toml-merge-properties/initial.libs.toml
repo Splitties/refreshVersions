@@ -1,0 +1,21 @@
+[libraries]
+
+my-lib = "com.mycompany:mylib:1.4"
+
+my-other-lib2 = { group = "com.mycompany", name = "alternate", version = "1.4" }
+
+[versions]
+
+groovy = "3.0.5"
+
+kotlin = "1.6"
+
+[plugins]
+
+short-notation = "some.plugin.id:1.4"
+
+refreshversions = "de.fayard.refreshversions:1.0"
+
+[bundles]
+
+groovy = ["groovy-core", "groovy-json", "groovy-nio"]
