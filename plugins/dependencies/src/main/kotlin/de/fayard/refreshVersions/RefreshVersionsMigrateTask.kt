@@ -3,19 +3,21 @@ package de.fayard.refreshVersions
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
+import de.fayard.refreshVersions.core.internal.VersionCatalogs
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
-import org.gradle.api.UnknownDomainObjectException
-import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
-import org.gradle.kotlin.dsl.getByType
+import org.gradle.api.tasks.options.Option
 import org.intellij.lang.annotations.Language
 import java.io.File
-import de.fayard.refreshVersions.core.internal.VersionCatalogs
 
 open class RefreshVersionsMigrateTask : DefaultTask() {
+
+    @Input
+    @Option(option = "toml", description = "Use libraries from ${VersionCatalogs.LIBS_VERSIONS_TOML} before built-in dependency notations")
+    var tomlFirst: Boolean = false
 
     @TaskAction
     fun refreshVersionsMissingEntries() {
@@ -27,11 +29,17 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
         val versionsCatalogMapping: Map<ModuleId.Maven, String> =
             VersionCatalogs.dependencyAliases(project.getVersionsCatalog())
 
-        val dependencyMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
+        val builtInDependenciesMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
             .associateShortestByMavenCoordinate()
 
+        val dependencyMapping = if (tomlFirst) {
+            builtInDependenciesMapping + versionsCatalogMapping
+        } else {
+            versionsCatalogMapping + builtInDependenciesMapping
+        }
+
         findFilesWithDependencyNotations(project.rootDir).forEach { buildFile ->
-            migrateFileIfNeeded(buildFile, versionsCatalogMapping + dependencyMapping)
+            migrateFileIfNeeded(buildFile, dependencyMapping)
         }
         println()
         println("""
@@ -142,8 +150,8 @@ internal fun findFilesWithDependencyNotations(fromDir: File): List<File> {
     return fromDir.walkBottomUp()
         .onEnter { dir -> dir.name !in listOf("resources", "build") }
         .filter {
-        it.extension in expectedExtensions && it.nameWithoutExtension.toLowerCase() in expectedNames
-    }.toList()
+            it.extension in expectedExtensions && it.nameWithoutExtension.toLowerCase() in expectedNames
+        }.toList()
 }
 
 /**
