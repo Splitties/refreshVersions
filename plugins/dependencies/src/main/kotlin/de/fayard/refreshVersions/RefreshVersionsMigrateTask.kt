@@ -139,7 +139,9 @@ internal fun findFilesWithDependencyNotations(fromDir: File): List<File> {
     require(fromDir.isDirectory) { "Expected a directory, got ${fromDir.absolutePath}" }
     val expectedNames = listOf("build", "build.gradle", "deps", "dependencies", "libs", "libraries", "versions")
     val expectedExtensions = listOf("gradle", "kts", "groovy", "kt")
-    return fromDir.walkBottomUp().filter {
+    return fromDir.walkBottomUp()
+        .onEnter { dir -> dir.name !in listOf("resources", "build") }
+        .filter {
         it.extension in expectedExtensions && it.nameWithoutExtension.toLowerCase() in expectedNames
     }.toList()
 }
