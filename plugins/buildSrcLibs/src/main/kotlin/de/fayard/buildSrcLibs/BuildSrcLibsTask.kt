@@ -47,7 +47,7 @@ open class BuildSrcLibsTask : DefaultTask() {
 
     @TaskAction
     fun taskUpdateLibsKt() {
-        val outputDir = project.file(OutputFile.OUTPUT_DIR.path)
+        val outputDir = OutputFile.OUTPUT_DIR.file
 
         val allDependencies = project.findDependencies()
         val resolvedUseFqdn = allDependencies.computeAliases(

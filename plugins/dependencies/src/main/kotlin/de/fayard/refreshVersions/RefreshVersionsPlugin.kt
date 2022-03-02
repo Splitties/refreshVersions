@@ -4,6 +4,7 @@ import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
+import de.fayard.refreshVersions.core.internal.skipConfigurationCache
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
@@ -167,6 +168,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             description = "Assists migration from hardcoded dependencies to constants of " +
                 "the refreshVersions dependencies plugin"
             finalizedBy("refreshVersions")
+            skipConfigurationCache()
         }
 
         project.tasks.register<DefaultTask>(
@@ -184,6 +186,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             group = "refreshVersions"
             description = "Update $LIBS_VERSIONS_TOML"
             outputs.upToDateWhen { false }
+            skipConfigurationCache()
         }
 
         project.tasks.register<RefreshVersionsMigrateTask>(
@@ -191,6 +194,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
         ) {
             group = "refreshVersions"
             description = "Migrate build to refreshVersions"
+            skipConfigurationCache()
         }
     }
 
