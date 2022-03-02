@@ -9,3 +9,12 @@ org.jetbrains.kotlinx:kotlinx-collections-immutable(-*)
 
 org.jetbrains.kotlinx:kotlinx.reflect.lite
               ^^^^^^^.        ^^^^^^^^^^^^
+
+org.jetbrains.kotlinx:dataframe
+              ^^^^^^^.^^^^^^^^^
+
+org.jetbrains.kotlinx:multik-*
+              ^^^^^^^.^^^^^^
+
+org.jetbrains.kotlinx:lincheck
+              ^^^^^^^.^^^^^^^^

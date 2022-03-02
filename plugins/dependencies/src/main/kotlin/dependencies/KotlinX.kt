@@ -176,4 +176,42 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
      * GitHub page: [Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
      */
     val datetime = module("kotlinx-datetime")
+
+    /**
+     * Kotlin DataFrame is a JVM Kotlin library for in-memory data manipulation.
+     *
+     * [Documentation](https://kotlin.github.io/dataframe/overview.html)
+     *
+     * [Examples](https://github.com/Kotlin/dataframe/tree/master/examples)
+     *
+     * GitHub page: [Kotlin/dataframe](https://github.com/Kotlin/dataframe)
+     */
+    val dataframe = module("dataframe")
+
+    /**
+     * Multidimensional array library for Kotlin.
+     *
+     * [API reference (Dokka)](https://kotlin.github.io/multik/multik-api/)
+     *
+     * [GitHub releases](https://github.com/Kotlin/multik/releases)
+     *
+     * GitHub page: [Kotlin/multik](https://github.com/Kotlin/multik)
+     */
+    val multik = Multik
+
+    object Multik :IsNotADependency {
+        val api = module("multik-api")
+        val default = module("multik-default")
+        val jvm = module("multik-jvm")
+        val native = module("multik-native")
+    }
+
+    /**
+     * Lincheck is a framework for testing concurrent data structures for correctness.
+     *
+     * [GitHub releases](https://github.com/Kotlin/kotlinx-lincheck/releases)
+     *
+     * GitHub page: [kotlinx-lincheck](https://github.com/Kotlin/kotlinx-lincheck)
+     */
+    val lincheck = module("lincheck")
 }
