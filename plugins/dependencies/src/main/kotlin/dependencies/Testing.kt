@@ -294,4 +294,23 @@ object Testing : IsNotADependency {
         val swing = module("assertj-swing")
     }
 
+    /**
+     * Matchers that can be combined to create flexible expressions of intent in tests
+     *
+     * Official website: [hamcrest.org](http://hamcrest.org/JavaHamcrest/)
+     *
+     * [GitHub releases](https://github.com/hamcrest/JavaHamcrest/releases)
+     *
+     * GitHub page: [hamcrest/JavaHamcrest](https://github.com/hamcrest/JavaHamcrest)
+     *
+     * [API reference (JavaDoc)](http://hamcrest.org/JavaHamcrest/javadoc/)
+     */
+    val hamcrest = Hamcrest
+
+    object Hamcrest : DependencyNotationAndGroup(group = "org.hamcrest", name = "hamcrest") {
+
+        val core = module("hamcrest-core")
+        val library = module("hamcrest-library")
+    }
+
 }

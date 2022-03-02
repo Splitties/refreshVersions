@@ -31,3 +31,6 @@ org.mockito:mockito-*
 org.assertj:assertj-*
             ^^^^^^^.^
 
+org.hamcrest:hamcrest(-*)
+    ^^^^^^^^
+
