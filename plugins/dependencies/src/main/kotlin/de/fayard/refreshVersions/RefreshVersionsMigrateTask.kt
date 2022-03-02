@@ -38,8 +38,14 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
             versionsCatalogMapping + builtInDependenciesMapping
         }
 
-        findFilesWithDependencyNotations(project.rootDir).forEach { buildFile ->
+        val findFiles = findFilesWithDependencyNotations(project.rootDir).toSet()
+        findFiles.forEach { buildFile ->
             migrateFileIfNeeded(buildFile, dependencyMapping)
+        }
+        project.allprojects {
+            if (buildFile !in findFiles) {
+                migrateFileIfNeeded(buildFile, dependencyMapping)
+            }
         }
         println()
         println("""
@@ -64,13 +70,9 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 // - Interactive task
 // - separate CLI tool
 // - FIXME/TODO comments insertion
-//TODO: Release BEFORE the 30th of June.
-//TODO: Replace versions with underscore in the Gradle Versions Catalog files.
-
-private val buildFilesNames = setOf("build.gradle", "build.gradle.kts")
 
 internal fun migrateFileIfNeeded(file: File, dependencyMapping: Map<ModuleId.Maven, String>) {
-    val isBuildFile = file.name in buildFilesNames
+    val isBuildFile = file.name.removeSuffix(".kts").endsWith(".gradle")
     val oldContent = file.readText()
     val newContent = oldContent.lines()
         .detectPluginsBlock()
