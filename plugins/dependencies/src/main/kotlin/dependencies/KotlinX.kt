@@ -214,4 +214,27 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
      * GitHub page: [kotlinx-lincheck](https://github.com/Kotlin/kotlinx-lincheck)
      */
     val lincheck = module("lincheck")
+
+    /**
+     * KotlinDL is a high-level Deep Learning API.
+     *
+     * Talks by Zinoviev Alexey:
+     * - [Deep Learning with KotlinDL](https://www.youtube.com/watch?v=jCFZc97_XQU)
+     * - [Introduction to Deep Learning with KotlinDL](https://www.youtube.com/watch?v=ruUz8uMZUVw)
+     *
+     * [API reference (Dokka)](https://jetbrains.github.io/KotlinDL)
+     *
+     * [GitHub releases](https://github.com/JetBrains/KotlinDL/releases)
+     *
+     * [Change log](https://github.com/JetBrains/KotlinDL/blob/master/CHANGELOG.md)
+     *
+     * GitHub page: [JetBrains/KotlinDL](https://github.com/JetBrains/KotlinDL)
+     */
+    val deeplearning = Deeplearning
+
+    object Deeplearning : IsNotADependency {
+        val api = module("kotlin-deeplearning-api")
+        val onnx = module("kotlin-deeplearning-onnx")
+        val visualization = module("kotlin-deeplearning-visualization")
+    }
 }
