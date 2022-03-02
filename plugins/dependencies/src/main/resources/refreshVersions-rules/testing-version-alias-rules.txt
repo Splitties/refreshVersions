@@ -34,3 +34,6 @@ org.assertj:assertj-*
 org.hamcrest:hamcrest(-*)
     ^^^^^^^^
 
+org.skyscreamer:jsonassert
+    ^^^^^^^^^^^.^^^^^^^^^^
+

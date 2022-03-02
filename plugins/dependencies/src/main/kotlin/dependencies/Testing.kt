@@ -313,4 +313,17 @@ object Testing : IsNotADependency {
         val library = module("hamcrest-library")
     }
 
+    /**
+     * Write JSON unit tests in less code; great for testing REST interfaces
+     *
+     * Official website: [jsonassert.skyscreamer.org](http://jsonassert.skyscreamer.org/)
+     *
+     * [GitHub releases](https://github.com/skyscreamer/JSONassert/releases)
+     *
+     * GitHub page: [skyscreamer/jsonassert](https://github.com/skyscreamer/jsonassert)
+     *
+     * [API reference (JavaDoc)](http://jsonassert.skyscreamer.org/apidocs/index.html)
+     */
+    val jsonAssert = DependencyNotation("org.skyscreamer", "jsonassert")
+
 }
