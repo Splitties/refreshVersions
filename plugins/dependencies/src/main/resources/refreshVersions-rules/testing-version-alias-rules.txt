@@ -37,3 +37,6 @@ org.hamcrest:hamcrest(-*)
 org.skyscreamer:jsonassert
     ^^^^^^^^^^^.^^^^^^^^^^
 
+io.rest-assured:*
+   ^^^^^^^^^^^^
+

@@ -326,4 +326,37 @@ object Testing : IsNotADependency {
      */
     val jsonAssert = DependencyNotation("org.skyscreamer", "jsonassert")
 
+    /**
+     * [Usage guide](https://github.com/rest-assured/rest-assured/wiki/Usage)
+     *
+     * [Git tags](https://github.com/rest-assured/rest-assured/tags)
+     *
+     * GitHub page: [rest-assured/rest-assured](https://github.com/rest-assured/rest-assured)
+     *
+     * [API reference (JavaDoc)](https://www.javadoc.io/doc/io.rest-assured/rest-assured/latest/index.html)
+     */
+    val restAssured = RestAssured
+
+    object RestAssured : DependencyNotationAndGroup(group = "io.rest-assured", name = "rest-assured") {
+
+        val json = Json
+
+        object Json : IsNotADependency {
+            val path = module("json-path")
+            val schemaValidator = module("json-schema-validator")
+        }
+
+        val kotlinExtensions = module("kotlin-extensions")
+
+        val spring = Spring
+
+        object Spring : IsNotADependency {
+            val mockMvc = module("spring-mock-mvc")
+            val webTestClient = module("spring-web-test-client")
+        }
+
+        val scalaSupport = module("scala-support")
+        val xmlPath = module("xml-path")
+    }
+
 }
