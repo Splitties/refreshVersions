@@ -377,4 +377,25 @@ object Testing : IsNotADependency {
         val junit = module("cucumber-junit")
     }
 
+    /**
+     * PowerMock is a framework that extends other mock libraries such as EasyMock with more powerful capabilities
+     *
+     * [GitHub releases](https://github.com/powermock/powermock/releases)
+     *
+     * GitHub page: [powermock/powermock](https://github.com/powermock/powermock)
+     */
+    val powermock = Powermock
+
+    object Powermock : DependencyGroup(group = "org.powermock") {
+
+        val apiMockito = module("powermock-api-mockito2")
+        val classLoader = module("powermock-classloading-xstream")
+
+        val junit4 = Junit4
+
+        object Junit4 : DependencyNotationAndGroup(group = group, name = "powermock-module-junit4") {
+
+            val rule = module("powermock-module-junit4-rule")
+        }
+    }
 }
