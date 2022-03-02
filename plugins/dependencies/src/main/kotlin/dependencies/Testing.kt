@@ -233,7 +233,7 @@ object Testing : IsNotADependency {
     /**
      * Mocking library for Kotlin.
      *
-     * Official Website: [mockk.io](https://mockk.io/)
+     * Official website: [mockk.io](https://mockk.io/)
      *
      * [GitHub releases](https://github.com/mockk/mockk/releases)
      *
