@@ -359,4 +359,22 @@ object Testing : IsNotADependency {
         val xmlPath = module("xml-path")
     }
 
+    /**
+     * Cucumber is a tool that supports [Behaviour-Driven Development (BDD)](https://cucumber.io/docs/bdd/)
+     *
+     * Official website: [cucumber.io](https://cucumber.io/docs/cucumber/)
+     *
+     * [Git tags](https://github.com/cucumber/cucumber-jvm/tags)
+     *
+     * GitHub page: [cucumber/cucumber-jvm](https://github.com/cucumber/cucumber-jvm)
+     */
+    val cucumber = Cucumber
+
+    object Cucumber : DependencyGroup("io.cucumber") {
+
+        val java = module("cucumber-java")
+        val java8 = module("cucumber-java8")
+        val junit = module("cucumber-junit")
+    }
+
 }

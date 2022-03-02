@@ -40,3 +40,6 @@ org.skyscreamer:jsonassert
 io.rest-assured:*
    ^^^^^^^^^^^^
 
+io.cucumber:cucumber-*
+   ^^^^^^^^
+
