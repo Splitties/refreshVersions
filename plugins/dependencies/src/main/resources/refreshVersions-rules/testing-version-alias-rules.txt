@@ -27,3 +27,7 @@ io.mockk:mockk(-*)
 
 org.mockito:mockito-*
     ^^^^^^^
+
+org.assertj:assertj-*
+            ^^^^^^^.^
+

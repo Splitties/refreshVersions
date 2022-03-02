@@ -275,4 +275,23 @@ object Testing : IsNotADependency {
          */
         val kotlin = DependencyNotation("com.nhaarman.mockitokotlin2", "mockito-kotlin")
     }
+
+    /**
+     * AssertJ provides a rich and intuitive set of strongly-typed assertions to use for unit testing
+     *
+     * Official website: [assertj.github.io](https://assertj.github.io/doc/)
+     *
+     * GitHub page: [assertj/assertj-core](https://github.com/assertj/assertj-core)
+     */
+    val assertj = AssertJ
+
+    object AssertJ : DependencyGroup("org.assertj") {
+
+        val core = module("assertj-core")
+        val guava = module("assertj-guava")
+        val jodaTime = module("assertj-joda-time")
+        val db = module("assertj-db")
+        val swing = module("assertj-swing")
+    }
+
 }
