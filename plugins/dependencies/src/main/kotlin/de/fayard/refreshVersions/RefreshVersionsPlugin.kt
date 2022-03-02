@@ -26,6 +26,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             "dependency-groups-alias-rules.txt",
             "google-version-alias-rules.txt",
             "jakewharton-version-alias-rules.txt",
+            "jetbrains-version-alias-rules.txt",
             "kotlin(x)-version-alias-rules.txt",
             "reactivex-version-alias-rules.txt",
             "square-version-alias-rules.txt",
