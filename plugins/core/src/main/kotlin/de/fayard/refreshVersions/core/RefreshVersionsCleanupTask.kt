@@ -18,7 +18,7 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
 
     @TaskAction
     fun cleanUpVersionsProperties() {
-        OutputFile.checkWhichFilesExist(project.rootDir)
+        OutputFile.checkWhichFilesExist()
         val model = VersionsPropertiesModel.readFromFile(RefreshVersionsConfigHolder.versionsPropertiesFile)
 
         val sectionsWithoutAvailableUpdates = model.sections.map { section ->
@@ -38,13 +38,13 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
             .filter { it.existed }
 
         settingsFiles.forEach { settingsFile ->
-            val initialContent = settingsFile.readText(project)
+            val initialContent = settingsFile.readText()
             val newContent = buildString {
                 append(initialContent)
                 removeCommentsAddedByUs()
             }
             if (initialContent.length != newContent.length) {
-                settingsFile.writeText(newContent, project)
+                settingsFile.writeText(newContent)
             }
         }
 

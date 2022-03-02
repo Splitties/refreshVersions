@@ -72,9 +72,9 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
 
         val deps: Deps = dependenciesToUse.checkModeAndNames(versionCatalogAliases, Case.`kebab-case`)
 
-        val currentText = if (catalog.existed) catalog.readText(project) else ""
+        val currentText = if (catalog.existed) catalog.readText() else ""
         val newText = versionsCatalog(deps, currentText, withVersions, plugins)
-        catalog.writeText(newText, project)
+        catalog.writeText(newText)
         catalog.logFileWasModified()
 
         println("""

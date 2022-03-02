@@ -22,7 +22,7 @@ open class BuildSrcLibsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionInitializeBuildSrc() {
-        OutputFile.checkWhichFilesExist(project.rootDir)
+        OutputFile.checkWhichFilesExist()
         project.file(OutputFile.OUTPUT_DIR.path).also {
             if (it.isDirectory.not()) it.mkdirs()
         }

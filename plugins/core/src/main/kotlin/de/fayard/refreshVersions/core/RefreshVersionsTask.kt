@@ -10,16 +10,11 @@ import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
-import org.gradle.api.UnknownDomainObjectException
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.MinimalExternalModuleDependency
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.util.GradleVersion
 
 /**
@@ -53,7 +48,7 @@ open class RefreshVersionsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionRefreshVersions() {
-        OutputFile.checkWhichFilesExist(project.rootDir)
+        OutputFile.checkWhichFilesExist()
 
         if (FeatureFlag.userSettings.isNotEmpty()) {
             logger.lifecycle("Feature flags: " + FeatureFlag.userSettings)
