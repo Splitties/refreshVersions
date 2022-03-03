@@ -858,9 +858,6 @@ org.jetbrains.kotlin:kotlin-test-junit
 org.jetbrains.kotlin:kotlin-test-junit5
 org.jetbrains.kotlin:kotlin-test-testng
 org.jetbrains.kotlinx:dataframe
-org.jetbrains.kotlinx:kotlin-deeplearning-api
-org.jetbrains.kotlinx:kotlin-deeplearning-onnx
-org.jetbrains.kotlinx:kotlin-deeplearning-visualization
 org.jetbrains.kotlinx:kotlinx-cli
 org.jetbrains.kotlinx:kotlinx-collections-immutable
 org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm
