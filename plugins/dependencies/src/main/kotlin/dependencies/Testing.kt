@@ -285,7 +285,13 @@ object Testing : IsNotADependency {
      */
     val assertj = AssertJ
 
-    object AssertJ : DependencyGroup("org.assertj") {
+    object AssertJ : DependencyGroup(
+        group = "org.assertj",
+        rawRules = """
+            org.assertj:assertj-*
+                        ^^^^^^^.^
+        """.trimIndent()
+    ) {
 
         val core = module("assertj-core")
         val guava = module("assertj-guava")
@@ -307,7 +313,14 @@ object Testing : IsNotADependency {
      */
     val hamcrest = Hamcrest
 
-    object Hamcrest : DependencyNotationAndGroup(group = "org.hamcrest", name = "hamcrest") {
+    object Hamcrest : DependencyNotationAndGroup(
+        group = "org.hamcrest",
+        name = "hamcrest",
+        rawRules = """
+            org.hamcrest:hamcrest(-*)
+                ^^^^^^^^
+        """.trimIndent()
+    ) {
 
         val core = module("hamcrest-core")
         val library = module("hamcrest-library")
@@ -337,7 +350,13 @@ object Testing : IsNotADependency {
      */
     val restAssured = RestAssured
 
-    object RestAssured : DependencyNotationAndGroup(group = "io.rest-assured", name = "rest-assured") {
+    object RestAssured : DependencyNotationAndGroup(
+        group = "io.rest-assured",
+        name = "rest-assured",
+        rawRules = """
+            io.rest-assured:*
+               ^^^^^^^^^^^^
+        """.trimIndent()) {
 
         val json = Json
 
@@ -370,7 +389,13 @@ object Testing : IsNotADependency {
      */
     val cucumber = Cucumber
 
-    object Cucumber : DependencyGroup("io.cucumber") {
+    object Cucumber : DependencyGroup(
+        group = "io.cucumber",
+        rawRules = """
+            io.cucumber:cucumber-*
+               ^^^^^^^^
+        """.trimIndent()
+    ) {
 
         val java = module("cucumber-java")
         val java8 = module("cucumber-java8")
@@ -386,7 +411,13 @@ object Testing : IsNotADependency {
      */
     val powermock = Powermock
 
-    object Powermock : DependencyGroup(group = "org.powermock") {
+    object Powermock : DependencyGroup(
+        group = "org.powermock",
+        rawRules = """
+            org.powermock:powermock-*
+                ^^^^^^^^^
+        """.trimIndent()
+    ) {
 
         val apiMockito = module("powermock-api-mockito2")
         val classLoader = module("powermock-classloading-xstream")
