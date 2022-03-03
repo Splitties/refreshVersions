@@ -857,7 +857,6 @@ org.jetbrains.kotlin:kotlin-test-js-runner
 org.jetbrains.kotlin:kotlin-test-junit
 org.jetbrains.kotlin:kotlin-test-junit5
 org.jetbrains.kotlin:kotlin-test-testng
-org.jetbrains.kotlinx:dataframe
 org.jetbrains.kotlinx:kotlinx-cli
 org.jetbrains.kotlinx:kotlinx-collections-immutable
 org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm
@@ -888,11 +887,6 @@ org.jetbrains.kotlinx:kotlinx-serialization-json
 org.jetbrains.kotlinx:kotlinx-serialization-properties
 org.jetbrains.kotlinx:kotlinx-serialization-protobuf
 org.jetbrains.kotlinx:kotlinx.reflect.lite
-org.jetbrains.kotlinx:lincheck
-org.jetbrains.kotlinx:multik-api
-org.jetbrains.kotlinx:multik-default
-org.jetbrains.kotlinx:multik-jvm
-org.jetbrains.kotlinx:multik-native
 org.junit.jupiter:junit-jupiter
 org.junit.jupiter:junit-jupiter-api
 org.junit.jupiter:junit-jupiter-engine
