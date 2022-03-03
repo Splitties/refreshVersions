@@ -186,7 +186,7 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
      *
      * GitHub page: [Kotlin/dataframe](https://github.com/Kotlin/dataframe)
      */
-    val dataframe = module("dataframe")
+    val dataFrame = module("dataframe")
 
     /**
      * Multidimensional array library for Kotlin.
@@ -230,9 +230,9 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
      *
      * GitHub page: [JetBrains/KotlinDL](https://github.com/JetBrains/KotlinDL)
      */
-    val deeplearning = Deeplearning
+    val deepLearning = DeepLearning
 
-    object Deeplearning : IsNotADependency {
+    object DeepLearning : IsNotADependency {
         val api = module("kotlin-deeplearning-api")
         val onnx = module("kotlin-deeplearning-onnx")
         val visualization = module("kotlin-deeplearning-visualization")
