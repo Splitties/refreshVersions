@@ -16,7 +16,13 @@ object JetBrains : IsNotADependency {
      */
     val exposed = Exposed
 
-    object Exposed : DependencyGroup("org.jetbrains.exposed") {
+    object Exposed : DependencyGroup(
+        group = "org.jetbrains.exposed",
+        rawRules = """
+            org.jetbrains.exposed:exposed-*
+                ^^^^^^^^^.^^^^^^^
+        """.trimIndent()
+    ) {
 
         val core = module("exposed-core")
         val dao = module("exposed-dao")
