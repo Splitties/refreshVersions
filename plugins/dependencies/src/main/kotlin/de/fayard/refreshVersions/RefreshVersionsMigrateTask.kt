@@ -72,6 +72,8 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 // - FIXME/TODO comments insertion
 
 internal fun migrateFileIfNeeded(file: File, dependencyMapping: Map<ModuleId.Maven, String>) {
+    if (file.canRead().not()) return
+
     val isBuildFile = file.name.removeSuffix(".kts").endsWith(".gradle")
     val oldContent = file.readText()
     val newContent = oldContent.lines()
