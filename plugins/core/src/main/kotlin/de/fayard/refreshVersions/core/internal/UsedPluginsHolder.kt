@@ -48,7 +48,7 @@ internal object UsedPluginsHolder {
         mutableListOf<UsedPluginDependency>()
     }
 
-    private class ConfigurationLessDependency(val dependencyNotation: String) : AbstractDependency() {
+    class ConfigurationLessDependency(val dependencyNotation: String) : AbstractDependency() {
 
         override fun getGroup() = group
         override fun getName() = name
