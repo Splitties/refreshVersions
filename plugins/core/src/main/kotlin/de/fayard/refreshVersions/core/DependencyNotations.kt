@@ -1,7 +1,6 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyRule
-import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
+import de.fayard.refreshVersions.core.internal.*
 import org.gradle.kotlin.dsl.IsNotADependency
 
 abstract class DependencyGroup private constructor(
@@ -94,6 +93,51 @@ abstract class DependencyNotationAndGroup private constructor(
 private annotation class PrivateForImplementation
 
 interface DependencyNotation : CharSequence {
+
+    /**
+     * Returns this dependency notation as a string. Allows accessing the overloads
+     * of `implementation` and friends that take a configuration lambda.
+     *
+     * Example usage:
+     *
+     * ```kts
+     * dependencies {
+     *     implementation(Example.something()) { // notice the parentheses.
+     *         version {
+     *             reject("1.0.0")
+     *         }
+     *     }
+     * }
+     * ```
+     */
+    operator fun invoke(): String
+
+    /**
+     * Constrains this dependency notation to strictly use the version declared in the versions file.
+     *
+     * Example usage:
+     *
+     * ```kts
+     * dependencies {
+     *     implementation(Example.something.strictVersion())
+     * }
+     * ```
+     */
+    fun strictVersion(): String
+
+    /**
+     * Makes Gradle use the version declared in the version files if it fits in the range of other constraints.
+     *
+     * Example usage:
+     *
+     * ```kts
+     * dependencies {
+     *     implementation(Example.something.preferDeclaredVersion())
+     * }
+     * ```
+     */
+    fun preferDeclaredVersion(): String
+
     fun withVersionPlaceholder(): String
     fun withVersion(version: String): String
     fun withoutVersion(): String
@@ -139,7 +183,11 @@ private class DependencyNotationImpl(
     private val usePlatformConstraints: Boolean?
 ) : DependencyNotation {
 
-    override fun withVersionPlaceholder(): String = this(version = "_")
+    override fun invoke(): String = toString()
+    override fun strictVersion(): String = this(version = VersionPlaceholders.strictly)
+    override fun preferDeclaredVersion(): String = this(version = VersionPlaceholders.prefer)
+
+    override fun withVersionPlaceholder(): String = this(version = VersionPlaceholders.require)
     override fun withVersion(version: String): String = this(version = version)
     override fun withoutVersion(): String = this(version = null)
 

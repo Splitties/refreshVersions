@@ -34,9 +34,11 @@ dependencies {
     implementation(AndroidX.core)
     testImplementation(KotlinX.coroutines.core)
     testImplementation(KotlinX.coroutines.jdk8)
-    testImplementation(Testing.kotest.runner.junit4)
+    testImplementation(Testing.kotest.runner.junit4.strictVersion())
     testImplementation("junit:junit:4.12")
-    implementation("com.google.guava:guava:15.0")
+    implementation("com.google.guava:guava:15.0") {
+
+    }
     implementation("com.google.inject:guice:2.0")
     implementation("com.squareup.okhttp3:okhttp:3.10.0")
     implementation("com.squareup.okhttp3:okhttp-urlconnection:3.10.0")
@@ -44,8 +46,8 @@ dependencies {
     implementation("org.mongodb:mongo-java-driver:3.11.0")
     implementation(kotlin("script-runtime"))
 
-    api("org.apache.poi:poi:_")
-    api("org.apache.poi:poi-ooxml:_")
+    api("org.apache.poi:poi:_?")
+    api("org.apache.poi:poi-ooxml:_!")
 }
 
 getKotlinPluginVersion().let {

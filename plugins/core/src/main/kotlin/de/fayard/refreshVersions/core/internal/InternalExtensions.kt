@@ -17,8 +17,10 @@ fun Dependency.isManageableVersion(
     versionKeyReader: ArtifactVersionKeyReader
 ): Boolean {
     return when {
-        version == versionPlaceholder -> true
-        this is ExternalDependency && versionPlaceholder in this.versionConstraint.rejectedVersions -> true
+        version == VersionPlaceholders.require -> true
+        version == VersionPlaceholders.prefer -> true
+        version == VersionPlaceholders.strictly -> true
+        this is ExternalDependency && VersionPlaceholders.require in this.versionConstraint.rejectedVersions -> true
         name.endsWith(".gradle.plugin") -> {
             when (val moduleId = moduleId()) {
                 is ModuleId.Maven -> {

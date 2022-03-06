@@ -21,8 +21,6 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.invocation.Gradle
 import kotlin.reflect.full.memberFunctions
 
-internal const val versionPlaceholder = "_"
-
 internal fun Gradle.setupVersionPlaceholdersResolving(versionsMap: Map<String, String>) {
 
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
@@ -146,8 +144,23 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
 
     withDependencies {
         for (dependency in this) {
-            if (dependency.version != versionPlaceholder) continue
-            val moduleId = dependency.moduleId() ?: continue
+            if (dependency.name == "guava") {
+                println("dependency.version = ${dependency.version}")
+                if (dependency is ExternalDependency) {
+                    dependency.versionConstraint.let {
+                        println("requiredVersion = ${it.requiredVersion}")
+                        println("strictVersion = ${it.strictVersion}")
+                        println("preferredVersion = ${it.preferredVersion}")
+                        println("rejectedVersions = ${it.rejectedVersions}")
+                    }
+                }
+            }
+            val moduleId: ModuleId = when (dependency.version) {
+                VersionPlaceholders.require, VersionPlaceholders.prefer, VersionPlaceholders.strictly -> {
+                    dependency.moduleId() ?: continue
+                }
+                else -> continue
+            }
             val propertyName = getVersionPropertyName(moduleId, versionKeyReader)
             val versionFromProperties = resolveVersion(
                 properties = properties,
@@ -177,9 +190,22 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                     }
             }
             if (dependency is ExternalDependency) {
+                println("Yo")
+                val initialVersion: String? = dependency.version
                 dependency.version {
-                    require(versionFromProperties)
-                    reject(versionPlaceholder) // Remember that we're managing the version of this dependency.
+                    require("")
+                    when (initialVersion) {
+                        VersionPlaceholders.prefer -> prefer(versionFromProperties).also {
+                            println("PREFER ($moduleId) initialVersion = $initialVersion")
+                        }
+                        VersionPlaceholders.strictly -> strictly(versionFromProperties).also {
+                            println("STRICTLY ($moduleId) initialVersion = $initialVersion")
+                        }
+                        else -> require(versionFromProperties).also {
+                            println("ELSE ($moduleId) initialVersion = $initialVersion")
+                        }
+                    }
+                    reject(VersionPlaceholders.require) // Remember that we're managing the version of this dependency.
                 }
             } else if (moduleId is ModuleId.Npm) {
                 val version = when {
@@ -191,6 +217,8 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                     }
                 }
                 dependenciesToReplace += dependency to npmDependencyWithVersion(dependency, version)
+            } else {
+                println("!! ELSE ($moduleId) is ${dependency.javaClass}")
             }
         }
         dependenciesToReplace.forEach { (old, new) ->
