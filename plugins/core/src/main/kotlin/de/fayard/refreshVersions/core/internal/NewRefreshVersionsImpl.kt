@@ -32,7 +32,6 @@ internal suspend fun lookupVersionCandidates(
 
     val projects = RefreshVersionsConfigHolder.allProjects(project)
     val (kotlinScriptDependencies, kotlinScriptRepos) = kotlinScriptDependenciesAndRepo()
-    println("kotlinScriptDependencies=$kotlinScriptDependencies kotlinScriptRepos=$kotlinScriptRepos")
 
     val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
     val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
@@ -60,7 +59,7 @@ internal suspend fun lookupVersionCandidates(
             kotlinScriptRepos.map { repoUrl ->
                 MavenDependencyVersionsFetcherHttp(httpClient, moduleId, repoUrl, null)
             }
-        }.also { println(it.joinToString("\n")) }
+        }
     ).toSet()
 
     return coroutineScope {
@@ -128,17 +127,19 @@ private fun ModuleId.toDependency() =
 
 
 fun kotlinScriptDependenciesAndRepo(): Pair<List<ModuleId.Maven>, List<String>> {
-    val regex = """@file:DependsOn\("(.+):(.+):(.+)"\).*""".toRegex()
-    val dependencies = """
-    @file:DependsOn("org.freemarker:freemarker:2.3.30")
-    @file:DependsOn("no.api.freemarker:freemarker-java8:2.0.0")
-    """.trimIndent()
-        .lines()
-        .mapNotNull { line ->
-            val (group, name) = regex.matchEntire(line)?.destructured ?: return@mapNotNull null
-            ModuleId.Maven(group, name)
-        }
-    return Pair(dependencies, listOf("https://repo.maven.apache.org/maven2/"))
+    val kotlinScripts = KotlinScript.findKotlinScripts(OutputFile.rootDir).map { file ->
+        KotlinScript(file.readText(), emptyList())
+    }
+
+    val moduleIds = kotlinScripts.flatMap { script ->
+        script.moduleIds()
+    }.distinct()
+
+    val repositories = kotlinScripts.flatMap { script ->
+        script.repositories()
+    }.distinct()
+
+    return Pair(moduleIds, repositories)
 }
 
 private suspend fun lookupAvailableGradleVersions(httpClient: OkHttpClient): List<Version> = coroutineScope {

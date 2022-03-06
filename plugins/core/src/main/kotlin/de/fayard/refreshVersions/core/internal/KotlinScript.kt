@@ -51,5 +51,23 @@ internal class KotlinScript(
 
     fun List<KotlinScriptLine>.toText(): String =
         joinToString("\n") { it.line }
+
+    fun repositories() = lines.mapNotNull { it.repository() }
+
+    fun moduleIds() = lines.mapNotNull { it.moduleId() }
+
+    companion object {
+
+        internal fun findKotlinScripts(fromDir: File): List<File> {
+            require(fromDir.isDirectory) { "Expected a directory, got ${fromDir.canonicalPath}" }
+            return fromDir.walkBottomUp()
+                .onEnter { dir -> dir.name !in listOf("resources", "build") }
+                .filter {
+                    it.extension == "kts" && it.name.contains("gradle").not()
+                }
+                .filter { it.canRead() }
+                .toList()
+        }
+    }
 }
 

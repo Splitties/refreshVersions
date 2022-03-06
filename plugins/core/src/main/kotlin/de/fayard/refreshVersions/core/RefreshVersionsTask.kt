@@ -92,11 +92,17 @@ open class RefreshVersionsTask : DefaultTask() {
             lintUpdatingProblemsAsync.await().forEach { problem ->
                 logger.log(problem)
             }
-            println(result.kotlinScriptUpdates.joinToString("\n", prefix = "kotlinScriptUpdates:\n"))
+            updateKotlinScripts(result.kotlinScriptUpdates)
             OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
             if (libsToml.canRead()) {
                 OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
             }
+        }
+    }
+
+    private fun updateKotlinScripts(kotlinScriptUpdates: List<DependencyWithVersionCandidates>) {
+        KotlinScript.findKotlinScripts(OutputFile.rootDir).forEach { file ->
+            KotlinScript(file.readText(), kotlinScriptUpdates).updateNewVersions(file)
         }
     }
 

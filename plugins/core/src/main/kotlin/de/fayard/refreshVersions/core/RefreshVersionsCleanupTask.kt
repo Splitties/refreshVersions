@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.internal.KotlinScript
 import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater.removeCommentsAddedByUs
@@ -30,6 +31,10 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
         val newModel = model.copy(sections = sectionsWithoutAvailableUpdates)
         newModel.writeTo(RefreshVersionsConfigHolder.versionsPropertiesFile)
         OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
+
+        KotlinScript.findKotlinScripts(OutputFile.rootDir).forEach { file ->
+            KotlinScript(file.readText(), emptyList()).cleanupComments(file)
+        }
     }
 
     @TaskAction
