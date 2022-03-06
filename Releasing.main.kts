@@ -209,7 +209,6 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
     }
     `Push release to origin` -> {
         printInfo("Will now push to origin repository")
-        printInfo("Once complete, GitHub should kick-off the release GitHub Action that will perform the publishing.")
         requestUserConfirmation("Continue?")
         git.pushToOrigin()
     }

@@ -144,7 +144,6 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
 
     val dependenciesToReplace = mutableListOf<Pair<Dependency, Dependency>>()
 
-    @Suppress("UnstableApiUsage")
     withDependencies {
         for (dependency in this) {
             if (dependency.version != versionPlaceholder) continue

@@ -562,6 +562,11 @@ com.louiscad.splitties:splitties-views-selectable
 com.louiscad.splitties:splitties-views-selectable-appcompat
 com.louiscad.splitties:splitties-views-selectable-constraintlayout
 com.nhaarman.mockitokotlin2:mockito-kotlin
+com.rickclephas.kmp:kmp-nativecoroutines-annotations
+com.rickclephas.kmp:kmp-nativecoroutines-compiler
+com.rickclephas.kmp:kmp-nativecoroutines-compiler-embeddable
+com.rickclephas.kmp:kmp-nativecoroutines-core
+com.rickclephas.kmp:kmp-nativecoroutines-gradle-plugin
 com.russhwolf:multiplatform-settings
 com.russhwolf:multiplatform-settings-coroutines
 com.russhwolf:multiplatform-settings-coroutines-native-mt
