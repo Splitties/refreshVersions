@@ -31,9 +31,9 @@ internal data class KotlinScriptLine(val line: String) {
     }
 
     fun availableSpace() : String {
-        val alignIndex = line.indexOfLast { it == ':' } // 53
-        val minus = "////# available:".length           // 16
-        val difference = alignIndex - minus             // 37
+        val alignIndex = line.indexOfLast { it == ':' }  // 53
+        val minus = "////# available:".lastIndex         // 15
+        val difference = alignIndex - minus              // 38
         return List(difference) { ' ' }.joinToString("")
         /**
 @file:DependsOn("io.rsocket.kotlin:rsocket-core-jvm:0.13.0-SNAPSHOT")

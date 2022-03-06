@@ -31,11 +31,11 @@ internal suspend fun lookupVersionCandidates(
     require(project.isRootProject)
 
     val projects = RefreshVersionsConfigHolder.allProjects(project)
-    val (kotlinScriptDependencies, kotlinScriptRepos) = kotlinScriptDependenciesAndRepo()
+    val kotlinScriptDependenciesFetcher: List<MavenDependencyVersionsFetcher> = kotlinScriptDependenciesFetcher(httpClient)
 
     val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
     val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
-    val kotlinScriptUpdates = mutableListOf<DependencyWithVersionCandidates>()
+
     val dependencyFilter: (Dependency) -> Boolean = { dependency ->
         dependency.isManageableVersion(versionMap, versionKeyReader, versionsCatalogMapping).also { manageable ->
             if (manageable) return@also
@@ -55,11 +55,7 @@ internal suspend fun lookupVersionCandidates(
     }.plus(
         getUsedPluginsDependencyVersionFetchers(httpClient = httpClient)
     ).plus(
-        kotlinScriptDependencies.flatMap { moduleId ->
-            kotlinScriptRepos.map { repoUrl ->
-                MavenDependencyVersionsFetcherHttp(httpClient, moduleId, repoUrl, null)
-            }
-        }
+        kotlinScriptDependenciesFetcher
     ).toSet()
 
     return coroutineScope {
@@ -89,11 +85,7 @@ internal suspend fun lookupVersionCandidates(
                         versionRejectionFilter(selection)
                     },
                     failures = failures
-                ).also {
-                    if (moduleId in kotlinScriptDependencies) {
-                        kotlinScriptUpdates += it
-                    }
-                }
+                )
             }
         }
 
@@ -106,6 +98,11 @@ internal suspend fun lookupVersionCandidates(
         }
 
         val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
+
+        val kotlinScriptModulesId = kotlinScriptDependenciesFetcher.map { it.moduleId }.toSet()
+        val kotlinScriptUpdates = dependenciesWithVersionCandidates.filter { dependencyWithVersionCandidates ->
+            dependencyWithVersionCandidates.moduleId in kotlinScriptModulesId
+        }
 
         val dependenciesFromVersionsCatalog = versionsCatalogMapping.map(ModuleId.Maven::toDependency)
 
@@ -126,20 +123,11 @@ private fun ModuleId.toDependency() =
     UsedPluginsHolder.ConfigurationLessDependency("$group:$name:_")
 
 
-fun kotlinScriptDependenciesAndRepo(): Pair<List<ModuleId.Maven>, List<String>> {
-    val kotlinScripts = KotlinScript.findKotlinScripts(OutputFile.rootDir).map { file ->
-        KotlinScript(file.readText(), emptyList())
+internal fun kotlinScriptDependenciesFetcher(httpClient: OkHttpClient): List<MavenDependencyVersionsFetcher> {
+    return KotlinScript.findKotlinScripts(OutputFile.rootDir).flatMap { file ->
+        val script = KotlinScript(file.readText(), emptyList())
+        script.mavenDependencyVersionsFetcher(httpClient)
     }
-
-    val moduleIds = kotlinScripts.flatMap { script ->
-        script.moduleIds()
-    }.distinct()
-
-    val repositories = kotlinScripts.flatMap { script ->
-        script.repositories()
-    }.distinct()
-
-    return Pair(moduleIds, repositories)
 }
 
 private suspend fun lookupAvailableGradleVersions(httpClient: OkHttpClient): List<Version> = coroutineScope {
