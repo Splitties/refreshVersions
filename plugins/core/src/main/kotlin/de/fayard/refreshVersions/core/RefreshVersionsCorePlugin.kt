@@ -3,7 +3,9 @@ package de.fayard.refreshVersions.core
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
+import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.core.internal.skipConfigurationCache
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.register
@@ -14,6 +16,7 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         check(project.isRootProject) { "ERROR: de.fayard.refreshVersions.core should not be applied manually" }
+        OutputFile.rootDir = project.rootDir
         if (project.isBuildSrc.not()) {
             // In the case where this runs in includedBuilds, the task configuration lambda may (will) run
             // after RefreshVersionsConfigHolder content is cleared (via its ClearStaticStateBuildService),
@@ -23,6 +26,7 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
             project.tasks.register<RefreshVersionsTask>(name = "refreshVersions") {
                 group = "refreshVersions"
                 description = "Search for new dependencies versions and update $versionsFileName"
+                skipConfigurationCache()
             }
 
             project.tasks.register<RefreshVersionsCleanupTask>(name = "refreshVersionsCleanup") {

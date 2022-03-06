@@ -24,7 +24,8 @@ internal suspend fun lookupVersionCandidates(
     httpClient: OkHttpClient,
     project: Project,
     versionMap: Map<String, String>,
-    versionKeyReader: ArtifactVersionKeyReader
+    versionKeyReader: ArtifactVersionKeyReader,
+    versionsCatalogMapping: Set<ModuleId.Maven>
 ): VersionCandidatesLookupResult {
 
     require(project.isRootProject)
@@ -37,7 +38,7 @@ internal suspend fun lookupVersionCandidates(
     val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
     val kotlinScriptUpdates = mutableListOf<DependencyWithVersionCandidates>()
     val dependencyFilter: (Dependency) -> Boolean = { dependency ->
-        dependency.isManageableVersion(versionMap, versionKeyReader).also { manageable ->
+        dependency.isManageableVersion(versionMap, versionKeyReader, versionsCatalogMapping).also { manageable ->
             if (manageable) return@also
             if (dependency.version != null) {
                 // null version means it's expected to be added by a BoM or a plugin, so we ignore them.
@@ -107,9 +108,11 @@ internal suspend fun lookupVersionCandidates(
 
         val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
 
+        val dependenciesFromVersionsCatalog = versionsCatalogMapping.map(ModuleId.Maven::toDependency)
+
         return@coroutineScope VersionCandidatesLookupResult(
             dependenciesUpdates = dependenciesWithVersionCandidates,
-            dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
+            dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions - dependenciesFromVersionsCatalog,
             dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
             gradleUpdates = gradleUpdatesAsync.await(),
             settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
@@ -119,6 +122,10 @@ internal suspend fun lookupVersionCandidates(
         TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
     }
 }
+
+private fun ModuleId.toDependency() =
+    UsedPluginsHolder.ConfigurationLessDependency("$group:$name:_")
+
 
 fun kotlinScriptDependenciesAndRepo(): Pair<List<ModuleId.Maven>, List<String>> {
     val regex = """@file:DependsOn\("(.+):(.+):(.+)"\).*""".toRegex()

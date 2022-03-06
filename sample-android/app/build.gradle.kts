@@ -21,7 +21,7 @@ dependencies {
 
     implementation(Kotlin.stdlib.jdk7)
     implementation(AndroidX.appCompat)
-    implementation(AndroidX.activityKtx)
+    implementation(AndroidX.activity.ktx)
     implementation(AndroidX.constraintLayout)
     implementation(Google.android.material)
     implementation(AndroidX.lifecycle.runtime)

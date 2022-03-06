@@ -1,7 +1,9 @@
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
+import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.problems.log
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
@@ -46,13 +48,16 @@ open class RefreshVersionsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionRefreshVersions() {
-        OutputFile.checkWhichFilesExist(project.rootDir)
+        OutputFile.checkWhichFilesExist()
 
         if (FeatureFlag.userSettings.isNotEmpty()) {
             logger.lifecycle("Feature flags: " + FeatureFlag.userSettings)
         }
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
+
+        val versionsCatalogMapping: Set<ModuleId.Maven> =
+            VersionCatalogs.dependencyAliases(project.getVersionsCatalog()).keys
 
         runBlocking {
             val lintUpdatingProblemsAsync = async {
@@ -65,7 +70,8 @@ open class RefreshVersionsTask : DefaultTask() {
                     httpClient = httpClient,
                     project = project,
                     versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
-                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader,
+                    versionsCatalogMapping = versionsCatalogMapping,
                 )
             }
             VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
@@ -74,6 +80,10 @@ open class RefreshVersionsTask : DefaultTask() {
                 settingsPluginsUpdates = result.settingsPluginsUpdates,
                 buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
             )
+            val libsToml = project.file(LIBS_VERSIONS_TOML)
+            if (VersionCatalogs.isSupported()) {
+                TomlUpdater(libsToml, result.dependenciesUpdates).updateNewVersions(libsToml)
+            }
 
             warnAboutRefreshVersionsIfSettingIfAny()
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
@@ -84,6 +94,9 @@ open class RefreshVersionsTask : DefaultTask() {
             }
             println(result.kotlinScriptUpdates.joinToString("\n", prefix = "kotlinScriptUpdates:\n"))
             OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
+            if (libsToml.canRead()) {
+                OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
+            }
         }
     }
 

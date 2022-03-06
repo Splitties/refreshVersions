@@ -5,7 +5,8 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.internal.artifacts.dependencies.AbstractDependency
 
-internal object UsedPluginsHolder {
+@InternalRefreshVersionsApi
+object UsedPluginsHolder {
 
     fun noteUsedPluginDependency(
         dependencyNotation: String,
@@ -48,7 +49,7 @@ internal object UsedPluginsHolder {
         mutableListOf<UsedPluginDependency>()
     }
 
-    class ConfigurationLessDependency(val dependencyNotation: String) : AbstractDependency() {
+    internal class ConfigurationLessDependency(val dependencyNotation: String) : AbstractDependency() {
 
         override fun getGroup() = group
         override fun getName() = name

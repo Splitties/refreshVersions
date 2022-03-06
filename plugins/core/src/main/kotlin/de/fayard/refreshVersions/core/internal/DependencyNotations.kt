@@ -1,25 +1,22 @@
-package de.fayard.buildSrcLibs.internal
+package de.fayard.refreshVersions.core.internal
 
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ExternalDependency
 
-internal enum class Case {
-    camelCase, snake_case; //, PascalCase, `kebab-case`
+@Suppress("EnumEntryName")
+@InternalRefreshVersionsApi
+enum class Case(
+    val convert: (String) -> String
+) {
+    snake_case({ it }),
+    `kebab-case`({
+        it.map { c->
+            if (c in separators) '-' else c
+        }.joinToString(separator = "")
+    });
 
     companion object {
-        internal fun toCamelCase(input: String): String = buildString {
-            var wasWordBreak = false
-            val wordBreaks = setOf(' ', '-', '_')
-            for (c in input) {
-                when {
-                    c in wordBreaks -> {
-                    }
-                    wasWordBreak -> append(c.toUpperCase())
-                    else -> append(c)
-                }
-                wasWordBreak = c in wordBreaks
-            }
-        }
+        val separators = setOf('.', '-', '_')
     }
 }
 
@@ -28,24 +25,26 @@ internal enum class Case {
  *
  * Found many inspiration for bad libs here https://developer.android.com/jetpack/androidx/migrate
  * **/
-internal val MEANING_LESS_NAMES: MutableList<String> = mutableListOf(
+@InternalRefreshVersionsApi
+val MEANING_LESS_NAMES: MutableList<String> = mutableListOf(
     "common", "core", "testing", "runtime", "extensions",
     "compiler", "migration", "db", "rules", "runner", "monitor", "loader",
     "media", "print", "io", "collection", "gradle", "android"
 )
 
-internal fun computeUseFqdnFor(
-    libraries: List<Library>,
+@InternalRefreshVersionsApi
+fun List<Library>.computeAliases(
     configured: List<String>,
     byDefault: List<String> = MEANING_LESS_NAMES
 ): List<String> {
     val groups = (configured + byDefault).filter { it.contains(".") }.distinct()
-    val depsFromGroups = libraries.filter { it.group in groups }.map { it.module }
-    val ambiguities = libraries.groupBy { it.module }.filter { it.value.size > 1 }.map { it.key }
+    val depsFromGroups = filter { it.group in groups }.map { it.module }
+    val ambiguities = groupBy { it.module }.filter { it.value.size > 1 }.map { it.key }
     return (configured + byDefault + ambiguities + depsFromGroups - groups).distinct().sorted()
 }
 
-internal fun escapeLibsKt(name: String): String {
+@InternalRefreshVersionsApi
+fun escapeLibsKt(name: String): String {
     val escapedChars = listOf('-', '.', ':')
     return buildString {
         for (c in name) {
@@ -54,7 +53,8 @@ internal fun escapeLibsKt(name: String): String {
     }
 }
 
-internal fun Project.findDependencies(): List<Library> {
+@InternalRefreshVersionsApi
+fun Project.findDependencies(): List<Library> {
     val allDependencies = mutableListOf<Library>()
     allprojects {
         (configurations + buildscript.configurations)
@@ -74,7 +74,8 @@ internal fun Project.findDependencies(): List<Library> {
 }
 
 
-internal data class Library(
+@InternalRefreshVersionsApi
+data class Library(
     val group: String = "",
     val module: String = "",
     val version: String = ""
@@ -83,31 +84,36 @@ internal data class Library(
     fun groupModuleVersion() = "$group:$module:$version"
     fun groupModuleUnderscore() = "$group:$module:_"
     fun groupModule() = "$group:$module"
-    fun versionNameCamelCase(mode: VersionMode): String =
-        Case.toCamelCase(versionNameSnakeCase(mode))
 
-    fun versionNameSnakeCase(mode: VersionMode): String = escapeLibsKt(
-        when (mode) {
-            VersionMode.MODULE -> module
-            VersionMode.GROUP -> group
-            VersionMode.GROUP_MODULE -> "${group}_$module"
-        }
-    )
+    @Suppress("LocalVariableName")
+    fun versionName(mode: VersionMode, case: Case): String {
+        val name_with_underscores = escapeLibsKt(
+            when (mode) {
+                VersionMode.MODULE -> module
+                VersionMode.GROUP -> group
+                VersionMode.GROUP_MODULE -> "${group}_$module"
+            }
+        )
+        return case.convert(name_with_underscores)
+    }
 
     override fun toString() = groupModuleVersion()
 }
 
-internal class Deps(
+@InternalRefreshVersionsApi
+class Deps(
     val libraries: List<Library>,
     val names: Map<Library, String>
 )
 
 
-internal enum class VersionMode {
+@InternalRefreshVersionsApi
+enum class VersionMode {
     GROUP, GROUP_MODULE, MODULE
 }
 
-internal fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>, case: Case): Deps {
+@InternalRefreshVersionsApi
+fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>, case: Case): Deps {
     val dependencies = this
 
     val modes: Map<Library, VersionMode> =
@@ -121,10 +127,7 @@ internal fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>, cas
 
     val versionNames = dependencies.associateWith { d ->
         val mode = modes.getValue(d)
-        when (case) {
-            Case.camelCase -> d.versionNameCamelCase(mode)
-            Case.snake_case -> d.versionNameSnakeCase(mode)
-        }
+        d.versionName(mode, case)
     }
     val sortedDependencies = dependencies.sortedBy { d: Library -> d.groupModule() }
     return Deps(sortedDependencies, versionNames)

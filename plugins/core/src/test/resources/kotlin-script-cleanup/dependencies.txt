@@ -1,0 +1,2 @@
+io.rsocket.kotlin:rsocket-core-jvm:0.13.0-SNAPSHOT:0.15.0,0.16.0
+io.ktor:ktor-client-okhttp:1.5.2:1.6.0,1.7.0

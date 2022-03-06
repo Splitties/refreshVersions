@@ -61,3 +61,4 @@ gradleEnterprise {
 }
 
 rootProject.name = "sample-kotlin"
+rootProject.buildFileName = "${rootProject.name}.gradle.kts"
