@@ -82,6 +82,7 @@ open class RefreshVersionsTask : DefaultTask() {
             lintUpdatingProblemsAsync.await().forEach { problem ->
                 logger.log(problem)
             }
+            println(result.kotlinScriptUpdates.joinToString("\n", prefix = "kotlinScriptUpdates:\n"))
             OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
         }
     }

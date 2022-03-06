@@ -30,9 +30,12 @@ internal suspend fun lookupVersionCandidates(
     require(project.isRootProject)
 
     val projects = RefreshVersionsConfigHolder.allProjects(project)
+    val (kotlinScriptDependencies, kotlinScriptRepos) = kotlinScriptDependenciesAndRepo()
+    println("kotlinScriptDependencies=$kotlinScriptDependencies kotlinScriptRepos=$kotlinScriptRepos")
 
     val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
     val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
+    val kotlinScriptUpdates = mutableListOf<DependencyWithVersionCandidates>()
     val dependencyFilter: (Dependency) -> Boolean = { dependency ->
         dependency.isManageableVersion(versionMap, versionKeyReader).also { manageable ->
             if (manageable) return@also
@@ -51,6 +54,12 @@ internal suspend fun lookupVersionCandidates(
         it.getDependencyVersionFetchers(httpClient = httpClient, dependencyFilter = dependencyFilter)
     }.plus(
         getUsedPluginsDependencyVersionFetchers(httpClient = httpClient)
+    ).plus(
+        kotlinScriptDependencies.flatMap { moduleId ->
+            kotlinScriptRepos.map { repoUrl ->
+                MavenDependencyVersionsFetcherHttp(httpClient, moduleId, repoUrl, null)
+            }
+        }.also { println(it.joinToString("\n")) }
     ).toSet()
 
     return coroutineScope {
@@ -80,7 +89,11 @@ internal suspend fun lookupVersionCandidates(
                         versionRejectionFilter(selection)
                     },
                     failures = failures
-                )
+                ).also {
+                    if (moduleId in kotlinScriptDependencies) {
+                        kotlinScriptUpdates += it
+                    }
+                }
             }
         }
 
@@ -100,10 +113,25 @@ internal suspend fun lookupVersionCandidates(
             dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
             gradleUpdates = gradleUpdatesAsync.await(),
             settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
-            buildSrcSettingsPluginsUpdates = settingsPluginsUpdatesAsync.await().buildSrcSettings
+            buildSrcSettingsPluginsUpdates = settingsPluginsUpdatesAsync.await().buildSrcSettings,
+            kotlinScriptUpdates = kotlinScriptUpdates,
         )
         TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
     }
+}
+
+fun kotlinScriptDependenciesAndRepo(): Pair<List<ModuleId.Maven>, List<String>> {
+    val regex = """@file:DependsOn\("(.+):(.+):(.+)"\).*""".toRegex()
+    val dependencies = """
+    @file:DependsOn("org.freemarker:freemarker:2.3.30")
+    @file:DependsOn("no.api.freemarker:freemarker-java8:2.0.0")
+    """.trimIndent()
+        .lines()
+        .mapNotNull { line ->
+            val (group, name) = regex.matchEntire(line)?.destructured ?: return@mapNotNull null
+            ModuleId.Maven(group, name)
+        }
+    return Pair(dependencies, listOf("https://repo.maven.apache.org/maven2/"))
 }
 
 private suspend fun lookupAvailableGradleVersions(httpClient: OkHttpClient): List<Version> = coroutineScope {

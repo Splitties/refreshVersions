@@ -15,6 +15,9 @@ internal abstract class MavenDependencyVersionsFetcher(
     repoUrlOrKey = repoUrl
 ) {
 
+    override fun toString() =
+        """${this::class.simpleName}(moduleId=$moduleId, repoUrl=$repoUrlOrKey)"""
+
     /**
      * Shall return `Xor.First(null)` if the metadata is not found on the repo (404 or file not found).
      */

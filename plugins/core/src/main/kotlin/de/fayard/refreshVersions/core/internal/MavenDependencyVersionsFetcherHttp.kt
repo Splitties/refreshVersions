@@ -20,7 +20,7 @@ internal class MavenDependencyVersionsFetcherHttp(
 ) {
 
     init {
-        require(repoUrl.endsWith('/'))
+        require(repoUrl.endsWith('/')) {  "Maven URL $repoUrl does not end with '/'"}
     }
 
     private val request = Request.Builder().apply {

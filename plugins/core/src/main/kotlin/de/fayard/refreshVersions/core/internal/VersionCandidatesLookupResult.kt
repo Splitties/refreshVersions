@@ -9,5 +9,6 @@ internal class VersionCandidatesLookupResult(
     val dependenciesWithDynamicVersions: List<Dependency>,
     val gradleUpdates: List<Version>,
     val settingsPluginsUpdates: List<PluginWithVersionCandidates>,
-    val buildSrcSettingsPluginsUpdates: List<PluginWithVersionCandidates>
+    val buildSrcSettingsPluginsUpdates: List<PluginWithVersionCandidates>,
+    val kotlinScriptUpdates : List<DependencyWithVersionCandidates>,
 )
