@@ -24,6 +24,7 @@ object Koin : DependencyGroup(
     val android = module("koin-android")
     val androidCompat = module("koin-android-compat")
     val workManager = module("koin-androidx-workmanager")
+    val navigation = module("koin-androidx-navigation")
     val compose = module("koin-androidx-compose")
     val ktor = module("koin-ktor")
     val slf4j = module("koin-logger-slf4j")
