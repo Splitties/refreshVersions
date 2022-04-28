@@ -48,7 +48,7 @@ dependencies {
     api("org.apache.poi:poi-ooxml:_")
 
     // logging
-    implementation("org.apache.logging.log4j:log4j-bom:2.17.2")
+    implementation(platform("org.apache.logging.log4j:log4j-bom:2.17.2"))
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl")
     runtimeOnly("org.apache.logging.log4j:log4j-jul")
 }
