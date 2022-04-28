@@ -46,6 +46,14 @@ dependencies {
 
     api("org.apache.poi:poi:_")
     api("org.apache.poi:poi-ooxml:_")
+
+    // logging
+    implementation(platform(libs.log4j.bom))
+    runtimeOnly(libs.log4j.slf4jImpl)
+    runtimeOnly(libs.log4j.jul)
+    // implementation("org.apache.logging.log4j:log4j-bom:2.17.2")
+    // runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl")
+    // runtimeOnly("org.apache.logging.log4j:log4j-jul")
 }
 
 getKotlinPluginVersion().let {

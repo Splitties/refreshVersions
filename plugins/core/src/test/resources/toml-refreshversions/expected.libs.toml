@@ -53,3 +53,5 @@ my-other-lib = { module = "com.mycompany:other", version = "1.4" }
 
 my-other-lib2 = { group = "com.mycompany", name = "alternate", version = "1.4" }
 ##                                                         # available = "1.5" }
+
+log4j-jul = { module = "org.apache.logging.log4j:log4j-jul" }

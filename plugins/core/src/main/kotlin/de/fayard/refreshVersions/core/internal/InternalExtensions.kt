@@ -31,7 +31,8 @@ fun Dependency.isManageableVersion(
                 else -> false
             }
         }
-        ModuleId.Maven(group ?: "", name) in versionsCatalogMapping -> true
+        ModuleId.Maven(group ?: "", name) in versionsCatalogMapping &&
+            version.isNullOrBlank().not() -> true
         else -> false
     }
 }

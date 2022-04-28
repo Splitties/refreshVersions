@@ -29,6 +29,8 @@ my-other-lib = { module = "com.mycompany:other", version = "1.4" }
 my-other-lib2 = { group = "com.mycompany", name = "alternate", version = "1.4" }
 ##                                                          # available="1.5" }
 
+log4j-jul = { module = "org.apache.logging.log4j:log4j-jul" }
+
 [bundles]
 
 groovy = ["groovy-core", "groovy-json", "groovy-nio"]
@@ -45,4 +47,3 @@ long-notation = { id = "some.plugin.id", version = "1.4" }
 ##                                    # available="1.6" }
 
 reference-notation = { id = "other.plugin.id", version.ref = "common" }
-

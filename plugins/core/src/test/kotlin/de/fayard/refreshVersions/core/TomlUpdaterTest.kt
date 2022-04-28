@@ -98,6 +98,7 @@ private fun dependencyWithVersionCandidates(folder: File): List<DependencyWithVe
 
     val dependencies = file.readText()
         .lines()
+        .filter { it.isNotBlank() }
         .map { line ->
             val (group, name, version, available) = line.split(":")
             DependencyWithVersionCandidates(

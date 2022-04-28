@@ -55,3 +55,9 @@ kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 kotlinx-coroutines-jdk8 = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-jdk8", version.ref = "kotlinx-coroutines" }
 
 mongo-java-driver = "org.mongodb:mongo-java-driver:3.11.0"
+
+log4j-bom = "org.apache.logging.log4j:log4j-bom:2.17.2"
+
+log4j-slf4jImpl = { module = "org.apache.logging.log4j:log4j-slf4j-impl" }
+
+log4j-jul = { module = "org.apache.logging.log4j:log4j-jul" }

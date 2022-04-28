@@ -32,7 +32,7 @@ internal data class TomlLine(
     val module get() = "$group:$name"
 
     val version: String get() =
-        if (section == Versions) value else map["version"]!!
+        if (section == Versions) value else map["version"] ?: ""
 
     val group: String get() =
         if (section == Plugins) id else map["group"]!!
