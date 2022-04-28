@@ -22,7 +22,6 @@ class MigrationTest : StringSpec({
     "Replace versions in maven coordinates in build files" {
         val input = """
             implementation("com.example:name:_")
-            implementation("com.example:name:_")
             implementation("com.example:name:${'$'}exampleVersion")
             implementation("com.example:name:${'$'}version")
             implementation("com.example:name:${'$'}{version}")

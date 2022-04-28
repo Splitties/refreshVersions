@@ -120,7 +120,7 @@ internal fun withVersionPlaceholder(
             if (coordinate in dependencyMapping) {
                 line.replace(mavenCoordinateRegex, dependencyMapping[coordinate]!!)
             } else {
-                line.replace(mavenCoordinateRegex, "\$1_\$2")
+                line.replace(mavenCoordinateRegex, "\$1:_\$2")
             }
         }
         else -> null
