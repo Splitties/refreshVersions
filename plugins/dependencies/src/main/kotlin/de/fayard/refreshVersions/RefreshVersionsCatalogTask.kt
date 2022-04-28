@@ -79,7 +79,7 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
 
         println("""
             You can now automatically migrate your build.gradle/build.gradle.kts file with the command:
-            
+
                 $ANSI_GREEN./gradlew refreshVersionsMigrate$ANSI_RESET
         """.trimIndent())
     }

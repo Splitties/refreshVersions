@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core.internal
 
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
 
 @Suppress("EnumEntryName")
@@ -80,6 +81,8 @@ data class Library(
     val module: String = "",
     val version: String = ""
 ) {
+    fun toDependency(): Dependency = UsedPluginsHolder.ConfigurationLessDependency(groupModuleVersion())
+
     val name: String get() = module
     fun groupModuleVersion() = "$group:$module:$version"
     fun groupModuleUnderscore() = "$group:$module:_"

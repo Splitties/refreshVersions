@@ -55,8 +55,12 @@ internal fun List<TomlLine>.toText(): String
 internal fun TomlLine(section: TomlSection, key: String, value: String): TomlLine =
     TomlLine(section, """$key = "$value"""" )
 
-internal fun TomlLine(section: TomlSection, key: String, dependency: Dependency): TomlLine =
-    TomlLine(section, key, """${dependency.group}:${dependency.name}:${dependency.version}""")
+internal fun TomlLine(section: TomlSection, key: String, dependency: Dependency): TomlLine = when {
+    dependency.version == "none" ->
+        TomlLine(section, key, mapOf("group" to (dependency.group ?: ""), "name" to dependency.name))
+    else ->
+        TomlLine(section, key, """${dependency.group}:${dependency.name}:${dependency.version}""")
+}
 
 internal fun TomlLine(section: TomlSection, key: String, map: Map<String, String>): TomlLine {
     require((map.keys - validKeys).isEmpty()) { "Map $map has invalid keys. Valid: $validKeys"}

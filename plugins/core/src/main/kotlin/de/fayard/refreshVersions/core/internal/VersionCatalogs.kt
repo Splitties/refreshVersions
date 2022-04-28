@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.ModuleId
+import de.fayard.refreshVersions.core.internal.UsedPluginsHolder.ConfigurationLessDependency
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.artifacts.VersionCatalog
@@ -135,8 +136,13 @@ object VersionCatalogs {
                 TomlLine(TomlSection.Libraries, deps.names[lib]!!, refVersion)
             } else {
                 val versionKey = getVersionPropertyName(ModuleId.Maven(lib.group, lib.name), versionKeyReader)
-                val version = versionsMap[versionKey] ?: "_"
-                val value = lib.groupModule() + ":" + if (withVersions) version else "_"
+                val version = when {
+                    lib.version == "none" -> "none"
+                    withVersions.not() -> "_"
+                    versionKey in versionsMap -> versionsMap[versionKey]!!
+                    else -> "_"
+                }
+                val value = lib.copy(version = version).toDependency()
                 TomlLine(TomlSection.Libraries, deps.names[lib]!!, value)
             }
 

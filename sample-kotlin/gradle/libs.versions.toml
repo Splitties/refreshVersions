@@ -58,6 +58,6 @@ mongo-java-driver = "org.mongodb:mongo-java-driver:3.11.0"
 
 log4j-bom = "org.apache.logging.log4j:log4j-bom:2.17.2"
 
-log4j-jul = { module = "org.apache.logging.log4j:log4j-jul" }
+log4j-jul = { group = "org.apache.logging.log4j", name = "log4j-jul" }
 
-log4j-slf4j-impl = { module = "org.apache.logging.log4j:log4j-slf4j-impl" }
+log4j-slf4j-impl = { group = "org.apache.logging.log4j", name = "log4j-slf4j-impl" }

@@ -37,7 +37,7 @@ class TomlLineTest : FunSpec({
             my-other-lib = { module = "com.mycompany:other", version = "1.4" }
 
             my-other-lib2 = { group = "com.mycompany", name = "alternate", version = "1.4" }
-            ##     
+            ##
         """.trimIndent().lines()
 
         val expectedKinds: List<TomlLine.Kind> = listOf(
@@ -60,13 +60,13 @@ class TomlLineTest : FunSpec({
 
         val lines = """
             # some comment
-            
+
             groovy = "3.0.5"
             ## available: "1.5"
             ## available: "1.6"
-            
+
             checkstyle = "8.37"
-            common = "3.4"    
+            common = "3.4"
         """.trimIndent().lines()
 
         val expectedKinds: List<TomlLine.Kind> = listOf(
@@ -87,10 +87,10 @@ class TomlLineTest : FunSpec({
         val lines = """
             short-notation = "some.plugin.id:1.4"
             ##                  # available:"1.5"
-            
+
             # yet another comment
             long-notation = { id = "some.plugin.id", version = "1.4" }
-            reference-notation = { id = "some.plugin.id", version.ref = "common" }    
+            reference-notation = { id = "some.plugin.id", version.ref = "common" }
         """.trimIndent().lines()
 
         val expectedKinds: List<TomlLine.Kind> = listOf(
@@ -148,7 +148,7 @@ class TomlLineTest : FunSpec({
         val lines = """
             # yet another comment
             ##                  # available:"1.5"
-            
+
             short-notation = "some.plugin.id:1.4"
             long-notation = { id = "some.plugin.id", version = "1.4" }
             reference-notation = { id = "some.plugin.id", version.ref = "common" }
@@ -193,6 +193,10 @@ class TomlLineTest : FunSpec({
             val d = ConfigurationLessDependency("com.example:name:1.0")
             TomlLine(TomlSection.Libraries, "my-lib", d)
                 .text shouldBe """my-lib = "com.example:name:1.0""""
+
+            val noVersion = ConfigurationLessDependency("com.example:name:none")
+            TomlLine(TomlSection.Libraries, "my-lib", noVersion)
+                .text shouldBe """my-lib = { group = "com.example", name = "name" }"""
         }
     }
 })
