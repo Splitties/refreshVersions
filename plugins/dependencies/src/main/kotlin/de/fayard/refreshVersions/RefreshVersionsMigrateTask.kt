@@ -132,12 +132,12 @@ internal fun withVersionPlaceholder(
 
 private fun extractCoordinate(line: String): ModuleId.Maven {
     val coordinate = mavenCoordinateRegex.find(line)!!.value
-    coordinate.replaceAfterLast(':', "").let {
-        return ModuleId.Maven(
-            group = it.substringBefore(':').removePrefix("'").removePrefix("\""),
-            name = it.substringAfter(':').removeSuffix(":")
-        )
-    }
+        .replace("'", "")
+        .replace("\"", "")
+
+    val (group, name) = coordinate.split(":")
+
+    return ModuleId.Maven(group = group, name = name)
 }
 
 private const val mavenChars = "[a-zA-Z0-9_.-]"
@@ -145,7 +145,7 @@ private const val versionChars = "[a-zA-Z0-9_.{}$-]"
 
 @Language("RegExp")
 private val mavenCoordinateRegex =
-    "(['\"]$mavenChars{4,}:$mavenChars{2,}:)(?:_|$versionChars{3,})([\"'])".toRegex()
+    "(['\"]$mavenChars{4,}:$mavenChars{2,})(?:|:_|:$versionChars{3,})([\"'])".toRegex()
 
 internal fun findFilesWithDependencyNotations(fromDir: File): List<File> {
     require(fromDir.isDirectory) { "Expected a directory, got ${fromDir.absolutePath}" }
