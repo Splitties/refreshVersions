@@ -114,7 +114,7 @@ jobs:
           build-root-directory: sample-kotlin
           arguments: check --stacktrace --configuration-cache
       - name: "Check for memory leaks"
-        if: ${{ github.event.inputs.check-for-memory-leaks == 'true' }}
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.check-for-memory-leaks == 'true' }}
         working-directory: sample-groovy
         run: ./gradlew -Dorg.gradle.jvmargs="-Xmx50M" && ./gradlew -Dorg.gradle.jvmargs="-Xmx50M"
       - name: "Run refreshVersions on sample-groovy"
