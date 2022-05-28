@@ -91,16 +91,21 @@ jobs:
         run: git config --global core.longpaths true
       - uses: actions/checkout@v2
       - name: "Configure JDK"
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
-          java-version: '11'
+          distribution: 'temurin'
+          java-version: '17'
       - name: "Check plugins and publish them to MavenLocal"
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: plugins/gradlew
           build-root-directory: plugins
           arguments: check publishToMavenLocal --stacktrace
+      - name: "Configure JDK for old Gradle"
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
       - name: "Run refreshVersions on sample-kotlin"
         if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.sample-kotlin == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
         uses: gradle/gradle-build-action@v2
@@ -115,6 +120,11 @@ jobs:
           gradle-executable: sample-kotlin/gradlew
           build-root-directory: sample-kotlin
           arguments: check --stacktrace --configuration-cache
+      - name: "Configure JDK back for new Gradle"
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: "Check for memory leaks"
         if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.check-for-memory-leaks == 'true' }}
         working-directory: sample-groovy
