@@ -128,7 +128,7 @@ jobs:
       - name: "Check for memory leaks"
         if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.check-for-memory-leaks == 'true' }}
         working-directory: sample-groovy
-        run: ./gradlew -Dorg.gradle.jvmargs="-Xmx70M" && ./gradlew -Dorg.gradle.jvmargs="-Xmx70M" && ./gradlew -Dorg.gradle.jvmargs="-Xmx70M" && ./gradlew -Dorg.gradle.jvmargs="-Xmx70M"
+        run: ./gradlew -Dorg.gradle.jvmargs="-Xmx70M" --daemon && ./gradlew -Dorg.gradle.jvmargs="-Xmx70M" --daemon && ./gradlew -Dorg.gradle.jvmargs="-Xmx70M" --daemon && ./gradlew -Dorg.gradle.jvmargs="-Xmx70M" --daemon && ./gradlew --stop
       - name: "Run refreshVersions on sample-groovy"
         if: ${{ github.event.inputs.sample-groovy == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
         uses: gradle/gradle-build-action@v2
