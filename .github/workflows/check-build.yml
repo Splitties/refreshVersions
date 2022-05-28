@@ -8,6 +8,11 @@ name: Check build and tests of plugins and samples
 on:
   workflow_dispatch:
     inputs:
+      check-for-memory-leaks:
+        description: "Check for memory leaks"
+        required: true
+        type: boolean
+        default: true
       run-refreshVersions-task:
         description: "Run the refreshVersions task"
         required: true
@@ -108,6 +113,10 @@ jobs:
           gradle-executable: sample-kotlin/gradlew
           build-root-directory: sample-kotlin
           arguments: check --stacktrace --configuration-cache
+      - name: "Check for memory leaks"
+        if: ${{ github.event.inputs.check-for-memory-leaks == 'true' }}
+        working-directory: sample-groovy
+        run: ./gradlew -Dorg.gradle.jvmargs="-Xmx50M" && ./gradlew -Dorg.gradle.jvmargs="-Xmx50M"
       - name: "Run refreshVersions on sample-groovy"
         if: ${{ github.event.inputs.sample-groovy == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
         uses: gradle/gradle-build-action@v2
