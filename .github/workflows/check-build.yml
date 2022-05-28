@@ -12,32 +12,32 @@ on:
         description: "Run the refreshVersions task"
         required: true
         type: boolean
-        default: 'false'
+        default: false
       sample-kotlin:
         description: "Enable sample-kotlin"
         required: true
         type: boolean
-        default: 'true'
+        default: true
       sample-groovy:
         description: "Enable sample-groovy"
         required: true
         type: boolean
-        default: 'true'
+        default: true
       sample-multi-modules:
         description: "Enable sample-multi-modules"
         required: true
         type: boolean
-        default: 'true'
+        default: true
       sample-kotlin-js:
         description: "Enable sample-kotlin-js"
         required: true
         type: boolean
-        default: 'true'
+        default: true
       sample-android:
         description: "Enable sample-android"
         required: true
         type: boolean
-        default: 'false'
+        default: false
       run-on:
         type: choice
         description: "Where to run this workflow"
