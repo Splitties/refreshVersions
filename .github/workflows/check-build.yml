@@ -46,15 +46,17 @@ on:
       run-on:
         type: choice
         description: "Where to run this workflow"
-        default: 'ubuntu-latest'
+        default: 'macos-12'
         required: true
         options:
           - windows-2022
           - windows-2019
           - windows-latest
+          - macos-12
           - macos-11
           - macos-10.5
           - macos-latest
+          - ubuntu-22.04
           - ubuntu-20.04
           - ubuntu-18.04
           - ubuntu-latest
@@ -82,7 +84,7 @@ on:
       - '!docs/**'
 jobs:
   check-all:
-    runs-on: ${{ github.event.inputs.run-on || 'ubuntu-latest' }}
+    runs-on: ${{ github.event.inputs.run-on || 'macos-12' }}
     steps:
       - name: "Enable long paths for git Windows"
         if: ${{ runner.os == 'Windows' }}
