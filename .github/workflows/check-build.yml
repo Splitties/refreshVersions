@@ -100,7 +100,7 @@ jobs:
         with:
           gradle-executable: plugins/gradlew
           build-root-directory: plugins
-          arguments: check publishToMavenLocal --stacktrace
+          arguments: check publishToMavenLocal --stacktrace --daemon
       - name: "Configure JDK for old Gradle"
         uses: actions/setup-java@v3
         with:
@@ -112,14 +112,14 @@ jobs:
         with:
           gradle-executable: sample-kotlin/gradlew
           build-root-directory: sample-kotlin
-          arguments: refreshVersions --stacktrace
+          arguments: refreshVersions --stacktrace --daemon
       - name: "Check sample-kotlin"
         if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.sample-kotlin == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-kotlin/gradlew
           build-root-directory: sample-kotlin
-          arguments: check --stacktrace --configuration-cache
+          arguments: check --stacktrace --configuration-cache --daemon
       - name: "Configure JDK back for new Gradle"
         uses: actions/setup-java@v3
         with:
@@ -129,70 +129,69 @@ jobs:
         if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.check-for-memory-leaks == 'true' }}
         working-directory: sample-groovy
         run: ./counted-stress-test.sh 10 ./gradlew --daemon -Dorg.gradle.jvmargs="-Xmx70M"
-      - name: "Stop Gradle daemon"
-        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.check-for-memory-leaks == 'true' }}
-        working-directory: sample-groovy
-        run: ./gradlew --stop
       - name: "Run refreshVersions on sample-groovy"
         if: ${{ github.event.inputs.sample-groovy == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-groovy/gradlew
           build-root-directory: sample-groovy
-          arguments: refreshVersions --stacktrace
+          arguments: refreshVersions --stacktrace --daemon
       - name: "Check sample-groovy"
         if: ${{ github.event.inputs.sample-groovy == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-groovy/gradlew
           build-root-directory: sample-groovy
-          arguments: check --stacktrace
+          arguments: check --stacktrace --daemon
       - name: "Check buildSrc of sample-groovy (simulates IDE Gradle sync)"
         if: ${{ github.event.inputs.sample-groovy == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-groovy/gradlew
           build-root-directory: sample-groovy/buildSrc
-          arguments: help --stacktrace
+          arguments: help --stacktrace --daemon
       - name: "Run refreshVersions on sample-multi-modules"
         if: ${{ github.event.inputs.sample-multi-modules == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-multi-modules/gradlew
           build-root-directory: sample-multi-modules
-          arguments: refreshVersions --stacktrace
+          arguments: refreshVersions --stacktrace --daemon
       - name: "Check sample-multi-modules"
         if: ${{ github.event.inputs.sample-multi-modules == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-multi-modules/gradlew
           build-root-directory: sample-multi-modules
-          arguments: check --stacktrace
+          arguments: check --stacktrace --daemon
       - name: "Run refreshVersions on sample-kotlin-js"
         if: ${{ github.event.inputs.sample-kotlin-js == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-kotlin-js/gradlew
           build-root-directory: sample-kotlin-js
-          arguments: refreshVersions --stacktrace
+          arguments: refreshVersions --stacktrace --daemon
       - name: "Check sample-kotlin-js"
         if: ${{ github.event.inputs.sample-kotlin-js == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-kotlin-js/gradlew
           build-root-directory: sample-kotlin-js
-          arguments: check --stacktrace
+          arguments: check --stacktrace --daemon
       - name: "Run refreshVersions on sample-android"
         if: ${{ github.event.inputs.sample-android == 'true' && github.event.inputs.run-refreshVersions-task == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-android/gradlew
           build-root-directory: sample-android
-          arguments: refreshVersions --stacktrace
+          arguments: refreshVersions --stacktrace --daemon
       - name: "Check sample-android"
         if: ${{ github.event.inputs.sample-android == 'true' }}
         uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: sample-android/gradlew
           build-root-directory: sample-android
-          arguments: check --stacktrace
+          arguments: check --stacktrace --daemon
+      - name: "Stop Gradle daemon"
+        working-directory: plugins
+        run: ./gradlew --stop
