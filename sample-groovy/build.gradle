@@ -4,7 +4,7 @@ plugins {
     id 'application'
     id 'idea'
     id 'java'
-//    id "org.gradle.hello-world"
+    id "org.gradle.hello-world"
 }
 
 group = "de.fayard"
