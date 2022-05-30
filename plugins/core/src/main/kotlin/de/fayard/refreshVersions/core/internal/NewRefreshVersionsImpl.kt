@@ -158,7 +158,7 @@ private fun Project.getDependencyVersionFetchers(
 private fun getUsedPluginsDependencyVersionFetchers(
     httpClient: OkHttpClient
 ): Sequence<DependencyVersionsFetcher> {
-    return UsedPluginsHolder.read().flatMap { (dependency, repositories) ->
+    return UsedPluginsTracker.read().flatMap { (dependency, repositories) ->
         repositories.withGlobalRepos().filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
             DependencyVersionsFetcher.forMaven(
                 httpClient = httpClient,
