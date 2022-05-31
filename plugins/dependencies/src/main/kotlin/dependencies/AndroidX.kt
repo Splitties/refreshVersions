@@ -837,7 +837,16 @@ object AndroidX : IsNotADependency {
          */
         val material3 = Material3
 
-        object Material3 : DependencyNotationAndGroup(group = "androidx.compose.material3", name = "material3")
+        object Material3 : DependencyNotationAndGroup(group = "androidx.compose.material3", name = "material3") {
+
+            /**
+             * Provides window size classes for building responsive UIs
+             *
+             * ### API reference:
+             * - [androidx.compose.material3.windowsizeclass](https://developer.android.com/reference/kotlin/androidx/compose/material3/windowsizeclass/package-summary)
+             */
+            val windowSizeClass = module("material3-window-size-class")
+        }
     }
 
     /**

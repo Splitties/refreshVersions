@@ -45,6 +45,7 @@ androidx.compose.material..material-icons-core=version.androidx.compose.material
 androidx.compose.material..material-icons-extended=version.androidx.compose.material
 androidx.compose.material..material-ripple=version.androidx.compose.material
 androidx.compose.material..material=version.androidx.compose.material
+androidx.compose.material3..material3-window-size-class=version.androidx.compose.material3
 androidx.compose.material3..material3=version.androidx.compose.material3
 androidx.compose.runtime..runtime-dispatch=version.androidx.compose.runtime
 androidx.compose.runtime..runtime-livedata=version.androidx.compose.runtime
