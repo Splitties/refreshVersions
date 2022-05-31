@@ -2,13 +2,29 @@
 
 ## [Unreleased] Version 0.40.2 (2022-05-31)
 
-### Fix
+### Fixes
 
-Fix a memory leak that led the Gradle daemon to eventually suffer from a lot of GC overhead before running out of memory when a Gradle plugin had its version managed by refreshVersions.
+- Fix a memory leak that led the Gradle daemon to eventually suffer from a lot of GC overhead before running out of memory when a Gradle plugin had its version managed by refreshVersions.
 We've done extensive tests to ensure we fixed this for good, and the CI now checks for leaks in the Gradle daemon to prevent future recurrence.
 Note that if you were using Gradle configuration cache, you were likely to encounter this issue less often.
+- Fix the `AndroidX.wear.tiles.material` dependency notation that was pointing to wrong coordinates because of a typo.
+The test that was designed to catch this has been fixed to prevent future recurrence.
 
-Thanks to [@yacine-ser](https://github.com/yacine-ser) for raising [this issue](https://github.com/jmfayard/refreshVersions/issues/536) along with a hint on the culprit, it was very helpful in reproducing and fixing the leak.
+Thanks to [@yacine-ser](https://github.com/yacine-ser) for raising [this memory leak issue](https://github.com/jmfayard/refreshVersions/issues/536) along with a hint on the culprit, it was very helpful in reproducing and fixing the leak.
+
+### New dependency notations:
+
+- AndroidX.camera.mlKitVision
+- AndroidX.compose.material3.windowSizeClass
+- AndroidX.compose.ui.text.googleFonts
+- AndroidX.core.performance
+- AndroidX.customView.poolingContainer
+- AndroidX.health.connectClient
+- AndroidX.metrics.performance
+- AndroidX.test.ext.junit.gTest
+- AndroidX.test.ext.junit.ktx (was previously AndroidX.test.ext.junitKtx)
+- AndroidX.wear.watchFace.complications.rendering
+- Google.android.material.composeThemeAdapter3
 
 ## Version 0.40.1 (2022-02-06)
 
