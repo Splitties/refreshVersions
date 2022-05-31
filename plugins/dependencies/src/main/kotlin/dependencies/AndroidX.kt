@@ -2884,6 +2884,14 @@ object AndroidX : IsNotADependency {
             object Complications : DependencyGroup(group = group) {
 
                 /**
+                 * Support for rendering complications on the watch face.
+                 *
+                 * ### API reference
+                 * - [androidx.wear.watchface.complications.rendering](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/rendering/package-summary)
+                 */
+                val rendering = module("watchface-complications-rendering")
+
+                /**
                  * Use this dependency to implement Watch Faces complications for WearOS in Java-only.
                  * Use [dataSourceKtx] to also get Kotlin extensions.
                  *

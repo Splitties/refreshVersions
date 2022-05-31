@@ -278,6 +278,7 @@ androidx.wear.tiles:titles-material
 androidx.wear.watchface:watchface
 androidx.wear.watchface:watchface-complications-data-source
 androidx.wear.watchface:watchface-complications-data-source-ktx
+androidx.wear.watchface:watchface-complications-rendering
 androidx.wear.watchface:watchface-editor
 androidx.wear:wear
 androidx.wear:wear-input
