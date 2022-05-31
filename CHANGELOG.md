@@ -1,5 +1,15 @@
 # Change log for refreshVersions
 
+## [Unreleased] Version 0.40.2 (2022-05-31)
+
+### Fix
+
+Fix a memory leak that led the Gradle daemon to eventually suffer from a lot of GC overhead before running out of memory when a Gradle plugin had its version managed by refreshVersions.
+We've done extensive tests to ensure we fixed this for good, and the CI now checks for leaks in the Gradle daemon to prevent future recurrence.
+Note that if you were using Gradle configuration cache, you were likely to encounter this issue less often.
+
+Thanks to [@yacine-ser](https://github.com/yacine-ser) for raising [this issue](https://github.com/jmfayard/refreshVersions/issues/536) along with a hint on the culprit, it was very helpful in reproducing and fixing the leak.
+
 ## Version 0.40.1 (2022-02-06)
 
 ### Fixes

@@ -5,7 +5,7 @@
 //@file:Repository("file:///Users/you/.m2/repository")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
 
-@file:CompilerOptions("-Xopt-in=kotlin.RequiresOptIn")
+@file:CompilerOptions("-opt-in=kotlin.RequiresOptIn")
 @file:Suppress("experimental_is_not_enabled")
 
 import kotlinx.coroutines.*

@@ -19,7 +19,7 @@ fun addMissingEntriesInVersionsProperties(project: Project) {
         configurations = configurationsWithHardcodedDependencies,
         versionsMap = versionsMap,
         versionKeyReader = versionKeyReader
-    ) + UsedPluginsHolder.usedPluginsWithoutEntryInVersionsFile
+    ) + UsedPluginsTracker.usedPluginsWithoutEntryInVersionsFile
         .associateBy { d -> pluginDependencyNotationToVersionKey(d.name) }
         .filterKeys { key -> key != null && key !in versionsMap }
         .mapKeys { (k, _) -> k!! }
