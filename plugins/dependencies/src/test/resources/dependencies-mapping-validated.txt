@@ -82,6 +82,7 @@ androidx.core..core-role=AndroidX.core.role
 androidx.core..core-splashscreen=AndroidX.core.splashscreen
 androidx.core..core=AndroidX.core
 androidx.cursoradapter..cursoradapter=AndroidX.cursorAdapter
+androidx.customview..customview-poolingcontainer=AndroidX.customView.poolingContainer
 androidx.customview..customview=AndroidX.customView
 androidx.datastore..datastore-core=AndroidX.dataStore.core
 androidx.datastore..datastore-preferences-core=AndroidX.dataStore.preferences.core

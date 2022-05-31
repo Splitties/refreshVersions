@@ -1040,7 +1040,19 @@ object AndroidX : IsNotADependency {
      * - [androidx.customview.view](https://developer.android.com/reference/kotlin/androidx/customview/view/package-summary)
      * - [androidx.customview.widget](https://developer.android.com/reference/kotlin/androidx/customview/widget/package-summary)
      */
-    val customView = DependencyNotation("androidx.customview", "customview")
+    val customView = CustomView
+
+    object CustomView : DependencyNotationAndGroup("androidx.customview", "customview") {
+
+        /**
+         * Utilities for listening to the lifecycle of containers that manage their child Views' lifecycle,
+         * such as RecyclerView
+         *
+         * ## API reference:
+         * - [androidx.customview.poolingcontainer](https://developer.android.com/reference/kotlin/androidx/customview/poolingcontainer/package-summary)
+         */
+        val poolingContainer = module("customview-poolingcontainer")
+    }
 
     /**
      * Store data asynchronously, consistently, and transactionally, overcoming some of the drawbacks of SharedPreferences.

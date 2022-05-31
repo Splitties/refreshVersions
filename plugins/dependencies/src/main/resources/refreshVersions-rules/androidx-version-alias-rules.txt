@@ -34,6 +34,9 @@ androidx.core:core-splashscreen(-*)
 androidx.compose.foundation:foundation-text // Deprecated artifact, no longer updated with its family.
 ^^^^^^^^.^^^^^^^.           ^^^^^^^^^^^^^^^
 
+androidx.customview:customview(-*)
+^^^^^^^^.           ^^^^^^^^^^^^^^
+
 androidx.dynamicanimation:dynamicanimation-ktx
 ^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^
 
