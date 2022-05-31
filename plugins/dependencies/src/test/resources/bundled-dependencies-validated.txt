@@ -120,6 +120,7 @@ androidx.glance:glance
 androidx.glance:glance-appwidget
 androidx.glance:glance-wear-tiles
 androidx.gridlayout:gridlayout
+androidx.health:health-connect-client
 androidx.health:health-services-client
 androidx.heifwriter:heifwriter
 androidx.hilt:hilt-compiler

@@ -58,6 +58,12 @@ androidx.hilt:hilt-lifecycle-viewmodel // Deprecated artifact, no longer updated
 androidx.hilt:hilt-navigation-compose
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^^^
 
+androidx.health:health-services-client
+^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.health:health-connect-client
+^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^
+
 androidx.leanback:leanback-paging(-*)
 ^^^^^^^^.         ^^^^^^^^^^^^^^^
 
