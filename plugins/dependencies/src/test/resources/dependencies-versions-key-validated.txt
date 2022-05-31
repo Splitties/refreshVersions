@@ -175,6 +175,7 @@ androidx.media3..media3-transformer=version.androidx.media3
 androidx.media3..media3-ui-leanback=version.androidx.media3
 androidx.media3..media3-ui=version.androidx.media3
 androidx.mediarouter..mediarouter=version.androidx.mediarouter
+androidx.metrics..metrics-performance=version.androidx.metrics
 androidx.multidex..multidex-instrumentation=version.androidx.multidex
 androidx.multidex..multidex=version.androidx.multidex
 androidx.navigation..navigation-common-ktx=version.androidx.navigation

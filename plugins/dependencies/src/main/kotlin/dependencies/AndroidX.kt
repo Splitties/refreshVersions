@@ -1884,6 +1884,22 @@ object AndroidX : IsNotADependency {
     val mediaRouter = DependencyNotation("androidx.mediarouter", "mediarouter")
 
     /**
+     * Library for tracking and reporting various runtime metrics for applications.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/metrics)
+     */
+    val metrics = Metrics
+
+    object Metrics : DependencyGroup(group = "androidx.metrics") {
+
+        /**
+         * ### API reference:
+         * - [androidx.metrics.performance](https://developer.android.com/reference/kotlin/androidx/metrics/performance/package-summary)
+         */
+        val performance = module("metrics-performance")
+    }
+
+    /**
      * Deploy applications with multiple dex files on pre-Android 5 devices.
      *
      * Guide: [Enable multidex for apps with over 64K methods](https://developer.android.com/studio/build/multidex)

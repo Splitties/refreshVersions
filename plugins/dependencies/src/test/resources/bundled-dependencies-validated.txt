@@ -175,6 +175,7 @@ androidx.media3:media3-ui
 androidx.media3:media3-ui-leanback
 androidx.media:media
 androidx.mediarouter:mediarouter
+androidx.metrics:metrics-performance
 androidx.multidex:multidex
 androidx.multidex:multidex-instrumentation
 androidx.navigation:navigation-common
