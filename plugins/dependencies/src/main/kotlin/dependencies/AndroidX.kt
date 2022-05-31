@@ -2528,12 +2528,20 @@ object AndroidX : IsNotADependency {
              *
              * @see junitKtx
              */
-            val junit = module("junit")
+            val junit = JUnit
 
-            /**
-             * JUnit extensions APIs. Includes Kotlin extensions.
-             */
-            val junitKtx = module("junit-ktx")
+            object JUnit : DependencyNotationAndGroup(group = group, name = "junit") {
+
+                /**
+                 * JUnit extensions APIs. Includes Kotlin extensions.
+                 */
+                val ktx = module("junit-ktx")
+
+                /**
+                 * Run GTest tests on Android devices
+                 */
+                val gTest = module("junit-gtest")
+            }
 
             /**
              * [Truth](https://github.com/google/truth) extensions APIs.

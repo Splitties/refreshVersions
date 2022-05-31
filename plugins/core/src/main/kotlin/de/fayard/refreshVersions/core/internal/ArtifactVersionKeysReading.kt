@@ -18,7 +18,16 @@ abstract class ArtifactVersionKeyReader private constructor(
             val rules = filesContent.flatMap { parseArtifactVersionKeysRules(it) }.sortedDescending()
             return object : ArtifactVersionKeyReader(getRemovedDependenciesVersionsKeys) {
                 override fun readVersionKey(group: String, name: String): String? {
-                    return rules.firstOrNull { it.matches(group, name) }?.key(group, name)
+                    var foundRule: ArtifactVersionKeyRule? = null
+                    for (rule in rules) if (rule.matches(group, name)) {
+                        if (foundRule == null) foundRule = rule
+                        // Let exact matches take precedence, even if they're not the longest matching rule.
+                        if (rule.onlyExactMatches()) {
+                            foundRule = rule
+                            break
+                        }
+                    }
+                    return foundRule?.key(group, name)
                 }
             }
         }

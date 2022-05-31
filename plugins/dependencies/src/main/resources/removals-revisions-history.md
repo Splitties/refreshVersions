@@ -499,3 +499,8 @@ id:[com.google.modernstorage:modernstorage-filesystem]
 // TODO: Replace with the storage module.
 moved:[com.google.modernstorage:modernstorage-storage]
 id:[com.google.modernstorage:modernstorage-mediastore]
+
+## Revision 10
+
+~~AndroidX.test.ext.junitKtx~~
+id:[androidx.test.ext:junit-ktx]

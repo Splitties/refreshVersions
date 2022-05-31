@@ -112,8 +112,14 @@ androidx.test:core(-*)
 androidx.test.ext:*
 ^^^^^^^^^^^^^^^^^.^
 
-androidx.test.ext:junit(-*)
+androidx.test.ext:junit
 ^^^^^^^^^^^^^^^^^.^^^^^
+
+androidx.test.ext:junit-ktx
+^^^^^^^^^^^^^^^^^.^^^^^
+
+androidx.test.ext:junit-*
+^^^^^^^^^^^^^^^^^.^^^^^^^
 
 androidx.test.espresso.idling(-*) // Same version as other androidx.test.espresso artifacts.
 ^^^^^^^^^^^^^^^^^^^^^^

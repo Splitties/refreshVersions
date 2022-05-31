@@ -255,6 +255,7 @@ androidx.test.espresso..espresso-remote=version.androidx.test.espresso
 androidx.test.espresso..espresso-web=version.androidx.test.espresso
 androidx.test.espresso.idling..idling-concurrent=version.androidx.test.espresso.idling
 androidx.test.espresso.idling..idling-net=version.androidx.test.espresso.idling
+androidx.test.ext..junit-gtest=version.androidx.test.ext.junit-gtest
 androidx.test.ext..junit-ktx=version.androidx.test.ext.junit
 androidx.test.ext..junit=version.androidx.test.ext.junit
 androidx.test.ext..truth=version.androidx.test.ext.truth

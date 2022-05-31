@@ -250,6 +250,7 @@ androidx.test.espresso:espresso-intents
 androidx.test.espresso:espresso-remote
 androidx.test.espresso:espresso-web
 androidx.test.ext:junit
+androidx.test.ext:junit-gtest
 androidx.test.ext:junit-ktx
 androidx.test.ext:truth
 androidx.test.services:test-services
