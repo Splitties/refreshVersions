@@ -37,7 +37,7 @@ class BundledDependenciesTest {
             val content = AbstractDependencyGroup.ALL_RULES
                 .sorted()
                 .distinct()
-                .joinToString(separator = "\n\n")
+                .joinToString(separator = "\n\n", postfix = "\n")
             if (file.readText() != content) file.writeText(content)
         }
     }
