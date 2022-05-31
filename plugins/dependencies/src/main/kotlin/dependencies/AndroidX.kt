@@ -675,7 +675,18 @@ object AndroidX : IsNotADependency {
              * - [androidx.compose.ui.text.platform.extensions](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/platform/extensions/package-summary)
              * - [androidx.compose.ui.text.style](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/style/package-summary)
              */
-            val text = module("ui-text")
+            val text = Text
+
+            object Text : DependencyNotationAndGroup(group = group, name = "ui-text") {
+
+                /**
+                 * Compose Downloadable Fonts integration for Google Fonts.
+                 *
+                 * ### API reference:
+                 * - [androidx.compose.ui.text.googlefonts](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/googlefonts/package-summary)
+                 */
+                val googleFonts = module("ui-text-google-fonts")
+            }
 
             /**
              * Compose tooling library. This library exposes information to our tools for better IDE support.

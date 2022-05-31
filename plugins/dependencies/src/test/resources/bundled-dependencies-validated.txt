@@ -59,6 +59,7 @@ androidx.compose.ui:ui-test
 androidx.compose.ui:ui-test-junit4
 androidx.compose.ui:ui-test-manifest
 androidx.compose.ui:ui-text
+androidx.compose.ui:ui-text-google-fonts
 androidx.compose.ui:ui-tooling
 androidx.compose.ui:ui-tooling-data
 androidx.compose.ui:ui-tooling-preview

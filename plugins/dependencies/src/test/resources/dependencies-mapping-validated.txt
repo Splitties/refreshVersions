@@ -57,6 +57,7 @@ androidx.compose.ui..ui-graphics=AndroidX.compose.ui.graphics
 androidx.compose.ui..ui-test-junit4=AndroidX.compose.ui.testJunit4
 androidx.compose.ui..ui-test-manifest=AndroidX.compose.ui.testManifest
 androidx.compose.ui..ui-test=AndroidX.compose.ui.test
+androidx.compose.ui..ui-text-google-fonts=AndroidX.compose.ui.text.googleFonts
 androidx.compose.ui..ui-text=AndroidX.compose.ui.text
 androidx.compose.ui..ui-tooling-data=AndroidX.compose.ui.toolingData
 androidx.compose.ui..ui-tooling-preview=AndroidX.compose.ui.toolingPreview
