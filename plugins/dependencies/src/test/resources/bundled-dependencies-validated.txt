@@ -77,6 +77,7 @@ androidx.core:core-animation
 androidx.core:core-animation-testing
 androidx.core:core-google-shortcuts
 androidx.core:core-ktx
+androidx.core:core-performance
 androidx.core:core-remoteviews
 androidx.core:core-role
 androidx.core:core-splashscreen

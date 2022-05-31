@@ -999,6 +999,17 @@ object AndroidX : IsNotADependency {
         val googleShortcuts = module("core-google-shortcuts")
 
         /**
+         * To enable APIs that query the performance characteristics of GMS devices.
+         *
+         * This library makes it easy for developers to make UI and feature choices based on
+         * Android Performance Class level for GMS devices.
+         *
+         * ### API reference:
+         * - [androidx.core.performance](https://developer.android.com/reference/kotlin/androidx/core/performance/package-summary)
+         */
+        val performance = module("core-performance")
+
+        /**
          * This library provides the compatibility APIs for SplashScreen and helper method to enable a
          * splashscreen on devices prior Android 12.
          */

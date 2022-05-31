@@ -25,6 +25,9 @@ androidx.core:core-animation(-*)
 androidx.core:core-google-shortcuts(-*)
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^
 
+androidx.core:core-performance(-*)
+^^^^^^^^.     ^^^^^^^^^^^^^^^^
+
 androidx.core:core-splashscreen(-*)
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^
 
