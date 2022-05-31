@@ -343,6 +343,16 @@ object AndroidX : IsNotADependency {
         val lifecycle = module("camera-lifecycle")
 
         /**
+         * MLKit vision components for the Jetpack Camera Library,
+         * a library providing a seamless integration that enables
+         * camera driven computer vision features across all of Android.
+         *
+         * ### API reference:
+         * - [androidx.camera.mlkit.vision](https://developer.android.com/reference/kotlin/androidx/camera/mlkit/vision/package-summary)
+         */
+        val mlKitVision = module("camera-mlkit-vision")
+
+        /**
          * Video components for the Jetpack Camera Library.
          *
          * ### API reference:

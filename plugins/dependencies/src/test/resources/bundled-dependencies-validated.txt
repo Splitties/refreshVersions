@@ -26,6 +26,7 @@ androidx.camera:camera-camera2
 androidx.camera:camera-core
 androidx.camera:camera-extensions
 androidx.camera:camera-lifecycle
+androidx.camera:camera-mlkit-vision
 androidx.camera:camera-video
 androidx.camera:camera-view
 androidx.car.app:app

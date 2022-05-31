@@ -26,6 +26,7 @@ androidx.camera..camera-camera2=version.androidx.camera
 androidx.camera..camera-core=version.androidx.camera
 androidx.camera..camera-extensions=version.androidx.camera.extensions
 androidx.camera..camera-lifecycle=version.androidx.camera
+androidx.camera..camera-mlkit-vision=version.androidx.camera
 androidx.camera..camera-video=version.androidx.camera
 androidx.camera..camera-view=version.androidx.camera.view
 androidx.car.app..app-automotive=version.androidx.car.app
