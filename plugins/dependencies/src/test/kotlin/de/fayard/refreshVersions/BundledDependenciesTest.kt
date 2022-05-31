@@ -12,6 +12,7 @@ import io.kotest.assertions.withClue
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.collections.haveSize
 import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.collections.shouldHaveAtLeastSize
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.launch
@@ -174,19 +175,22 @@ class BundledDependenciesTest {
             "${it.group}:${it.artifact}"
         }
 
-        val newValidatedMappings = runBlocking {
+        val newValidatedMappings: List<ModuleId.Maven> = runBlocking {
             mappingWithLines.filter {
                 it.value !in validatedDependencyMapping
             }.keys.map { dependencyMapping ->
                 ModuleId.Maven(dependencyMapping.group, dependencyMapping.artifact)
             }.distinct().onEach { mavenModuleId ->
                 launch {
-                    getVersionCandidates(
+                    val foundVersions: List<Version> = getVersionCandidates(
                         httpClient = defaultHttpClient,
                         mavenModuleId = mavenModuleId,
                         repoUrls = reposUrls,
                         currentVersion = Version("")
                     )
+                    withClue("No versions found for $mavenModuleId! Is there a typo?") {
+                        foundVersions shouldHaveAtLeastSize 1
+                    }
                 }
             }
         }
