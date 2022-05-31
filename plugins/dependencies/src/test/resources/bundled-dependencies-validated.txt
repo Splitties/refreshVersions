@@ -386,6 +386,7 @@ com.google.android.gms:play-services-wearable
 com.google.android.gms:strict-version-matcher-plugin
 com.google.android.libraries.places:places
 com.google.android.material:compose-theme-adapter
+com.google.android.material:compose-theme-adapter-3
 com.google.android.material:material
 com.google.android.play:core
 com.google.android.play:core-ktx

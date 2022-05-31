@@ -385,6 +385,7 @@ com.google.android.gms..play-services-wallet=Google.android.playServices.wallet
 com.google.android.gms..play-services-wearable=Google.android.playServices.wearOS
 com.google.android.gms..strict-version-matcher-plugin=Google.android.versionMatcherPlugin
 com.google.android.libraries.places..places=Google.android.maps.places
+com.google.android.material..compose-theme-adapter-3=Google.android.material.composeThemeAdapter3
 com.google.android.material..compose-theme-adapter=Google.android.material.composeThemeAdapter
 com.google.android.material..material=Google.android.material
 com.google.android.play..core-ktx=Google.android.play.coreKtx
