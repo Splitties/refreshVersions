@@ -2930,7 +2930,7 @@ object AndroidX : IsNotADependency {
             /**
              * Material components library for Android Wear Tiles.
              */
-            val material = module("titles-material")
+            val material = module("tiles-material")
 
             /**
              * Android Wear Tiles Renderer components.
