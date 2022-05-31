@@ -39,3 +39,6 @@ com.android.billingclient:billing(-*)
 
 com.russhwolf:multiplatform-settings(-*)
               ^^^^^^^^^^^^^^^^^^^^^^
+
+com.rickclephas.kmp:kmp-nativecoroutines(-*)
+    ^^^^^^^^^^^^        ^^^^^^^^^^^^^^^^

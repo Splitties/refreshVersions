@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
-          java-version: 11
+          distribution: 'temurin'
+          java-version: 17
       - uses: gradle/gradle-build-action@v2
         with:
           gradle-executable: plugins/gradlew

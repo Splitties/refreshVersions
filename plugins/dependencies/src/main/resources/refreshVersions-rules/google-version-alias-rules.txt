@@ -28,6 +28,9 @@ com.google.android.material:material
 com.google.android.material:compose-theme-adapter
     ^^^^^^^^^^^^^^^^^^^^^^^.^^^^^^^^^^^^^^^^^^^^^
 
+com.google.android.material:compose-theme-adapter-3
+    ^^^^^^^^^^^^^^^^^^^^^^^.^^^^^^^^^^^^^^^^^^^^^^^
+
 com.google.android.wearable:wearable
     ^^^^^^^^^^^^^^^^^^^^^^^
 

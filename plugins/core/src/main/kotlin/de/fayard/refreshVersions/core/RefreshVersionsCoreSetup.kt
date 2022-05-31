@@ -164,6 +164,7 @@ private fun setupRefreshVersions(
     settings: Settings,
     versionsMap: Map<String, String> = RefreshVersionsConfigHolder.readVersionsMap()
 ) {
+    UsedPluginsTracker.clearFor(settings)
     @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(
         settings = settings,
@@ -201,20 +202,25 @@ private fun setupPluginsVersionsResolution(
             val version = resolveVersion(properties, versionKey)
             if (version == null) {
                 val pluginVersion = requested.version ?: return@eachPlugin
-                UsedPluginsHolder.pluginHasNoEntryInVersionsFile(pluginIdToDependency(pluginId, pluginVersion))
+                UsedPluginsTracker.pluginHasNoEntryInVersionsFile(
+                    settings = settings,
+                    dependency = pluginIdToDependency(pluginId, pluginVersion)
+                )
                 return@eachPlugin
             }
             when {
                 pluginNamespace.startsWith("com.android") -> {
                     val dependencyNotation = "com.android.tools.build:gradle:$version"
-                    UsedPluginsHolder.noteUsedPluginDependency(
+                    UsedPluginsTracker.noteUsedPluginDependency(
+                        settings = settings,
                         dependencyNotation = dependencyNotation,
                         repositories = repositories
                     )
                     useModule(dependencyNotation)
                 }
                 else -> {
-                    UsedPluginsHolder.noteUsedPluginDependency(
+                    UsedPluginsTracker.noteUsedPluginDependency(
+                        settings = settings,
                         dependencyNotation = "$pluginId:$pluginId.gradle.plugin:$version",
                         repositories = repositories
                     )

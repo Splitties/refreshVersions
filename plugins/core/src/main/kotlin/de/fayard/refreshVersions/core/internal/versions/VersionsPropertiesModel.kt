@@ -73,11 +73,8 @@ internal actual data class VersionsPropertiesModel(
 
         const val failureComment = "## failed to check repo "
 
-        fun failureComment(failure: DependencyVersionsFetcher.Result.Failure): String = buildString {
-            append(failureComment)
-            append(failure.repoUrlOrKey)
-            append(" Cause: ")
-            append(failure.cause.oneLineSummary())
+        fun failureComment(failure: DependencyVersionsFetcher.Result.Failure): String {
+            return "$failureComment${failure.repoUrlOrKey} Cause: ${failure.cause.oneLineSummary()}"
         }
 
         val versionKeysPrefixes = listOf("plugin", "version")

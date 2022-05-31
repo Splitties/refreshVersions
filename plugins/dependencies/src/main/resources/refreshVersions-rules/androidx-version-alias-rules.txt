@@ -25,11 +25,17 @@ androidx.core:core-animation(-*)
 androidx.core:core-google-shortcuts(-*)
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^
 
+androidx.core:core-performance(-*)
+^^^^^^^^.     ^^^^^^^^^^^^^^^^
+
 androidx.core:core-splashscreen(-*)
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^
 
 androidx.compose.foundation:foundation-text // Deprecated artifact, no longer updated with its family.
 ^^^^^^^^.^^^^^^^.           ^^^^^^^^^^^^^^^
+
+androidx.customview:customview(-*)
+^^^^^^^^.           ^^^^^^^^^^^^^^
 
 androidx.dynamicanimation:dynamicanimation-ktx
 ^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^
@@ -51,6 +57,12 @@ androidx.hilt:hilt-lifecycle-viewmodel // Deprecated artifact, no longer updated
 
 androidx.hilt:hilt-navigation-compose
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.health:health-services-client
+^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.health:health-connect-client
+^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^
 
 androidx.leanback:leanback-paging(-*)
 ^^^^^^^^.         ^^^^^^^^^^^^^^^
@@ -106,8 +118,14 @@ androidx.test:core(-*)
 androidx.test.ext:*
 ^^^^^^^^^^^^^^^^^.^
 
-androidx.test.ext:junit(-*)
+androidx.test.ext:junit
 ^^^^^^^^^^^^^^^^^.^^^^^
+
+androidx.test.ext:junit-ktx
+^^^^^^^^^^^^^^^^^.^^^^^
+
+androidx.test.ext:junit-*
+^^^^^^^^^^^^^^^^^.^^^^^^^
 
 androidx.test.espresso.idling(-*) // Same version as other androidx.test.espresso artifacts.
 ^^^^^^^^^^^^^^^^^^^^^^
