@@ -105,6 +105,7 @@ data class Version(val value: String) : Comparable<Version> {
 
         private val knownVersionSuffixes = listOf("-android", "-jre")
         private val knownStableKeywords = listOf("RELEASE", "FINAL", "GA")
+        private val knownStableSuffixes = listOf("-r")
         private val digitsOnlyBasedVersionNumberRegex = "^[\\d,.v-]+$".toRegex()
 
         private fun Version.isStable(): Boolean {
@@ -168,6 +169,9 @@ data class Version(val value: String) : Comparable<Version> {
         private fun String.withoutKnownSuffixes(): String {
             var result: String = this
             for (suffix in knownVersionSuffixes) {
+                result = result.removeSuffix(suffix)
+            }
+            for (suffix in knownStableSuffixes) {
                 result = result.removeSuffix(suffix)
             }
             return result
