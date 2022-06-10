@@ -116,7 +116,7 @@ data class Version(val value: String) : Comparable<Version> {
 
         private fun Version.isMilestone(): Boolean {
             val version = value
-            return when (val indexOfM = version.indexOfLast { it == 'M' }) {
+            return when (val indexOfM = version.indexOfLast { it.toUpperCase() == 'M' }) {
                 -1 -> false
                 version.lastIndex -> false
                 else -> version.substring(startIndex = indexOfM + 1).all { it.isDigit() }
