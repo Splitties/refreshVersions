@@ -504,3 +504,5 @@ id:[com.google.modernstorage:modernstorage-mediastore]
 
 ~~AndroidX.test.ext.junitKtx~~
 id:[androidx.test.ext:junit-ktx]
+
+## Revision 11 (empty, used as a marker for migration of versionFor calls in Groovy DSL)

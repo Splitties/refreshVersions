@@ -16,5 +16,7 @@ dependencies {
     implementation("org.jetbrains:annotations:_")
 }
 
-println("The version for artifact org.jetbrains:annotations:_ is " + versionFor("org.jetbrains:annotations:_"))
-println("The version for version key version.com.google.guava..guava is " + versionFor("version.com.google.guava..guava"))
+println("The version for artifact org.jetbrains:annotations:_ is " + versionFor(project, "org.jetbrains:annotations:_"))
+println("The version for version key version.com.google.guava..guava is " + versionFor(project, "version.com.google.guava..guava"))
+
+println("The version for AndroidX.compose.compiler is " + versionFor(project, AndroidX.compose.compiler))

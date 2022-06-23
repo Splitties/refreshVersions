@@ -4,10 +4,8 @@ package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.internal.*
+import de.fayard.refreshVersions.core.internal.migrations.runMigrationsIfNeeded
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
-import de.fayard.refreshVersions.core.internal.removals_replacement.replaceRemovedDependencyNotationReferencesIfNeeded
-import de.fayard.refreshVersions.core.internal.resolveVersion
-import de.fayard.refreshVersions.core.internal.setupVersionPlaceholdersResolving
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.file.RegularFile
 import org.gradle.api.initialization.Settings
@@ -76,7 +74,7 @@ fun Settings.bootstrapRefreshVersionsCore(
     )
     val versionsPropertiesModel = RefreshVersionsConfigHolder.readVersionsPropertiesModel()
     getRemovedDependencyNotationsReplacementInfo?.let {
-        replaceRemovedDependencyNotationReferencesIfNeeded(
+        runMigrationsIfNeeded(
             projectDir = rootDir,
             versionsPropertiesFile = versionsPropertiesFile,
             versionsPropertiesModel = versionsPropertiesModel,
@@ -165,6 +163,7 @@ private fun setupRefreshVersions(
     versionsMap: Map<String, String> = RefreshVersionsConfigHolder.readVersionsMap()
 ) {
     UsedPluginsTracker.clearFor(settings)
+    UsedVersionForTracker.clearFor(settings)
     @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(
         settings = settings,

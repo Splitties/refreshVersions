@@ -5,13 +5,16 @@ import de.fayard.refreshVersions.core.DependencyVersionsFetcher
 import de.fayard.refreshVersions.core.FeatureFlag.GRADLE_UPDATES
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
+import de.fayard.refreshVersions.core.extensions.gradle.*
 import de.fayard.refreshVersions.core.extensions.gradle.hasDynamicVersion
 import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
+import de.fayard.refreshVersions.core.extensions.gradle.npmModuleId
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import okhttp3.OkHttpClient
 import org.gradle.api.Project
+import org.gradle.api.artifacts.ArtifactRepositoryContainer
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
@@ -50,7 +53,9 @@ internal suspend fun lookupVersionCandidates(
     val dependencyVersionsFetchers: Set<DependencyVersionsFetcher> = projects.flatMap {
         it.getDependencyVersionFetchers(httpClient = httpClient, dependencyFilter = dependencyFilter)
     }.plus(
-        getUsedPluginsDependencyVersionFetchers(httpClient = httpClient)
+        UsedPluginsTracker.read().getDependencyVersionsFetchers(httpClient)
+    ).plus(
+        UsedVersionForTracker.read().getDependencyVersionsFetchers(httpClient)
     ).toSet()
 
     return coroutineScope {
@@ -155,14 +160,14 @@ private fun Project.getDependencyVersionFetchers(
     )
 )
 
-private fun getUsedPluginsDependencyVersionFetchers(
+private fun Sequence<Pair<Dependency, ArtifactRepositoryContainer>>.getDependencyVersionsFetchers(
     httpClient: OkHttpClient
 ): Sequence<DependencyVersionsFetcher> {
-    return UsedPluginsTracker.read().flatMap { (dependency, repositories) ->
+    return flatMap { (dependency, repositories) ->
         repositories.withGlobalRepos().filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
             DependencyVersionsFetcher.forMaven(
                 httpClient = httpClient,
-                dependency = dependency,
+                moduleId = dependency.mavenModuleId(),
                 repository = repo
             )
         }.asSequence()
@@ -195,7 +200,7 @@ private fun getDependencyVersionFetchers(
         (npmRegistries ?: listOf("https://registry.npmjs.org/")).map { registryUrl ->
             DependencyVersionsFetcher.forNpm(
                 httpClient = httpClient,
-                npmDependency = dependency,
+                moduleId = dependency.npmModuleId(),
                 npmRegistry = registryUrl
             )
         }.asSequence()
@@ -203,7 +208,7 @@ private fun getDependencyVersionFetchers(
         mavenRepositories.mapNotNull { repo ->
             DependencyVersionsFetcher.forMaven(
                 httpClient = httpClient,
-                dependency = dependency,
+                moduleId = dependency.mavenModuleId(),
                 repository = repo
             )
         }.asSequence()
