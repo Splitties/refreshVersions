@@ -26,6 +26,7 @@ androidx.camera:camera-camera2
 androidx.camera:camera-core
 androidx.camera:camera-extensions
 androidx.camera:camera-lifecycle
+androidx.camera:camera-mlkit-vision
 androidx.camera:camera-video
 androidx.camera:camera-view
 androidx.car.app:app
@@ -42,6 +43,7 @@ androidx.compose.compiler:compiler
 androidx.compose.foundation:foundation
 androidx.compose.foundation:foundation-layout
 androidx.compose.material3:material3
+androidx.compose.material3:material3-window-size-class
 androidx.compose.material:material
 androidx.compose.material:material-icons-core
 androidx.compose.material:material-icons-extended
@@ -59,6 +61,7 @@ androidx.compose.ui:ui-test
 androidx.compose.ui:ui-test-junit4
 androidx.compose.ui:ui-test-manifest
 androidx.compose.ui:ui-text
+androidx.compose.ui:ui-text-google-fonts
 androidx.compose.ui:ui-tooling
 androidx.compose.ui:ui-tooling-data
 androidx.compose.ui:ui-tooling-preview
@@ -76,11 +79,13 @@ androidx.core:core-animation
 androidx.core:core-animation-testing
 androidx.core:core-google-shortcuts
 androidx.core:core-ktx
+androidx.core:core-performance
 androidx.core:core-remoteviews
 androidx.core:core-role
 androidx.core:core-splashscreen
 androidx.cursoradapter:cursoradapter
 androidx.customview:customview
+androidx.customview:customview-poolingcontainer
 androidx.datastore:datastore
 androidx.datastore:datastore-core
 androidx.datastore:datastore-preferences
@@ -116,6 +121,7 @@ androidx.glance:glance
 androidx.glance:glance-appwidget
 androidx.glance:glance-wear-tiles
 androidx.gridlayout:gridlayout
+androidx.health:health-connect-client
 androidx.health:health-services-client
 androidx.heifwriter:heifwriter
 androidx.hilt:hilt-compiler
@@ -175,6 +181,7 @@ androidx.media3:media3-ui
 androidx.media3:media3-ui-leanback
 androidx.media:media
 androidx.mediarouter:mediarouter
+androidx.metrics:metrics-performance
 androidx.multidex:multidex
 androidx.multidex:multidex-instrumentation
 androidx.navigation:navigation-common
@@ -246,6 +253,7 @@ androidx.test.espresso:espresso-intents
 androidx.test.espresso:espresso-remote
 androidx.test.espresso:espresso-web
 androidx.test.ext:junit
+androidx.test.ext:junit-gtest
 androidx.test.ext:junit-ktx
 androidx.test.ext:truth
 androidx.test.services:test-services
@@ -272,12 +280,13 @@ androidx.wear.compose:compose-foundation
 androidx.wear.compose:compose-material
 androidx.wear.compose:compose-navigation
 androidx.wear.tiles:tiles
+androidx.wear.tiles:tiles-material
 androidx.wear.tiles:tiles-renderer
 androidx.wear.tiles:tiles-testing
-androidx.wear.tiles:titles-material
 androidx.wear.watchface:watchface
 androidx.wear.watchface:watchface-complications-data-source
 androidx.wear.watchface:watchface-complications-data-source-ktx
+androidx.wear.watchface:watchface-complications-rendering
 androidx.wear.watchface:watchface-editor
 androidx.wear:wear
 androidx.wear:wear-input
@@ -379,6 +388,7 @@ com.google.android.gms:play-services-wearable
 com.google.android.gms:strict-version-matcher-plugin
 com.google.android.libraries.places:places
 com.google.android.material:compose-theme-adapter
+com.google.android.material:compose-theme-adapter-3
 com.google.android.material:material
 com.google.android.play:core
 com.google.android.play:core-ktx

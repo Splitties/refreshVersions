@@ -22,7 +22,7 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
         if (line.isEmpty()) return@forEach
         val isRevisionHeader = line.startsWith("## Revision ")
         if (isRevisionHeader) {
-            val value = line.substringAfter("## Revision ")
+            val value = line.substringAfter("## Revision ").substringBefore(' ')
             require(value.toIntOrNull() == ++revisionTracking) {
                 "Expected to encounter heading for revision $revisionTracking but found $value instead."
             }

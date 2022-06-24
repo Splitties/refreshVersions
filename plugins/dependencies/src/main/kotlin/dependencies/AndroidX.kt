@@ -343,6 +343,16 @@ object AndroidX : IsNotADependency {
         val lifecycle = module("camera-lifecycle")
 
         /**
+         * MLKit vision components for the Jetpack Camera Library,
+         * a library providing a seamless integration that enables
+         * camera driven computer vision features across all of Android.
+         *
+         * ### API reference:
+         * - [androidx.camera.mlkit.vision](https://developer.android.com/reference/kotlin/androidx/camera/mlkit/vision/package-summary)
+         */
+        val mlKitVision = module("camera-mlkit-vision")
+
+        /**
          * Video components for the Jetpack Camera Library.
          *
          * ### API reference:
@@ -675,7 +685,18 @@ object AndroidX : IsNotADependency {
              * - [androidx.compose.ui.text.platform.extensions](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/platform/extensions/package-summary)
              * - [androidx.compose.ui.text.style](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/style/package-summary)
              */
-            val text = module("ui-text")
+            val text = Text
+
+            object Text : DependencyNotationAndGroup(group = group, name = "ui-text") {
+
+                /**
+                 * Compose Downloadable Fonts integration for Google Fonts.
+                 *
+                 * ### API reference:
+                 * - [androidx.compose.ui.text.googlefonts](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/googlefonts/package-summary)
+                 */
+                val googleFonts = module("ui-text-google-fonts")
+            }
 
             /**
              * Compose tooling library. This library exposes information to our tools for better IDE support.
@@ -826,7 +847,16 @@ object AndroidX : IsNotADependency {
          */
         val material3 = Material3
 
-        object Material3 : DependencyNotationAndGroup(group = "androidx.compose.material3", name = "material3")
+        object Material3 : DependencyNotationAndGroup(group = "androidx.compose.material3", name = "material3") {
+
+            /**
+             * Provides window size classes for building responsive UIs
+             *
+             * ### API reference:
+             * - [androidx.compose.material3.windowsizeclass](https://developer.android.com/reference/kotlin/androidx/compose/material3/windowsizeclass/package-summary)
+             */
+            val windowSizeClass = module("material3-window-size-class")
+        }
     }
 
     /**
@@ -988,6 +1018,17 @@ object AndroidX : IsNotADependency {
         val googleShortcuts = module("core-google-shortcuts")
 
         /**
+         * To enable APIs that query the performance characteristics of GMS devices.
+         *
+         * This library makes it easy for developers to make UI and feature choices based on
+         * Android Performance Class level for GMS devices.
+         *
+         * ### API reference:
+         * - [androidx.core.performance](https://developer.android.com/reference/kotlin/androidx/core/performance/package-summary)
+         */
+        val performance = module("core-performance")
+
+        /**
          * This library provides the compatibility APIs for SplashScreen and helper method to enable a
          * splashscreen on devices prior Android 12.
          */
@@ -1018,7 +1059,19 @@ object AndroidX : IsNotADependency {
      * - [androidx.customview.view](https://developer.android.com/reference/kotlin/androidx/customview/view/package-summary)
      * - [androidx.customview.widget](https://developer.android.com/reference/kotlin/androidx/customview/widget/package-summary)
      */
-    val customView = DependencyNotation("androidx.customview", "customview")
+    val customView = CustomView
+
+    object CustomView : DependencyNotationAndGroup("androidx.customview", "customview") {
+
+        /**
+         * Utilities for listening to the lifecycle of containers that manage their child Views' lifecycle,
+         * such as RecyclerView
+         *
+         * ## API reference:
+         * - [androidx.customview.poolingcontainer](https://developer.android.com/reference/kotlin/androidx/customview/poolingcontainer/package-summary)
+         */
+        val poolingContainer = module("customview-poolingcontainer")
+    }
 
     /**
      * Store data asynchronously, consistently, and transactionally, overcoming some of the drawbacks of SharedPreferences.
@@ -1389,6 +1442,28 @@ object AndroidX : IsNotADependency {
     val health = Health
 
     object Health : DependencyGroup(group = "androidx.health") {
+
+        /**
+         * Read or write user's health and fitness records.
+         *
+         * ### API reference:
+         * - [androidx.health.connect.client](https://developer.android.com/reference/kotlin/androidx/health/connect/client/package-summary)
+         * - [androidx.health.connect.client.aggregate](https://developer.android.com/reference/kotlin/androidx/health/connect/client/aggregate/package-summary)
+         * - [androidx.health.connect.client.changes](https://developer.android.com/reference/kotlin/androidx/health/connect/client/changes/package-summary)
+         * - [androidx.health.connect.client.metadata](https://developer.android.com/reference/kotlin/androidx/health/connect/client/metadata/package-summary)
+         * - [androidx.health.connect.client.permission](https://developer.android.com/reference/kotlin/androidx/health/connect/client/permission/package-summary)
+         * - [androidx.health.connect.client.records](https://developer.android.com/reference/kotlin/androidx/health/connect/client/records/package-summary)
+         * - [androidx.health.connect.client.request](https://developer.android.com/reference/kotlin/androidx/health/connect/client/request/package-summary)
+         * - [androidx.health.connect.client.response](https://developer.android.com/reference/kotlin/androidx/health/connect/client/response/package-summary)
+         * - [androidx.health.connect.client.time](https://developer.android.com/reference/kotlin/androidx/health/connect/client/time/package-summary)
+         * - [androidx.health.platform.client](https://developer.android.com/reference/kotlin/androidx/health/platform/client/package-summary)
+         * - [androidx.health.platform.client.changes](https://developer.android.com/reference/kotlin/androidx/health/platform/client/changes/package-summary)
+         * - [androidx.health.platform.client.error](https://developer.android.com/reference/kotlin/androidx/health/platform/client/error/package-summary)
+         * - [androidx.health.platform.client.permission](https://developer.android.com/reference/kotlin/androidx/health/platform/client/permission/package-summary)
+         * - [androidx.health.platform.client.request](https://developer.android.com/reference/kotlin/androidx/health/platform/client/request/package-summary)
+         * - [androidx.health.platform.client.response](https://developer.android.com/reference/kotlin/androidx/health/platform/client/response/package-summary)
+         */
+        val connectClient = module("health-connect-client")
 
         /**
          * ### API reference:
@@ -1882,6 +1957,22 @@ object AndroidX : IsNotADependency {
      * - [androidx.mediarouter.media](https://developer.android.com/reference/kotlin/androidx/mediarouter/media/package-summary)
      */
     val mediaRouter = DependencyNotation("androidx.mediarouter", "mediarouter")
+
+    /**
+     * Library for tracking and reporting various runtime metrics for applications.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/metrics)
+     */
+    val metrics = Metrics
+
+    object Metrics : DependencyGroup(group = "androidx.metrics") {
+
+        /**
+         * ### API reference:
+         * - [androidx.metrics.performance](https://developer.android.com/reference/kotlin/androidx/metrics/performance/package-summary)
+         */
+        val performance = module("metrics-performance")
+    }
 
     /**
      * Deploy applications with multiple dex files on pre-Android 5 devices.
@@ -2478,12 +2569,20 @@ object AndroidX : IsNotADependency {
              *
              * @see junitKtx
              */
-            val junit = module("junit")
+            val junit = JUnit
 
-            /**
-             * JUnit extensions APIs. Includes Kotlin extensions.
-             */
-            val junitKtx = module("junit-ktx")
+            object JUnit : DependencyNotationAndGroup(group = group, name = "junit") {
+
+                /**
+                 * JUnit extensions APIs. Includes Kotlin extensions.
+                 */
+                val ktx = module("junit-ktx")
+
+                /**
+                 * Run GTest tests on Android devices
+                 */
+                val gTest = module("junit-gtest")
+            }
 
             /**
              * [Truth](https://github.com/google/truth) extensions APIs.
@@ -2831,7 +2930,7 @@ object AndroidX : IsNotADependency {
             /**
              * Material components library for Android Wear Tiles.
              */
-            val material = module("titles-material")
+            val material = module("tiles-material")
 
             /**
              * Android Wear Tiles Renderer components.
@@ -2882,6 +2981,14 @@ object AndroidX : IsNotADependency {
             val complications = Complications
 
             object Complications : DependencyGroup(group = group) {
+
+                /**
+                 * Support for rendering complications on the watch face.
+                 *
+                 * ### API reference
+                 * - [androidx.wear.watchface.complications.rendering](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/rendering/package-summary)
+                 */
+                val rendering = module("watchface-complications-rendering")
 
                 /**
                  * Use this dependency to implement Watch Faces complications for WearOS in Java-only.

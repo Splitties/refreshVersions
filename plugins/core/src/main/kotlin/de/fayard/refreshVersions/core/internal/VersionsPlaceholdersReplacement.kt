@@ -127,6 +127,33 @@ internal fun String.isAVersionAlias(): Boolean = startsWith("version.") || start
 
 private val lock = Any()
 
+internal fun getVersionForVersionFor( // Yes, you read it right. Get version for `versionFor`.
+    project: Project,
+    moduleId: ModuleId,
+    versionKeyReader: ArtifactVersionKeyReader
+): String {
+    val propertyName = getVersionPropertyName(moduleId, versionKeyReader)
+    resolveVersion(
+        properties = RefreshVersionsConfigHolder.lastlyReadVersionsMap,
+        key = propertyName
+    )?.let {
+        return it
+    }
+    val properties = RefreshVersionsConfigHolder.readVersionsMap()
+    return resolveVersion(properties, propertyName)
+        ?: `Copy previously matching version entry, if any, and get its version`(
+            versionKeyReader = versionKeyReader,
+            propertyName = propertyName,
+            versionsMap = properties,
+            moduleId = moduleId
+        )
+        ?: `Write versions candidates using latest most stable version and get it`(
+            repositories = project.repositories.withGlobalRepos(),
+            propertyName = propertyName,
+            moduleId = moduleId
+        )
+}
+
 private fun Configuration.replaceVersionPlaceholdersFromDependencies(
     project: Project,
     isFromBuildscript: Boolean,
@@ -167,7 +194,6 @@ private fun Configuration.replaceVersionPlaceholdersFromDependencies(
                     ?: `Write versions candidates using latest most stable version and get it`(
                         repositories = repositories,
                         propertyName = propertyName,
-                        dependency = dependency,
                         moduleId = moduleId
                     ).also {
                         RefreshVersionsConfigHolder.readVersionsMap().let { updatedMap ->
@@ -279,14 +305,12 @@ private fun findAnyPreviouslyMatchingVersionEntry(
 private fun `Write versions candidates using latest most stable version and get it`(
     repositories: List<ArtifactRepository>,
     propertyName: String,
-    dependency: Dependency,
     moduleId: ModuleId
 ): String = RefreshVersionsConfigHolder.withHttpClient { httpClient ->
     `Write versions candidates using latest most stable version and get it`(
         httpClient = httpClient,
         repositories = repositories,
         propertyName = propertyName,
-        dependency = dependency,
         moduleId = moduleId
     )
 }
@@ -296,21 +320,20 @@ private fun `Write versions candidates using latest most stable version and get 
     httpClient: OkHttpClient,
     repositories: List<ArtifactRepository>,
     propertyName: String,
-    dependency: Dependency,
     moduleId: ModuleId
 ): String {
     val dependencyVersionsFetchers = when (moduleId) {
         is ModuleId.Maven -> repositories.filterIsInstance<MavenArtifactRepository>().mapNotNull { repo ->
             DependencyVersionsFetcher.forMaven(
                 httpClient = httpClient,
-                dependency = dependency,
+                moduleId = moduleId,
                 repository = repo
             )
         }
         is ModuleId.Npm -> listOf(
             DependencyVersionsFetcher.forNpm(
                 httpClient = httpClient,
-                npmDependency = dependency,
+                moduleId = moduleId,
                 npmRegistry = "https://registry.npmjs.org/" //TODO: Support custom npm registries.
             )
         )

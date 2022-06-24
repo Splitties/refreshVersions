@@ -1,19 +1,25 @@
 package de.fayard.refreshVersions.core.internal
 
+import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import org.gradle.api.artifacts.ArtifactRepositoryContainer
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
+import org.gradle.api.initialization.Settings
 import org.gradle.api.internal.artifacts.dependencies.AbstractDependency
 
-@InternalRefreshVersionsApi
-object UsedPluginsHolder {
+internal object UsedPluginsTracker {
+
+    fun clearFor(settings: Settings) {
+        if (settings.isBuildSrc) buildSrcHolder = null else projectHolder = null
+    }
 
     fun noteUsedPluginDependency(
+        settings: Settings,
         dependencyNotation: String,
         repositories: ArtifactRepositoryContainer
     ) {
-        synchronized(lock) {
-            usedPluginDependencies += UsedPluginDependency(
+        editHolder(settings) { holder ->
+            holder.usedPluginDependencies += UsedPluginDependency(
                 dependencyNotation = dependencyNotation,
                 repositories = repositories
             )
@@ -26,27 +32,48 @@ object UsedPluginsHolder {
         }
     }
 
-    fun pluginHasNoEntryInVersionsFile(dependency: ExternalDependency) {
-        synchronized(lock) {
-            _usedPluginsWithoutEntryInVersionsFile.add(dependency)
+    fun pluginHasNoEntryInVersionsFile(settings: Settings, dependency: ExternalDependency) {
+        editHolder(settings) { holder ->
+            holder.usedPluginsWithoutEntryInVersionsFile.add(dependency)
         }
     }
-    val usedPluginsWithoutEntryInVersionsFile: List<ExternalDependency>
-        get() = _usedPluginsWithoutEntryInVersionsFile
 
-    private val _usedPluginsWithoutEntryInVersionsFile by RefreshVersionsConfigHolder.resettableDelegates.Lazy {
-        mutableListOf<ExternalDependency>()
-    }
+    val usedPluginsWithoutEntryInVersionsFile: List<ExternalDependency>
+        get() = listOfNotNull(projectHolder, buildSrcHolder).flatMap { it.usedPluginsWithoutEntryInVersionsFile }
+
+    private val usedPluginDependencies: List<UsedPluginDependency>
+        get() = listOfNotNull(projectHolder, buildSrcHolder).flatMap { it.usedPluginDependencies }
 
     private val lock = Any()
+
+    private inline fun editHolder(settings: Settings, block: (Holder) -> Unit) {
+        synchronized(lock) {
+            val holder: Holder = if (settings.isBuildSrc) {
+                if (buildSrcHolder?.settings != settings) {
+                    buildSrcHolder = Holder(settings)
+                }
+                buildSrcHolder!!
+            } else {
+                if (projectHolder?.settings != settings) {
+                    projectHolder = Holder(settings)
+                }
+                projectHolder!!
+            }
+            block(holder)
+        }
+    }
+
+    private var projectHolder: Holder? = null
+    private var buildSrcHolder: Holder? = null
 
     private data class UsedPluginDependency(
         val dependencyNotation: String,
         val repositories: ArtifactRepositoryContainer
     )
 
-    private val usedPluginDependencies by RefreshVersionsConfigHolder.resettableDelegates.Lazy {
-        mutableListOf<UsedPluginDependency>()
+    private class Holder(val settings: Settings) {
+        val usedPluginDependencies = mutableListOf<UsedPluginDependency>()
+        val usedPluginsWithoutEntryInVersionsFile = mutableListOf<ExternalDependency>()
     }
 
     internal class ConfigurationLessDependency(val dependencyNotation: String) : AbstractDependency() {

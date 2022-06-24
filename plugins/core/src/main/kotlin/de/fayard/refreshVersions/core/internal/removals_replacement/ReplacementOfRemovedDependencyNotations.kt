@@ -1,7 +1,6 @@
 package de.fayard.refreshVersions.core.internal.removals_replacement
 
 import de.fayard.refreshVersions.core.ModuleId
-import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.extensions.collections.forEachReversedWithIndex
 import de.fayard.refreshVersions.core.extensions.ranges.contains
 import de.fayard.refreshVersions.core.extensions.text.indexOfFirst
@@ -16,38 +15,17 @@ import de.fayard.refreshVersions.core.internal.codeparsing.findFirstImportStatem
 import de.fayard.refreshVersions.core.internal.codeparsing.gradle.extractGradleScriptSections
 import de.fayard.refreshVersions.core.internal.codeparsing.rangeOfCode
 import de.fayard.refreshVersions.core.internal.codeparsing.rangesOfCode
-import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
-import de.fayard.refreshVersions.core.internal.versions.writeTo
 import java.io.File
 
 internal fun replaceRemovedDependencyNotationReferencesIfNeeded(
     projectDir: File,
-    versionsPropertiesFile: File,
-    versionsPropertiesModel: VersionsPropertiesModel,
     dependencyMapping: List<DependencyMapping>,
-    getRemovedDependencyNotationsReplacementInfo: () -> RemovedDependencyNotationsReplacementInfo
+    revisionOfLastRefreshVersionsRun: Int,
+    info: RemovedDependencyNotationsReplacementInfo
 ) {
-    val currentVersion = RefreshVersionsCorePlugin.currentVersion
-    val lastVersion = versionsPropertiesModel.generatedByVersion
-    if (currentVersion == lastVersion) {
-        if (versionsPropertiesModel.dependencyNotationRemovalsRevision == null) {
-            return // No revision in the versions.properties file means version alone is enough.
-        }
-    }
-
-    val info = getRemovedDependencyNotationsReplacementInfo()
-
-    if (currentVersion == lastVersion) {
-        if (info.currentRevision == versionsPropertiesModel.dependencyNotationRemovalsRevision) {
-            return // Handles the case of matching revisions in snapshot to snapshot upgrade.
-        }
-    }
 
     val history = info.removalsListingResource.parseRemovedDependencyNotationsHistory(
-        currentRevision = info.readRevisionOfLastRefreshVersionsRun(
-            lastVersion,
-            versionsPropertiesModel.dependencyNotationRemovalsRevision
-        )
+        currentRevision = revisionOfLastRefreshVersionsRun
     )
 
     val shortestDependencyMapping: Map<ModuleId.Maven, String> by lazy {
@@ -75,10 +53,6 @@ internal fun replaceRemovedDependencyNotationReferencesIfNeeded(
             gradleFile.writeText(newContent)
         }
     }
-
-    versionsPropertiesModel.copy(
-        dependencyNotationRemovalsRevision = info.currentRevision.takeIf { currentVersion.endsWith("-SNAPSHOT") }
-    ).writeTo(versionsPropertiesFile)
 }
 
 internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationReferencesIfAny(

@@ -18,7 +18,7 @@ fun addMissingEntriesInVersionsProperties(project: Project) {
         configurations = configurationsWithHardcodedDependencies,
         versionsMap = versionsMap,
         versionKeyReader = versionKeyReader
-    ) + UsedPluginsHolder.usedPluginsWithoutEntryInVersionsFile
+    ) + UsedPluginsTracker.usedPluginsWithoutEntryInVersionsFile
         .associateBy { d -> pluginDependencyNotationToVersionKey(d.name) }
         .filterKeys { key -> key != null && key !in versionsMap }
         .mapKeys { (k, _) -> k!! }
@@ -90,9 +90,12 @@ internal fun findMissingEntries(
                 .filter {
                     it.hasHardcodedVersion(versionsMap, versionKeyReader) && it.version != null
                 }
-                .map { dependency: ExternalDependency ->
+                .mapNotNull { dependency: ExternalDependency ->
                     val versionKey = getVersionPropertyName(
-                        ModuleId.Maven(group = dependency.group, name = dependency.name),
+                        ModuleId.Maven(
+                            group = dependency.group ?: return@mapNotNull null,
+                            name = dependency.name
+                        ),
                         versionKeyReader
                     )
                     versionKey to dependency
