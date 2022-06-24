@@ -224,6 +224,7 @@ object Google : IsNotADependency {
 
         object Material : DependencyNotationAndGroup(group = "com.google.android.material", name = "material") {
             val composeThemeAdapter = module("compose-theme-adapter")
+            val composeThemeAdapter3 = module("compose-theme-adapter-3")
         }
 
         val play = Play

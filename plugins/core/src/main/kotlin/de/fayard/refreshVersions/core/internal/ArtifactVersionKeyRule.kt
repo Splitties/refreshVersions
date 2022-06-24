@@ -21,6 +21,8 @@ abstract class ArtifactVersionKeyRule protected constructor(
 
     abstract fun key(group: String, name: String): String
 
+    fun onlyExactMatches(): Boolean = artifactPattern.none { it == '*' }
+
     final override fun compareTo(other: ArtifactVersionKeyRule) = comparator.compare(this, other)
 
     private val versionKeySignificantCharsLength = versionKeyPattern.count { it != ' ' }

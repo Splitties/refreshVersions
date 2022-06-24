@@ -1,7 +1,6 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.ModuleId
-import de.fayard.refreshVersions.core.internal.UsedPluginsHolder.ConfigurationLessDependency
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.artifacts.VersionCatalog

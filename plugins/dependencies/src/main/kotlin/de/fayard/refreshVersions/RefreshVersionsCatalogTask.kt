@@ -10,7 +10,7 @@ import de.fayard.refreshVersions.core.internal.checkModeAndNames
 import de.fayard.refreshVersions.core.internal.computeAliases
 import de.fayard.refreshVersions.core.internal.findDependencies
 import de.fayard.refreshVersions.core.internal.VersionCatalogs.versionsCatalog
-import de.fayard.refreshVersions.core.internal.UsedPluginsHolder
+import de.fayard.refreshVersions.core.internal.UsedPluginsTracker
 import de.fayard.refreshVersions.core.internal.VersionCatalogs
 import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
@@ -62,8 +62,8 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
             allDependencies.filter { it.copy(version = "_") !in builtInDependencies }
         }
 
-        val plugins = UsedPluginsHolder.usedPluginsWithoutEntryInVersionsFile +
-                UsedPluginsHolder.read().map { it.first }
+        val plugins = UsedPluginsTracker.usedPluginsWithoutEntryInVersionsFile +
+                UsedPluginsTracker.read().map { it.first }
 
         val versionCatalogAliases: List<String> = dependenciesToUse.computeAliases(
             configured = emptyList(),
