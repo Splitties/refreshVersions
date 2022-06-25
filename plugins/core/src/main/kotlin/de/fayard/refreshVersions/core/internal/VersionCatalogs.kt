@@ -18,8 +18,8 @@ object VersionCatalogs {
 
     fun dependencyAliases(versionCatalog: VersionCatalog?): Map<ModuleId.Maven, String> {
         versionCatalog ?: return emptyMap()
-        return versionCatalog.dependencyAliases.mapNotNull { alias ->
-            versionCatalog.findDependency(alias)
+        return versionCatalog.libraryAliases.mapNotNull { alias ->
+            versionCatalog.findLibrary(alias)
                 .orElse(null)
                 ?.orNull
                 ?.let { dependency: MinimalExternalModuleDependency ->
