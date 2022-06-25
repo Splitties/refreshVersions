@@ -12,13 +12,9 @@ enum class Case(
     snake_case({ it }),
     `kebab-case`({
         it.map { c->
-            if (c in separators) '-' else c
+            if (c in ".-_") '-' else c
         }.joinToString(separator = "")
     });
-
-    companion object {
-        val separators = setOf('.', '-', '_')
-    }
 }
 
 /**
