@@ -114,8 +114,7 @@ internal suspend fun lookupVersionCandidates(
     }
 }
 
-private fun ModuleId.toDependency() =
-    UsedPluginsTracker.ConfigurationLessDependency("$group:$name:_")
+private fun ModuleId.Maven.toDependency() = ConfigurationLessDependency(moduleId = this, version = "_")
 
 private suspend fun lookupAvailableGradleVersions(httpClient: OkHttpClient): List<Version> = coroutineScope {
     val checker = GradleUpdateChecker(httpClient)

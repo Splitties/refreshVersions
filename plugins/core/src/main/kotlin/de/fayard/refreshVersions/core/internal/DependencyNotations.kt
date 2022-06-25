@@ -81,7 +81,7 @@ data class Library(
     val module: String = "",
     val version: String = ""
 ) {
-    fun toDependency(): Dependency = UsedPluginsTracker.ConfigurationLessDependency(groupModuleVersion())
+    fun toDependency(): Dependency = ConfigurationLessDependency(groupModuleVersion())
 
     val name: String get() = module
     fun groupModuleVersion() = "$group:$module:$version"

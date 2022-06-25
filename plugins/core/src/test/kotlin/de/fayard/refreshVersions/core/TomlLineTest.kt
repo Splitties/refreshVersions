@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.internal.ConfigurationLessDependency
 import de.fayard.refreshVersions.core.internal.TomlLine
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Delete
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Ignore
@@ -10,7 +11,6 @@ import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Plugin
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.PluginVersionRef
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Version
 import de.fayard.refreshVersions.core.internal.TomlSection
-import de.fayard.refreshVersions.core.internal.UsedPluginsTracker.ConfigurationLessDependency
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
