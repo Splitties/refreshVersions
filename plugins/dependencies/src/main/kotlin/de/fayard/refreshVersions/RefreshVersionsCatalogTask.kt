@@ -40,7 +40,7 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
                 """
                 |Gradle versions catalogs are not supported in ${GradleVersion.current()}
                 |Upgrade Gradle with this command
-                |     ./gradlew wrapper --gradle-version ${VersionCatalogs.NEEDS_GRADLE_VERSION.version}
+                |     ./gradlew wrapper --gradle-version ${VersionCatalogs.minimumGradleVersion.version}
             """.trimMargin()
             )
         }

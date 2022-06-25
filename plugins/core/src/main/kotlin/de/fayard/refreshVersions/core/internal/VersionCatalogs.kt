@@ -11,10 +11,9 @@ object VersionCatalogs {
 
     const val LIBS_VERSIONS_TOML = "gradle/libs.versions.toml"
 
-    val NEEDS_GRADLE_VERSION: GradleVersion = GradleVersion.version("7.4")
+    val minimumGradleVersion: GradleVersion = GradleVersion.version("7.4")
 
-    fun isSupported(): Boolean =
-        GradleVersion.current() >= NEEDS_GRADLE_VERSION
+    fun isSupported(): Boolean = GradleVersion.current() >= minimumGradleVersion
 
     fun dependencyAliases(versionCatalog: VersionCatalog?): Map<ModuleId.Maven, String> {
         versionCatalog ?: return emptyMap()
