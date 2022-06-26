@@ -1,12 +1,12 @@
 package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.VersionCatalogs
-import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import kotlin.test.Test
 
-class TomlSectionTest : StringSpec({
+class TomlSectionTest {
 
-    val toml = """
+    private val toml = """
         ## This is a great comment
 
         [versions]
@@ -26,32 +26,16 @@ class TomlSectionTest : StringSpec({
         testDependencies = ["junit-jupiter", "junit-engine"]
         """.trimIndent()
 
-    val (a, b, c, d) = """
-        ## This is a great comment
+    @Test
+    fun `Parse Toml in Sections`() {
 
-        ---
-        groovy = "2.5.14"
-        guava = "30.0-jre"
-        jupiter = "5.7.1"
+        val (a, b, c, d) = toml.split(
+            "[versions]\n",
+            "[libraries]\n",
+            "[bundles]\n"
+        )
 
-        ---
-        guava = { module="com.google.guava:guava", version.ref="guava" }
-        junit-jupiter = { module="org.junit.jupiter:junit-jupiter-api", version.ref="jupiter" }
-        junit-engine = { module="org.junit.jupiter:junit-jupiter-engine" }
-
-        groovy-core = { module="org.codehaus.groovy:groovy", version.ref="groovy" }
-        groovy-json = { module="org.codehaus.groovy:groovy-json", version.ref="groovy" }
-
-        ---
-        testDependencies = ["junit-jupiter", "junit-engine"]
-        """.trimIndent().split("---\n")
-    val expected = mapOf("root" to a, "versions" to b, "libraries" to c, "bundles" to d)
-
-    "Parse Toml in Sections" {
-        VersionCatalogs.parseTomlInSection(toml) shouldBe expected
+        val expected = mapOf("root" to a, "versions" to b, "libraries" to c, "bundles" to d)
+        VersionCatalogs.parseTomlInSections(toml) shouldBe expected
     }
-
-})
-
-
-
+}

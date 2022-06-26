@@ -28,7 +28,7 @@ object VersionCatalogs {
     }
 
     internal fun parseToml(toml: String): Toml {
-        val map = parseTomlInSection(toml)
+        val map = parseTomlInSections(toml)
             .map { (sectionName, paragraph) ->
                 val section = TomlSection.from(sectionName)
                 section to paragraph.lines().map { TomlLine(section, it) }
@@ -36,7 +36,7 @@ object VersionCatalogs {
         return Toml(map.toMutableMap())
     }
 
-    fun parseTomlInSection(toml: String): Map<String, String> {
+    fun parseTomlInSections(toml: String): Map<String, String> {
         val result = mutableMapOf<String, StringBuilder>()
         result["root"] = StringBuilder()
         var current: StringBuilder = result["root"]!!
