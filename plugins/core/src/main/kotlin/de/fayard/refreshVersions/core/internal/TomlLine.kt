@@ -27,20 +27,17 @@ internal data class TomlLine(
 
     val map: Map<String, String> = parseTomlMap(kind).withDefault { "" }
 
-    val versionRef get() =  map["version.ref"]
+    val versionRef get() = map["version.ref"]
 
     val module get() = "$group:$name"
 
-    val version: String get() =
-        if (section == Versions) value else map["version"] ?: ""
+    val version: String get() = if (section == Versions) value else map["version"] ?: ""
 
-    val group: String get() =
-        if (section == Plugins) id else map["group"]!!
+    val group: String get() = if (section == Plugins) id else map["group"]!!
 
-    val name: String get() =
-        if (section == Plugins) "$id.gradle.plugin" else map["name"]!!
+    val name: String get() = if (section == Plugins) "$id.gradle.plugin" else map["name"]!!
 
-    val id: String by  map
+    val id: String by map
 
     override fun toString(): String = "TomlLine(section=$section, kind=$kind, key=$key, value=$value, map=$map)\n$text"
 
@@ -49,21 +46,37 @@ internal data class TomlLine(
     }
 }
 
-internal fun List<TomlLine>.toText(): String
-    = joinToString("\n", postfix = "\n", prefix = "\n") { it.text }
+internal fun List<TomlLine>.toText(): String = joinToString("\n", postfix = "\n", prefix = "\n") { it.text }
 
-internal fun TomlLine(section: TomlSection, key: String, value: String): TomlLine =
-    TomlLine(section, """$key = "$value"""" )
+internal fun TomlLine(
+    section: TomlSection,
+    key: String,
+    value: String
+): TomlLine = TomlLine(section, """$key = "$value"""")
 
-internal fun TomlLine(section: TomlSection, key: String, dependency: Dependency): TomlLine = when {
-    dependency.version == "none" ->
-        TomlLine(section, key, mapOf("group" to (dependency.group ?: ""), "name" to dependency.name))
-    else ->
-        TomlLine(section, key, """${dependency.group}:${dependency.name}:${dependency.version}""")
+internal fun TomlLine(
+    section: TomlSection,
+    key: String,
+    dependency: Dependency
+): TomlLine = when (dependency.version) {
+    "none" -> TomlLine(
+        section = section,
+        key = key,
+        map = mapOf("group" to (dependency.group ?: ""), "name" to dependency.name)
+    )
+    else -> TomlLine(
+        section = section,
+        key = key,
+        value = """${dependency.group}:${dependency.name}:${dependency.version}"""
+    )
 }
 
-internal fun TomlLine(section: TomlSection, key: String, map: Map<String, String>): TomlLine {
-    require((map.keys - validKeys).isEmpty()) { "Map $map has invalid keys. Valid: $validKeys"}
+internal fun TomlLine(
+    section: TomlSection,
+    key: String,
+    map: Map<String, String>
+): TomlLine {
+    require((map.keys - validKeys).isEmpty()) { "Map $map has invalid keys. Valid: $validKeys" }
     val formatMap = map.entries
         .joinToString(", ") { (key, value) -> """$key = "$value"""" }
     return TomlLine(section, "$key = { $formatMap }")
@@ -75,7 +88,7 @@ private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
     val splitSemicolon = value.split(":")
 
     val map: MutableMap<String, String> = when {
-        unparsedValue.startsWith("{").not() -> mutableMapOf()
+        unparsedValue.startsWith('{').not() -> mutableMapOf()
         else -> unparsedValue
             .removePrefix("{").removeSuffix("}")
             .split(",")
@@ -85,7 +98,7 @@ private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
             }.toMutableMap()
     }
 
-    return when(kind) {
+    return when (kind) {
         Ignore -> emptyMap()
         Delete -> emptyMap()
         LibsUnderscore -> emptyMap()
@@ -115,9 +128,17 @@ private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
     }
 }
 
-private fun lineMap(group: String, name: String, version: String?, versionRef: String?) =
-    listOfNotNull("group" to group, "name" to name, version?.let { "version" to it }, versionRef?.let { "version.ref" to it })
-        .toMap()
+private fun lineMap(
+    group: String,
+    name: String,
+    version: String?,
+    versionRef: String?
+) = listOfNotNull(
+    "group" to group,
+    "name" to name,
+    version?.let { "version" to it },
+    versionRef?.let { "version.ref" to it }
+).toMap()
 
 private fun TomlLine.guessTomlLineKind(): TomlLine.Kind {
     if (text.startsWith("##")) return Delete
@@ -132,13 +153,11 @@ private fun TomlLine.guessTomlLineKind(): TomlLine.Kind {
             hasKey -> Version
             else -> Ignore
         }
-        Libraries -> {
-            when {
-                hasKey.not() -> Ignore
-                textWithoutComment.endsWith(":_\"") -> LibsUnderscore
-                hasVersionRef -> LibsVersionRef
-                else -> Libs
-            }
+        Libraries -> when {
+            hasKey.not() -> Ignore
+            textWithoutComment.endsWith(":_\"") -> LibsUnderscore
+            hasVersionRef -> LibsVersionRef
+            else -> Libs
         }
         Plugins -> when {
             hasKey.not() -> Ignore
