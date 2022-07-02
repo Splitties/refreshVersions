@@ -867,6 +867,10 @@ org.jetbrains.kotlin:kotlin-test-js-runner
 org.jetbrains.kotlin:kotlin-test-junit
 org.jetbrains.kotlin:kotlin-test-junit5
 org.jetbrains.kotlin:kotlin-test-testng
+org.jetbrains.kotlinx:dataframe
+org.jetbrains.kotlinx:dataframe-arrow
+org.jetbrains.kotlinx:dataframe-core
+org.jetbrains.kotlinx:dataframe-excel
 org.jetbrains.kotlinx:kotlinx-cli
 org.jetbrains.kotlinx:kotlinx-collections-immutable
 org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm

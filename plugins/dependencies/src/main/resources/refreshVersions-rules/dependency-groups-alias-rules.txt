@@ -34,6 +34,9 @@ org.http4k:http4k-connect-*
 com.android.tools:*
     ^^^^^^^^^^^^^.^
 
+org.jetbrains.kotlinx:dataframe(-*)
+              ^^^^^^^ ^^^^^^^^^
+
 com.android.billingclient:billing(-*)
     ^^^^^^^^^^^^^^^^^^^^^
 

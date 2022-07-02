@@ -176,4 +176,29 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
      * GitHub page: [Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
      */
     val datetime = module("kotlinx-datetime")
+
+    /**
+     * Kotlin DataFrame is a JVM Kotlin library for in-memory data manipulation.
+     *
+     * [Documentation](https://kotlin.github.io/dataframe/overview.html)
+     *
+     * [GitHub page](https://github.com/Kotlin/dataframe/)
+     *
+     */
+    val dataframe = DataFrame
+
+    object DataFrame: DependencyNotationAndGroup(
+        group = "org.jetbrains.kotlinx",
+        name = "dataframe",
+        rawRules = """
+        org.jetbrains.kotlinx:dataframe(-*)
+                      ^^^^^^^ ^^^^^^^^^
+        """.trimIndent()
+    ) {
+        const val gradlePlugin = "org.jetbrains.kotlin.plugin.dataframe"
+        val dataframe = module("dataframe")
+        val core  = module("dataframe-core")
+        val excel = module("dataframe-excel")
+        val arrow = module("dataframe-arrow")
+    }
 }
