@@ -233,7 +233,7 @@ object Testing : IsNotADependency {
     /**
      * Mocking library for Kotlin.
      *
-     * Official Website: [mockk.io](https://mockk.io/)
+     * Official website: [mockk.io](https://mockk.io/)
      *
      * [GitHub releases](https://github.com/mockk/mockk/releases)
      *
@@ -274,5 +274,159 @@ object Testing : IsNotADependency {
          * [More info here](https://github.com/nhaarman/mockito-kotlin)
          */
         val kotlin = DependencyNotation("com.nhaarman.mockitokotlin2", "mockito-kotlin")
+    }
+
+    /**
+     * AssertJ provides a rich and intuitive set of strongly-typed assertions to use for unit testing
+     *
+     * Official website: [assertj.github.io](https://assertj.github.io/doc/)
+     *
+     * GitHub page: [assertj/assertj-core](https://github.com/assertj/assertj-core)
+     */
+    val assertj = AssertJ
+
+    object AssertJ : DependencyGroup(
+        group = "org.assertj",
+        rawRules = """
+            org.assertj:assertj-*
+                        ^^^^^^^.^
+        """.trimIndent()
+    ) {
+
+        val core = module("assertj-core")
+        val guava = module("assertj-guava")
+        val jodaTime = module("assertj-joda-time")
+        val db = module("assertj-db")
+        val swing = module("assertj-swing")
+    }
+
+    /**
+     * Matchers that can be combined to create flexible expressions of intent in tests
+     *
+     * Official website: [hamcrest.org](http://hamcrest.org/JavaHamcrest/)
+     *
+     * [GitHub releases](https://github.com/hamcrest/JavaHamcrest/releases)
+     *
+     * GitHub page: [hamcrest/JavaHamcrest](https://github.com/hamcrest/JavaHamcrest)
+     *
+     * [API reference (JavaDoc)](http://hamcrest.org/JavaHamcrest/javadoc/)
+     */
+    val hamcrest = Hamcrest
+
+    object Hamcrest : DependencyNotationAndGroup(
+        group = "org.hamcrest",
+        name = "hamcrest",
+        rawRules = """
+            org.hamcrest:hamcrest(-*)
+                ^^^^^^^^
+        """.trimIndent()
+    ) {
+
+        val core = module("hamcrest-core")
+        val library = module("hamcrest-library")
+    }
+
+    /**
+     * Write JSON unit tests in less code; great for testing REST interfaces
+     *
+     * Official website: [jsonassert.skyscreamer.org](http://jsonassert.skyscreamer.org/)
+     *
+     * [GitHub releases](https://github.com/skyscreamer/JSONassert/releases)
+     *
+     * GitHub page: [skyscreamer/jsonassert](https://github.com/skyscreamer/jsonassert)
+     *
+     * [API reference (JavaDoc)](http://jsonassert.skyscreamer.org/apidocs/index.html)
+     */
+    val jsonAssert = DependencyNotation("org.skyscreamer", "jsonassert")
+
+    /**
+     * [Usage guide](https://github.com/rest-assured/rest-assured/wiki/Usage)
+     *
+     * [Git tags](https://github.com/rest-assured/rest-assured/tags)
+     *
+     * GitHub page: [rest-assured/rest-assured](https://github.com/rest-assured/rest-assured)
+     *
+     * [API reference (JavaDoc)](https://www.javadoc.io/doc/io.rest-assured/rest-assured/latest/index.html)
+     */
+    val restAssured = RestAssured
+
+    object RestAssured : DependencyNotationAndGroup(
+        group = "io.rest-assured",
+        name = "rest-assured",
+        rawRules = """
+            io.rest-assured:*
+               ^^^^^^^^^^^^
+        """.trimIndent()) {
+
+        val json = Json
+
+        object Json : IsNotADependency {
+            val path = module("json-path")
+            val schemaValidator = module("json-schema-validator")
+        }
+
+        val kotlinExtensions = module("kotlin-extensions")
+
+        val spring = Spring
+
+        object Spring : IsNotADependency {
+            val mockMvc = module("spring-mock-mvc")
+            val webTestClient = module("spring-web-test-client")
+        }
+
+        val scalaSupport = module("scala-support")
+        val xmlPath = module("xml-path")
+    }
+
+    /**
+     * Cucumber is a tool that supports [Behaviour-Driven Development (BDD)](https://cucumber.io/docs/bdd/)
+     *
+     * Official website: [cucumber.io](https://cucumber.io/docs/cucumber/)
+     *
+     * [Git tags](https://github.com/cucumber/cucumber-jvm/tags)
+     *
+     * GitHub page: [cucumber/cucumber-jvm](https://github.com/cucumber/cucumber-jvm)
+     */
+    val cucumber = Cucumber
+
+    object Cucumber : DependencyGroup(
+        group = "io.cucumber",
+        rawRules = """
+            io.cucumber:cucumber-*
+               ^^^^^^^^
+        """.trimIndent()
+    ) {
+
+        val java = module("cucumber-java")
+        val java8 = module("cucumber-java8")
+        val junit = module("cucumber-junit")
+    }
+
+    /**
+     * PowerMock is a framework that extends other mock libraries such as EasyMock with more powerful capabilities
+     *
+     * [GitHub releases](https://github.com/powermock/powermock/releases)
+     *
+     * GitHub page: [powermock/powermock](https://github.com/powermock/powermock)
+     */
+    val powermock = Powermock
+
+    object Powermock : DependencyGroup(
+        group = "org.powermock",
+        rawRules = """
+            org.powermock:powermock-*
+                ^^^^^^^^^
+        """.trimIndent()
+    ) {
+
+        val apiMockito = module("powermock-api-mockito2")
+        val classLoader = module("powermock-classloading-xstream")
+
+        val junit4 = Junit4
+
+        object Junit4 : DependencyNotationAndGroup(group = group, name = "powermock-module-junit4") {
+
+            val rule = module("powermock-module-junit4-rule")
+        }
     }
 }

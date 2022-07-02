@@ -1,5 +1,5 @@
 junit:junit
-^^^^^.^^^^^ // Allow to add digits/numbers in artifact rules if not too complicated
+^^^^^.^^^^^ // Allow adding digits/numbers in artifact rules if not too complicated
 
 org.junit:junit-bom
     ^^^^^
@@ -27,3 +27,21 @@ io.mockk:mockk(-*)
 
 org.mockito:mockito-*
     ^^^^^^^
+
+org.assertj:assertj-*
+            ^^^^^^^.^
+
+org.hamcrest:hamcrest(-*)
+    ^^^^^^^^
+
+org.skyscreamer:jsonassert
+    ^^^^^^^^^^^.^^^^^^^^^^
+
+io.rest-assured:*
+   ^^^^^^^^^^^^
+
+io.cucumber:cucumber-*
+   ^^^^^^^^
+
+org.powermock:powermock-*
+    ^^^^^^^^^
