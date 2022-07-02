@@ -1131,6 +1131,7 @@ org.springframework.boot..spring-boot-starter-websocket=Spring.boot.websocket
 org.springframework.cloud..spring-cloud-bus=Spring.cloud.bus
 org.springframework.cloud..spring-cloud-cloudfoundry-discovery=Spring.cloud.cloudfoundry_discovery
 org.springframework.cloud..spring-cloud-config-server=Spring.cloud.config_server
+org.springframework.cloud..spring-cloud-dependencies=Spring.boms.springCloud
 org.springframework.cloud..spring-cloud-dependencies=Spring.boms.springclmoud
 org.springframework.cloud..spring-cloud-function-web=Spring.cloud.function_web
 org.springframework.cloud..spring-cloud-gcp-starter-pubsub=Spring.cloud.gcp_starter_pubsub

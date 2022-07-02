@@ -8,7 +8,10 @@ object Spring : IsNotADependency {
     object Boms: IsNotADependency {
         val dependencies = "org.springframework.boot:spring-boot-dependencies:_"
         val geode = "org.springframework.geode:spring-geode-bom:_"
-        val springclmoud = "org.springframework.cloud:spring-cloud-dependencies:_"
+        val springCloud = "org.springframework.cloud:spring-cloud-dependencies:_"
+
+        @Deprecated("typo", ReplaceWith("springCloud"))
+        val springclmoud = springCloud
     }
 
     val kafka = "org.springframework.kafka:spring-kafka"
