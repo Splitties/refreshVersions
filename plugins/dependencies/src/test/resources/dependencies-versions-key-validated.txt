@@ -692,6 +692,7 @@ io.github.javaeden.orchid..OrchidWritersBlocks=version.orchid
 io.insert-koin..koin-android-compat=version.koin
 io.insert-koin..koin-android=version.koin
 io.insert-koin..koin-androidx-compose=version.koin
+io.insert-koin..koin-androidx-navigation=version.koin
 io.insert-koin..koin-androidx-workmanager=version.koin
 io.insert-koin..koin-core=version.koin
 io.insert-koin..koin-ktor=version.koin
