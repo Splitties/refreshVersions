@@ -4,6 +4,9 @@ io.insert-koin:koin-*
 io.ktor:*
    ^^^^
 
+io.arrow-kt:arrow-*
+            ^^^^^
+
 co.touchlab:kermit(-*)
             ^^^^^^
 
@@ -39,6 +42,9 @@ com.android.billingclient:billing(-*)
 
 com.russhwolf:multiplatform-settings(-*)
               ^^^^^^^^^^^^^^^^^^^^^^
+
+io.arrow-kt.analysis.kotlin:io.arrow-kt.analysis.kotlin.*
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 com.rickclephas.kmp:kmp-nativecoroutines(-*)
     ^^^^^^^^^^^^        ^^^^^^^^^^^^^^^^

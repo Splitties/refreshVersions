@@ -637,6 +637,14 @@ com.squareup.wire:wire-runtime
 com.squareup:kotlinpoet
 com.squareup:kotlinpoet-metadata
 com.squareup:kotlinpoet-metadata-specs
+io.arrow-kt.analysis.kotlin:io.arrow-kt.analysis.kotlin.gradle.plugin
+io.arrow-kt:arrow-core
+io.arrow-kt:arrow-fx-coroutines
+io.arrow-kt:arrow-fx-stm
+io.arrow-kt:arrow-optics
+io.arrow-kt:arrow-optics-ksp-plugin
+io.arrow-kt:arrow-optics-reflect
+io.arrow-kt:arrow-stack
 io.coil-kt:coil
 io.coil-kt:coil-base
 io.coil-kt:coil-compose

@@ -4,6 +4,7 @@ package dependencies
 
 import Android
 import AndroidX
+import Arrow
 import COIL
 import CashApp
 import Chucker
@@ -30,6 +31,7 @@ import Touchlab
 internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     Android,
     AndroidX,
+    Arrow,
     CashApp,
     Chucker,
     COIL,
