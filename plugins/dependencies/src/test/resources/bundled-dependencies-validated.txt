@@ -861,6 +861,9 @@ org.http4k:http4k-testing-kotest
 org.http4k:http4k-testing-servirtium
 org.http4k:http4k-testing-strikt
 org.http4k:http4k-testing-webdriver
+org.jetbrains.exposed:exposed-core
+org.jetbrains.exposed:exposed-dao
+org.jetbrains.exposed:exposed-jdbc
 org.jetbrains.kotlin:kotlin-script-runtime
 org.jetbrains.kotlin:kotlin-stdlib
 org.jetbrains.kotlin:kotlin-stdlib-common

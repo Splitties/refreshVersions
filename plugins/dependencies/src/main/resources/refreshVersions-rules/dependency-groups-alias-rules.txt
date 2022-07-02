@@ -40,6 +40,9 @@ com.android.tools:*
 org.jetbrains.kotlinx:dataframe(-*)
               ^^^^^^^ ^^^^^^^^^
 
+org.jetbrains.exposed:exposed-*
+    ^^^^^^^^^.^^^^^^^
+
 com.android.billingclient:billing(-*)
     ^^^^^^^^^^^^^^^^^^^^^
 
