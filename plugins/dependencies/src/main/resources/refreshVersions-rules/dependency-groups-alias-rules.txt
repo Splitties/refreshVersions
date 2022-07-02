@@ -34,14 +34,23 @@ org.kodein.di:kodein-di(-*)
 org.http4k:http4k-connect-*
            ^^^^^^^^^^^^^^
 
+org.jetbrains.kotlinx:multik(-*)
+              ^^^^^^^.^^^^^^
+
 com.android.tools:*
     ^^^^^^^^^^^^^.^
 
-org.jetbrains.kotlinx:dataframe(-*)
-              ^^^^^^^ ^^^^^^^^^
+org.jetbrains.kotlinx:lincheck(-*)
+              ^^^^^^^.^^^^^^^^
 
 org.jetbrains.exposed:exposed-*
     ^^^^^^^^^.^^^^^^^
+
+org.jetbrains.kotlinx:dataframe(-*)
+              ^^^^^^^.^^^^^^^^^
+
+org.jetbrains.kotlinx:kotlin-deeplearning(-*)
+              ^^^^^^^.       ^^^^^^^^^^^^
 
 com.android.billingclient:billing(-*)
     ^^^^^^^^^^^^^^^^^^^^^
