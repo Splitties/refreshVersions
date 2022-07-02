@@ -82,3 +82,4 @@ androidx.test.ext..truth=version.androidx.test
 com.google.modernstorage..modernstorage-filesystem=version.google.modernstorage
 com.google.modernstorage..modernstorage-mediastore=version.google.modernstorage
 androidx.health..health-services-client=version.androidx.health
+androidx.navigation..navigation-compose=version.androidx.navigation-compose
