@@ -80,7 +80,7 @@ class BundledDependenciesTest {
                 if (hasWipHeading.not()) {
                     val lastRevision = removalsRevisionsHistory.lineSequence().last {
                         it.startsWith("## Revision ")
-                    }.substringAfter("## Revision ").toInt()
+                    }.substringAfter("## Revision ").substringBefore(" ").toInt()
                     appendLine("## [WIP] Revision ${lastRevision + 1}")
                     appendLine()
                 }
