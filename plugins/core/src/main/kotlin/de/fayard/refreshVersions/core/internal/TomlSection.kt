@@ -1,6 +1,6 @@
 package de.fayard.refreshVersions.core.internal
 
-internal sealed class TomlSection(val name: String) {
+internal sealed class TomlSection(open val name: String) {
 
     override fun toString() = name
 
@@ -9,7 +9,7 @@ internal sealed class TomlSection(val name: String) {
     object Plugins: TomlSection("plugins")
     object Bundles: TomlSection("bundles")
     object Libraries: TomlSection("libraries")
-    class Custom(name: String) : TomlSection(name)
+    data class Custom(override val name: String) : TomlSection(name)
 
     companion object {
         val sectionOrder = listOf(Root, Bundles, Plugins, Versions, Libraries)
