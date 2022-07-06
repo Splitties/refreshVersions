@@ -4,10 +4,10 @@ import de.fayard.refreshVersions.core.ModuleId
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.internal.artifacts.dependencies.AbstractDependency
 
-internal class ConfigurationLessDependency private constructor(
+internal class ConfigurationLessDependency(
     private val group: String,
     private val name: String,
-    private val version: String
+    private val version: String?
 ) : AbstractDependency() {
 
     constructor(
@@ -27,7 +27,7 @@ internal class ConfigurationLessDependency private constructor(
 
     override fun getGroup() = group
     override fun getName() = name
-    override fun getVersion(): String = version
+    override fun getVersion() = version
 
     override fun contentEquals(dependency: Dependency): Boolean = throw UnsupportedOperationException()
 
@@ -37,5 +37,5 @@ internal class ConfigurationLessDependency private constructor(
         version = version
     )
 
-    override fun toString() = "$group:$name:$version"
+    override fun toString(): String = if (version == null) "$group:$name" else "$group:$name:$version"
 }

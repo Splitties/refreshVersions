@@ -72,7 +72,7 @@ internal fun TomlLine(
 internal fun TomlLine(
     section: TomlSection,
     key: String,
-    map: Map<String, String>
+    map: Map<String, String?>
 ): TomlLine {
     require((map.keys - validKeys).isEmpty()) { "Map $map has invalid keys. Valid: $validKeys" }
     val formatMap = map.entries

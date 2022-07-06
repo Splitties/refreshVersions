@@ -11,7 +11,7 @@ enum class Case(
 ) {
     snake_case({ it }),
     `kebab-case`({
-        it.map { c->
+        it.map { c ->
             if (c in ".-_") '-' else c
         }.joinToString(separator = "")
     });
@@ -34,7 +34,7 @@ fun List<Library>.computeAliases(
     configured: List<String>,
     byDefault: List<String> = MEANING_LESS_NAMES
 ): List<String> {
-    val groups = (configured + byDefault).filter { it.contains(".") }.distinct()
+    val groups = (configured + byDefault).filter { it.contains(".") }.toSet()
     val depsFromGroups = filter { it.group in groups }.map { it.module }
     val ambiguities = groupBy { it.module }.filter { it.value.size > 1 }.map { it.key }
     return (configured + byDefault + ambiguities + depsFromGroups - groups).distinct().sorted()
@@ -54,18 +54,17 @@ fun escapeLibsKt(name: String): String {
 fun Project.findDependencies(): List<Library> {
     val allDependencies = mutableListOf<Library>()
     allprojects {
-        (configurations + buildscript.configurations)
-            .flatMapTo(allDependencies) { configuration ->
-                configuration.allDependencies
-                    .filterIsInstance<ExternalDependency>()
-                    .filter {
-                        @Suppress("SENSELESS_COMPARISON")
-                        it.group != null
-                    }
-                    .map { dependency ->
-                        Library(dependency.group, dependency.name, dependency.version ?: "none")
-                    }
-            }
+        (buildscript.configurations + configurations).flatMapTo(allDependencies) { configuration ->
+            configuration.allDependencies
+                .filterIsInstance<ExternalDependency>()
+                .mapNotNull { dependency ->
+                    Library(
+                        group = dependency.group ?: return@mapNotNull null,
+                        module = dependency.name,
+                        version = dependency.version
+                    )
+                }
+        }
     }
     return allDependencies.distinctBy { d -> d.groupModule() }
 }
@@ -75,12 +74,15 @@ fun Project.findDependencies(): List<Library> {
 data class Library(
     val group: String = "",
     val module: String = "",
-    val version: String = ""
+    val version: String? = null
 ) {
-    fun toDependency(): Dependency = ConfigurationLessDependency(groupModuleVersion())
+    fun toDependency(): Dependency = ConfigurationLessDependency(
+        group = group,
+        name = name,
+        version = version
+    )
 
     val name: String get() = module
-    fun groupModuleVersion() = "$group:$module:$version"
     fun groupModuleUnderscore() = "$group:$module:_"
     fun groupModule() = "$group:$module"
 
@@ -96,7 +98,7 @@ data class Library(
         return case.convert(name_with_underscores)
     }
 
-    override fun toString() = groupModuleVersion()
+    override fun toString(): String = if (version == null) "$group:$name" else "$group:$name:$version"
 }
 
 @InternalRefreshVersionsApi
