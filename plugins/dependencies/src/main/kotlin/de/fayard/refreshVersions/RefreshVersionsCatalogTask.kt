@@ -56,10 +56,9 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
 
         val allDependencies: List<Library> = project.findDependencies()
 
-        val dependenciesToUse = if (withAllLibraries) {
-            allDependencies
-        } else {
-            allDependencies.filter { it.copy(version = "_") !in builtInDependencies }
+        val dependenciesToUse = when {
+            withAllLibraries -> allDependencies
+            else -> allDependencies.filter { it.copy(version = "_") !in builtInDependencies }
         }
 
         val plugins = UsedPluginsTracker.usedPluginsWithoutEntryInVersionsFile +
@@ -84,4 +83,3 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         """.trimIndent())
     }
 }
-

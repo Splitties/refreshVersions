@@ -1,7 +1,6 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.*
-import de.fayard.refreshVersions.core.internal.TomlSection.*
 import org.gradle.api.artifacts.Dependency
 
 internal data class TomlLine(
@@ -18,10 +17,9 @@ internal data class TomlLine(
 
     val unparsedValue: String = if (hasKey.not()) "" else textWithoutComment.substringAfter("=").trim()
 
-    private val quote = "\""
-    fun String.unquote() = trim().removePrefix(quote).removeSuffix(quote)
+    fun String.unquote() = trim().removeSurrounding("\"")
 
-    val value = if (unparsedValue.startsWith(quote)) unparsedValue.unquote() else ""
+    val value = if (unparsedValue.startsWith('"')) unparsedValue.unquote() else ""
 
     val kind: Kind = this.guessTomlLineKind()
 
@@ -31,11 +29,11 @@ internal data class TomlLine(
 
     val module get() = "$group:$name"
 
-    val version: String get() = if (section == Versions) value else map["version"] ?: ""
+    val version: String get() = if (section == TomlSection.Versions) value else map["version"] ?: ""
 
-    val group: String get() = if (section == Plugins) id else map["group"]!!
+    val group: String get() = if (section == TomlSection.Plugins) id else map["group"]!!
 
-    val name: String get() = if (section == Plugins) "$id.gradle.plugin" else map["name"]!!
+    val name: String get() = if (section == TomlSection.Plugins) "$id.gradle.plugin" else map["name"]!!
 
     val id: String by map
 
@@ -90,7 +88,7 @@ private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
     val map: MutableMap<String, String> = when {
         unparsedValue.startsWith('{').not() -> mutableMapOf()
         else -> unparsedValue
-            .removePrefix("{").removeSuffix("}")
+            .removeSurrounding("{", "}")
             .split(",")
             .associate { entry ->
                 val (key, value) = entry.split("=")
@@ -146,20 +144,20 @@ private fun TomlLine.guessTomlLineKind(): TomlLine.Kind {
     val hasVersionRef = textWithoutComment.contains("version.ref")
 
     return when (section) {
-        is Custom -> Ignore
-        Root -> Ignore
-        Bundles -> Ignore
-        Versions -> when {
+        is TomlSection.Custom -> Ignore
+        TomlSection.Root -> Ignore
+        TomlSection.Bundles -> Ignore
+        TomlSection.Versions -> when {
             hasKey -> Version
             else -> Ignore
         }
-        Libraries -> when {
+        TomlSection.Libraries -> when {
             hasKey.not() -> Ignore
             textWithoutComment.endsWith(":_\"") -> LibsUnderscore
             hasVersionRef -> LibsVersionRef
             else -> Libs
         }
-        Plugins -> when {
+        TomlSection.Plugins -> when {
             hasKey.not() -> Ignore
             hasVersionRef -> PluginVersionRef
             else -> Plugin

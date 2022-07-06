@@ -14,9 +14,6 @@ internal sealed class TomlSection(val name: String) {
     companion object {
         val sectionOrder = listOf(Root, Bundles, Plugins, Versions, Libraries)
 
-        fun from(name: String): TomlSection =
-            sectionOrder
-                .firstOrNull { it.name == name }
-                ?: Custom(name)
+        fun from(name: String): TomlSection = orderedSections.firstOrNull { it.name == name } ?: Custom(name)
     }
 }

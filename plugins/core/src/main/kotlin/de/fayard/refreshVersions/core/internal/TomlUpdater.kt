@@ -25,21 +25,19 @@ internal class TomlUpdater(val fileContent: String, val dependenciesUpdates: Lis
         actual.writeText(toml.toString())
     }
 
-    private fun updateNewVersions(lines: List<TomlLine>): List<TomlLine> {
-        return lines.flatMap { line ->
-            val noop = listOf(line)
-            when (line.kind) {
-                Ignore, LibsUnderscore, LibsVersionRef, PluginVersionRef -> noop
-                Delete -> emptyList()
-                Version -> {
-                    linesForUpdate(line, findLineReferencing(line))
+    private fun updateNewVersions(lines: List<TomlLine>): List<TomlLine> = lines.flatMap { line ->
+        val noop = listOf(line)
+        when (line.kind) {
+            Ignore, LibsUnderscore, LibsVersionRef, PluginVersionRef -> noop
+            Delete -> emptyList()
+            Version -> {
+                linesForUpdate(line, findLineReferencing(line))
+            }
+            Libs, Plugin -> {
+                val update = dependenciesUpdates.firstOrNull { dc ->
+                    dc.moduleId.name == line.name && dc.moduleId.group == line.group
                 }
-                Libs, Plugin -> {
-                    val update = dependenciesUpdates.firstOrNull { dc ->
-                        dc.moduleId.name == line.name && dc.moduleId.group == line.group
-                    }
-                    linesForUpdate(line, update)
-                }
+                linesForUpdate(line, update)
             }
         }
     }
@@ -54,7 +52,10 @@ internal class TomlUpdater(val fileContent: String, val dependenciesUpdates: Lis
         }
     }
 
-    private fun linesForUpdate(line: TomlLine, update: DependencyWithVersionCandidates?): List<TomlLine> {
+    private fun linesForUpdate(
+        line: TomlLine,
+        update: DependencyWithVersionCandidates?
+    ): List<TomlLine> {
         val result = mutableListOf(line)
         val versions = update?.versionsCandidates ?: return result
         val version = line.version
@@ -67,9 +68,8 @@ internal class TomlUpdater(val fileContent: String, val dependenciesUpdates: Lis
             else -> """:${v.value}""""
         }
 
-        val nbSpaces = line.text.indexOf(version ?: "oops") -
-                if (isObject) 17 else 14
-        val space = List(Math.max(0, nbSpaces)) { " " }.joinToString("")
+        val nbSpaces = line.text.indexOf(version) - if (isObject) 17 else 14
+        val space = List(nbSpaces.coerceAtLeast(0)) { " " }.joinToString("")
 
         versions.mapTo(result) { v: MavenVersion ->
             TomlLine(line.section, "##${space}# available${suffix(v)}")
@@ -79,7 +79,10 @@ internal class TomlUpdater(val fileContent: String, val dependenciesUpdates: Lis
 }
 
 
-internal fun TomlUpdater(file: File, dependenciesUpdates: List<DependencyWithVersionCandidates>): TomlUpdater {
+internal fun TomlUpdater(
+    file: File,
+    dependenciesUpdates: List<DependencyWithVersionCandidates>
+): TomlUpdater {
     val text: String = if (file.canRead()) file.readText() else ""
     return TomlUpdater(text, dependenciesUpdates)
 }

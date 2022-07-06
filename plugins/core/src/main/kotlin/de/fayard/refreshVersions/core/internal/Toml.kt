@@ -10,7 +10,10 @@ internal data class Toml(
         sections[section] = lines
     }
 
-    fun merge(section: TomlSection, newLines: List<TomlLine>) {
+    fun merge(
+        section: TomlSection,
+        newLines: List<TomlLine>
+    ) {
         val existingKeys = get(section).map { it.key }.toSet() - ""
         val filteredLines = newLines.filterNot { it.key in existingKeys }
         val updateExistingLines = get(section).map { line ->
@@ -19,8 +22,7 @@ internal data class Toml(
         sections[section] = updateExistingLines + filteredLines
     }
 
-    internal operator fun get(section: TomlSection): List<TomlLine> =
-        sections.get(section) ?: emptyList()
+    internal operator fun get(section: TomlSection): List<TomlLine> = sections[section] ?: emptyList()
 
     private fun format(): String = buildString {
         initializeRoot()
@@ -43,10 +45,7 @@ internal data class Toml(
         }
     }
 
-    private fun sortedSections() =
-        (TomlSection.sectionOrder + sections.keys).toSet()
-
-
+    private fun sortedSections() = (TomlSection.orderedSections + sections.keys).toSet()
 
     private fun initializeRoot() {
         if (get(TomlSection.Root).none { it.text.isNotBlank() }) {
