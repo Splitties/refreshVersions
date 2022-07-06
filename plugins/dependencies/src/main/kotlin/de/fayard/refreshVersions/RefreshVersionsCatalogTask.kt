@@ -34,7 +34,6 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
 
     @TaskAction
     fun refreshVersionsCatalogAction() {
-        // Check Gradle version
         if (VersionCatalogs.isSupported().not()) {
             throw GradleException(
                 """
