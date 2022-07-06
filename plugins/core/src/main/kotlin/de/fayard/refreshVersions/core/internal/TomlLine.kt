@@ -8,7 +8,8 @@ internal data class TomlLine(
     val text: String,
 ) {
 
-    internal enum class Kind { Ignore, Delete, Libs, LibsUnderscore, LibsVersionRef, Version, Plugin, PluginVersionRef }
+    internal enum class Kind { Ignore, Deletable, Libs, LibsUnderscore, LibsVersionRef, Version, Plugin, PluginVersionRef }
+    //TODO: Maybe convert to sealed class/interface?
 
     val textWithoutComment = text.substringBefore("#")
 
@@ -98,7 +99,7 @@ private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
 
     return when (kind) {
         Ignore -> emptyMap()
-        Delete -> emptyMap()
+        Deletable -> emptyMap()
         LibsUnderscore -> emptyMap()
         Version -> emptyMap()
         Plugin, PluginVersionRef -> when {
@@ -139,7 +140,7 @@ private fun lineMap(
 ).toMap()
 
 private fun TomlLine.guessTomlLineKind(): TomlLine.Kind {
-    if (text.startsWith("##")) return Delete
+    if (text.startsWith("##")) return Deletable
 
     val hasVersionRef = textWithoutComment.contains("version.ref")
 

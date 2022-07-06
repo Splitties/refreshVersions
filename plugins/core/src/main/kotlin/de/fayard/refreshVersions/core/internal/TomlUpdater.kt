@@ -24,7 +24,7 @@ internal class TomlUpdater(
         if (fileContent.isBlank()) return
 
         toml.sections.forEach { (section, lines) ->
-            toml[section] = lines.filter { it.kind != Delete }
+            toml[section] = lines.filter { it.kind != Deletable }
         }
         actual.writeText(toml.toString())
     }
@@ -33,7 +33,7 @@ internal class TomlUpdater(
         val noop = listOf(line)
         when (line.kind) {
             Ignore, LibsUnderscore, LibsVersionRef, PluginVersionRef -> noop
-            Delete -> emptyList()
+            Deletable -> emptyList()
             Version -> {
                 linesForUpdate(line, findLineReferencing(line))
             }
