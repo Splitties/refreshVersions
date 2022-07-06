@@ -12,15 +12,16 @@ import de.fayard.refreshVersions.core.internal.TomlLine.Kind.PluginVersionRef
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Version
 import de.fayard.refreshVersions.core.internal.TomlSection
 import io.kotest.assertions.assertSoftly
-import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
 import io.kotest.inspectors.forAny
 import io.kotest.matchers.shouldBe
+import kotlin.test.Test
 
-class TomlLineTest : FunSpec({
+class TomlLineTest {
 
 
-    test("Parsing kind for libraries") {
+    @Test
+    fun `Parsing kind for libraries`() {
 
         val lines = """
             groovy-core = { module = "org.codehaus.groovy:groovy", version.ref = "groovy" }
@@ -56,7 +57,8 @@ class TomlLineTest : FunSpec({
         }
     }
 
-    test("Parsing kind for versions") {
+    @Test
+    fun `Parsing kind for versions`() {
 
         val lines = """
             # some comment
@@ -82,7 +84,8 @@ class TomlLineTest : FunSpec({
         }
     }
 
-    test("Parsing kind for plugins") {
+    @Test
+    fun `Parsing kind for plugins`() {
 
         val lines = """
             short-notation = "some.plugin.id:1.4"
@@ -105,7 +108,8 @@ class TomlLineTest : FunSpec({
         }
     }
 
-    test("Parsing libraries values") {
+    @Test
+    fun `Parsing libraries values`() {
         fun map(group: String, name: String, version: String?, versionRef: String?) =
             listOfNotNull("group" to group, "name" to name, version?.let { "version" to it }, versionRef?.let { "version.ref" to it })
                 .toMap()
@@ -140,7 +144,8 @@ class TomlLineTest : FunSpec({
 
     }
 
-    test("Parsing plugins values") {
+    @Test
+    fun `Parsing plugins values`() {
         fun map(id: String, version: String?, versionRef: String?) =
             listOfNotNull("id" to id, version?.let { "version" to it }, versionRef?.let { "version.ref" to it })
                 .toMap()
@@ -170,7 +175,8 @@ class TomlLineTest : FunSpec({
         }
     }
 
-    test("Parsing for warning or error messages") {
+    @Test
+    fun `Parsing for warning or error messages`() {
         val lines = """
             ## error: something happened
             ## warning: just a warning
@@ -182,7 +188,8 @@ class TomlLineTest : FunSpec({
         }
     }
 
-    test("Constructors for TomlLine") {
+    @Test
+    fun `Constructors for TomlLine`() {
         assertSoftly {
             TomlLine(TomlSection.Plugins, "org-jetbrains-kotlin-jvm", mapOf("id" to "org.jetbrains.kotlin.jvm", "version" to "1.6.10"))
                 .text shouldBe """org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "1.6.10" }"""
@@ -199,6 +206,4 @@ class TomlLineTest : FunSpec({
                 .text shouldBe """my-lib = { group = "com.example", name = "name" }"""
         }
     }
-})
-
-
+}
