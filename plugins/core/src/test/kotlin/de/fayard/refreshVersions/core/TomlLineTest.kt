@@ -2,7 +2,7 @@ package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.ConfigurationLessDependency
 import de.fayard.refreshVersions.core.internal.TomlLine
-import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Delete
+import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Deletable
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Ignore
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.Libs
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.LibsUnderscore
@@ -45,9 +45,9 @@ class TomlLineTest {
             LibsVersionRef, LibsVersionRef, LibsVersionRef,
             Ignore, Ignore, Ignore,
             LibsUnderscore, Ignore,
-            Libs, Delete, Ignore,
+            Libs, Deletable, Ignore,
             Libs, Ignore,
-            Libs, Delete,
+            Libs, Deletable,
         )
 
         val testCases = lines.zip(expectedKinds)
@@ -73,7 +73,7 @@ class TomlLineTest {
 
         val expectedKinds: List<TomlLine.Kind> = listOf(
             Ignore, Ignore,
-            Version, Delete, Delete, Ignore,
+            Version, Deletable, Deletable, Ignore,
             Version, Version,
         )
 
@@ -97,7 +97,7 @@ class TomlLineTest {
         """.trimIndent().lines()
 
         val expectedKinds: List<TomlLine.Kind> = listOf(
-            Plugin, Delete, Ignore, Ignore,
+            Plugin, Deletable, Ignore, Ignore,
             Plugin, PluginVersionRef
         )
 
@@ -184,7 +184,7 @@ class TomlLineTest {
         """.trimIndent().lines()
 
         lines.forAny {
-            TomlLine(TomlSection.Libraries, it).kind shouldBe Delete
+            TomlLine(TomlSection.Libraries, it).kind shouldBe Deletable
         }
     }
 
