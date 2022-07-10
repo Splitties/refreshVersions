@@ -245,7 +245,7 @@ class BundledDependenciesTest {
                 // "AndroidX" to mapOf("androidx.tools:tools-core" to "androidx.tools")
                 // "AndroidX.test" to mapOf("androidx.test:test" to "androidx.test")
                 val submappings: Map<String, Map<ModuleId.Maven, String>> =
-                    mappingsBySection.filter { it.key.startsWith(section) }
+                    mappingsBySection.filter { it.key.startsWith("$section.") || it.key == section }
                 val rows = submappings.mapValues { (_, map) ->
                     map.entries.joinToString(" - ") { (moduleId, constantName) ->
                         val versionKey = versionKeyReader.readVersionKey(moduleId.group, moduleId.name) ?: "NO-RULE"
@@ -253,7 +253,7 @@ class BundledDependenciesTest {
                     }
                 }
                 """
-                 |## $section
+                 |## [$section.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/$section.kt)
                  |
                  |${table(rows)}
                  |
@@ -289,8 +289,6 @@ class BundledDependenciesTest {
         val rows = rows.entries.joinToString("\n") { (title, content) -> "<tr><td><b>$title</b></td><td>$content</td></tr>" }
         return """
                     <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     $rows
                     </table>

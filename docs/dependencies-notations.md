@@ -5,11 +5,9 @@ We currently support **1046** dependency notations in **23** groups and **202** 
 [**See Add Dependencies**](add-dependencies.md)
 
 
-## Android
+## [Android.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Android.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Android</b></td><td><span title="Android.installReferrer
 version.NO-RULE
@@ -27,701 +25,10 @@ com.android.tools:r8:_" style="text-decoration: underline;" >r8</span>&nbsp;</td
 <tr><td><b>Android.tools.build</b></td><td><span title="Android.tools.build.gradlePlugin
 version.NO-RULE
 com.android.tools.build:gradle:_" style="text-decoration: underline;" >gradlePlugin</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX</b></td><td><span title="AndroidX.localBroadcastManager
-version.androidx.localbroadcastmanager
-androidx.localbroadcastmanager:localbroadcastmanager:_" style="text-decoration: underline;" >localBroadcastManager</span>&nbsp; - <span title="AndroidX.asyncLayoutInflater
-version.androidx.asynclayoutinflater
-androidx.asynclayoutinflater:asynclayoutinflater:_" style="text-decoration: underline;" >asyncLayoutInflater</span>&nbsp; - <span title="AndroidX.versionedParcelable
-version.androidx.versionedparcelable
-androidx.versionedparcelable:versionedparcelable:_" style="text-decoration: underline;" >versionedParcelable</span>&nbsp; - <span title="AndroidX.swipeRefreshLayout
-version.androidx.swiperefreshlayout
-androidx.swiperefreshlayout:swiperefreshlayout:_" style="text-decoration: underline;" >swipeRefreshLayout</span>&nbsp; - <span title="AndroidX.coordinatorLayout
-version.androidx.coordinatorlayout
-androidx.coordinatorlayout:coordinatorlayout:_" style="text-decoration: underline;" >coordinatorLayout</span>&nbsp; - <span title="AndroidX.slidingPaneLayout
-version.androidx.slidingpanelayout
-androidx.slidingpanelayout:slidingpanelayout:_" style="text-decoration: underline;" >slidingPaneLayout</span>&nbsp; - <span title="AndroidX.constraintLayout
-version.androidx.constraintlayout
-androidx.constraintlayout:constraintlayout:_" style="text-decoration: underline;" >constraintLayout</span>&nbsp; - <span title="AndroidX.dynamicAnimation
-version.androidx.dynamicanimation
-androidx.dynamicanimation:dynamicanimation:_" style="text-decoration: underline;" >dynamicAnimation</span>&nbsp; - <span title="AndroidX.recommendation
-version.androidx.recommendation
-androidx.recommendation:recommendation:_" style="text-decoration: underline;" >recommendation</span>&nbsp; - <span title="AndroidX.remoteCallback
-version.androidx.remotecallback
-androidx.remotecallback:remotecallback:_" style="text-decoration: underline;" >remoteCallback</span>&nbsp; - <span title="AndroidX.textClassifier
-version.androidx.textclassifier
-androidx.textclassifier:textclassifier:_" style="text-decoration: underline;" >textClassifier</span>&nbsp; - <span title="AndroidX.vectorDrawable
-version.androidx.vectordrawable
-androidx.vectordrawable:vectordrawable:_" style="text-decoration: underline;" >vectorDrawable</span>&nbsp; - <span title="AndroidX.cursorAdapter
-version.androidx.cursoradapter
-androidx.cursoradapter:cursoradapter:_" style="text-decoration: underline;" >cursorAdapter</span>&nbsp; - <span title="AndroidX.exifInterface
-version.androidx.exifinterface
-androidx.exifinterface:exifinterface:_" style="text-decoration: underline;" >exifInterface</span>&nbsp; - <span title="AndroidX.transitionKtx
-version.androidx.transition
-androidx.transition:transition-ktx:_" style="text-decoration: underline;" >transitionKtx</span>&nbsp; - <span title="AndroidX.contentPager
-version.androidx.contentpager
-androidx.contentpager:contentpager:_" style="text-decoration: underline;" >contentPager</span>&nbsp; - <span title="AndroidX.documentFile
-version.androidx.documentfile
-androidx.documentfile:documentfile:_" style="text-decoration: underline;" >documentFile</span>&nbsp; - <span title="AndroidX.drawerLayout
-version.androidx.drawerlayout
-androidx.drawerlayout:drawerlayout:_" style="text-decoration: underline;" >drawerLayout</span>&nbsp; - <span title="AndroidX.interpolator
-version.androidx.interpolator
-androidx.interpolator:interpolator:_" style="text-decoration: underline;" >interpolator</span>&nbsp; - <span title="AndroidX.recyclerView
-version.androidx.recyclerview
-androidx.recyclerview:recyclerview:_" style="text-decoration: underline;" >recyclerView</span>&nbsp; - <span title="AndroidX.dragAndDrop
-version.androidx.draganddrop
-androidx.draganddrop:draganddrop:_" style="text-decoration: underline;" >dragAndDrop</span>&nbsp; - <span title="AndroidX.mediaRouter
-version.androidx.mediarouter
-androidx.mediarouter:mediarouter:_" style="text-decoration: underline;" >mediaRouter</span>&nbsp; - <span title="AndroidX.shareTarget
-version.androidx.sharetarget
-androidx.sharetarget:sharetarget:_" style="text-decoration: underline;" >shareTarget</span>&nbsp; - <span title="AndroidX.annotation
-version.androidx.annotation
-androidx.annotation:annotation:_" style="text-decoration: underline;" >annotation</span>&nbsp; - <span title="AndroidX.collection
-version.androidx.collection
-androidx.collection:collection:_" style="text-decoration: underline;" >collection</span>&nbsp; - <span title="AndroidX.customView
-version.androidx.customview
-androidx.customview:customview:_" style="text-decoration: underline;" >customView</span>&nbsp; - <span title="AndroidX.gridLayout
-version.androidx.gridlayout
-androidx.gridlayout:gridlayout:_" style="text-decoration: underline;" >gridLayout</span>&nbsp; - <span title="AndroidX.heifWriter
-version.androidx.heifwriter
-androidx.heifwriter:heifwriter:_" style="text-decoration: underline;" >heifWriter</span>&nbsp; - <span title="AndroidX.preference
-version.androidx.preference
-androidx.preference:preference:_" style="text-decoration: underline;" >preference</span>&nbsp; - <span title="AndroidX.savedState
-version.androidx.savedstate
-androidx.savedstate:savedstate:_" style="text-decoration: underline;" >savedState</span>&nbsp; - <span title="AndroidX.transition
-version.androidx.transition
-androidx.transition:transition:_" style="text-decoration: underline;" >transition</span>&nbsp; - <span title="AndroidX.tvProvider
-version.androidx.tvprovider
-androidx.tvprovider:tvprovider:_" style="text-decoration: underline;" >tvProvider</span>&nbsp; - <span title="AndroidX.viewPager2
-version.androidx.viewpager2
-androidx.viewpager2:viewpager2:_" style="text-decoration: underline;" >viewPager2</span>&nbsp; - <span title="AndroidX.appCompat
-version.androidx.appcompat
-androidx.appcompat:appcompat:_" style="text-decoration: underline;" >appCompat</span>&nbsp; - <span title="AndroidX.appSearch
-version.androidx.appsearch
-androidx.appsearch:appsearch:_" style="text-decoration: underline;" >appSearch</span>&nbsp; - <span title="AndroidX.biometric
-version.androidx.biometric
-androidx.biometric:biometric:_" style="text-decoration: underline;" >biometric</span>&nbsp; - <span title="AndroidX.dataStore
-version.androidx.datastore
-androidx.datastore:datastore:_" style="text-decoration: underline;" >dataStore</span>&nbsp; - <span title="AndroidX.viewPager
-version.androidx.viewpager
-androidx.viewpager:viewpager:_" style="text-decoration: underline;" >viewPager</span>&nbsp; - <span title="AndroidX.activity
-version.androidx.activity
-androidx.activity:activity:_" style="text-decoration: underline;" >activity</span>&nbsp; - <span title="AndroidX.autoFill
-version.androidx.autofill
-androidx.autofill:autofill:_" style="text-decoration: underline;" >autoFill</span>&nbsp; - <span title="AndroidX.cardView
-version.androidx.cardview
-androidx.cardview:cardview:_" style="text-decoration: underline;" >cardView</span>&nbsp; - <span title="AndroidX.fragment
-version.androidx.fragment
-androidx.fragment:fragment:_" style="text-decoration: underline;" >fragment</span>&nbsp; - <span title="AndroidX.leanback
-version.androidx.leanback
-androidx.leanback:leanback:_" style="text-decoration: underline;" >leanback</span>&nbsp; - <span title="AndroidX.multidex
-version.androidx.multidex
-androidx.multidex:multidex:_" style="text-decoration: underline;" >multidex</span>&nbsp; - <span title="AndroidX.browser
-version.androidx.browser
-androidx.browser:browser:_" style="text-decoration: underline;" >browser</span>&nbsp; - <span title="AndroidX.palette
-version.androidx.palette
-androidx.palette:palette:_" style="text-decoration: underline;" >palette</span>&nbsp; - <span title="AndroidX.tracing
-version.androidx.tracing
-androidx.tracing:tracing:_" style="text-decoration: underline;" >tracing</span>&nbsp; - <span title="AndroidX.carApp
-version.androidx.car.app
-androidx.car.app:app:_" style="text-decoration: underline;" >carApp</span>&nbsp; - <span title="AndroidX.emoji2
-version.androidx.emoji2
-androidx.emoji2:emoji2:_" style="text-decoration: underline;" >emoji2</span>&nbsp; - <span title="AndroidX.glance
-version.androidx.glance
-androidx.glance:glance:_" style="text-decoration: underline;" >glance</span>&nbsp; - <span title="AndroidX.loader
-version.androidx.loader
-androidx.loader:loader:_" style="text-decoration: underline;" >loader</span>&nbsp; - <span title="AndroidX.sqlite
-version.androidx.sqlite
-androidx.sqlite:sqlite:_" style="text-decoration: underline;" >sqlite</span>&nbsp; - <span title="AndroidX.webkit
-version.androidx.webkit
-androidx.webkit:webkit:_" style="text-decoration: underline;" >webkit</span>&nbsp; - <span title="AndroidX.window
-version.androidx.window
-androidx.window:window:_" style="text-decoration: underline;" >window</span>&nbsp; - <span title="AndroidX.emoji
-version.androidx.emoji
-androidx.emoji:emoji:_" style="text-decoration: underline;" >emoji</span>&nbsp; - <span title="AndroidX.media
-version.androidx.media
-androidx.media:media:_" style="text-decoration: underline;" >media</span>&nbsp; - <span title="AndroidX.print
-version.androidx.print
-androidx.print:print:_" style="text-decoration: underline;" >print</span>&nbsp; - <span title="AndroidX.core
-version.androidx.core
-androidx.core:core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="AndroidX.wear
-version.androidx.wear
-androidx.wear:wear:_" style="text-decoration: underline;" >wear</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.activity</b></td><td><span title="AndroidX.activity.compose
-version.androidx.activity
-androidx.activity:activity-compose:_" style="text-decoration: underline;" >compose</span>&nbsp; - <span title="AndroidX.activity.ktx
-version.androidx.activity
-androidx.activity:activity-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.annotation</b></td><td><span title="AndroidX.annotation.experimental
-version.androidx.annotation
-androidx.annotation:annotation-experimental:_" style="text-decoration: underline;" >experimental</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.appCompat</b></td><td><span title="AndroidX.appCompat.resources
-version.androidx.appcompat
-androidx.appcompat:appcompat-resources:_" style="text-decoration: underline;" >resources</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.appSearch</b></td><td><span title="AndroidX.appSearch.platformStorage
-version.androidx.appsearch
-androidx.appsearch:appsearch-platform-storage:_" style="text-decoration: underline;" >platformStorage</span>&nbsp; - <span title="AndroidX.appSearch.localStorage
-version.androidx.appsearch
-androidx.appsearch:appsearch-local-storage:_" style="text-decoration: underline;" >localStorage</span>&nbsp; - <span title="AndroidX.appSearch.compiler
-version.androidx.appsearch
-androidx.appsearch:appsearch-compiler:_" style="text-decoration: underline;" >compiler</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.archCore</b></td><td><span title="AndroidX.archCore.runtime
-version.androidx.arch.core
-androidx.arch.core:core-runtime:_" style="text-decoration: underline;" >runtime</span>&nbsp; - <span title="AndroidX.archCore.testing
-version.androidx.arch.core
-androidx.arch.core:core-testing:_" style="text-decoration: underline;" >testing</span>&nbsp; - <span title="AndroidX.archCore.common
-version.androidx.arch.core
-androidx.arch.core:core-common:_" style="text-decoration: underline;" >common</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.benchmark</b></td><td><span title="AndroidX.benchmark.gradlePlugin
-version.androidx.benchmark
-androidx.benchmark:benchmark-gradle-plugin:_" style="text-decoration: underline;" >gradlePlugin</span>&nbsp; - <span title="AndroidX.benchmark.macroJunit4
-version.androidx.benchmark
-androidx.benchmark:benchmark-macro-junit4:_" style="text-decoration: underline;" >macroJunit4</span>&nbsp; - <span title="AndroidX.benchmark.common
-version.androidx.benchmark
-androidx.benchmark:benchmark-common:_" style="text-decoration: underline;" >common</span>&nbsp; - <span title="AndroidX.benchmark.junit4
-version.androidx.benchmark
-androidx.benchmark:benchmark-junit4:_" style="text-decoration: underline;" >junit4</span>&nbsp; - <span title="AndroidX.benchmark.macro
-version.androidx.benchmark
-androidx.benchmark:benchmark-macro:_" style="text-decoration: underline;" >macro</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.biometric</b></td><td><span title="AndroidX.biometric.ktx
-version.androidx.biometric-ktx
-androidx.biometric:biometric-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.camera</b></td><td><span title="AndroidX.camera.mlKitVision
-version.androidx.camera
-androidx.camera:camera-mlkit-vision:_" style="text-decoration: underline;" >mlKitVision</span>&nbsp; - <span title="AndroidX.camera.extensions
-version.androidx.camera.extensions
-androidx.camera:camera-extensions:_" style="text-decoration: underline;" >extensions</span>&nbsp; - <span title="AndroidX.camera.lifecycle
-version.androidx.camera
-androidx.camera:camera-lifecycle:_" style="text-decoration: underline;" >lifecycle</span>&nbsp; - <span title="AndroidX.camera.camera2
-version.androidx.camera
-androidx.camera:camera-camera2:_" style="text-decoration: underline;" >camera2</span>&nbsp; - <span title="AndroidX.camera.video
-version.androidx.camera
-androidx.camera:camera-video:_" style="text-decoration: underline;" >video</span>&nbsp; - <span title="AndroidX.camera.core
-version.androidx.camera
-androidx.camera:camera-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="AndroidX.camera.view
-version.androidx.camera.view
-androidx.camera:camera-view:_" style="text-decoration: underline;" >view</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.carApp</b></td><td><span title="AndroidX.carApp.automotive
-version.androidx.car.app
-androidx.car.app:app-automotive:_" style="text-decoration: underline;" >automotive</span>&nbsp; - <span title="AndroidX.carApp.projected
-version.androidx.car.app
-androidx.car.app:app-projected:_" style="text-decoration: underline;" >projected</span>&nbsp; - <span title="AndroidX.carApp.testing
-version.androidx.car.app-testing
-androidx.car.app:app-testing:_" style="text-decoration: underline;" >testing</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.collection</b></td><td><span title="AndroidX.collection.ktx
-version.androidx.collection
-androidx.collection:collection-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.compose</b></td><td><span title="AndroidX.compose.foundation
-version.androidx.compose.foundation
-androidx.compose.foundation:foundation:_" style="text-decoration: underline;" >foundation</span>&nbsp; - <span title="AndroidX.compose.animation
-version.androidx.compose.animation
-androidx.compose.animation:animation:_" style="text-decoration: underline;" >animation</span>&nbsp; - <span title="AndroidX.compose.material3
-version.androidx.compose.material3
-androidx.compose.material3:material3:_" style="text-decoration: underline;" >material3</span>&nbsp; - <span title="AndroidX.compose.compiler
-version.androidx.compose.compiler
-androidx.compose.compiler:compiler:_" style="text-decoration: underline;" >compiler</span>&nbsp; - <span title="AndroidX.compose.material
-version.androidx.compose.material
-androidx.compose.material:material:_" style="text-decoration: underline;" >material</span>&nbsp; - <span title="AndroidX.compose.runtime
-version.androidx.compose.runtime
-androidx.compose.runtime:runtime:_" style="text-decoration: underline;" >runtime</span>&nbsp; - <span title="AndroidX.compose.ui
-version.androidx.compose.ui
-androidx.compose.ui:ui:_" style="text-decoration: underline;" >ui</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.compose.animation</b></td><td><span title="AndroidX.compose.animation.graphics
-version.androidx.compose.animation
-androidx.compose.animation:animation-graphics:_" style="text-decoration: underline;" >graphics</span>&nbsp; - <span title="AndroidX.compose.animation.core
-version.androidx.compose.animation
-androidx.compose.animation:animation-core:_" style="text-decoration: underline;" >core</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.compose.foundation</b></td><td><span title="AndroidX.compose.foundation.layout
-version.androidx.compose.foundation
-androidx.compose.foundation:foundation-layout:_" style="text-decoration: underline;" >layout</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.compose.material</b></td><td><span title="AndroidX.compose.material.ripple
-version.androidx.compose.material
-androidx.compose.material:material-ripple:_" style="text-decoration: underline;" >ripple</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.compose.material.icons</b></td><td><span title="AndroidX.compose.material.icons.extended
-version.androidx.compose.material
-androidx.compose.material:material-icons-extended:_" style="text-decoration: underline;" >extended</span>&nbsp; - <span title="AndroidX.compose.material.icons.core
-version.androidx.compose.material
-androidx.compose.material:material-icons-core:_" style="text-decoration: underline;" >core</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.compose.material3</b></td><td><span title="AndroidX.compose.material3.windowSizeClass
-version.androidx.compose.material3
-androidx.compose.material3:material3-window-size-class:_" style="text-decoration: underline;" >windowSizeClass</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.compose.runtime</b></td><td><span title="AndroidX.compose.runtime.dispatch
-version.androidx.compose.runtime
-androidx.compose.runtime:runtime-dispatch:_" style="text-decoration: underline;" >dispatch</span>&nbsp; - <span title="AndroidX.compose.runtime.liveData
-version.androidx.compose.runtime
-androidx.compose.runtime:runtime-livedata:_" style="text-decoration: underline;" >liveData</span>&nbsp; - <span title="AndroidX.compose.runtime.saveable
-version.androidx.compose.runtime
-androidx.compose.runtime:runtime-saveable:_" style="text-decoration: underline;" >saveable</span>&nbsp; - <span title="AndroidX.compose.runtime.rxJava2
-version.androidx.compose.runtime
-androidx.compose.runtime:runtime-rxjava2:_" style="text-decoration: underline;" >rxJava2</span>&nbsp; - <span title="AndroidX.compose.runtime.rxJava3
-version.androidx.compose.runtime
-androidx.compose.runtime:runtime-rxjava3:_" style="text-decoration: underline;" >rxJava3</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.compose.ui</b></td><td><span title="AndroidX.compose.ui.toolingPreview
-version.androidx.compose.ui
-androidx.compose.ui:ui-tooling-preview:_" style="text-decoration: underline;" >toolingPreview</span>&nbsp; - <span title="AndroidX.compose.ui.testManifest
-version.androidx.compose.ui
-androidx.compose.ui:ui-test-manifest:_" style="text-decoration: underline;" >testManifest</span>&nbsp; - <span title="AndroidX.compose.ui.toolingData
-version.androidx.compose.ui
-androidx.compose.ui:ui-tooling-data:_" style="text-decoration: underline;" >toolingData</span>&nbsp; - <span title="AndroidX.compose.ui.viewBinding
-version.androidx.compose.ui
-androidx.compose.ui:ui-viewbinding:_" style="text-decoration: underline;" >viewBinding</span>&nbsp; - <span title="AndroidX.compose.ui.testJunit4
-version.androidx.compose.ui
-androidx.compose.ui:ui-test-junit4:_" style="text-decoration: underline;" >testJunit4</span>&nbsp; - <span title="AndroidX.compose.ui.geometry
-version.androidx.compose.ui
-androidx.compose.ui:ui-geometry:_" style="text-decoration: underline;" >geometry</span>&nbsp; - <span title="AndroidX.compose.ui.graphics
-version.androidx.compose.ui
-androidx.compose.ui:ui-graphics:_" style="text-decoration: underline;" >graphics</span>&nbsp; - <span title="AndroidX.compose.ui.tooling
-version.androidx.compose.ui
-androidx.compose.ui:ui-tooling:_" style="text-decoration: underline;" >tooling</span>&nbsp; - <span title="AndroidX.compose.ui.test
-version.androidx.compose.ui
-androidx.compose.ui:ui-test:_" style="text-decoration: underline;" >test</span>&nbsp; - <span title="AndroidX.compose.ui.text
-version.androidx.compose.ui
-androidx.compose.ui:ui-text:_" style="text-decoration: underline;" >text</span>&nbsp; - <span title="AndroidX.compose.ui.unit
-version.androidx.compose.ui
-androidx.compose.ui:ui-unit:_" style="text-decoration: underline;" >unit</span>&nbsp; - <span title="AndroidX.compose.ui.util
-version.androidx.compose.ui
-androidx.compose.ui:ui-util:_" style="text-decoration: underline;" >util</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.compose.ui.text</b></td><td><span title="AndroidX.compose.ui.text.googleFonts
-version.androidx.compose.ui
-androidx.compose.ui:ui-text-google-fonts:_" style="text-decoration: underline;" >googleFonts</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.concurrent</b></td><td><span title="AndroidX.concurrent.futuresKtx
-version.androidx.concurrent
-androidx.concurrent:concurrent-futures-ktx:_" style="text-decoration: underline;" >futuresKtx</span>&nbsp; - <span title="AndroidX.concurrent.futures
-version.androidx.concurrent
-androidx.concurrent:concurrent-futures:_" style="text-decoration: underline;" >futures</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.constraintLayout</b></td><td><span title="AndroidX.constraintLayout.compose
-version.androidx.constraintlayout-compose
-androidx.constraintlayout:constraintlayout-compose:_" style="text-decoration: underline;" >compose</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.core</b></td><td><span title="AndroidX.core.animationTesting
-version.androidx.core-animation
-androidx.core:core-animation-testing:_" style="text-decoration: underline;" >animationTesting</span>&nbsp; - <span title="AndroidX.core.googleShortcuts
-version.androidx.core-google-shortcuts
-androidx.core:core-google-shortcuts:_" style="text-decoration: underline;" >googleShortcuts</span>&nbsp; - <span title="AndroidX.core.splashscreen
-version.androidx.core-splashscreen
-androidx.core:core-splashscreen:_" style="text-decoration: underline;" >splashscreen</span>&nbsp; - <span title="AndroidX.core.performance
-version.androidx.core-performance
-androidx.core:core-performance:_" style="text-decoration: underline;" >performance</span>&nbsp; - <span title="AndroidX.core.remoteViews
-version.androidx.core
-androidx.core:core-remoteviews:_" style="text-decoration: underline;" >remoteViews</span>&nbsp; - <span title="AndroidX.core.animation
-version.androidx.core-animation
-androidx.core:core-animation:_" style="text-decoration: underline;" >animation</span>&nbsp; - <span title="AndroidX.core.role
-version.androidx.core-role
-androidx.core:core-role:_" style="text-decoration: underline;" >role</span>&nbsp; - <span title="AndroidX.core.ktx
-version.androidx.core
-androidx.core:core-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.customView</b></td><td><span title="AndroidX.customView.poolingContainer
-version.androidx.customview-poolingcontainer
-androidx.customview:customview-poolingcontainer:_" style="text-decoration: underline;" >poolingContainer</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.dataStore</b></td><td><span title="AndroidX.dataStore.preferences
-version.androidx.datastore
-androidx.datastore:datastore-preferences:_" style="text-decoration: underline;" >preferences</span>&nbsp; - <span title="AndroidX.dataStore.rxJava2
-version.androidx.datastore
-androidx.datastore:datastore-rxJava2:_" style="text-decoration: underline;" >rxJava2</span>&nbsp; - <span title="AndroidX.dataStore.rxJava3
-version.androidx.datastore
-androidx.datastore:datastore-rxJava3:_" style="text-decoration: underline;" >rxJava3</span>&nbsp; - <span title="AndroidX.dataStore.core
-version.androidx.datastore
-androidx.datastore:datastore-core:_" style="text-decoration: underline;" >core</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.dataStore.preferences</b></td><td><span title="AndroidX.dataStore.preferences.rxJava2
-version.androidx.datastore
-androidx.datastore:datastore-preferences-rxJava2:_" style="text-decoration: underline;" >rxJava2</span>&nbsp; - <span title="AndroidX.dataStore.preferences.rxJava3
-version.androidx.datastore
-androidx.datastore:datastore-preferences-rxJava3:_" style="text-decoration: underline;" >rxJava3</span>&nbsp; - <span title="AndroidX.dataStore.preferences.core
-version.androidx.datastore
-androidx.datastore:datastore-preferences-core:_" style="text-decoration: underline;" >core</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.dynamicAnimation</b></td><td><span title="AndroidX.dynamicAnimation.ktx
-version.androidx.dynamicanimation-ktx
-androidx.dynamicanimation:dynamicanimation-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.emoji</b></td><td><span title="AndroidX.emoji.appCompat
-version.androidx.emoji
-androidx.emoji:emoji-appcompat:_" style="text-decoration: underline;" >appCompat</span>&nbsp; - <span title="AndroidX.emoji.bundled
-version.androidx.emoji
-androidx.emoji:emoji-bundled:_" style="text-decoration: underline;" >bundled</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.emoji2</b></td><td><span title="AndroidX.emoji2.viewsHelper
-version.androidx.emoji2
-androidx.emoji2:emoji2-views-helper:_" style="text-decoration: underline;" >viewsHelper</span>&nbsp; - <span title="AndroidX.emoji2.bundled
-version.androidx.emoji2
-androidx.emoji2:emoji2-bundled:_" style="text-decoration: underline;" >bundled</span>&nbsp; - <span title="AndroidX.emoji2.views
-version.androidx.emoji2
-androidx.emoji2:emoji2-views:_" style="text-decoration: underline;" >views</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.enterprise</b></td><td><span title="AndroidX.enterprise.feedbackTesting
-version.androidx.enterprise
-androidx.enterprise:enterprise-feedback-testing:_" style="text-decoration: underline;" >feedbackTesting</span>&nbsp; - <span title="AndroidX.enterprise.feedback
-version.androidx.enterprise
-androidx.enterprise:enterprise-feedback:_" style="text-decoration: underline;" >feedback</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.fragment</b></td><td><span title="AndroidX.fragment.testing
-version.androidx.fragment
-androidx.fragment:fragment-testing:_" style="text-decoration: underline;" >testing</span>&nbsp; - <span title="AndroidX.fragment.ktx
-version.androidx.fragment
-androidx.fragment:fragment-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.games</b></td><td><span title="AndroidX.games.performanceTuner
-version.androidx.games-performance-tuner
-androidx.games:games-performance-tuner:_" style="text-decoration: underline;" >performanceTuner</span>&nbsp; - <span title="AndroidX.games.framePacing
-version.androidx.games-frame-pacing
-androidx.games:games-frame-pacing:_" style="text-decoration: underline;" >framePacing</span>&nbsp; - <span title="AndroidX.games.controller
-version.androidx.games-controller
-androidx.games:games-controller:_" style="text-decoration: underline;" >controller</span>&nbsp; - <span title="AndroidX.games.textInput
-version.androidx.games-text-input
-androidx.games:games-text-input:_" style="text-decoration: underline;" >textInput</span>&nbsp; - <span title="AndroidX.games.activity
-version.androidx.games-activity
-androidx.games:games-activity:_" style="text-decoration: underline;" >activity</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.glance</b></td><td><span title="AndroidX.glance.appWidget
-version.androidx.glance
-androidx.glance:glance-appwidget:_" style="text-decoration: underline;" >appWidget</span>&nbsp; - <span title="AndroidX.glance.wearTiles
-version.androidx.glance
-androidx.glance:glance-wear-tiles:_" style="text-decoration: underline;" >wearTiles</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.health</b></td><td><span title="AndroidX.health.servicesClient
-version.androidx.health-services-client
-androidx.health:health-services-client:_" style="text-decoration: underline;" >servicesClient</span>&nbsp; - <span title="AndroidX.health.connectClient
-version.androidx.health-connect-client
-androidx.health:health-connect-client:_" style="text-decoration: underline;" >connectClient</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.hilt</b></td><td><span title="AndroidX.hilt.navigationFragment
-version.androidx.hilt
-androidx.hilt:hilt-navigation-fragment:_" style="text-decoration: underline;" >navigationFragment</span>&nbsp; - <span title="AndroidX.hilt.navigationCompose
-version.androidx.hilt-navigation-compose
-androidx.hilt:hilt-navigation-compose:_" style="text-decoration: underline;" >navigationCompose</span>&nbsp; - <span title="AndroidX.hilt.compiler
-version.androidx.hilt
-androidx.hilt:hilt-compiler:_" style="text-decoration: underline;" >compiler</span>&nbsp; - <span title="AndroidX.hilt.work
-version.androidx.hilt
-androidx.hilt:hilt-work:_" style="text-decoration: underline;" >work</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.leanback</b></td><td><span title="AndroidX.leanback.preference
-version.androidx.leanback
-androidx.leanback:leanback-preference:_" style="text-decoration: underline;" >preference</span>&nbsp; - <span title="AndroidX.leanback.paging
-version.androidx.leanback-paging
-androidx.leanback:leanback-paging:_" style="text-decoration: underline;" >paging</span>&nbsp; - <span title="AndroidX.leanback.grid
-version.androidx.leanback-grid
-androidx.leanback:leanback-grid:_" style="text-decoration: underline;" >grid</span>&nbsp; - <span title="AndroidX.leanback.tab
-version.androidx.leanback-tab
-androidx.leanback:leanback-tab:_" style="text-decoration: underline;" >tab</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.lifecycle</b></td><td><span title="AndroidX.lifecycle.viewModelSavedState
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-viewmodel-savedstate:_" style="text-decoration: underline;" >viewModelSavedState</span>&nbsp; - <span title="AndroidX.lifecycle.reactiveStreamsKtx
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-reactivestreams-ktx:_" style="text-decoration: underline;" >reactiveStreamsKtx</span>&nbsp; - <span title="AndroidX.lifecycle.viewModelCompose
-version.androidx.lifecycle-viewmodel-compose
-androidx.lifecycle:lifecycle-viewmodel-compose:_" style="text-decoration: underline;" >viewModelCompose</span>&nbsp; - <span title="AndroidX.lifecycle.reactiveStreams
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-reactivestreams:_" style="text-decoration: underline;" >reactiveStreams</span>&nbsp; - <span title="AndroidX.lifecycle.runtimeTesting
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-runtime-testing:_" style="text-decoration: underline;" >runtimeTesting</span>&nbsp; - <span title="AndroidX.lifecycle.viewModelKtx
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-viewmodel-ktx:_" style="text-decoration: underline;" >viewModelKtx</span>&nbsp; - <span title="AndroidX.lifecycle.commonJava8
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-common-java8:_" style="text-decoration: underline;" >commonJava8</span>&nbsp; - <span title="AndroidX.lifecycle.liveDataKtx
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-livedata-ktx:_" style="text-decoration: underline;" >liveDataKtx</span>&nbsp; - <span title="AndroidX.lifecycle.extensions
-version.androidx.lifecycle-extensions
-androidx.lifecycle:lifecycle-extensions:_" style="text-decoration: underline;" >extensions</span>&nbsp; - <span title="AndroidX.lifecycle.runtimeKtx
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-runtime-ktx:_" style="text-decoration: underline;" >runtimeKtx</span>&nbsp; - <span title="AndroidX.lifecycle.viewModel
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-viewmodel:_" style="text-decoration: underline;" >viewModel</span>&nbsp; - <span title="AndroidX.lifecycle.compiler
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-compiler:_" style="text-decoration: underline;" >compiler</span>&nbsp; - <span title="AndroidX.lifecycle.liveData
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-livedata:_" style="text-decoration: underline;" >liveData</span>&nbsp; - <span title="AndroidX.lifecycle.process
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-process:_" style="text-decoration: underline;" >process</span>&nbsp; - <span title="AndroidX.lifecycle.runtime
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-runtime:_" style="text-decoration: underline;" >runtime</span>&nbsp; - <span title="AndroidX.lifecycle.service
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-service:_" style="text-decoration: underline;" >service</span>&nbsp; - <span title="AndroidX.lifecycle.common
-version.androidx.lifecycle
-androidx.lifecycle:lifecycle-common:_" style="text-decoration: underline;" >common</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.media2</b></td><td><span title="AndroidX.media2.exoplayer
-version.androidx.media2
-androidx.media2:media2-exoplayer:_" style="text-decoration: underline;" >exoplayer</span>&nbsp; - <span title="AndroidX.media2.session
-version.androidx.media2
-androidx.media2:media2-session:_" style="text-decoration: underline;" >session</span>&nbsp; - <span title="AndroidX.media2.common
-version.androidx.media2
-androidx.media2:media2-common:_" style="text-decoration: underline;" >common</span>&nbsp; - <span title="AndroidX.media2.player
-version.androidx.media2
-androidx.media2:media2-player:_" style="text-decoration: underline;" >player</span>&nbsp; - <span title="AndroidX.media2.widget
-version.androidx.media2
-androidx.media2:media2-widget:_" style="text-decoration: underline;" >widget</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.media3</b></td><td><span title="AndroidX.media3.transformer
-version.androidx.media3
-androidx.media3:media3-transformer:_" style="text-decoration: underline;" >transformer</span>&nbsp; - <span title="AndroidX.media3.datasource
-version.androidx.media3
-androidx.media3:media3-datasource:_" style="text-decoration: underline;" >datasource</span>&nbsp; - <span title="AndroidX.media3.exoPlayer
-version.androidx.media3
-androidx.media3:media3-exoplayer:_" style="text-decoration: underline;" >exoPlayer</span>&nbsp; - <span title="AndroidX.media3.extractor
-version.androidx.media3
-androidx.media3:media3-extractor:_" style="text-decoration: underline;" >extractor</span>&nbsp; - <span title="AndroidX.media3.testUtils
-version.androidx.media3
-androidx.media3:media3-test-utils:_" style="text-decoration: underline;" >testUtils</span>&nbsp; - <span title="AndroidX.media3.database
-version.androidx.media3
-androidx.media3:media3-database:_" style="text-decoration: underline;" >database</span>&nbsp; - <span title="AndroidX.media3.decoder
-version.androidx.media3
-androidx.media3:media3-decoder:_" style="text-decoration: underline;" >decoder</span>&nbsp; - <span title="AndroidX.media3.session
-version.androidx.media3
-androidx.media3:media3-session:_" style="text-decoration: underline;" >session</span>&nbsp; - <span title="AndroidX.media3.common
-version.androidx.media3
-androidx.media3:media3-common:_" style="text-decoration: underline;" >common</span>&nbsp; - <span title="AndroidX.media3.cast
-version.androidx.media3
-androidx.media3:media3-cast:_" style="text-decoration: underline;" >cast</span>&nbsp; - <span title="AndroidX.media3.ui
-version.androidx.media3
-androidx.media3:media3-ui:_" style="text-decoration: underline;" >ui</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.media3.dataSource</b></td><td><span title="AndroidX.media3.dataSource.cronet
-version.androidx.media3
-androidx.media3:media3-datasource-cronet:_" style="text-decoration: underline;" >cronet</span>&nbsp; - <span title="AndroidX.media3.dataSource.okhttp
-version.androidx.media3
-androidx.media3:media3-datasource-okhttp:_" style="text-decoration: underline;" >okhttp</span>&nbsp; - <span title="AndroidX.media3.dataSource.rtmp
-version.androidx.media3
-androidx.media3:media3-datasource-rtmp:_" style="text-decoration: underline;" >rtmp</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.media3.exoPlayer</b></td><td><span title="AndroidX.media3.exoPlayer.workmanager
-version.androidx.media3
-androidx.media3:media3-exoplayer-workmanager:_" style="text-decoration: underline;" >workmanager</span>&nbsp; - <span title="AndroidX.media3.exoPlayer.dash
-version.androidx.media3
-androidx.media3:media3-exoplayer-dash:_" style="text-decoration: underline;" >dash</span>&nbsp; - <span title="AndroidX.media3.exoPlayer.rtsp
-version.androidx.media3
-androidx.media3:media3-exoplayer-rtsp:_" style="text-decoration: underline;" >rtsp</span>&nbsp; - <span title="AndroidX.media3.exoPlayer.hls
-version.androidx.media3
-androidx.media3:media3-exoplayer-hls:_" style="text-decoration: underline;" >hls</span>&nbsp; - <span title="AndroidX.media3.exoPlayer.ima
-version.androidx.media3
-androidx.media3:media3-exoplayer-ima:_" style="text-decoration: underline;" >ima</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.media3.testUtils</b></td><td><span title="AndroidX.media3.testUtils.robolectric
-version.androidx.media3
-androidx.media3:media3-test-utils-robolectric:_" style="text-decoration: underline;" >robolectric</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.media3.ui</b></td><td><span title="AndroidX.media3.ui.leanback
-version.androidx.media3
-androidx.media3:media3-ui-leanback:_" style="text-decoration: underline;" >leanback</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.metrics</b></td><td><span title="AndroidX.metrics.performance
-version.androidx.metrics
-androidx.metrics:metrics-performance:_" style="text-decoration: underline;" >performance</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.multidex</b></td><td><span title="AndroidX.multidex.instrumentation
-version.androidx.multidex
-androidx.multidex:multidex-instrumentation:_" style="text-decoration: underline;" >instrumentation</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.navigation</b></td><td><span title="AndroidX.navigation.dynamicFeaturesFragment
-version.androidx.navigation
-androidx.navigation:navigation-dynamic-features-fragment:_" style="text-decoration: underline;" >dynamicFeaturesFragment</span>&nbsp; - <span title="AndroidX.navigation.safeArgsGradlePlugin
-version.androidx.navigation
-androidx.navigation:navigation-safe-args-gradle-plugin:_" style="text-decoration: underline;" >safeArgsGradlePlugin</span>&nbsp; - <span title="AndroidX.navigation.safeArgsGenerator
-version.androidx.navigation
-androidx.navigation:navigation-safe-args-generator:_" style="text-decoration: underline;" >safeArgsGenerator</span>&nbsp; - <span title="AndroidX.navigation.fragmentKtx
-version.androidx.navigation
-androidx.navigation:navigation-fragment-ktx:_" style="text-decoration: underline;" >fragmentKtx</span>&nbsp; - <span title="AndroidX.navigation.runtimeKtx
-version.androidx.navigation
-androidx.navigation:navigation-runtime-ktx:_" style="text-decoration: underline;" >runtimeKtx</span>&nbsp; - <span title="AndroidX.navigation.commonKtx
-version.androidx.navigation
-androidx.navigation:navigation-common-ktx:_" style="text-decoration: underline;" >commonKtx</span>&nbsp; - <span title="AndroidX.navigation.fragment
-version.androidx.navigation
-androidx.navigation:navigation-fragment:_" style="text-decoration: underline;" >fragment</span>&nbsp; - <span title="AndroidX.navigation.compose
-version.androidx.navigation-compose
-androidx.navigation:navigation-compose:_" style="text-decoration: underline;" >compose</span>&nbsp; - <span title="AndroidX.navigation.runtime
-version.androidx.navigation
-androidx.navigation:navigation-runtime:_" style="text-decoration: underline;" >runtime</span>&nbsp; - <span title="AndroidX.navigation.testing
-version.androidx.navigation
-androidx.navigation:navigation-testing:_" style="text-decoration: underline;" >testing</span>&nbsp; - <span title="AndroidX.navigation.common
-version.androidx.navigation
-androidx.navigation:navigation-common:_" style="text-decoration: underline;" >common</span>&nbsp; - <span title="AndroidX.navigation.uiKtx
-version.androidx.navigation
-androidx.navigation:navigation-ui-ktx:_" style="text-decoration: underline;" >uiKtx</span>&nbsp; - <span title="AndroidX.navigation.ui
-version.androidx.navigation
-androidx.navigation:navigation-ui:_" style="text-decoration: underline;" >ui</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.paging</b></td><td><span title="AndroidX.paging.runtimeKtx
-version.androidx.paging
-androidx.paging:paging-runtime-ktx:_" style="text-decoration: underline;" >runtimeKtx</span>&nbsp; - <span title="AndroidX.paging.rxJava2Ktx
-version.androidx.paging
-androidx.paging:paging-rxjava2-ktx:_" style="text-decoration: underline;" >rxJava2Ktx</span>&nbsp; - <span title="AndroidX.paging.commonKtx
-version.androidx.paging
-androidx.paging:paging-common-ktx:_" style="text-decoration: underline;" >commonKtx</span>&nbsp; - <span title="AndroidX.paging.compose
-version.androidx.paging-compose
-androidx.paging:paging-compose:_" style="text-decoration: underline;" >compose</span>&nbsp; - <span title="AndroidX.paging.runtime
-version.androidx.paging
-androidx.paging:paging-runtime:_" style="text-decoration: underline;" >runtime</span>&nbsp; - <span title="AndroidX.paging.rxJava2
-version.androidx.paging
-androidx.paging:paging-rxjava2:_" style="text-decoration: underline;" >rxJava2</span>&nbsp; - <span title="AndroidX.paging.rxJava3
-version.androidx.paging
-androidx.paging:paging-rxjava3:_" style="text-decoration: underline;" >rxJava3</span>&nbsp; - <span title="AndroidX.paging.common
-version.androidx.paging
-androidx.paging:paging-common:_" style="text-decoration: underline;" >common</span>&nbsp; - <span title="AndroidX.paging.guava
-version.androidx.paging
-androidx.paging:paging-guava:_" style="text-decoration: underline;" >guava</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.palette</b></td><td><span title="AndroidX.palette.ktx
-version.androidx.palette
-androidx.palette:palette-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.preference</b></td><td><span title="AndroidX.preference.ktx
-version.androidx.preference
-androidx.preference:preference-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.recyclerView</b></td><td><span title="AndroidX.recyclerView.selection
-version.androidx.recyclerview-selection
-androidx.recyclerview:recyclerview-selection:_" style="text-decoration: underline;" >selection</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.remoteCallback</b></td><td><span title="AndroidX.remoteCallback.processor
-version.androidx.remotecallback
-androidx.remotecallback:remotecallback-processor:_" style="text-decoration: underline;" >processor</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.room</b></td><td><span title="AndroidX.room.compiler
-version.androidx.room
-androidx.room:room-compiler:_" style="text-decoration: underline;" >compiler</span>&nbsp; - <span title="AndroidX.room.runtime
-version.androidx.room
-androidx.room:room-runtime:_" style="text-decoration: underline;" >runtime</span>&nbsp; - <span title="AndroidX.room.rxJava2
-version.androidx.room
-androidx.room:room-rxjava2:_" style="text-decoration: underline;" >rxJava2</span>&nbsp; - <span title="AndroidX.room.rxJava3
-version.androidx.room
-androidx.room:room-rxjava3:_" style="text-decoration: underline;" >rxJava3</span>&nbsp; - <span title="AndroidX.room.testing
-version.androidx.room
-androidx.room:room-testing:_" style="text-decoration: underline;" >testing</span>&nbsp; - <span title="AndroidX.room.common
-version.androidx.room
-androidx.room:room-common:_" style="text-decoration: underline;" >common</span>&nbsp; - <span title="AndroidX.room.paging
-version.androidx.room
-androidx.room:room-paging:_" style="text-decoration: underline;" >paging</span>&nbsp; - <span title="AndroidX.room.guava
-version.androidx.room
-androidx.room:room-guava:_" style="text-decoration: underline;" >guava</span>&nbsp; - <span title="AndroidX.room.ktx
-version.androidx.room
-androidx.room:room-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.savedState</b></td><td><span title="AndroidX.savedState.ktx
-version.androidx.savedstate
-androidx.savedstate:savedstate-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.security</b></td><td><span title="AndroidX.security.appAuthenticatorTesting
-version.androidx.security-app-authenticator-testing
-androidx.security:security-app-authenticator-testing:_" style="text-decoration: underline;" >appAuthenticatorTesting</span>&nbsp; - <span title="AndroidX.security.identityCredential
-version.androidx.security-identity-credential
-androidx.security:security-identity-credential:_" style="text-decoration: underline;" >identityCredential</span>&nbsp; - <span title="AndroidX.security.appAuthenticator
-version.androidx.security-app-authenticator
-androidx.security:security-app-authenticator:_" style="text-decoration: underline;" >appAuthenticator</span>&nbsp; - <span title="AndroidX.security.cryptoKtx
-version.androidx.security-crypto
-androidx.security:security-crypto-ktx:_" style="text-decoration: underline;" >cryptoKtx</span>&nbsp; - <span title="AndroidX.security.crypto
-version.androidx.security-crypto
-androidx.security:security-crypto:_" style="text-decoration: underline;" >crypto</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.slice</b></td><td><span title="AndroidX.slice.buildersKtx
-version.androidx.slice-builders-ktx
-androidx.slice:slice-builders-ktx:_" style="text-decoration: underline;" >buildersKtx</span>&nbsp; - <span title="AndroidX.slice.builders
-version.androidx.slice
-androidx.slice:slice-builders:_" style="text-decoration: underline;" >builders</span>&nbsp; - <span title="AndroidX.slice.core
-version.androidx.slice
-androidx.slice:slice-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="AndroidX.slice.view
-version.androidx.slice
-androidx.slice:slice-view:_" style="text-decoration: underline;" >view</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.sqlite</b></td><td><span title="AndroidX.sqlite.framework
-version.androidx.sqlite
-androidx.sqlite:sqlite-framework:_" style="text-decoration: underline;" >framework</span>&nbsp; - <span title="AndroidX.sqlite.ktx
-version.androidx.sqlite
-androidx.sqlite:sqlite-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.startup</b></td><td><span title="AndroidX.startup.runtime
-version.androidx.startup
-androidx.startup:startup-runtime:_" style="text-decoration: underline;" >runtime</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.test</b></td><td><span title="AndroidX.test.orchestrator
-version.androidx.test.orchestrator
-androidx.test:orchestrator:_" style="text-decoration: underline;" >orchestrator</span>&nbsp; - <span title="AndroidX.test.uiAutomator
-version.androidx.test.uiautomator
-androidx.test.uiautomator:uiautomator:_" style="text-decoration: underline;" >uiAutomator</span>&nbsp; - <span title="AndroidX.test.services
-version.androidx.test.services
-androidx.test.services:test-services:_" style="text-decoration: underline;" >services</span>&nbsp; - <span title="AndroidX.test.coreKtx
-version.androidx.test.core
-androidx.test:core-ktx:_" style="text-decoration: underline;" >coreKtx</span>&nbsp; - <span title="AndroidX.test.monitor
-version.androidx.test.monitor
-androidx.test:monitor:_" style="text-decoration: underline;" >monitor</span>&nbsp; - <span title="AndroidX.test.runner
-version.androidx.test.runner
-androidx.test:runner:_" style="text-decoration: underline;" >runner</span>&nbsp; - <span title="AndroidX.test.rules
-version.androidx.test.rules
-androidx.test:rules:_" style="text-decoration: underline;" >rules</span>&nbsp; - <span title="AndroidX.test.core
-version.androidx.test.core
-androidx.test:core:_" style="text-decoration: underline;" >core</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.test.espresso</b></td><td><span title="AndroidX.test.espresso.idlingResource
-version.androidx.test.espresso
-androidx.test.espresso:espresso-idling-resource:_" style="text-decoration: underline;" >idlingResource</span>&nbsp; - <span title="AndroidX.test.espresso.accessibility
-version.androidx.test.espresso
-androidx.test.espresso:espresso-accessibility:_" style="text-decoration: underline;" >accessibility</span>&nbsp; - <span title="AndroidX.test.espresso.contrib
-version.androidx.test.espresso
-androidx.test.espresso:espresso-contrib:_" style="text-decoration: underline;" >contrib</span>&nbsp; - <span title="AndroidX.test.espresso.intents
-version.androidx.test.espresso
-androidx.test.espresso:espresso-intents:_" style="text-decoration: underline;" >intents</span>&nbsp; - <span title="AndroidX.test.espresso.remote
-version.androidx.test.espresso
-androidx.test.espresso:espresso-remote:_" style="text-decoration: underline;" >remote</span>&nbsp; - <span title="AndroidX.test.espresso.core
-version.androidx.test.espresso
-androidx.test.espresso:espresso-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="AndroidX.test.espresso.web
-version.androidx.test.espresso
-androidx.test.espresso:espresso-web:_" style="text-decoration: underline;" >web</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.test.espresso.idling</b></td><td><span title="AndroidX.test.espresso.idling.concurrent
-version.androidx.test.espresso.idling
-androidx.test.espresso.idling:idling-concurrent:_" style="text-decoration: underline;" >concurrent</span>&nbsp; - <span title="AndroidX.test.espresso.idling.net
-version.androidx.test.espresso.idling
-androidx.test.espresso.idling:idling-net:_" style="text-decoration: underline;" >net</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.test.ext</b></td><td><span title="AndroidX.test.ext.junit
-version.androidx.test.ext.junit
-androidx.test.ext:junit:_" style="text-decoration: underline;" >junit</span>&nbsp; - <span title="AndroidX.test.ext.truth
-version.androidx.test.ext.truth
-androidx.test.ext:truth:_" style="text-decoration: underline;" >truth</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.test.ext.junit</b></td><td><span title="AndroidX.test.ext.junit.gTest
-version.androidx.test.ext.junit-gtest
-androidx.test.ext:junit-gtest:_" style="text-decoration: underline;" >gTest</span>&nbsp; - <span title="AndroidX.test.ext.junit.ktx
-version.androidx.test.ext.junit
-androidx.test.ext:junit-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.tracing</b></td><td><span title="AndroidX.tracing.ktx
-version.androidx.tracing
-androidx.tracing:tracing-ktx:_" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.vectorDrawable</b></td><td><span title="AndroidX.vectorDrawable.animated
-version.androidx.vectordrawable-animated
-androidx.vectordrawable:vectordrawable-animated:_" style="text-decoration: underline;" >animated</span>&nbsp; - <span title="AndroidX.vectorDrawable.seekable
-version.androidx.vectordrawable-seekable
-androidx.vectordrawable:vectordrawable-seekable:_" style="text-decoration: underline;" >seekable</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.wear</b></td><td><span title="AndroidX.wear.remoteInteractions
-version.androidx.wear-remote-interactions
-androidx.wear:wear-remote-interactions:_" style="text-decoration: underline;" >remoteInteractions</span>&nbsp; - <span title="AndroidX.wear.phoneInteractions
-version.androidx.wear-phone-interactions
-androidx.wear:wear-phone-interactions:_" style="text-decoration: underline;" >phoneInteractions</span>&nbsp; - <span title="AndroidX.wear.inputTesting
-version.androidx.wear-input
-androidx.wear:wear-input-testing:_" style="text-decoration: underline;" >inputTesting</span>&nbsp; - <span title="AndroidX.wear.watchFace
-version.androidx.wear.watchface
-androidx.wear.watchface:watchface:_" style="text-decoration: underline;" >watchFace</span>&nbsp; - <span title="AndroidX.wear.ongoing
-version.androidx.wear-ongoing
-androidx.wear:wear-ongoing:_" style="text-decoration: underline;" >ongoing</span>&nbsp; - <span title="AndroidX.wear.input
-version.androidx.wear-input
-androidx.wear:wear-input:_" style="text-decoration: underline;" >input</span>&nbsp; - <span title="AndroidX.wear.tiles
-version.androidx.wear.tiles
-androidx.wear.tiles:tiles:_" style="text-decoration: underline;" >tiles</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.wear.compose</b></td><td><span title="AndroidX.wear.compose.foundation
-version.androidx.wear.compose.compose-foundation
-androidx.wear.compose:compose-foundation:_" style="text-decoration: underline;" >foundation</span>&nbsp; - <span title="AndroidX.wear.compose.navigation
-version.androidx.wear.compose.compose-navigation
-androidx.wear.compose:compose-navigation:_" style="text-decoration: underline;" >navigation</span>&nbsp; - <span title="AndroidX.wear.compose.material
-version.androidx.wear.compose.compose-material
-androidx.wear.compose:compose-material:_" style="text-decoration: underline;" >material</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.wear.tiles</b></td><td><span title="AndroidX.wear.tiles.material
-version.androidx.wear.tiles
-androidx.wear.tiles:tiles-material:_" style="text-decoration: underline;" >material</span>&nbsp; - <span title="AndroidX.wear.tiles.renderer
-version.androidx.wear.tiles
-androidx.wear.tiles:tiles-renderer:_" style="text-decoration: underline;" >renderer</span>&nbsp; - <span title="AndroidX.wear.tiles.testing
-version.androidx.wear.tiles
-androidx.wear.tiles:tiles-testing:_" style="text-decoration: underline;" >testing</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.wear.watchFace</b></td><td><span title="AndroidX.wear.watchFace.editor
-version.androidx.wear.watchface-editor
-androidx.wear.watchface:watchface-editor:_" style="text-decoration: underline;" >editor</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.wear.watchFace.complications</b></td><td><span title="AndroidX.wear.watchFace.complications.dataSourceKtx
-version.androidx.wear.watchface-complications-data-source-ktx
-androidx.wear.watchface:watchface-complications-data-source-ktx:_" style="text-decoration: underline;" >dataSourceKtx</span>&nbsp; - <span title="AndroidX.wear.watchFace.complications.dataSource
-version.androidx.wear.watchface-complications-data-source
-androidx.wear.watchface:watchface-complications-data-source:_" style="text-decoration: underline;" >dataSource</span>&nbsp; - <span title="AndroidX.wear.watchFace.complications.rendering
-version.androidx.wear.watchface-complications-rendering
-androidx.wear.watchface:watchface-complications-rendering:_" style="text-decoration: underline;" >rendering</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.window</b></td><td><span title="AndroidX.window.rxJava2
-version.androidx.window
-androidx.window:window-rxjava2:_" style="text-decoration: underline;" >rxJava2</span>&nbsp; - <span title="AndroidX.window.rxJava3
-version.androidx.window
-androidx.window:window-rxjava3:_" style="text-decoration: underline;" >rxJava3</span>&nbsp; - <span title="AndroidX.window.testing
-version.androidx.window
-androidx.window:window-testing:_" style="text-decoration: underline;" >testing</span>&nbsp; - <span title="AndroidX.window.java
-version.androidx.window
-androidx.window:window-java:_" style="text-decoration: underline;" >java</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.work</b></td><td><span title="AndroidX.work.multiprocess
-version.androidx.work
-androidx.work:work-multiprocess:_" style="text-decoration: underline;" >multiprocess</span>&nbsp; - <span title="AndroidX.work.runtimeKtx
-version.androidx.work
-androidx.work:work-runtime-ktx:_" style="text-decoration: underline;" >runtimeKtx</span>&nbsp; - <span title="AndroidX.work.runtime
-version.androidx.work
-androidx.work:work-runtime:_" style="text-decoration: underline;" >runtime</span>&nbsp; - <span title="AndroidX.work.rxJava2
-version.androidx.work
-androidx.work:work-rxjava2:_" style="text-decoration: underline;" >rxJava2</span>&nbsp; - <span title="AndroidX.work.rxJava3
-version.androidx.work
-androidx.work:work-rxjava3:_" style="text-decoration: underline;" >rxJava3</span>&nbsp; - <span title="AndroidX.work.testing
-version.androidx.work
-androidx.work:work-testing:_" style="text-decoration: underline;" >testing</span>&nbsp; - <span title="AndroidX.work.gcm
-version.androidx.work
-androidx.work:work-gcm:_" style="text-decoration: underline;" >gcm</span>&nbsp;</td></tr>
                     </table>
-## AndroidX
+## [AndroidX.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/AndroidX.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>AndroidX</b></td><td><span title="AndroidX.localBroadcastManager
 version.androidx.localbroadcastmanager
@@ -1413,11 +720,9 @@ androidx.work:work-testing:_" style="text-decoration: underline;" >testing</span
 version.androidx.work
 androidx.work:work-gcm:_" style="text-decoration: underline;" >gcm</span>&nbsp;</td></tr>
                     </table>
-## COIL
+## [COIL.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/COIL.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>COIL</b></td><td><span title="COIL.composeBase
 version.coil-kt
@@ -1435,11 +740,9 @@ io.coil-kt:coil-svg:_" style="text-decoration: underline;" >svg</span>&nbsp; - <
 version.coil-kt
 io.coil-kt:coil:_" style="text-decoration: underline;" >COIL</span>&nbsp;</td></tr>
                     </table>
-## CashApp
+## [CashApp.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/CashApp.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>CashApp</b></td><td><span title="CashApp.licenseeGradlePlugin
 version.app.cash.licensee
@@ -1454,11 +757,9 @@ app.cash.copper:copper-rx2:_" style="text-decoration: underline;" >rx2</span>&nb
 version.app.cash.copper
 app.cash.copper:copper-rx3:_" style="text-decoration: underline;" >rx3</span>&nbsp;</td></tr>
                     </table>
-## Chucker
+## [Chucker.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Chucker.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Chucker</b></td><td><span title="Chucker.libraryNoOp
 version.chucker
@@ -1466,11 +767,9 @@ com.github.chuckerteam.chucker:library-no-op:_" style="text-decoration: underlin
 version.chucker
 com.github.chuckerteam.chucker:library:_" style="text-decoration: underline;" >library</span>&nbsp;</td></tr>
                     </table>
-## Firebase
+## [Firebase.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Firebase.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Firebase</b></td><td><span title="Firebase.performanceMonitoringGradlePlugin
 version.NO-RULE
@@ -1544,11 +843,9 @@ com.google.firebase:firebase-analytics:_" style="text-decoration: underline;" >a
 version.firebase-bom
 com.google.firebase:firebase-bom:_" style="text-decoration: underline;" >bom</span>&nbsp;</td></tr>
                     </table>
-## Google
+## [Google.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Google.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Google</b></td><td><span title="Google.playServicesGradlePlugin
 version.NO-RULE
@@ -1825,11 +1122,9 @@ com.google.modernstorage:modernstorage-storage:_" style="text-decoration: underl
 version.google.modernstorage
 com.google.modernstorage:modernstorage-bom:_" style="text-decoration: underline;" >bom</span>&nbsp;</td></tr>
                     </table>
-## Http4k
+## [Http4k.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Http4k.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Http4k</b></td><td><span title="Http4k.metricsMicrometer
 version.http4k
@@ -1959,11 +1254,9 @@ org.http4k:http4k-testing-strikt:_" style="text-decoration: underline;" >strikt<
 version.http4k
 org.http4k:http4k-testing-chaos:_" style="text-decoration: underline;" >chaos</span>&nbsp;</td></tr>
                     </table>
-## JakeWharton
+## [JakeWharton.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/JakeWharton.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>JakeWharton</b></td><td><span title="JakeWharton.confundusGradlePlugin
 version.jakewharton.confundus
@@ -2031,11 +1324,9 @@ com.jakewharton.rxbinding4:rxbinding-material:_" style="text-decoration: underli
 version.jakewharton.rxbinding4
 com.jakewharton.rxbinding4:rxbinding-core:_" style="text-decoration: underline;" >core</span>&nbsp;</td></tr>
                     </table>
-## Kodein
+## [Kodein.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Kodein.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Kodein.di</b></td><td><span title="Kodein.di.configurableJvm
 version.kodein.di
@@ -2057,11 +1348,9 @@ org.kodein.di:kodein-di-framework-ktor-server-jvm:_" style="text-decoration: und
 version.kodein.di
 org.kodein.di:kodein-di-js:_" style="text-decoration: underline;" >js</span>&nbsp;</td></tr>
                     </table>
-## Koin
+## [Koin.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Koin.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Koin</b></td><td><span title="Koin.androidCompat
 version.koin
@@ -2085,11 +1374,9 @@ io.insert-koin:koin-ktor:_" style="text-decoration: underline;" >ktor</span>&nbs
 version.koin
 io.insert-koin:koin-test:_" style="text-decoration: underline;" >test</span>&nbsp;</td></tr>
                     </table>
-## Kotlin
+## [Kotlin.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Kotlin.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Kotlin</b></td><td><span title="Kotlin.scriptRuntime
 version.kotlin
@@ -2122,78 +1409,10 @@ version.kotlin
 org.jetbrains.kotlin:kotlin-test-junit:_" style="text-decoration: underline;" >junit</span>&nbsp; - <span title="Kotlin.test.js
 version.kotlin
 org.jetbrains.kotlin:kotlin-test-js:_" style="text-decoration: underline;" >js</span>&nbsp;</td></tr>
-<tr><td><b>KotlinX</b></td><td><span title="KotlinX.datetime
-version.kotlinx.datetime
-org.jetbrains.kotlinx:kotlinx-datetime:_" style="text-decoration: underline;" >datetime</span>&nbsp; - <span title="KotlinX.nodeJs
-version.kotlinx.nodejs
-org.jetbrains.kotlinx:kotlinx-nodejs:_" style="text-decoration: underline;" >nodeJs</span>&nbsp; - <span title="KotlinX.html
-version.kotlinx.html
-org.jetbrains.kotlinx:kotlinx-html:_" style="text-decoration: underline;" >html</span>&nbsp; - <span title="KotlinX.cli
-version.kotlinx.cli
-org.jetbrains.kotlinx:kotlinx-cli:_" style="text-decoration: underline;" >cli</span>&nbsp;</td></tr>
-<tr><td><b>KotlinX.collections</b></td><td><span title="KotlinX.collections.immutableJvmOnly
-version.kotlinx.collections.immutable
-org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:_" style="text-decoration: underline;" >immutableJvmOnly</span>&nbsp; - <span title="KotlinX.collections.immutable
-version.kotlinx.collections.immutable
-org.jetbrains.kotlinx:kotlinx-collections-immutable:_" style="text-decoration: underline;" >immutable</span>&nbsp;</td></tr>
-<tr><td><b>KotlinX.coroutines</b></td><td><span title="KotlinX.coroutines.playServices
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-play-services:_" style="text-decoration: underline;" >playServices</span>&nbsp; - <span title="KotlinX.coroutines.reactive
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-reactive:_" style="text-decoration: underline;" >reactive</span>&nbsp; - <span title="KotlinX.coroutines.android
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-android:_" style="text-decoration: underline;" >android</span>&nbsp; - <span title="KotlinX.coroutines.reactor
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-reactor:_" style="text-decoration: underline;" >reactor</span>&nbsp; - <span title="KotlinX.coroutines.javaFx
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-javafx:_" style="text-decoration: underline;" >javaFx</span>&nbsp; - <span title="KotlinX.coroutines.debug
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-debug:_" style="text-decoration: underline;" >debug</span>&nbsp; - <span title="KotlinX.coroutines.guava
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-guava:_" style="text-decoration: underline;" >guava</span>&nbsp; - <span title="KotlinX.coroutines.slf4j
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:_" style="text-decoration: underline;" >slf4j</span>&nbsp; - <span title="KotlinX.coroutines.swing
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-swing:_" style="text-decoration: underline;" >swing</span>&nbsp; - <span title="KotlinX.coroutines.core
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="KotlinX.coroutines.jdk8
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:_" style="text-decoration: underline;" >jdk8</span>&nbsp; - <span title="KotlinX.coroutines.jdk9
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-jdk9:_" style="text-decoration: underline;" >jdk9</span>&nbsp; - <span title="KotlinX.coroutines.test
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-test:_" style="text-decoration: underline;" >test</span>&nbsp; - <span title="KotlinX.coroutines.bom
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-bom:_" style="text-decoration: underline;" >bom</span>&nbsp; - <span title="KotlinX.coroutines.rx2
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-rx2:_" style="text-decoration: underline;" >rx2</span>&nbsp; - <span title="KotlinX.coroutines.rx3
-version.kotlinx.coroutines
-org.jetbrains.kotlinx:kotlinx-coroutines-rx3:_" style="text-decoration: underline;" >rx3</span>&nbsp;</td></tr>
-<tr><td><b>KotlinX.io</b></td><td><span title="KotlinX.io.jvm
-version.kotlinx.io
-org.jetbrains.kotlinx:kotlinx-io-jvm:_" style="text-decoration: underline;" >jvm</span>&nbsp;</td></tr>
-<tr><td><b>KotlinX.reflect</b></td><td><span title="KotlinX.reflect.lite
-version.kotlinx.reflect.lite
-org.jetbrains.kotlinx:kotlinx.reflect.lite:_" style="text-decoration: underline;" >lite</span>&nbsp;</td></tr>
-<tr><td><b>KotlinX.serialization</b></td><td><span title="KotlinX.serialization.properties
-version.kotlinx.serialization
-org.jetbrains.kotlinx:kotlinx-serialization-properties:_" style="text-decoration: underline;" >properties</span>&nbsp; - <span title="KotlinX.serialization.protobuf
-version.kotlinx.serialization
-org.jetbrains.kotlinx:kotlinx-serialization-protobuf:_" style="text-decoration: underline;" >protobuf</span>&nbsp; - <span title="KotlinX.serialization.hocon
-version.kotlinx.serialization
-org.jetbrains.kotlinx:kotlinx-serialization-hocon:_" style="text-decoration: underline;" >hocon</span>&nbsp; - <span title="KotlinX.serialization.cbor
-version.kotlinx.serialization
-org.jetbrains.kotlinx:kotlinx-serialization-cbor:_" style="text-decoration: underline;" >cbor</span>&nbsp; - <span title="KotlinX.serialization.core
-version.kotlinx.serialization
-org.jetbrains.kotlinx:kotlinx-serialization-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="KotlinX.serialization.json
-version.kotlinx.serialization
-org.jetbrains.kotlinx:kotlinx-serialization-json:_" style="text-decoration: underline;" >json</span>&nbsp;</td></tr>
                     </table>
-## KotlinX
+## [KotlinX.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/KotlinX.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>KotlinX</b></td><td><span title="KotlinX.datetime
 version.kotlinx.datetime
@@ -2262,11 +1481,9 @@ org.jetbrains.kotlinx:kotlinx-serialization-core:_" style="text-decoration: unde
 version.kotlinx.serialization
 org.jetbrains.kotlinx:kotlinx-serialization-json:_" style="text-decoration: underline;" >json</span>&nbsp;</td></tr>
                     </table>
-## Ktor
+## [Ktor.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Ktor.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Ktor</b></td><td><span title="Ktor.testDispatcher
 version.ktor
@@ -2362,11 +1579,9 @@ io.ktor:ktor-server-netty:_" style="text-decoration: underline;" >netty</span>&n
 version.ktor
 io.ktor:ktor-server-core:_" style="text-decoration: underline;" >core</span>&nbsp;</td></tr>
                     </table>
-## Orchid
+## [Orchid.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Orchid.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Orchid</b></td><td><span title="Orchid.core
 version.orchid
@@ -2447,11 +1662,9 @@ io.github.javaeden.orchid:OrchidCopper:_" style="text-decoration: underline;" >c
 version.orchid
 io.github.javaeden.orchid:OrchidBsDoc:_" style="text-decoration: underline;" >bsDoc</span>&nbsp;</td></tr>
                     </table>
-## ReactiveX
+## [ReactiveX.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/ReactiveX.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>ReactiveX</b></td><td><span title="ReactiveX.rxJava2
 version.rxjava2.rxjava
@@ -2469,11 +1682,9 @@ io.reactivex.rxjava3:rxandroid:_" style="text-decoration: underline;" >rxAndroid
 version.rxjava3.rxkotlin
 io.reactivex.rxjava3:rxkotlin:_" style="text-decoration: underline;" >rxKotlin</span>&nbsp;</td></tr>
                     </table>
-## RickClephas
+## [RickClephas.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/RickClephas.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>RickClephas.nativeCoroutines</b></td><td><span title="RickClephas.nativeCoroutines.compilerEmbeddable
 version.rickclephas.nativecoroutines
@@ -2487,11 +1698,9 @@ com.rickclephas.kmp:kmp-nativecoroutines-compiler:_" style="text-decoration: und
 version.rickclephas.nativecoroutines
 com.rickclephas.kmp:kmp-nativecoroutines-core:_" style="text-decoration: underline;" >core</span>&nbsp;</td></tr>
                     </table>
-## RussHWolf
+## [RussHWolf.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/RussHWolf.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>RussHWolf</b></td><td><span title="RussHWolf.multiplatformSettings
 version.multiplatform-settings
@@ -2510,11 +1719,9 @@ com.russhwolf:multiplatform-settings-no-arg:_" style="text-decoration: underline
 version.multiplatform-settings
 com.russhwolf:multiplatform-settings-test:_" style="text-decoration: underline;" >test</span>&nbsp;</td></tr>
                     </table>
-## Splitties
+## [Splitties.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Splitties.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Splitties</b></td><td><span title="Splitties.viewsSelectableConstraintlayout
 version.splitties
@@ -2627,11 +1834,9 @@ com.louiscad.splitties:splitties-fun-pack-android-material-components:_" style="
 version.splitties
 com.louiscad.splitties:splitties-fun-pack-android-appcompat:_" style="text-decoration: underline;" >appCompat</span>&nbsp;</td></tr>
                     </table>
-## Spring
+## [Spring.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Spring.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Spring</b></td><td><span title="Spring.springRestdocsWebtestclient
 version.NO-RULE
@@ -2892,11 +2097,9 @@ io.pivotal.spring.cloud:spring-cloud-services-starter-circuit-breaker:_" style="
 version.NO-RULE
 io.pivotal.spring.cloud:spring-cloud-services-starter-config-client:_" style="text-decoration: underline;" >configClient</span>&nbsp;</td></tr>
                     </table>
-## Square
+## [Square.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Square.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Square</b></td><td><span title="Square.retrofit2
 version.retrofit2
@@ -3021,11 +2224,9 @@ com.squareup.wire:wire-runtime:_" style="text-decoration: underline;" >runtime</
 version.wire
 com.squareup.wire:wire-grpc-client:_" style="text-decoration: underline;" >client</span>&nbsp;</td></tr>
                     </table>
-## Testing
+## [Testing.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Testing.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Testing</b></td><td><span title="Testing.robolectric
 version.robolectric
@@ -3183,11 +2384,9 @@ io.strikt:strikt-core:_" style="text-decoration: underline;" >core</span>&nbsp; 
 version.strikt
 io.strikt:strikt-bom:_" style="text-decoration: underline;" >bom</span>&nbsp;</td></tr>
                     </table>
-## Touchlab
+## [Touchlab.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Touchlab.kt)
 
 <table style="width: 100%; table-layout:fixed;">
-	                <col style="width:10%">
-	                <col style="width:80%">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>Touchlab</b></td><td><span title="Touchlab.kermit
 version.kermit
