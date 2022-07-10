@@ -5,6 +5,7 @@ import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
 import de.fayard.refreshVersions.core.internal.DependencyMapping
+import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import dependencies.ALL_DEPENDENCIES_NOTATIONS
 import io.kotest.assertions.fail
@@ -24,6 +25,7 @@ import org.junit.jupiter.api.Test
 import testutils.getVersionCandidates
 import testutils.isInCi
 import testutils.parseRemovedDependencyNotations
+import java.io.File
 
 class BundledDependenciesTest {
 
@@ -220,5 +222,78 @@ class BundledDependenciesTest {
                 }
             }).setLevel(HttpLoggingInterceptor.Level.BASIC))
             .build()
+    }
+
+    @Test
+    fun `update the list of dependency notations on the website`() {
+        val rulesDir = mainResources.resolve("refreshVersions-rules")
+        val versionKeyReader = ArtifactVersionKeyReader.fromRules(
+            rulesDir.listFiles()!!.map { it.readText() }
+        )
+
+        val mappingsBySection: Map<String, Map<ModuleId.Maven, String>> = getArtifactNameToConstantMapping()
+            .associateShortestByMavenCoordinate()
+            .entries
+            .groupBy { it.value.substringBeforeLast(".") }
+            .toSortedMap()
+            .mapValues { it.value.map { entry -> entry.key to entry.value }.toMap() }
+
+        val sections = mappingsBySection.keys.map { it.substringBefore(".") }.distinct()
+
+        val fileContent = sections
+            .map { section ->
+                // "AndroidX" to mapOf("androidx.tools:tools-core" to "androidx.tools")
+                // "AndroidX.test" to mapOf("androidx.test:test" to "androidx.test")
+                val submappings: Map<String, Map<ModuleId.Maven, String>> =
+                    mappingsBySection.filter { it.key.startsWith(section) }
+                val rows = submappings.mapValues { (_, map) ->
+                    map.entries.joinToString(" - ") { (moduleId, constantName) ->
+                        val versionKey = versionKeyReader.readVersionKey(moduleId.group, moduleId.name) ?: "NO-RULE"
+                        markdown(moduleId, constantName, versionKey).trim()
+                    }
+                }
+                """
+                 |## $section
+                 |
+                 |${table(rows)}
+                 |
+                 """.trimMargin()
+            }.joinToString("")
+
+        val mappings = mappingsBySection.flatMap { it.value.values }
+        val nbGroups = mappings.distinctBy { it.substringBeforeLast(".") }.count()
+
+        val destination = File(".").absoluteFile.parentFile.parentFile.parentFile.resolve("docs/dependencies-notations.md")
+        println("Updating ${destination.canonicalPath}")
+
+        val fileHeader = """
+            # Dependency Mapping
+
+            We currently support **${mappings.size}** dependency notations in **${sections.size}** groups and **$nbGroups** subgroups
+
+            [**See Add Dependencies**](add-dependencies.md)
+
+        """.trimIndent()
+        destination.writeText("$fileHeader\n\n$fileContent")
+    }
+
+    private fun markdown(moduleId: ModuleId.Maven, constantName: String, versionKey: String): String {
+        val LF = 0x0A.toChar()
+        val mavenCoordinates = "${moduleId.group}:${moduleId.name}:_"
+        return """
+          <span title="$constantName${LF}version.$versionKey${LF}$mavenCoordinates" style="text-decoration: underline;" >${constantName.substringAfterLast(".")}</span>&nbsp;
+                """.trimIndent()
+    }
+
+    fun table(rows: Map<String, String>): String {
+        val rows = rows.entries.joinToString("\n") { (title, content) -> "<tr><td><b>$title</b></td><td>$content</td></tr>" }
+        return """
+                    <table style="width: 100%; table-layout:fixed;">
+	                <col style="width:10%">
+	                <col style="width:80%">
+                    <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
+                    $rows
+                    </table>
+                """.trimIndent().trim()
     }
 }
