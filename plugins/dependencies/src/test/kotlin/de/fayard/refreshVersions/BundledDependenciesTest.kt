@@ -1,7 +1,7 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.AbstractDependencyGroup
-import de.fayard.refreshVersions.core.ModuleId
+import de.fayard.refreshVersions.core.ModuleId.Maven
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
 import de.fayard.refreshVersions.core.internal.DependencyMapping
@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test
 import testutils.getVersionCandidates
 import testutils.isInCi
 import testutils.parseRemovedDependencyNotations
+import java.io.File
 
 class BundledDependenciesTest {
 
@@ -115,9 +116,6 @@ class BundledDependenciesTest {
 
     @Test
     fun `Version keys should be up to date`() {
-        val rulesDir = mainResources.resolve("refreshVersions-rules")
-        val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
-
         val existingKeys = testResources.resolve("dependencies-versions-key-validated.txt")
         val receivedKeys = testResources.resolve("dependencies-versions-key-received.txt")
         val removedKeys = mainResources.resolve("removed-dependencies-versions-keys.txt")
@@ -175,11 +173,11 @@ class BundledDependenciesTest {
             "${it.group}:${it.artifact}"
         }
 
-        val newValidatedMappings: List<ModuleId.Maven> = runBlocking {
+        val newValidatedMappings: List<Maven> = runBlocking {
             mappingWithLines.filter {
                 it.value !in validatedDependencyMapping
             }.keys.map { dependencyMapping ->
-                ModuleId.Maven(dependencyMapping.group, dependencyMapping.artifact)
+                Maven(dependencyMapping.group, dependencyMapping.artifact)
             }.distinct().onEach { mavenModuleId ->
                 launch {
                     val foundVersions: List<Version> = getVersionCandidates(
@@ -220,5 +218,110 @@ class BundledDependenciesTest {
                 }
             }).setLevel(HttpLoggingInterceptor.Level.BASIC))
             .build()
+    }
+
+    val rulesDir = mainResources.resolve("refreshVersions-rules")
+    val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
+
+    // todo: rename
+    data class MarkdownDependency(
+        val moduleId: Maven,
+        val versionKey: String,
+        val constantName: String,
+    ) {
+        val group = constantName.substringBefore(".")
+        val subgroup = constantName.substringBeforeLast(".")
+
+        fun markdown(): String {
+            val LF = 0x0A.toChar()
+            val mavenCoordinates = "${moduleId.group}:${moduleId.name}:_"
+            return """
+          <span title="$constantName${LF}version.$versionKey${LF}$mavenCoordinates" style="text-decoration: underline;" >${constantName.substringAfterLast(".")}</span>&nbsp;
+                """.trimIndent().trim()
+        }
+    }
+
+    @Test
+    fun `update the list of dependency notations on the website`() {
+        val markdownDependencies = getArtifactNameToConstantMapping()
+            .map {
+                val moduleId = it.moduleId
+                val versionKey = versionKeyReader.readVersionKey(moduleId.group, moduleId.name) ?: "NO-RULE"
+                MarkdownDependency(moduleId, versionKey, it.constantName)
+            }
+
+        val groups: List<String> = markdownDependencies
+            .map { it.group }
+            .distinct()
+            .sorted()
+
+        val subgroups: List<String> = markdownDependencies
+            .map { it.subgroup }
+            .distinct()
+            .sorted()
+
+        val dependenciesBySubGroup: Map<String, List<MarkdownDependency>> = markdownDependencies
+            .groupBy { it.subgroup }
+
+        val map: Map<String, List<String>> = groups.associateWith { group ->
+            // "AndroidX" to mapOf("androidx.tools:tools-core" to "androidx.tools")
+            // "AndroidX.test" to mapOf("androidx.test:test" to "androidx.test")
+            subgroups.filter { it.startsWith("$group.") || it == group }
+        }
+
+        val markdownGroups = map.entries
+            .map { (group, subgroups) ->
+                val rows: Map<String, String> = subgroups.associateWith { subgroup ->
+                    val dependencies = dependenciesBySubGroup[subgroup]!!
+                    dependencies.joinToString(" - ", transform = MarkdownDependency::markdown)
+                }
+                """
+                 |## [$group.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/$group.kt)
+                 |
+                 |${table(rows)}
+                 |
+                 """.trimMargin()
+            }
+
+        val destination = File(".").absoluteFile.parentFile.parentFile.parentFile.resolve("docs/dependencies-notations.md")
+        println("Updating ${destination.canonicalPath}")
+
+        val size = markdownDependencies
+            .distinctBy { it.moduleId }
+            .size
+
+        val fileHeader = """
+            |# Dependency Notations
+            |
+            |[**refreshVersion**](https://github.com/jmfayard/refreshVersions) provide **$size** Dependency notations in **${groups.size}** groups and **${subgroups.size}** subgroups
+            |
+            |**Dependency Notations** are maven coordinates of popular libraries,
+            |discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
+            |who will be configured in the `versions.properties` file with the latest available version
+            |after the first Gradle sync.
+            |They drastically cut the time it takes to add popular libraries to your Gradle build.
+            |
+            |[**See: Adding a Dependency Notation**](add-dependencies.md)
+            |
+            |---
+            |
+            |Below is the list of all available dependency notations.
+            |
+            |Use the table of contents to jump to the group you are interested in.
+            |
+            |Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordinate, VersionKey)`.
+            |""".trimMargin()
+        destination.writeText("$fileHeader\n\n${markdownGroups.joinToString("")}")
+    }
+
+
+    fun table(rows: Map<String, String>): String {
+        val rows = rows.entries.joinToString("\n") { (title, content) -> "<tr><td><b>$title</b></td><td>$content</td></tr>" }
+        return """
+                    <table style="width: 100%; table-layout:fixed;">
+                    <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
+                    $rows
+                    </table>
+                """.trimIndent().trim()
     }
 }
