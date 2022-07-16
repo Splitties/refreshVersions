@@ -388,6 +388,14 @@ com.google.android.gms:play-services-vision
 com.google.android.gms:play-services-wallet
 com.google.android.gms:play-services-wearable
 com.google.android.gms:strict-version-matcher-plugin
+com.google.android.horologist:horologist-audio
+com.google.android.horologist:horologist-audio-ui
+com.google.android.horologist:horologist-composables
+com.google.android.horologist:horologist-media
+com.google.android.horologist:horologist-media-ui
+com.google.android.horologist:horologist-media3-backend
+com.google.android.horologist:horologist-network-awareness
+com.google.android.horologist:horologist-tiles
 com.google.android.libraries.places:places
 com.google.android.material:compose-theme-adapter
 com.google.android.material:compose-theme-adapter-3
