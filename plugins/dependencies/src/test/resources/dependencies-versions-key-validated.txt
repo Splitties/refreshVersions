@@ -391,6 +391,7 @@ com.google.android.gms..strict-version-matcher-plugin=version.NO-RULE
 com.google.android.horologist..horologist-audio-ui=version.NO-RULE
 com.google.android.horologist..horologist-audio=version.NO-RULE
 com.google.android.horologist..horologist-composables=version.NO-RULE
+com.google.android.horologist..horologist-media-data=version.NO-RULE
 com.google.android.horologist..horologist-media-ui=version.NO-RULE
 com.google.android.horologist..horologist-media3-backend=version.NO-RULE
 com.google.android.horologist..horologist-media=version.NO-RULE

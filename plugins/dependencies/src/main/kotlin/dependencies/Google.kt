@@ -625,7 +625,7 @@ object Google : IsNotADependency {
         val media = Media
 
         object Media : DependencyNotationAndGroup(group = "com.google.android.horologist", name = "horologist-media") {
-            val data = module("horologist-media-ui")
+            val data = module("horologist-media-data")
             val ui = module("horologist-media-ui")
         }
 
