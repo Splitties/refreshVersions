@@ -391,6 +391,8 @@ com.google.android.gms:strict-version-matcher-plugin
 com.google.android.horologist:horologist-audio
 com.google.android.horologist:horologist-audio-ui
 com.google.android.horologist:horologist-composables
+com.google.android.horologist:horologist-compose-layout
+com.google.android.horologist:horologist-compose-tools
 com.google.android.horologist:horologist-media
 com.google.android.horologist:horologist-media-data
 com.google.android.horologist:horologist-media-ui

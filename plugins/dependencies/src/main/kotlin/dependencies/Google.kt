@@ -607,7 +607,18 @@ object Google : IsNotADependency {
      * - GitHub page: https://github.com/google/horologist
      */
     @Incubating
-    object Horologist : DependencyGroup(group = "com.google.android.horologist") {
+    object Horologist : DependencyGroup(
+        group = "com.google.android.horologist",
+        rawRules = """
+            com.google.android.horologist:*
+                ^^^^^^^        ^^^^^^^^^^
+        """.trimIndent()
+    ) {
+        val composables = module("horologist-composables")
+
+        val networkAwareness = module("horologist-network-awareness")
+
+        val tiles = module("horologist-tiles")
 
         val audio = Audio
 
@@ -615,9 +626,9 @@ object Google : IsNotADependency {
             val ui = module("horologist-audio-ui")
         }
 
-        val composables = module("horologist-composables")
+        val compose = Compose
 
-        object Compose : DependencyGroup(group = "com.google.android.horologist") {
+        object Compose : IsNotADependency {
             val layout = module("horologist-compose-layout")
             val tools = module("horologist-compose-tools")
         }
@@ -631,13 +642,9 @@ object Google : IsNotADependency {
 
         val media3 = Media3
 
-        object Media3 : DependencyGroup(group = "com.google.android.horologist") {
+        object Media3 : IsNotADependency {
             val backend = module("horologist-media3-backend")
         }
-
-        val networkAwareness = module("horologist-network-awareness")
-
-        val tiles = module("horologist-tiles")
     }
 
     /**
