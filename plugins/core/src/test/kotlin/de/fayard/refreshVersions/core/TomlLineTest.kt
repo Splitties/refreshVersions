@@ -110,9 +110,17 @@ class TomlLineTest {
 
     @Test
     fun `Parsing libraries values`() {
-        fun map(group: String, name: String, version: String?, versionRef: String?) =
-            listOfNotNull("group" to group, "name" to name, version?.let { "version" to it }, versionRef?.let { "version.ref" to it })
-                .toMap()
+        fun map(
+            group: String,
+            name: String,
+            version: String?,
+            versionRef: String?
+        ) = listOfNotNull(
+            "group" to group,
+            "name" to name,
+            version?.let { "version" to it },
+            versionRef?.let { "version.ref" to it }
+        ).toMap()
 
         val lines = """
             ##                # available:1.5"
@@ -201,9 +209,9 @@ class TomlLineTest {
             TomlLine(TomlSection.Libraries, "my-lib", d)
                 .text shouldBe """my-lib = "com.example:name:1.0""""
 
-            val noVersion = ConfigurationLessDependency("com.example:name:none")
+            val noVersion = ConfigurationLessDependency("com.example:name")
             TomlLine(TomlSection.Libraries, "my-lib", noVersion)
-                .text shouldBe """my-lib = { group = "com.example", name = "name" }"""
+                .text shouldBe """my-lib = "com.example:name""""
         }
     }
 }

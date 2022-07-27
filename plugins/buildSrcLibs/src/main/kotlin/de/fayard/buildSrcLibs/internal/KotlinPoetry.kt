@@ -17,8 +17,8 @@ internal fun kotlinpoet(
     val libsProperties: List<PropertySpec> = libraries
         .distinctBy { it.groupModule() }
         .map { d ->
-            val libValue = when {
-                d.version == "none" -> CodeBlock.of("%S", d.groupModule())
+            val libValue = when (d.version) {
+                null -> CodeBlock.of("%S", d.groupModule())
                 else -> CodeBlock.of("%S", d.groupModuleUnderscore())
             }
             constStringProperty(

@@ -3,6 +3,10 @@ package de.fayard.refreshVersions.core.internal
 import de.fayard.refreshVersions.core.internal.TomlLine.Kind.*
 import org.gradle.api.artifacts.Dependency
 
+/**
+ * Despite TOML supporting braces in its syntax, they must open and close on
+ * the same line, so having a per-line model is fine.
+ */
 internal data class TomlLine(
     val section: TomlSection,
     val text: String,
@@ -58,10 +62,10 @@ internal fun TomlLine(
     key: String,
     dependency: Dependency
 ): TomlLine = when (dependency.version) {
-    "none" -> TomlLine(
+    null -> TomlLine(
         section = section,
         key = key,
-        map = mapOf("group" to (dependency.group ?: ""), "name" to dependency.name)
+        value = """${dependency.group}:${dependency.name}"""
     )
     else -> TomlLine(
         section = section,
@@ -84,7 +88,7 @@ internal fun TomlLine(
 private val validKeys = listOf("module", "group", "name", "version.ref", "version", "id")
 
 private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
-    val splitSemicolon = value.split(":")
+    val splitByColon = value.split(":")
 
     val map: MutableMap<String, String> = when {
         unparsedValue.startsWith('{').not() -> mutableMapOf()
@@ -103,16 +107,19 @@ private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
         LibsUnderscore -> emptyMap()
         Version -> emptyMap()
         Plugin, PluginVersionRef -> when {
-            value.isNotBlank() -> {
-                val (id, version) = splitSemicolon
-                mapOf("id" to id, "version" to version)
+            value.isNotBlank() -> mutableMapOf<String, String>().apply { //TODO: Replace with buildMap later.
+                this["id"] = splitByColon.first()
+                splitByColon.getOrNull(1)?.also { version ->
+                    this["version"] = version
+                }
             }
             else -> map
         }
         Libs, LibsVersionRef -> when {
             value.isNotBlank() -> {
-                val (group, name, version) = splitSemicolon
-                lineMap(group, name, version, null)
+                val (group, name) = splitByColon
+                val version = splitByColon.getOrNull(2)
+                lineMap(group = group, name = name, version = version, versionRef = null)
             }
             else -> {
                 map["module"]?.also { module ->

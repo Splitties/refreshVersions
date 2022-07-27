@@ -19,11 +19,19 @@ internal class ConfigurationLessDependency(
         version = version
     )
 
-    constructor(dependencyNotationWithVersion: String) : this(
-        group = dependencyNotationWithVersion.substringBefore(':'),
-        name = dependencyNotationWithVersion.substringAfter(':').substringBefore(':'),
-        version = dependencyNotationWithVersion.substringAfterLast(':')
-    )
+    companion object {
+        operator fun invoke(dependencyNotation: String): ConfigurationLessDependency {
+            val beforeFirstColon = dependencyNotation.substringBefore(':')
+            val afterFirstColon = dependencyNotation.substringAfter(':')
+            val name = afterFirstColon.substringBefore(':')
+            val version = if (afterFirstColon == name) null else afterFirstColon.substringAfterLast(':')
+            return ConfigurationLessDependency(
+                group = beforeFirstColon,
+                name = name,
+                version = version
+            )
+        }
+    }
 
     override fun getGroup() = group
     override fun getName() = name

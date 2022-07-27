@@ -9,7 +9,7 @@ import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.checkModeAndNames
 import de.fayard.refreshVersions.core.internal.computeAliases
 import de.fayard.refreshVersions.core.internal.findDependencies
-import de.fayard.refreshVersions.core.internal.VersionCatalogs.versionsCatalog
+import de.fayard.refreshVersions.core.internal.VersionCatalogs.generateVersionsCatalogText
 import de.fayard.refreshVersions.core.internal.UsedPluginsTracker
 import de.fayard.refreshVersions.core.internal.VersionCatalogs
 import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
@@ -71,7 +71,7 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         val deps: Deps = dependenciesToUse.checkModeAndNames(versionCatalogAliases, Case.`kebab-case`)
 
         val currentText = if (catalog.existed) catalog.readText() else ""
-        val newText = versionsCatalog(deps, currentText, withVersions, plugins)
+        val newText = generateVersionsCatalogText(deps, currentText, withVersions, plugins)
         catalog.writeText(newText)
         catalog.logFileWasModified()
 
