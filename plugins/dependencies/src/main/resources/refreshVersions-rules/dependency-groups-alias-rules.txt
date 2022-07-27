@@ -55,6 +55,9 @@ com.android.tools:*
 org.jetbrains.kotlinx:dataframe(-*)
               ^^^^^^^ ^^^^^^^^^
 
+com.google.android.horologist:*
+    ^^^^^^^        ^^^^^^^^^^
+
 com.android.billingclient:billing(-*)
     ^^^^^^^^^^^^^^^^^^^^^
 

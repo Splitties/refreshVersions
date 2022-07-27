@@ -3,6 +3,7 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
+import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 object Google : IsNotADependency {
@@ -592,6 +593,57 @@ object Google : IsNotADependency {
                 val processor = module("dagger-grpc-server-processor")
                 val annotations = module("dagger-grpc-server-annotations")
             }
+        }
+    }
+
+    val horologist = Horologist
+
+    /**
+     * Horologist is a group of libraries that aim to supplement
+     * Wear OS developers with features that are commonly required
+     * by developers but not yet available.
+     *
+     * - [Official website here](https://google.github.io/horologist/)
+     * - GitHub page: https://github.com/google/horologist
+     */
+    @Incubating
+    object Horologist : DependencyGroup(
+        group = "com.google.android.horologist",
+        rawRules = """
+            com.google.android.horologist:*
+                ^^^^^^^        ^^^^^^^^^^
+        """.trimIndent()
+    ) {
+        val composables = module("horologist-composables")
+
+        val networkAwareness = module("horologist-network-awareness")
+
+        val tiles = module("horologist-tiles")
+
+        val audio = Audio
+
+        object Audio : DependencyNotationAndGroup(group = "com.google.android.horologist", name = "horologist-audio") {
+            val ui = module("horologist-audio-ui")
+        }
+
+        val compose = Compose
+
+        object Compose : IsNotADependency {
+            val layout = module("horologist-compose-layout")
+            val tools = module("horologist-compose-tools")
+        }
+
+        val media = Media
+
+        object Media : DependencyNotationAndGroup(group = "com.google.android.horologist", name = "horologist-media") {
+            val data = module("horologist-media-data")
+            val ui = module("horologist-media-ui")
+        }
+
+        val media3 = Media3
+
+        object Media3 : IsNotADependency {
+            val backend = module("horologist-media3-backend")
         }
     }
 
