@@ -16,13 +16,13 @@ junit-jupiter = "42"
 
 [libraries]
 
-groovy-kotlin = "org.codehaus.groovy:groovy-kotlin:3.0.5"
+groovy-kotlin = "org.codehaus.groovy:groovy-kotlin:_"
 
-my-lib = "com.mycompany:mylib:1.4"
+my-lib = "com.mycompany:mylib:_"
 
-my-other-lib = "com.mycompany:other:1.4"
+my-other-lib = "com.mycompany:other:_"
 
-my-alternate-lib = "com.mycompany:alternate:1.2"
+my-alternate-lib = "com.mycompany:alternate:_"
 
 kotest-core = { group = "io.kotest", name = "kotest", version.ref = "kotest" }
 

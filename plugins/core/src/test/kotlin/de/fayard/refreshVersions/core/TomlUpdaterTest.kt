@@ -1,6 +1,5 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.extensions.gradle.moduleId
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
 import de.fayard.refreshVersions.core.internal.ConfigurationLessDependency
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
@@ -11,10 +10,8 @@ import de.fayard.refreshVersions.core.internal.TomlSection
 import de.fayard.refreshVersions.core.internal.TomlUpdater
 import de.fayard.refreshVersions.core.internal.VersionCatalogs
 import io.kotest.assertions.asClue
-import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import org.gradle.api.artifacts.Dependency
 import java.io.File
 import de.fayard.refreshVersions.core.Version as MavenVersion
 
@@ -28,7 +25,7 @@ class TomlUpdaterTest : FunSpec({
         // check idempotent
         TomlUpdater(input.expected, input.dependenciesUpdates).updateNewVersions(input.expected)
         input.asClue {
-            input.actual.readText()  shouldBe input.expectedText
+            input.actual.readText() shouldBe input.expectedText
         }
 
         // delete actual file if successful
@@ -44,7 +41,7 @@ class TomlUpdaterTest : FunSpec({
         // check idempotent
         TomlUpdater(input.expected, input.dependenciesUpdates).cleanupComments(input.expected)
         input.asClue {
-            input.actual.readText()  shouldBe input.expectedText
+            input.actual.readText() shouldBe input.expectedText
         }
 
         // delete actual file if successful
@@ -55,20 +52,26 @@ class TomlUpdaterTest : FunSpec({
         val input = FolderInput("toml-merge-properties")
 
         val toml = VersionCatalogs.parseToml(input.initial.readText())
-        toml.merge(TomlSection.Versions, listOf(
-            TomlLine(TomlSection.Versions, "groovy", "3.0.6"),
-            TomlLine(TomlSection.Versions, "ktor", "2.0"),
-        ))
+        toml.merge(
+            TomlSection.Versions, listOf(
+                TomlLine(TomlSection.Versions, "groovy", "3.0.6"),
+                TomlLine(TomlSection.Versions, "ktor", "2.0"),
+            )
+        )
 
-        toml.merge(TomlSection.Libraries, listOf(
-            TomlLine(TomlSection.Libraries, "my-lib", "com.mycompany:mylib:1.5"),
-            TomlLine(TomlSection.Libraries, "other-lib", "com.mycompany:other:1.5"),
-        ))
+        toml.merge(
+            TomlSection.Libraries, listOf(
+                TomlLine(TomlSection.Libraries, "my-lib", "com.mycompany:mylib:1.5"),
+                TomlLine(TomlSection.Libraries, "other-lib", "com.mycompany:other:1.5"),
+            )
+        )
 
-        toml.merge(TomlSection.Plugins, listOf(
-            TomlLine(TomlSection.Plugins, "short-notation", "some.plugin.id:1.6"),
-            TomlLine(TomlSection.Plugins, "ben-manes", "ben.manes:versions:1.0"),
-        ))
+        toml.merge(
+            TomlSection.Plugins, listOf(
+                TomlLine(TomlSection.Plugins, "short-notation", "some.plugin.id:1.6"),
+                TomlLine(TomlSection.Plugins, "ben-manes", "ben.manes:versions:1.0"),
+            )
+        )
 
         input.actual.writeText(toml.toString())
         input.asClue {
@@ -81,31 +84,42 @@ class TomlUpdaterTest : FunSpec({
 
     val rulesDir = File(".").absoluteFile.parentFile.parentFile
         .resolve("dependencies/src/main/resources/refreshVersions-rules")
-        .also { require(it.canRead()) { "Can't read foler $it"} }
-    VersionCatalogs.versionsMap = emptyMap() // TODO
+        .also { require(it.canRead()) { "Can't read foler $it" } }
+    VersionCatalogs.versionsMap = mapOf(
+        "version.junit.jupiter" to "42"
+    )
     VersionCatalogs.versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
-    test("Folder toml-generate-initial-versions - generate the initial versions catalog") {
-        val input = FolderInput("refreshVersionsCatalog-versions-new")
-        val withVersions = true
+    context("refreshVersionsCatalog") {
+        val refreshVersionsCatalogInputs = listOf(
+            FolderInput("refreshVersionsCatalog-versions-new"),
+            FolderInput("refreshVersionsCatalog-versions-existing"),
+            FolderInput("refreshVersionsCatalog-underscore-new"),
+            FolderInput("refreshVersionsCatalog-underscore-existing"),
+        )
+        for (input in refreshVersionsCatalogInputs) {
+            test("Folder ${input.folder}") {
+                val withVersions = input.folder.contains("versions")
 
-        val currentText = input.initial.readText()
-        val librariesMap = input.dependenciesUpdates
-            .associate { d ->
-                val versionName = d.versionsCandidates.first().value
-                Library(d.moduleId.group!!, d.moduleId.name, d.currentVersion) to versionName
+                val currentText = input.initial.readText()
+                val librariesMap = input.dependenciesUpdates
+                    .associate { d ->
+                        val versionName = d.versionsCandidates.first().value
+                        Library(d.moduleId.group!!, d.moduleId.name, d.currentVersion) to versionName
+                    }
+                val deps = Deps(librariesMap.keys.toList(), librariesMap)
+                val plugins = input.dependenciesUpdates.mapNotNull {
+                    ConfigurationLessDependency(it.moduleId as ModuleId.Maven, it.currentVersion)
+                        .takeIf { it.name.endsWith(".gradle.plugin") }
+                }
+                val newText = VersionCatalogs.generateVersionsCatalogText(deps, currentText, withVersions, plugins)
+                input.actual.writeText(newText)
+                input.asClue {
+                    newText shouldBe input.expectedText
+                }
+                input.actual.delete()
             }
-        val deps = Deps(librariesMap.keys.toList(), librariesMap)
-        val plugins = input.dependenciesUpdates.mapNotNull {
-            ConfigurationLessDependency(it.moduleId as ModuleId.Maven, it.currentVersion)
-                .takeIf { it.name.endsWith(".gradle.plugin") }
         }
-        val newText = VersionCatalogs.generateVersionsCatalogText(deps, currentText, withVersions, plugins)
-        input.actual.writeText(newText)
-        input.asClue {
-            newText shouldBe input.expectedText
-        }
-        input.actual.delete()
     }
 })
 
@@ -118,7 +132,8 @@ private data class FolderInput(
 ) {
     val expectedText = expected.readText()
 
-    override fun toString() = "Comparing from resources folder=$folder:  actual=${actual.name} and expected=${expected.name}"
+    override fun toString() =
+        "Comparing from resources folder=$folder:  actual=${actual.name} and expected=${expected.name}"
 }
 
 private fun FolderInput(folderName: String): FolderInput {
