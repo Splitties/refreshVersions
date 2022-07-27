@@ -715,6 +715,8 @@ io.kotest.extensions:kotest-extensions-robolectric
 io.kotest.extensions:kotest-extensions-spring
 io.kotest.extensions:kotest-extensions-testcontainers
 io.kotest.extensions:kotest-extensions-wiremock
+io.kotest.extensions:kotest-property-arbs
+io.kotest.extensions:kotest-property-datetime
 io.kotest:kotest-assertions-arrow
 io.kotest:kotest-assertions-compiler
 io.kotest:kotest-assertions-core

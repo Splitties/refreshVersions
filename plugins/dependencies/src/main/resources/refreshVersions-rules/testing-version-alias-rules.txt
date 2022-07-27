@@ -10,8 +10,8 @@ org.junit.jupiter:junit-jupiter(-*)
 io.kotest:*
    ^^^^^^
 
-io.kotest.extensions:kotest-extensions-*
-                     ^^^^^^.^^^^^^^^^^.^
+io.kotest.extensions:*
+   ^^^^^^.^^^^^^^^^^
 
 org.spekframework.spek2:spek-*
                         ^^^^

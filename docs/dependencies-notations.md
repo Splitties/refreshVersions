@@ -1,6 +1,6 @@
 # Dependency Notations
 
-[**refreshVersion**](https://github.com/jmfayard/refreshVersions) provide **1148** Dependency notations in **26** groups and **239** subgroups
+[**refreshVersion**](https://github.com/jmfayard/refreshVersions) provide **1150** Dependency notations in **26** groups and **239** subgroups
 
 **Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -2977,26 +2977,30 @@ io.kotest:kotest-runner-junit4:_" style="text-decoration: underline;" >junit4</s
 version.kotest
 io.kotest:kotest-runner-junit5:_" style="text-decoration: underline;" >junit5</span>&nbsp;</td></tr>
 <tr><td><b>Testing.kotestExtensions</b></td><td><span title="Testing.kotestExtensions.allure
-version.kotest.extensions.allure
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-allure:_" style="text-decoration: underline;" >allure</span>&nbsp; - <span title="Testing.kotestExtensions.embeddedKafka
-version.kotest.extensions.embedded-kafka
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-embedded-kafka:_" style="text-decoration: underline;" >embeddedKafka</span>&nbsp; - <span title="Testing.kotestExtensions.gherkin
-version.kotest.extensions.gherkin
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-gherkin:_" style="text-decoration: underline;" >gherkin</span>&nbsp; - <span title="Testing.kotestExtensions.koin
-version.kotest.extensions.koin
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-koin:_" style="text-decoration: underline;" >koin</span>&nbsp; - <span title="Testing.kotestExtensions.mockServer
-version.kotest.extensions.mockserver
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-mockserver:_" style="text-decoration: underline;" >mockServer</span>&nbsp; - <span title="Testing.kotestExtensions.pitest
-version.kotest.extensions.pitest
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-pitest:_" style="text-decoration: underline;" >pitest</span>&nbsp; - <span title="Testing.kotestExtensions.robolectric
-version.kotest.extensions.robolectric
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-robolectric:_" style="text-decoration: underline;" >robolectric</span>&nbsp; - <span title="Testing.kotestExtensions.spring
-version.kotest.extensions.spring
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-spring:_" style="text-decoration: underline;" >spring</span>&nbsp; - <span title="Testing.kotestExtensions.testContainers
-version.kotest.extensions.testcontainers
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-testcontainers:_" style="text-decoration: underline;" >testContainers</span>&nbsp; - <span title="Testing.kotestExtensions.wiremock
-version.kotest.extensions.wiremock
-io.kotest.extensions:kotest-extensions-wiremock:_" style="text-decoration: underline;" >wiremock</span>&nbsp;</td></tr>
+version.kotest.extensions
+io.kotest.extensions:kotest-extensions-wiremock:_" style="text-decoration: underline;" >wiremock</span>&nbsp; - <span title="Testing.kotestExtensions.arbs
+version.kotest.extensions
+io.kotest.extensions:kotest-property-arbs:_" style="text-decoration: underline;" >arbs</span>&nbsp; - <span title="Testing.kotestExtensions.datetime
+version.kotest.extensions
+io.kotest.extensions:kotest-property-datetime:_" style="text-decoration: underline;" >datetime</span>&nbsp;</td></tr>
 <tr><td><b>Testing.mockK</b></td><td><span title="Testing.mockK.android
 version.mockk
 io.mockk:mockk-android:_" style="text-decoration: underline;" >android</span>&nbsp; - <span title="Testing.mockK.common
