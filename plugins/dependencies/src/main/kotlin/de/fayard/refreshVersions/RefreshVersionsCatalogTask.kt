@@ -1,20 +1,19 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
-import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
 import de.fayard.refreshVersions.core.internal.Case
 import de.fayard.refreshVersions.core.internal.Deps
 import de.fayard.refreshVersions.core.internal.Library
 import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
 import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
-import de.fayard.refreshVersions.core.internal.checkModeAndNames
-import de.fayard.refreshVersions.core.internal.computeAliases
-import de.fayard.refreshVersions.core.internal.findDependencies
-import de.fayard.refreshVersions.core.internal.VersionCatalogs.generateVersionsCatalogText
 import de.fayard.refreshVersions.core.internal.UsedPluginsTracker
 import de.fayard.refreshVersions.core.internal.VersionCatalogs
 import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
+import de.fayard.refreshVersions.core.internal.VersionCatalogs.generateVersionsCatalogText
+import de.fayard.refreshVersions.core.internal.checkModeAndNames
+import de.fayard.refreshVersions.core.internal.computeAliases
+import de.fayard.refreshVersions.core.internal.findDependencies
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
@@ -63,7 +62,7 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         }
 
         val plugins = UsedPluginsTracker.usedPluginsWithoutEntryInVersionsFile +
-                UsedPluginsTracker.read().map { it.first }
+            UsedPluginsTracker.read().map { it.first }
 
         val versionCatalogAliases: List<String> = dependenciesToUse.computeAliases(
             configured = emptyList(),
@@ -71,18 +70,21 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         )
 
         val deps: Deps = dependenciesToUse.checkModeAndNames(versionCatalogAliases, Case.`kebab-case`)
+        val dependenciesAndNames = deps.names.mapKeys { it.key.toDependency() }
 
         val currentText = if (catalog.existed) catalog.readText() else ""
         VersionCatalogs.versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
         VersionCatalogs.versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-        val newText = generateVersionsCatalogText(deps, currentText, withVersions, plugins)
+        val newText = generateVersionsCatalogText(dependenciesAndNames, currentText, withVersions, plugins)
         catalog.writeText(newText)
         catalog.logFileWasModified()
 
-        println("""
+        println(
+            """
             You can now automatically migrate your build.gradle/build.gradle.kts file with the command:
 
                 $ANSI_GREEN./gradlew refreshVersionsMigrate$ANSI_RESET
-        """.trimIndent())
+        """.trimIndent()
+        )
     }
 }

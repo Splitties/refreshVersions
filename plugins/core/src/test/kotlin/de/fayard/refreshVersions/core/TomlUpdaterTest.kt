@@ -12,6 +12,7 @@ import de.fayard.refreshVersions.core.internal.VersionCatalogs
 import io.kotest.assertions.asClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import org.gradle.api.artifacts.Dependency
 import java.io.File
 import de.fayard.refreshVersions.core.Version as MavenVersion
 
@@ -102,17 +103,15 @@ class TomlUpdaterTest : FunSpec({
                 val withVersions = input.folder.contains("versions")
 
                 val currentText = input.initial.readText()
-                val librariesMap = input.dependenciesUpdates
+                val dependenciesAndNames = input.dependenciesUpdates
                     .associate { d ->
                         val versionName = d.versionsCandidates.first().value
-                        Library(d.moduleId.group!!, d.moduleId.name, d.currentVersion) to versionName
+                        val dependency: Dependency = ConfigurationLessDependency(d.moduleId.group!!, d.moduleId.name, d.currentVersion)
+                        dependency to versionName
                     }
-                val deps = Deps(librariesMap.keys.toList(), librariesMap)
-                val plugins = input.dependenciesUpdates.mapNotNull {
-                    ConfigurationLessDependency(it.moduleId as ModuleId.Maven, it.currentVersion)
-                        .takeIf { it.name.endsWith(".gradle.plugin") }
-                }
-                val newText = VersionCatalogs.generateVersionsCatalogText(deps, currentText, withVersions, plugins)
+                val plugins = dependenciesAndNames.keys
+                    .filter { it.name.endsWith(".gradle.plugin") }
+                val newText = VersionCatalogs.generateVersionsCatalogText(dependenciesAndNames, currentText, withVersions, plugins)
                 input.actual.writeText(newText)
                 input.asClue {
                     newText shouldBe input.expectedText
