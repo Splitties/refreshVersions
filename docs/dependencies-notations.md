@@ -1,6 +1,6 @@
 # Dependency Notations
 
-[**refreshVersion**](https://github.com/jmfayard/refreshVersions) provide **1150** Dependency notations in **26** groups and **239** subgroups
+[**refreshVersion**](https://github.com/jmfayard/refreshVersions) provide **1171** Dependency notations in **26** groups and **244** subgroups
 
 **Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -1203,6 +1203,33 @@ version.firebase-storage
 com.google.firebase:firebase-storage:_" style="text-decoration: underline;" >cloudStorage</span>&nbsp; - <span title="Google.firebase.performanceMonitoringGradlePlugin
 version.NO-RULE
 com.google.firebase:perf-plugin:_" style="text-decoration: underline;" >performanceMonitoringGradlePlugin</span>&nbsp;</td></tr>
+<tr><td><b>Google.horologist</b></td><td><span title="Google.horologist.audio
+version.google.horologist
+com.google.android.horologist:horologist-audio:_" style="text-decoration: underline;" >audio</span>&nbsp; - <span title="Google.horologist.composables
+version.google.horologist
+com.google.android.horologist:horologist-composables:_" style="text-decoration: underline;" >composables</span>&nbsp; - <span title="Google.horologist.media
+version.google.horologist
+com.google.android.horologist:horologist-media:_" style="text-decoration: underline;" >media</span>&nbsp; - <span title="Google.horologist.networkAwareness
+version.google.horologist
+com.google.android.horologist:horologist-network-awareness:_" style="text-decoration: underline;" >networkAwareness</span>&nbsp; - <span title="Google.horologist.tiles
+version.google.horologist
+com.google.android.horologist:horologist-tiles:_" style="text-decoration: underline;" >tiles</span>&nbsp;</td></tr>
+<tr><td><b>Google.horologist.audio</b></td><td><span title="Google.horologist.audio.ui
+version.google.horologist
+com.google.android.horologist:horologist-audio-ui:_" style="text-decoration: underline;" >ui</span>&nbsp;</td></tr>
+<tr><td><b>Google.horologist.compose</b></td><td><span title="Google.horologist.compose.layout
+version.google.horologist
+com.google.android.horologist:horologist-compose-layout:_" style="text-decoration: underline;" >layout</span>&nbsp; - <span title="Google.horologist.compose.tools
+version.google.horologist
+com.google.android.horologist:horologist-compose-tools:_" style="text-decoration: underline;" >tools</span>&nbsp;</td></tr>
+<tr><td><b>Google.horologist.media</b></td><td><span title="Google.horologist.media.data
+version.google.horologist
+com.google.android.horologist:horologist-media-data:_" style="text-decoration: underline;" >data</span>&nbsp; - <span title="Google.horologist.media.ui
+version.google.horologist
+com.google.android.horologist:horologist-media-ui:_" style="text-decoration: underline;" >ui</span>&nbsp;</td></tr>
+<tr><td><b>Google.horologist.media3</b></td><td><span title="Google.horologist.media3.backend
+version.google.horologist
+com.google.android.horologist:horologist-media3-backend:_" style="text-decoration: underline;" >backend</span>&nbsp;</td></tr>
 <tr><td><b>Google.mlKit</b></td><td><span title="Google.mlKit.playStoreDynamicFeatureSupport
 version.google.mlkit.playstore-dynamic-feature-support
 com.google.mlkit:playstore-dynamic-feature-support:_" style="text-decoration: underline;" >playStoreDynamicFeatureSupport</span>&nbsp;</td></tr>
@@ -2797,11 +2824,31 @@ version.moshi
 com.squareup.moshi:moshi:_" style="text-decoration: underline;" >javaReflect</span>&nbsp;</td></tr>
 <tr><td><b>Square.okHttp3</b></td><td><span title="Square.okHttp3.loggingInterceptor
 version.okhttp3
-com.squareup.okhttp3:logging-interceptor:_" style="text-decoration: underline;" >loggingInterceptor</span>&nbsp; - <span title="Square.okHttp3.mockWebServer
+com.squareup.okhttp3:logging-interceptor:_" style="text-decoration: underline;" >loggingInterceptor</span>&nbsp; - <span title="Square.okHttp3.mockWebServer3Junit4
 version.okhttp3
-com.squareup.okhttp3:mockwebserver:_" style="text-decoration: underline;" >mockWebServer</span>&nbsp; - <span title="Square.okHttp3.bom
+com.squareup.okhttp3:mockwebserver3-junit4:_" style="text-decoration: underline;" >mockWebServer3Junit4</span>&nbsp; - <span title="Square.okHttp3.mockWebServer3Junit5
 version.okhttp3
-com.squareup.okhttp3:okhttp-bom:_" style="text-decoration: underline;" >bom</span>&nbsp; - <span title="Square.okHttp3.okHttp
+com.squareup.okhttp3:mockwebserver3-junit5:_" style="text-decoration: underline;" >mockWebServer3Junit5</span>&nbsp; - <span title="Square.okHttp3.mockWebServer3
+version.okhttp3
+com.squareup.okhttp3:mockwebserver3:_" style="text-decoration: underline;" >mockWebServer3</span>&nbsp; - <span title="Square.okHttp3.mockWebServer
+version.okhttp3
+com.squareup.okhttp3:mockwebserver:_" style="text-decoration: underline;" >mockWebServer</span>&nbsp; - <span title="Square.okHttp3.android
+version.okhttp3
+com.squareup.okhttp3:okhttp-android:_" style="text-decoration: underline;" >android</span>&nbsp; - <span title="Square.okHttp3.bom
+version.okhttp3
+com.squareup.okhttp3:okhttp-bom:_" style="text-decoration: underline;" >bom</span>&nbsp; - <span title="Square.okHttp3.brotli
+version.okhttp3
+com.squareup.okhttp3:okhttp-brotli:_" style="text-decoration: underline;" >brotli</span>&nbsp; - <span title="Square.okHttp3.coroutines
+version.okhttp3
+com.squareup.okhttp3:okhttp-coroutines:_" style="text-decoration: underline;" >coroutines</span>&nbsp; - <span title="Square.okHttp3.dnsOverHttps
+version.okhttp3
+com.squareup.okhttp3:okhttp-dnsoverhttps:_" style="text-decoration: underline;" >dnsOverHttps</span>&nbsp; - <span title="Square.okHttp3.sse
+version.okhttp3
+com.squareup.okhttp3:okhttp-sse:_" style="text-decoration: underline;" >sse</span>&nbsp; - <span title="Square.okHttp3.tls
+version.okhttp3
+com.squareup.okhttp3:okhttp-tls:_" style="text-decoration: underline;" >tls</span>&nbsp; - <span title="Square.okHttp3.urlConnection
+version.okhttp3
+com.squareup.okhttp3:okhttp-urlconnection:_" style="text-decoration: underline;" >urlConnection</span>&nbsp; - <span title="Square.okHttp3.okHttp
 version.okhttp3
 com.squareup.okhttp3:okhttp:_" style="text-decoration: underline;" >okHttp</span>&nbsp;</td></tr>
 <tr><td><b>Square.picasso</b></td><td><span title="Square.picasso.pollexor
