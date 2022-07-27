@@ -1,11 +1,13 @@
 package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
+import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
 import de.fayard.refreshVersions.core.internal.Case
 import de.fayard.refreshVersions.core.internal.Deps
 import de.fayard.refreshVersions.core.internal.Library
 import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
 import de.fayard.refreshVersions.core.internal.OutputFile
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.checkModeAndNames
 import de.fayard.refreshVersions.core.internal.computeAliases
 import de.fayard.refreshVersions.core.internal.findDependencies
@@ -71,6 +73,8 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         val deps: Deps = dependenciesToUse.checkModeAndNames(versionCatalogAliases, Case.`kebab-case`)
 
         val currentText = if (catalog.existed) catalog.readText() else ""
+        VersionCatalogs.versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
+        VersionCatalogs.versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
         val newText = generateVersionsCatalogText(deps, currentText, withVersions, plugins)
         catalog.writeText(newText)
         catalog.logFileWasModified()

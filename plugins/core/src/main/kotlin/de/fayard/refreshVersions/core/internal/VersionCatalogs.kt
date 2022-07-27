@@ -114,11 +114,11 @@ object VersionCatalogs {
 
     private data class TomlVersionRef(val key: String, val version: String)
 
-    private fun dependenciesWithVersionRefsMapIfAny(deps: Deps): Map<Library, TomlVersionRef?> {
-        val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
-        val versionKeyReader: ArtifactVersionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+    lateinit var versionsMap: Map<String, String>
+    lateinit var versionKeyReader: ArtifactVersionKeyReader
 
-        return deps.libraries.mapNotNull { lib ->
+    private fun dependenciesWithVersionRefsMapIfAny(deps: Deps): Map<Library, TomlVersionRef?> =
+        deps.libraries.mapNotNull { lib ->
             val name = getVersionPropertyName(ModuleId.Maven(lib.group, lib.name), versionKeyReader)
 
             if (name.contains("..") || name.startsWith("plugin")) {
@@ -132,15 +132,12 @@ object VersionCatalogs {
                 )
             }
         }.toMap()
-    }
 
     private fun versionsCatalogLibraries(
         deps: Deps,
         versionRefMap: Map<Library, TomlVersionRef?>,
         withVersions: Boolean,
     ): List<TomlLine> {
-        val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
-        val versionKeyReader: ArtifactVersionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
 
         return deps.libraries.filterNot { lib ->
             lib.name.endsWith("gradle.plugin")
