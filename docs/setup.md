@@ -70,6 +70,9 @@ If you use the **buildSrc** module and have dependencies declared in the `buildS
 === "buildSrc/settings.gradle.kts"
     ```kotlin
     pluginManagement {
+        repositories {
+            gradlePluginPortal()
+        }
         plugins {
             id("de.fayard.refreshVersions") version "{{version.refreshVersions}}"
         }
@@ -82,6 +85,9 @@ If you use the **buildSrc** module and have dependencies declared in the `buildS
 === "buildSrc/settings.gradle"
     ```groovy
     pluginManagement {
+        repositories {
+            gradlePluginPortal()
+        }
         plugins {
             id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
         }
@@ -101,6 +107,9 @@ A workaround is to configure the plugin in the `buildSrc` module (create the dir
 === "buildSrc/settings.gradle"
     ```groovy
     pluginManagement {
+        repositories {
+            gradlePluginPortal()
+        }
         plugins {
             id 'de.fayard.refreshVersions' version '{{version.refreshVersions}}'
         }
