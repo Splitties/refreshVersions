@@ -1,18 +1,24 @@
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.extensions.gradle.moduleId
+import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
+import de.fayard.refreshVersions.core.internal.ConfigurationLessDependency
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
-import de.fayard.refreshVersions.core.internal.Toml
+import de.fayard.refreshVersions.core.internal.Deps
+import de.fayard.refreshVersions.core.internal.Library
 import de.fayard.refreshVersions.core.internal.TomlLine
 import de.fayard.refreshVersions.core.internal.TomlSection
 import de.fayard.refreshVersions.core.internal.TomlUpdater
 import de.fayard.refreshVersions.core.internal.VersionCatalogs
+import io.kotest.assertions.asClue
+import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import org.gradle.api.artifacts.Dependency
 import java.io.File
 import de.fayard.refreshVersions.core.Version as MavenVersion
 
 class TomlUpdaterTest : FunSpec({
-
     test("Folder toml-refreshversions - update new versions") {
         val input = FolderInput("toml-refreshversions")
 
@@ -21,7 +27,9 @@ class TomlUpdaterTest : FunSpec({
 
         // check idempotent
         TomlUpdater(input.expected, input.dependenciesUpdates).updateNewVersions(input.expected)
-        input.actual.readText()  shouldBe input.expectedText
+        input.asClue {
+            input.actual.readText()  shouldBe input.expectedText
+        }
 
         // delete actual file if successful
         input.actual.delete()
@@ -35,7 +43,9 @@ class TomlUpdaterTest : FunSpec({
 
         // check idempotent
         TomlUpdater(input.expected, input.dependenciesUpdates).cleanupComments(input.expected)
-        input.actual.readText()  shouldBe input.expectedText
+        input.asClue {
+            input.actual.readText()  shouldBe input.expectedText
+        }
 
         // delete actual file if successful
         input.actual.delete()
@@ -61,12 +71,43 @@ class TomlUpdaterTest : FunSpec({
         ))
 
         input.actual.writeText(toml.toString())
-        toml.toString() shouldBe input.expectedText
+        input.asClue {
+            toml.toString() shouldBe input.expectedText
+        }
         // delete actual file if successful
         input.actual.delete()
     }
-})
 
+
+    val rulesDir = File(".").absoluteFile.parentFile.parentFile
+        .resolve("dependencies/src/main/resources/refreshVersions-rules")
+        .also { require(it.canRead()) { "Can't read foler $it"} }
+    VersionCatalogs.versionsMap = emptyMap() // TODO
+    VersionCatalogs.versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
+
+    test("Folder toml-generate-initial-versions - generate the initial versions catalog") {
+        val input = FolderInput("refreshVersionsCatalog-versions-new")
+        val withVersions = true
+
+        val currentText = input.initial.readText()
+        val librariesMap = input.dependenciesUpdates
+            .associate { d ->
+                val versionName = d.versionsCandidates.first().value
+                Library(d.moduleId.group!!, d.moduleId.name, d.currentVersion) to versionName
+            }
+        val deps = Deps(librariesMap.keys.toList(), librariesMap)
+        val plugins = input.dependenciesUpdates.mapNotNull {
+            ConfigurationLessDependency(it.moduleId as ModuleId.Maven, it.currentVersion)
+                .takeIf { it.name.endsWith(".gradle.plugin") }
+        }
+        val newText = VersionCatalogs.generateVersionsCatalogText(deps, currentText, withVersions, plugins)
+        input.actual.writeText(newText)
+        input.asClue {
+            newText shouldBe input.expectedText
+        }
+        input.actual.delete()
+    }
+})
 
 private data class FolderInput(
     val folder: String,
@@ -76,6 +117,8 @@ private data class FolderInput(
     val dependenciesUpdates: List<DependencyWithVersionCandidates>
 ) {
     val expectedText = expected.readText()
+
+    override fun toString() = "Comparing from resources folder=$folder:  actual=${actual.name} and expected=${expected.name}"
 }
 
 private fun FolderInput(folderName: String): FolderInput {

@@ -1,0 +1,6 @@
+org.codehaus.groovy:groovy-kotlin:3.0.5:groovy-kotlin
+com.mycompany:mylib:1.4:my-lib
+com.mycompany:other:1.4:my-other-lib
+com.mycompany:alternate:1.2:my-alternate-lib
+some.plugin.id:some.plugin.id.gradle.plugin:1.4:1.5,1.6,1.7
+other.plugin.id:other.plugin.id.gradle.plugin:3.4:3.5,3.6
