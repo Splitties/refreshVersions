@@ -53,7 +53,7 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
 
     @TaskAction
     fun cleanUpVersionsCatalog() {
-        if (VersionCatalogs.isSupported()) {
+        if (VersionCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled) {
             val file = File(LIBS_VERSIONS_TOML)
             TomlUpdater(file, emptyList()).cleanupComments(file)
             OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()

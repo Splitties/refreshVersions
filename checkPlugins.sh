@@ -14,14 +14,15 @@ runGradleTaskInFolder() {
     pwd
 
     echo '$' "./gradlew $TASK"
-    ./gradlew task || fail "ERROR for task $TASK"
+    ./gradlew $TASK || fail "ERROR for task $TASK"
     cd ..
 }
 
 DIR="$(basename $PWD)"
 TASK="check refreshVersions"
 
-test -n "$1" && TASK="$1"
+test -n "$1" && TASK="$*"
+echo "TASK=$TASK"
 
 test "$DIR" = "refreshVersions" || fail "ERROR: must be called from the refreshVersions folder"
 checkInstalled java

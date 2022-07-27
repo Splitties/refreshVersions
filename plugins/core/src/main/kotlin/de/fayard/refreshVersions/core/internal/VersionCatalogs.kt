@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core.internal
 
+import de.fayard.refreshVersions.core.FeatureFlag
 import de.fayard.refreshVersions.core.ModuleId
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
@@ -15,9 +16,10 @@ object VersionCatalogs {
 
     fun isSupported(): Boolean = GradleVersion.current() >= minimumGradleVersion
 
-    fun dependencyAliases(versionCatalog: VersionCatalog?): Map<ModuleId.Maven, String> {
-        versionCatalog ?: return emptyMap()
-        return versionCatalog.libraryAliases.mapNotNull { alias ->
+    fun dependencyAliases(versionCatalog: VersionCatalog?): Map<ModuleId.Maven, String> = when {
+        FeatureFlag.VERSIONS_CATALOG.isNotEnabled -> emptyMap()
+        versionCatalog == null -> emptyMap()
+        else -> versionCatalog.libraryAliases.mapNotNull { alias ->
             versionCatalog.findLibrary(alias)
                 .orElse(null)
                 ?.orNull

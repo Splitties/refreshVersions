@@ -80,10 +80,6 @@ open class RefreshVersionsTask : DefaultTask() {
                 settingsPluginsUpdates = result.settingsPluginsUpdates,
                 buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
             )
-            val libsToml = project.file(LIBS_VERSIONS_TOML)
-            if (VersionCatalogs.isSupported()) {
-                TomlUpdater(libsToml, result.dependenciesUpdates).updateNewVersions(libsToml)
-            }
 
             warnAboutRefreshVersionsIfSettingIfAny()
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
@@ -93,8 +89,14 @@ open class RefreshVersionsTask : DefaultTask() {
                 logger.log(problem)
             }
             OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
-            if (libsToml.canRead()) {
-                OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
+
+            val libsToml = project.file(LIBS_VERSIONS_TOML)
+            val shouldUpdateVersionCatalogs = VersionCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled
+            if (shouldUpdateVersionCatalogs) {
+                TomlUpdater(libsToml, result.dependenciesUpdates).updateNewVersions(libsToml)
+                if (libsToml.canRead()) {
+                    OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
+                }
             }
         }
     }
