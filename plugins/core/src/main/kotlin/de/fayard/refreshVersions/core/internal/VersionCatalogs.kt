@@ -159,7 +159,7 @@ object VersionCatalogs {
                     lib.version == null -> null
                     withVersions.not() -> "_"
                     versionKey in versionsMap -> versionsMap[versionKey]!!
-                    else -> "_"
+                    else -> lib.version
                 }
                 val value = lib.copy(version = version).toDependency()
                 TomlLine(TomlSection.Libraries, deps.names[lib]!!, value)
