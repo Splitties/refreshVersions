@@ -67,6 +67,9 @@ org.jetbrains.kotlinx:dataframe(-*)
 org.jetbrains.kotlinx:kotlin-deeplearning(-*)
               ^^^^^^^.       ^^^^^^^^^^^^
 
+com.google.android.horologist:*
+    ^^^^^^^        ^^^^^^^^^^
+
 com.android.billingclient:billing(-*)
     ^^^^^^^^^^^^^^^^^^^^^
 
