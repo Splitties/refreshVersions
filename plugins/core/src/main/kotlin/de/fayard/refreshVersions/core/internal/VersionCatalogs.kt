@@ -168,8 +168,15 @@ object VersionCatalogs {
                     versionKey in versionsMap -> versionsMap[versionKey]!!
                     else -> dependency.version
                 }
-                val value = ConfigurationLessDependency(group, dependency.name, version)
-                TomlLine(TomlSection.Libraries, dependenciesAndNames.get(dependency)!!, value)
+                TomlLine(
+                    section = TomlSection.Libraries,
+                    key = dependenciesAndNames.getValue(dependency),
+                    dependency = ConfigurationLessDependency(
+                        group = group,
+                        name = dependency.name,
+                        version = version
+                    )
+                )
             }
 
             listOf(TomlLine.newLine, line)
