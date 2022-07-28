@@ -30,9 +30,8 @@ internal class TomlUpdater(
     }
 
     private fun updateNewVersions(lines: List<TomlLine>): List<TomlLine> = lines.flatMap { line ->
-        val noop = listOf(line)
         when (line.kind) {
-            Ignore, LibsUnderscore, LibsVersionRef, PluginVersionRef -> noop
+            Ignore, LibsUnderscore, LibsVersionRef, PluginVersionRef -> listOf(line)
             Deletable -> emptyList()
             Version -> {
                 linesForUpdate(line, findLineReferencing(line))
