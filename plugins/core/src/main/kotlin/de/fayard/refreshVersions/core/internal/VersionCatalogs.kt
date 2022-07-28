@@ -159,43 +159,40 @@ object VersionCatalogs {
         dependenciesAndNames: Map<Dependency, String>,
         versionRefMap: Map<Dependency, TomlVersionRef?>,
         withVersions: Boolean,
-    ): List<TomlLine> {
-
-        return dependenciesAndNames.keys.filterNot { dependency ->
-            dependency.name.endsWith("gradle.plugin") && dependency.group != null
-        }.flatMap { dependency: Dependency ->
-            val group = dependency.group!!
-            val line: TomlLine = if (dependency in versionRefMap) {
-                val versionRef: TomlVersionRef? = versionRefMap[dependency]
-                TomlLine(
-                    section = TomlSection.Libraries,
-                    key = dependenciesAndNames.getValue(dependency),
-                    map = mutableMapOf<String, String?>().apply { //TODO: Replace with buildMap later.
-                        put("group", dependency.group)
-                        put("name", dependency.name)
-                        put("version.ref", versionRef?.key ?: return@apply)
-                    }
-                )
-            } else {
-                val versionKey = getVersionPropertyName(ModuleId.Maven(group, dependency.name), versionKeyReader)
-                val version = when {
-                    dependency.version == null -> null
-                    withVersions.not() -> "_"
-                    versionKey in versionsMap -> versionsMap[versionKey]!!
-                    else -> dependency.version
+    ): List<TomlLine> = dependenciesAndNames.keys.filterNot { dependency ->
+        dependency.name.endsWith("gradle.plugin") && dependency.group != null
+    }.flatMap { dependency: Dependency ->
+        val group = dependency.group!!
+        val line: TomlLine = if (dependency in versionRefMap) {
+            val versionRef: TomlVersionRef? = versionRefMap[dependency]
+            TomlLine(
+                section = TomlSection.Libraries,
+                key = dependenciesAndNames.getValue(dependency),
+                map = mutableMapOf<String, String?>().apply { //TODO: Replace with buildMap later.
+                    put("group", dependency.group)
+                    put("name", dependency.name)
+                    put("version.ref", versionRef?.key ?: return@apply)
                 }
-                TomlLine(
-                    section = TomlSection.Libraries,
-                    key = dependenciesAndNames.getValue(dependency),
-                    dependency = ConfigurationLessDependency(
-                        group = group,
-                        name = dependency.name,
-                        version = version
-                    )
-                )
+            )
+        } else {
+            val versionKey = getVersionPropertyName(ModuleId.Maven(group, dependency.name), versionKeyReader)
+            val version = when {
+                dependency.version == null -> null
+                withVersions.not() -> "_"
+                versionKey in versionsMap -> versionsMap[versionKey]!!
+                else -> dependency.version
             }
-
-            listOf(TomlLine.newLine, line)
+            TomlLine(
+                section = TomlSection.Libraries,
+                key = dependenciesAndNames.getValue(dependency),
+                dependency = ConfigurationLessDependency(
+                    group = group,
+                    name = dependency.name,
+                    version = version
+                )
+            )
         }
+
+        listOf(TomlLine.newLine, line)
     }
 }
