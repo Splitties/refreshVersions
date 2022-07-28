@@ -22,7 +22,6 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import org.gradle.util.GradleVersion
 
-@Suppress("UnstableApiUsage")
 open class RefreshVersionsCatalogTask : DefaultTask() {
 
     @Input
