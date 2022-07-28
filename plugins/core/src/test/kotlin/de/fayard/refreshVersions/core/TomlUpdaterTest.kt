@@ -86,10 +86,10 @@ class TomlUpdaterTest : FunSpec({
     val rulesDir = File(".").absoluteFile.parentFile.parentFile
         .resolve("dependencies/src/main/resources/refreshVersions-rules")
         .also { require(it.canRead()) { "Can't read foler $it" } }
-    VersionCatalogs.versionsMap = mapOf(
+    val versionsMap = mapOf(
         "version.junit.jupiter" to "42"
     )
-    VersionCatalogs.versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
+    val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
     context("refreshVersionsCatalog") {
         val refreshVersionsCatalogInputs = listOf(
@@ -111,7 +111,14 @@ class TomlUpdaterTest : FunSpec({
                     }
                 val plugins = dependenciesAndNames.keys
                     .filter { it.name.endsWith(".gradle.plugin") }
-                val newText = VersionCatalogs.generateVersionsCatalogText(dependenciesAndNames, currentText, withVersions, plugins)
+                val newText = VersionCatalogs.generateVersionsCatalogText(
+                    versionsMap = versionsMap,
+                    versionKeyReader = versionKeyReader,
+                    dependenciesAndNames = dependenciesAndNames,
+                    currentText = currentText,
+                    withVersions = withVersions,
+                    plugins = plugins
+                )
                 input.actual.writeText(newText)
                 input.asClue {
                     newText shouldBe input.expectedText

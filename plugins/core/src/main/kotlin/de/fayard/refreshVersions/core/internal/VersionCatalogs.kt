@@ -62,13 +62,19 @@ object VersionCatalogs {
     }
 
     fun generateVersionsCatalogText(
+        versionsMap: Map<String, String> = RefreshVersionsConfigHolder.readVersionsMap(),
+        versionKeyReader: ArtifactVersionKeyReader = RefreshVersionsConfigHolder.versionKeyReader,
         dependenciesAndNames: Map<Dependency, String>,
         currentText: String,
         withVersions: Boolean,
         plugins: List<Dependency>
     ): String {
         val dependencies = dependenciesAndNames.keys.toList()
-        val versionRefMap = dependenciesWithVersionRefsMapIfAny(dependencies)
+        val versionRefMap = dependenciesWithVersionRefsMapIfAny(
+            versionsMap = versionsMap,
+            versionKeyReader = versionKeyReader,
+            dependencies = dependencies
+        )
 
         val toml = parseToml(currentText)
         toml.merge(TomlSection.Plugins, addPlugins(plugins, versionRefMap))
@@ -120,6 +126,8 @@ object VersionCatalogs {
     lateinit var versionKeyReader: ArtifactVersionKeyReader
 
     private fun dependenciesWithVersionRefsMapIfAny(
+        versionsMap: Map<String, String>,
+        versionKeyReader: ArtifactVersionKeyReader,
         dependencies: List<Dependency>
     ): Map<Dependency, TomlVersionRef?> = dependencies.mapNotNull { dependency ->
         val group = dependency.group ?: return@mapNotNull null
