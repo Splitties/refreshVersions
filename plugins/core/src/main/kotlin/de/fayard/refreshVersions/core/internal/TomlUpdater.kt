@@ -72,7 +72,7 @@ internal class TomlUpdater(
         }
 
         val nbSpaces = line.text.indexOf(version) - if (isObject) 17 else 14
-        val space = List(nbSpaces.coerceAtLeast(0)) { " " }.joinToString("")
+        val space = " ".repeat(nbSpaces.coerceAtLeast(0))
 
         versions.mapTo(result) { v: MavenVersion ->
             TomlLine(line.section, "##${space}# available${suffix(v)}")
