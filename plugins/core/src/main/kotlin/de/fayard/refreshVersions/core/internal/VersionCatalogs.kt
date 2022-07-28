@@ -105,10 +105,10 @@ object VersionCatalogs {
     private fun addVersions(
         dependenciesAndNames: Map<Dependency, String>,
         versionRefMap: Map<Dependency, TomlVersionRef?>
-    ): List<TomlLine> = dependenciesAndNames.keys.distinctBy { lib ->
-        versionRefMap[lib]?.key
-    }.flatMap { lib ->
-        val (versionName, versionValue) = versionRefMap[lib] ?: return@flatMap emptyList()
+    ): List<TomlLine> = dependenciesAndNames.keys.distinctBy { dependency ->
+        versionRefMap[dependency]?.key
+    }.flatMap { dependency ->
+        val (versionName, versionValue) = versionRefMap[dependency] ?: return@flatMap emptyList()
 
         val versionLine = TomlLine(TomlSection.Versions, versionName, versionValue)
         listOf(TomlLine.newLine, versionLine)
@@ -121,22 +121,22 @@ object VersionCatalogs {
 
     private fun dependenciesWithVersionRefsMapIfAny(
         dependencies: List<Dependency>
-    ): Map<Dependency, TomlVersionRef?> = dependencies.mapNotNull { lib ->
-        val group = lib.group ?: return@mapNotNull null
+    ): Map<Dependency, TomlVersionRef?> = dependencies.mapNotNull { dependency ->
+        val group = dependency.group ?: return@mapNotNull null
 
-        val name = getVersionPropertyName(ModuleId.Maven(group, lib.name), versionKeyReader)
+        val name = getVersionPropertyName(ModuleId.Maven(group, dependency.name), versionKeyReader)
 
         if (name.contains("..") || name.startsWith("plugin")) {
             return@mapNotNull null
         }
-        val version = versionsMap[name] ?: lib.version
+        val version = versionsMap[name] ?: dependency.version
         val versionRef = version?.let {
             TomlVersionRef(
                 key = name.removePrefix("version.").replace(".", "-"), // Better match TOML naming convention.
                 version = it
             )
         }
-        lib to versionRef
+        dependency to versionRef
     }.toMap()
 
     private fun versionsCatalogLibraries(
@@ -145,8 +145,8 @@ object VersionCatalogs {
         withVersions: Boolean,
     ): List<TomlLine> {
 
-        return dependenciesAndNames.keys.filterNot { lib ->
-            lib.name.endsWith("gradle.plugin") && lib.group != null
+        return dependenciesAndNames.keys.filterNot { dependency ->
+            dependency.name.endsWith("gradle.plugin") && dependency.group != null
         }.flatMap { dependency: Dependency ->
             val group = dependency.group!!
             val line: TomlLine = if (dependency in versionRefMap) {
