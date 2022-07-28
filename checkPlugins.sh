@@ -10,7 +10,7 @@ checkInstalled() {
 runGradleTaskInFolder() {
     echo
     echo "== cd $1 =="
-    cd $1 || fail "ERROR: Folder $1 doens't exist"
+    cd $1 || fail "ERROR: Folder $1 doesn't exist"
     pwd
 
     echo '$' "./gradlew $TASK"
