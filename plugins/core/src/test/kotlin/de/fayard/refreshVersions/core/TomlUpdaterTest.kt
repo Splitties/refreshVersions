@@ -8,46 +8,41 @@ import de.fayard.refreshVersions.core.internal.TomlSection
 import de.fayard.refreshVersions.core.internal.TomlUpdater
 import de.fayard.refreshVersions.core.internal.VersionCatalogs
 import io.kotest.assertions.asClue
-import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import org.gradle.api.artifacts.Dependency
+import org.junit.jupiter.api.TestFactory
+import testutils.junit.dynamicTest
 import java.io.File
+import kotlin.test.Test
 import de.fayard.refreshVersions.core.Version as MavenVersion
 
-class TomlUpdaterTest : FunSpec({
-    test("Folder toml-refreshversions - update new versions") {
-        val input = FolderInput("toml-refreshversions")
+class TomlUpdaterTest {
 
-        TomlUpdater(input.initial, input.dependenciesUpdates).updateNewVersions(input.actual)
+    @Test
+    fun `Folder toml-refreshversions - update new versions`() = testTomlUpdater(
+        inputFolderName = "toml-refreshversions"
+    ) { actual: File -> updateNewVersions(actual) }
+
+    @Test
+    fun `Folder toml-cleanup - remove refreshVersions comments`() = testTomlUpdater(
+        inputFolderName = "toml-cleanup"
+    ) { actual: File -> cleanupComments(actual) }
+
+    private fun testTomlUpdater(inputFolderName: String, action: TomlUpdater.(actual: File) -> Unit) {
+        val input = FolderInput(inputFolderName)
+        TomlUpdater(input.initial, input.dependenciesUpdates).action(input.actual)
         input.actual.readText() shouldBe input.expectedText
 
-        // check idempotent
-        TomlUpdater(input.expected, input.dependenciesUpdates).updateNewVersions(input.expected)
-        input.asClue {
-            input.actual.readText() shouldBe input.expectedText
-        }
+        // check idempotence
+        TomlUpdater(input.expected, input.dependenciesUpdates).action(input.expected)
+        input.actual.readText() shouldBe input.expectedText
 
         // delete actual file if successful
         input.actual.delete()
     }
 
-    test("Folder toml-cleanup - remove refreshVersions comments") {
-        val input = FolderInput("toml-cleanup")
-
-        TomlUpdater(input.initial, input.dependenciesUpdates).cleanupComments(input.actual)
-        input.actual.readText() shouldBe input.expectedText
-
-        // check idempotent
-        TomlUpdater(input.expected, input.dependenciesUpdates).cleanupComments(input.expected)
-        input.asClue {
-            input.actual.readText() shouldBe input.expectedText
-        }
-
-        // delete actual file if successful
-        input.actual.delete()
-    }
-
-    test("Folder toml-merge-properties - modify file incrementally") {
+    @Test
+    fun `Folder toml-merge-properties - modify file incrementally`() {
         val input = FolderInput("toml-merge-properties")
 
         val toml = VersionCatalogs.parseToml(input.initial.readText())
@@ -81,51 +76,48 @@ class TomlUpdaterTest : FunSpec({
     }
 
 
-    val rulesDir = File(".").absoluteFile.parentFile.parentFile
+    private val rulesDir = File(".").absoluteFile.parentFile.parentFile
         .resolve("dependencies/src/main/resources/refreshVersions-rules")
         .also { require(it.canRead()) { "Can't read foler $it" } }
-    val versionsMap = mapOf(
+    private val versionsMap = mapOf(
         "version.junit.jupiter" to "42"
     )
-    val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
+    private val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
-    context("refreshVersionsCatalog") {
-        val refreshVersionsCatalogInputs = listOf(
-            FolderInput("refreshVersionsCatalog-versions-new"),
-            FolderInput("refreshVersionsCatalog-versions-existing"),
-            FolderInput("refreshVersionsCatalog-underscore-new"),
-            FolderInput("refreshVersionsCatalog-underscore-existing"),
-        )
-        for (input in refreshVersionsCatalogInputs) {
-            test("Folder ${input.folder}") {
-                val withVersions = input.folder.contains("versions")
+    @TestFactory
+    fun refreshVersionsCatalog() = listOf(
+        "refreshVersionsCatalog-versions-new",
+        "refreshVersionsCatalog-versions-existing",
+        "refreshVersionsCatalog-underscore-new",
+        "refreshVersionsCatalog-underscore-existing"
+    ).map { folderName: String ->
+        dynamicTest("Folder $folderName") {
+            val input = FolderInput(folderName)
+            val withVersions = input.folder.contains("versions")
 
-                val currentText = input.initial.readText()
-                val dependenciesAndNames = input.dependenciesUpdates
-                    .associate { d ->
-                        val versionName = d.versionsCandidates.first().value
-                        val dependency: Dependency = ConfigurationLessDependency(d.moduleId.group!!, d.moduleId.name, d.currentVersion)
-                        dependency to versionName
-                    }
-                val plugins = dependenciesAndNames.keys
-                    .filter { it.name.endsWith(".gradle.plugin") }
-                val newText = VersionCatalogs.generateVersionsCatalogText(
-                    versionsMap = versionsMap,
-                    versionKeyReader = versionKeyReader,
-                    dependenciesAndNames = dependenciesAndNames,
-                    currentText = currentText,
-                    withVersions = withVersions,
-                    plugins = plugins
-                )
-                input.actual.writeText(newText)
-                input.asClue {
-                    newText shouldBe input.expectedText
-                }
-                input.actual.delete()
+            val currentText = input.initial.readText()
+            val dependenciesAndNames = input.dependenciesUpdates.associate { d ->
+                val versionName = d.versionsCandidates.first().value
+                val dependency: Dependency = ConfigurationLessDependency(d.moduleId.group!!, d.moduleId.name, d.currentVersion)
+                dependency to versionName
             }
+            val plugins = dependenciesAndNames.keys.filter { it.name.endsWith(".gradle.plugin") }
+            val newText = VersionCatalogs.generateVersionsCatalogText(
+                versionsMap = versionsMap,
+                versionKeyReader = versionKeyReader,
+                dependenciesAndNames = dependenciesAndNames,
+                currentText = currentText,
+                withVersions = withVersions,
+                plugins = plugins
+            )
+            input.actual.writeText(newText)
+            input.asClue {
+                newText shouldBe input.expectedText
+            }
+            input.actual.delete()
         }
     }
-})
+}
 
 private data class FolderInput(
     val folder: String,
