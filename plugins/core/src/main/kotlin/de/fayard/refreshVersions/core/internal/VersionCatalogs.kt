@@ -120,8 +120,8 @@ object VersionCatalogs {
     lateinit var versionKeyReader: ArtifactVersionKeyReader
 
     private fun dependenciesWithVersionRefsMapIfAny(
-        libraries: List<Dependency>
-    ): Map<Dependency, TomlVersionRef?> = libraries.mapNotNull { lib ->
+        dependencies: List<Dependency>
+    ): Map<Dependency, TomlVersionRef?> = dependencies.mapNotNull { lib ->
         val group = lib.group ?: return@mapNotNull null
 
         val name = getVersionPropertyName(ModuleId.Maven(group, lib.name), versionKeyReader)
