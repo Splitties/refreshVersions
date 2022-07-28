@@ -90,9 +90,9 @@ open class RefreshVersionsTask : DefaultTask() {
             }
             OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 
-            val libsToml = project.file(LIBS_VERSIONS_TOML)
             val shouldUpdateVersionCatalogs = VersionCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled
             if (shouldUpdateVersionCatalogs) {
+                val libsToml = project.file(LIBS_VERSIONS_TOML)
                 TomlUpdater(libsToml, result.dependenciesUpdates).updateNewVersions(libsToml)
                 if (libsToml.canRead()) {
                     OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
