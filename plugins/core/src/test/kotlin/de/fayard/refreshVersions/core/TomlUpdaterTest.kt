@@ -3,8 +3,6 @@ package de.fayard.refreshVersions.core
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyReader
 import de.fayard.refreshVersions.core.internal.ConfigurationLessDependency
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
-import de.fayard.refreshVersions.core.internal.Deps
-import de.fayard.refreshVersions.core.internal.Library
 import de.fayard.refreshVersions.core.internal.TomlLine
 import de.fayard.refreshVersions.core.internal.TomlSection
 import de.fayard.refreshVersions.core.internal.TomlUpdater
