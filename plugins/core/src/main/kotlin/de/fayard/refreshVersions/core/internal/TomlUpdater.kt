@@ -75,7 +75,10 @@ internal class TomlUpdater(
         val space = " ".repeat(nbSpaces.coerceAtLeast(0))
 
         versions.mapTo(result) { v: MavenVersion ->
-            TomlLine(line.section, "##${space}# available${suffix(v)}")
+            TomlLine(
+                section = line.section,
+                text = "##${space}# available${suffix(v)}"
+            )
         }
         return result
     }
