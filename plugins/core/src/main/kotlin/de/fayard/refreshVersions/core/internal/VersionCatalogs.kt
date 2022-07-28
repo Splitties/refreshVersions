@@ -119,25 +119,25 @@ object VersionCatalogs {
     lateinit var versionsMap: Map<String, String>
     lateinit var versionKeyReader: ArtifactVersionKeyReader
 
-    private fun dependenciesWithVersionRefsMapIfAny(libraries: List<Dependency>): Map<Dependency, TomlVersionRef?> =
-        libraries
-            .mapNotNull { lib ->
-            val group = lib.group ?: return@mapNotNull null
+    private fun dependenciesWithVersionRefsMapIfAny(
+        libraries: List<Dependency>
+    ): Map<Dependency, TomlVersionRef?> = libraries.mapNotNull { lib ->
+        val group = lib.group ?: return@mapNotNull null
 
-            val name = getVersionPropertyName(ModuleId.Maven(group, lib.name), versionKeyReader)
+        val name = getVersionPropertyName(ModuleId.Maven(group, lib.name), versionKeyReader)
 
-            if (name.contains("..") || name.startsWith("plugin")) {
-                return@mapNotNull null
-            }
-            val version = versionsMap[name] ?: lib.version
-            val versionRef = version?.let {
-                TomlVersionRef(
-                    key = name.removePrefix("version.").replace(".", "-"), // Better match TOML naming convention.
-                    version = it
-                )
-            }
-            lib to versionRef
-        }.toMap()
+        if (name.contains("..") || name.startsWith("plugin")) {
+            return@mapNotNull null
+        }
+        val version = versionsMap[name] ?: lib.version
+        val versionRef = version?.let {
+            TomlVersionRef(
+                key = name.removePrefix("version.").replace(".", "-"), // Better match TOML naming convention.
+                version = it
+            )
+        }
+        lib to versionRef
+    }.toMap()
 
     private fun versionsCatalogLibraries(
         dependenciesAndNames: Map<Dependency, String>,
