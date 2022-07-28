@@ -17,6 +17,7 @@ import de.fayard.refreshVersions.core.internal.findDependencies
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
+import org.gradle.api.artifacts.Dependency
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
@@ -69,7 +70,7 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         )
 
         val deps: Deps = dependenciesToUse.checkModeAndNames(versionCatalogAliases, Case.`kebab-case`)
-        val dependenciesAndNames = deps.names.mapKeys { it.key.toDependency() }
+        val dependenciesAndNames: Map<Dependency, String> = deps.names.mapKeys { it.key.toDependency() }
 
         val currentText = if (catalog.existed) catalog.readText() else ""
         VersionCatalogs.versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
