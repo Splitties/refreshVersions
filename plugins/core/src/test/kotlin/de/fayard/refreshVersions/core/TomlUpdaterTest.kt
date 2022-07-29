@@ -85,15 +85,10 @@ class TomlUpdaterTest {
     private val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
     @TestFactory
-    fun refreshVersionsCatalog() = listOf(
-        "refreshVersionsCatalog-versions-new",
-        "refreshVersionsCatalog-versions-existing",
-        "refreshVersionsCatalog-underscore-new",
-        "refreshVersionsCatalog-underscore-existing"
-    ).map { folderName: String ->
-        dynamicTest("Folder $folderName") {
-            val input = FolderInput(folderName)
-            val withVersions = input.folder.contains("versions")
+    fun refreshVersionsCatalog() = testResources.resolve("refreshVersionsCatalog").listFiles()!!.map { folder ->
+        dynamicTest(folder.name) {
+            val input = FolderInput(folder)
+            val withVersions = input.folder.name.contains("versions")
 
             val currentText = input.initial.readText()
             val dependenciesAndNames = input.dependenciesUpdates.associate { d ->
@@ -120,7 +115,7 @@ class TomlUpdaterTest {
 }
 
 private data class FolderInput(
-    val folder: String,
+    val folder: File,
     val initial: File,
     val expected: File,
     val actual: File,
@@ -129,15 +124,16 @@ private data class FolderInput(
     val expectedText = expected.readText()
 
     override fun toString() =
-        "Comparing from resources folder=$folder:  actual=${actual.name} and expected=${expected.name}"
+        "Comparing from resources folder=${folder.name}:  actual=${actual.name} and expected=${expected.name}"
 }
 
-private fun FolderInput(folderName: String): FolderInput {
-    val folder = testResources.resolve(folderName)
+private fun FolderInput(folderName: String): FolderInput = FolderInput(testResources.resolve(folderName))
+
+private fun FolderInput(folder: File): FolderInput {
     require(folder.canRead()) { "Invalid folder ${folder.absolutePath}" }
     val dependencies = dependencyWithVersionCandidates(folder)
     return FolderInput(
-        folder = folderName,
+        folder = folder,
         initial = folder.resolve("initial.libs.toml"),
         actual = folder.resolve("actual.libs.toml"),
         expected = folder.resolve("expected.libs.toml"),
