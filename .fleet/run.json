@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "type": "command",
+            "name": "mkdocs",
+            "environment": {
+
+          }, // optional
+            "dependsOn": [], // optional
+            "program": "mkdocs",
+            "args": ["serve"], // optional
+            "pty": true, // optional
+        }
+
+    ]
+}
