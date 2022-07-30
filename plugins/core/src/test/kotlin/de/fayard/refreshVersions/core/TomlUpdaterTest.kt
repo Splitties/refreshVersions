@@ -85,7 +85,8 @@ class TomlUpdaterTest {
     private val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
     @TestFactory
-    fun refreshVersionsCatalog() = testResources.resolve("refreshVersionsCatalog").listFiles()!!.map { folder ->
+    fun refreshVersionsCatalog() = testResources.resolve("refreshVersionsCatalog").listFiles()!!.mapNotNull { folder ->
+        if (folder.isDirectory.not()) return@mapNotNull null
         dynamicTest(folder.name) {
             val input = FolderInput(folder)
             val withVersions = input.folder.name.contains("versions")
@@ -144,19 +145,24 @@ private fun FolderInput(folder: File): FolderInput {
 private fun dependencyWithVersionCandidates(folder: File): List<DependencyWithVersionCandidates> {
     val file = folder.resolve("dependencies.txt")
         .takeIf { it.canRead() }
-        ?: return emptyList()
+        ?: folder.parentFile.resolve("default-dependencies.txt")
+            .takeIf { it.canRead() } ?: return emptyList()
 
-    val dependencies = file.readText()
-        .lines()
-        .filter { it.isNotBlank() }
-        .map { line ->
-            val (group, name, version, available) = line.split(":")
+    return file.useLines { lines ->
+        lines.filter {
+            it.isNotBlank()
+        }.map { line ->
+            val dependencyNotation = line.substringBefore('|').trimEnd()
+            val versions = line.substringAfter('|', missingDelimiterValue = "").trim().split(',')
             DependencyWithVersionCandidates(
-                moduleId = ModuleId.Maven(group, name),
-                currentVersion = version,
-                versionsCandidates = available.split(",").map { MavenVersion(it) },
+                moduleId = ModuleId.Maven(
+                    group = dependencyNotation.substringBefore(':'),
+                    name = dependencyNotation.substringAfter(':').substringBefore(':')
+                ),
+                currentVersion = dependencyNotation.substringAfterLast(':'), //TODO: Support and test version-less
+                versionsCandidates = versions.map { MavenVersion(it.trim()) },
                 failures = emptyList()
             )
-        }
-    return dependencies
+        }.toList()
+    }
 }
