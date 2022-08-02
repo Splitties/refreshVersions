@@ -49,14 +49,26 @@ io.rest-assured:*
 org.http4k:http4k-connect-*
            ^^^^^^^^^^^^^^
 
+org.jetbrains.kotlinx:multik(-*)
+              ^^^^^^^.^^^^^^
+
 com.android.tools:*
     ^^^^^^^^^^^^^.^
 
-org.jetbrains.kotlinx:dataframe(-*)
-              ^^^^^^^ ^^^^^^^^^
+org.jetbrains.kotlinx:lincheck(-*)
+              ^^^^^^^.^^^^^^^^
 
 com.google.android.horologist:*
     ^^^^^^^        ^^^^^^^^^^
+
+org.jetbrains.exposed:exposed-*
+    ^^^^^^^^^.^^^^^^^
+
+org.jetbrains.kotlinx:dataframe(-*)
+              ^^^^^^^.^^^^^^^^^
+
+org.jetbrains.kotlinx:kotlin-deeplearning(-*)
+              ^^^^^^^.       ^^^^^^^^^^^^
 
 com.android.billingclient:billing(-*)
     ^^^^^^^^^^^^^^^^^^^^^

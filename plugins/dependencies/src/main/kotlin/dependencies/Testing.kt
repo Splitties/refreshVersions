@@ -156,6 +156,8 @@ object Testing : IsNotADependency {
         val mockServer = module("kotest-extensions-mockserver")
         val spring = module("kotest-extensions-spring")
         val testContainers = module("kotest-extensions-testcontainers")
+        val datetime = module("kotest-property-datetime")
+        val arbs = module("kotest-property-arbs")
     }
 
     /**

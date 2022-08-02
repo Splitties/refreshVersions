@@ -82,9 +82,6 @@ androidx.lifecycle:lifecycle-viewmodel-compose
 androidx.media:media-widget(-*)
 ^^^^^^^^.      ^^^^^^^^^^^^
 
-androidx.navigation:navigation-compose
-^^^^^^^^.           ^^^^^^^^^^^^^^^^^^
-
 androidx.paging:paging-compose
 ^^^^^^^^.       ^^^^^^^^^^^^^^
 

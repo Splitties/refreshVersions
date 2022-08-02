@@ -17,6 +17,8 @@ object Koin : DependencyGroup(
                   ^^^^
     """.trimIndent()
 ) {
+    // See https://insert-koin.io/docs/setup/v3.2
+
     val core = module("koin-core")
     val test = module("koin-test")
     val junit4 = module("koin-test-junit4")
@@ -24,6 +26,7 @@ object Koin : DependencyGroup(
     val android = module("koin-android")
     val androidCompat = module("koin-android-compat")
     val workManager = module("koin-androidx-workmanager")
+    val navigation = module("koin-androidx-navigation")
     val compose = module("koin-androidx-compose")
     val ktor = module("koin-ktor")
     val slf4j = module("koin-logger-slf4j")

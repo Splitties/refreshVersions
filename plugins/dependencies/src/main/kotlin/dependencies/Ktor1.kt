@@ -3,6 +3,9 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
+@Deprecated("Use either Ktor1 or Ktor2", ReplaceWith("Ktor2"))
+val Ktor: Ktor1 = Ktor1
+
 /**
  * [Complete KDoc here](https://api.ktor.io/latest/).
  *
@@ -17,7 +20,7 @@ import org.gradle.kotlin.dsl.IsNotADependency
  *
  * TODO: Finish KDoc of undocumented artifact constants. Also link to their KDoc.
  */
-object Ktor : DependencyGroup("io.ktor",
+object Ktor1 : DependencyGroup("io.ktor",
     rawRules = """
         io.ktor:*
            ^^^^
