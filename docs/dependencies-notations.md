@@ -1,6 +1,6 @@
 # Dependency Notations
 
-[**refreshVersion**](https://github.com/jmfayard/refreshVersions) provide **1103** Dependency notations in **24** groups and **225** subgroups
+[**refreshVersion**](https://github.com/jmfayard/refreshVersions) provide **1171** Dependency notations in **26** groups and **244** subgroups
 
 **Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -512,7 +512,7 @@ version.androidx.navigation
 androidx.navigation:navigation-common-ktx:_" style="text-decoration: underline;" >commonKtx</span>&nbsp; - <span title="AndroidX.navigation.common
 version.androidx.navigation
 androidx.navigation:navigation-common:_" style="text-decoration: underline;" >common</span>&nbsp; - <span title="AndroidX.navigation.compose
-version.androidx.navigation-compose
+version.androidx.navigation
 androidx.navigation:navigation-compose:_" style="text-decoration: underline;" >compose</span>&nbsp; - <span title="AndroidX.navigation.dynamicFeaturesFragment
 version.androidx.navigation
 androidx.navigation:navigation-dynamic-features-fragment:_" style="text-decoration: underline;" >dynamicFeaturesFragment</span>&nbsp; - <span title="AndroidX.navigation.fragmentKtx
@@ -1491,6 +1491,286 @@ com.jakewharton.rxbinding4:rxbinding-viewpager2:_" style="text-decoration: under
 version.jakewharton.rxbinding4
 com.jakewharton.rxbinding4:rxbinding-viewpager:_" style="text-decoration: underline;" >viewPager</span>&nbsp;</td></tr>
                     </table>
+## [JetBrains.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/JetBrains.kt)
+
+<table style="width: 100%; table-layout:fixed;">
+                    <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
+                    <tr><td><b>JetBrains.exposed</b></td><td><span title="JetBrains.exposed.core
+version.jetbrains.exposed
+org.jetbrains.exposed:exposed-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="JetBrains.exposed.dao
+version.jetbrains.exposed
+org.jetbrains.exposed:exposed-dao:_" style="text-decoration: underline;" >dao</span>&nbsp; - <span title="JetBrains.exposed.jdbc
+version.jetbrains.exposed
+org.jetbrains.exposed:exposed-jdbc:_" style="text-decoration: underline;" >jdbc</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor1</b></td><td><span title="JetBrains.ktor1.httpCio
+version.ktor
+io.ktor:ktor-http-cio:_" style="text-decoration: underline;" >httpCio</span>&nbsp; - <span title="JetBrains.ktor1.http
+version.ktor
+io.ktor:ktor-http:_" style="text-decoration: underline;" >http</span>&nbsp; - <span title="JetBrains.ktor1.io
+version.ktor
+io.ktor:ktor-io:_" style="text-decoration: underline;" >io</span>&nbsp; - <span title="JetBrains.ktor1.testDispatcher
+version.ktor
+io.ktor:ktor-test-dispatcher:_" style="text-decoration: underline;" >testDispatcher</span>&nbsp; - <span title="JetBrains.ktor1.utils
+version.ktor
+io.ktor:ktor-utils:_" style="text-decoration: underline;" >utils</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor1.client</b></td><td><span title="JetBrains.ktor1.client.android
+version.ktor
+io.ktor:ktor-client-android:_" style="text-decoration: underline;" >android</span>&nbsp; - <span title="JetBrains.ktor1.client.apache
+version.ktor
+io.ktor:ktor-client-apache:_" style="text-decoration: underline;" >apache</span>&nbsp; - <span title="JetBrains.ktor1.client.authBasic
+version.ktor
+io.ktor:ktor-client-auth-basic:_" style="text-decoration: underline;" >authBasic</span>&nbsp; - <span title="JetBrains.ktor1.client.auth
+version.ktor
+io.ktor:ktor-client-auth:_" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="JetBrains.ktor1.client.cio
+version.ktor
+io.ktor:ktor-client-cio:_" style="text-decoration: underline;" >cio</span>&nbsp; - <span title="JetBrains.ktor1.client.core
+version.ktor
+io.ktor:ktor-client-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="JetBrains.ktor1.client.curl
+version.ktor
+io.ktor:ktor-client-curl:_" style="text-decoration: underline;" >curl</span>&nbsp; - <span title="JetBrains.ktor1.client.darwin
+version.ktor
+io.ktor:ktor-client-darwin:_" style="text-decoration: underline;" >darwin</span>&nbsp; - <span title="JetBrains.ktor1.client.encoding
+version.ktor
+io.ktor:ktor-client-encoding:_" style="text-decoration: underline;" >encoding</span>&nbsp; - <span title="JetBrains.ktor1.client.jetty
+version.ktor
+io.ktor:ktor-client-jetty:_" style="text-decoration: underline;" >jetty</span>&nbsp; - <span title="JetBrains.ktor1.client.jsonTests
+version.ktor
+io.ktor:ktor-client-json-tests:_" style="text-decoration: underline;" >jsonTests</span>&nbsp; - <span title="JetBrains.ktor1.client.json
+version.ktor
+io.ktor:ktor-client-json:_" style="text-decoration: underline;" >json</span>&nbsp; - <span title="JetBrains.ktor1.client.logging
+version.ktor
+io.ktor:ktor-client-logging:_" style="text-decoration: underline;" >logging</span>&nbsp; - <span title="JetBrains.ktor1.client.mock
+version.ktor
+io.ktor:ktor-client-mock:_" style="text-decoration: underline;" >mock</span>&nbsp; - <span title="JetBrains.ktor1.client.okHttp
+version.ktor
+io.ktor:ktor-client-okhttp:_" style="text-decoration: underline;" >okHttp</span>&nbsp; - <span title="JetBrains.ktor1.client.serialization
+version.ktor
+io.ktor:ktor-client-serialization:_" style="text-decoration: underline;" >serialization</span>&nbsp; - <span title="JetBrains.ktor1.client.tests
+version.ktor
+io.ktor:ktor-client-tests:_" style="text-decoration: underline;" >tests</span>&nbsp; - <span title="JetBrains.ktor1.client.websockets
+version.ktor
+io.ktor:ktor-client-websockets:_" style="text-decoration: underline;" >websockets</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor1.features</b></td><td><span title="JetBrains.ktor1.features.authJwt
+version.ktor
+io.ktor:ktor-auth-jwt:_" style="text-decoration: underline;" >authJwt</span>&nbsp; - <span title="JetBrains.ktor1.features.authLdap
+version.ktor
+io.ktor:ktor-auth-ldap:_" style="text-decoration: underline;" >authLdap</span>&nbsp; - <span title="JetBrains.ktor1.features.auth
+version.ktor
+io.ktor:ktor-auth:_" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="JetBrains.ktor1.features.freemarker
+version.ktor
+io.ktor:ktor-freemarker:_" style="text-decoration: underline;" >freemarker</span>&nbsp; - <span title="JetBrains.ktor1.features.gson
+version.ktor
+io.ktor:ktor-gson:_" style="text-decoration: underline;" >gson</span>&nbsp; - <span title="JetBrains.ktor1.features.htmlBuilder
+version.ktor
+io.ktor:ktor-html-builder:_" style="text-decoration: underline;" >htmlBuilder</span>&nbsp; - <span title="JetBrains.ktor1.features.jackson
+version.ktor
+io.ktor:ktor-jackson:_" style="text-decoration: underline;" >jackson</span>&nbsp; - <span title="JetBrains.ktor1.features.locations
+version.ktor
+io.ktor:ktor-locations:_" style="text-decoration: underline;" >locations</span>&nbsp; - <span title="JetBrains.ktor1.features.metrics
+version.ktor
+io.ktor:ktor-metrics:_" style="text-decoration: underline;" >metrics</span>&nbsp; - <span title="JetBrains.ktor1.features.serialization
+version.ktor
+io.ktor:ktor-serialization:_" style="text-decoration: underline;" >serialization</span>&nbsp; - <span title="JetBrains.ktor1.features.serverSessions
+version.ktor
+io.ktor:ktor-server-sessions:_" style="text-decoration: underline;" >serverSessions</span>&nbsp; - <span title="JetBrains.ktor1.features.velocity
+version.ktor
+io.ktor:ktor-velocity:_" style="text-decoration: underline;" >velocity</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor1.network</b></td><td><span title="JetBrains.ktor1.network.tlsCertificates
+version.ktor
+io.ktor:ktor-network-tls-certificates:_" style="text-decoration: underline;" >tlsCertificates</span>&nbsp; - <span title="JetBrains.ktor1.network.tls
+version.ktor
+io.ktor:ktor-network-tls:_" style="text-decoration: underline;" >tls</span>&nbsp; - <span title="JetBrains.ktor1.network.network
+version.ktor
+io.ktor:ktor-network:_" style="text-decoration: underline;" >network</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor1.server</b></td><td><span title="JetBrains.ktor1.server.core
+version.ktor
+io.ktor:ktor-server-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="JetBrains.ktor1.server.jetty
+version.ktor
+io.ktor:ktor-server-jetty:_" style="text-decoration: underline;" >jetty</span>&nbsp; - <span title="JetBrains.ktor1.server.netty
+version.ktor
+io.ktor:ktor-server-netty:_" style="text-decoration: underline;" >netty</span>&nbsp; - <span title="JetBrains.ktor1.server.servlet
+version.ktor
+io.ktor:ktor-server-servlet:_" style="text-decoration: underline;" >servlet</span>&nbsp; - <span title="JetBrains.ktor1.server.testHost
+version.ktor
+io.ktor:ktor-server-test-host:_" style="text-decoration: underline;" >testHost</span>&nbsp; - <span title="JetBrains.ktor1.server.tomcat
+version.ktor
+io.ktor:ktor-server-tomcat:_" style="text-decoration: underline;" >tomcat</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor2</b></td><td><span title="JetBrains.ktor2.testDispatcher
+version.ktor
+io.ktor:ktor-test-dispatcher:_" style="text-decoration: underline;" >testDispatcher</span>&nbsp; - <span title="JetBrains.ktor2.utils
+version.ktor
+io.ktor:ktor-utils:_" style="text-decoration: underline;" >utils</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor2.client</b></td><td><span title="JetBrains.ktor2.client.android
+version.ktor
+io.ktor:ktor-client-android:_" style="text-decoration: underline;" >android</span>&nbsp; - <span title="JetBrains.ktor2.client.apache
+version.ktor
+io.ktor:ktor-client-apache:_" style="text-decoration: underline;" >apache</span>&nbsp; - <span title="JetBrains.ktor2.client.auth
+version.ktor
+io.ktor:ktor-client-auth:_" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="JetBrains.ktor2.client.cio
+version.ktor
+io.ktor:ktor-client-cio:_" style="text-decoration: underline;" >cio</span>&nbsp; - <span title="JetBrains.ktor2.client.contentNegotiationTests
+version.ktor
+io.ktor:ktor-client-content-negotiation-tests:_" style="text-decoration: underline;" >contentNegotiationTests</span>&nbsp; - <span title="JetBrains.ktor2.client.contentNegotiation
+version.ktor
+io.ktor:ktor-client-content-negotiation:_" style="text-decoration: underline;" >contentNegotiation</span>&nbsp; - <span title="JetBrains.ktor2.client.core
+version.ktor
+io.ktor:ktor-client-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="JetBrains.ktor2.client.curl
+version.ktor
+io.ktor:ktor-client-curl:_" style="text-decoration: underline;" >curl</span>&nbsp; - <span title="JetBrains.ktor2.client.darwin
+version.ktor
+io.ktor:ktor-client-darwin:_" style="text-decoration: underline;" >darwin</span>&nbsp; - <span title="JetBrains.ktor2.client.encoding
+version.ktor
+io.ktor:ktor-client-encoding:_" style="text-decoration: underline;" >encoding</span>&nbsp; - <span title="JetBrains.ktor2.client.gson
+version.ktor
+io.ktor:ktor-client-gson:_" style="text-decoration: underline;" >gson</span>&nbsp; - <span title="JetBrains.ktor2.client.jackson
+version.ktor
+io.ktor:ktor-client-jackson:_" style="text-decoration: underline;" >jackson</span>&nbsp; - <span title="JetBrains.ktor2.client.java
+version.ktor
+io.ktor:ktor-client-java:_" style="text-decoration: underline;" >java</span>&nbsp; - <span title="JetBrains.ktor2.client.jetty
+version.ktor
+io.ktor:ktor-client-jetty:_" style="text-decoration: underline;" >jetty</span>&nbsp; - <span title="JetBrains.ktor2.client.jsonTests
+version.ktor
+io.ktor:ktor-client-json-tests:_" style="text-decoration: underline;" >jsonTests</span>&nbsp; - <span title="JetBrains.ktor2.client.json
+version.ktor
+io.ktor:ktor-client-json:_" style="text-decoration: underline;" >json</span>&nbsp; - <span title="JetBrains.ktor2.client.logging
+version.ktor
+io.ktor:ktor-client-logging:_" style="text-decoration: underline;" >logging</span>&nbsp; - <span title="JetBrains.ktor2.client.mock
+version.ktor
+io.ktor:ktor-client-mock:_" style="text-decoration: underline;" >mock</span>&nbsp; - <span title="JetBrains.ktor2.client.okhttp
+version.ktor
+io.ktor:ktor-client-okhttp:_" style="text-decoration: underline;" >okhttp</span>&nbsp; - <span title="JetBrains.ktor2.client.resources
+version.ktor
+io.ktor:ktor-client-resources:_" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="JetBrains.ktor2.client.serialization
+version.ktor
+io.ktor:ktor-client-serialization:_" style="text-decoration: underline;" >serialization</span>&nbsp; - <span title="JetBrains.ktor2.client.tests
+version.ktor
+io.ktor:ktor-client-tests:_" style="text-decoration: underline;" >tests</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor2.plugins</b></td><td><span title="JetBrains.ktor2.plugins.events
+version.ktor
+io.ktor:ktor-events:_" style="text-decoration: underline;" >events</span>&nbsp; - <span title="JetBrains.ktor2.plugins.httpCio
+version.ktor
+io.ktor:ktor-http-cio:_" style="text-decoration: underline;" >httpCio</span>&nbsp; - <span title="JetBrains.ktor2.plugins.http
+version.ktor
+io.ktor:ktor-http:_" style="text-decoration: underline;" >http</span>&nbsp; - <span title="JetBrains.ktor2.plugins.io
+version.ktor
+io.ktor:ktor-io:_" style="text-decoration: underline;" >io</span>&nbsp; - <span title="JetBrains.ktor2.plugins.networkTlsCertificates
+version.ktor
+io.ktor:ktor-network-tls-certificates:_" style="text-decoration: underline;" >networkTlsCertificates</span>&nbsp; - <span title="JetBrains.ktor2.plugins.networkTls
+version.ktor
+io.ktor:ktor-network-tls:_" style="text-decoration: underline;" >networkTls</span>&nbsp; - <span title="JetBrains.ktor2.plugins.network
+version.ktor
+io.ktor:ktor-network:_" style="text-decoration: underline;" >network</span>&nbsp; - <span title="JetBrains.ktor2.plugins.resources
+version.ktor
+io.ktor:ktor-resources:_" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="JetBrains.ktor2.plugins.websocketSerialization
+version.ktor
+io.ktor:ktor-websocket-serialization:_" style="text-decoration: underline;" >websocketSerialization</span>&nbsp; - <span title="JetBrains.ktor2.plugins.websockets
+version.ktor
+io.ktor:ktor-websockets:_" style="text-decoration: underline;" >websockets</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor2.plugins.serialization</b></td><td><span title="JetBrains.ktor2.plugins.serialization.gson
+version.ktor
+io.ktor:ktor-serialization-gson:_" style="text-decoration: underline;" >gson</span>&nbsp; - <span title="JetBrains.ktor2.plugins.serialization.jackson
+version.ktor
+io.ktor:ktor-serialization-jackson:_" style="text-decoration: underline;" >jackson</span>&nbsp; - <span title="JetBrains.ktor2.plugins.serialization.kotlinxCbor
+version.ktor
+io.ktor:ktor-serialization-kotlinx-cbor:_" style="text-decoration: underline;" >kotlinxCbor</span>&nbsp; - <span title="JetBrains.ktor2.plugins.serialization.kotlinxJson
+version.ktor
+io.ktor:ktor-serialization-kotlinx-json:_" style="text-decoration: underline;" >kotlinxJson</span>&nbsp; - <span title="JetBrains.ktor2.plugins.serialization.kotlinxTests
+version.ktor
+io.ktor:ktor-serialization-kotlinx-tests:_" style="text-decoration: underline;" >kotlinxTests</span>&nbsp; - <span title="JetBrains.ktor2.plugins.serialization.kotlinxXml
+version.ktor
+io.ktor:ktor-serialization-kotlinx-xml:_" style="text-decoration: underline;" >kotlinxXml</span>&nbsp; - <span title="JetBrains.ktor2.plugins.serialization.kotlinx
+version.ktor
+io.ktor:ktor-serialization-kotlinx:_" style="text-decoration: underline;" >kotlinx</span>&nbsp; - <span title="JetBrains.ktor2.plugins.serialization.serialization
+version.ktor
+io.ktor:ktor-serialization:_" style="text-decoration: underline;" >serialization</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor2.server</b></td><td><span title="JetBrains.ktor2.server.authJwt
+version.ktor
+io.ktor:ktor-server-auth-jwt:_" style="text-decoration: underline;" >authJwt</span>&nbsp; - <span title="JetBrains.ktor2.server.authLdap
+version.ktor
+io.ktor:ktor-server-auth-ldap:_" style="text-decoration: underline;" >authLdap</span>&nbsp; - <span title="JetBrains.ktor2.server.auth
+version.ktor
+io.ktor:ktor-server-auth:_" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="JetBrains.ktor2.server.autoHeadResponse
+version.ktor
+io.ktor:ktor-server-auto-head-response:_" style="text-decoration: underline;" >autoHeadResponse</span>&nbsp; - <span title="JetBrains.ktor2.server.cachingHeaders
+version.ktor
+io.ktor:ktor-server-caching-headers:_" style="text-decoration: underline;" >cachingHeaders</span>&nbsp; - <span title="JetBrains.ktor2.server.callId
+version.ktor
+io.ktor:ktor-server-call-id:_" style="text-decoration: underline;" >callId</span>&nbsp; - <span title="JetBrains.ktor2.server.callLogging
+version.ktor
+io.ktor:ktor-server-call-logging:_" style="text-decoration: underline;" >callLogging</span>&nbsp; - <span title="JetBrains.ktor2.server.cio
+version.ktor
+io.ktor:ktor-server-cio:_" style="text-decoration: underline;" >cio</span>&nbsp; - <span title="JetBrains.ktor2.server.compression
+version.ktor
+io.ktor:ktor-server-compression:_" style="text-decoration: underline;" >compression</span>&nbsp; - <span title="JetBrains.ktor2.server.conditionalHeaders
+version.ktor
+io.ktor:ktor-server-conditional-headers:_" style="text-decoration: underline;" >conditionalHeaders</span>&nbsp; - <span title="JetBrains.ktor2.server.contentNegotiation
+version.ktor
+io.ktor:ktor-server-content-negotiation:_" style="text-decoration: underline;" >contentNegotiation</span>&nbsp; - <span title="JetBrains.ktor2.server.core
+version.ktor
+io.ktor:ktor-server-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="JetBrains.ktor2.server.cors
+version.ktor
+io.ktor:ktor-server-cors:_" style="text-decoration: underline;" >cors</span>&nbsp; - <span title="JetBrains.ktor2.server.dataConversion
+version.ktor
+io.ktor:ktor-server-data-conversion:_" style="text-decoration: underline;" >dataConversion</span>&nbsp; - <span title="JetBrains.ktor2.server.defaultHeaders
+version.ktor
+io.ktor:ktor-server-default-headers:_" style="text-decoration: underline;" >defaultHeaders</span>&nbsp; - <span title="JetBrains.ktor2.server.doubleReceive
+version.ktor
+io.ktor:ktor-server-double-receive:_" style="text-decoration: underline;" >doubleReceive</span>&nbsp; - <span title="JetBrains.ktor2.server.forwardedHeader
+version.ktor
+io.ktor:ktor-server-forwarded-header:_" style="text-decoration: underline;" >forwardedHeader</span>&nbsp; - <span title="JetBrains.ktor2.server.freeMarker
+version.ktor
+io.ktor:ktor-server-freemarker:_" style="text-decoration: underline;" >freeMarker</span>&nbsp; - <span title="JetBrains.ktor2.server.hostCommon
+version.ktor
+io.ktor:ktor-server-host-common:_" style="text-decoration: underline;" >hostCommon</span>&nbsp; - <span title="JetBrains.ktor2.server.hsts
+version.ktor
+io.ktor:ktor-server-hsts:_" style="text-decoration: underline;" >hsts</span>&nbsp; - <span title="JetBrains.ktor2.server.htmlBuilder
+version.ktor
+io.ktor:ktor-server-html-builder:_" style="text-decoration: underline;" >htmlBuilder</span>&nbsp; - <span title="JetBrains.ktor2.server.httpRedirect
+version.ktor
+io.ktor:ktor-server-http-redirect:_" style="text-decoration: underline;" >httpRedirect</span>&nbsp; - <span title="JetBrains.ktor2.server.jetty
+version.ktor
+io.ktor:ktor-server-jetty:_" style="text-decoration: underline;" >jetty</span>&nbsp; - <span title="JetBrains.ktor2.server.jte
+version.ktor
+io.ktor:ktor-server-jte:_" style="text-decoration: underline;" >jte</span>&nbsp; - <span title="JetBrains.ktor2.server.locations
+version.ktor
+io.ktor:ktor-server-locations:_" style="text-decoration: underline;" >locations</span>&nbsp; - <span title="JetBrains.ktor2.server.methodOverride
+version.ktor
+io.ktor:ktor-server-method-override:_" style="text-decoration: underline;" >methodOverride</span>&nbsp; - <span title="JetBrains.ktor2.server.metricsMicrometer
+version.ktor
+io.ktor:ktor-server-metrics-micrometer:_" style="text-decoration: underline;" >metricsMicrometer</span>&nbsp; - <span title="JetBrains.ktor2.server.metrics
+version.ktor
+io.ktor:ktor-server-metrics:_" style="text-decoration: underline;" >metrics</span>&nbsp; - <span title="JetBrains.ktor2.server.mustache
+version.ktor
+io.ktor:ktor-server-mustache:_" style="text-decoration: underline;" >mustache</span>&nbsp; - <span title="JetBrains.ktor2.server.netty
+version.ktor
+io.ktor:ktor-server-netty:_" style="text-decoration: underline;" >netty</span>&nbsp; - <span title="JetBrains.ktor2.server.partialContent
+version.ktor
+io.ktor:ktor-server-partial-content:_" style="text-decoration: underline;" >partialContent</span>&nbsp; - <span title="JetBrains.ktor2.server.pebble
+version.ktor
+io.ktor:ktor-server-pebble:_" style="text-decoration: underline;" >pebble</span>&nbsp; - <span title="JetBrains.ktor2.server.resources
+version.ktor
+io.ktor:ktor-server-resources:_" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="JetBrains.ktor2.server.servlet
+version.ktor
+io.ktor:ktor-server-servlet:_" style="text-decoration: underline;" >servlet</span>&nbsp; - <span title="JetBrains.ktor2.server.sessions
+version.ktor
+io.ktor:ktor-server-sessions:_" style="text-decoration: underline;" >sessions</span>&nbsp; - <span title="JetBrains.ktor2.server.statusPages
+version.ktor
+io.ktor:ktor-server-status-pages:_" style="text-decoration: underline;" >statusPages</span>&nbsp; - <span title="JetBrains.ktor2.server.testHost
+version.ktor
+io.ktor:ktor-server-test-host:_" style="text-decoration: underline;" >testHost</span>&nbsp; - <span title="JetBrains.ktor2.server.testSuites
+version.ktor
+io.ktor:ktor-server-test-suites:_" style="text-decoration: underline;" >testSuites</span>&nbsp; - <span title="JetBrains.ktor2.server.thymeleaf
+version.ktor
+io.ktor:ktor-server-thymeleaf:_" style="text-decoration: underline;" >thymeleaf</span>&nbsp; - <span title="JetBrains.ktor2.server.tomcat
+version.ktor
+io.ktor:ktor-server-tomcat:_" style="text-decoration: underline;" >tomcat</span>&nbsp; - <span title="JetBrains.ktor2.server.velocity
+version.ktor
+io.ktor:ktor-server-velocity:_" style="text-decoration: underline;" >velocity</span>&nbsp; - <span title="JetBrains.ktor2.server.webjars
+version.ktor
+io.ktor:ktor-server-webjars:_" style="text-decoration: underline;" >webjars</span>&nbsp; - <span title="JetBrains.ktor2.server.websockets
+version.ktor
+io.ktor:ktor-server-websockets:_" style="text-decoration: underline;" >websockets</span>&nbsp;</td></tr>
+                    </table>
 ## [Kodein.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Kodein.kt)
 
 <table style="width: 100%; table-layout:fixed;">
@@ -1525,7 +1805,9 @@ io.insert-koin:koin-android-compat:_" style="text-decoration: underline;" >andro
 version.koin
 io.insert-koin:koin-android:_" style="text-decoration: underline;" >android</span>&nbsp; - <span title="Koin.compose
 version.koin
-io.insert-koin:koin-androidx-compose:_" style="text-decoration: underline;" >compose</span>&nbsp; - <span title="Koin.workManager
+io.insert-koin:koin-androidx-compose:_" style="text-decoration: underline;" >compose</span>&nbsp; - <span title="Koin.navigation
+version.koin
+io.insert-koin:koin-androidx-navigation:_" style="text-decoration: underline;" >navigation</span>&nbsp; - <span title="Koin.workManager
 version.koin
 io.insert-koin:koin-androidx-workmanager:_" style="text-decoration: underline;" >workManager</span>&nbsp; - <span title="Koin.core
 version.koin
@@ -1582,7 +1864,7 @@ org.jetbrains.kotlin:kotlin-test-testng:_" style="text-decoration: underline;" >
 <table style="width: 100%; table-layout:fixed;">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
                     <tr><td><b>KotlinX</b></td><td><span title="KotlinX.dataframe
-version.kotlinxdataframe
+version.kotlinx.dataframe
 org.jetbrains.kotlinx:dataframe:_" style="text-decoration: underline;" >dataframe</span>&nbsp; - <span title="KotlinX.cli
 version.kotlinx.cli
 org.jetbrains.kotlinx:kotlinx-cli:_" style="text-decoration: underline;" >cli</span>&nbsp; - <span title="KotlinX.datetime
@@ -1591,7 +1873,9 @@ org.jetbrains.kotlinx:kotlinx-datetime:_" style="text-decoration: underline;" >d
 version.kotlinx.html
 org.jetbrains.kotlinx:kotlinx-html:_" style="text-decoration: underline;" >html</span>&nbsp; - <span title="KotlinX.nodeJs
 version.kotlinx.nodejs
-org.jetbrains.kotlinx:kotlinx-nodejs:_" style="text-decoration: underline;" >nodeJs</span>&nbsp;</td></tr>
+org.jetbrains.kotlinx:kotlinx-nodejs:_" style="text-decoration: underline;" >nodeJs</span>&nbsp; - <span title="KotlinX.lincheck
+version.kotlinx.lincheck
+org.jetbrains.kotlinx:lincheck:_" style="text-decoration: underline;" >lincheck</span>&nbsp;</td></tr>
 <tr><td><b>KotlinX.collections</b></td><td><span title="KotlinX.collections.immutableJvmOnly
 version.kotlinx.collections.immutable
 org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:_" style="text-decoration: underline;" >immutableJvmOnly</span>&nbsp; - <span title="KotlinX.collections.immutable
@@ -1631,17 +1915,36 @@ org.jetbrains.kotlinx:kotlinx-coroutines-swing:_" style="text-decoration: underl
 version.kotlinx.coroutines
 org.jetbrains.kotlinx:kotlinx-coroutines-test:_" style="text-decoration: underline;" >test</span>&nbsp;</td></tr>
 <tr><td><b>KotlinX.dataframe</b></td><td><span title="KotlinX.dataframe.arrow
-version.kotlinxdataframe
+version.kotlinx.dataframe
 org.jetbrains.kotlinx:dataframe-arrow:_" style="text-decoration: underline;" >arrow</span>&nbsp; - <span title="KotlinX.dataframe.core
-version.kotlinxdataframe
+version.kotlinx.dataframe
 org.jetbrains.kotlinx:dataframe-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="KotlinX.dataframe.excel
-version.kotlinxdataframe
+version.kotlinx.dataframe
 org.jetbrains.kotlinx:dataframe-excel:_" style="text-decoration: underline;" >excel</span>&nbsp; - <span title="KotlinX.dataframe.dataframe
-version.kotlinxdataframe
+version.kotlinx.dataframe
 org.jetbrains.kotlinx:dataframe:_" style="text-decoration: underline;" >dataframe</span>&nbsp;</td></tr>
+<tr><td><b>KotlinX.deeplearning</b></td><td><span title="KotlinX.deeplearning.api
+version.kotlinx.deeplearning
+org.jetbrains.kotlinx:kotlin-deeplearning-api:_" style="text-decoration: underline;" >api</span>&nbsp; - <span title="KotlinX.deeplearning.onnx
+version.kotlinx.deeplearning
+org.jetbrains.kotlinx:kotlin-deeplearning-onnx:_" style="text-decoration: underline;" >onnx</span>&nbsp; - <span title="KotlinX.deeplearning.visualization
+version.kotlinx.deeplearning
+org.jetbrains.kotlinx:kotlin-deeplearning-visualization:_" style="text-decoration: underline;" >visualization</span>&nbsp;</td></tr>
 <tr><td><b>KotlinX.io</b></td><td><span title="KotlinX.io.jvm
 version.kotlinx.io
 org.jetbrains.kotlinx:kotlinx-io-jvm:_" style="text-decoration: underline;" >jvm</span>&nbsp;</td></tr>
+<tr><td><b>KotlinX.lincheck</b></td><td><span title="KotlinX.lincheck.jvm
+version.kotlinx.lincheck
+org.jetbrains.kotlinx:lincheck-jvm:_" style="text-decoration: underline;" >jvm</span>&nbsp;</td></tr>
+<tr><td><b>KotlinX.multik</b></td><td><span title="KotlinX.multik.api
+version.kotlinx.multik
+org.jetbrains.kotlinx:multik-api:_" style="text-decoration: underline;" >api</span>&nbsp; - <span title="KotlinX.multik.default
+version.kotlinx.multik
+org.jetbrains.kotlinx:multik-default:_" style="text-decoration: underline;" >default</span>&nbsp; - <span title="KotlinX.multik.jvm
+version.kotlinx.multik
+org.jetbrains.kotlinx:multik-jvm:_" style="text-decoration: underline;" >jvm</span>&nbsp; - <span title="KotlinX.multik.native
+version.kotlinx.multik
+org.jetbrains.kotlinx:multik-native:_" style="text-decoration: underline;" >native</span>&nbsp;</td></tr>
 <tr><td><b>KotlinX.reflect</b></td><td><span title="KotlinX.reflect.lite
 version.kotlinx.reflect.lite
 org.jetbrains.kotlinx:kotlinx.reflect.lite:_" style="text-decoration: underline;" >lite</span>&nbsp;</td></tr>
@@ -1659,103 +1962,283 @@ org.jetbrains.kotlinx:kotlinx-serialization-properties:_" style="text-decoration
 version.kotlinx.serialization
 org.jetbrains.kotlinx:kotlinx-serialization-protobuf:_" style="text-decoration: underline;" >protobuf</span>&nbsp;</td></tr>
                     </table>
-## [Ktor.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Ktor.kt)
+## [Ktor1.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Ktor1.kt)
 
 <table style="width: 100%; table-layout:fixed;">
                     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
-                    <tr><td><b>Ktor</b></td><td><span title="Ktor.httpCio
+                    <tr><td><b>Ktor1</b></td><td><span title="Ktor1.httpCio
 version.ktor
-io.ktor:ktor-http-cio:_" style="text-decoration: underline;" >httpCio</span>&nbsp; - <span title="Ktor.http
+io.ktor:ktor-http-cio:_" style="text-decoration: underline;" >httpCio</span>&nbsp; - <span title="Ktor1.http
 version.ktor
-io.ktor:ktor-http:_" style="text-decoration: underline;" >http</span>&nbsp; - <span title="Ktor.io
+io.ktor:ktor-http:_" style="text-decoration: underline;" >http</span>&nbsp; - <span title="Ktor1.io
 version.ktor
-io.ktor:ktor-io:_" style="text-decoration: underline;" >io</span>&nbsp; - <span title="Ktor.testDispatcher
+io.ktor:ktor-io:_" style="text-decoration: underline;" >io</span>&nbsp; - <span title="Ktor1.testDispatcher
 version.ktor
-io.ktor:ktor-test-dispatcher:_" style="text-decoration: underline;" >testDispatcher</span>&nbsp; - <span title="Ktor.utils
+io.ktor:ktor-test-dispatcher:_" style="text-decoration: underline;" >testDispatcher</span>&nbsp; - <span title="Ktor1.utils
 version.ktor
 io.ktor:ktor-utils:_" style="text-decoration: underline;" >utils</span>&nbsp;</td></tr>
-<tr><td><b>Ktor.client</b></td><td><span title="Ktor.client.android
+<tr><td><b>Ktor1.client</b></td><td><span title="Ktor1.client.android
 version.ktor
-io.ktor:ktor-client-android:_" style="text-decoration: underline;" >android</span>&nbsp; - <span title="Ktor.client.apache
+io.ktor:ktor-client-android:_" style="text-decoration: underline;" >android</span>&nbsp; - <span title="Ktor1.client.apache
 version.ktor
-io.ktor:ktor-client-apache:_" style="text-decoration: underline;" >apache</span>&nbsp; - <span title="Ktor.client.authBasic
+io.ktor:ktor-client-apache:_" style="text-decoration: underline;" >apache</span>&nbsp; - <span title="Ktor1.client.authBasic
 version.ktor
-io.ktor:ktor-client-auth-basic:_" style="text-decoration: underline;" >authBasic</span>&nbsp; - <span title="Ktor.client.auth
+io.ktor:ktor-client-auth-basic:_" style="text-decoration: underline;" >authBasic</span>&nbsp; - <span title="Ktor1.client.auth
 version.ktor
-io.ktor:ktor-client-auth:_" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="Ktor.client.cio
+io.ktor:ktor-client-auth:_" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="Ktor1.client.cio
 version.ktor
-io.ktor:ktor-client-cio:_" style="text-decoration: underline;" >cio</span>&nbsp; - <span title="Ktor.client.core
+io.ktor:ktor-client-cio:_" style="text-decoration: underline;" >cio</span>&nbsp; - <span title="Ktor1.client.core
 version.ktor
-io.ktor:ktor-client-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="Ktor.client.curl
+io.ktor:ktor-client-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="Ktor1.client.curl
 version.ktor
-io.ktor:ktor-client-curl:_" style="text-decoration: underline;" >curl</span>&nbsp; - <span title="Ktor.client.darwin
+io.ktor:ktor-client-curl:_" style="text-decoration: underline;" >curl</span>&nbsp; - <span title="Ktor1.client.darwin
 version.ktor
-io.ktor:ktor-client-darwin:_" style="text-decoration: underline;" >darwin</span>&nbsp; - <span title="Ktor.client.encoding
+io.ktor:ktor-client-darwin:_" style="text-decoration: underline;" >darwin</span>&nbsp; - <span title="Ktor1.client.encoding
 version.ktor
-io.ktor:ktor-client-encoding:_" style="text-decoration: underline;" >encoding</span>&nbsp; - <span title="Ktor.client.jetty
+io.ktor:ktor-client-encoding:_" style="text-decoration: underline;" >encoding</span>&nbsp; - <span title="Ktor1.client.jetty
 version.ktor
-io.ktor:ktor-client-jetty:_" style="text-decoration: underline;" >jetty</span>&nbsp; - <span title="Ktor.client.jsonTests
+io.ktor:ktor-client-jetty:_" style="text-decoration: underline;" >jetty</span>&nbsp; - <span title="Ktor1.client.jsonTests
 version.ktor
-io.ktor:ktor-client-json-tests:_" style="text-decoration: underline;" >jsonTests</span>&nbsp; - <span title="Ktor.client.json
+io.ktor:ktor-client-json-tests:_" style="text-decoration: underline;" >jsonTests</span>&nbsp; - <span title="Ktor1.client.json
 version.ktor
-io.ktor:ktor-client-json:_" style="text-decoration: underline;" >json</span>&nbsp; - <span title="Ktor.client.logging
+io.ktor:ktor-client-json:_" style="text-decoration: underline;" >json</span>&nbsp; - <span title="Ktor1.client.logging
 version.ktor
-io.ktor:ktor-client-logging:_" style="text-decoration: underline;" >logging</span>&nbsp; - <span title="Ktor.client.mock
+io.ktor:ktor-client-logging:_" style="text-decoration: underline;" >logging</span>&nbsp; - <span title="Ktor1.client.mock
 version.ktor
-io.ktor:ktor-client-mock:_" style="text-decoration: underline;" >mock</span>&nbsp; - <span title="Ktor.client.okHttp
+io.ktor:ktor-client-mock:_" style="text-decoration: underline;" >mock</span>&nbsp; - <span title="Ktor1.client.okHttp
 version.ktor
-io.ktor:ktor-client-okhttp:_" style="text-decoration: underline;" >okHttp</span>&nbsp; - <span title="Ktor.client.serialization
+io.ktor:ktor-client-okhttp:_" style="text-decoration: underline;" >okHttp</span>&nbsp; - <span title="Ktor1.client.serialization
 version.ktor
-io.ktor:ktor-client-serialization:_" style="text-decoration: underline;" >serialization</span>&nbsp; - <span title="Ktor.client.tests
+io.ktor:ktor-client-serialization:_" style="text-decoration: underline;" >serialization</span>&nbsp; - <span title="Ktor1.client.tests
 version.ktor
-io.ktor:ktor-client-tests:_" style="text-decoration: underline;" >tests</span>&nbsp; - <span title="Ktor.client.websockets
+io.ktor:ktor-client-tests:_" style="text-decoration: underline;" >tests</span>&nbsp; - <span title="Ktor1.client.websockets
 version.ktor
 io.ktor:ktor-client-websockets:_" style="text-decoration: underline;" >websockets</span>&nbsp;</td></tr>
-<tr><td><b>Ktor.features</b></td><td><span title="Ktor.features.authJwt
+<tr><td><b>Ktor1.features</b></td><td><span title="Ktor1.features.authJwt
 version.ktor
-io.ktor:ktor-auth-jwt:_" style="text-decoration: underline;" >authJwt</span>&nbsp; - <span title="Ktor.features.authLdap
+io.ktor:ktor-auth-jwt:_" style="text-decoration: underline;" >authJwt</span>&nbsp; - <span title="Ktor1.features.authLdap
 version.ktor
-io.ktor:ktor-auth-ldap:_" style="text-decoration: underline;" >authLdap</span>&nbsp; - <span title="Ktor.features.auth
+io.ktor:ktor-auth-ldap:_" style="text-decoration: underline;" >authLdap</span>&nbsp; - <span title="Ktor1.features.auth
 version.ktor
-io.ktor:ktor-auth:_" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="Ktor.features.freemarker
+io.ktor:ktor-auth:_" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="Ktor1.features.freemarker
 version.ktor
-io.ktor:ktor-freemarker:_" style="text-decoration: underline;" >freemarker</span>&nbsp; - <span title="Ktor.features.gson
+io.ktor:ktor-freemarker:_" style="text-decoration: underline;" >freemarker</span>&nbsp; - <span title="Ktor1.features.gson
 version.ktor
-io.ktor:ktor-gson:_" style="text-decoration: underline;" >gson</span>&nbsp; - <span title="Ktor.features.htmlBuilder
+io.ktor:ktor-gson:_" style="text-decoration: underline;" >gson</span>&nbsp; - <span title="Ktor1.features.htmlBuilder
 version.ktor
-io.ktor:ktor-html-builder:_" style="text-decoration: underline;" >htmlBuilder</span>&nbsp; - <span title="Ktor.features.jackson
+io.ktor:ktor-html-builder:_" style="text-decoration: underline;" >htmlBuilder</span>&nbsp; - <span title="Ktor1.features.jackson
 version.ktor
-io.ktor:ktor-jackson:_" style="text-decoration: underline;" >jackson</span>&nbsp; - <span title="Ktor.features.locations
+io.ktor:ktor-jackson:_" style="text-decoration: underline;" >jackson</span>&nbsp; - <span title="Ktor1.features.locations
 version.ktor
-io.ktor:ktor-locations:_" style="text-decoration: underline;" >locations</span>&nbsp; - <span title="Ktor.features.metrics
+io.ktor:ktor-locations:_" style="text-decoration: underline;" >locations</span>&nbsp; - <span title="Ktor1.features.metrics
 version.ktor
-io.ktor:ktor-metrics:_" style="text-decoration: underline;" >metrics</span>&nbsp; - <span title="Ktor.features.serialization
+io.ktor:ktor-metrics:_" style="text-decoration: underline;" >metrics</span>&nbsp; - <span title="Ktor1.features.serialization
 version.ktor
-io.ktor:ktor-serialization:_" style="text-decoration: underline;" >serialization</span>&nbsp; - <span title="Ktor.features.serverSessions
+io.ktor:ktor-serialization:_" style="text-decoration: underline;" >serialization</span>&nbsp; - <span title="Ktor1.features.serverSessions
 version.ktor
-io.ktor:ktor-server-sessions:_" style="text-decoration: underline;" >serverSessions</span>&nbsp; - <span title="Ktor.features.velocity
+io.ktor:ktor-server-sessions:_" style="text-decoration: underline;" >serverSessions</span>&nbsp; - <span title="Ktor1.features.velocity
 version.ktor
 io.ktor:ktor-velocity:_" style="text-decoration: underline;" >velocity</span>&nbsp;</td></tr>
-<tr><td><b>Ktor.network</b></td><td><span title="Ktor.network.tlsCertificates
+<tr><td><b>Ktor1.network</b></td><td><span title="Ktor1.network.tlsCertificates
 version.ktor
-io.ktor:ktor-network-tls-certificates:_" style="text-decoration: underline;" >tlsCertificates</span>&nbsp; - <span title="Ktor.network.tls
+io.ktor:ktor-network-tls-certificates:_" style="text-decoration: underline;" >tlsCertificates</span>&nbsp; - <span title="Ktor1.network.tls
 version.ktor
-io.ktor:ktor-network-tls:_" style="text-decoration: underline;" >tls</span>&nbsp; - <span title="Ktor.network.network
+io.ktor:ktor-network-tls:_" style="text-decoration: underline;" >tls</span>&nbsp; - <span title="Ktor1.network.network
 version.ktor
 io.ktor:ktor-network:_" style="text-decoration: underline;" >network</span>&nbsp;</td></tr>
-<tr><td><b>Ktor.server</b></td><td><span title="Ktor.server.core
+<tr><td><b>Ktor1.server</b></td><td><span title="Ktor1.server.core
 version.ktor
-io.ktor:ktor-server-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="Ktor.server.jetty
+io.ktor:ktor-server-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="Ktor1.server.jetty
 version.ktor
-io.ktor:ktor-server-jetty:_" style="text-decoration: underline;" >jetty</span>&nbsp; - <span title="Ktor.server.netty
+io.ktor:ktor-server-jetty:_" style="text-decoration: underline;" >jetty</span>&nbsp; - <span title="Ktor1.server.netty
 version.ktor
-io.ktor:ktor-server-netty:_" style="text-decoration: underline;" >netty</span>&nbsp; - <span title="Ktor.server.servlet
+io.ktor:ktor-server-netty:_" style="text-decoration: underline;" >netty</span>&nbsp; - <span title="Ktor1.server.servlet
 version.ktor
-io.ktor:ktor-server-servlet:_" style="text-decoration: underline;" >servlet</span>&nbsp; - <span title="Ktor.server.testHost
+io.ktor:ktor-server-servlet:_" style="text-decoration: underline;" >servlet</span>&nbsp; - <span title="Ktor1.server.testHost
 version.ktor
-io.ktor:ktor-server-test-host:_" style="text-decoration: underline;" >testHost</span>&nbsp; - <span title="Ktor.server.tomcat
+io.ktor:ktor-server-test-host:_" style="text-decoration: underline;" >testHost</span>&nbsp; - <span title="Ktor1.server.tomcat
 version.ktor
 io.ktor:ktor-server-tomcat:_" style="text-decoration: underline;" >tomcat</span>&nbsp;</td></tr>
+                    </table>
+## [Ktor2.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Ktor2.kt)
+
+<table style="width: 100%; table-layout:fixed;">
+                    <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
+                    <tr><td><b>Ktor2</b></td><td><span title="Ktor2.testDispatcher
+version.ktor
+io.ktor:ktor-test-dispatcher:_" style="text-decoration: underline;" >testDispatcher</span>&nbsp; - <span title="Ktor2.utils
+version.ktor
+io.ktor:ktor-utils:_" style="text-decoration: underline;" >utils</span>&nbsp;</td></tr>
+<tr><td><b>Ktor2.client</b></td><td><span title="Ktor2.client.android
+version.ktor
+io.ktor:ktor-client-android:_" style="text-decoration: underline;" >android</span>&nbsp; - <span title="Ktor2.client.apache
+version.ktor
+io.ktor:ktor-client-apache:_" style="text-decoration: underline;" >apache</span>&nbsp; - <span title="Ktor2.client.auth
+version.ktor
+io.ktor:ktor-client-auth:_" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="Ktor2.client.cio
+version.ktor
+io.ktor:ktor-client-cio:_" style="text-decoration: underline;" >cio</span>&nbsp; - <span title="Ktor2.client.contentNegotiationTests
+version.ktor
+io.ktor:ktor-client-content-negotiation-tests:_" style="text-decoration: underline;" >contentNegotiationTests</span>&nbsp; - <span title="Ktor2.client.contentNegotiation
+version.ktor
+io.ktor:ktor-client-content-negotiation:_" style="text-decoration: underline;" >contentNegotiation</span>&nbsp; - <span title="Ktor2.client.core
+version.ktor
+io.ktor:ktor-client-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="Ktor2.client.curl
+version.ktor
+io.ktor:ktor-client-curl:_" style="text-decoration: underline;" >curl</span>&nbsp; - <span title="Ktor2.client.darwin
+version.ktor
+io.ktor:ktor-client-darwin:_" style="text-decoration: underline;" >darwin</span>&nbsp; - <span title="Ktor2.client.encoding
+version.ktor
+io.ktor:ktor-client-encoding:_" style="text-decoration: underline;" >encoding</span>&nbsp; - <span title="Ktor2.client.gson
+version.ktor
+io.ktor:ktor-client-gson:_" style="text-decoration: underline;" >gson</span>&nbsp; - <span title="Ktor2.client.jackson
+version.ktor
+io.ktor:ktor-client-jackson:_" style="text-decoration: underline;" >jackson</span>&nbsp; - <span title="Ktor2.client.java
+version.ktor
+io.ktor:ktor-client-java:_" style="text-decoration: underline;" >java</span>&nbsp; - <span title="Ktor2.client.jetty
+version.ktor
+io.ktor:ktor-client-jetty:_" style="text-decoration: underline;" >jetty</span>&nbsp; - <span title="Ktor2.client.jsonTests
+version.ktor
+io.ktor:ktor-client-json-tests:_" style="text-decoration: underline;" >jsonTests</span>&nbsp; - <span title="Ktor2.client.json
+version.ktor
+io.ktor:ktor-client-json:_" style="text-decoration: underline;" >json</span>&nbsp; - <span title="Ktor2.client.logging
+version.ktor
+io.ktor:ktor-client-logging:_" style="text-decoration: underline;" >logging</span>&nbsp; - <span title="Ktor2.client.mock
+version.ktor
+io.ktor:ktor-client-mock:_" style="text-decoration: underline;" >mock</span>&nbsp; - <span title="Ktor2.client.okhttp
+version.ktor
+io.ktor:ktor-client-okhttp:_" style="text-decoration: underline;" >okhttp</span>&nbsp; - <span title="Ktor2.client.resources
+version.ktor
+io.ktor:ktor-client-resources:_" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="Ktor2.client.serialization
+version.ktor
+io.ktor:ktor-client-serialization:_" style="text-decoration: underline;" >serialization</span>&nbsp; - <span title="Ktor2.client.tests
+version.ktor
+io.ktor:ktor-client-tests:_" style="text-decoration: underline;" >tests</span>&nbsp;</td></tr>
+<tr><td><b>Ktor2.plugins</b></td><td><span title="Ktor2.plugins.events
+version.ktor
+io.ktor:ktor-events:_" style="text-decoration: underline;" >events</span>&nbsp; - <span title="Ktor2.plugins.httpCio
+version.ktor
+io.ktor:ktor-http-cio:_" style="text-decoration: underline;" >httpCio</span>&nbsp; - <span title="Ktor2.plugins.http
+version.ktor
+io.ktor:ktor-http:_" style="text-decoration: underline;" >http</span>&nbsp; - <span title="Ktor2.plugins.io
+version.ktor
+io.ktor:ktor-io:_" style="text-decoration: underline;" >io</span>&nbsp; - <span title="Ktor2.plugins.networkTlsCertificates
+version.ktor
+io.ktor:ktor-network-tls-certificates:_" style="text-decoration: underline;" >networkTlsCertificates</span>&nbsp; - <span title="Ktor2.plugins.networkTls
+version.ktor
+io.ktor:ktor-network-tls:_" style="text-decoration: underline;" >networkTls</span>&nbsp; - <span title="Ktor2.plugins.network
+version.ktor
+io.ktor:ktor-network:_" style="text-decoration: underline;" >network</span>&nbsp; - <span title="Ktor2.plugins.resources
+version.ktor
+io.ktor:ktor-resources:_" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="Ktor2.plugins.websocketSerialization
+version.ktor
+io.ktor:ktor-websocket-serialization:_" style="text-decoration: underline;" >websocketSerialization</span>&nbsp; - <span title="Ktor2.plugins.websockets
+version.ktor
+io.ktor:ktor-websockets:_" style="text-decoration: underline;" >websockets</span>&nbsp;</td></tr>
+<tr><td><b>Ktor2.plugins.serialization</b></td><td><span title="Ktor2.plugins.serialization.gson
+version.ktor
+io.ktor:ktor-serialization-gson:_" style="text-decoration: underline;" >gson</span>&nbsp; - <span title="Ktor2.plugins.serialization.jackson
+version.ktor
+io.ktor:ktor-serialization-jackson:_" style="text-decoration: underline;" >jackson</span>&nbsp; - <span title="Ktor2.plugins.serialization.kotlinxCbor
+version.ktor
+io.ktor:ktor-serialization-kotlinx-cbor:_" style="text-decoration: underline;" >kotlinxCbor</span>&nbsp; - <span title="Ktor2.plugins.serialization.kotlinxJson
+version.ktor
+io.ktor:ktor-serialization-kotlinx-json:_" style="text-decoration: underline;" >kotlinxJson</span>&nbsp; - <span title="Ktor2.plugins.serialization.kotlinxTests
+version.ktor
+io.ktor:ktor-serialization-kotlinx-tests:_" style="text-decoration: underline;" >kotlinxTests</span>&nbsp; - <span title="Ktor2.plugins.serialization.kotlinxXml
+version.ktor
+io.ktor:ktor-serialization-kotlinx-xml:_" style="text-decoration: underline;" >kotlinxXml</span>&nbsp; - <span title="Ktor2.plugins.serialization.kotlinx
+version.ktor
+io.ktor:ktor-serialization-kotlinx:_" style="text-decoration: underline;" >kotlinx</span>&nbsp; - <span title="Ktor2.plugins.serialization.serialization
+version.ktor
+io.ktor:ktor-serialization:_" style="text-decoration: underline;" >serialization</span>&nbsp;</td></tr>
+<tr><td><b>Ktor2.server</b></td><td><span title="Ktor2.server.authJwt
+version.ktor
+io.ktor:ktor-server-auth-jwt:_" style="text-decoration: underline;" >authJwt</span>&nbsp; - <span title="Ktor2.server.authLdap
+version.ktor
+io.ktor:ktor-server-auth-ldap:_" style="text-decoration: underline;" >authLdap</span>&nbsp; - <span title="Ktor2.server.auth
+version.ktor
+io.ktor:ktor-server-auth:_" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="Ktor2.server.autoHeadResponse
+version.ktor
+io.ktor:ktor-server-auto-head-response:_" style="text-decoration: underline;" >autoHeadResponse</span>&nbsp; - <span title="Ktor2.server.cachingHeaders
+version.ktor
+io.ktor:ktor-server-caching-headers:_" style="text-decoration: underline;" >cachingHeaders</span>&nbsp; - <span title="Ktor2.server.callId
+version.ktor
+io.ktor:ktor-server-call-id:_" style="text-decoration: underline;" >callId</span>&nbsp; - <span title="Ktor2.server.callLogging
+version.ktor
+io.ktor:ktor-server-call-logging:_" style="text-decoration: underline;" >callLogging</span>&nbsp; - <span title="Ktor2.server.cio
+version.ktor
+io.ktor:ktor-server-cio:_" style="text-decoration: underline;" >cio</span>&nbsp; - <span title="Ktor2.server.compression
+version.ktor
+io.ktor:ktor-server-compression:_" style="text-decoration: underline;" >compression</span>&nbsp; - <span title="Ktor2.server.conditionalHeaders
+version.ktor
+io.ktor:ktor-server-conditional-headers:_" style="text-decoration: underline;" >conditionalHeaders</span>&nbsp; - <span title="Ktor2.server.contentNegotiation
+version.ktor
+io.ktor:ktor-server-content-negotiation:_" style="text-decoration: underline;" >contentNegotiation</span>&nbsp; - <span title="Ktor2.server.core
+version.ktor
+io.ktor:ktor-server-core:_" style="text-decoration: underline;" >core</span>&nbsp; - <span title="Ktor2.server.cors
+version.ktor
+io.ktor:ktor-server-cors:_" style="text-decoration: underline;" >cors</span>&nbsp; - <span title="Ktor2.server.dataConversion
+version.ktor
+io.ktor:ktor-server-data-conversion:_" style="text-decoration: underline;" >dataConversion</span>&nbsp; - <span title="Ktor2.server.defaultHeaders
+version.ktor
+io.ktor:ktor-server-default-headers:_" style="text-decoration: underline;" >defaultHeaders</span>&nbsp; - <span title="Ktor2.server.doubleReceive
+version.ktor
+io.ktor:ktor-server-double-receive:_" style="text-decoration: underline;" >doubleReceive</span>&nbsp; - <span title="Ktor2.server.forwardedHeader
+version.ktor
+io.ktor:ktor-server-forwarded-header:_" style="text-decoration: underline;" >forwardedHeader</span>&nbsp; - <span title="Ktor2.server.freeMarker
+version.ktor
+io.ktor:ktor-server-freemarker:_" style="text-decoration: underline;" >freeMarker</span>&nbsp; - <span title="Ktor2.server.hostCommon
+version.ktor
+io.ktor:ktor-server-host-common:_" style="text-decoration: underline;" >hostCommon</span>&nbsp; - <span title="Ktor2.server.hsts
+version.ktor
+io.ktor:ktor-server-hsts:_" style="text-decoration: underline;" >hsts</span>&nbsp; - <span title="Ktor2.server.htmlBuilder
+version.ktor
+io.ktor:ktor-server-html-builder:_" style="text-decoration: underline;" >htmlBuilder</span>&nbsp; - <span title="Ktor2.server.httpRedirect
+version.ktor
+io.ktor:ktor-server-http-redirect:_" style="text-decoration: underline;" >httpRedirect</span>&nbsp; - <span title="Ktor2.server.jetty
+version.ktor
+io.ktor:ktor-server-jetty:_" style="text-decoration: underline;" >jetty</span>&nbsp; - <span title="Ktor2.server.jte
+version.ktor
+io.ktor:ktor-server-jte:_" style="text-decoration: underline;" >jte</span>&nbsp; - <span title="Ktor2.server.locations
+version.ktor
+io.ktor:ktor-server-locations:_" style="text-decoration: underline;" >locations</span>&nbsp; - <span title="Ktor2.server.methodOverride
+version.ktor
+io.ktor:ktor-server-method-override:_" style="text-decoration: underline;" >methodOverride</span>&nbsp; - <span title="Ktor2.server.metricsMicrometer
+version.ktor
+io.ktor:ktor-server-metrics-micrometer:_" style="text-decoration: underline;" >metricsMicrometer</span>&nbsp; - <span title="Ktor2.server.metrics
+version.ktor
+io.ktor:ktor-server-metrics:_" style="text-decoration: underline;" >metrics</span>&nbsp; - <span title="Ktor2.server.mustache
+version.ktor
+io.ktor:ktor-server-mustache:_" style="text-decoration: underline;" >mustache</span>&nbsp; - <span title="Ktor2.server.netty
+version.ktor
+io.ktor:ktor-server-netty:_" style="text-decoration: underline;" >netty</span>&nbsp; - <span title="Ktor2.server.partialContent
+version.ktor
+io.ktor:ktor-server-partial-content:_" style="text-decoration: underline;" >partialContent</span>&nbsp; - <span title="Ktor2.server.pebble
+version.ktor
+io.ktor:ktor-server-pebble:_" style="text-decoration: underline;" >pebble</span>&nbsp; - <span title="Ktor2.server.resources
+version.ktor
+io.ktor:ktor-server-resources:_" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="Ktor2.server.servlet
+version.ktor
+io.ktor:ktor-server-servlet:_" style="text-decoration: underline;" >servlet</span>&nbsp; - <span title="Ktor2.server.sessions
+version.ktor
+io.ktor:ktor-server-sessions:_" style="text-decoration: underline;" >sessions</span>&nbsp; - <span title="Ktor2.server.statusPages
+version.ktor
+io.ktor:ktor-server-status-pages:_" style="text-decoration: underline;" >statusPages</span>&nbsp; - <span title="Ktor2.server.testHost
+version.ktor
+io.ktor:ktor-server-test-host:_" style="text-decoration: underline;" >testHost</span>&nbsp; - <span title="Ktor2.server.testSuites
+version.ktor
+io.ktor:ktor-server-test-suites:_" style="text-decoration: underline;" >testSuites</span>&nbsp; - <span title="Ktor2.server.thymeleaf
+version.ktor
+io.ktor:ktor-server-thymeleaf:_" style="text-decoration: underline;" >thymeleaf</span>&nbsp; - <span title="Ktor2.server.tomcat
+version.ktor
+io.ktor:ktor-server-tomcat:_" style="text-decoration: underline;" >tomcat</span>&nbsp; - <span title="Ktor2.server.velocity
+version.ktor
+io.ktor:ktor-server-velocity:_" style="text-decoration: underline;" >velocity</span>&nbsp; - <span title="Ktor2.server.webjars
+version.ktor
+io.ktor:ktor-server-webjars:_" style="text-decoration: underline;" >webjars</span>&nbsp; - <span title="Ktor2.server.websockets
+version.ktor
+io.ktor:ktor-server-websockets:_" style="text-decoration: underline;" >websockets</span>&nbsp;</td></tr>
                     </table>
 ## [Orchid.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Orchid.kt)
 
@@ -2033,7 +2516,9 @@ version.NO-RULE
 org.springframework.restdocs:spring-restdocs-webtestclient:_" style="text-decoration: underline;" >springRestdocsWebtestclient</span>&nbsp;</td></tr>
 <tr><td><b>Spring.boms</b></td><td><span title="Spring.boms.dependencies
 version.NO-RULE
-org.springframework.boot:spring-boot-dependencies:_" style="text-decoration: underline;" >dependencies</span>&nbsp; - <span title="Spring.boms.springclmoud
+org.springframework.boot:spring-boot-dependencies:_" style="text-decoration: underline;" >dependencies</span>&nbsp; - <span title="Spring.boms.springCloud
+version.NO-RULE
+org.springframework.cloud:spring-cloud-dependencies:_" style="text-decoration: underline;" >springCloud</span>&nbsp; - <span title="Spring.boms.springclmoud
 version.NO-RULE
 org.springframework.cloud:spring-cloud-dependencies:_" style="text-decoration: underline;" >springclmoud</span>&nbsp; - <span title="Spring.boms.geode
 version.NO-RULE
@@ -2539,26 +3024,30 @@ io.kotest:kotest-runner-junit4:_" style="text-decoration: underline;" >junit4</s
 version.kotest
 io.kotest:kotest-runner-junit5:_" style="text-decoration: underline;" >junit5</span>&nbsp;</td></tr>
 <tr><td><b>Testing.kotestExtensions</b></td><td><span title="Testing.kotestExtensions.allure
-version.kotest.extensions.allure
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-allure:_" style="text-decoration: underline;" >allure</span>&nbsp; - <span title="Testing.kotestExtensions.embeddedKafka
-version.kotest.extensions.embedded-kafka
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-embedded-kafka:_" style="text-decoration: underline;" >embeddedKafka</span>&nbsp; - <span title="Testing.kotestExtensions.gherkin
-version.kotest.extensions.gherkin
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-gherkin:_" style="text-decoration: underline;" >gherkin</span>&nbsp; - <span title="Testing.kotestExtensions.koin
-version.kotest.extensions.koin
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-koin:_" style="text-decoration: underline;" >koin</span>&nbsp; - <span title="Testing.kotestExtensions.mockServer
-version.kotest.extensions.mockserver
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-mockserver:_" style="text-decoration: underline;" >mockServer</span>&nbsp; - <span title="Testing.kotestExtensions.pitest
-version.kotest.extensions.pitest
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-pitest:_" style="text-decoration: underline;" >pitest</span>&nbsp; - <span title="Testing.kotestExtensions.robolectric
-version.kotest.extensions.robolectric
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-robolectric:_" style="text-decoration: underline;" >robolectric</span>&nbsp; - <span title="Testing.kotestExtensions.spring
-version.kotest.extensions.spring
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-spring:_" style="text-decoration: underline;" >spring</span>&nbsp; - <span title="Testing.kotestExtensions.testContainers
-version.kotest.extensions.testcontainers
+version.kotest.extensions
 io.kotest.extensions:kotest-extensions-testcontainers:_" style="text-decoration: underline;" >testContainers</span>&nbsp; - <span title="Testing.kotestExtensions.wiremock
-version.kotest.extensions.wiremock
-io.kotest.extensions:kotest-extensions-wiremock:_" style="text-decoration: underline;" >wiremock</span>&nbsp;</td></tr>
+version.kotest.extensions
+io.kotest.extensions:kotest-extensions-wiremock:_" style="text-decoration: underline;" >wiremock</span>&nbsp; - <span title="Testing.kotestExtensions.arbs
+version.kotest.extensions
+io.kotest.extensions:kotest-property-arbs:_" style="text-decoration: underline;" >arbs</span>&nbsp; - <span title="Testing.kotestExtensions.datetime
+version.kotest.extensions
+io.kotest.extensions:kotest-property-datetime:_" style="text-decoration: underline;" >datetime</span>&nbsp;</td></tr>
 <tr><td><b>Testing.mockK</b></td><td><span title="Testing.mockK.android
 version.mockk
 io.mockk:mockk-android:_" style="text-decoration: underline;" >android</span>&nbsp; - <span title="Testing.mockK.common
