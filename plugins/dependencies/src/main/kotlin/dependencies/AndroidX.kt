@@ -1647,6 +1647,9 @@ object AndroidX : IsNotADependency {
          */
         val runtimeTesting = module("lifecycle-runtime-testing")
 
+        /** Provides `collectAsStateWithLifecycle` extensions for `Flow` and `StateFlow` */
+        val runtimeCompose = module("lifecycle-runtime-compose")
+
         /** LiveData, with Kotlin extensions. */
         val liveDataKtx = module("lifecycle-livedata-ktx")
 
