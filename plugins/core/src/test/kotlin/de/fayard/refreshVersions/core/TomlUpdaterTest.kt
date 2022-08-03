@@ -78,7 +78,7 @@ class TomlUpdaterTest {
 
     private val rulesDir = File(".").absoluteFile.parentFile.parentFile
         .resolve("dependencies/src/main/resources/refreshVersions-rules")
-        .also { require(it.canRead()) { "Can't read foler $it" } }
+        .also { require(it.canRead()) { "Can't read folder $it" } }
     private val versionsMap = mapOf(
         "version.junit.jupiter" to "42"
     )
