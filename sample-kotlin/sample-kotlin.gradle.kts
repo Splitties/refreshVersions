@@ -38,7 +38,7 @@ dependencies {
     testImplementation("junit:junit:4.12")
     implementation("com.google.guava:guava:15.0")
     implementation("com.google.inject:guice:2.0")
-    implementation("com.squareup.okhttp3:okhttp:3.10.0")
+    implementation("com.squareup.okhttp3:okhttp:_")
     implementation("com.squareup.okhttp3:okhttp-urlconnection:3.10.0")
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.mongodb:mongo-java-driver:3.11.0")

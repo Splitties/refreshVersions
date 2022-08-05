@@ -18,6 +18,11 @@ pluginManagement {
 
 plugins {
     id("com.gradle.enterprise").version("3.8.1")
+////                        # available:"3.9")
+////                        # available:"3.10")
+////                        # available:"3.10.1")
+////                        # available:"3.10.2")
+////                        # available:"3.10.3")
     id("de.fayard.refreshVersions")
 }
 
@@ -25,7 +30,7 @@ refreshVersions {
     featureFlags {
         enable(LIBS)
         disable(GRADLE_UPDATES)
-        disable(VERSIONS_CATALOG)
+        enable(VERSIONS_CATALOG)
     }
 
     extraArtifactVersionKeyRules(file("refreshVersions-extra-rules.txt"))
