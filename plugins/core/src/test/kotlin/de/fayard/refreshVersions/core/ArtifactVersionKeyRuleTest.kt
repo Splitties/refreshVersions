@@ -1,6 +1,11 @@
 package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.internal.ArtifactVersionKeyRule
+import de.fayard.refreshVersions.core.internal.PrefixRule
+import io.kotest.assertions.throwables.shouldThrowAny
+import io.kotest.inspectors.forAll
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
@@ -9,14 +14,13 @@ import testutils.junit.dynamicTest
 import kotlin.test.assertEquals
 
 class ArtifactVersionKeyRuleTest {
-
     @Test
     fun `Test kotlinx libraries`() {
         val versionKeyRule = ArtifactVersionKeyRule(
             artifactPattern = "  org.jetbrains.kotlinx:kotlinx-???(-*)".trimStart(),
             versionKeyPattern = "              ^^^^^^^.        ^^^"
         )
-        kotlinxArtifacts.forEach {
+        kotlinxArtifacts.forAll {
             val group = it.substringBefore(':')
             val name = it.substringAfter(':')
             assert(versionKeyRule.matches(group, name)) { it }

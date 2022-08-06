@@ -32,6 +32,9 @@ abstract class ArtifactVersionKeyRule protected constructor(
         $versionKeyPattern
     """.trimIndent()
 
+    override fun equals(other: Any?): Boolean =
+        this.toString() == other?.toString()
+
     companion object {
 
         operator fun invoke(
