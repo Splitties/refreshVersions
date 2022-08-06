@@ -37,8 +37,8 @@ internal class TomlUpdater(
                 linesForUpdate(line, findLineReferencing(line))
             }
             Libs, Plugin -> {
-                val updates = dependenciesUpdates.firstOrNull { dc ->
-                    dc.moduleId.name == line.name && dc.moduleId.group == line.group
+                val updates = dependenciesUpdates.firstOrNull {
+                    it.moduleId.name == line.name && it.moduleId.group == line.group
                 }
                 linesForUpdate(line, updates)
             }
