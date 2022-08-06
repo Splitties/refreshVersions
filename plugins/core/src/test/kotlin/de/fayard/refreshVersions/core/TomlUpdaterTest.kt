@@ -28,14 +28,21 @@ class TomlUpdaterTest {
         inputFolderName = "toml-cleanup"
     ) { actual: File -> cleanupComments(actual) }
 
-    private fun testTomlUpdater(inputFolderName: String, action: TomlUpdater.(actual: File) -> Unit) {
+    private fun testTomlUpdater(
+        inputFolderName: String,
+        action: TomlUpdater.(actual: File) -> Unit
+    ) {
         val input = FolderInput(inputFolderName)
-        TomlUpdater(input.initial, input.dependenciesUpdates).action(input.actual)
-        input.actual.readText() shouldBe input.expectedText
-
-        // check idempotence
-        TomlUpdater(input.expected, input.dependenciesUpdates).action(input.expected)
-        input.actual.readText() shouldBe input.expectedText
+        sequence {
+            yield(input.initial to input.actual)
+            yield(input.expected to input.expected) // check idempotence
+        }.forEach { (initial, actual) ->
+            TomlUpdater(
+                file = initial,
+                dependenciesUpdates = dependencyWithVersionCandidates(input.folder)
+            ).action(actual)
+            input.actual.readText() shouldBe input.expectedText
+        }
 
         // delete actual file if successful
         input.actual.delete()
@@ -92,10 +99,17 @@ class TomlUpdaterTest {
             val withVersions = input.folder.name.contains("versions")
 
             val currentText = input.initial.readText()
-            val dependenciesAndNames = input.dependenciesUpdates.associate { d ->
-                val versionName = d.versionsCandidates.first().value
-                val dependency: Dependency = ConfigurationLessDependency(d.moduleId.group!!, d.moduleId.name, d.currentVersion)
-                dependency to versionName
+            val dependenciesDataFile = folder.resolve("dependencies.txt").takeIf { it.exists() }
+                ?: folder.parentFile.resolve("default-dependencies.txt")
+            val dependenciesAndNames = dependenciesDataFile.useLines { lines ->
+                lines.filter {
+                    it.isNotBlank() && it.startsWith("//").not()
+                }.toList()
+            }.associate {
+                val dependencyNotation = it.substringBefore('|').trimEnd()
+                val tomlPropertyName = it.substringAfter('|').trim()
+                val dependency: Dependency = ConfigurationLessDependency(dependencyNotation)
+                dependency to tomlPropertyName
             }
             val plugins = dependenciesAndNames.keys.filter { it.name.endsWith(".gradle.plugin") }
             val newText = VersionCatalogs.generateVersionsCatalogText(
@@ -120,7 +134,6 @@ private data class FolderInput(
     val initial: File,
     val expected: File,
     val actual: File,
-    val dependenciesUpdates: List<DependencyWithVersionCandidates>
 ) {
     val expectedText = expected.readText()
 
@@ -132,13 +145,11 @@ private fun FolderInput(folderName: String): FolderInput = FolderInput(testResou
 
 private fun FolderInput(folder: File): FolderInput {
     require(folder.canRead()) { "Invalid folder ${folder.absolutePath}" }
-    val dependencies = dependencyWithVersionCandidates(folder)
     return FolderInput(
         folder = folder,
         initial = folder.resolve("initial.libs.toml"),
         actual = folder.resolve("actual.libs.toml"),
         expected = folder.resolve("expected.libs.toml"),
-        dependenciesUpdates = dependencies
     )
 }
 
@@ -153,15 +164,16 @@ private fun dependencyWithVersionCandidates(folder: File): List<DependencyWithVe
             it.isNotBlank()
         }.map { line ->
             val dependencyNotation = line.substringBefore('|').trimEnd()
-            val versions = line.substringAfter('|', missingDelimiterValue = "").trim().split(',')
+            val moduleId = ModuleId.Maven(
+                group = dependencyNotation.substringBefore(':'),
+                name = dependencyNotation.substringAfter(':').substringBefore(':')
+            )
+            val versions = line.substringAfter('|').trim().split(',')
             DependencyWithVersionCandidates(
-                moduleId = ModuleId.Maven(
-                    group = dependencyNotation.substringBefore(':'),
-                    name = dependencyNotation.substringAfter(':').substringBefore(':')
-                ),
-                currentVersion = dependencyNotation.substringAfterLast(':'), //TODO: Support and test version-less
+                moduleId = moduleId,
+                currentVersion = dependencyNotation.substringAfterLast(':'),
                 versionsCandidates = versions.map { MavenVersion(it.trim()) },
-                failures = emptyList()
+                failures = emptyList() //TODO: Test failures
             )
         }.toList()
     }

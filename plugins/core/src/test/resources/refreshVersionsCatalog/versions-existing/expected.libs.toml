@@ -40,4 +40,6 @@ kotest-core = { group = "io.kotest", name = "kotest", version.ref = "kotest" }
 
 kotest-property = { group = "io.kotest", name = "kotest-property", version.ref = "kotest" }
 
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit-jupiter" }
+junit-jupiter-bom = { group = "org.junit.jupiter", name = "junit-jupiter-bom", version.ref = "junit-jupiter" }
+
+junit-jupiter = "org.junit.jupiter:junit-jupiter"
