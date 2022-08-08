@@ -3,6 +3,7 @@ package de.fayard.refreshVersions
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.internal.Case
 import de.fayard.refreshVersions.core.internal.Deps
+import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.Library
 import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
 import de.fayard.refreshVersions.core.internal.OutputFile
@@ -22,6 +23,12 @@ import org.gradle.api.tasks.options.Option
 import org.gradle.util.GradleVersion
 
 open class RefreshVersionsCatalogTask : DefaultTask() {
+
+    @InternalRefreshVersionsApi
+    companion object {
+        const val TASK_NAME: String = "refreshVersionsCatalog"
+        const val DESCRIPTION: String = "Update $LIBS_VERSIONS_TOML"
+    }
 
     @Input
     @Option(option = "versions", description = "Add the versions in $LIBS_VERSIONS_TOML")

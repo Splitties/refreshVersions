@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater.removeCommentsAddedByUs
@@ -15,6 +16,12 @@ import org.gradle.api.tasks.TaskAction
 import java.io.File
 
 open class RefreshVersionsCleanupTask : DefaultTask() {
+
+    @InternalRefreshVersionsApi
+    companion object {
+        const val TASK_NAME = "refreshVersionsCleanup"
+        const val DESCRIPTION = "Cleanup versions availability comments"
+    }
 
     @TaskAction
     fun cleanUpVersionsProperties() {

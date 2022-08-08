@@ -14,6 +14,12 @@ import org.slf4j.helpers.BasicMarkerFactory
 
 open class RefreshVersionsCorePlugin : Plugin<Project> {
 
+    @InternalRefreshVersionsApi
+    companion object {
+        const val GROUP = "refreshVersions"
+        val currentVersion: String by lazy { readCurrentPluginVersion() }
+    }
+
     override fun apply(project: Project) {
         check(project.isRootProject) { "ERROR: de.fayard.refreshVersions.core should not be applied manually" }
         OutputFile.rootDir = project.rootDir
@@ -23,15 +29,15 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
             // so we get the value before.
             val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
 
-            project.tasks.register<RefreshVersionsTask>(name = "refreshVersions") {
-                group = "refreshVersions"
-                description = "Search for new dependencies versions and update $versionsFileName"
+            project.tasks.register<RefreshVersionsTask>(RefreshVersionsTask.TASK_NAME) {
+                group = GROUP
+                description = RefreshVersionsTask.DESCRIPTION + " and update $versionsFileName"
                 skipConfigurationCache()
             }
 
-            project.tasks.register<RefreshVersionsCleanupTask>(name = "refreshVersionsCleanup") {
-                group = "refreshVersions"
-                description = "Cleanup versions availability comments"
+            project.tasks.register<RefreshVersionsCleanupTask>(RefreshVersionsCleanupTask.TASK_NAME) {
+                group = GROUP
+                description = RefreshVersionsCleanupTask.DESCRIPTION
             }
         }
         cleanFilesFromPreviousVersions(project)
@@ -52,13 +58,10 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
         @JvmField
         val default: Marker = BasicMarkerFactory().getMarker("refreshVersions")
     }
-
-    @InternalRefreshVersionsApi
-    companion object {
-        val currentVersion by lazy {
-            RefreshVersionsCorePlugin::class.java.getResourceAsStream("/version.txt")!!
-                .bufferedReader()
-                .useLines { it.first() }
-        }
-    }
 }
+
+internal fun readCurrentPluginVersion(): String =
+    RefreshVersionsCorePlugin::class.java
+        .getResourceAsStream("/version.txt")!!
+        .bufferedReader()
+        .useLines { it.first() }

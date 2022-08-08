@@ -2,11 +2,9 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
-import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
 import de.fayard.refreshVersions.core.internal.skipConfigurationCache
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
-import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
@@ -108,9 +106,11 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     }
 
     private fun bootstrap(settings: Settings) {
-        if (settings.extensions.findByName("refreshVersions") == null) {
+        if (settings.extensions.findByName(RefreshVersionsExtension.EXTENSION_NAME) == null) {
             // If using legacy bootstrap, the extension has already been created.
-            settings.extensions.create<RefreshVersionsExtension>("refreshVersions")
+            settings.extensions.create<RefreshVersionsExtension>(
+                RefreshVersionsExtension.EXTENSION_NAME
+            )
         }
 
         if (settings.isBuildSrc) {
@@ -153,47 +153,44 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 }
             }
             gradle.rootProject {
-                applyToProject(this)
+                registerDependenciesTask(this)
             }
         }
     }
 
-    private fun applyToProject(project: Project) {
+    private fun registerDependenciesTask(project: Project) {
         if (project != project.rootProject) return // We want the tasks only for the root project
 
         project.tasks.register<RefreshVersionsDependenciesMigrationTask>(
-            name = "migrateToRefreshVersionsDependenciesConstants"
+            RefreshVersionsDependenciesMigrationTask.TASK_NAME
         ) {
-            group = "refreshVersions"
-            description = "Assists migration from hardcoded dependencies to constants of " +
-                "the refreshVersions dependencies plugin"
-            finalizedBy("refreshVersions")
+            description = RefreshVersionsDependenciesMigrationTask.DESCRIPTION
+            group = RefreshVersionsCorePlugin.GROUP
+            finalizedBy(RefreshVersionsTask.TASK_NAME)
             skipConfigurationCache()
         }
 
-        project.tasks.register<DefaultTask>(
-            name = "refreshVersionsDependenciesMapping"
+        project.tasks.register<RefreshVersionsDependenciesMappingTask>(
+            name = RefreshVersionsDependenciesMappingTask.TASK_NAME
         ) {
-            group = "refreshVersions"
-            description = "Shows the mapping of Gradle dependencies and their typesafe accessors"
-            doLast {
-                println(getArtifactNameToConstantMapping().joinToString("\n"))
-            }
+            description = RefreshVersionsDependenciesMappingTask.DESCRIPTION
+            group = RefreshVersionsCorePlugin.GROUP
         }
+
         project.tasks.register<RefreshVersionsCatalogTask>(
-            name = "refreshVersionsCatalog"
+            name = RefreshVersionsCatalogTask.TASK_NAME
         ) {
-            group = "refreshVersions"
-            description = "Update $LIBS_VERSIONS_TOML"
+            description = RefreshVersionsCatalogTask.DESCRIPTION
+            group = RefreshVersionsCorePlugin.GROUP
             outputs.upToDateWhen { false }
             skipConfigurationCache()
         }
 
         project.tasks.register<RefreshVersionsMigrateTask>(
-            name = "refreshVersionsMigrate"
+            name = RefreshVersionsMigrateTask.TASK_NAME
         ) {
-            group = "refreshVersions"
-            description = "Migrate build to refreshVersions"
+            description = RefreshVersionsMigrateTask.DESCRIPTION
+            group = RefreshVersionsCorePlugin.GROUP
             skipConfigurationCache()
         }
     }

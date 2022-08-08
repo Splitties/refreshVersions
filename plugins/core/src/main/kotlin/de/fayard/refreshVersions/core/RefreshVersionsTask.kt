@@ -29,6 +29,11 @@ import org.gradle.util.GradleVersion
  */
 open class RefreshVersionsTask : DefaultTask() {
 
+    @InternalRefreshVersionsApi
+    companion object {
+        const val TASK_NAME = "refreshVersions"
+        const val DESCRIPTION = "Search for new dependencies versions"
+    }
 
     @Input @Optional
     @Option(option = "enable", description = "Enable a feature flag")
