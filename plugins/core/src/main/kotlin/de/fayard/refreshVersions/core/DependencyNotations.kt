@@ -8,33 +8,41 @@ abstract class DependencyGroup private constructor(
     platformConstrainsDelegateGroup: AbstractDependencyGroup?,
     group: String,
     rawRules: String? = null,
-    usePlatformConstraints: Boolean?
+    usePlatformConstraints: Boolean?,
+    val kdoc: DependencyKdoc? = null,
 ) : IsNotADependency, AbstractDependencyGroup(
     platformConstrainsDelegateGroup = platformConstrainsDelegateGroup,
     group = group,
     rawRules = rawRules,
     usePlatformConstraints = usePlatformConstraints
 ) {
+    @InternalRefreshVersionsApi
+    fun kdoc(): DependencyKdoc? = kdoc
+
     constructor(
         group: String,
         rawRules: String? = null,
-        usePlatformConstraints: Boolean = false
+        usePlatformConstraints: Boolean = false,
+        kdoc: DependencyKdoc? = null,
     ) : this(
         platformConstrainsDelegateGroup = null,
         group = group,
         rawRules = rawRules,
-        usePlatformConstraints = usePlatformConstraints
+        usePlatformConstraints = usePlatformConstraints,
+        kdoc = kdoc,
     )
 
     constructor(
         platformConstrainsDelegateGroup: AbstractDependencyGroup,
         group: String = platformConstrainsDelegateGroup.group,
-        rawRules: String? = null
+        rawRules: String? = null,
+        kdoc: DependencyKdoc? = null,
     ) : this(
         platformConstrainsDelegateGroup = platformConstrainsDelegateGroup,
         group = group,
         rawRules = rawRules,
-        usePlatformConstraints = null
+        usePlatformConstraints = null,
+        kdoc = kdoc,
     )
 }
 

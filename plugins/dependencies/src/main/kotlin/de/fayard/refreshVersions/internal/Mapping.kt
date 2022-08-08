@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.internal
 
 import de.fayard.refreshVersions.core.AbstractDependencyGroup
+import de.fayard.refreshVersions.core.DependencyKdoc
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.internal.DependencyMapping
 import dependencies.ALL_DEPENDENCIES_NOTATIONS
@@ -54,7 +55,9 @@ private fun getArtifactNameToConstantMappingFromObject(
         @OptIn(ExperimentalStdlibApi::class)
         kProperty.visibility == KVisibility.PUBLIC && kProperty.returnType.let {
             // Filter out dependency constants and redirection properties.
-            it != typeOf<String>() && it.javaType != java.lang.Void::class.java
+            it != typeOf<String>() &&
+                it.javaType != java.lang.Void::class.java &&
+                it.javaType != DependencyKdoc::class.java
         }
     }.flatMap { kProperty ->
         when (kProperty.name) {
