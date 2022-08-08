@@ -5,7 +5,7 @@ import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
-class RefreshVersionsDependenciesMappingTask: DefaultTask() {
+open class RefreshVersionsDependenciesMappingTask: DefaultTask() {
 
     @InternalRefreshVersionsApi
     companion object {
