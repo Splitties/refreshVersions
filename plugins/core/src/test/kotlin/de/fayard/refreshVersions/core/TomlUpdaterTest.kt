@@ -172,7 +172,11 @@ private fun dependencyWithVersionCandidates(folder: File): List<DependencyWithVe
             DependencyWithVersionCandidates(
                 moduleId = moduleId,
                 currentVersion = dependencyNotation.substringAfterLast(':'),
-                versionsCandidates = versions.map { MavenVersion(it.trim()) },
+                versionsCandidates = { currentVersion ->
+                    versions.mapNotNull { rawVersion ->
+                        MavenVersion(rawVersion.trim()).takeIf { it > currentVersion }
+                    }
+                },
                 failures = emptyList() //TODO: Test failures
             )
         }.toList()

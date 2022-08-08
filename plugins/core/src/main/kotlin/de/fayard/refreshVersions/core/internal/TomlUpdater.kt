@@ -50,7 +50,8 @@ internal class TomlUpdater(
             line.versionRef == version.key
         } ?: return null
 
-        return dependenciesUpdates.firstOrNull { (moduleId) ->
+        return dependenciesUpdates.firstOrNull {
+            val moduleId = it.moduleId
             (moduleId.name == libOrPlugin.name) && (moduleId.group == libOrPlugin.group)
         }
     }
@@ -60,8 +61,9 @@ internal class TomlUpdater(
         update: DependencyWithVersionCandidates?
     ): List<TomlLine> {
         val result = mutableListOf(line)
-        val versions = update?.versionsCandidates ?: return result
         val version = line.version
+        if (update == null) return result
+        val versions = update.versionsCandidates(MavenVersion(version))
 
         val isObject = line.unparsedValue.endsWith("}")
 

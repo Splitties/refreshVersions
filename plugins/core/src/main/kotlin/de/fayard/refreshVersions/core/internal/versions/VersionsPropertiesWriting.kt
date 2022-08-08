@@ -45,7 +45,7 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
                         when (val data = candidatesMap[section.key]) {
                             null -> section.asUnused(isUnused = true)
                             else -> section.copy(
-                                availableUpdates = data.versionsCandidates.map { it.value },
+                                availableUpdates = data.versionsCandidates(Version(section.currentVersion)).map { it.value },
                             ).asUnused(isUnused = false).withFailures(data.failures)
                         }
                     }

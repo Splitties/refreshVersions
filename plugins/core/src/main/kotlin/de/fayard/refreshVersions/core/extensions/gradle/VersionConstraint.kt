@@ -18,3 +18,13 @@ internal fun VersionConstraint.hasDynamicVersion(): Boolean {
     if (requiredVersion.isVersionDynamic().not()) return false
     return true
 }
+
+internal fun VersionConstraint.tryExtractingSimpleVersion(): String? {
+    fun String.isVersionRange(): Boolean = first() in "[]()" && ',' in this || '+' in this
+
+    return sequence {
+        yield(strictVersion)
+        yield(requiredVersion)
+        yield(preferredVersion)
+    }.firstOrNull { it.isNotEmpty() && it.isVersionRange().not() }
+}

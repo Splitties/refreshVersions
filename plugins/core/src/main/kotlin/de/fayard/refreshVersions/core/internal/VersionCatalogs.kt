@@ -16,6 +16,22 @@ object VersionCatalogs {
 
     fun isSupported(): Boolean = GradleVersion.current() >= minimumGradleVersion
 
+    internal fun libraries(versionCatalog: VersionCatalog?): Set<MinimalExternalModuleDependency> {
+        if (versionCatalog == null) return emptySet()
+        val aliases = versionCatalog.libraryAliases
+        return aliases.mapTo(LinkedHashSet(aliases.size)) { alias ->
+            versionCatalog.findLibrary(alias).get().get()
+        }
+    }
+
+    internal fun plugins(versionCatalog: VersionCatalog?): Set<PluginDependencyCompat> {
+        if (versionCatalog == null) return emptySet()
+        val aliases = versionCatalog.pluginAliases
+        return aliases.mapTo(LinkedHashSet(aliases.size)) { alias ->
+            PluginDependencyCompat(versionCatalog.findPlugin(alias).get().get())
+        }
+    }
+
     fun dependencyAliases(versionCatalog: VersionCatalog?): Map<ModuleId.Maven, String> = when {
         FeatureFlag.VERSIONS_CATALOG.isNotEnabled -> emptyMap()
         versionCatalog == null -> emptyMap()

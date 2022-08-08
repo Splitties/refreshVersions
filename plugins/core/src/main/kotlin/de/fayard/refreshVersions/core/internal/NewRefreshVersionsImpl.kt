@@ -18,6 +18,7 @@ import org.gradle.api.artifacts.ArtifactRepositoryContainer
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
+import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.initialization.Settings
@@ -28,7 +29,8 @@ internal suspend fun lookupVersionCandidates(
     project: Project,
     versionMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader,
-    versionsCatalogMapping: Set<ModuleId.Maven>
+    versionsCatalogLibraries: Set<MinimalExternalModuleDependency>,
+    versionsCatalogPlugins: Set<PluginDependencyCompat>
 ): VersionCandidatesLookupResult {
 
     require(project.isRootProject)
@@ -53,7 +55,8 @@ internal suspend fun lookupVersionCandidates(
         },
         versionMap = versionMap,
         versionKeyReader = versionKeyReader,
-        versionsCatalogMapping = versionsCatalogMapping
+        versionsCatalogLibraries = versionsCatalogLibraries,
+        versionsCatalogPlugins = versionsCatalogPlugins
     )
 }
 
@@ -63,22 +66,37 @@ internal suspend fun lookupVersionCandidates(
     lookupSettingsPluginUpdates: suspend (VersionCandidatesResultMode) -> SettingsPluginsUpdatesFinder.UpdatesLookupResult,
     versionMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader,
-    versionsCatalogMapping: Set<ModuleId.Maven>
+    versionsCatalogLibraries: Set<MinimalExternalModuleDependency>,
+    versionsCatalogPlugins: Set<PluginDependencyCompat>
 ): VersionCandidatesLookupResult {
 
     val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
     val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
+    val managedDependencies = mutableListOf<Pair<Dependency, VersionManagementKind.Match>>()
+
     val dependencyFilter: (Dependency) -> Boolean = { dependency ->
-        dependency.isManageableVersion(versionMap, versionKeyReader, versionsCatalogMapping).also { manageable ->
-            if (manageable) return@also
-            if (dependency.version != null) {
-                // null version means it's expected to be added by a BoM or a plugin, so we ignore them.
-                dependenciesWithHardcodedVersions.add(dependency)
+        val versionManagementKind = dependency.versionManagementKind(
+            versionMap = versionMap,
+            versionKeyReader = versionKeyReader,
+            versionsCatalogLibraries = versionsCatalogLibraries,
+            versionsCatalogPlugins = versionsCatalogPlugins
+        )
+        when (versionManagementKind) {
+            is VersionManagementKind.Match -> {
+                managedDependencies.add(dependency to versionManagementKind)
+                true
             }
-            if (dependency is ExternalDependency &&
-                dependency.versionConstraint.hasDynamicVersion()
-            ) {
-                dependenciesWithDynamicVersions.add(dependency)
+            VersionManagementKind.NoMatch -> {
+                if (dependency.version != null) {
+                    // null version means it's expected to be added by a BoM or a plugin, so we ignore them.
+                    dependenciesWithHardcodedVersions.add(dependency)
+                }
+                if (dependency is ExternalDependency &&
+                    dependency.versionConstraint.hasDynamicVersion()
+                ) {
+                    dependenciesWithDynamicVersions.add(dependency)
+                }
+                false
             }
         }
     }
@@ -90,24 +108,36 @@ internal suspend fun lookupVersionCandidates(
         val dependenciesWithVersionCandidatesAsync = dependencyVersionsFetchers(dependencyFilter).groupBy {
             it.moduleId
         }.map { (moduleId: ModuleId, versionFetchers: List<DependencyVersionsFetcher>) ->
-            val propertyName = getVersionPropertyName(moduleId, versionKeyReader)
-            val resolvedVersion = resolveVersion(
-                properties = versionMap,
-                key = propertyName
-            )?.let { Version(it) }
             async {
+                val propertyName = getVersionPropertyName(moduleId, versionKeyReader)
+                val emptyVersion = Version("")
+                val resolvedVersion = resolveVersion(
+                    properties = versionMap,
+                    key = propertyName
+                )?.let { Version(it) } ?: emptyVersion
+                val lowestVersionInCatalog = versionsCatalogLibraries.mapNotNull {
+                    val matches = it.module.group == moduleId.group && it.module.name == it.module.name
+                    when {
+                        matches -> it.versionConstraint.tryExtractingSimpleVersion()?.let { rawVersion ->
+                            Version(rawVersion)
+                        }
+                        else -> null
+                    }
+                }.minOrNull()
+                val lowestUsedVersion = minOf(resolvedVersion, lowestVersionInCatalog ?: resolvedVersion)
                 val (versions, failures) = versionFetchers.getVersionCandidates(
-                    currentVersion = resolvedVersion ?: Version(""),
+                    currentVersion = lowestUsedVersion,
                     resultMode = resultMode
                 )
-                val currentVersion = resolvedVersion ?: versions.latestMostStable()
-                val selection = DependencySelection(moduleId, currentVersion, propertyName)
                 DependencyWithVersionCandidates(
                     moduleId = moduleId,
-                    currentVersion = currentVersion.value,
-                    versionsCandidates = versions.filterNot { version ->
-                        selection.candidate = version
-                        versionRejectionFilter(selection)
+                    currentVersion = lowestUsedVersion.value,
+                    versionsCandidates = { currentVersion ->
+                        val selection = DependencySelection(moduleId, currentVersion, propertyName)
+                        versions.filter { version ->
+                            selection.candidate = version
+                            version > currentVersion && versionRejectionFilter(selection).not()
+                        }
                     },
                     failures = failures
                 )
@@ -117,17 +147,14 @@ internal suspend fun lookupVersionCandidates(
         val settingsPluginsUpdatesAsync = async { lookupSettingsPluginUpdates(resultMode) }
         val gradleUpdatesAsync = async { lookupAvailableGradleVersions() }
 
-        val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
-
-        val dependenciesFromVersionsCatalog: Set<ConfigurationLessDependency> = versionsCatalogMapping.mapTo(
-            destination = mutableSetOf()
-        ) {
-            ConfigurationLessDependency(moduleId = it, version = "_")
-        }
+        val versionsCandidatesResult = dependenciesWithVersionCandidatesAsync.awaitAll().splitForTargets(
+            managedDependencies = managedDependencies
+        )
 
         return@coroutineScope VersionCandidatesLookupResult(
-            dependenciesUpdates = dependenciesWithVersionCandidates,
-            dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions - dependenciesFromVersionsCatalog,
+            dependenciesUpdatesForVersionsProperties = versionsCandidatesResult.forVersionsProperties,
+            dependenciesUpdatesForVersionCatalog = versionsCandidatesResult.forVersionsCatalog,
+            dependenciesWithHardcodedVersions = dependenciesWithHardcodedVersions,
             dependenciesWithDynamicVersions = dependenciesWithDynamicVersions,
             gradleUpdates = gradleUpdatesAsync.await(),
             settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
@@ -135,6 +162,37 @@ internal suspend fun lookupVersionCandidates(
         )
         TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
     }
+}
+
+private class VersionCandidatesResult(
+    val forVersionsProperties: List<DependencyWithVersionCandidates>,
+    val forVersionsCatalog: List<DependencyWithVersionCandidates>,
+)
+
+private fun List<DependencyWithVersionCandidates>.splitForTargets(
+    managedDependencies: MutableList<Pair<Dependency, VersionManagementKind.Match>>
+): VersionCandidatesResult {
+    val forVersionsProperties = mutableListOf<DependencyWithVersionCandidates>()
+    val forVersionCatalog = mutableListOf<DependencyWithVersionCandidates>()
+
+    forEach { dependencyWithVersionCandidates ->
+        managedDependencies.forEach { (dependency, versionManagementKind) ->
+            if (dependency.matches(dependencyWithVersionCandidates.moduleId)) {
+                val targetList = when (versionManagementKind) {
+                    VersionManagementKind.Match.MatchingVersionConstraintInVersionCatalog -> {
+                        forVersionCatalog
+                    }
+                    VersionManagementKind.Match.MatchingPluginVersion -> forVersionsProperties
+                    VersionManagementKind.Match.VersionPlaceholder -> forVersionsProperties
+                }
+                targetList.add(dependencyWithVersionCandidates)
+            }
+        }
+    }
+    return VersionCandidatesResult(
+        forVersionsProperties = forVersionsProperties,
+        forVersionsCatalog = forVersionCatalog
+    )
 }
 
 private suspend fun lookupAvailableGradleVersions(httpClient: OkHttpClient): List<Version> = coroutineScope {

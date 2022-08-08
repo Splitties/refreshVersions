@@ -4,7 +4,8 @@ import de.fayard.refreshVersions.core.Version
 import org.gradle.api.artifacts.Dependency
 
 internal class VersionCandidatesLookupResult(
-    val dependenciesUpdates: List<DependencyWithVersionCandidates>,
+    val dependenciesUpdatesForVersionsProperties: List<DependencyWithVersionCandidates>,
+    val dependenciesUpdatesForVersionCatalog: List<DependencyWithVersionCandidates>,
     val dependenciesWithHardcodedVersions: List<Dependency>,
     val dependenciesWithDynamicVersions: List<Dependency>,
     val gradleUpdates: List<Version>,
