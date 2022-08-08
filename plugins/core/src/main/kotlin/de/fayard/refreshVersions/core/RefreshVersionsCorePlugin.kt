@@ -17,6 +17,8 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
     @InternalRefreshVersionsApi
     companion object {
         const val GROUP = "refreshVersions"
+        const val refreshVersionsUrl = "https://github.com/jmfayard/refreshVersions"
+
         val currentVersion: String by lazy { readCurrentPluginVersion() }
     }
 
@@ -33,6 +35,9 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
                 group = GROUP
                 description = RefreshVersionsTask.DESCRIPTION + " and update $versionsFileName"
                 skipConfigurationCache()
+                if (FeatureFlag.DEPENDENCIES_DOC.isEnabled) {
+                    finalizedBy("")
+                }
             }
 
             project.tasks.register<RefreshVersionsCleanupTask>(RefreshVersionsCleanupTask.TASK_NAME) {

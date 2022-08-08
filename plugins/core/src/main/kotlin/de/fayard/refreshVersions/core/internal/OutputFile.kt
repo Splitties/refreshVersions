@@ -16,6 +16,7 @@ enum class OutputFile(var path: String, var existed: Boolean = false, val altern
     BUILD_SETTINGS_GRADLE("build/settings.gradle"),
     BUILD_SETTINGS_GRADLE_KTS("build/settings.gradle.kts"),
     GRADLE_VERSIONS_CATALOG(LIBS_VERSIONS_TOML),
+    DEPENDENCIES("DEPENDENCIES.md"),
     ;
 
     val file get() = rootDir.resolve(path)

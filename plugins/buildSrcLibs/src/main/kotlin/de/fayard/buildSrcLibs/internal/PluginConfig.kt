@@ -1,6 +1,7 @@
 package de.fayard.buildSrcLibs.internal
 
 import de.fayard.buildSrcLibs.BuildSrcTask
+import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.RefreshVersionsTask
 
 
@@ -8,9 +9,7 @@ import de.fayard.refreshVersions.core.RefreshVersionsTask
 internal object PluginConfig {
 
     /** Documentation **/
-    internal fun issue(number: Int): String = "$refreshVersionsUrl/issues/$number"
-
-    const val refreshVersionsUrl = "https://github.com/jmfayard/refreshVersions"
+    internal fun issue(number: Int): String = "${RefreshVersionsCorePlugin.refreshVersionsUrl}/issues/$number"
 
     val INITIAL_GITIGNORE = """
         |.gradle/
@@ -26,7 +25,7 @@ internal object PluginConfig {
         |    $ ./gradlew ${RefreshVersionsTask.TASK_NAME}
         |And edit the file `versions.properties`
         |
-        |See $refreshVersionsUrl
+        |See ${RefreshVersionsCorePlugin.refreshVersionsUrl}
     """.trimMargin()
 
     //

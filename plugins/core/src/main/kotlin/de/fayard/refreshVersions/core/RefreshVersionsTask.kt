@@ -32,6 +32,7 @@ open class RefreshVersionsTask : DefaultTask() {
     @InternalRefreshVersionsApi
     companion object {
         const val TASK_NAME = "refreshVersions"
+        const val TASK_NAME_refreshDocs = "refreshVersionsDependencyDocs"  // must be defined here because of plugins split-up :(
         const val DESCRIPTION = "Search for new dependencies versions"
     }
 

@@ -193,6 +193,14 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             group = RefreshVersionsCorePlugin.GROUP
             skipConfigurationCache()
         }
+
+        project.tasks.register<RefreshDependenciesDocTask>(
+            name = RefreshDependenciesDocTask.TASK_NAME
+        ) {
+            description = RefreshDependenciesDocTask.DESCRIPTION
+            group = RefreshVersionsCorePlugin.GROUP
+            skipConfigurationCache()
+        }
     }
 
     private fun addDependencyToBuildSrcForGroovyDsl(settings: Settings) {
