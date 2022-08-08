@@ -1,7 +1,7 @@
 package de.fayard.refreshVersions.core.internal
 
 /**
- * The rules are case sensitive.
+ * The rules are case-sensitive.
  */
 @InternalRefreshVersionsApi
 abstract class ArtifactVersionKeyRule protected constructor(
