@@ -4,6 +4,7 @@
 
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
+import de.fayard.refreshVersions.core.DependencyKdoc
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
@@ -74,9 +75,16 @@ object Testing : IsNotADependency {
      */
     val kotest = Kotest
 
-    object Kotest : DependencyGroup("io.kotest") {
-
-
+    object Kotest : DependencyGroup(
+        group = "io.kotest",
+        kdoc = DependencyKdoc(
+            title = "Powerful, elegant and flexible test framework for Kotlin",
+            website = "https://kotest.io/",
+            gitUrl = "https://github.com/kotest/kotest",
+            changelogUrl = "https://github.com/kotest/kotest",
+            description = "Kotest is a flexible and elegant multi-platform test framework for Kotlin with extensive assertions and integrated property testing",
+        ),
+    ) {
         val core = module("kotest-core")
         val property = module("kotest-property")
         val propertyArrow = module("kotest-property-arrow")

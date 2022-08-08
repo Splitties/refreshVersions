@@ -1,6 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyKdoc
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.kotlin.dsl.IsNotADependency
@@ -97,7 +98,15 @@ object Square : IsNotADependency {
      */
     val sqlDelight = SqlDelight
 
-    object SqlDelight : DependencyGroup("com.squareup.sqldelight") {
+    object SqlDelight : DependencyGroup(
+        group = "com.squareup.sqldelight",
+        kdoc = DependencyKdoc(
+            title = "SQLDelight generates typesafe kotlin APIs from your SQL statements.",
+            website = "https://cashapp.github.io/sqldelight/",
+            gitUrl = "https://github.com/cashapp/sqldelight",
+            changelogUrl = "https://cashapp.github.io/sqldelight/changelog/",
+        )
+    ) {
 
         val gradlePlugin = module("gradle-plugin")
 
