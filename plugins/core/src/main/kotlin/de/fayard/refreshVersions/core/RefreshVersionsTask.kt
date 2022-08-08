@@ -56,8 +56,12 @@ open class RefreshVersionsTask : DefaultTask() {
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
 
-        val versionsCatalogMapping: Set<ModuleId.Maven> =
+        val shouldUpdateVersionCatalogs = VersionCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled
+
+
+        val versionsCatalogMapping: Set<ModuleId.Maven> = if (shouldUpdateVersionCatalogs) {
             VersionCatalogs.dependencyAliases(project.getVersionsCatalog()).keys
+        } else emptySet()
 
         runBlocking {
             val lintUpdatingProblemsAsync = async {
@@ -90,7 +94,6 @@ open class RefreshVersionsTask : DefaultTask() {
             }
             OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 
-            val shouldUpdateVersionCatalogs = VersionCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled
             if (shouldUpdateVersionCatalogs) {
                 val libsToml = project.file(LIBS_VERSIONS_TOML)
                 if (libsToml.canRead()) {
