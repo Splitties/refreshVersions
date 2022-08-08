@@ -8,9 +8,8 @@ import org.gradle.api.artifacts.ExternalDependency
 @InternalRefreshVersionsApi
 fun Dependency.hasHardcodedVersion(
     versionMap: Map<String, String>,
-    versionKeyReader: ArtifactVersionKeyReader,
-    versionsCatalogMapping: Set<ModuleId.Maven> = emptySet(),
-): Boolean = isManageableVersion(versionMap, versionKeyReader, versionsCatalogMapping).not()
+    versionKeyReader: ArtifactVersionKeyReader
+): Boolean = isManageableVersion(versionMap, versionKeyReader, emptySet()).not()
 
 @InternalRefreshVersionsApi
 fun Dependency.isManageableVersion(
@@ -31,8 +30,13 @@ fun Dependency.isManageableVersion(
                 else -> false
             }
         }
-        ModuleId.Maven(group ?: "", name) in versionsCatalogMapping &&
-            version.isNullOrBlank().not() -> true
+        hasVersionInVersionCatalog(versionsCatalogMapping) -> true
         else -> false
     }
+}
+
+private fun Dependency.hasVersionInVersionCatalog(
+    versionsCatalogMapping: Set<ModuleId.Maven>
+): Boolean = versionsCatalogMapping.any {
+    it.group == group && it.name == name && version != null
 }
