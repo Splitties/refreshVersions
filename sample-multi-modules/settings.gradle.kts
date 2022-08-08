@@ -1,3 +1,5 @@
+import de.fayard.refreshVersions.core.FeatureFlag
+
 pluginManagement {
     repositories {
         mavenLocal()
@@ -34,6 +36,9 @@ gradleEnterprise {
 
 refreshVersions {
     enableBuildSrcLibs()
+    featureFlags {
+        enable(FeatureFlag.DEPENDENCIES_DOC)
+    }
 }
 
 include("module1")
