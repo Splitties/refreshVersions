@@ -3,16 +3,12 @@ package de.fayard.refreshVersions
 import de.fayard.refreshVersions.core.ModuleId.Maven
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 
-internal data class DependenciesDocGenerator(
-    val mavenDependenciesInBuild: List<Maven>
-) {
+internal object DependenciesDocGenerator {
 
-    internal companion object {
-        fun hardCoded() = listOf(
-            Maven("com.squareup.sqldelight", "coroutines-extensions"),
-            Maven("io.kotest", "kotest-core")
-        )
-    }
+    fun hardCoded() = listOf(
+        Maven("com.squareup.sqldelight", "coroutines-extensions"),
+        Maven("io.kotest", "kotest-core")
+    )
 
     fun generateMarkdown(dependenciesAndDocs: List<DependencyAndDoc>): String {
         return """

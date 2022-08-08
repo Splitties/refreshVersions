@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.RefreshVersionsTask
 import de.fayard.refreshVersions.core.internal.OutputFile
 import org.gradle.api.DefaultTask
@@ -15,15 +16,14 @@ open class RefreshDependenciesDocTask : DefaultTask() {
     @TaskAction
     fun refreshDependenciesDocsTask() {
         println("refreshDependenciesDocsTask")
-        val allbuildDependencies = DependenciesDocGenerator.hardCoded()
-        val generator = DependenciesDocGenerator(allbuildDependencies)
-        val dependenciesAndDocs = generator.dependenciesAndDocs()
+        val allMavenDependencies: List<ModuleId.Maven> = DependenciesDocGenerator.hardCoded()
+        val dependenciesAndDocs: List<DocumentedDependency> = DependenciesDocGenerator.dependenciesAndDocs(allMavenDependencies)
 
-        generator.updateChangeLogsUrlsInFiles(dependenciesAndDocs)
+        DependenciesDocGenerator.updateChangeLogsUrlsInFiles(dependenciesAndDocs)
         OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
         OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
 
-        val markdown = generator.generateMarkdown(dependenciesAndDocs)
+        val markdown = DependenciesDocGenerator.generateMarkdown(dependenciesAndDocs)
         OutputFile.DEPENDENCIES.writeText(markdown)
         OutputFile.DEPENDENCIES.logFileWasModified()
     }
