@@ -35,6 +35,37 @@ internal suspend fun lookupVersionCandidates(
 
     val projects = RefreshVersionsConfigHolder.allProjects(project)
 
+    return lookupVersionCandidates(
+        dependencyVersionsFetchers = { dependencyFilter ->
+            projects.flatMap {
+                it.getDependencyVersionFetchers(httpClient = httpClient, dependencyFilter = dependencyFilter)
+            }.plus(
+                UsedPluginsTracker.read().getDependencyVersionsFetchers(httpClient)
+            ).plus(
+                UsedVersionForTracker.read().getDependencyVersionsFetchers(httpClient)
+            ).toSet()
+        },
+        lookupAvailableGradleVersions = {
+            if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions(httpClient) else emptyList()
+        },
+        lookupSettingsPluginUpdates = { resultMode ->
+            SettingsPluginsUpdatesFinder.getSettingsPluginUpdates(httpClient, resultMode)
+        },
+        versionMap = versionMap,
+        versionKeyReader = versionKeyReader,
+        versionsCatalogMapping = versionsCatalogMapping
+    )
+}
+
+internal suspend fun lookupVersionCandidates(
+    dependencyVersionsFetchers: (dependencyFilter: (Dependency) -> Boolean) -> Set<DependencyVersionsFetcher>,
+    lookupAvailableGradleVersions: suspend () -> List<Version>,
+    lookupSettingsPluginUpdates: suspend (VersionCandidatesResultMode) -> SettingsPluginsUpdatesFinder.UpdatesLookupResult,
+    versionMap: Map<String, String>,
+    versionKeyReader: ArtifactVersionKeyReader,
+    versionsCatalogMapping: Set<ModuleId.Maven>
+): VersionCandidatesLookupResult {
+
     val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
     val dependenciesWithDynamicVersions = mutableListOf<Dependency>()
     val dependencyFilter: (Dependency) -> Boolean = { dependency ->
@@ -51,19 +82,12 @@ internal suspend fun lookupVersionCandidates(
             }
         }
     }
-    val dependencyVersionsFetchers: Set<DependencyVersionsFetcher> = projects.flatMap {
-        it.getDependencyVersionFetchers(httpClient = httpClient, dependencyFilter = dependencyFilter)
-    }.plus(
-        UsedPluginsTracker.read().getDependencyVersionsFetchers(httpClient)
-    ).plus(
-        UsedVersionForTracker.read().getDependencyVersionsFetchers(httpClient)
-    ).toSet()
 
     return coroutineScope {
 
         val resultMode = RefreshVersionsConfigHolder.resultMode
         val versionRejectionFilter = RefreshVersionsConfigHolder.versionRejectionFilter ?: { false }
-        val dependenciesWithVersionCandidatesAsync = dependencyVersionsFetchers.groupBy {
+        val dependenciesWithVersionCandidatesAsync = dependencyVersionsFetchers(dependencyFilter).groupBy {
             it.moduleId
         }.map { (moduleId: ModuleId, versionFetchers: List<DependencyVersionsFetcher>) ->
             val propertyName = getVersionPropertyName(moduleId, versionKeyReader)
@@ -90,17 +114,16 @@ internal suspend fun lookupVersionCandidates(
             }
         }
 
-        val settingsPluginsUpdatesAsync = async {
-            SettingsPluginsUpdatesFinder.getSettingsPluginUpdates(httpClient, resultMode)
-        }
-
-        val gradleUpdatesAsync = async {
-            if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions(httpClient) else emptyList()
-        }
+        val settingsPluginsUpdatesAsync = async { lookupSettingsPluginUpdates(resultMode) }
+        val gradleUpdatesAsync = async { lookupAvailableGradleVersions() }
 
         val dependenciesWithVersionCandidates = dependenciesWithVersionCandidatesAsync.awaitAll()
 
-        val dependenciesFromVersionsCatalog = versionsCatalogMapping.map(ModuleId.Maven::toDependency)
+        val dependenciesFromVersionsCatalog: Set<ConfigurationLessDependency> = versionsCatalogMapping.mapTo(
+            destination = mutableSetOf()
+        ) {
+            ConfigurationLessDependency(moduleId = it, version = "_")
+        }
 
         return@coroutineScope VersionCandidatesLookupResult(
             dependenciesUpdates = dependenciesWithVersionCandidates,
@@ -113,8 +136,6 @@ internal suspend fun lookupVersionCandidates(
         TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
     }
 }
-
-private fun ModuleId.Maven.toDependency() = ConfigurationLessDependency(moduleId = this, version = "_")
 
 private suspend fun lookupAvailableGradleVersions(httpClient: OkHttpClient): List<Version> = coroutineScope {
     val checker = GradleUpdateChecker(httpClient)
