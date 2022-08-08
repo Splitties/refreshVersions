@@ -24,8 +24,11 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         check(project.isRootProject) { "ERROR: de.fayard.refreshVersions.core should not be applied manually" }
-        OutputFile.rootDir = project.rootDir
-        if (project.isBuildSrc.not()) {
+        if (project.isBuildSrc) {
+            OutputFile.rootDir = project.rootDir.absoluteFile.parentFile
+        } else {
+            OutputFile.rootDir = project.rootDir
+
             // In the case where this runs in includedBuilds, the task configuration lambda may (will) run
             // after RefreshVersionsConfigHolder content is cleared (via its ClearStaticStateBuildService),
             // so we get the value before.
