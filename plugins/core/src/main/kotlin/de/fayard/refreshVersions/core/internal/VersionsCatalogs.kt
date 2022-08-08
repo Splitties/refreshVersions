@@ -8,7 +8,7 @@ import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.util.GradleVersion
 
 @InternalRefreshVersionsApi
-object VersionCatalogs {
+object VersionsCatalogs {
 
     const val LIBS_VERSIONS_TOML = "gradle/libs.versions.toml"
 

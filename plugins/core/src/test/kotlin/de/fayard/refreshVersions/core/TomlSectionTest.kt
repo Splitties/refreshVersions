@@ -1,6 +1,6 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.internal.VersionCatalogs
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import io.kotest.matchers.shouldBe
 import kotlin.test.Test
 
@@ -36,6 +36,6 @@ class TomlSectionTest {
         )
 
         val expected = mapOf("root" to a, "versions" to b, "libraries" to c, "bundles" to d)
-        VersionCatalogs.parseTomlInSections(toml) shouldBe expected
+        VersionsCatalogs.parseTomlInSections(toml) shouldBe expected
     }
 }

@@ -7,8 +7,8 @@ import de.fayard.refreshVersions.core.internal.Library
 import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
 import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.UsedPluginsTracker
-import de.fayard.refreshVersions.core.internal.VersionCatalogs
-import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.checkModeAndNames
 import de.fayard.refreshVersions.core.internal.computeAliases
 import de.fayard.refreshVersions.core.internal.findDependencies
@@ -33,12 +33,12 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
 
     @TaskAction
     fun refreshVersionsCatalogAction() {
-        if (VersionCatalogs.isSupported().not()) {
+        if (VersionsCatalogs.isSupported().not()) {
             throw GradleException(
                 """
                 |Gradle versions catalogs are not supported in ${GradleVersion.current()}
                 |Upgrade Gradle with this command
-                |     ./gradlew wrapper --gradle-version ${VersionCatalogs.minimumGradleVersion.version}
+                |     ./gradlew wrapper --gradle-version ${VersionsCatalogs.minimumGradleVersion.version}
             """.trimMargin()
             )
         }
@@ -71,7 +71,7 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         val dependenciesAndNames: Map<Dependency, String> = deps.names.mapKeys { it.key.toDependency() }
 
         val currentText = if (catalog.existed) catalog.readText() else ""
-        val newText = VersionCatalogs.generateVersionsCatalogText(
+        val newText = VersionsCatalogs.generateVersionsCatalogText(
             dependenciesAndNames = dependenciesAndNames,
             currentText = currentText,
             withVersions = withVersions,

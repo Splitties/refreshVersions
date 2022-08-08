@@ -3,7 +3,7 @@ package de.fayard.refreshVersions
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
-import de.fayard.refreshVersions.core.internal.VersionCatalogs
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
@@ -16,7 +16,7 @@ import java.io.File
 open class RefreshVersionsMigrateTask : DefaultTask() {
 
     @Input
-    @Option(option = "toml", description = "Use libraries from ${VersionCatalogs.LIBS_VERSIONS_TOML} before built-in dependency notations")
+    @Option(option = "toml", description = "Use libraries from ${VersionsCatalogs.LIBS_VERSIONS_TOML} before built-in dependency notations")
     var tomlFirst: Boolean = false
 
     @TaskAction
@@ -27,7 +27,7 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
     @TaskAction
     fun migrateBuild() {
         val versionsCatalogMapping: Map<ModuleId.Maven, String> =
-            VersionCatalogs.dependencyAliases(project.getVersionsCatalog())
+            VersionsCatalogs.dependencyAliases(project.getVersionsCatalog())
 
         val builtInDependenciesMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
             .associateShortestByMavenCoordinate()

@@ -1,6 +1,6 @@
 package de.fayard.refreshVersions.core.internal
 
-import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
 import java.io.File
 
 @InternalRefreshVersionsApi

@@ -5,8 +5,8 @@ import de.fayard.refreshVersions.core.internal.ConfigurationLessDependency
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
 import de.fayard.refreshVersions.core.internal.TomlLine
 import de.fayard.refreshVersions.core.internal.TomlSection
-import de.fayard.refreshVersions.core.internal.TomlUpdater
-import de.fayard.refreshVersions.core.internal.VersionCatalogs
+import de.fayard.refreshVersions.core.internal.VersionsCatalogUpdater
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import io.kotest.assertions.asClue
 import io.kotest.matchers.shouldBe
 import org.gradle.api.artifacts.Dependency
@@ -16,28 +16,28 @@ import java.io.File
 import kotlin.test.Test
 import de.fayard.refreshVersions.core.Version as MavenVersion
 
-class TomlUpdaterTest {
+class VersionsCatalogUpdaterTest {
 
     @Test
-    fun `Folder toml-refreshversions - update new versions`() = testTomlUpdater(
+    fun `Folder toml-refreshversions - update new versions`() = testVersionsCatalogUpdater(
         inputFolderName = "toml-refreshversions"
     ) { actual: File -> updateNewVersions(actual) }
 
     @Test
-    fun `Folder toml-cleanup - remove refreshVersions comments`() = testTomlUpdater(
+    fun `Folder toml-cleanup - remove refreshVersions comments`() = testVersionsCatalogUpdater(
         inputFolderName = "toml-cleanup"
     ) { actual: File -> cleanupComments(actual) }
 
-    private fun testTomlUpdater(
+    private fun testVersionsCatalogUpdater(
         inputFolderName: String,
-        action: TomlUpdater.(actual: File) -> Unit
+        action: VersionsCatalogUpdater.(actual: File) -> Unit
     ) {
         val input = FolderInput(inputFolderName)
         sequence {
             yield(input.initial to input.actual)
             yield(input.expected to input.expected) // check idempotence
         }.forEach { (initial, actual) ->
-            TomlUpdater(
+            VersionsCatalogUpdater(
                 file = initial,
                 dependenciesUpdates = dependencyWithVersionCandidates(input.folder)
             ).action(actual)
@@ -52,7 +52,7 @@ class TomlUpdaterTest {
     fun `Folder toml-merge-properties - modify file incrementally`() {
         val input = FolderInput("toml-merge-properties")
 
-        val toml = VersionCatalogs.parseToml(input.initial.readText())
+        val toml = VersionsCatalogs.parseToml(input.initial.readText())
         toml.merge(
             TomlSection.Versions, listOf(
                 TomlLine(TomlSection.Versions, "groovy", "3.0.6"),
@@ -112,7 +112,7 @@ class TomlUpdaterTest {
                 dependency to tomlPropertyName
             }
             val plugins = dependenciesAndNames.keys.filter { it.name.endsWith(".gradle.plugin") }
-            val newText = VersionCatalogs.generateVersionsCatalogText(
+            val newText = VersionsCatalogs.generateVersionsCatalogText(
                 versionsMap = versionsMap,
                 versionKeyReader = versionKeyReader,
                 dependenciesAndNames = dependenciesAndNames,

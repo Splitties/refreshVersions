@@ -4,12 +4,12 @@ import de.fayard.refreshVersions.core.internal.TomlLine.Kind.*
 import java.io.File
 import de.fayard.refreshVersions.core.Version as MavenVersion
 
-internal class TomlUpdater(
+internal class VersionsCatalogUpdater(
     private val fileContent: String,
     private val dependenciesUpdates: List<DependencyWithVersionCandidates>
 ) {
 
-    private val toml = VersionCatalogs.parseToml(fileContent)
+    private val toml = VersionsCatalogs.parseToml(fileContent)
 
     fun updateNewVersions(actual: File) {
         if (fileContent.isBlank()) return
@@ -87,10 +87,10 @@ internal class TomlUpdater(
 }
 
 
-internal fun TomlUpdater(
+internal fun VersionsCatalogUpdater(
     file: File,
     dependenciesUpdates: List<DependencyWithVersionCandidates>
-): TomlUpdater {
+): VersionsCatalogUpdater {
     val text: String = if (file.canRead()) file.readText() else ""
-    return TomlUpdater(text, dependenciesUpdates)
+    return VersionsCatalogUpdater(text, dependenciesUpdates)
 }

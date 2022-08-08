@@ -3,7 +3,7 @@ package de.fayard.refreshVersions.core
 import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
-import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.problems.log
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
@@ -57,15 +57,15 @@ open class RefreshVersionsTask : DefaultTask() {
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
 
-        val shouldUpdateVersionCatalogs = VersionCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled
+        val shouldUpdateVersionCatalogs = VersionsCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled
 
 
         val versionsCatalogLibraries: Set<MinimalExternalModuleDependency>
         val versionsCatalogPlugins: Set<PluginDependencyCompat>
         if (shouldUpdateVersionCatalogs) {
             val versionCatalog = project.getVersionsCatalog()
-            versionsCatalogLibraries = VersionCatalogs.libraries(versionCatalog)
-            versionsCatalogPlugins = VersionCatalogs.plugins(versionCatalog)
+            versionsCatalogLibraries = VersionsCatalogs.libraries(versionCatalog)
+            versionsCatalogPlugins = VersionsCatalogs.plugins(versionCatalog)
         } else {
             versionsCatalogLibraries = emptySet()
             versionsCatalogPlugins = emptySet()
@@ -107,7 +107,7 @@ open class RefreshVersionsTask : DefaultTask() {
             if (shouldUpdateVersionCatalogs) {
                 val libsToml = project.file(LIBS_VERSIONS_TOML)
                 if (libsToml.canRead()) {
-                    TomlUpdater(
+                    VersionsCatalogUpdater(
                         file = libsToml,
                         dependenciesUpdates = result.dependenciesUpdatesForVersionCatalog
                     ).updateNewVersions(libsToml)

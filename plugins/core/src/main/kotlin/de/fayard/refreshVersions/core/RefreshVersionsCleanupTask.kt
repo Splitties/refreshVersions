@@ -3,9 +3,9 @@ package de.fayard.refreshVersions.core
 import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater.removeCommentsAddedByUs
-import de.fayard.refreshVersions.core.internal.TomlUpdater
-import de.fayard.refreshVersions.core.internal.VersionCatalogs
-import de.fayard.refreshVersions.core.internal.VersionCatalogs.LIBS_VERSIONS_TOML
+import de.fayard.refreshVersions.core.internal.VersionsCatalogUpdater
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section
 import de.fayard.refreshVersions.core.internal.versions.readFromFile
@@ -53,9 +53,9 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
 
     @TaskAction
     fun cleanUpVersionsCatalog() {
-        if (VersionCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled) {
+        if (VersionsCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled) {
             val file = File(LIBS_VERSIONS_TOML)
-            TomlUpdater(file, emptyList()).cleanupComments(file)
+            VersionsCatalogUpdater(file, emptyList()).cleanupComments(file)
             OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
         }
     }
