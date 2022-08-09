@@ -48,7 +48,8 @@ fun Settings.bootstrapRefreshVersionsCore(
     versionsPropertiesFile: File = rootDir.resolve("versions.properties"),
     getDependenciesMapping: () -> List<DependencyMapping> = { emptyList() },
     getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() },
-    getRemovedDependencyNotationsReplacementInfo: (() -> RemovedDependencyNotationsReplacementInfo)? = null
+    getRemovedDependencyNotationsReplacementInfo: (() -> RemovedDependencyNotationsReplacementInfo)? = null,
+    versionRejectionFilter: (DependencySelection.() -> Boolean)? = null
 ) {
     null.checkGradleVersionIsSupported()
     require(settings.isBuildSrc.not()) {
@@ -70,7 +71,8 @@ fun Settings.bootstrapRefreshVersionsCore(
         settings = settings,
         artifactVersionKeyRules = artifactVersionKeyRules,
         getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys,
-        versionsPropertiesFile = versionsPropertiesFile
+        versionsPropertiesFile = versionsPropertiesFile,
+        versionRejectionFilter = versionRejectionFilter
     )
     val versionsPropertiesModel = RefreshVersionsConfigHolder.readVersionsPropertiesModel()
     getRemovedDependencyNotationsReplacementInfo?.let {

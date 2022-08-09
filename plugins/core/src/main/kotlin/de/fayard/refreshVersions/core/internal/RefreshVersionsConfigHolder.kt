@@ -88,7 +88,8 @@ object RefreshVersionsConfigHolder {
         settings: Settings,
         artifactVersionKeyRules: List<String>,
         getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String>,
-        versionsPropertiesFile: File
+        versionsPropertiesFile: File,
+        versionRejectionFilter: (DependencySelection.() -> Boolean)?
     ) {
         require(settings.isBuildSrc.not())
         this.settings = settings
@@ -96,6 +97,7 @@ object RefreshVersionsConfigHolder {
         this.versionsPropertiesFile = versionsPropertiesFile.also {
             it.createNewFile() // Creates the file if it doesn't exist yet
         }
+        this.versionRejectionFilter = versionRejectionFilter
         this.artifactVersionKeyRules = artifactVersionKeyRules
         versionKeyReader = ArtifactVersionKeyReader.fromRules(
             filesContent = artifactVersionKeyRules,

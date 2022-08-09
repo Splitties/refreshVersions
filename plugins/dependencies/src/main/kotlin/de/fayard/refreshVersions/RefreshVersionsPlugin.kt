@@ -134,7 +134,8 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                     ?: settings.rootDir.resolve("versions.properties"),
                 getDependenciesMapping = ::getArtifactNameToConstantMapping,
                 getRemovedDependenciesVersionsKeys = ::getRemovedDependenciesVersionsKeys,
-                getRemovedDependencyNotationsReplacementInfo = ::getRemovedDependencyNotationsReplacementInfo
+                getRemovedDependencyNotationsReplacementInfo = ::getRemovedDependencyNotationsReplacementInfo,
+                versionRejectionFilter = extension.versionRejectionFilter
             )
             if (extension.isBuildSrcLibsEnabled) gradle.beforeProject {
                 if (project != project.rootProject) return@beforeProject
