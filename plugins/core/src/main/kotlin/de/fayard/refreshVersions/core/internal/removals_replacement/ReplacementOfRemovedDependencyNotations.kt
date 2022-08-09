@@ -28,6 +28,8 @@ internal fun replaceRemovedDependencyNotationReferencesIfNeeded(
         currentRevision = revisionOfLastRefreshVersionsRun
     )
 
+    if (history.isEmpty()) return
+
     val shortestDependencyMapping: Map<ModuleId.Maven, String> by lazy {
         dependencyMapping.associateShortestByMavenCoordinate()
     }
