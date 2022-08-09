@@ -37,6 +37,8 @@ internal suspend fun lookupVersionCandidates(
 
     val projects = RefreshVersionsConfigHolder.allProjects(project)
 
+    val dependenciesFromVersionFor = UsedVersionForTracker.read()
+
     return lookupVersionCandidates(
         dependencyVersionsFetchers = { dependencyFilter ->
             projects.flatMap {
@@ -44,7 +46,9 @@ internal suspend fun lookupVersionCandidates(
             }.plus(
                 UsedPluginsTracker.read().getDependencyVersionsFetchers(httpClient)
             ).plus(
-                UsedVersionForTracker.read().getDependencyVersionsFetchers(httpClient)
+                dependenciesFromVersionFor.asSequence().onEach { (dependency, _) ->
+                    check(dependencyFilter(dependency)) // Needed because dependencyFilter also tracks dependencies usage.
+                }.getDependencyVersionsFetchers(httpClient)
             ).toSet()
         },
         lookupAvailableGradleVersions = {
@@ -56,7 +60,8 @@ internal suspend fun lookupVersionCandidates(
         versionMap = versionMap,
         versionKeyReader = versionKeyReader,
         versionsCatalogLibraries = versionsCatalogLibraries,
-        versionsCatalogPlugins = versionsCatalogPlugins
+        versionsCatalogPlugins = versionsCatalogPlugins,
+        dependenciesFromVersionFor = dependenciesFromVersionFor.map { (dependency, _) -> dependency }
     )
 }
 
@@ -67,7 +72,8 @@ internal suspend fun lookupVersionCandidates(
     versionMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader,
     versionsCatalogLibraries: Set<MinimalExternalModuleDependency>,
-    versionsCatalogPlugins: Set<PluginDependencyCompat>
+    versionsCatalogPlugins: Set<PluginDependencyCompat>,
+    dependenciesFromVersionFor: List<Dependency>
 ): VersionCandidatesLookupResult {
 
     val dependenciesWithHardcodedVersions = mutableListOf<Dependency>()
@@ -79,7 +85,8 @@ internal suspend fun lookupVersionCandidates(
             versionMap = versionMap,
             versionKeyReader = versionKeyReader,
             versionsCatalogLibraries = versionsCatalogLibraries,
-            versionsCatalogPlugins = versionsCatalogPlugins
+            versionsCatalogPlugins = versionsCatalogPlugins,
+            dependenciesFromVersionFor = dependenciesFromVersionFor
         )
         when (versionManagementKind) {
             is VersionManagementKind.Match -> {
@@ -179,11 +186,8 @@ private fun List<DependencyWithVersionCandidates>.splitForTargets(
         managedDependencies.forEach { (dependency, versionManagementKind) ->
             if (dependency.matches(dependencyWithVersionCandidates.moduleId)) {
                 val targetList = when (versionManagementKind) {
-                    VersionManagementKind.Match.MatchingVersionConstraintInVersionCatalog -> {
-                        forVersionCatalog
-                    }
-                    VersionManagementKind.Match.MatchingPluginVersion -> forVersionsProperties
-                    VersionManagementKind.Match.VersionPlaceholder -> forVersionsProperties
+                    is VersionManagementKind.Match.VersionsCatalog -> forVersionCatalog
+                    is VersionManagementKind.Match.VersionsFile -> forVersionsProperties
                 }
                 targetList.add(dependencyWithVersionCandidates)
             }

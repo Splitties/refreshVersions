@@ -33,11 +33,11 @@ internal object UsedVersionForTracker {
         }
     }
 
-    fun read(): Sequence<Pair<Dependency, ArtifactRepositoryContainer>> {
-        return usedInVersionsFor.asSequence().map {
+    fun read(): List<Pair<Dependency, ArtifactRepositoryContainer>> {
+        return usedInVersionsFor.map {
             ConfigurationLessDependency(
-                it.moduleId,
-                it.version
+                moduleId = it.moduleId,
+                version = it.version
             ) to it.repositories
         }
     }
