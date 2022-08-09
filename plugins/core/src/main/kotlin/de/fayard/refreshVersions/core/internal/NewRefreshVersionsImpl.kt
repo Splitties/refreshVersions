@@ -167,7 +167,7 @@ internal suspend fun lookupVersionCandidates(
             settingsPluginsUpdates = settingsPluginsUpdatesAsync.await().settings,
             buildSrcSettingsPluginsUpdates = settingsPluginsUpdatesAsync.await().buildSrcSettings
         )
-        TODO("Check version candidates for the same key are the same, or warn the user with actionable details")
+        //TODO: Check version candidates for the same key are the same, or warn the user with actionable details.
     }
 }
 
