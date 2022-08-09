@@ -51,8 +51,8 @@ dependencies {
     implementation(Square.moshi.kotlinReflect)
 
     testImplementation(Square.okHttp3.loggingInterceptor)
-    testImplementation(platform(notation = "org.junit:junit-bom:_"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(platform(notation = Testing.junit.bom))
+    testImplementation(Testing.junit.jupiter)
     testImplementation(Testing.kotest.runner.junit5)
     testImplementation(Kotlin.test.annotationsCommon)
     testImplementation(Kotlin.test.junit5)

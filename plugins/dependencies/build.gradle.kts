@@ -43,8 +43,8 @@ publishing {
 dependencies {
     testImplementation(Testing.kotest.runner.junit5)
 
-    testImplementation(platform(notation = "org.junit:junit-bom:_"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(platform(notation = Testing.junit.bom))
+    testImplementation(Testing.junit.jupiter)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
         because("allows tests to run from IDEs that bundle older version of launcher")
     }
