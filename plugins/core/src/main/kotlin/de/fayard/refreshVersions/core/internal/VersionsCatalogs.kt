@@ -153,6 +153,7 @@ object VersionsCatalogs {
         dependencies: List<Dependency>
     ): Map<Dependency, TomlVersionRef?> = dependencies.mapNotNull { dependency ->
         val group = dependency.group ?: return@mapNotNull null
+        if (dependency.version == null) return@mapNotNull null
 
         val name = getVersionPropertyName(ModuleId.Maven(group, dependency.name), versionKeyReader)
 
