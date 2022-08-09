@@ -92,6 +92,7 @@ object RefreshVersionsConfigHolder {
         versionRejectionFilter: (DependencySelection.() -> Boolean)?
     ) {
         require(settings.isBuildSrc.not())
+        resettableDelegates.reset()
         this.settings = settings
 
         this.versionsPropertiesFile = versionsPropertiesFile.also {
