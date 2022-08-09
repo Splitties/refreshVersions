@@ -192,12 +192,18 @@ object VersionsCatalogs {
                 }
             )
         } else {
-            val versionKey = getVersionPropertyName(ModuleId.Maven(group, dependency.name), versionKeyReader)
             val version = when {
                 dependency.version == null -> null
                 withVersions.not() -> "_"
-                versionKey in versionsMap -> versionsMap[versionKey]!!
-                else -> dependency.version
+                else -> when (
+                    val versionKey = getVersionPropertyName(
+                        moduleId = ModuleId.Maven(group, dependency.name),
+                        versionKeyReader = versionKeyReader
+                    )
+                ) {
+                    in versionsMap -> versionsMap[versionKey]!!
+                    else -> dependency.version
+                }
             }
             TomlLine(
                 section = TomlSection.Libraries,
