@@ -8,7 +8,9 @@ import io.kotest.inspectors.forAll
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.shouldBe
 import java.io.File
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 class MigrationTest : StringSpec({
     val testResources: File = File(".").absoluteFile.resolve("src/test/resources")
 
