@@ -25,6 +25,7 @@ refreshVersions {
     featureFlags {
         enable(LIBS)
         disable(GRADLE_UPDATES)
+        disable(VERSIONS_CATALOG)
     }
 
     extraArtifactVersionKeyRules(file("refreshVersions-extra-rules.txt"))
@@ -56,7 +57,9 @@ gradleEnterprise {
     buildScan {
         termsOfServiceUrl = "https://gradle.com/terms-of-service"
         termsOfServiceAgree = "yes"
+        publishOnFailure()
     }
 }
 
 rootProject.name = "sample-kotlin"
+rootProject.buildFileName = "${rootProject.name}.gradle.kts"

@@ -2,14 +2,22 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
+import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.options.Option
 import org.intellij.lang.annotations.Language
 import java.io.File
 
 open class RefreshVersionsMigrateTask : DefaultTask() {
+
+    @Input
+    @Option(option = "toml", description = "Use libraries from ${VersionsCatalogs.LIBS_VERSIONS_TOML} before built-in dependency notations")
+    var tomlFirst: Boolean = false
 
     @TaskAction
     fun refreshVersionsMissingEntries() {
@@ -18,11 +26,26 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 
     @TaskAction
     fun migrateBuild() {
-        val dependencyMapping = getArtifactNameToConstantMapping()
+        val versionsCatalogMapping: Map<ModuleId.Maven, String> =
+            VersionsCatalogs.dependencyAliases(project.getVersionsCatalog())
+
+        val builtInDependenciesMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
             .associateShortestByMavenCoordinate()
 
-        findFilesWithDependencyNotations(project.rootDir).forEach { buildFile ->
+        val dependencyMapping = if (tomlFirst) {
+            builtInDependenciesMapping + versionsCatalogMapping
+        } else {
+            versionsCatalogMapping + builtInDependenciesMapping
+        }
+
+        val findFiles = findFilesWithDependencyNotations(project.rootDir).toSet()
+        findFiles.forEach { buildFile ->
             migrateFileIfNeeded(buildFile, dependencyMapping)
+        }
+        project.allprojects {
+            if (buildFile !in findFiles) {
+                migrateFileIfNeeded(buildFile, dependencyMapping)
+            }
         }
         println()
         println("""
@@ -32,6 +55,7 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
             """.trimIndent())
     }
 }
+
 
 //TODO: Don't replace random versions in build.gradle(.kts) files to avoid breaking plugins.
 //TODO: Don't rely on a regex to extract the version so we detect absolutely any version string literal.
@@ -46,13 +70,11 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 // - Interactive task
 // - separate CLI tool
 // - FIXME/TODO comments insertion
-//TODO: Release BEFORE the 30th of June.
-//TODO: Replace versions with underscore in the Gradle Versions Catalog files.
-
-private val buildFilesNames = setOf("build.gradle", "build.gradle.kts")
 
 internal fun migrateFileIfNeeded(file: File, dependencyMapping: Map<ModuleId.Maven, String>) {
-    val isBuildFile = file.name in buildFilesNames
+    if (file.canRead().not()) return
+
+    val isBuildFile = file.name.removeSuffix(".kts").endsWith(".gradle")
     val oldContent = file.readText()
     val newContent = oldContent.lines()
         .detectPluginsBlock()
@@ -65,9 +87,9 @@ internal fun migrateFileIfNeeded(file: File, dependencyMapping: Map<ModuleId.Mav
     }
 }
 
-private const val ANSI_RESET = "\u001B[0m"
+internal const val ANSI_RESET = "\u001B[0m"
 private const val ANSI_BLUE = "\u001B[34m"
-private const val ANSI_GREEN = "\u001B[36m"
+internal const val ANSI_GREEN = "\u001B[36m"
 
 @Language("RegExp")
 private val versionRegex =
@@ -89,7 +111,7 @@ internal fun withVersionPlaceholder(
     line: String,
     isInsidePluginsBlock: Boolean,
     isBuildFile: Boolean,
-    dependencyMapping: Map<ModuleId.Maven, String> = emptyMap()
+    dependencyMapping: Map<ModuleId.Maven, String> = emptyMap(),
 ): String? = when {
     isInsidePluginsBlock -> line.replace(pluginVersionRegex, "")
     isBuildFile -> when {
@@ -98,7 +120,7 @@ internal fun withVersionPlaceholder(
             if (coordinate in dependencyMapping) {
                 line.replace(mavenCoordinateRegex, dependencyMapping[coordinate]!!)
             } else {
-                line.replace(mavenCoordinateRegex, "\$1_\$2")
+                line.replace(mavenCoordinateRegex, "\$1:_\$2")
             }
         }
         else -> null
@@ -110,12 +132,12 @@ internal fun withVersionPlaceholder(
 
 private fun extractCoordinate(line: String): ModuleId.Maven {
     val coordinate = mavenCoordinateRegex.find(line)!!.value
-    coordinate.replaceAfterLast(':', "").let {
-        return ModuleId.Maven(
-            group = it.substringBefore(':').removePrefix("'").removePrefix("\""),
-            name = it.substringAfter(':').removeSuffix(":")
-        )
-    }
+        .replace("'", "")
+        .replace("\"", "")
+
+    val (group, name) = coordinate.split(":")
+
+    return ModuleId.Maven(group = group, name = name)
 }
 
 private const val mavenChars = "[a-zA-Z0-9_.-]"
@@ -123,15 +145,17 @@ private const val versionChars = "[a-zA-Z0-9_.{}$-]"
 
 @Language("RegExp")
 private val mavenCoordinateRegex =
-    "(['\"]$mavenChars{4,}:$mavenChars{2,}:)(?:_|$versionChars{3,})([\"'])".toRegex()
+    "(['\"]$mavenChars{4,}:$mavenChars{2,})(?:|:_|:$versionChars{3,})([\"'])".toRegex()
 
 internal fun findFilesWithDependencyNotations(fromDir: File): List<File> {
     require(fromDir.isDirectory) { "Expected a directory, got ${fromDir.absolutePath}" }
     val expectedNames = listOf("build", "build.gradle", "deps", "dependencies", "libs", "libraries", "versions")
     val expectedExtensions = listOf("gradle", "kts", "groovy", "kt")
-    return fromDir.walkBottomUp().filter {
-        it.extension in expectedExtensions && it.nameWithoutExtension.toLowerCase() in expectedNames
-    }.toList()
+    return fromDir.walkBottomUp()
+        .onEnter { dir -> dir.name !in listOf("resources", "build") }
+        .filter {
+            it.extension in expectedExtensions && it.nameWithoutExtension.toLowerCase() in expectedNames
+        }.toList()
 }
 
 /**

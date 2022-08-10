@@ -1,0 +1,36 @@
+# See https://docs.gradle.org/current/userguide/platforms.html#sub:conventional-dependencies-toml
+
+## strange key
+key = "some key"
+
+[bundles]
+
+## unused
+groovy = ["groovy-core", "groovy-json", "groovy-nio"]
+
+[plugins]
+
+short-notation = "some.plugin.id:1.4"
+##                   # available:1.5"
+##                   # available:1.6"
+
+# yet another comment
+
+[versions]
+
+# some comment
+
+## warning: Kotlin is better than Groovy
+groovy = "3.0.5"
+### available = "3.1.0"
+### available = "3.2.0"
+
+[libraries]
+
+# another comment
+
+## error: could not resolve this dependency on mavenCentral()
+my-lib = "com.mycompany:mylib:1.4"
+
+my-other-lib2 = { group = "com.mycompany", name = "alternate", version = "1.4" }
+##                                                         # available = "1.5" }

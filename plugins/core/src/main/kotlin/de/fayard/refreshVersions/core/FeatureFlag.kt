@@ -37,7 +37,8 @@ enum class FeatureFlag(private val enabledByDefault: Boolean?) {
 
     GRADLE_UPDATES(enabledByDefault = true),
     LIBS(enabledByDefault = false),
-    NPM_IMPLICIT_RANGE(enabledByDefault = false)
+    NPM_IMPLICIT_RANGE(enabledByDefault = false),
+    VERSIONS_CATALOG(enabledByDefault = true),
     ;
 
     companion object {
@@ -59,4 +60,7 @@ enum class FeatureFlag(private val enabledByDefault: Boolean?) {
             true -> userSettings[this] != false
             null -> false
         }
+
+    internal val isNotEnabled
+        get() = isEnabled.not()
 }

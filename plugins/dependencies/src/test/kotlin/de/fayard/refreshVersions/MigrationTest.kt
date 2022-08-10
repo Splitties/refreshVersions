@@ -8,7 +8,9 @@ import io.kotest.inspectors.forAll
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.shouldBe
 import java.io.File
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 class MigrationTest : StringSpec({
     val testResources: File = File(".").absoluteFile.resolve("src/test/resources")
 
@@ -179,7 +181,8 @@ class MigrationTest : StringSpec({
         val dependencyMapping = mapOf(
             "com.squareup.okio:okio" to "Square.okio",
             "com.squareup.moshi:moshi" to "Square.moshi",
-            "com.google.firebase:firebase-analytics" to "Firebase.analytics"
+            "com.google.firebase:firebase-analytics" to "Firebase.analytics",
+            "org.apache.logging.log4j:log4j-jul" to "libs.log4j.jul",
         ).mapKeys { (key, _) ->
             ModuleId.Maven(
                 group = key.substringBefore(':'),
@@ -190,11 +193,13 @@ class MigrationTest : StringSpec({
             implementation 'com.squareup.okio:okio:1.2'
             implementation("com.squareup.moshi:moshi:_")
             implementation("com.google.firebase:firebase-analytics:3.4")
+            implementation("org.apache.logging.log4j:log4j-jul")
         """.trimIndent().lines()
         val expected = """
             implementation Square.okio
             implementation(Square.moshi)
             implementation(Firebase.analytics)
+            implementation(libs.log4j.jul)
         """.trimIndent().lines()
         input.size shouldBeExactly expected.size
         List(input.size) { input[it] to expected[it] }

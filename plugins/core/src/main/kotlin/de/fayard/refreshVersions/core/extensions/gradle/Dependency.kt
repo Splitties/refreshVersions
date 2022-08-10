@@ -21,3 +21,7 @@ internal fun Dependency.npmModuleId(): ModuleId.Npm {
     val nameWithoutScope = name.substringAfter('/')
     return ModuleId.Npm(scope, nameWithoutScope)
 }
+
+internal fun Dependency.matches(moduleId: ModuleId): Boolean {
+    return moduleId.group == group && moduleId.name == name
+}

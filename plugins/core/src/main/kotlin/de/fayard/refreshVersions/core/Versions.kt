@@ -46,7 +46,7 @@ private fun retrieveVersionFor(
             ).also { version ->
                 UsedVersionForTracker.noteUsedDependencyNotation(
                     project = project,
-                    dependencyNotation = it,
+                    moduleId = moduleId,
                     version = version
                 )
             }

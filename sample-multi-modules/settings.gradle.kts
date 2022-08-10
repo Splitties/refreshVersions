@@ -16,6 +16,12 @@ pluginManagement {
 
 plugins {
     id("com.gradle.enterprise").version("3.8")
+////                        # available:"3.8.1")
+////                        # available:"3.9")
+////                        # available:"3.10")
+////                        # available:"3.10.1")
+////                        # available:"3.10.2")
+////                        # available:"3.10.3")
     id("de.fayard.refreshVersions")
 }
 

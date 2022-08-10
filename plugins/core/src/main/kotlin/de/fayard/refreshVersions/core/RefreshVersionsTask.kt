@@ -1,7 +1,9 @@
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.problems.log
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
@@ -9,6 +11,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
+import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
@@ -46,13 +49,28 @@ open class RefreshVersionsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionRefreshVersions() {
-        OutputFile.checkWhichFilesExist(project.rootDir)
+        OutputFile.checkWhichFilesExist()
 
         if (FeatureFlag.userSettings.isNotEmpty()) {
             logger.lifecycle("Feature flags: " + FeatureFlag.userSettings)
         }
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
+
+        val shouldUpdateVersionCatalogs = VersionsCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled
+
+
+        val versionsCatalogLibraries: Set<MinimalExternalModuleDependency>
+        val versionsCatalogPlugins: Set<PluginDependencyCompat>
+        if (shouldUpdateVersionCatalogs) {
+            val versionCatalog = project.getVersionsCatalog()
+            versionsCatalogLibraries = VersionsCatalogs.libraries(versionCatalog)
+            versionsCatalogPlugins = VersionsCatalogs.plugins(versionCatalog)
+        } else {
+            versionsCatalogLibraries = emptySet()
+            versionsCatalogPlugins = emptySet()
+        }
+
 
         runBlocking {
             val lintUpdatingProblemsAsync = async {
@@ -65,10 +83,12 @@ open class RefreshVersionsTask : DefaultTask() {
                     httpClient = httpClient,
                     project = project,
                     versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
-                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+                    versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader,
+                    versionsCatalogLibraries = versionsCatalogLibraries,
+                    versionsCatalogPlugins = versionsCatalogPlugins
                 )
             }
-            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdates)
+            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdatesForVersionsProperties)
             SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
                 rootProject = project,
                 settingsPluginsUpdates = result.settingsPluginsUpdates,
@@ -83,6 +103,17 @@ open class RefreshVersionsTask : DefaultTask() {
                 logger.log(problem)
             }
             OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
+
+            if (shouldUpdateVersionCatalogs) {
+                val libsToml = project.file(LIBS_VERSIONS_TOML)
+                if (libsToml.canRead()) {
+                    VersionsCatalogUpdater(
+                        file = libsToml,
+                        dependenciesUpdates = result.dependenciesUpdatesForVersionCatalog
+                    ).updateNewVersions(libsToml)
+                    OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
+                }
+            }
         }
     }
 

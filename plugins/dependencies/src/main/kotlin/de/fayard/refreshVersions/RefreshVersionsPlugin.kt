@@ -2,7 +2,9 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
+import de.fayard.refreshVersions.core.internal.skipConfigurationCache
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
@@ -132,7 +134,8 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                     ?: settings.rootDir.resolve("versions.properties"),
                 getDependenciesMapping = ::getArtifactNameToConstantMapping,
                 getRemovedDependenciesVersionsKeys = ::getRemovedDependenciesVersionsKeys,
-                getRemovedDependencyNotationsReplacementInfo = ::getRemovedDependencyNotationsReplacementInfo
+                getRemovedDependencyNotationsReplacementInfo = ::getRemovedDependencyNotationsReplacementInfo,
+                versionRejectionFilter = extension.versionRejectionFilter
             )
             if (extension.isBuildSrcLibsEnabled) gradle.beforeProject {
                 if (project != project.rootProject) return@beforeProject
@@ -166,6 +169,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             description = "Assists migration from hardcoded dependencies to constants of " +
                 "the refreshVersions dependencies plugin"
             finalizedBy("refreshVersions")
+            skipConfigurationCache()
         }
 
         project.tasks.register<DefaultTask>(
@@ -177,12 +181,21 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 println(getArtifactNameToConstantMapping().joinToString("\n"))
             }
         }
+        project.tasks.register<RefreshVersionsCatalogTask>(
+            name = "refreshVersionsCatalog"
+        ) {
+            group = "refreshVersions"
+            description = "Update $LIBS_VERSIONS_TOML"
+            outputs.upToDateWhen { false }
+            skipConfigurationCache()
+        }
 
         project.tasks.register<RefreshVersionsMigrateTask>(
             name = "refreshVersionsMigrate"
         ) {
             group = "refreshVersions"
             description = "Migrate build to refreshVersions"
+            skipConfigurationCache()
         }
     }
 

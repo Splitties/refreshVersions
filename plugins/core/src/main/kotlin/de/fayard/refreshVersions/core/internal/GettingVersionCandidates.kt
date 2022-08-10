@@ -12,8 +12,14 @@ internal suspend fun List<DependencyVersionsFetcher>.getVersionCandidates(
     currentVersion: Version,
     resultMode: VersionCandidatesResultMode
 ): Pair<List<Version>, List<DependencyVersionsFetcher.Result.Failure>> {
-
     val results = getVersionCandidates(versionFilter = { it > currentVersion })
+    return results.sortWith(resultMode)
+}
+
+internal fun List<DependencyVersionsFetcher.Result>.sortWith(
+    resultMode: VersionCandidatesResultMode
+): Pair<List<Version>, List<DependencyVersionsFetcher.Result.Failure>> {
+    val results = this
     val versionsList = results.filterIsInstance<DependencyVersionsFetcher.Result.Success>()
     val failures = results.filterIsInstance<DependencyVersionsFetcher.Result.Failure>()
     return when (resultMode.filterMode) {

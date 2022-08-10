@@ -2,7 +2,6 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.DependencySelection
 import de.fayard.refreshVersions.core.FeatureFlag
-import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.Incubating
@@ -13,6 +12,7 @@ open class RefreshVersionsExtension {
     var versionsPropertiesFile: File? = null
     var extraArtifactVersionKeyRules: List<String> = emptyList()
     internal var isBuildSrcLibsEnabled = false
+    internal var versionRejectionFilter: (DependencySelection.() -> Boolean)? = null
 
     @Incubating
     fun enableBuildSrcLibs() {
@@ -32,14 +32,14 @@ open class RefreshVersionsExtension {
     }
 
     fun rejectVersionIf(filter: Closure<Boolean>) {
-        RefreshVersionsConfigHolder.versionRejectionFilter = {
+        versionRejectionFilter = {
             filter.delegate = this
             filter.call()
         }
     }
 
     fun rejectVersionIf(filter: DependencySelection.() -> Boolean) {
-        RefreshVersionsConfigHolder.versionRejectionFilter = filter
+        versionRejectionFilter = filter
     }
 }
 
