@@ -349,7 +349,7 @@ class BundledDependenciesTest {
         val fileHeader = """
             |# Dependency Notations
             |
-            |[**refreshVersion**](https://github.com/jmfayard/refreshVersions) provide **$size** Dependency notations in **${groups.size}** groups and **${subgroups.size}** subgroups
+            |[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **$size** Dependency Notations in **${groups.size}** groups and **${subgroups.size}** subgroups
             |
             |**Dependency Notations** are maven coordinates of popular libraries,
             |discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
