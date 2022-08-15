@@ -371,13 +371,15 @@ class BundledDependenciesTest {
     }
 
 
-    fun table(rows: Map<String, String>): String {
-        val rows = rows.entries.joinToString("\n") { (title, content) -> "<tr><td><b>$title</b></td><td>$content</td></tr>" }
+    private fun table(rows: Map<String, String>): String {
+        val rowsText = rows.entries.joinToString("\n") { (title, content) ->
+            "<tr><td><b>$title</b></td><td>$content</td></tr>"
+        }
         return """
-                    <table style="width: 100%; table-layout:fixed;">
-                    <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
-                    $rows
-                    </table>
-                """.trimIndent().trim()
+                <table style="width: 100%; table-layout:fixed;">
+                <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
+                $rowsText
+                </table>
+            """.trimIndent().trim()
     }
 }
