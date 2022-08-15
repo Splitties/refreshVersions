@@ -5,7 +5,6 @@ import de.fayard.refreshVersions.BundledDependenciesTest.Files.existingKeys
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.receivedKeys
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.removalsRevisionsHistoryFile
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.removeKeysDescription
-import de.fayard.refreshVersions.BundledDependenciesTest.Files.rulesDir
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.validateMappingDescription
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.validatedDependencyMappingFile
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.versionKeysDescription
