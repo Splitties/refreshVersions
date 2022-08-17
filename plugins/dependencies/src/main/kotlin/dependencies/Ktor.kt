@@ -1,6 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused", "MemberVisibilityCanBePrivate")
 
-import Ktor2.server
+import Ktor.server
 import de.fayard.refreshVersions.core.DependencyGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
@@ -18,7 +18,7 @@ import org.gradle.kotlin.dsl.IsNotADependency
  *
  * TODO: Finish KDoc of undocumented artifact constants. Also link to their KDoc.
  */
-object Ktor2 : DependencyGroup("io.ktor") {
+object Ktor : DependencyGroup("io.ktor") {
 
     val testDispatcher = module("ktor-test-dispatcher")
     val utils = module("ktor-utils")

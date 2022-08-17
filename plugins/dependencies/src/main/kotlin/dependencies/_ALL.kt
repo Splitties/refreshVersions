@@ -17,8 +17,7 @@ import Kodein
 import Koin
 import Kotlin
 import KotlinX
-import Ktor1
-import Ktor2
+import Ktor
 import Orchid
 import ReactiveX
 import RickClephas
@@ -46,8 +45,7 @@ internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     Koin,
     Kotlin,
     KotlinX,
-    Ktor1,
-    Ktor2,
+    Ktor,
     ReactiveX,
     RussHWolf,
     Orchid,
