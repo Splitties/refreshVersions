@@ -96,12 +96,6 @@ object Testing : IsNotADependency {
             val piTest = module("kotest-plugins-pitest")
         }
 
-        @Suppress("DEPRECATION")
-        @Deprecated(
-            message = "Since Kotest 4.5.0 extensions have a separate lifecycle per extension",
-            replaceWith = ReplaceWith("Testing.kotestExtensions")
-        )
-        val extensions = Extensions
 
         val framework = Framework
 
@@ -111,18 +105,27 @@ object Testing : IsNotADependency {
             val datatest = module("kotest-framework-datatest")
         }
 
-        @Deprecated(
-            message = "Since Kotest 4.5.0 extensions have a separate lifecycle per extension",
-            replaceWith = ReplaceWith("Testing.KotestExtensions")
-        )
-        object Extensions : IsNotADependency {
+        val extensions = Extensions
 
+        object Extensions : DependencyGroup("io.kotest.extensions") {
+
+            val pitest = module("kotest-extensions-pitest")
+            val embeddedKafka = module("kotest-extensions-embedded-kafka")
+            val robolectric = module("kotest-extensions-robolectric")
+            val wiremock = module("kotest-extensions-wiremock")
+            val gherkin = module("kotest-extensions-gherkin")
             val allure = module("kotest-extensions-allure")
-            val http = module("kotest-extensions-http")
             val koin = module("kotest-extensions-koin")
             val mockServer = module("kotest-extensions-mockserver")
             val spring = module("kotest-extensions-spring")
             val testContainers = module("kotest-extensions-testcontainers")
+
+            val property = Property
+
+            object Property : DependencyGroup(group = group) {
+                val datetime = module("kotest-property-datetime")
+                val arbs = module("kotest-property-arbs")
+            }
         }
 
         val assertions = Assertions
@@ -140,24 +143,6 @@ object Testing : IsNotADependency {
             val ktor = module("kotest-assertions-ktor")
             val sql = module("kotest-assertions-sql")
         }
-    }
-
-    val kotestExtensions = KotestExtensions
-
-    object KotestExtensions : DependencyGroup("io.kotest.extensions") {
-
-        val pitest = module("kotest-extensions-pitest")
-        val embeddedKafka = module("kotest-extensions-embedded-kafka")
-        val robolectric = module("kotest-extensions-robolectric")
-        val wiremock = module("kotest-extensions-wiremock")
-        val gherkin = module("kotest-extensions-gherkin")
-        val allure = module("kotest-extensions-allure")
-        val koin = module("kotest-extensions-koin")
-        val mockServer = module("kotest-extensions-mockserver")
-        val spring = module("kotest-extensions-spring")
-        val testContainers = module("kotest-extensions-testcontainers")
-        val datetime = module("kotest-property-datetime")
-        val arbs = module("kotest-property-arbs")
     }
 
     /**
@@ -326,109 +311,5 @@ object Testing : IsNotADependency {
 
         val core = module("hamcrest-core")
         val library = module("hamcrest-library")
-    }
-
-    /**
-     * Write JSON unit tests in less code; great for testing REST interfaces
-     *
-     * Official website: [jsonassert.skyscreamer.org](http://jsonassert.skyscreamer.org/)
-     *
-     * [GitHub releases](https://github.com/skyscreamer/JSONassert/releases)
-     *
-     * GitHub page: [skyscreamer/jsonassert](https://github.com/skyscreamer/jsonassert)
-     *
-     * [API reference (JavaDoc)](http://jsonassert.skyscreamer.org/apidocs/index.html)
-     */
-    val jsonAssert = DependencyNotation("org.skyscreamer", "jsonassert")
-
-    /**
-     * [Usage guide](https://github.com/rest-assured/rest-assured/wiki/Usage)
-     *
-     * [Git tags](https://github.com/rest-assured/rest-assured/tags)
-     *
-     * GitHub page: [rest-assured/rest-assured](https://github.com/rest-assured/rest-assured)
-     *
-     * [API reference (JavaDoc)](https://www.javadoc.io/doc/io.rest-assured/rest-assured/latest/index.html)
-     */
-    val restAssured = RestAssured
-
-    object RestAssured : DependencyNotationAndGroup(
-        group = "io.rest-assured",
-        name = "rest-assured",
-        rawRules = """
-            io.rest-assured:*
-               ^^^^^^^^^^^^
-        """.trimIndent()) {
-
-        val json = Json
-
-        object Json : IsNotADependency {
-            val path = module("json-path")
-            val schemaValidator = module("json-schema-validator")
-        }
-
-        val kotlinExtensions = module("kotlin-extensions")
-
-        val spring = Spring
-
-        object Spring : IsNotADependency {
-            val mockMvc = module("spring-mock-mvc")
-            val webTestClient = module("spring-web-test-client")
-        }
-
-        val scalaSupport = module("scala-support")
-        val xmlPath = module("xml-path")
-    }
-
-    /**
-     * Cucumber is a tool that supports [Behaviour-Driven Development (BDD)](https://cucumber.io/docs/bdd/)
-     *
-     * Official website: [cucumber.io](https://cucumber.io/docs/cucumber/)
-     *
-     * [Git tags](https://github.com/cucumber/cucumber-jvm/tags)
-     *
-     * GitHub page: [cucumber/cucumber-jvm](https://github.com/cucumber/cucumber-jvm)
-     */
-    val cucumber = Cucumber
-
-    object Cucumber : DependencyGroup(
-        group = "io.cucumber",
-        rawRules = """
-            io.cucumber:cucumber-*
-               ^^^^^^^^
-        """.trimIndent()
-    ) {
-
-        val java = module("cucumber-java")
-        val java8 = module("cucumber-java8")
-        val junit = module("cucumber-junit")
-    }
-
-    /**
-     * PowerMock is a framework that extends other mock libraries such as EasyMock with more powerful capabilities
-     *
-     * [GitHub releases](https://github.com/powermock/powermock/releases)
-     *
-     * GitHub page: [powermock/powermock](https://github.com/powermock/powermock)
-     */
-    val powermock = Powermock
-
-    object Powermock : DependencyGroup(
-        group = "org.powermock",
-        rawRules = """
-            org.powermock:powermock-*
-                ^^^^^^^^^
-        """.trimIndent()
-    ) {
-
-        val apiMockito = module("powermock-api-mockito2")
-        val classLoader = module("powermock-classloading-xstream")
-
-        val junit4 = Junit4
-
-        object Junit4 : DependencyNotationAndGroup(group = group, name = "powermock-module-junit4") {
-
-            val rule = module("powermock-module-junit4-rule")
-        }
     }
 }

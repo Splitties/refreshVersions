@@ -27,21 +27,3 @@ io.mockk:mockk(-*)
 
 org.mockito:mockito-*
     ^^^^^^^
-
-org.assertj:assertj-*
-            ^^^^^^^.^
-
-org.hamcrest:hamcrest(-*)
-    ^^^^^^^^
-
-org.skyscreamer:jsonassert
-    ^^^^^^^^^^^.^^^^^^^^^^
-
-io.rest-assured:*
-   ^^^^^^^^^^^^
-
-io.cucumber:cucumber-*
-   ^^^^^^^^
-
-org.powermock:powermock-*
-    ^^^^^^^^^

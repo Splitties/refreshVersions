@@ -196,7 +196,6 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
                       ^^^^^^^.^^^^^^^^^
         """.trimIndent()
     ) {
-        const val gradlePlugin = "org.jetbrains.kotlinx.plugin.dataframe"
 
         val dataframe = module("dataframe")
         val core  = module("dataframe-core")

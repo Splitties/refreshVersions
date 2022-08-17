@@ -25,9 +25,6 @@ com.github.chuckerteam.chucker:library(-*)
 io.coil-kt:coil(-*)
    ^^^^^^^
 
-io.cucumber:cucumber-*
-   ^^^^^^^^
-
 org.hamcrest:hamcrest(-*)
     ^^^^^^^^
 
@@ -39,12 +36,6 @@ org.assertj:assertj-*
 
 org.kodein.di:kodein-di(-*)
     ^^^^^^^^^
-
-org.powermock:powermock-*
-    ^^^^^^^^^
-
-io.rest-assured:*
-   ^^^^^^^^^^^^
 
 org.http4k:http4k-connect-*
            ^^^^^^^^^^^^^^
