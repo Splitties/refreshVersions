@@ -2567,7 +2567,7 @@ object AndroidX : IsNotADependency {
             /**
              * JUnit extensions APIs.
              *
-             * @see junitKtx
+             * @see AndroidX.Test.Ext.JUnit.ktx
              */
             val junit = JUnit
 
@@ -2587,7 +2587,7 @@ object AndroidX : IsNotADependency {
             /**
              * [Truth](https://github.com/google/truth) extensions APIs.
              *
-             * @see junitKtx
+             * @see AndroidX.Test.Ext.JUnit.ktx
              */
             val truth = module("truth")
         }
