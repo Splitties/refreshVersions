@@ -11,7 +11,7 @@ import org.gradle.kotlin.dsl.IsNotADependency
  *
  * This structure brings **organized and ready-to-use constants for AndroidX dependencies**. It was made because:
  *
- * - As of 2021 August the 23rd, AndroidX is made of **91 sub-families** of artifacts with their own version.
+ * - As of 2021 August the 23rd, AndroidX is made of **91 subfamilies** of artifacts with their own version.
  * - Back in 2019 November the 18th, AndroidX was made of **187 artifacts**.
  */
 object AndroidX : IsNotADependency {
