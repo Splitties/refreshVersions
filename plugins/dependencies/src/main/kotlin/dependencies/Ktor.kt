@@ -18,7 +18,13 @@ import org.gradle.kotlin.dsl.IsNotADependency
  *
  * TODO: Finish KDoc of undocumented artifact constants. Also link to their KDoc.
  */
-object Ktor : DependencyGroup("io.ktor") {
+object Ktor : DependencyGroup(
+    group = "io.ktor",
+    rawRules = """
+        io.ktor:*
+           ^^^^
+    """.trimIndent()
+) {
 
     val testDispatcher = module("ktor-test-dispatcher")
     val utils = module("ktor-utils")
