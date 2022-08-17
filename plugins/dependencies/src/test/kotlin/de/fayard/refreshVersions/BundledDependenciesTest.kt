@@ -36,7 +36,7 @@ import java.io.File
 
 class BundledDependenciesTest {
 
-    object Files {
+    private object Files {
         val rulesDir = mainResources.resolve("refreshVersions-rules")
 
         // We update the rules from a DependencyGroup(rawRules = "...")
