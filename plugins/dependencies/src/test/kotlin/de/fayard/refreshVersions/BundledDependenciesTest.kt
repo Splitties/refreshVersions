@@ -72,7 +72,7 @@ class BundledDependenciesTest {
         """.trimIndent()  + "\n"
     }
     companion object {
-        fun List<String>.withoutComments(): List<String> =
+        private fun Sequence<String>.withoutComments(): Sequence<String> =
             filterNot { it.startsWith("##") || it.isBlank() }
 
         @JvmStatic // Required for @BeforeAll
@@ -100,18 +100,15 @@ class BundledDependenciesTest {
     @Test
     fun `Removed dependency notations should be tracked`() {
 
-        val existingMapping = Files.validatedMappingFile
-            .readLines()
-            .withoutComments()
-            .mapNotNull { DependencyMapping.fromLine(it) }
-            .toSet()
+        val existingMapping = Files.validatedMappingFile.useLines { lines ->
+            lines.withoutComments().mapNotNull { DependencyMapping.fromLine(it) }.toSet()
+        }
         val receivedMapping = getArtifactNameToConstantMapping().toSet()
 
         if (receivedMapping == existingMapping) return
         if (isInCi()) withClue("Run the tests locally and commit the changes to fix this") {
             fail("There are dependency mapping updates that haven't been committed!")
         }
-
 
         val removals = existingMapping - receivedMapping
         if (removals.isNotEmpty()) {
@@ -168,11 +165,9 @@ class BundledDependenciesTest {
     fun `Version keys should be up to date`() {
         val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
-        val existingMapping = existingKeys
-            .readLines()
-            .withoutComments()
-            .mapNotNull { DependencyMapping.fromLine(it) }
-            .toSet()
+        val existingMapping = existingKeys.useLines { lines ->
+            lines.withoutComments().mapNotNull { DependencyMapping.fromLine(it) }.toSet()
+        }
 
         val receivedMapping = getArtifactNameToConstantMapping().map {
             val key = versionKeyReader.readVersionKey(it.group, it.artifact) ?: "NO-RULE"
@@ -192,10 +187,14 @@ class BundledDependenciesTest {
             }
         } else if (breakingChanges.isNotEmpty()) {
             //TODO: Should we filter out the "NO-RULE" ones?
-            val lines = Files.removedKeys.readLines().withoutComments() + breakingChanges
-            Files.removedKeys.writeText(
-                lines.joinToString(separator = "\n", postfix = "\n", prefix = removeKeysDescription)
-            )
+            val text = Files.removedKeys.useLines { lines ->
+                (lines.withoutComments() + breakingChanges).joinToString(
+                    separator = "\n",
+                    postfix = "\n",
+                    prefix = removeKeysDescription
+                )
+            }
+            Files.removedKeys.writeText(text)
         }
         receivedKeys.copyTo(existingKeys, overwrite = true)
         receivedKeys.deleteOnExit()
@@ -213,9 +212,9 @@ class BundledDependenciesTest {
 
     @Test
     fun `test bundled dependencies exist in standard repositories`() {
-        val validatedDependencyMapping = validatedDependencyMappingFile.readLines()
-            .withoutComments()
-            .toSet()
+        val validatedDependencyMapping = validatedDependencyMappingFile.useLines { lines ->
+            lines.withoutComments().toSet()
+        }
 
         // "standard repositories" are mavenCentral and google
         val reposUrls = listOf(
