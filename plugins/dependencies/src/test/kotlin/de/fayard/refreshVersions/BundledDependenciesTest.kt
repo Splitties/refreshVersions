@@ -133,7 +133,11 @@ class BundledDependenciesTest {
             if (hasWipHeading.not()) {
                 val lastRevision = removalsRevisionsHistory.lineSequence().last {
                     it.startsWith("## Revision ")
-                }.substringAfter("## Revision ").toInt()
+                }.substringAfter(
+                    delimiter = "## Revision "
+                ).substringBefore(
+                    delimiter = ' ' // For cases like revision 11 where we have a comment in parentheses.
+                ).toInt()
                 appendLine("## [WIP] Revision ${lastRevision + 1}")
                 appendLine()
             }
