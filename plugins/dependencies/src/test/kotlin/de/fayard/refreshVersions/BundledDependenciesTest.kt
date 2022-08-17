@@ -111,32 +111,39 @@ class BundledDependenciesTest {
         }
 
         val removals = existingMapping - receivedMapping
-        if (removals.isNotEmpty()) {
-            val removalsRevisionsHistory = removalsRevisionsHistoryFile.readText()
-            val hasWipHeading = removalsRevisionsHistory.lineSequence().any { it.startsWith("## [WIP]") }
-            val extraText = buildString {
-                run {
-                    val lineBreaks = when {
-                        removalsRevisionsHistory.endsWith("\n\n") -> ""
-                        removalsRevisionsHistory.endsWith('\n') -> "\n"
-                        else -> "\n\n"
-                    }
-                    append(lineBreaks)
+        if (removals.isNotEmpty()) updateRemovalsRevisionsHistory(removals)
+
+        Files.validatedMappingFile.writeText(
+            receivedMapping.joinToString(separator = "\n", postfix = "\n", prefix = validateMappingDescription)
+        )
+    }
+
+    private fun updateRemovalsRevisionsHistory(removals: Set<DependencyMapping>) {
+        val removalsRevisionsHistory = removalsRevisionsHistoryFile.readText()
+        val hasWipHeading = removalsRevisionsHistory.lineSequence().any { it.startsWith("## [WIP]") }
+        val extraText = buildString {
+            run {
+                val lineBreaks = when {
+                    removalsRevisionsHistory.endsWith("\n\n") -> ""
+                    removalsRevisionsHistory.endsWith('\n') -> "\n"
+                    else -> "\n\n"
                 }
-                if (hasWipHeading.not()) {
-                    val lastRevision = removalsRevisionsHistory.lineSequence().last {
-                        it.startsWith("## Revision ")
-                    }.substringAfter("## Revision ").substringBefore(" ").toInt()
-                    appendLine("## [WIP] Revision ${lastRevision + 1}")
-                    appendLine()
-                }
-                val removedEntriesText = removals.joinToString(
-                    separator = "\n\n",
-                    postfix = "\n"
-                ) { removedMapping ->
-                    val group = removedMapping.moduleId.group
-                    val name = removedMapping.moduleId.name
-                    """
+                append(lineBreaks)
+            }
+            if (hasWipHeading.not()) {
+                val lastRevision = removalsRevisionsHistory.lineSequence().last {
+                    it.startsWith("## Revision ")
+                }.substringAfter("## Revision ").toInt()
+                appendLine("## [WIP] Revision ${lastRevision + 1}")
+                appendLine()
+            }
+            val removedEntriesText = removals.joinToString(
+                separator = "\n\n",
+                postfix = "\n"
+            ) { removedMapping ->
+                val group = removedMapping.moduleId.group
+                val name = removedMapping.moduleId.name
+                """
                         ~~${removedMapping.constantName}~~
                         **Remove this line when comments are complete.**
                         // TODO: Put guidance comment lines here.
@@ -145,15 +152,10 @@ class BundledDependenciesTest {
                         moved:[<insert replacement group:name here, or remove this line>]
                         id:[$group:$name]
                     """.trimIndent()
-                }
-                append(removedEntriesText)
             }
-            removalsRevisionsHistoryFile.appendText(extraText)
+            append(removedEntriesText)
         }
-
-        Files.validatedMappingFile.writeText(
-            receivedMapping.joinToString(separator = "\n", postfix = "\n", prefix = validateMappingDescription)
-        )
+        removalsRevisionsHistoryFile.appendText(extraText)
     }
 
     @Test
