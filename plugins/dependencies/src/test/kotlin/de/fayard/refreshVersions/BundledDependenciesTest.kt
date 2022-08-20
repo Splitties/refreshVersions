@@ -351,11 +351,11 @@ class BundledDependenciesTest {
             .size
 
         val fileHeader = """
-            |# Dependency Notations
+            |# Built-in Dependency Notations
             |
             |[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **$size** Dependency Notations in **${groups.size}** groups and **${subgroups.size}** subgroups
             |
-            |**Dependency Notations** are maven coordinates of popular libraries,
+            |**Built-in Dependency Notations** are maven coordinates of popular libraries,
             |discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
             |who will be configured in the `versions.properties` file with the latest available version
             |after the first Gradle sync.
