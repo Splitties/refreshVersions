@@ -506,3 +506,309 @@ id:[com.google.modernstorage:modernstorage-mediastore]
 id:[androidx.test.ext:junit-ktx]
 
 ## Revision 11 (empty, used as a marker for migration of versionFor calls in Groovy DSL)
+
+## [WIP] Revision 12
+
+~~Testing.kotest.extensions.allure~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest:kotest-extensions-allure]
+
+~~Testing.kotest.extensions.http~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest:kotest-extensions-http]
+
+~~Testing.kotest.extensions.koin~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest:kotest-extensions-koin]
+
+~~Testing.kotest.extensions.mockServer~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest:kotest-extensions-mockserver]
+
+~~Testing.kotest.extensions.spring~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest:kotest-extensions-spring]
+
+~~Testing.kotest.extensions.testContainers~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest:kotest-extensions-testcontainers]
+
+~~Testing.kotestExtensions.allure~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest.extensions:kotest-extensions-allure]
+
+~~Testing.kotestExtensions.embeddedKafka~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest.extensions:kotest-extensions-embedded-kafka]
+
+~~Testing.kotestExtensions.gherkin~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest.extensions:kotest-extensions-gherkin]
+
+~~Testing.kotestExtensions.koin~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest.extensions:kotest-extensions-koin]
+
+~~Testing.kotestExtensions.mockServer~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest.extensions:kotest-extensions-mockserver]
+
+~~Testing.kotestExtensions.pitest~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest.extensions:kotest-extensions-pitest]
+
+~~Testing.kotestExtensions.robolectric~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest.extensions:kotest-extensions-robolectric]
+
+~~Testing.kotestExtensions.spring~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest.extensions:kotest-extensions-spring]
+
+~~Testing.kotestExtensions.testContainers~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest.extensions:kotest-extensions-testcontainers]
+
+~~Testing.kotestExtensions.wiremock~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.kotest.extensions:kotest-extensions-wiremock]
+
+~~Ktor.features.authJwt~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-auth-jwt]
+
+~~Ktor.features.authLdap~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-auth-ldap]
+
+~~Ktor.features.auth~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-auth]
+
+~~Ktor.client.authBasic~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-client-auth-basic]
+
+~~Ktor.client.okHttp~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-client-okhttp]
+
+~~Ktor.client.websockets~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-client-websockets]
+
+~~Ktor.features.freemarker~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-freemarker]
+
+~~Ktor.features.gson~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-gson]
+
+~~Ktor.features.htmlBuilder~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-html-builder]
+
+~~Ktor.httpCio~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-http-cio]
+
+~~Ktor.http~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-http]
+
+~~Ktor.io~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-io]
+
+~~Ktor.features.jackson~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-jackson]
+
+~~Ktor.features.locations~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-locations]
+
+~~Ktor.features.metrics~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-metrics]
+
+~~Ktor.network.tlsCertificates~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-network-tls-certificates]
+
+~~Ktor.network.tls~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-network-tls]
+
+~~Ktor.network.network~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-network]
+
+~~Ktor.features.serialization~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-serialization]
+
+~~Ktor.features.serverSessions~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-server-sessions]
+
+~~Ktor.features.velocity~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[io.ktor:ktor-velocity]
+
+~~Spring.boms.springclmoud~~
+**Remove this line when comments are complete.**
+// TODO: Put guidance comment lines here.
+// We recommend prefixing them with "FIXME:" if the user should take further action,
+// such as using new maven coordinates, or stop depending on the deprecated library.
+moved:[<insert replacement group:name here, or remove this line>]
+id:[org.springframework.cloud:spring-cloud-dependencies]
