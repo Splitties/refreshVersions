@@ -36,7 +36,7 @@ class RemovedDependencyNotationsHistoryParsingTest {
 
             ~~SomeGroup.three~~
             moved:[com.anothergroup:anothergroup-three]
-            moved:[com.anothergroup:anothergroup-three-plus]
+            extra:[com.anothergroup:anothergroup-three-plus]
             id:[com.somegroup:somegroup-three]
         """.trimIndent()
         val expectedValues = object {
