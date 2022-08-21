@@ -16,7 +16,7 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
     val list = mutableListOf<RemovedDependencyNotation>()
     var dependencyNotation: String? = null
     val commentLines = mutableListOf<String>()
-    var replacementMavenCoordinates: ModuleId.Maven? = null
+    val replacementMavenCoordinates = mutableListOf<ModuleId.Maven>()
     var revisionTracking = 0
     forEach { line ->
         if (line.isEmpty()) return@forEach
@@ -28,7 +28,7 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
             }
             check(dependencyNotation == null)
             check(commentLines.isEmpty())
-            check(replacementMavenCoordinates == null)
+            check(replacementMavenCoordinates.isEmpty())
             return@forEach
         }
         if (revisionTracking <= (currentRevision ?: 0)) {
@@ -38,27 +38,25 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
             line.startsWith("~~") && line.endsWith("~~") -> {
                 check(dependencyNotation == null)
                 check(commentLines.isEmpty())
-                check(replacementMavenCoordinates == null)
+                check(replacementMavenCoordinates.isEmpty())
                 dependencyNotation = line.removeSurrounding("~~").also { check(it.isNotEmpty()) }
             }
             line.startsWith("//") -> {
                 checkNotNull(dependencyNotation)
-                check(replacementMavenCoordinates == null)
+                check(replacementMavenCoordinates.isEmpty())
                 commentLines.add(line)
             }
             line.startsWith("moved:[") -> {
                 checkNotNull(dependencyNotation)
-                replacementMavenCoordinates = line.substringAfter("moved:")
-                    .removeSurrounding("[", "]").let {
-                        require(it.first() != '<' && it.last() != '>' && it.none { c -> c.isWhitespace() }) {
-                            "Expected comma separated group and name within the brackets, " +
-                                "but found extra surrounding or whitespace in the moved clause."
-                        }
-                        ModuleId.Maven(
-                            group = it.substringBefore(':'),
-                            name = it.substringAfter(':')
-                        )
-                    }
+                check(replacementMavenCoordinates.isEmpty()) {
+                    "Use extra in place of moved when there are multiple replacing artifacts."
+                }
+                replacementMavenCoordinates += parseReplacementLine(line, "moved:")
+            }
+            line.startsWith("extra:[") -> {
+                checkNotNull(dependencyNotation)
+                check(replacementMavenCoordinates.isNotEmpty())
+                replacementMavenCoordinates += parseReplacementLine(line, "extra:")
             }
             line.startsWith("id:[") -> {
                 checkNotNull(dependencyNotation)
@@ -72,9 +70,9 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
                             )
                         },
                     leadingCommentLines = commentLines.toList(),
-                    replacementMavenCoordinates = replacementMavenCoordinates
+                    replacementMavenCoordinates = replacementMavenCoordinates.toList()
                 )
-                replacementMavenCoordinates = null
+                replacementMavenCoordinates.clear()
                 dependencyNotation = null
                 commentLines.clear()
                 list.add(newElement)
@@ -82,7 +80,7 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
             line.startsWith("## [WIP]") -> {
                 check(dependencyNotation == null)
                 check(commentLines.isEmpty())
-                check(replacementMavenCoordinates == null)
+                check(replacementMavenCoordinates.isEmpty())
                 return list
             }
             line.startsWith("**") -> throw IllegalArgumentException()
@@ -90,4 +88,18 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
         }
     }
     return list
+}
+
+private fun parseReplacementLine(
+    line: String,
+    prefix: String
+): ModuleId.Maven = line.substringAfter(prefix).removeSurrounding("[", "]").let {
+    require(it.first() != '<' && it.last() != '>' && it.none { c -> c.isWhitespace() }) {
+        "Expected colon separated group and name within the brackets, " +
+            "but found extra surrounding or whitespace in the moved clause."
+    }
+    ModuleId.Maven(
+        group = it.substringBefore(':'),
+        name = it.substringAfter(':')
+    )
 }

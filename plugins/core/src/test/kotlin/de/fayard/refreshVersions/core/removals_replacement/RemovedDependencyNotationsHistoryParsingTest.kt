@@ -33,6 +33,11 @@ class RemovedDependencyNotationsHistoryParsingTest {
             ~~SomeGroup.two~~
             moved:[com.anothergroup:anothergroup-two]
             id:[com.somegroup:somegroup-two]
+
+            ~~SomeGroup.three~~
+            moved:[com.anothergroup:anothergroup-three]
+            moved:[com.anothergroup:anothergroup-three-plus]
+            id:[com.somegroup:somegroup-three]
         """.trimIndent()
         val expectedValues = object {
             val watchFaceClient = RemovedDependencyNotation(
@@ -49,7 +54,7 @@ class RemovedDependencyNotationsHistoryParsingTest {
                 dependencyNotation = "SomeGroup.something",
                 moduleId = ModuleId.Maven(group = "com.somegroup", name = "somegroup-something"),
                 leadingCommentLines = emptyList(),
-                replacementMavenCoordinates = null
+                replacementMavenCoordinates = emptyList()
             )
             val one = RemovedDependencyNotation(
                 dependencyNotation = "SomeGroup.one",
@@ -57,7 +62,7 @@ class RemovedDependencyNotationsHistoryParsingTest {
                 leadingCommentLines = listOf(
                     "//FIXME: Remove dependency now that somegroup one has been deprecated."
                 ),
-                replacementMavenCoordinates = null
+                replacementMavenCoordinates = emptyList()
             )
             val two = RemovedDependencyNotation(
                 dependencyNotation = "SomeGroup.two",
@@ -67,22 +72,34 @@ class RemovedDependencyNotationsHistoryParsingTest {
                     group = "com.anothergroup", name = "anothergroup-two"
                 )
             )
+            val three = RemovedDependencyNotation(
+                dependencyNotation = "SomeGroup.three",
+                moduleId = ModuleId.Maven(group = "com.somegroup", name = "somegroup-three"),
+                leadingCommentLines = emptyList(),
+                replacementMavenCoordinates = listOf(
+                    ModuleId.Maven(group = "com.anothergroup", name = "anothergroup-three"),
+                    ModuleId.Maven(group = "com.anothergroup", name = "anothergroup-three-plus")
+                )
+            )
         }
         listOf(
             0 to listOf(
                 expectedValues.watchFaceClient,
                 expectedValues.something,
                 expectedValues.one,
-                expectedValues.two
+                expectedValues.two,
+                expectedValues.three
             ),
             1 to listOf(
                 expectedValues.something,
                 expectedValues.one,
-                expectedValues.two
+                expectedValues.two,
+                expectedValues.three
             ),
             2 to listOf(
                 expectedValues.one,
-                expectedValues.two
+                expectedValues.two,
+                expectedValues.three
             ),
             3 to emptyList()
         ).forEach { (currentRevision, expectedList) ->
