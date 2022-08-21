@@ -791,6 +791,7 @@ io.ktor:ktor-serialization-kotlinx-cbor
 io.ktor:ktor-serialization-kotlinx-json
 io.ktor:ktor-serialization-kotlinx-tests
 io.ktor:ktor-serialization-kotlinx-xml
+io.ktor:ktor-server
 io.ktor:ktor-server-auth
 io.ktor:ktor-server-auth-jwt
 io.ktor:ktor-server-auth-ldap

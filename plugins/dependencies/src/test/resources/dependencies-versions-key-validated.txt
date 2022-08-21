@@ -834,6 +834,7 @@ io.ktor..ktor-server-tomcat=version.ktor
 io.ktor..ktor-server-velocity=version.ktor
 io.ktor..ktor-server-webjars=version.ktor
 io.ktor..ktor-server-websockets=version.ktor
+io.ktor..ktor-server=version.ktor
 io.ktor..ktor-test-dispatcher=version.ktor
 io.ktor..ktor-utils=version.ktor
 io.ktor..ktor-websocket-serialization=version.ktor

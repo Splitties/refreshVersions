@@ -1,6 +1,6 @@
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1137** Dependency Notations in **25** groups and **228** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1138** Dependency Notations in **25** groups and **228** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -1502,7 +1502,9 @@ version.jetbrains.exposed
 org.jetbrains.exposed:exposed-dao:_" style="text-decoration: underline;" >dao</span>&nbsp; - <span title="JetBrains.exposed.jdbc
 version.jetbrains.exposed
 org.jetbrains.exposed:exposed-jdbc:_" style="text-decoration: underline;" >jdbc</span>&nbsp;</td></tr>
-<tr><td><b>JetBrains.ktor</b></td><td><span title="JetBrains.ktor.testDispatcher
+<tr><td><b>JetBrains.ktor</b></td><td><span title="JetBrains.ktor.server
+version.ktor
+io.ktor:ktor-server:_" style="text-decoration: underline;" >server</span>&nbsp; - <span title="JetBrains.ktor.testDispatcher
 version.ktor
 io.ktor:ktor-test-dispatcher:_" style="text-decoration: underline;" >testDispatcher</span>&nbsp; - <span title="JetBrains.ktor.utils
 version.ktor
@@ -1873,7 +1875,9 @@ org.jetbrains.kotlinx:kotlinx-serialization-protobuf:_" style="text-decoration: 
 
 <table style="width: 100%; table-layout:fixed;">
                 <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
-                <tr><td><b>Ktor</b></td><td><span title="Ktor.testDispatcher
+                <tr><td><b>Ktor</b></td><td><span title="Ktor.server
+version.ktor
+io.ktor:ktor-server:_" style="text-decoration: underline;" >server</span>&nbsp; - <span title="Ktor.testDispatcher
 version.ktor
 io.ktor:ktor-test-dispatcher:_" style="text-decoration: underline;" >testDispatcher</span>&nbsp; - <span title="Ktor.utils
 version.ktor

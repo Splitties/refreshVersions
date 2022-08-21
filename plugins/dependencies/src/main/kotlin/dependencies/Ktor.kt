@@ -2,6 +2,7 @@
 
 import Ktor.server
 import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
@@ -83,7 +84,10 @@ object Ktor : DependencyGroup(
     }
 
     val server = Server
-    object Server : IsNotADependency {
+    object Server : DependencyNotationAndGroup(
+        group = group,
+        name = "ktor-server"
+    ) {
         val auth = module("ktor-server-auth")
         val authJwt = module("ktor-server-auth-jwt")
         val authLdap = module("ktor-server-auth-ldap")
