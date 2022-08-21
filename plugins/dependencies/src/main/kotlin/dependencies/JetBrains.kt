@@ -36,14 +36,5 @@ object JetBrains : IsNotADependency {
      * - [Complete KDoc here](https://api.ktor.io/latest/).
      * - [Website here](https://ktor.io/).
      */
-    val ktor1 = Ktor1
-
-    /**
-     * Ktor: Create asynchronous client and server applications.
-     * Anything from microservices to multiplatform HTTP client apps in a simple way. Open Source, free, and fun!
-     *
-     * - [Complete KDoc here](https://api.ktor.io/latest/).
-     * - [Website here](https://ktor.io/).
-     */
-    val ktor2 = Ktor2
+    val ktor = Ktor
 }

@@ -5,7 +5,6 @@ import de.fayard.refreshVersions.BundledDependenciesTest.Files.existingKeys
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.receivedKeys
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.removalsRevisionsHistoryFile
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.removeKeysDescription
-import de.fayard.refreshVersions.BundledDependenciesTest.Files.rulesDir
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.validateMappingDescription
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.validatedDependencyMappingFile
 import de.fayard.refreshVersions.BundledDependenciesTest.Files.versionKeysDescription
@@ -37,7 +36,7 @@ import java.io.File
 
 class BundledDependenciesTest {
 
-    object Files {
+    private object Files {
         val rulesDir = mainResources.resolve("refreshVersions-rules")
 
         // We update the rules from a DependencyGroup(rawRules = "...")
@@ -73,7 +72,7 @@ class BundledDependenciesTest {
         """.trimIndent()  + "\n"
     }
     companion object {
-        fun List<String>.withoutComments(): List<String> =
+        private fun Sequence<String>.withoutComments(): Sequence<String> =
             filterNot { it.startsWith("##") || it.isBlank() }
 
         @JvmStatic // Required for @BeforeAll
@@ -101,11 +100,9 @@ class BundledDependenciesTest {
     @Test
     fun `Removed dependency notations should be tracked`() {
 
-        val existingMapping = Files.validatedMappingFile
-            .readLines()
-            .withoutComments()
-            .mapNotNull { DependencyMapping.fromLine(it) }
-            .toSet()
+        val existingMapping = Files.validatedMappingFile.useLines { lines ->
+            lines.withoutComments().mapNotNull { DependencyMapping.fromLine(it) }.toSet()
+        }
         val receivedMapping = getArtifactNameToConstantMapping().toSet()
 
         if (receivedMapping == existingMapping) return
@@ -113,34 +110,44 @@ class BundledDependenciesTest {
             fail("There are dependency mapping updates that haven't been committed!")
         }
 
-
         val removals = existingMapping - receivedMapping
-        if (removals.isNotEmpty()) {
-            val removalsRevisionsHistory = removalsRevisionsHistoryFile.readText()
-            val hasWipHeading = removalsRevisionsHistory.lineSequence().any { it.startsWith("## [WIP]") }
-            val extraText = buildString {
-                run {
-                    val lineBreaks = when {
-                        removalsRevisionsHistory.endsWith("\n\n") -> ""
-                        removalsRevisionsHistory.endsWith('\n') -> "\n"
-                        else -> "\n\n"
-                    }
-                    append(lineBreaks)
+        if (removals.isNotEmpty()) updateRemovalsRevisionsHistory(removals)
+
+        Files.validatedMappingFile.writeText(
+            receivedMapping.joinToString(separator = "\n", postfix = "\n", prefix = validateMappingDescription)
+        )
+    }
+
+    private fun updateRemovalsRevisionsHistory(removals: Set<DependencyMapping>) {
+        val removalsRevisionsHistory = removalsRevisionsHistoryFile.readText()
+        val hasWipHeading = removalsRevisionsHistory.lineSequence().any { it.startsWith("## [WIP]") }
+        val extraText = buildString {
+            run {
+                val lineBreaks = when {
+                    removalsRevisionsHistory.endsWith("\n\n") -> ""
+                    removalsRevisionsHistory.endsWith('\n') -> "\n"
+                    else -> "\n\n"
                 }
-                if (hasWipHeading.not()) {
-                    val lastRevision = removalsRevisionsHistory.lineSequence().last {
-                        it.startsWith("## Revision ")
-                    }.substringAfter("## Revision ").substringBefore(" ").toInt()
-                    appendLine("## [WIP] Revision ${lastRevision + 1}")
-                    appendLine()
-                }
-                val removedEntriesText = removals.joinToString(
-                    separator = "\n\n",
-                    postfix = "\n"
-                ) { removedMapping ->
-                    val group = removedMapping.moduleId.group
-                    val name = removedMapping.moduleId.name
-                    """
+                append(lineBreaks)
+            }
+            if (hasWipHeading.not()) {
+                val lastRevision = removalsRevisionsHistory.lineSequence().last {
+                    it.startsWith("## Revision ")
+                }.substringAfter(
+                    delimiter = "## Revision "
+                ).substringBefore(
+                    delimiter = ' ' // For cases like revision 11 where we have a comment in parentheses.
+                ).toInt()
+                appendLine("## [WIP] Revision ${lastRevision + 1}")
+                appendLine()
+            }
+            val removedEntriesText = removals.joinToString(
+                separator = "\n\n",
+                postfix = "\n"
+            ) { removedMapping ->
+                val group = removedMapping.moduleId.group
+                val name = removedMapping.moduleId.name
+                """
                         ~~${removedMapping.constantName}~~
                         **Remove this line when comments are complete.**
                         // TODO: Put guidance comment lines here.
@@ -149,15 +156,10 @@ class BundledDependenciesTest {
                         moved:[<insert replacement group:name here, or remove this line>]
                         id:[$group:$name]
                     """.trimIndent()
-                }
-                append(removedEntriesText)
             }
-            removalsRevisionsHistoryFile.appendText(extraText)
+            append(removedEntriesText)
         }
-
-        Files.validatedMappingFile.writeText(
-            receivedMapping.joinToString(separator = "\n", postfix = "\n", prefix = validateMappingDescription)
-        )
+        removalsRevisionsHistoryFile.appendText(extraText)
     }
 
     @Test
@@ -169,11 +171,9 @@ class BundledDependenciesTest {
     fun `Version keys should be up to date`() {
         val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
-        val existingMapping = existingKeys
-            .readLines()
-            .withoutComments()
-            .mapNotNull { DependencyMapping.fromLine(it) }
-            .toSet()
+        val existingMapping = existingKeys.useLines { lines ->
+            lines.withoutComments().mapNotNull { DependencyMapping.fromLine(it) }.toSet()
+        }
 
         val receivedMapping = getArtifactNameToConstantMapping().map {
             val key = versionKeyReader.readVersionKey(it.group, it.artifact) ?: "NO-RULE"
@@ -193,10 +193,14 @@ class BundledDependenciesTest {
             }
         } else if (breakingChanges.isNotEmpty()) {
             //TODO: Should we filter out the "NO-RULE" ones?
-            val lines = Files.removedKeys.readLines().withoutComments() + breakingChanges
-            Files.removedKeys.writeText(
-                lines.joinToString(separator = "\n", postfix = "\n", prefix = removeKeysDescription)
-            )
+            val text = Files.removedKeys.useLines { lines ->
+                (lines.withoutComments() + breakingChanges).joinToString(
+                    separator = "\n",
+                    postfix = "\n",
+                    prefix = removeKeysDescription
+                )
+            }
+            Files.removedKeys.writeText(text)
         }
         receivedKeys.copyTo(existingKeys, overwrite = true)
         receivedKeys.deleteOnExit()
@@ -214,9 +218,9 @@ class BundledDependenciesTest {
 
     @Test
     fun `test bundled dependencies exist in standard repositories`() {
-        val validatedDependencyMapping = validatedDependencyMappingFile.readLines()
-            .withoutComments()
-            .toSet()
+        val validatedDependencyMapping = validatedDependencyMappingFile.useLines { lines ->
+            lines.withoutComments().toSet()
+        }
 
         // "standard repositories" are mavenCentral and google
         val reposUrls = listOf(
@@ -347,11 +351,11 @@ class BundledDependenciesTest {
             .size
 
         val fileHeader = """
-            |# Dependency Notations
+            |# Built-in Dependency Notations
             |
-            |[**refreshVersion**](https://github.com/jmfayard/refreshVersions) provide **$size** Dependency notations in **${groups.size}** groups and **${subgroups.size}** subgroups
+            |[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **$size** Dependency Notations in **${groups.size}** groups and **${subgroups.size}** subgroups
             |
-            |**Dependency Notations** are maven coordinates of popular libraries,
+            |**Built-in Dependency Notations** are maven coordinates of popular libraries,
             |discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
             |who will be configured in the `versions.properties` file with the latest available version
             |after the first Gradle sync.
@@ -371,13 +375,15 @@ class BundledDependenciesTest {
     }
 
 
-    fun table(rows: Map<String, String>): String {
-        val rows = rows.entries.joinToString("\n") { (title, content) -> "<tr><td><b>$title</b></td><td>$content</td></tr>" }
+    private fun table(rows: Map<String, String>): String {
+        val rowsText = rows.entries.joinToString("\n") { (title, content) ->
+            "<tr><td><b>$title</b></td><td>$content</td></tr>"
+        }
         return """
-                    <table style="width: 100%; table-layout:fixed;">
-                    <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
-                    $rows
-                    </table>
-                """.trimIndent().trim()
+                <table style="width: 100%; table-layout:fixed;">
+                <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
+                $rowsText
+                </table>
+            """.trimIndent().trim()
     }
 }

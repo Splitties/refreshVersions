@@ -1,7 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
@@ -196,7 +195,6 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
                       ^^^^^^^.^^^^^^^^^
         """.trimIndent()
     ) {
-        const val gradlePlugin = "org.jetbrains.kotlinx.plugin.dataframe"
 
         val dataframe = module("dataframe")
         val core  = module("dataframe-core")

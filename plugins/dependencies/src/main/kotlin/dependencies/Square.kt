@@ -42,20 +42,20 @@ object Square : IsNotADependency {
         val bom = module("okhttp-bom", isBom = true)
         val okHttp = module("okhttp")
 
-        // Added in OkHttp 5
+        /** Added in OkHttp 5 */
         val android = module("okhttp-android")
         val brotli = module("okhttp-brotli")
-        // Added in OkHttp 5
+        /** Added in OkHttp 5 */
         val coroutines = module("okhttp-coroutines")
         val dnsOverHttps = module("okhttp-dnsoverhttps")
         val loggingInterceptor = module("logging-interceptor")
-        // Deprecated in OkHttp 5
+        /** Deprecated in OkHttp 5 */
         val mockWebServer = module("mockwebserver")
-        // Added in OkHttp 5
+        /** Added in OkHttp 5 */
         val mockWebServer3 = module("mockwebserver3")
-        // Added in OkHttp 5
+        /** Added in OkHttp 5 */
         val mockWebServer3Junit4 = module("mockwebserver3-junit4")
-        // Added in OkHttp 5
+        /** Added in OkHttp 5 */
         val mockWebServer3Junit5 = module("mockwebserver3-junit5")
         val sse = module("okhttp-sse")
         val tls = module("okhttp-tls")

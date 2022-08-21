@@ -84,7 +84,9 @@ open class RefreshVersionsPlugin : Plugin<Any> {
         return getBundledResourceAsStream("removed-dependencies-versions-keys.txt")
             ?.bufferedReader()
             ?.useLines { sequence ->
-                sequence.filter { it.isNotEmpty() }.associate {
+                sequence.filterNot {
+                    it.startsWith("##") // Header/comment lines
+                }.filter { it.isNotEmpty() }.associate {
                     val groupNameSeparator = ".."
                     val group = it.substringBefore(groupNameSeparator)
                     val postGroupPart = it.substring(startIndex = group.length + groupNameSeparator.length)

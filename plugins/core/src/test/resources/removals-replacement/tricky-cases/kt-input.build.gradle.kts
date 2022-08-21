@@ -8,4 +8,5 @@ dependencies {
     implementation(SomeGroup.subGroup.artifact1)
     implementation(SomeGroup.subGroup.artifact1.artifact3)
     implementation(SomeGroup.subGroup.artifact2)
+    implementation(Ktor.features.gson)
 }

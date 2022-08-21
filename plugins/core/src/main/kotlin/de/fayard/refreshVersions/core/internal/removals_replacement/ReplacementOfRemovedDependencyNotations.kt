@@ -135,19 +135,25 @@ internal fun List<RemovedDependencyNotation>.replaceRemovedDependencyNotationRef
             val hasCallOnTheDependencyNotation = endOfPreviousLine.trimStart().firstOrNull().let {
                 it == '.' || it == '('
             }
-            removedDependencyNotation.replacementMavenCoordinates?.let { moduleId ->
+            removedDependencyNotation.replacementMavenCoordinates.forEachReversedWithIndex { index, moduleId ->
                 val insertionIndex = indexOf('\n', startIndex = range.last).let {
                     if (it == -1) size else it + 1
                 }
                 val comment = buildString comment@{
                     val commentStart = "//"
-                    val prefix = "moved:"
                     append(commentStart)
-                    val dpdcNotationOffsetFromLineStart = range.first - lineStartIndex
-                    (dpdcNotationOffsetFromLineStart - (commentStart.length + prefix.length)).coerceAtLeast(0).let {
-                        append(" ".repeat(it))
+                    if (index == 0) {
+                        val prefix = "moved:"
+                        val dpdcNotationOffsetFromLineStart = range.first - lineStartIndex
+                        (dpdcNotationOffsetFromLineStart - (commentStart.length + prefix.length)).coerceAtLeast(0).let {
+                            append(" ".repeat(it))
+                        }
+                        append(prefix)
+                    } else {
+                        val preDependencyNotationText = gradleBuildFileContent.substring(lineStartIndex, range.first)
+                        append(preDependencyNotationText)
                     }
-                    append(prefix)
+
                     val dependencyNotation = moduleId.dependencyNotation(
                         mapping = shortestDependencyMapping(),
                         ensureWrappedInParsedDependencyNotation = hasCallOnTheDependencyNotation
