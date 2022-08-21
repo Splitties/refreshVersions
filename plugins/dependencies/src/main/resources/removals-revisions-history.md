@@ -638,171 +638,98 @@ moved:[<insert replacement group:name here, or remove this line>]
 id:[io.kotest.extensions:kotest-extensions-wiremock]
 
 ~~Ktor.features.authJwt~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-auth-jwt]
 id:[io.ktor:ktor-auth-jwt]
 
 ~~Ktor.features.authLdap~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-auth-ldap]
 id:[io.ktor:ktor-auth-ldap]
 
 ~~Ktor.features.auth~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-auth]
 id:[io.ktor:ktor-auth]
 
 ~~Ktor.client.authBasic~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-client-auth]
 id:[io.ktor:ktor-client-auth-basic]
 
 ~~Ktor.client.okHttp~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.ktor:ktor-client-okhttp]
 
 ~~Ktor.client.websockets~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-websockets]
 id:[io.ktor:ktor-client-websockets]
 
 ~~Ktor.features.freemarker~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-freemarker]
 id:[io.ktor:ktor-freemarker]
 
 ~~Ktor.features.gson~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+// TODO: Move to the 2 artifacts below (currently commented-out).
+moved:[io.ktor:ktor-serialization-gson]
+extra:[io.ktor:ktor-server-content-negotiation]
 id:[io.ktor:ktor-gson]
 
 ~~Ktor.features.htmlBuilder~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-html-builder]
 id:[io.ktor:ktor-html-builder]
 
 ~~Ktor.httpCio~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.ktor:ktor-http-cio]
 
 ~~Ktor.http~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.ktor:ktor-http]
 
 ~~Ktor.io~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.ktor:ktor-io]
 
 ~~Ktor.features.jackson~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+// TODO: Move to the 2 artifacts below (currently commented-out).
+moved:[io.ktor:ktor-serialization-jackson]
+extra:[io.ktor:ktor-server-content-negotiation]
 id:[io.ktor:ktor-jackson]
 
 ~~Ktor.features.locations~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-locations]
 id:[io.ktor:ktor-locations]
 
 ~~Ktor.features.metrics~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-metrics]
 id:[io.ktor:ktor-metrics]
 
 ~~Ktor.network.tlsCertificates~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.ktor:ktor-network-tls-certificates]
 
 ~~Ktor.network.tls~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.ktor:ktor-network-tls]
 
 ~~Ktor.network.network~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.ktor:ktor-network]
 
 ~~Ktor.features.serialization~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+// TODO: Move to the 2 artifacts below (currently commented-out).
+moved:[io.ktor:ktor-serialization-kotlinx-json]
+extra:[io.ktor:ktor-server-content-negotiation]
 id:[io.ktor:ktor-serialization]
 
 ~~Ktor.features.serverSessions~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.ktor:ktor-server-sessions]
 
 ~~Ktor.features.velocity~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-velocity]
 id:[io.ktor:ktor-velocity]
 
 ~~Spring.boms.springclmoud~~
