@@ -49,14 +49,18 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
             line.startsWith("moved:[") -> {
                 checkNotNull(dependencyNotation)
                 check(replacementMavenCoordinates.isEmpty()) {
-                    "Use extra in place of moved when there are multiple replacing artifacts."
+                    "Use `extra:` in place of moved when there are multiple replacing artifacts."
                 }
                 replacementMavenCoordinates += parseReplacementLine(line, "moved:")
             }
             line.startsWith("extra:[") -> {
                 checkNotNull(dependencyNotation)
-                check(replacementMavenCoordinates.isNotEmpty())
-                replacementMavenCoordinates += parseReplacementLine(line, "extra:")
+                check(replacementMavenCoordinates.isNotEmpty()) {
+                    "`extra:` is meant to be used after `moved:` for extra replacement dependency notations."
+                }
+                val coordinates = parseReplacementLine(line, "extra:")
+                check(coordinates !in replacementMavenCoordinates)
+                replacementMavenCoordinates += coordinates
             }
             line.startsWith("id:[") -> {
                 checkNotNull(dependencyNotation)
