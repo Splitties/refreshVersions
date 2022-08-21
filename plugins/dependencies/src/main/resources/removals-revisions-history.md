@@ -733,9 +733,4 @@ moved:[io.ktor:ktor-server-velocity]
 id:[io.ktor:ktor-velocity]
 
 ~~Spring.boms.springclmoud~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[org.springframework.cloud:spring-cloud-dependencies]
