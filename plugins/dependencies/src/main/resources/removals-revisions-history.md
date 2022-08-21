@@ -507,7 +507,7 @@ id:[androidx.test.ext:junit-ktx]
 
 ## Revision 11 (empty, used as a marker for migration of versionFor calls in Groovy DSL)
 
-## [WIP] Revision 12
+## Revision 12
 
 ~~Testing.kotest.extensions.allure~~
 // TODO: Use new artifact as group changed.
