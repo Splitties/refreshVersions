@@ -510,131 +510,62 @@ id:[androidx.test.ext:junit-ktx]
 ## [WIP] Revision 12
 
 ~~Testing.kotest.extensions.allure~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Use new artifact as group changed.
+moved:[io.kotest.extensions:kotest-extensions-allure]
 id:[io.kotest:kotest-extensions-allure]
 
 ~~Testing.kotest.extensions.http~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Stop using this undocumented artifact.
 id:[io.kotest:kotest-extensions-http]
 
 ~~Testing.kotest.extensions.koin~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Use new artifact as group changed.
+moved:[io.kotest.extensions:kotest-extensions-koin]
 id:[io.kotest:kotest-extensions-koin]
 
 ~~Testing.kotest.extensions.mockServer~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Use new artifact as group changed.
+moved:[io.kotest.extensions:kotest-extensions-mockserver]
 id:[io.kotest:kotest-extensions-mockserver]
 
 ~~Testing.kotest.extensions.spring~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Use new artifact as group changed.
+moved:[io.kotest.extensions:kotest-extensions-spring]
 id:[io.kotest:kotest-extensions-spring]
 
 ~~Testing.kotest.extensions.testContainers~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
+// TODO: Use new artifact as group changed.
+moved:[io.kotest.extensions:kotest-extensions-testcontainers]
 id:[io.kotest:kotest-extensions-testcontainers]
 
 ~~Testing.kotestExtensions.allure~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.kotest.extensions:kotest-extensions-allure]
 
 ~~Testing.kotestExtensions.embeddedKafka~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.kotest.extensions:kotest-extensions-embedded-kafka]
 
 ~~Testing.kotestExtensions.gherkin~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.kotest.extensions:kotest-extensions-gherkin]
 
 ~~Testing.kotestExtensions.koin~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.kotest.extensions:kotest-extensions-koin]
 
 ~~Testing.kotestExtensions.mockServer~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.kotest.extensions:kotest-extensions-mockserver]
 
 ~~Testing.kotestExtensions.pitest~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.kotest.extensions:kotest-extensions-pitest]
 
 ~~Testing.kotestExtensions.robolectric~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.kotest.extensions:kotest-extensions-robolectric]
 
 ~~Testing.kotestExtensions.spring~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.kotest.extensions:kotest-extensions-spring]
 
 ~~Testing.kotestExtensions.testContainers~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.kotest.extensions:kotest-extensions-testcontainers]
 
 ~~Testing.kotestExtensions.wiremock~~
-**Remove this line when comments are complete.**
-// TODO: Put guidance comment lines here.
-// We recommend prefixing them with "FIXME:" if the user should take further action,
-// such as using new maven coordinates, or stop depending on the deprecated library.
-moved:[<insert replacement group:name here, or remove this line>]
 id:[io.kotest.extensions:kotest-extensions-wiremock]
 
 ~~Ktor.features.authJwt~~
