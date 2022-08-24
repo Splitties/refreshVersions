@@ -34,13 +34,13 @@ internal class VersionsCatalogUpdater(
             Ignore, LibsUnderscore, LibsVersionRef, PluginVersionRef -> listOf(line)
             Deletable -> emptyList()
             Version -> {
-                linesForUpdate(line, findLineReferencing(line))
+                linesForUpdates(line, findLineReferencing(line))
             }
             Libs, Plugin -> {
                 val updates = dependenciesUpdates.firstOrNull {
                     it.moduleId.name == line.name && it.moduleId.group == line.group
                 }
-                linesForUpdate(line, updates)
+                linesForUpdates(line, updates)
             }
         }
     }
@@ -56,39 +56,54 @@ internal class VersionsCatalogUpdater(
         }
     }
 
-    private fun linesForUpdate(
-        line: TomlLine,
-        update: DependencyWithVersionCandidates?
+    private fun linesForUpdates(
+        initialLine: TomlLine,
+        versionCandidates: DependencyWithVersionCandidates?
     ): List<TomlLine> {
-        val result = mutableListOf(line)
-        val currentVersion = line.version ?: return result
-        if (update == null) return result
-        val availableUpdates = update.versionsCandidates(MavenVersion(currentVersion))
+        val currentVersion = initialLine.version ?: return listOf(initialLine)
+        if (versionCandidates == null) return listOf(initialLine)
+        val availableUpdates = versionCandidates.versionsCandidates(MavenVersion(currentVersion))
 
-        val isObject = line.unparsedValue.endsWith("}")
+        val isObject = initialLine.unparsedValue.endsWith("}")
 
         fun suffix(version: MavenVersion) = when {
             isObject -> """= "${version.value}" }"""
-            line.section == TomlSection.Versions -> """= "${version.value}""""
+            initialLine.section == TomlSection.Versions -> """= "${version.value}""""
             else -> """:${version.value}""""
         }
 
-        val nbSpaces = line.text.indexOf(currentVersion) - if (isObject) 11 else 8
-        val leadingSpaces = " ".repeat(nbSpaces.coerceAtLeast(0))
-        val trailingSpaces = " ".repeat(
-            when {
-                nbSpaces >= 0 && (isObject || line.section == TomlSection.Versions) -> 1
-                else -> 0
-            }
-        )
-
-        availableUpdates.mapTo(result) { versionCandidate: MavenVersion ->
+        val commentPrefix = "##"
+        val availableSymbol = "⬆"
+        val versionPrefix = when {
+            isObject || initialLine.section == TomlSection.Versions -> """= """"
+            else -> """:"""
+        }
+        val versionSuffix = when {
+            isObject -> """" }"""
+            else -> "\""
+        }
+        val leadingSpace: String
+        val trailingSpace: String
+        sequence {
+            yield(commentPrefix)
+            yield(availableSymbol)
+            yield(versionPrefix)
+        }.sumOf { it.length }.let {
+            val indexOfCurrentVersion = initialLine.text.indexOf(currentVersion)
+            val canFitSpaceAfterAvailableSymbol: Boolean = indexOfCurrentVersion - it > 0
+            leadingSpace = " ".repeat((indexOfCurrentVersion - it - when {
+                canFitSpaceAfterAvailableSymbol -> 2 // Magic number, figure the math out sometime.
+                else -> 1 // Magic number, figure the math out sometime.
+            }).coerceAtLeast(0))
+            trailingSpace = if (canFitSpaceAfterAvailableSymbol && versionPrefix.startsWith(' ').not()) " " else ""
+        }
+        return availableUpdates.mapTo(mutableListOf(initialLine)) { versionCandidate: MavenVersion ->
+            val version = versionCandidate.value
             TomlLine(
-                section = line.section,
-                text = "##${leadingSpaces}⬆$trailingSpaces${suffix(versionCandidate)}"
+                section = initialLine.section,
+                text = "$commentPrefix$leadingSpace$availableSymbol$trailingSpace$versionPrefix$version$versionSuffix"
             )
         }
-        return result
     }
 }
 

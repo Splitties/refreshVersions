@@ -5,6 +5,9 @@ key = "some key"
 [versions]
 # some comment
 
+kt = "1.6.21"
+##⬆= "1.7.0"
+
 groovy = "3.0.5"
 ### available="1.5"
 ### available="1.6"
@@ -13,6 +16,9 @@ checkstyle = "8.37"
 common = "3.4"
 
 [libraries]
+
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kt" }
+
 groovy-core = { module = "org.codehaus.groovy:groovy", version.ref = "groovy" }
 groovy-json = { module = "org.codehaus.groovy:groovy-json", version.ref = "groovy" }
 groovy-nio = { module = "org.codehaus.groovy:groovy-nio", version.ref = "groovy" }
