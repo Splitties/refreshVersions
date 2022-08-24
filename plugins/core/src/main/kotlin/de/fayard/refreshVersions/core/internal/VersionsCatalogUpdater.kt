@@ -46,14 +46,14 @@ internal class VersionsCatalogUpdater(
     }
 
     private fun findLineReferencing(version: TomlLine): DependencyWithVersionCandidates? {
-        val libOrPlugin = toml.sections.values.flatten().firstOrNull { line ->
+        return toml.sections.values.asSequence().flatten().filter { line ->
             line.versionRef == version.key
-        } ?: return null
-
-        return dependenciesUpdates.firstOrNull {
-            val moduleId = it.moduleId
-            (moduleId.name == libOrPlugin.name) && (moduleId.group == libOrPlugin.group)
-        }
+        }.mapNotNull { libOrPlugin ->
+            dependenciesUpdates.firstOrNull {
+                val moduleId = it.moduleId
+                (moduleId.name == libOrPlugin.name) && (moduleId.group == libOrPlugin.group)
+            }
+        }.firstOrNull()
     }
 
     private fun linesForUpdates(
