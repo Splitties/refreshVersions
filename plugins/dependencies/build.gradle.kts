@@ -100,6 +100,10 @@ val copyDependencyNotationsRemovalsRevisionNumber by tasks.registering {
                 check(existingMapping == mappingLine)
             } else {
                 check(mappingFileContent.endsWith('\n') || mappingFileContent.isEmpty())
+                val isInCi = System.getenv("CI") == "true"
+                check(isInCi.not()) {
+                    "$versionToRemovalsMappingFile shall be updated before publishing."
+                }
                 versionToRemovalsMappingFile.appendText("$mappingLine\n")
             }
         }
