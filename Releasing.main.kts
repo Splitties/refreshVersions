@@ -233,6 +233,8 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
         file.checkChanged()
     }
     `Commit 'prepare for release' and tag` -> with(OngoingRelease) {
+        files.changelog.checkChanged()
+        files.versionToRemovalsMapping.checkChanged()
         git.commitAllFiles(commitMessage = "Prepare for release $newVersion")
         git.tagAnnotated(tag = tagOfVersionBeingReleased(), annotationMessage = "Version $newVersion")
     }
