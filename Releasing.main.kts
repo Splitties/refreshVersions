@@ -11,6 +11,7 @@ import Releasing_main.ReleaseStep.*
 import lib_publisher_tools.cli.CliUi
 import lib_publisher_tools.cli.defaultImpl
 import lib_publisher_tools.cli.runUntilSuccessWithErrorPrintingOrCancel
+import lib_publisher_tools.process.executeAndPrint
 import lib_publisher_tools.vcs.*
 import lib_publisher_tools.versioning.StabilityLevel
 import lib_publisher_tools.versioning.Version
@@ -24,8 +25,8 @@ val dir = File(".")
 val publishWorkflowFilename = "release-plugins.yml".also {
     check(dir.resolve(".github").resolve("workflows").resolve(it).exists()) {
         "The $it file expected in the `.github/workflows dir wasn't found!\n" +
-                "The filename is required to be correct.\n" +
-                "If the release workflow needs to be retried, it will be used to make a valid link."
+            "The filename is required to be correct.\n" +
+            "If the release workflow needs to be retried, it will be used to make a valid link."
     }
 }
 
@@ -47,6 +48,7 @@ enum class ReleaseStep { // Order of the steps, must be kept right.
     `Update release branch`,
     `Update main branch from release`,
     `Change this library version`,
+    `Run pre-publish tests`,
     `Request doc update confirmation`,
     `Request CHANGELOG update confirmation`,
     `Commit 'prepare for release' and tag`,
@@ -66,13 +68,25 @@ sealed interface CiReleaseFailureCause {
     enum class RequiresRetrying : CiReleaseFailureCause { ThirdPartyOutage, NetworkOutage }
 }
 
-val ongoingReleaseFile = dir.resolve("ongoing_release.tmp.properties")
-val versionsFile = dir.resolve("plugins/version.txt")
+
+private class Files {
+    val ongoingRelease = dir.resolve("ongoing_release.tmp.properties")
+
+    val versions = dir.resolve("plugins/version.txt")
+    val changelog = dir.resolve("CHANGELOG.md")
+
+    val mainResourcesDir = dir.resolve("plugins/dependencies/src/main/resources")
+    val versionToRemovalsMapping = mainResourcesDir.resolve("version-to-removals-revision-mapping.txt").also {
+        check(it.exists()) { "Didn't find the ${it.name} file in ${it.parentFile}! Has it been moved or renamed?" }
+    }
+}
+
+private val files = Files()
 
 inner class OngoingReleaseImpl {
-    fun load() = properties.load(ongoingReleaseFile.inputStream())
-    fun write() = properties.store(ongoingReleaseFile.outputStream(), null)
-    fun clear() = ongoingReleaseFile.delete()
+    fun load() = properties.load(files.ongoingRelease.inputStream())
+    fun write() = properties.store(files.ongoingRelease.outputStream(), null)
+    fun clear() = files.ongoingRelease.delete()
 
     private val properties = java.util.Properties()
 
@@ -92,13 +106,13 @@ val versionTagPrefix = "v"
 
 fun tagOfVersionBeingReleased(): String = "$versionTagPrefix${OngoingRelease.newVersion}"
 
-if (ongoingReleaseFile.exists()) {
+if (files.ongoingRelease.exists()) {
     OngoingRelease.load()
     startAtStep = ReleaseStep.valueOf(OngoingRelease.currentStepName)
 } else {
     checkOnMainBranch()
     with(OngoingRelease) {
-        versionBeforeRelease = versionsFile.bufferedReader().use { it.readLine() }.also {
+        versionBeforeRelease = files.versions.bufferedReader().use { it.readLine() }.also {
             check(it.contains("-dev-") || it.endsWith("-SNAPSHOT")) {
                 "The current version needs to be a SNAPSHOT or a dev version, but we got: $it"
             }
@@ -164,8 +178,22 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
         OngoingRelease.newVersion.let { newVersion ->
             printInfo("refreshVersions new version: \"$newVersion\"")
             requestUserConfirmation("Confirm?")
-            versionsFile.writeText(newVersion)
+            files.versions.writeText(newVersion)
         }
+    }
+    `Run pre-publish tests` -> {
+        val osName = System.getProperty("os.name").lowercase()
+        val isWindows: Boolean = "win" in osName
+        val commandPrefix = if (isWindows) "" else "./"
+        val command = "${commandPrefix}gradlew prePublishTest --console=plain"
+        printInfo("Will now run $command")
+        requestUserConfirmation("Ready?")
+        command.executeAndPrint(dir)
+        check(git.didFileChange(files.versionToRemovalsMapping)) {
+            "Expected ${files.versionToRemovalsMapping} to be edited by " +
+                "the command that just ran. Is something broken?"
+        }
+        printInfo("Successfully updated the following file: ${files.versionToRemovalsMapping}")
     }
     `Request doc update confirmation` -> {
         arrayOf(
@@ -175,7 +203,7 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
             do {
                 requestManualAction(
                     instructions = "Update the `$relativePath` file with the new version (if needed)," +
-                            " and any other changes needed for this release."
+                        " and any other changes needed for this release."
                 )
                 if (git.didFileChange(dir.resolve(relativePath))) {
                     break
@@ -190,7 +218,7 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
         }.also {
             if (askIfYes(
                     yesNoQuestion = "Apart from the changelog, are there any other files that " +
-                            "need to be updated for this new release?"
+                        "need to be updated for this new release?"
                 )
             ) {
                 requestManualAction(
@@ -200,8 +228,9 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
         }
     }
     `Request CHANGELOG update confirmation` -> {
-        requestManualAction("Update the `CHANGELOG.md` for the impending release.")
-        dir.resolve("CHANGELOG.md").checkChanged()
+        val file = files.changelog
+        requestManualAction("Update the `${file.name}` for the impending release.")
+        file.checkChanged()
     }
     `Commit 'prepare for release' and tag` -> with(OngoingRelease) {
         git.commitAllFiles(commitMessage = "Prepare for release $newVersion")
@@ -324,8 +353,8 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
             if (it.endsWith("-SNAPSHOT")) it
             else "${it.substringBefore("-dev-")}-SNAPSHOT"
         }
-        versionsFile.writeText(nextDevVersion)
-        printInfo("${versionsFile.path} has been edited with next development version ($nextDevVersion).")
+        files.versions.writeText(nextDevVersion)
+        printInfo("${files.versions.path} has been edited with next development version ($nextDevVersion).")
     }
     `Commit 'prepare next dev version'` -> git.commitAllFiles(
         commitMessage = "Prepare next development version.".also {
