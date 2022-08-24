@@ -17,6 +17,8 @@ import lib_publisher_tools.versioning.StabilityLevel
 import lib_publisher_tools.versioning.Version
 import lib_publisher_tools.versioning.checkIsValidVersionString
 import lib_publisher_tools.versioning.stabilityLevel
+import java.net.URLEncoder
+import java.nio.charset.Charset
 
 val gitHubRepoUrl = "https://github.com/jmfayard/refreshVersions"
 
@@ -124,6 +126,17 @@ if (files.ongoingRelease.exists()) {
     }
     startAtStep = ReleaseStep.values().first()
 }
+
+fun extractChangelogForVersion(version: String): String = files.changelog.useLines { lines ->
+    val startOfThisVersionHeading = "## Version $version"
+    lines.dropWhile {
+        it.startsWith(startOfThisVersionHeading).not()
+    }.takeWhile {
+        it.startsWith(startOfThisVersionHeading) || it.startsWith("## Version ").not()
+    }.joinToString(separator = "\n")
+}
+
+fun String.urlEncode(charset: Charset = Charset.defaultCharset()): String = URLEncoder.encode(this, charset)
 
 fun askNewVersionInput(
     currentVersion: String,
@@ -323,10 +336,12 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
     }
     `Request GitHub release publication` -> {
         printInfo("It's now time to publish the release on GitHub, so people get notified.")
-        printInfo("Copy the section of this release from the CHANGELOG file, and head over to the following url to proceed:")
+        printInfo("Head over to the following url to proceed, changelog will be pre-filled:")
         val newVersion = OngoingRelease.newVersion
+        val changelogForThisRelease: String = extractChangelogForVersion(newVersion)
+        val urlEncodedChangelogForThisRelease = changelogForThisRelease.urlEncode()
         // https://docs.github.com/en/repositories/releasing-projects-on-github/automation-for-release-forms-with-query-parameters
-        printInfo("$gitHubRepoUrl/releases/new?tag=${tagOfVersionBeingReleased()}&title=$newVersion")
+        printInfo("$gitHubRepoUrl/releases/new?tag=${tagOfVersionBeingReleased()}&title=$newVersion&body=$urlEncodedChangelogForThisRelease")
         requestManualAction("Publish the release $newVersion on GitHub with the changelog.")
     }
     `Change this library version back to a SNAPSHOT` -> {
