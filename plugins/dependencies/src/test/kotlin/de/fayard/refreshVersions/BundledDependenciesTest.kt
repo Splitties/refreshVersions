@@ -351,6 +351,9 @@ class BundledDependenciesTest {
             .size
 
         val fileHeader = """
+            |---
+            |title: Built-in Dependency Notations
+            |---
             |# Built-in Dependency Notations
             |
             |[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **$size** Dependency Notations in **${groups.size}** groups and **${subgroups.size}** subgroups

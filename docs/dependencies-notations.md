@@ -1,3 +1,6 @@
+---
+title: Built-in Dependency Notations
+---
 # Built-in Dependency Notations
 
 [**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1138** Dependency Notations in **25** groups and **228** subgroups

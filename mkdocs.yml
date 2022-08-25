@@ -66,7 +66,7 @@ nav:
   - 'Setup': setup.md
   - 'Migrate': migrate.md
   - 'Add Dependencies': add-dependencies.md
-  - 'Dependencies Notations': dependencies-notations.md
+  - 'Built-in Dependency Notations': dependencies-notations.md
   - 'Update Dependencies': update-dependencies.md
   # TODO: Uncomment line below after its content is updated. We might also change the title.
   #  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
