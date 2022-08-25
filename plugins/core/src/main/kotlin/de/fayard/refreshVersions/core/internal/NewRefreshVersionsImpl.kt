@@ -14,12 +14,11 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import okhttp3.OkHttpClient
 import org.gradle.api.Project
-import org.gradle.api.artifacts.ArtifactRepositoryContainer
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
-import org.gradle.api.artifacts.dsl.RepositoryHandler
+import org.gradle.api.artifacts.repositories.ArtifactRepository
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.initialization.Settings
 import org.gradle.util.GradleVersion
@@ -42,9 +41,10 @@ internal suspend fun lookupVersionCandidates(
     return lookupVersionCandidates(
         dependencyVersionsFetchers = { dependencyFilter ->
             projects.flatMap {
-                it.getDependencyVersionFetchers(httpClient = httpClient, dependencyFilter = dependencyFilter)
+                it.getDependencyVersionFetchers(httpClient = httpClient, dependencyFilter = dependencyFilter).toList()
             }.plus(
-                UsedPluginsTracker.read().getDependencyVersionsFetchers(httpClient)
+                UsedPluginsTracker.read().getDependencyVersionsFetchers(httpClient) //TODO: Is this needed?
+                //TODO: If so, don't we miss passing dependencies through the dependencyFilter?
             ).plus(
                 dependenciesFromVersionFor.asSequence().onEach { (dependency, _) ->
                     check(dependencyFilter(dependency)) // Needed because dependencyFilter also tracks dependencies usage.
@@ -112,7 +112,8 @@ internal suspend fun lookupVersionCandidates(
 
         val resultMode = RefreshVersionsConfigHolder.resultMode
         val versionRejectionFilter = RefreshVersionsConfigHolder.versionRejectionFilter ?: { false }
-        val dependenciesWithVersionCandidatesAsync = dependencyVersionsFetchers(dependencyFilter).groupBy {
+        val fetchers = dependencyVersionsFetchers(dependencyFilter)
+        val dependenciesWithVersionCandidatesAsync = fetchers.groupBy {
             it.moduleId
         }.map { (moduleId: ModuleId, versionFetchers: List<DependencyVersionsFetcher>) ->
             async {
@@ -227,7 +228,7 @@ internal fun Settings.getDependencyVersionFetchers(
 ): Sequence<DependencyVersionsFetcher> = getDependencyVersionFetchers(
     httpClient = httpClient,
     configurations = buildscript.configurations,
-    repositories = buildscript.repositories,
+    repositories = buildscript.repositories.withPluginsRepos(),
     dependencyFilter = dependencyFilter
 )
 
@@ -237,7 +238,7 @@ private fun Project.getDependencyVersionFetchers(
 ): Sequence<DependencyVersionsFetcher> = getDependencyVersionFetchers(
     httpClient = httpClient,
     configurations = buildscript.configurations,
-    repositories = buildscript.repositories,
+    repositories = buildscript.repositories.withPluginsRepos(),
     dependencyFilter = dependencyFilter
 ).plus(
     getDependencyVersionFetchers(
@@ -248,7 +249,7 @@ private fun Project.getDependencyVersionFetchers(
     )
 )
 
-private fun Sequence<Pair<Dependency, ArtifactRepositoryContainer>>.getDependencyVersionsFetchers(
+private fun Sequence<Pair<Dependency, List<ArtifactRepository>>>.getDependencyVersionsFetchers(
     httpClient: OkHttpClient
 ): Sequence<DependencyVersionsFetcher> {
     return flatMap { (dependency, repositories) ->
@@ -265,7 +266,7 @@ private fun Sequence<Pair<Dependency, ArtifactRepositoryContainer>>.getDependenc
 private fun getDependencyVersionFetchers(
     httpClient: OkHttpClient,
     configurations: ConfigurationContainer,
-    repositories: RepositoryHandler,
+    repositories: List<ArtifactRepository>,
     dependencyFilter: (Dependency) -> Boolean
 ): Sequence<DependencyVersionsFetcher> = getDependencyVersionFetchers(
     httpClient = httpClient,

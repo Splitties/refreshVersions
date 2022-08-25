@@ -4,6 +4,7 @@ import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import org.gradle.api.artifacts.ArtifactRepositoryContainer
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
+import org.gradle.api.artifacts.repositories.ArtifactRepository
 import org.gradle.api.initialization.Settings
 
 @InternalRefreshVersionsApi
@@ -26,9 +27,9 @@ object UsedPluginsTracker {
         }
     }
 
-    fun read(): Sequence<Pair<Dependency, ArtifactRepositoryContainer>> {
+    fun read(): Sequence<Pair<Dependency, List<ArtifactRepository>>> {
         return usedPluginDependencies.asSequence().map {
-            ConfigurationLessDependency(it.dependencyNotation) to it.repositories
+            ConfigurationLessDependency(it.dependencyNotation) to it.repositories.withPluginsRepos()
         }
     }
 
