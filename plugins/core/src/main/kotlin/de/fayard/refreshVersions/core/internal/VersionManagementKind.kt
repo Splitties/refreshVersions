@@ -65,8 +65,8 @@ internal fun Dependency.versionManagementKind(
                 when (versionFromProperty) {
                     null -> when {
                         hasVersionInVersionCatalog(
-                            versionsCatalogMapping = versionsCatalogLibraries,
-                            versionsCatalogLibraries = versionsCatalogPlugins
+                            versionsCatalogLibraries = versionsCatalogLibraries,
+                            versionsCatalogPlugins = versionsCatalogPlugins
                         ) -> Match.VersionsCatalog.MatchingVersionConstraint
                         else -> NoMatch
                     }
@@ -79,19 +79,19 @@ internal fun Dependency.versionManagementKind(
     }
     else -> when {
         hasVersionInVersionCatalog(
-            versionsCatalogMapping = versionsCatalogLibraries
+            versionsCatalogLibraries = versionsCatalogLibraries
         ) -> Match.VersionsCatalog.MatchingVersionConstraint
         else -> NoMatch
     }
 }
 
 private fun Dependency.hasVersionInVersionCatalog(
-    versionsCatalogMapping: Collection<MinimalExternalModuleDependency>,
-    versionsCatalogLibraries: Set<PluginDependencyCompat> = emptySet()
+    versionsCatalogLibraries: Collection<MinimalExternalModuleDependency>,
+    versionsCatalogPlugins: Set<PluginDependencyCompat> = emptySet()
 ): Boolean {
     if (this !is ExternalDependency) return false
 
-    val matchingLib = versionsCatalogMapping.any {
+    val matchingLib = versionsCatalogLibraries.any {
         it.module.group == group && it.module.name == name && it.versionConstraint == versionConstraint
     }
     if (matchingLib) return true
@@ -99,5 +99,5 @@ private fun Dependency.hasVersionInVersionCatalog(
     if (name.endsWith(".gradle.plugin").not()) return false
 
     val pluginId = name.substringBeforeLast(".gradle.plugin")
-    return versionsCatalogLibraries.any { it.pluginId == pluginId && it.version == versionConstraint }
+    return versionsCatalogPlugins.any { it.pluginId == pluginId && it.version == versionConstraint }
 }
