@@ -296,7 +296,7 @@ class BundledDependenciesTest {
             val LF = 0x0A.toChar()
             val mavenCoordinates = "${moduleId.group}:${moduleId.name}:_"
             return """
-          <span title="$constantName${LF}version.$versionKey${LF}$mavenCoordinates" style="text-decoration: underline;" >${constantName.substringAfterLast(".")}</span>&nbsp;
+          <span title="$constantName${LF}$mavenCoordinates${LF}version.$versionKey" style="text-decoration: underline;" >${constantName.substringAfterLast(".")}</span>&nbsp;
                 """.trimIndent().trim()
         }
     }
