@@ -1,5 +1,34 @@
 # Change log for refreshVersions
 
+## [Unreleased] Version 0.41.0 (2022-08-26)
+
+### Highlights
+
+1. First class support for Versions Catalogs! 🎉
+2. Semi-automatic migration to Versions Catalogs 😎
+3. First class support for `versionFor`: refreshVersions now finds updates for `AndroidX.compose.compiler`! 👌
+4. Lots of built-in dependency notations updates, [now all available on the dedicated page](https://jmfayard.github.io/refreshVersions/dependencies-notations/)! 📕
+
+### New features
+
+We are very excited to release built-in support for Gradle's versions catalogs!
+If you use the default version catalog, in the `gradle/libs.versions.toml` file, running the refreshVersions task will automatically update it with new versions, granted the versions are actually there.
+If you use the version placeholder (`_`) in place of the version, the `refreshVersions` task will work as usual, putting the available updates in the `versions.properties`.
+Note that both work simultaneously, so you can have some versions in the properties file, and some other ones in the toml file.
+
+What if you don't use versions catalogs yet, but want to make the jump?
+Along with support for them, we also brought a migration facility!
+To use it… TK
+
+### Fixes
+
+- `rejectVersionIf { … }` had an issue: its removal would not be taken into account until the Gradle daemon would be killed. This now behaves correctly.
+- We were ignoring repositories defined in `pluginManagement { … }`, which might have led to Gradle plugin updates being missed by refreshVersions. Now, we lookup these repositories as well.
+
+### New dependency notations:
+
+TK : Use the details html element?
+
 ## Version 0.40.2 (2022-06-01)
 
 ### Fixes
