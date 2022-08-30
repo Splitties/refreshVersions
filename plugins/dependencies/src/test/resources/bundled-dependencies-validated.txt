@@ -223,6 +223,9 @@ androidx.room:room-compiler
 androidx.room:room-guava
 androidx.room:room-ktx
 androidx.room:room-paging
+androidx.room:room-paging-guava
+androidx.room:room-paging-rxjava2
+androidx.room:room-paging-rxjava3
 androidx.room:room-runtime
 androidx.room:room-rxjava2
 androidx.room:room-rxjava3

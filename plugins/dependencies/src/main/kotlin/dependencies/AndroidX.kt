@@ -2277,7 +2277,16 @@ object AndroidX : IsNotADependency {
         /**
          * Paging 3 Integration
          */
-        val paging = module("room-paging")
+        val paging = Paging
+
+        object Paging : DependencyNotationAndGroup(
+            group = group,
+            name = "room-paging"
+        ) {
+            val guava = module("room-paging-guava")
+            val rxJava2 = module("room-paging-rxjava2")
+            val rxJava3 = module("room-paging-rxjava3")
+        }
 
         /**
          * Room compiler, compatible with ksp, kapt, and Java annotation processors.

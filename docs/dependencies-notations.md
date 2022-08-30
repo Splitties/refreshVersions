@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1138** Dependency Notations in **25** groups and **228** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1141** Dependency Notations in **25** groups and **229** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -587,6 +587,13 @@ androidx.room:room-rxjava3:_
 version.androidx.room" style="text-decoration: underline;" >rxJava3</span>&nbsp; - <span title="AndroidX.room.testing
 androidx.room:room-testing:_
 version.androidx.room" style="text-decoration: underline;" >testing</span>&nbsp;</td></tr>
+<tr><td><b>AndroidX.room.paging</b></td><td><span title="AndroidX.room.paging.guava
+androidx.room:room-paging-guava:_
+version.androidx.room" style="text-decoration: underline;" >guava</span>&nbsp; - <span title="AndroidX.room.paging.rxJava2
+androidx.room:room-paging-rxjava2:_
+version.androidx.room" style="text-decoration: underline;" >rxJava2</span>&nbsp; - <span title="AndroidX.room.paging.rxJava3
+androidx.room:room-paging-rxjava3:_
+version.androidx.room" style="text-decoration: underline;" >rxJava3</span>&nbsp;</td></tr>
 <tr><td><b>AndroidX.savedState</b></td><td><span title="AndroidX.savedState.ktx
 androidx.savedstate:savedstate-ktx:_
 version.androidx.savedstate" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
