@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1147** Dependency Notations in **25** groups and **231** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1147** Dependency Notations in **25** groups and **232** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -397,11 +397,12 @@ androidx.glance:glance-appwidget:_
 version.androidx.glance" style="text-decoration: underline;" >appWidget</span>&nbsp; - <span title="AndroidX.glance.wearTiles
 androidx.glance:glance-wear-tiles:_
 version.androidx.glance" style="text-decoration: underline;" >wearTiles</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.health</b></td><td><span title="AndroidX.health.connectClient
-androidx.health:health-connect-client:_
-version.androidx.health-connect-client" style="text-decoration: underline;" >connectClient</span>&nbsp; - <span title="AndroidX.health.servicesClient
+<tr><td><b>AndroidX.health</b></td><td><span title="AndroidX.health.servicesClient
 androidx.health:health-services-client:_
 version.androidx.health-services-client" style="text-decoration: underline;" >servicesClient</span>&nbsp;</td></tr>
+<tr><td><b>AndroidX.health.connect</b></td><td><span title="AndroidX.health.connect.client
+androidx.health.connect:connect-client:_
+version.androidx.health.connect" style="text-decoration: underline;" >client</span>&nbsp;</td></tr>
 <tr><td><b>AndroidX.hilt</b></td><td><span title="AndroidX.hilt.compiler
 androidx.hilt:hilt-compiler:_
 version.androidx.hilt" style="text-decoration: underline;" >compiler</span>&nbsp; - <span title="AndroidX.hilt.navigationCompose

@@ -1474,27 +1474,32 @@ object AndroidX : IsNotADependency {
 
     object Health : DependencyGroup(group = "androidx.health") {
 
-        /**
-         * Read or write user's health and fitness records.
-         *
-         * ### API reference:
-         * - [androidx.health.connect.client](https://developer.android.com/reference/kotlin/androidx/health/connect/client/package-summary)
-         * - [androidx.health.connect.client.aggregate](https://developer.android.com/reference/kotlin/androidx/health/connect/client/aggregate/package-summary)
-         * - [androidx.health.connect.client.changes](https://developer.android.com/reference/kotlin/androidx/health/connect/client/changes/package-summary)
-         * - [androidx.health.connect.client.metadata](https://developer.android.com/reference/kotlin/androidx/health/connect/client/metadata/package-summary)
-         * - [androidx.health.connect.client.permission](https://developer.android.com/reference/kotlin/androidx/health/connect/client/permission/package-summary)
-         * - [androidx.health.connect.client.records](https://developer.android.com/reference/kotlin/androidx/health/connect/client/records/package-summary)
-         * - [androidx.health.connect.client.request](https://developer.android.com/reference/kotlin/androidx/health/connect/client/request/package-summary)
-         * - [androidx.health.connect.client.response](https://developer.android.com/reference/kotlin/androidx/health/connect/client/response/package-summary)
-         * - [androidx.health.connect.client.time](https://developer.android.com/reference/kotlin/androidx/health/connect/client/time/package-summary)
-         * - [androidx.health.platform.client](https://developer.android.com/reference/kotlin/androidx/health/platform/client/package-summary)
-         * - [androidx.health.platform.client.changes](https://developer.android.com/reference/kotlin/androidx/health/platform/client/changes/package-summary)
-         * - [androidx.health.platform.client.error](https://developer.android.com/reference/kotlin/androidx/health/platform/client/error/package-summary)
-         * - [androidx.health.platform.client.permission](https://developer.android.com/reference/kotlin/androidx/health/platform/client/permission/package-summary)
-         * - [androidx.health.platform.client.request](https://developer.android.com/reference/kotlin/androidx/health/platform/client/request/package-summary)
-         * - [androidx.health.platform.client.response](https://developer.android.com/reference/kotlin/androidx/health/platform/client/response/package-summary)
-         */
-        val connectClient = module("health-connect-client")
+        val connect = Connect
+
+        object Connect : DependencyGroup(group = "androidx.health.connect") {
+
+            /**
+             * Read or write user's health and fitness records.
+             *
+             * ### API reference:
+             * - [androidx.health.connect.client](https://developer.android.com/reference/kotlin/androidx/health/connect/client/package-summary)
+             * - [androidx.health.connect.client.aggregate](https://developer.android.com/reference/kotlin/androidx/health/connect/client/aggregate/package-summary)
+             * - [androidx.health.connect.client.changes](https://developer.android.com/reference/kotlin/androidx/health/connect/client/changes/package-summary)
+             * - [androidx.health.connect.client.metadata](https://developer.android.com/reference/kotlin/androidx/health/connect/client/metadata/package-summary)
+             * - [androidx.health.connect.client.permission](https://developer.android.com/reference/kotlin/androidx/health/connect/client/permission/package-summary)
+             * - [androidx.health.connect.client.records](https://developer.android.com/reference/kotlin/androidx/health/connect/client/records/package-summary)
+             * - [androidx.health.connect.client.request](https://developer.android.com/reference/kotlin/androidx/health/connect/client/request/package-summary)
+             * - [androidx.health.connect.client.response](https://developer.android.com/reference/kotlin/androidx/health/connect/client/response/package-summary)
+             * - [androidx.health.connect.client.time](https://developer.android.com/reference/kotlin/androidx/health/connect/client/time/package-summary)
+             * - [androidx.health.platform.client](https://developer.android.com/reference/kotlin/androidx/health/platform/client/package-summary)
+             * - [androidx.health.platform.client.changes](https://developer.android.com/reference/kotlin/androidx/health/platform/client/changes/package-summary)
+             * - [androidx.health.platform.client.error](https://developer.android.com/reference/kotlin/androidx/health/platform/client/error/package-summary)
+             * - [androidx.health.platform.client.permission](https://developer.android.com/reference/kotlin/androidx/health/platform/client/permission/package-summary)
+             * - [androidx.health.platform.client.request](https://developer.android.com/reference/kotlin/androidx/health/platform/client/request/package-summary)
+             * - [androidx.health.platform.client.response](https://developer.android.com/reference/kotlin/androidx/health/platform/client/response/package-summary)
+             */
+            val client = module("connect-client")
+        }
 
         /**
          * ### API reference:

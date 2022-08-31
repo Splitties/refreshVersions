@@ -103,3 +103,4 @@ io.ktor..ktor-jackson=version.ktor
 io.ktor..ktor-locations=version.ktor
 io.ktor..ktor-metrics=version.ktor
 io.ktor..ktor-velocity=version.ktor
+androidx.health..health-connect-client=version.androidx.health-connect-client
