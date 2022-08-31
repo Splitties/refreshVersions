@@ -680,7 +680,7 @@ id:[androidx.lifecycle:lifecycle-runtime-testing]
 moved:[androidx.health.connect:connect-client]
 id:[androidx.health:health-connect-client]
 
-## [WIP] Revision 14
+## Revision 14
 
 ~~Google.accompanist.glide~~
 // The Glide module was deprecated and got removed in version 0.16.0
