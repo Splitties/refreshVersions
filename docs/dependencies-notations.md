@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1142** Dependency Notations in **25** groups and **229** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1142** Dependency Notations in **25** groups and **230** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -431,11 +431,7 @@ version.androidx.lifecycle" style="text-decoration: underline;" >process</span>&
 androidx.lifecycle:lifecycle-reactivestreams-ktx:_
 version.androidx.lifecycle" style="text-decoration: underline;" >reactiveStreamsKtx</span>&nbsp; - <span title="AndroidX.lifecycle.reactiveStreams
 androidx.lifecycle:lifecycle-reactivestreams:_
-version.androidx.lifecycle" style="text-decoration: underline;" >reactiveStreams</span>&nbsp; - <span title="AndroidX.lifecycle.runtimeKtx
-androidx.lifecycle:lifecycle-runtime-ktx:_
-version.androidx.lifecycle" style="text-decoration: underline;" >runtimeKtx</span>&nbsp; - <span title="AndroidX.lifecycle.runtimeTesting
-androidx.lifecycle:lifecycle-runtime-testing:_
-version.androidx.lifecycle" style="text-decoration: underline;" >runtimeTesting</span>&nbsp; - <span title="AndroidX.lifecycle.runtime
+version.androidx.lifecycle" style="text-decoration: underline;" >reactiveStreams</span>&nbsp; - <span title="AndroidX.lifecycle.runtime
 androidx.lifecycle:lifecycle-runtime:_
 version.androidx.lifecycle" style="text-decoration: underline;" >runtime</span>&nbsp; - <span title="AndroidX.lifecycle.service
 androidx.lifecycle:lifecycle-service:_
@@ -448,6 +444,11 @@ androidx.lifecycle:lifecycle-viewmodel-savedstate:_
 version.androidx.lifecycle" style="text-decoration: underline;" >viewModelSavedState</span>&nbsp; - <span title="AndroidX.lifecycle.viewModel
 androidx.lifecycle:lifecycle-viewmodel:_
 version.androidx.lifecycle" style="text-decoration: underline;" >viewModel</span>&nbsp;</td></tr>
+<tr><td><b>AndroidX.lifecycle.runtime</b></td><td><span title="AndroidX.lifecycle.runtime.ktx
+androidx.lifecycle:lifecycle-runtime-ktx:_
+version.androidx.lifecycle" style="text-decoration: underline;" >ktx</span>&nbsp; - <span title="AndroidX.lifecycle.runtime.testing
+androidx.lifecycle:lifecycle-runtime-testing:_
+version.androidx.lifecycle" style="text-decoration: underline;" >testing</span>&nbsp;</td></tr>
 <tr><td><b>AndroidX.media2</b></td><td><span title="AndroidX.media2.common
 androidx.media2:media2-common:_
 version.androidx.media2" style="text-decoration: underline;" >common</span>&nbsp; - <span title="AndroidX.media2.exoplayer

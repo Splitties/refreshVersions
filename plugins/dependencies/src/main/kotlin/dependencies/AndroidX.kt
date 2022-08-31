@@ -1647,18 +1647,6 @@ object AndroidX : IsNotADependency {
 
     object Lifecycle : DependencyGroup(group = "androidx.lifecycle") {
 
-        /** Lifecyclew only (without ViewModel or LiveData), with Kotlin extensions. */
-        val runtimeKtx = module("lifecycle-runtime-ktx")
-
-        /**
-         * Provides a `TestlifecycleOwner` that implements `LifecycleOwner` and
-         * provides a thread safe mutable `Lifcycle`.
-         *
-         * ### API reference:
-         * - [androidx.lifecycle.testing](https://developer.android.com/reference/kotlin/androidx/lifecycle/testing/package-summary)
-         */
-        val runtimeTesting = module("lifecycle-runtime-testing")
-
         /** LiveData, with Kotlin extensions. */
         val liveDataKtx = module("lifecycle-livedata-ktx")
 
@@ -1685,9 +1673,26 @@ object AndroidX : IsNotADependency {
         /**
          * Lifecyclew only (without ViewModel or LiveData), includes only Java APIs.
          *
-         * @see AndroidX.Lifecycle.runtimeKtx
+         * @see AndroidX.Lifecycle.Runtime.ktx
          */
-        val runtime = module("lifecycle-runtime")
+        val runtime = Runtime
+
+        object Runtime : DependencyNotationAndGroup(
+            group = group,
+            name = "lifecycle-runtime"
+        ) {
+            /** Lifecyclew only (without ViewModel or LiveData), with Kotlin extensions. */
+            val ktx = module("lifecycle-runtime-ktx")
+
+            /**
+             * Provides a `TestlifecycleOwner` that implements `LifecycleOwner` and
+             * provides a thread safe mutable `Lifcycle`.
+             *
+             * ### API reference:
+             * - [androidx.lifecycle.testing](https://developer.android.com/reference/kotlin/androidx/lifecycle/testing/package-summary)
+             */
+            val testing = module("lifecycle-runtime-testing")
+        }
 
         /**
          * ViewModel, includes only Java APIs.
