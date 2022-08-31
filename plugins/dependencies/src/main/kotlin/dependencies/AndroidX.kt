@@ -1681,7 +1681,7 @@ object AndroidX : IsNotADependency {
             group = group,
             name = "lifecycle-runtime"
         ) {
-            /** Lifecyclew only (without ViewModel or LiveData), with Kotlin extensions. */
+            /** Lifecycle only (without ViewModel or LiveData), with Kotlin extensions. */
             val ktx = module("lifecycle-runtime-ktx")
 
             /**
