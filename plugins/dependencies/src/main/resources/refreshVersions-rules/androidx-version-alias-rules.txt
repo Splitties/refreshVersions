@@ -13,8 +13,11 @@ androidx.camera:camera-view(-*)
 androidx.car.app:app-testing(-*)
 ^^^^^^^^.^^^.    ^^^^^^^^^^^
 
-androidx.constraintlayout:constraintlayout-compose
-^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^^^^^
+androidx.constraintlayout:constraintlayout
+^^^^^^^^.                 ^^^^^^^^^^^^^^^^
+
+androidx.constraintlayout:constraintlayout-*
+^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^
 
 androidx.core:core-role(-*)
 ^^^^^^^^.     ^^^^^^^^^
