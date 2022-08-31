@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1141** Dependency Notations in **25** groups and **229** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1142** Dependency Notations in **25** groups and **229** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -177,7 +177,9 @@ version.androidx.annotation" style="text-decoration: underline;" >experimental</
 <tr><td><b>AndroidX.appCompat</b></td><td><span title="AndroidX.appCompat.resources
 androidx.appcompat:appcompat-resources:_
 version.androidx.appcompat" style="text-decoration: underline;" >resources</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.appSearch</b></td><td><span title="AndroidX.appSearch.compiler
+<tr><td><b>AndroidX.appSearch</b></td><td><span title="AndroidX.appSearch.builtInTypes
+androidx.appsearch:appsearch-builtin-types:_
+version.androidx.appsearch" style="text-decoration: underline;" >builtInTypes</span>&nbsp; - <span title="AndroidX.appSearch.compiler
 androidx.appsearch:appsearch-compiler:_
 version.androidx.appsearch" style="text-decoration: underline;" >compiler</span>&nbsp; - <span title="AndroidX.appSearch.localStorage
 androidx.appsearch:appsearch-local-storage:_

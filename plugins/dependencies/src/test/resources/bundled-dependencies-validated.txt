@@ -8,6 +8,7 @@ androidx.annotation:annotation-experimental
 androidx.appcompat:appcompat
 androidx.appcompat:appcompat-resources
 androidx.appsearch:appsearch
+androidx.appsearch:appsearch-builtin-types
 androidx.appsearch:appsearch-compiler
 androidx.appsearch:appsearch-local-storage
 androidx.appsearch:appsearch-platform-storage

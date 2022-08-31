@@ -7,6 +7,7 @@ androidx.annotation..annotation-experimental=version.androidx.annotation
 androidx.annotation..annotation=version.androidx.annotation
 androidx.appcompat..appcompat-resources=version.androidx.appcompat
 androidx.appcompat..appcompat=version.androidx.appcompat
+androidx.appsearch..appsearch-builtin-types=version.androidx.appsearch
 androidx.appsearch..appsearch-compiler=version.androidx.appsearch
 androidx.appsearch..appsearch-local-storage=version.androidx.appsearch
 androidx.appsearch..appsearch-platform-storage=version.androidx.appsearch

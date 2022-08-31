@@ -147,6 +147,18 @@ object AndroidX : IsNotADependency {
          * - [androidx.appsearch.platformstorage](https://developer.android.com/reference/kotlin/androidx/appsearch/platformstorage/package-summary)
          */
         val platformStorage = module("appsearch-platform-storage")
+
+        /**
+         * AppSearch Builtin Types
+         *
+         * Contains AppSearch Document classes and builders for a variety of common objects based on
+         * http://schema.org. Data interchange with the system, and other apps, as well as
+         * structured parameters for semantic intents should use these built-in types as appropriate.
+         *
+         * ### API reference:
+         * - [androidx.appsearch.builtintypes](https://developer.android.com/reference/androidx/appsearch/builtintypes/package-summary)
+         */
+        val builtInTypes = module("appsearch-builtin-types")
     }
 
     /**
