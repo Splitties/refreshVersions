@@ -675,7 +675,6 @@ id:[androidx.lifecycle:lifecycle-runtime-ktx]
 id:[androidx.lifecycle:lifecycle-runtime-testing]
 
 ~~AndroidX.health.connectClient~~
-**Remove this line when comments are complete.**
 // Moved since version 1.0.0-alpha04
 // FIXME: Replace with new artifact.
 moved:[androidx.health.connect:connect-client]
