@@ -24,9 +24,6 @@ object Google : IsNotADependency {
 
     object Accompanist : DependencyGroup(group = "com.google.accompanist") {
 
-        val glide = module("accompanist-glide")
-        val imageloadingCore = module("accompanist-imageloading-core")
-
         val insets = Insets
 
         object Insets : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-insets") {
@@ -45,6 +42,24 @@ object Google : IsNotADependency {
 
         val flowlayout = module("accompanist-flowlayout")
         val swiperefresh = module("accompanist-swiperefresh")
+
+        val placeholder = Placeholder
+
+        object Placeholder : DependencyNotationAndGroup(
+            group = "com.google.accompanist",
+            name = "accompanist-placeholder"
+        ) {
+            val material = module("accompanist-placeholder-material")
+        }
+
+        val drawablepainter = module("accompanist-drawablepainter")
+
+        val permissions = module("accompanist-permissions")
+
+        val navigationMaterial = module("accompanist-navigation-material")
+        val navigationAnimation = module("accompanist-navigation-animation")
+
+        val webview = module("accompanist-webview")
     }
 
     val android = Android

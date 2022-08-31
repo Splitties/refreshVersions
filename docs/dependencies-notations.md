@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1147** Dependency Notations in **25** groups and **232** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1152** Dependency Notations in **25** groups and **233** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -945,27 +945,38 @@ com.google.oboe:oboe:_
 version.google.oboe" style="text-decoration: underline;" >oboe</span>&nbsp;</td></tr>
 <tr><td><b>Google.accompanist</b></td><td><span title="Google.accompanist.appcompatTheme
 com.google.accompanist:accompanist-appcompat-theme:_
-version.google.accompanist" style="text-decoration: underline;" >appcompatTheme</span>&nbsp; - <span title="Google.accompanist.flowlayout
+version.google.accompanist" style="text-decoration: underline;" >appcompatTheme</span>&nbsp; - <span title="Google.accompanist.drawablepainter
+com.google.accompanist:accompanist-drawablepainter:_
+version.google.accompanist" style="text-decoration: underline;" >drawablepainter</span>&nbsp; - <span title="Google.accompanist.flowlayout
 com.google.accompanist:accompanist-flowlayout:_
-version.google.accompanist" style="text-decoration: underline;" >flowlayout</span>&nbsp; - <span title="Google.accompanist.glide
-com.google.accompanist:accompanist-glide:_
-version.google.accompanist" style="text-decoration: underline;" >glide</span>&nbsp; - <span title="Google.accompanist.imageloadingCore
-com.google.accompanist:accompanist-imageloading-core:_
-version.google.accompanist" style="text-decoration: underline;" >imageloadingCore</span>&nbsp; - <span title="Google.accompanist.insets
+version.google.accompanist" style="text-decoration: underline;" >flowlayout</span>&nbsp; - <span title="Google.accompanist.insets
 com.google.accompanist:accompanist-insets:_
-version.google.accompanist" style="text-decoration: underline;" >insets</span>&nbsp; - <span title="Google.accompanist.pager
+version.google.accompanist" style="text-decoration: underline;" >insets</span>&nbsp; - <span title="Google.accompanist.navigationAnimation
+com.google.accompanist:accompanist-navigation-animation:_
+version.google.accompanist" style="text-decoration: underline;" >navigationAnimation</span>&nbsp; - <span title="Google.accompanist.navigationMaterial
+com.google.accompanist:accompanist-navigation-material:_
+version.google.accompanist" style="text-decoration: underline;" >navigationMaterial</span>&nbsp; - <span title="Google.accompanist.pager
 com.google.accompanist:accompanist-pager:_
-version.google.accompanist" style="text-decoration: underline;" >pager</span>&nbsp; - <span title="Google.accompanist.swiperefresh
+version.google.accompanist" style="text-decoration: underline;" >pager</span>&nbsp; - <span title="Google.accompanist.permissions
+com.google.accompanist:accompanist-permissions:_
+version.google.accompanist" style="text-decoration: underline;" >permissions</span>&nbsp; - <span title="Google.accompanist.placeholder
+com.google.accompanist:accompanist-placeholder:_
+version.google.accompanist" style="text-decoration: underline;" >placeholder</span>&nbsp; - <span title="Google.accompanist.swiperefresh
 com.google.accompanist:accompanist-swiperefresh:_
 version.google.accompanist" style="text-decoration: underline;" >swiperefresh</span>&nbsp; - <span title="Google.accompanist.systemuicontroller
 com.google.accompanist:accompanist-systemuicontroller:_
-version.google.accompanist" style="text-decoration: underline;" >systemuicontroller</span>&nbsp;</td></tr>
+version.google.accompanist" style="text-decoration: underline;" >systemuicontroller</span>&nbsp; - <span title="Google.accompanist.webview
+com.google.accompanist:accompanist-webview:_
+version.google.accompanist" style="text-decoration: underline;" >webview</span>&nbsp;</td></tr>
 <tr><td><b>Google.accompanist.insets</b></td><td><span title="Google.accompanist.insets.ui
 com.google.accompanist:accompanist-insets-ui:_
 version.google.accompanist" style="text-decoration: underline;" >ui</span>&nbsp;</td></tr>
 <tr><td><b>Google.accompanist.pager</b></td><td><span title="Google.accompanist.pager.indicators
 com.google.accompanist:accompanist-pager-indicators:_
 version.google.accompanist" style="text-decoration: underline;" >indicators</span>&nbsp;</td></tr>
+<tr><td><b>Google.accompanist.placeholder</b></td><td><span title="Google.accompanist.placeholder.material
+com.google.accompanist:accompanist-placeholder-material:_
+version.google.accompanist" style="text-decoration: underline;" >material</span>&nbsp;</td></tr>
 <tr><td><b>Google.android</b></td><td><span title="Google.android.flexbox
 com.google.android.flexbox:flexbox:_
 version.google.android.flexbox" style="text-decoration: underline;" >flexbox</span>&nbsp; - <span title="Google.android.openSourceLicensesPlugin

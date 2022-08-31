@@ -679,3 +679,15 @@ id:[androidx.lifecycle:lifecycle-runtime-testing]
 // FIXME: Replace with new artifact.
 moved:[androidx.health.connect:connect-client]
 id:[androidx.health:health-connect-client]
+
+## [WIP] Revision 14
+
+~~Google.accompanist.glide~~
+// The Glide module was deprecated and got removed in version 0.16.0
+// FIXME: Replace with Coil Compose.
+id:[com.google.accompanist:accompanist-glide]
+
+~~Google.accompanist.imageloadingCore~~
+// The imageloading module was deprecated and got removed in version 0.16.0
+// FIXME: Replace with Coil Compose.
+id:[com.google.accompanist:accompanist-imageloading-core]
