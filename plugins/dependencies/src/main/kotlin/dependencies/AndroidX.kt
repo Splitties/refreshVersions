@@ -2756,6 +2756,14 @@ object AndroidX : IsNotADependency {
 
         /** Kotlin extensions */
         val ktx = module("tracing-ktx")
+
+        /**
+         * AndroidX Tracing: Perfetto SDK
+         *
+         * ### API reference:
+         * - [androidx.tracing.perfetto](https://developer.android.com/reference/androidx/tracing/perfetto/package-summary)
+         */
+        val perfetto = module("tracing-perfetto")
     }
 
     /**

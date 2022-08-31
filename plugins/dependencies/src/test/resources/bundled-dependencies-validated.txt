@@ -276,6 +276,7 @@ androidx.test:runner
 androidx.textclassifier:textclassifier
 androidx.tracing:tracing
 androidx.tracing:tracing-ktx
+androidx.tracing:tracing-perfetto
 androidx.transition:transition
 androidx.transition:transition-ktx
 androidx.tvprovider:tvprovider

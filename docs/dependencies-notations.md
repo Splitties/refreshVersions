@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1145** Dependency Notations in **25** groups and **231** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1146** Dependency Notations in **25** groups and **231** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -684,7 +684,9 @@ androidx.test.ext:junit-ktx:_
 version.androidx.test.ext.junit" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
 <tr><td><b>AndroidX.tracing</b></td><td><span title="AndroidX.tracing.ktx
 androidx.tracing:tracing-ktx:_
-version.androidx.tracing" style="text-decoration: underline;" >ktx</span>&nbsp;</td></tr>
+version.androidx.tracing" style="text-decoration: underline;" >ktx</span>&nbsp; - <span title="AndroidX.tracing.perfetto
+androidx.tracing:tracing-perfetto:_
+version.androidx.tracing-perfetto" style="text-decoration: underline;" >perfetto</span>&nbsp;</td></tr>
 <tr><td><b>AndroidX.vectorDrawable</b></td><td><span title="AndroidX.vectorDrawable.animated
 androidx.vectordrawable:vectordrawable-animated:_
 version.androidx.vectordrawable-animated" style="text-decoration: underline;" >animated</span>&nbsp; - <span title="AndroidX.vectorDrawable.seekable

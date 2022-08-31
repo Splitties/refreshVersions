@@ -276,6 +276,7 @@ androidx.test.services..test-services=AndroidX.test.services
 androidx.test.uiautomator..uiautomator=AndroidX.test.uiAutomator
 androidx.textclassifier..textclassifier=AndroidX.textClassifier
 androidx.tracing..tracing-ktx=AndroidX.tracing.ktx
+androidx.tracing..tracing-perfetto=AndroidX.tracing.perfetto
 androidx.tracing..tracing=AndroidX.tracing
 androidx.transition..transition-ktx=AndroidX.transitionKtx
 androidx.transition..transition=AndroidX.transition
