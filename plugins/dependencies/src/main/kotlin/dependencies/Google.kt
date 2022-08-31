@@ -24,18 +24,15 @@ object Google : IsNotADependency {
 
     object Accompanist : DependencyGroup(group = "com.google.accompanist") {
 
-        val glide = module("accompanist-glide")
-        val imageloadingCore = module("accompanist-imageloading-core")
-
         val insets = Insets
 
         object Insets : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-insets") {
             val ui = module("accompanist-insets-ui")
         }
 
-        val systemuicontroller = module("accompanist-systemuicontroller")
+        val systemUiController = module("accompanist-systemuicontroller")
 
-        val appcompatTheme = module("accompanist-appcompat-theme")
+        val appCompatTheme = module("accompanist-appcompat-theme")
 
         val pager = Pager
 
@@ -43,8 +40,26 @@ object Google : IsNotADependency {
             val indicators = module("accompanist-pager-indicators")
         }
 
-        val flowlayout = module("accompanist-flowlayout")
-        val swiperefresh = module("accompanist-swiperefresh")
+        val flowLayout = module("accompanist-flowlayout")
+        val swipeRefresh = module("accompanist-swiperefresh")
+
+        val placeholder = Placeholder
+
+        object Placeholder : DependencyNotationAndGroup(
+            group = "com.google.accompanist",
+            name = "accompanist-placeholder"
+        ) {
+            val material = module("accompanist-placeholder-material")
+        }
+
+        val drawablePainter = module("accompanist-drawablepainter")
+
+        val permissions = module("accompanist-permissions")
+
+        val navigationMaterial = module("accompanist-navigation-material")
+        val navigationAnimation = module("accompanist-navigation-animation")
+
+        val webView = module("accompanist-webview")
     }
 
     val android = Android
