@@ -666,7 +666,7 @@ id:[io.ktor:ktor-velocity]
 ~~Spring.boms.springclmoud~~
 id:[org.springframework.cloud:spring-cloud-dependencies]
 
-## [WIP] Revision 13
+## Revision 13
 
 ~~AndroidX.lifecycle.runtimeKtx~~
 id:[androidx.lifecycle:lifecycle-runtime-ktx]
