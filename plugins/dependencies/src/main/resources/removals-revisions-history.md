@@ -691,3 +691,15 @@ id:[com.google.accompanist:accompanist-glide]
 // The imageloading module was deprecated and got removed in version 0.16.0
 // FIXME: Replace with Coil Compose.
 id:[com.google.accompanist:accompanist-imageloading-core]
+
+~~Google.accompanist.appcompatTheme~~
+id:[com.google.accompanist:accompanist-appcompat-theme]
+
+~~Google.accompanist.flowlayout~~
+id:[com.google.accompanist:accompanist-flowlayout]
+
+~~Google.accompanist.swiperefresh~~
+id:[com.google.accompanist:accompanist-swiperefresh]
+
+~~Google.accompanist.systemuicontroller~~
+id:[com.google.accompanist:accompanist-systemuicontroller]

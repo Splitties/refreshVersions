@@ -30,9 +30,9 @@ object Google : IsNotADependency {
             val ui = module("accompanist-insets-ui")
         }
 
-        val systemuicontroller = module("accompanist-systemuicontroller")
+        val systemUiController = module("accompanist-systemuicontroller")
 
-        val appcompatTheme = module("accompanist-appcompat-theme")
+        val appCompatTheme = module("accompanist-appcompat-theme")
 
         val pager = Pager
 
@@ -40,8 +40,8 @@ object Google : IsNotADependency {
             val indicators = module("accompanist-pager-indicators")
         }
 
-        val flowlayout = module("accompanist-flowlayout")
-        val swiperefresh = module("accompanist-swiperefresh")
+        val flowLayout = module("accompanist-flowlayout")
+        val swipeRefresh = module("accompanist-swiperefresh")
 
         val placeholder = Placeholder
 
@@ -52,14 +52,14 @@ object Google : IsNotADependency {
             val material = module("accompanist-placeholder-material")
         }
 
-        val drawablepainter = module("accompanist-drawablepainter")
+        val drawablePainter = module("accompanist-drawablepainter")
 
         val permissions = module("accompanist-permissions")
 
         val navigationMaterial = module("accompanist-navigation-material")
         val navigationAnimation = module("accompanist-navigation-animation")
 
-        val webview = module("accompanist-webview")
+        val webView = module("accompanist-webview")
     }
 
     val android = Android
