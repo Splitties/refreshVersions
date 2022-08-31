@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1143** Dependency Notations in **25** groups and **230** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1145** Dependency Notations in **25** groups and **231** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -329,7 +329,12 @@ version.androidx.core" style="text-decoration: underline;" >remoteViews</span>&n
 androidx.core:core-role:_
 version.androidx.core-role" style="text-decoration: underline;" >role</span>&nbsp; - <span title="AndroidX.core.splashscreen
 androidx.core:core-splashscreen:_
-version.androidx.core-splashscreen" style="text-decoration: underline;" >splashscreen</span>&nbsp;</td></tr>
+version.androidx.core-splashscreen" style="text-decoration: underline;" >splashscreen</span>&nbsp; - <span title="AndroidX.core.uwb
+androidx.core.uwb:uwb:_
+version.androidx.core.uwb" style="text-decoration: underline;" >uwb</span>&nbsp;</td></tr>
+<tr><td><b>AndroidX.core.uwb</b></td><td><span title="AndroidX.core.uwb.rxJava3
+androidx.core.uwb:uwb-rxjava3:_
+version.androidx.core.uwb" style="text-decoration: underline;" >rxJava3</span>&nbsp;</td></tr>
 <tr><td><b>AndroidX.customView</b></td><td><span title="AndroidX.customView.poolingContainer
 androidx.customview:customview-poolingcontainer:_
 version.androidx.customview-poolingcontainer" style="text-decoration: underline;" >poolingContainer</span>&nbsp;</td></tr>

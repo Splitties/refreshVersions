@@ -1001,6 +1001,25 @@ object AndroidX : IsNotADependency {
         val ktx = module("core-ktx")
 
         /**
+         * Public API surface for apps to use UWB (ultra-wideband) on supported devices.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/core-uwb)
+         *
+         * ## API reference:
+         * - [androidx.core.uwb](https://developer.android.com/reference/kotlin/androidx/core/uwb/package-summary)
+         * - [androidx.core.uwb.exceptions](https://developer.android.com/reference/kotlin/androidx/core/uwb/exceptions/package-summary)
+         */
+        val uwb = Uwb
+
+        object Uwb : DependencyNotationAndGroup(
+            group = "androidx.core.uwb",
+            name = "uwb"
+        ) {
+            /** 	RxJava3 integration for UWB module */
+            val rxJava3 = module(name = "uwb-rxjava3")
+        }
+
+        /**
          * To use RoleManagerCompat
          *
          * ## API reference:

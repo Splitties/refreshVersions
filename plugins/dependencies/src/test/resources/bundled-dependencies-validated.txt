@@ -77,6 +77,8 @@ androidx.constraintlayout:constraintlayout
 androidx.constraintlayout:constraintlayout-compose
 androidx.contentpager:contentpager
 androidx.coordinatorlayout:coordinatorlayout
+androidx.core.uwb:uwb
+androidx.core.uwb:uwb-rxjava3
 androidx.core:core
 androidx.core:core-animation
 androidx.core:core-animation-testing
