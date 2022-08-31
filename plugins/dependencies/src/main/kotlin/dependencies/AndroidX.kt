@@ -1578,6 +1578,16 @@ object AndroidX : IsNotADependency {
     val interpolator = DependencyNotation("androidx.interpolator", "interpolator")
 
     /**
+     * Javascript Engine is a static library you can add to your Android application in order to evaluate JavaScript.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/javascriptengine)
+     *
+     * ### API reference:
+     * - [androidx.javascriptengine](https://developer.android.com/reference/kotlin/androidx/javascriptengine/package-summary)
+     */
+    val javascriptEngine = DependencyNotation("androidx.javascriptengine", "javascriptengine")
+
+    /**
      * Write apps for Android TV devices using dpad-friendly widgets and template fragments.
      *
      * The initial release targets foldable devices,

@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1146** Dependency Notations in **25** groups and **231** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1147** Dependency Notations in **25** groups and **231** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -107,7 +107,9 @@ version.androidx.gridlayout" style="text-decoration: underline;" >gridLayout</sp
 androidx.heifwriter:heifwriter:_
 version.androidx.heifwriter" style="text-decoration: underline;" >heifWriter</span>&nbsp; - <span title="AndroidX.interpolator
 androidx.interpolator:interpolator:_
-version.androidx.interpolator" style="text-decoration: underline;" >interpolator</span>&nbsp; - <span title="AndroidX.leanback
+version.androidx.interpolator" style="text-decoration: underline;" >interpolator</span>&nbsp; - <span title="AndroidX.javascriptEngine
+androidx.javascriptengine:javascriptengine:_
+version.androidx.javascriptengine" style="text-decoration: underline;" >javascriptEngine</span>&nbsp; - <span title="AndroidX.leanback
 androidx.leanback:leanback:_
 version.androidx.leanback" style="text-decoration: underline;" >leanback</span>&nbsp; - <span title="AndroidX.loader
 androidx.loader:loader:_
