@@ -1684,6 +1684,9 @@ object AndroidX : IsNotADependency {
             /** Lifecycle only (without ViewModel or LiveData), with Kotlin extensions. */
             val ktx = module("lifecycle-runtime-ktx")
 
+            /** Compose integration with Lifecycle. */
+            val compose = module("lifecycle-runtime-compose")
+
             /**
              * Provides a `TestlifecycleOwner` that implements `LifecycleOwner` and
              * provides a thread safe mutable `Lifcycle`.

@@ -147,6 +147,7 @@ androidx.lifecycle:lifecycle-process
 androidx.lifecycle:lifecycle-reactivestreams
 androidx.lifecycle:lifecycle-reactivestreams-ktx
 androidx.lifecycle:lifecycle-runtime
+androidx.lifecycle:lifecycle-runtime-compose
 androidx.lifecycle:lifecycle-runtime-ktx
 androidx.lifecycle:lifecycle-runtime-testing
 androidx.lifecycle:lifecycle-service

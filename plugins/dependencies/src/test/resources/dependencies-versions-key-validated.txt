@@ -146,6 +146,7 @@ androidx.lifecycle..lifecycle-livedata=version.androidx.lifecycle
 androidx.lifecycle..lifecycle-process=version.androidx.lifecycle
 androidx.lifecycle..lifecycle-reactivestreams-ktx=version.androidx.lifecycle
 androidx.lifecycle..lifecycle-reactivestreams=version.androidx.lifecycle
+androidx.lifecycle..lifecycle-runtime-compose=version.androidx.lifecycle
 androidx.lifecycle..lifecycle-runtime-ktx=version.androidx.lifecycle
 androidx.lifecycle..lifecycle-runtime-testing=version.androidx.lifecycle
 androidx.lifecycle..lifecycle-runtime=version.androidx.lifecycle

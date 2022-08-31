@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1142** Dependency Notations in **25** groups and **230** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1143** Dependency Notations in **25** groups and **230** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -444,7 +444,9 @@ androidx.lifecycle:lifecycle-viewmodel-savedstate:_
 version.androidx.lifecycle" style="text-decoration: underline;" >viewModelSavedState</span>&nbsp; - <span title="AndroidX.lifecycle.viewModel
 androidx.lifecycle:lifecycle-viewmodel:_
 version.androidx.lifecycle" style="text-decoration: underline;" >viewModel</span>&nbsp;</td></tr>
-<tr><td><b>AndroidX.lifecycle.runtime</b></td><td><span title="AndroidX.lifecycle.runtime.ktx
+<tr><td><b>AndroidX.lifecycle.runtime</b></td><td><span title="AndroidX.lifecycle.runtime.compose
+androidx.lifecycle:lifecycle-runtime-compose:_
+version.androidx.lifecycle" style="text-decoration: underline;" >compose</span>&nbsp; - <span title="AndroidX.lifecycle.runtime.ktx
 androidx.lifecycle:lifecycle-runtime-ktx:_
 version.androidx.lifecycle" style="text-decoration: underline;" >ktx</span>&nbsp; - <span title="AndroidX.lifecycle.runtime.testing
 androidx.lifecycle:lifecycle-runtime-testing:_
