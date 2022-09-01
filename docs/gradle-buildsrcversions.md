@@ -1,5 +1,25 @@
 
-## The buildSrc module
+The ancestor of the *plugin* `id("de.fayard.refreshVersions")` was a *plugin* called `id("de.fayard.buildSrcVersions")`. It took advantage of the IDE integration with the buildSrc module in Gradle.
+
+The idea still makes sense for example to have better IDE support for Groovy, and in that case you can **enable it** and use the **task** ~~buildSrcVersions~~ **buildSrcLibs**.
+
+## Gradle buildSrcVersions is dead…
+
+What the former plugin did was to auto-generate the `buildSrc/.../{Libs,Versions}.kt` files above!
+
+```bash
+$ ./gradlew buildSrcVersions
+# now that would be: ./gradlew buildSrcLibs
+> Task :buildSrcVersions
+        new file:   buildSrc/build.gradle.kts
+        new file:   buildSrc/.gitignore
+        new file:   buildSrc/src/main/kotlin/Libs.kt
+        new file:   buildSrc/src/main/kotlin/Versions.kt
+```
+
+The idea was to take advantage of IntelliJ & Android Studio support for the Gradle buildSrc module.
+
+## The buildSrc module in Gradle
 
 The `buildSrc` is a Gradle module where you can write Kotlin code (with full tooling support).
 That code is then be available to all your build files - not your final application.
@@ -30,28 +50,13 @@ Finally the IDE tooling we deserve:
 - jumping to definition
 - ...
 
-
-## "gradle buildSrcVersions" is dead…
-
-The ancestor of the *plugin* `refreshVersions` was a *plugin* called `buildSrcVersions`.
-
-What it did was to auto-generate the `buildSrc/.../{Libs,Versions}.kt` files above!
-
-```bash
-$ ./gradlew buildSrcVersions
-> Task :buildSrcVersions
-        new file:   buildSrc/build.gradle.kts
-        new file:   buildSrc/.gitignore
-        new file:   buildSrc/src/main/kotlin/Libs.kt
-        new file:   buildSrc/src/main/kotlin/Versions.kt
-```
-
-## …long life "gradle buildSrcLibs"!
+## Long life to "gradle buildSrcLibs"!
 
 The `Versions.kt` file was replaced by a technically better solution, the `versions.properties` file.
 
-That said, the `Libs.kt` file still has its use cases, so in your `settings.gradle(.kts)` file,
-you can add the following:
+That said, the `Libs.kt` file still has its use cases, for example to have better IDE support for Groovy.
+
+Enable it in your `settings.gradle(.kts)` file:
 
 ```groovy
 refreshVersions {
@@ -59,7 +64,9 @@ refreshVersions {
 }
 ```
 
-That will enable the task `buildSrcLibs`, which also has an alias: `buildSrcVersions` for easier transition for existing users.
+The task `buildSrcLibs` is now available
+
+(It also has an alias: `buildSrcVersions` for easier transition for existing users).
 
 Use it like this:
 
