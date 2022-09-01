@@ -68,7 +68,6 @@ nav:
   - 'Add Dependencies': add-dependencies.md
   - 'Built-in Dependency Notations': dependencies-notations.md
   - 'Update Dependencies': update-dependencies.md
-  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
   - 'RefreshVersionsBot': refreshversions-bot.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing':
@@ -79,6 +78,8 @@ nav:
     - 'Development process': contributing/submitting-prs/dev-process.md
     - 'Dependency notations': contributing/submitting-prs/dependency-notations-updates.md
   - 'Bonus: Gradle tips and tricks': gradle-tips.md
+  - 'legacy':
+      - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
 
 plugins:
   - search
