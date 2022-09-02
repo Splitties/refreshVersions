@@ -50,13 +50,16 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         val catalog = OutputFile.GRADLE_VERSIONS_CATALOG
 
         val builtInDependencies = getArtifactNameToConstantMapping()
-            .map { Library(it.group, it.artifact, "_") }
 
         val allDependencies: List<Library> = project.findDependencies()
 
         val dependenciesToUse = when {
             withAllLibraries -> allDependencies
-            else -> allDependencies.filter { it.copy(version = "_") !in builtInDependencies }
+            else -> allDependencies.filter {
+                builtInDependencies.none { builtInDependency ->
+                    builtInDependency.group == it.group && builtInDependency.artifact == it.name
+                }
+            }
         }
 
         val plugins = UsedPluginsTracker.usedPluginsWithoutEntryInVersionsFile +
