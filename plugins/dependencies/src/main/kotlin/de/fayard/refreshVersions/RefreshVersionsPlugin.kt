@@ -165,22 +165,6 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     private fun registerDependenciesTask(project: Project) {
         if (project != project.rootProject) return // We want the tasks only for the root project
 
-        project.tasks.register<RefreshVersionsDependenciesMigrationTask>(
-            RefreshVersionsDependenciesMigrationTask.TASK_NAME
-        ) {
-            description = RefreshVersionsDependenciesMigrationTask.DESCRIPTION
-            group = RefreshVersionsCorePlugin.GROUP
-            finalizedBy(RefreshVersionsTask.TASK_NAME)
-            skipConfigurationCache()
-        }
-
-        project.tasks.register<RefreshVersionsDependenciesMappingTask>(
-            name = RefreshVersionsDependenciesMappingTask.TASK_NAME
-        ) {
-            description = RefreshVersionsDependenciesMappingTask.DESCRIPTION
-            group = RefreshVersionsCorePlugin.GROUP
-        }
-
         project.tasks.register<RefreshVersionsCatalogTask>(
             name = RefreshVersionsCatalogTask.TASK_NAME
         ) {
@@ -196,6 +180,24 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             description = RefreshVersionsMigrateTask.DESCRIPTION
             group = RefreshVersionsCorePlugin.GROUP
             skipConfigurationCache()
+        }
+
+        if (FeatureFlag.OLD_TASKS.isEnabled) {
+            project.tasks.register<RefreshVersionsDependenciesMigrationTask>(
+                RefreshVersionsDependenciesMigrationTask.TASK_NAME
+            ) {
+                description = RefreshVersionsDependenciesMigrationTask.DESCRIPTION
+                group = RefreshVersionsCorePlugin.GROUP
+                finalizedBy(RefreshVersionsTask.TASK_NAME)
+                skipConfigurationCache()
+            }
+
+            project.tasks.register<RefreshVersionsDependenciesMappingTask>(
+                name = RefreshVersionsDependenciesMappingTask.TASK_NAME
+            ) {
+                description = RefreshVersionsDependenciesMappingTask.DESCRIPTION
+                group = RefreshVersionsCorePlugin.GROUP
+            }
         }
     }
 

@@ -23,6 +23,7 @@ plugins {
 
 refreshVersions {
     featureFlags {
+        enable(OLD_TASKS)
         enable(LIBS)
         disable(GRADLE_UPDATES)
         disable(VERSIONS_CATALOG)

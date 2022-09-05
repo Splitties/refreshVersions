@@ -36,6 +36,7 @@ enum class FeatureFlag(private val enabledByDefault: Boolean?) {
     // Instead, mark it as deprecated, like this: @Deprecated("your message here")
 
     GRADLE_UPDATES(enabledByDefault = true),
+    OLD_TASKS(enabledByDefault = false),
     LIBS(enabledByDefault = false),
     NPM_IMPLICIT_RANGE(enabledByDefault = false),
     VERSIONS_CATALOG(enabledByDefault = true),
@@ -54,13 +55,13 @@ enum class FeatureFlag(private val enabledByDefault: Boolean?) {
      * Intended usage:
      * `if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions() else emptyList()`
      */
-    internal val isEnabled: Boolean
+    @InternalRefreshVersionsApi val isEnabled: Boolean
         get() = when (enabledByDefault) {
             false -> userSettings[this] == true
             true -> userSettings[this] != false
             null -> false
         }
 
-    internal val isNotEnabled
+    @InternalRefreshVersionsApi val isNotEnabled
         get() = isEnabled.not()
 }
