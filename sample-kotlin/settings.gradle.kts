@@ -26,6 +26,7 @@ refreshVersions {
         enable(LIBS)
         disable(GRADLE_UPDATES)
         disable(VERSIONS_CATALOG)
+        enable(KOTLIN_SCRIPTS)
     }
 
     extraArtifactVersionKeyRules(file("refreshVersions-extra-rules.txt"))

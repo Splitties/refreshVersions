@@ -39,6 +39,7 @@ enum class FeatureFlag(private val enabledByDefault: Boolean?) {
     LIBS(enabledByDefault = false),
     NPM_IMPLICIT_RANGE(enabledByDefault = false),
     VERSIONS_CATALOG(enabledByDefault = true),
+    KOTLIN_SCRIPTS(enabledByDefault = false),
     ;
 
     companion object {
