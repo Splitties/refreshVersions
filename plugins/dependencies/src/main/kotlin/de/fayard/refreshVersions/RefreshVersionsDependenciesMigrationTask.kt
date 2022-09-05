@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.internal.promptProjectSelection
 import de.fayard.refreshVersions.internal.runInteractiveMigrationToDependenciesConstants
 import de.fayard.refreshVersions.core.internal.cli.AnsiColor
@@ -9,6 +10,14 @@ import org.gradle.api.logging.configuration.ConsoleOutput
 import org.gradle.api.tasks.TaskAction
 
 open class RefreshVersionsDependenciesMigrationTask : DefaultTask() {
+
+    @InternalRefreshVersionsApi
+    companion object {
+        const val TASK_NAME = "migrateToRefreshVersionsDependenciesConstants"
+        const val DESCRIPTION =
+            "Assists migration from hardcoded dependencies to constants of " +
+                "the refreshVersions dependencies plugin"
+    }
 
     @TaskAction
     fun taskActionMigrate() {

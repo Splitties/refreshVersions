@@ -2,12 +2,19 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.DependencySelection
 import de.fayard.refreshVersions.core.FeatureFlag
+import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.Incubating
 import java.io.File
 
 open class RefreshVersionsExtension {
+
+    @InternalRefreshVersionsApi
+    companion object {
+        const val EXTENSION_NAME = "refreshVersions"
+    }
 
     var versionsPropertiesFile: File? = null
     var extraArtifactVersionKeyRules: List<String> = emptyList()

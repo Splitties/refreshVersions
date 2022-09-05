@@ -1,7 +1,9 @@
 package de.fayard.buildSrcLibs
 
+import de.fayard.buildSrcLibs.BuildSrcTask.Companion.TASK_NAME_buildSrcLibs
+import de.fayard.buildSrcLibs.BuildSrcTask.Companion.TASK_NAME_buildSrcVersions
+import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.internal.skipConfigurationCache
-import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.register
@@ -9,20 +11,17 @@ import org.gradle.kotlin.dsl.register
 class BuildSrcLibsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
-        project.tasks.register<BuildSrcLibsTask>(
-            name = "buildSrcLibs"
-        ) {
-            group = "refreshVersions"
-            description = "Update buildSrc/src/main/kotlin/Libs.kt"
+        listOf(TASK_NAME_buildSrcLibs, TASK_NAME_buildSrcVersions).forEach {
+            name -> registerBuildSrcTAsk(project, name)
+        }
+    }
+
+    private fun registerBuildSrcTAsk(project: Project, name: String) {
+        project.tasks.register<BuildSrcTask>(name) {
+            group = RefreshVersionsCorePlugin.GROUP
+            description = BuildSrcTask.DESCRIPTION
             outputs.upToDateWhen { false }
             skipConfigurationCache()
-        }
-        project.tasks.register<DefaultTask>(
-            name = "buildSrcVersions"
-        ) {
-            group = "refreshVersions"
-            description = "Update buildSrc/src/main/kotlin/Libs.kt"
-            dependsOn("buildSrcLibs")
         }
     }
 }

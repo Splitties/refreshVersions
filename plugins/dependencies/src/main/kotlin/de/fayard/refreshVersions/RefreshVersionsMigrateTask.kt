@@ -3,6 +3,7 @@ package de.fayard.refreshVersions
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
+import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
@@ -14,6 +15,12 @@ import org.intellij.lang.annotations.Language
 import java.io.File
 
 open class RefreshVersionsMigrateTask : DefaultTask() {
+
+    @InternalRefreshVersionsApi
+    companion object {
+        const val TASK_NAME = "refreshVersionsMigrate"
+        const val DESCRIPTION = "Migrate build to refreshVersions"
+    }
 
     @Input
     @Option(option = "toml", description = "Use libraries from ${VersionsCatalogs.LIBS_VERSIONS_TOML} before built-in dependency notations")
@@ -54,6 +61,7 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
                 $ANSI_GREEN./gradlew refreshVersions$ANSI_RESET
             """.trimIndent())
     }
+
 }
 
 

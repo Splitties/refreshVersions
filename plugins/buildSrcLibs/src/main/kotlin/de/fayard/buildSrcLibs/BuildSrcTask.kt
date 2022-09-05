@@ -4,6 +4,7 @@ import com.squareup.kotlinpoet.FileSpec
 import de.fayard.buildSrcLibs.internal.*
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.internal.Case
+import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
 import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.checkModeAndNames
@@ -13,7 +14,14 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
 @Suppress("UnstableApiUsage")
-open class BuildSrcLibsTask : DefaultTask() {
+open class BuildSrcTask : DefaultTask() {
+
+    @InternalRefreshVersionsApi
+    companion object {
+        const val TASK_NAME_buildSrcLibs = "buildSrcLibs"
+        const val TASK_NAME_buildSrcVersions = "buildSrcVersions"
+        const val DESCRIPTION = "Update buildSrc/src/main/kotlin/Libs.kt"
+    }
 
     @TaskAction
     fun addMissingEntries() {
