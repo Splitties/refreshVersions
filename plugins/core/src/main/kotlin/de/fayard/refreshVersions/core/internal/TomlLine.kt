@@ -119,7 +119,7 @@ private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
             value.isNotBlank() -> {
                 val (group, name) = splitByColon
                 val version = splitByColon.getOrNull(2)
-                lineMap(group = group, name = name, version = version, versionRef = null)
+                lineMap(group = group, name = name, version = version)
             }
             else -> {
                 map["module"]?.also { module ->
@@ -138,12 +138,10 @@ private fun lineMap(
     group: String,
     name: String,
     version: String?,
-    versionRef: String?
 ) = listOfNotNull(
     "group" to group,
     "name" to name,
     version?.let { "version" to it },
-    versionRef?.let { "version.ref" to it }
 ).toMap()
 
 private fun TomlLine.guessTomlLineKind(): TomlLine.Kind {
