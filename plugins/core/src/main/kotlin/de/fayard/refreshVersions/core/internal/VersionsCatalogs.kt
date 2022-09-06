@@ -82,7 +82,7 @@ object VersionsCatalogs {
         versionKeyReader: ArtifactVersionKeyReader = RefreshVersionsConfigHolder.versionKeyReader,
         dependenciesAndNames: Map<Dependency, String>,
         currentText: String,
-        withVersions: Boolean,
+        moveVersionsToCatalog: Boolean,
         plugins: List<Dependency>
     ): String {
         val dependencies = dependenciesAndNames.keys.toList()
@@ -101,7 +101,7 @@ object VersionsCatalogs {
                 versionKeyReader = versionKeyReader,
                 dependenciesAndNames = dependenciesAndNames,
                 versionRefMap = versionRefMap,
-                withVersions = withVersions
+                moveVersionsToCatalog = moveVersionsToCatalog
             )
         )
         toml.merge(TomlSection.Versions, addVersions(dependenciesAndNames, versionRefMap))
@@ -175,7 +175,7 @@ object VersionsCatalogs {
         versionKeyReader: ArtifactVersionKeyReader,
         dependenciesAndNames: Map<Dependency, String>,
         versionRefMap: Map<Dependency, TomlVersionRef?>,
-        withVersions: Boolean,
+        moveVersionsToCatalog: Boolean,
     ): List<TomlLine> = dependenciesAndNames.keys.filterNot { dependency ->
         dependency.name.endsWith("gradle.plugin") && dependency.group != null
     }.flatMap { dependency: Dependency ->
@@ -194,7 +194,7 @@ object VersionsCatalogs {
         } else {
             val version = when {
                 dependency.version == null -> null
-                withVersions.not() -> "_"
+                moveVersionsToCatalog.not() -> "_"
                 else -> when (
                     val versionKey = getVersionPropertyName(
                         moduleId = ModuleId.Maven(group, dependency.name),

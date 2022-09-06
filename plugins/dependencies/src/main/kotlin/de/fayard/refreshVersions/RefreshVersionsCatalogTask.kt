@@ -6,6 +6,7 @@ import de.fayard.refreshVersions.core.internal.Deps
 import de.fayard.refreshVersions.core.internal.Library
 import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
 import de.fayard.refreshVersions.core.internal.OutputFile
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.UsedPluginsTracker
 import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
@@ -24,12 +25,37 @@ import org.gradle.util.GradleVersion
 open class RefreshVersionsCatalogTask : DefaultTask() {
 
     @Input
-    @Option(option = "versions", description = "Add the versions in $LIBS_VERSIONS_TOML")
-    var withVersions: Boolean = false
+    @Option(
+        option = "versions-keep-placeholders",
+        description = "Keep versions placeholders in $LIBS_VERSIONS_TOML and don't move versions into the catalog."
+    )
+    var keepVersionsPlaceholders: Boolean = false
 
     @Input
-    @Option(option = "all", description = "Add all libraries in $LIBS_VERSIONS_TOML")
-    var withAllLibraries: Boolean = false
+    @Option(
+        option = "versions-move-to-catalog",
+        description = "Move versions into $LIBS_VERSIONS_TOML instead of keeping versions placeholders."
+    )
+    var moveVersionsToCatalog: Boolean = false
+
+    @Input
+    @Option(
+        option = "copy-built-in-dependency-notations-to-catalog",
+        description = "Copy built-in dependency notations to $LIBS_VERSIONS_TOML"
+    )
+    var copyBuiltInDependencyNotationsToCatalog: Boolean = false
+
+    private fun checkOptions() {
+        if (keepVersionsPlaceholders == moveVersionsToCatalog) {
+            val versionsPropertiesFile = RefreshVersionsConfigHolder.versionsPropertiesFile
+            val errorMessage = """
+                |You need to specify exactly one of the following 2 flags:
+                |--versions-keep-placeholders, if you want to keep the versions in the ${versionsPropertiesFile.name} file
+                |--versions-move-to-catalog, if you want to have all the versions in the $LIBS_VERSIONS_TOML file
+            """.trimMargin()
+            throw IllegalArgumentException(errorMessage)
+        }
+    }
 
     @TaskAction
     fun refreshVersionsCatalogAction() {
@@ -42,6 +68,7 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
             """.trimMargin()
             )
         }
+        checkOptions()
 
         // Update versions.properties
         addMissingEntriesInVersionsProperties(project)
@@ -54,7 +81,7 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         val allDependencies: List<Library> = project.findDependencies()
 
         val dependenciesToUse = when {
-            withAllLibraries -> allDependencies
+            copyBuiltInDependencyNotationsToCatalog -> allDependencies
             else -> allDependencies.filter {
                 builtInDependencies.none { builtInDependency ->
                     builtInDependency.group == it.group && builtInDependency.artifact == it.name
@@ -77,7 +104,7 @@ open class RefreshVersionsCatalogTask : DefaultTask() {
         val newText = VersionsCatalogs.generateVersionsCatalogText(
             dependenciesAndNames = dependenciesAndNames,
             currentText = currentText,
-            withVersions = withVersions,
+            moveVersionsToCatalog = moveVersionsToCatalog,
             plugins = plugins
         )
         catalog.writeText(newText)
