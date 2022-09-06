@@ -66,12 +66,6 @@ internal class VersionsCatalogUpdater(
 
         val isObject = initialLine.unparsedValue.endsWith("}")
 
-        fun suffix(version: MavenVersion) = when {
-            isObject -> """= "${version.value}" }"""
-            initialLine.section == TomlSection.Versions -> """= "${version.value}""""
-            else -> """:${version.value}""""
-        }
-
         val commentPrefix = "##"
         val availableSymbol = "⬆"
         val versionPrefix = when {
