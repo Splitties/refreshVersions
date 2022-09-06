@@ -55,7 +55,7 @@ internal fun TomlLine(
     section: TomlSection,
     key: String,
     value: String
-): TomlLine = TomlLine(section, """$key = "$value"""")
+): TomlLine = TomlLine(section = section, text = """$key = "$value"""")
 
 internal fun TomlLine(
     section: TomlSection,
@@ -64,8 +64,7 @@ internal fun TomlLine(
 ): TomlLine = when (dependency.version) {
     null -> TomlLine(
         section = section,
-        key = key,
-        value = """${dependency.group}:${dependency.name}"""
+        text = """$key = { module = "${dependency.group}:${dependency.name}" }"""
     )
     else -> TomlLine(
         section = section,
