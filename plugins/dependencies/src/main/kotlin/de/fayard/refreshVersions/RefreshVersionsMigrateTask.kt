@@ -5,9 +5,13 @@ import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
 import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
+import de.fayard.refreshVersions.core.internal.skipConfigurationCache
+import de.fayard.refreshVersions.internal.generateVersionsCatalogFromCurrentDependencies
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
+import org.gradle.api.Project
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import org.intellij.lang.annotations.Language
@@ -16,44 +20,105 @@ import java.io.File
 open class RefreshVersionsMigrateTask : DefaultTask() {
 
     @Input
-    @Option(option = "toml", description = "Use libraries from ${VersionsCatalogs.LIBS_VERSIONS_TOML} before built-in dependency notations")
-    var tomlFirst: Boolean = false
+    @Optional
+    @Option(
+        option = "mode",
+        description = "Which migration mode to use."
+    )
+    var mode: Mode? = null
 
-    @TaskAction
-    fun refreshVersionsMissingEntries() {
-        addMissingEntriesInVersionsProperties(project)
+    enum class Mode {
+        VersionsPropertiesOnly,
+        VersionsPropertiesAndPlaceholdersInCatalog,
+        VersionCatalogAndVersionProperties,
+        VersionCatalogOnly
+    }
+
+    init {
+        group = "refreshVersions"
+        skipConfigurationCache()
+    }
+
+    private fun requireMode(): Mode = requireNotNull(mode) {
+        buildString {
+            appendLine("You need to provide which mode you want to run the migration in.")
+            appendLine("Specify the `mode` option in one of the following ways and re-run.")
+            Mode.values().forEach { mode ->
+                appendLine("--mode=$mode")
+            }
+        }
     }
 
     @TaskAction
     fun migrateBuild() {
-        val versionsCatalogMapping: Map<ModuleId.Maven, String> =
-            VersionsCatalogs.dependencyAliases(project.getVersionsCatalog())
-
-        val builtInDependenciesMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
-            .associateShortestByMavenCoordinate()
-
-        val dependencyMapping = if (tomlFirst) {
-            builtInDependenciesMapping + versionsCatalogMapping
-        } else {
-            versionsCatalogMapping + builtInDependenciesMapping
-        }
-
-        val findFiles = findFilesWithDependencyNotations(project.rootDir).toSet()
-        findFiles.forEach { buildFile ->
-            migrateFileIfNeeded(buildFile, dependencyMapping)
-        }
-        project.allprojects {
-            if (buildFile !in findFiles) {
-                migrateFileIfNeeded(buildFile, dependencyMapping)
+        val mode = requireMode()
+        when (mode) {
+            Mode.VersionsPropertiesOnly -> Unit
+            Mode.VersionsPropertiesAndPlaceholdersInCatalog -> {
+                generateVersionsCatalogFromCurrentDependencies(
+                    project = project,
+                    keepVersionsPlaceholders = true,
+                    copyBuiltInDependencyNotationsToCatalog = false
+                )
+            }
+            Mode.VersionCatalogAndVersionProperties -> {
+                generateVersionsCatalogFromCurrentDependencies(
+                    project = project,
+                    keepVersionsPlaceholders = false,
+                    copyBuiltInDependencyNotationsToCatalog = false
+                )
+            }
+            Mode.VersionCatalogOnly -> {
+                generateVersionsCatalogFromCurrentDependencies(
+                    project = project,
+                    keepVersionsPlaceholders = false,
+                    copyBuiltInDependencyNotationsToCatalog = true
+                )
             }
         }
-        println()
-        println("""
+        migrateBuildToRefreshVersions(
+            project = project,
+            versionCatalogOnly = mode == Mode.VersionCatalogOnly
+        )
+    }
+}
+
+internal fun migrateBuildToRefreshVersions(
+    project: Project,
+    versionCatalogOnly: Boolean
+) {
+   if (versionCatalogOnly.not()) {
+       addMissingEntriesInVersionsProperties(project)
+   }
+    val versionsCatalogMapping: Map<ModuleId.Maven, String> =
+        VersionsCatalogs.dependencyAliases(project.getVersionsCatalog())
+
+    val builtInDependenciesMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
+        .associateShortestByMavenCoordinate()
+
+    val dependencyMapping = if (versionCatalogOnly) {
+        versionsCatalogMapping
+    } else {
+        versionsCatalogMapping + builtInDependenciesMapping
+    }
+
+    val findFiles = findFilesWithDependencyNotations(project.rootDir).toSet()
+    findFiles.forEach { buildFile ->
+        migrateFileIfNeeded(buildFile, dependencyMapping)
+    }
+    project.allprojects {
+        if (buildFile !in findFiles) {
+            migrateFileIfNeeded(buildFile, dependencyMapping)
+        }
+    }
+    println()
+    println(
+        """
             To find available updates, run this:
 
                 $ANSI_GREEN./gradlew refreshVersions$ANSI_RESET
-            """.trimIndent())
-    }
+        """.trimIndent()
+    )
 }
 
 

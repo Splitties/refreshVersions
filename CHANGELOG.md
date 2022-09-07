@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased] Version 0.41.0 (2022-08-26)
+## [Unreleased] Version 0.41.0 (2022-09-07)
 
 ### Highlights
 
@@ -18,7 +18,9 @@ Note that both work simultaneously, so you can have some versions in the propert
 
 What if you don't use versions catalogs yet, but want to make the jump?
 Along with support for them, we also brought a migration facility!
-To use it… TK
+
+It lives right into the `refreshVersionsMigrate` task you might already be familiar with.
+The task will now require you to specify which mode you want to run it in, listing all the different ones, among which you will find 3 that relate to versions catalog support.
 
 ### Fixes
 

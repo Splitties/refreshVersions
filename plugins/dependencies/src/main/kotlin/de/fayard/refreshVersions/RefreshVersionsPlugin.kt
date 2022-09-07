@@ -2,7 +2,6 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
-import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
 import de.fayard.refreshVersions.core.internal.skipConfigurationCache
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
@@ -183,21 +182,12 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 println(getArtifactNameToConstantMapping().joinToString("\n"))
             }
         }
-        project.tasks.register<RefreshVersionsCatalogTask>(
-            name = "refreshVersionsCatalog"
-        ) {
-            group = "refreshVersions"
-            description = "Update $LIBS_VERSIONS_TOML"
-            outputs.upToDateWhen { false }
-            skipConfigurationCache()
-        }
 
         project.tasks.register<RefreshVersionsMigrateTask>(
             name = "refreshVersionsMigrate"
         ) {
             group = "refreshVersions"
             description = "Migrate build to refreshVersions"
-            skipConfigurationCache()
         }
     }
 
