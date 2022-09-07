@@ -1,14 +1,17 @@
 package de.fayard.refreshVersions.core.internal
 
 import org.gradle.api.Task
-import kotlin.reflect.full.memberFunctions
+import org.gradle.util.GradleVersion
 
 @InternalRefreshVersionsApi
 fun Task.skipConfigurationCache() {
-    this::class.memberFunctions
-        .firstOrNull { it.name == "notCompatibleWithConfigurationCache" }
-        ?.call(this, "Task $name does not support Configuration Cache")
-        ?: run {
-            println("warning: task $name not compatible with the configuration cache.")
-        }
+    if (GradleVersion.current() < GradleVersion.version("7.4")) return
+    try {
+        @Suppress("UnstableApiUsage")
+        notCompatibleWithConfigurationCache("Task $name does not support Configuration Cache")
+//        println("warning: task $name not compatible with the configuration cache.")
+    } catch (t: Throwable) {
+        // Catch in case the function is renamed/removed in future Gradle versions.
+        println(t)
+    }
 }
