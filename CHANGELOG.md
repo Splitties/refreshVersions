@@ -2,25 +2,21 @@
 
 ## [Unreleased] Version 0.41.0 (2022-09-07)
 
-### Highlights
+### Support for Versions Catalogs! 🎉
 
-1. First class support for Versions Catalogs! 🎉
-2. Semi-automatic migration to Versions Catalogs 😎
-3. First class support for `versionFor`: refreshVersions now finds updates for `AndroidX.compose.compiler`! 👌
-4. Lots of built-in dependency notations updates, [now all available on the dedicated page](https://jmfayard.github.io/refreshVersions/dependencies-notations/)! 📕
+**Versions Catalog** is Gradle 7.4+ solution for storing dependencies and versions in the `gradle/libs.versions.toml` file. It is similar in spirit to the `versions.properties` file **and we are happy to add support for it**:
 
-### New features
+- `./gradlew refreshVersions` will now add available updates as comments inside `gradle/libs.versions.toml`
+- `./gradlew refreshVersionsMigrate --mode=VersionCatalogAndVersionProperties` will **generate a versions catalog and migrate your build to use it** if you don't have one already.
+- this is a big and new feature, so if you have issues, [please provide feedback in this thread](https://github.com/jmfayard/refreshVersions/discussions/592).
 
-We are very excited to release built-in support for Gradle's versions catalogs!
-If you use the default version catalog, in the `gradle/libs.versions.toml` file, running the refreshVersions task will automatically update it with new versions, granted the versions are actually there.
-If you use the version placeholder (`_`) in place of the version, the `refreshVersions` task will work as usual, putting the available updates in the `versions.properties`.
-Note that both work simultaneously, so you can have some versions in the properties file, and some other ones in the toml file.
+All of this is [covered in the friendly documentation](https://github.com/jmfayard/drafts/wiki/RefreshVersions-%E2%99%A5%EF%B8%8F-Gradle-Version-Catalog).
 
-What if you don't use versions catalogs yet, but want to make the jump?
-Along with support for them, we also brought a migration facility!
+### New featues
 
-It lives right into the `refreshVersionsMigrate` task you might already be familiar with.
-The task will now require you to specify which mode you want to run it in, listing all the different ones, among which you will find 3 that relate to versions catalog support.
+1. Lots of built-in dependency notations updates, [now all available on the dedicated page](https://jmfayard.github.io/refreshVersions/dependencies-notations/)! 📕
+2. First class support for `versionFor`: refreshVersions now finds updates for `AndroidX.compose.compiler`! 👌
+
 
 ### Fixes
 
