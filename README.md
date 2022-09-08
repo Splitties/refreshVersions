@@ -39,9 +39,21 @@ refreshVersions { // Optional: configure the plugin
 
 ## Usage
 
+Make sure the project is correctly set up (see just above).
+
 **Migrate project:**
 
-`./gradlew refreshVersionsMigrate`
+The `refreshVersionsMigrate` task can help you migrate your project in a few minutes, or less.
+
+It requires a `mode` option. You can run it without it to see the complete list.
+
+If you want to use only `versions.properties` and the [built-in dependencies notations](https://jmfayard.github.io/refreshVersions/dependencies-notations/), run:
+
+`./gradlew refreshVersionsMigrate --mode=VersionsPropertiesOnly`
+
+If you want to [also use Gradle's Versions Catalogs](https://github.com/jmfayard/drafts/wiki/RefreshVersions-%E2%99%A5%EF%B8%8F-Gradle-Version-Catalog), run:
+
+`./gradlew refreshVersionsMigrate --mode=VersionCatalogAndVersionProperties`
 
 **Find available updates in `versions.properties`:**
 
