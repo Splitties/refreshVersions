@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased] Version 0.41.0 (2022-09-07)
+## [Unreleased] Version 0.41.0 (2022-09-08)
 
 ### Support for Versions Catalogs! 🎉
 
@@ -12,16 +12,53 @@
 
 All of this is [covered in the friendly documentation](https://github.com/jmfayard/drafts/wiki/RefreshVersions-%E2%99%A5%EF%B8%8F-Gradle-Version-Catalog).
 
-### New featues
+### Better support for `versionFor`, and Jetpack Compose!
 
-1. Lots of built-in dependency notations updates, [now all available on the dedicated page](https://jmfayard.github.io/refreshVersions/dependencies-notations/)! 📕
-2. First class support for `versionFor`: refreshVersions now finds updates for `AndroidX.compose.compiler`! 👌
+#### Before
 
+`versionFor` was helpful when you need to access a version located in the `versions.properties` file, but if there was no dependency using it, you'd never see any updates.
+For projects/modules using Jetpack Compose from Google, that meant you'd never see any updates for the compiler, and you'd need to look it up yourself.
+Also, the version entry would be marked as unused, or would be the wrong one if you shared it with other Compose artifacts since [the compiler now has its own versioning track](https://android-developers.googleblog.com/2022/06/independent-versioning-of-Jetpack-Compose-libraries.html).
+
+#### Now
+
+Now, passing a dependency notation such as `AndroidX.compose.compiler` to `versionFor` is exactly the same as if you used the dependency somewhere in the project:
+
+You'll get all the updates, and if the version is not yet specified in the `versions.properties` file, as usual, refreshVersions will try to find the latest most stable version available, plus it will also add the available comments for any newer, less stable version.
+That makes it even easier to start a project with Jetpack Compose!
+
+With this in a `build.gradle.kts` file:
+
+```kts
+android {
+    composeOptions {
+        kotlinCompilerExtensionVersion = versionFor(AndroidX.compose.compiler) // Kotlin DSL
+        kotlinCompilerExtensionVersion = versionFor(project, AndroidX.compose.compiler) // Groovy DSL
+    }
+}
+```
+
+_`AndroidX.compose.compiler` is equivalent to `"androidx.compose.compiler:compiler:_"`._
+
+You'll get that in the `versions.properties` file if you were on version `1.3.0-rc01`:
+
+```properties
+version.androidx.compose.compiler=1.3.0-rc01
+##                    # available=1.3.0-rc02
+##                    # available=1.3.0
+```
+
+### New page for all the built-in dependency notations 📕
+
+To make it easy to start new projects, new modules, or using a common library, we spent a lot of time adding built-in dependency notations for Kotlin, kotlinx, AndroidX, and more.
+
+However, it wasn't so easy to know that they exist.
+That's why we made [a dedicated page where you can find them all](https://jmfayard.github.io/refreshVersions/dependencies-notations/)! Let us know how helpful it is to you!
 
 ### Fixes
 
 - `rejectVersionIf { … }` had an issue: its removal would not be taken into account until the Gradle daemon would be killed. This now behaves correctly.
-- We were ignoring repositories defined in `pluginManagement { … }`, which might have led to Gradle plugin updates being missed by refreshVersions. Now, we lookup these repositories as well.
+- We were ignoring repositories defined in `pluginManagement { … }`, which might have led to Gradle plugin updates being missed by refreshVersions. Now, we look up these repositories as well.
 
 ### New dependency notations:
 
