@@ -25,7 +25,6 @@ refreshVersions {
     featureFlags {
         enable(LIBS)
         disable(GRADLE_UPDATES)
-        disable(VERSIONS_CATALOG)
     }
 
     extraArtifactVersionKeyRules(file("refreshVersions-extra-rules.txt"))
