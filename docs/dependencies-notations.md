@@ -1583,9 +1583,9 @@ version.ktor" style="text-decoration: underline;" >json</span>&nbsp; - <span tit
 io.ktor:ktor-client-logging:_
 version.ktor" style="text-decoration: underline;" >logging</span>&nbsp; - <span title="JetBrains.ktor.client.mock
 io.ktor:ktor-client-mock:_
-version.ktor" style="text-decoration: underline;" >mock</span>&nbsp; - <span title="JetBrains.ktor.client.okhttp
+version.ktor" style="text-decoration: underline;" >mock</span>&nbsp; - <span title="JetBrains.ktor.client.okHttp
 io.ktor:ktor-client-okhttp:_
-version.ktor" style="text-decoration: underline;" >okhttp</span>&nbsp; - <span title="JetBrains.ktor.client.resources
+version.ktor" style="text-decoration: underline;" >okHttp</span>&nbsp; - <span title="JetBrains.ktor.client.resources
 io.ktor:ktor-client-resources:_
 version.ktor" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="JetBrains.ktor.client.serialization
 io.ktor:ktor-client-serialization:_
@@ -1956,9 +1956,9 @@ version.ktor" style="text-decoration: underline;" >json</span>&nbsp; - <span tit
 io.ktor:ktor-client-logging:_
 version.ktor" style="text-decoration: underline;" >logging</span>&nbsp; - <span title="Ktor.client.mock
 io.ktor:ktor-client-mock:_
-version.ktor" style="text-decoration: underline;" >mock</span>&nbsp; - <span title="Ktor.client.okhttp
+version.ktor" style="text-decoration: underline;" >mock</span>&nbsp; - <span title="Ktor.client.okHttp
 io.ktor:ktor-client-okhttp:_
-version.ktor" style="text-decoration: underline;" >okhttp</span>&nbsp; - <span title="Ktor.client.resources
+version.ktor" style="text-decoration: underline;" >okHttp</span>&nbsp; - <span title="Ktor.client.resources
 io.ktor:ktor-client-resources:_
 version.ktor" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="Ktor.client.serialization
 io.ktor:ktor-client-serialization:_

@@ -50,7 +50,7 @@ object Ktor : DependencyGroup(
         val jsonTests = module("ktor-client-json-tests")
         val logging = module("ktor-client-logging")
         val mock = module("ktor-client-mock")
-        val okhttp = module("ktor-client-okhttp")
+        val okHttp = module("ktor-client-okhttp")
         val resources = module("ktor-client-resources")
         val serialization = module("ktor-client-serialization")
         val tests = module("ktor-client-tests")
