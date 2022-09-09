@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1153** Dependency Notations in **25** groups and **233** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1153** Dependency Notations in **25** groups and **234** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -2673,11 +2673,7 @@ com.squareup.moshi:moshi:_
 version.moshi" style="text-decoration: underline;" >javaReflect</span>&nbsp;</td></tr>
 <tr><td><b>Square.okHttp3</b></td><td><span title="Square.okHttp3.loggingInterceptor
 com.squareup.okhttp3:logging-interceptor:_
-version.okhttp3" style="text-decoration: underline;" >loggingInterceptor</span>&nbsp; - <span title="Square.okHttp3.mockWebServer3Junit4
-com.squareup.okhttp3:mockwebserver3-junit4:_
-version.okhttp3" style="text-decoration: underline;" >mockWebServer3Junit4</span>&nbsp; - <span title="Square.okHttp3.mockWebServer3Junit5
-com.squareup.okhttp3:mockwebserver3-junit5:_
-version.okhttp3" style="text-decoration: underline;" >mockWebServer3Junit5</span>&nbsp; - <span title="Square.okHttp3.mockWebServer3
+version.okhttp3" style="text-decoration: underline;" >loggingInterceptor</span>&nbsp; - <span title="Square.okHttp3.mockWebServer3
 com.squareup.okhttp3:mockwebserver3:_
 version.okhttp3" style="text-decoration: underline;" >mockWebServer3</span>&nbsp; - <span title="Square.okHttp3.mockWebServer
 com.squareup.okhttp3:mockwebserver:_
@@ -2700,6 +2696,11 @@ com.squareup.okhttp3:okhttp-urlconnection:_
 version.okhttp3" style="text-decoration: underline;" >urlConnection</span>&nbsp; - <span title="Square.okHttp3.okHttp
 com.squareup.okhttp3:okhttp:_
 version.okhttp3" style="text-decoration: underline;" >okHttp</span>&nbsp;</td></tr>
+<tr><td><b>Square.okHttp3.mockWebServer3</b></td><td><span title="Square.okHttp3.mockWebServer3.junit4
+com.squareup.okhttp3:mockwebserver3-junit4:_
+version.okhttp3" style="text-decoration: underline;" >junit4</span>&nbsp; - <span title="Square.okHttp3.mockWebServer3.junit5
+com.squareup.okhttp3:mockwebserver3-junit5:_
+version.okhttp3" style="text-decoration: underline;" >junit5</span>&nbsp;</td></tr>
 <tr><td><b>Square.picasso</b></td><td><span title="Square.picasso.pollexor
 com.squareup.picasso:picasso-pollexor:_
 version.picasso" style="text-decoration: underline;" >pollexor</span>&nbsp;</td></tr>
