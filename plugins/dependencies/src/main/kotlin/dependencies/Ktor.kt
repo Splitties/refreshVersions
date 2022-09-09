@@ -59,8 +59,10 @@ object Ktor : DependencyGroup(
     val plugins = Plugins
     object Plugins : IsNotADependency {
         val events = module("ktor-events")
-        val http = module("ktor-http")
-        val httpCio = module("ktor-http-cio")
+        val http = Http
+        object Http : DependencyNotationAndGroup(group = group, name = "ktor-http") {
+            val cio = module("ktor-http-cio")
+        }
         val io = module("ktor-io")
         val network = module("ktor-network")
         val networkTls = module("ktor-network-tls")

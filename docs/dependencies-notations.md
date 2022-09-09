@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1153** Dependency Notations in **25** groups and **234** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1153** Dependency Notations in **25** groups and **236** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -1594,9 +1594,7 @@ io.ktor:ktor-client-tests:_
 version.ktor" style="text-decoration: underline;" >tests</span>&nbsp;</td></tr>
 <tr><td><b>JetBrains.ktor.plugins</b></td><td><span title="JetBrains.ktor.plugins.events
 io.ktor:ktor-events:_
-version.ktor" style="text-decoration: underline;" >events</span>&nbsp; - <span title="JetBrains.ktor.plugins.httpCio
-io.ktor:ktor-http-cio:_
-version.ktor" style="text-decoration: underline;" >httpCio</span>&nbsp; - <span title="JetBrains.ktor.plugins.http
+version.ktor" style="text-decoration: underline;" >events</span>&nbsp; - <span title="JetBrains.ktor.plugins.http
 io.ktor:ktor-http:_
 version.ktor" style="text-decoration: underline;" >http</span>&nbsp; - <span title="JetBrains.ktor.plugins.io
 io.ktor:ktor-io:_
@@ -1613,6 +1611,9 @@ io.ktor:ktor-websocket-serialization:_
 version.ktor" style="text-decoration: underline;" >websocketSerialization</span>&nbsp; - <span title="JetBrains.ktor.plugins.websockets
 io.ktor:ktor-websockets:_
 version.ktor" style="text-decoration: underline;" >websockets</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor.plugins.http</b></td><td><span title="JetBrains.ktor.plugins.http.cio
+io.ktor:ktor-http-cio:_
+version.ktor" style="text-decoration: underline;" >cio</span>&nbsp;</td></tr>
 <tr><td><b>JetBrains.ktor.plugins.serialization</b></td><td><span title="JetBrains.ktor.plugins.serialization.gson
 io.ktor:ktor-serialization-gson:_
 version.ktor" style="text-decoration: underline;" >gson</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.jackson
@@ -1967,9 +1968,7 @@ io.ktor:ktor-client-tests:_
 version.ktor" style="text-decoration: underline;" >tests</span>&nbsp;</td></tr>
 <tr><td><b>Ktor.plugins</b></td><td><span title="Ktor.plugins.events
 io.ktor:ktor-events:_
-version.ktor" style="text-decoration: underline;" >events</span>&nbsp; - <span title="Ktor.plugins.httpCio
-io.ktor:ktor-http-cio:_
-version.ktor" style="text-decoration: underline;" >httpCio</span>&nbsp; - <span title="Ktor.plugins.http
+version.ktor" style="text-decoration: underline;" >events</span>&nbsp; - <span title="Ktor.plugins.http
 io.ktor:ktor-http:_
 version.ktor" style="text-decoration: underline;" >http</span>&nbsp; - <span title="Ktor.plugins.io
 io.ktor:ktor-io:_
@@ -1986,6 +1985,9 @@ io.ktor:ktor-websocket-serialization:_
 version.ktor" style="text-decoration: underline;" >websocketSerialization</span>&nbsp; - <span title="Ktor.plugins.websockets
 io.ktor:ktor-websockets:_
 version.ktor" style="text-decoration: underline;" >websockets</span>&nbsp;</td></tr>
+<tr><td><b>Ktor.plugins.http</b></td><td><span title="Ktor.plugins.http.cio
+io.ktor:ktor-http-cio:_
+version.ktor" style="text-decoration: underline;" >cio</span>&nbsp;</td></tr>
 <tr><td><b>Ktor.plugins.serialization</b></td><td><span title="Ktor.plugins.serialization.gson
 io.ktor:ktor-serialization-gson:_
 version.ktor" style="text-decoration: underline;" >gson</span>&nbsp; - <span title="Ktor.plugins.serialization.jackson
