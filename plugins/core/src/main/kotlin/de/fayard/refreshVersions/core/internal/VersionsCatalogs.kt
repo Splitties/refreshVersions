@@ -2,19 +2,35 @@ package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.FeatureFlag
 import de.fayard.refreshVersions.core.ModuleId
+import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.artifacts.VersionCatalog
+import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.util.GradleVersion
 
 @InternalRefreshVersionsApi
 object VersionsCatalogs {
 
-    const val LIBS_VERSIONS_TOML = "gradle/libs.versions.toml"
+    const val LIBS_VERSIONS_TOML = "gradle/libs.versions.toml" // Unrelated to the catalog name, never changes.
 
     val minimumGradleVersion: GradleVersion = GradleVersion.version("7.4")
 
     fun isSupported(): Boolean = GradleVersion.current() >= minimumGradleVersion
+
+    private fun defaultCatalogName(): String = try {
+        @Suppress("UnstableApiUsage")
+        RefreshVersionsConfigHolder.settings.dependencyResolutionManagement.defaultLibrariesExtensionName.get()
+    } catch (t: Throwable) {
+        System.err.println(t)
+        "libs"
+    }
+
+    fun getDefault(project: Project): VersionCatalog? {
+        val versionCatalogs = project.extensions.getByType<VersionCatalogsExtension>()
+        return versionCatalogs.find(defaultCatalogName()).orElse(null)
+    }
 
     internal fun libraries(versionCatalog: VersionCatalog?): Set<MinimalExternalModuleDependency> {
         if (versionCatalog == null) return emptySet()
@@ -40,7 +56,10 @@ object VersionsCatalogs {
                 .orElse(null)
                 ?.orNull
                 ?.let { dependency: MinimalExternalModuleDependency ->
-                    ModuleId.Maven(dependency.module.group, dependency.module.name) to "libs.$alias"
+                    ModuleId.Maven(
+                        group = dependency.module.group,
+                        name = dependency.module.name
+                    ) to "${versionCatalog.name}.$alias"
                 }
         }.toMap()
     }

@@ -2,7 +2,6 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
-import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
 import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
 import de.fayard.refreshVersions.core.internal.skipConfigurationCache
@@ -91,7 +90,7 @@ internal fun migrateBuildToRefreshVersions(
        addMissingEntriesInVersionsProperties(project)
    }
     val versionsCatalogMapping: Map<ModuleId.Maven, String> =
-        VersionsCatalogs.dependencyAliases(project.getVersionsCatalog())
+        VersionsCatalogs.dependencyAliases(VersionsCatalogs.getDefault(project))
 
     val builtInDependenciesMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
         .associateShortestByMavenCoordinate()
