@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1152** Dependency Notations in **25** groups and **233** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1153** Dependency Notations in **25** groups and **233** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -278,7 +278,9 @@ version.androidx.compose.runtime" style="text-decoration: underline;" >rxJava2</
 androidx.compose.runtime:runtime-rxjava3:_
 version.androidx.compose.runtime" style="text-decoration: underline;" >rxJava3</span>&nbsp; - <span title="AndroidX.compose.runtime.saveable
 androidx.compose.runtime:runtime-saveable:_
-version.androidx.compose.runtime" style="text-decoration: underline;" >saveable</span>&nbsp;</td></tr>
+version.androidx.compose.runtime" style="text-decoration: underline;" >saveable</span>&nbsp; - <span title="AndroidX.compose.runtime.tracing
+androidx.compose.runtime:runtime-tracing:_
+version.androidx.compose.runtime" style="text-decoration: underline;" >tracing</span>&nbsp;</td></tr>
 <tr><td><b>AndroidX.compose.ui</b></td><td><span title="AndroidX.compose.ui.geometry
 androidx.compose.ui:ui-geometry:_
 version.androidx.compose.ui" style="text-decoration: underline;" >geometry</span>&nbsp; - <span title="AndroidX.compose.ui.graphics
