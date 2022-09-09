@@ -70,15 +70,22 @@ object Ktor : DependencyGroup(
         val resources = module("ktor-resources")
 
         val serialization = Serialization
-        object Serialization : IsNotADependency {
-            val serialization = module("ktor-serialization")
+        object Serialization : DependencyNotationAndGroup(
+            group = group,
+            name = "ktor-serialization"
+        ) {
             val gson = module("ktor-serialization-gson")
             val jackson = module("ktor-serialization-jackson")
-            val kotlinx = module("ktor-serialization-kotlinx")
-            val kotlinxCbor = module("ktor-serialization-kotlinx-cbor")
-            val kotlinxJson = module("ktor-serialization-kotlinx-json")
-            val kotlinxTests = module("ktor-serialization-kotlinx-tests")
-            val kotlinxXml = module("ktor-serialization-kotlinx-xml")
+            val kotlinx = Kotlinx
+            object Kotlinx : DependencyNotationAndGroup(
+                group = group,
+                name = "ktor-serialization-kotlinx"
+            ) {
+                val cbor = module("ktor-serialization-kotlinx-cbor")
+                val json = module("ktor-serialization-kotlinx-json")
+                val tests = module("ktor-serialization-kotlinx-tests")
+                val xml = module("ktor-serialization-kotlinx-xml")
+            }
         }
 
         val websocketSerialization = module("ktor-websocket-serialization")

@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1153** Dependency Notations in **25** groups and **236** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1153** Dependency Notations in **25** groups and **238** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -1606,7 +1606,9 @@ version.ktor" style="text-decoration: underline;" >networkTls</span>&nbsp; - <sp
 io.ktor:ktor-network:_
 version.ktor" style="text-decoration: underline;" >network</span>&nbsp; - <span title="JetBrains.ktor.plugins.resources
 io.ktor:ktor-resources:_
-version.ktor" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="JetBrains.ktor.plugins.websocketSerialization
+version.ktor" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization
+io.ktor:ktor-serialization:_
+version.ktor" style="text-decoration: underline;" >serialization</span>&nbsp; - <span title="JetBrains.ktor.plugins.websocketSerialization
 io.ktor:ktor-websocket-serialization:_
 version.ktor" style="text-decoration: underline;" >websocketSerialization</span>&nbsp; - <span title="JetBrains.ktor.plugins.websockets
 io.ktor:ktor-websockets:_
@@ -1618,19 +1620,18 @@ version.ktor" style="text-decoration: underline;" >cio</span>&nbsp;</td></tr>
 io.ktor:ktor-serialization-gson:_
 version.ktor" style="text-decoration: underline;" >gson</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.jackson
 io.ktor:ktor-serialization-jackson:_
-version.ktor" style="text-decoration: underline;" >jackson</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.kotlinxCbor
-io.ktor:ktor-serialization-kotlinx-cbor:_
-version.ktor" style="text-decoration: underline;" >kotlinxCbor</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.kotlinxJson
-io.ktor:ktor-serialization-kotlinx-json:_
-version.ktor" style="text-decoration: underline;" >kotlinxJson</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.kotlinxTests
-io.ktor:ktor-serialization-kotlinx-tests:_
-version.ktor" style="text-decoration: underline;" >kotlinxTests</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.kotlinxXml
-io.ktor:ktor-serialization-kotlinx-xml:_
-version.ktor" style="text-decoration: underline;" >kotlinxXml</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.kotlinx
+version.ktor" style="text-decoration: underline;" >jackson</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.kotlinx
 io.ktor:ktor-serialization-kotlinx:_
-version.ktor" style="text-decoration: underline;" >kotlinx</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.serialization
-io.ktor:ktor-serialization:_
-version.ktor" style="text-decoration: underline;" >serialization</span>&nbsp;</td></tr>
+version.ktor" style="text-decoration: underline;" >kotlinx</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor.plugins.serialization.kotlinx</b></td><td><span title="JetBrains.ktor.plugins.serialization.kotlinx.cbor
+io.ktor:ktor-serialization-kotlinx-cbor:_
+version.ktor" style="text-decoration: underline;" >cbor</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.kotlinx.json
+io.ktor:ktor-serialization-kotlinx-json:_
+version.ktor" style="text-decoration: underline;" >json</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.kotlinx.tests
+io.ktor:ktor-serialization-kotlinx-tests:_
+version.ktor" style="text-decoration: underline;" >tests</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.kotlinx.xml
+io.ktor:ktor-serialization-kotlinx-xml:_
+version.ktor" style="text-decoration: underline;" >xml</span>&nbsp;</td></tr>
 <tr><td><b>JetBrains.ktor.server</b></td><td><span title="JetBrains.ktor.server.authJwt
 io.ktor:ktor-server-auth-jwt:_
 version.ktor" style="text-decoration: underline;" >authJwt</span>&nbsp; - <span title="JetBrains.ktor.server.authLdap
@@ -1980,7 +1981,9 @@ version.ktor" style="text-decoration: underline;" >networkTls</span>&nbsp; - <sp
 io.ktor:ktor-network:_
 version.ktor" style="text-decoration: underline;" >network</span>&nbsp; - <span title="Ktor.plugins.resources
 io.ktor:ktor-resources:_
-version.ktor" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="Ktor.plugins.websocketSerialization
+version.ktor" style="text-decoration: underline;" >resources</span>&nbsp; - <span title="Ktor.plugins.serialization
+io.ktor:ktor-serialization:_
+version.ktor" style="text-decoration: underline;" >serialization</span>&nbsp; - <span title="Ktor.plugins.websocketSerialization
 io.ktor:ktor-websocket-serialization:_
 version.ktor" style="text-decoration: underline;" >websocketSerialization</span>&nbsp; - <span title="Ktor.plugins.websockets
 io.ktor:ktor-websockets:_
@@ -1992,19 +1995,18 @@ version.ktor" style="text-decoration: underline;" >cio</span>&nbsp;</td></tr>
 io.ktor:ktor-serialization-gson:_
 version.ktor" style="text-decoration: underline;" >gson</span>&nbsp; - <span title="Ktor.plugins.serialization.jackson
 io.ktor:ktor-serialization-jackson:_
-version.ktor" style="text-decoration: underline;" >jackson</span>&nbsp; - <span title="Ktor.plugins.serialization.kotlinxCbor
-io.ktor:ktor-serialization-kotlinx-cbor:_
-version.ktor" style="text-decoration: underline;" >kotlinxCbor</span>&nbsp; - <span title="Ktor.plugins.serialization.kotlinxJson
-io.ktor:ktor-serialization-kotlinx-json:_
-version.ktor" style="text-decoration: underline;" >kotlinxJson</span>&nbsp; - <span title="Ktor.plugins.serialization.kotlinxTests
-io.ktor:ktor-serialization-kotlinx-tests:_
-version.ktor" style="text-decoration: underline;" >kotlinxTests</span>&nbsp; - <span title="Ktor.plugins.serialization.kotlinxXml
-io.ktor:ktor-serialization-kotlinx-xml:_
-version.ktor" style="text-decoration: underline;" >kotlinxXml</span>&nbsp; - <span title="Ktor.plugins.serialization.kotlinx
+version.ktor" style="text-decoration: underline;" >jackson</span>&nbsp; - <span title="Ktor.plugins.serialization.kotlinx
 io.ktor:ktor-serialization-kotlinx:_
-version.ktor" style="text-decoration: underline;" >kotlinx</span>&nbsp; - <span title="Ktor.plugins.serialization.serialization
-io.ktor:ktor-serialization:_
-version.ktor" style="text-decoration: underline;" >serialization</span>&nbsp;</td></tr>
+version.ktor" style="text-decoration: underline;" >kotlinx</span>&nbsp;</td></tr>
+<tr><td><b>Ktor.plugins.serialization.kotlinx</b></td><td><span title="Ktor.plugins.serialization.kotlinx.cbor
+io.ktor:ktor-serialization-kotlinx-cbor:_
+version.ktor" style="text-decoration: underline;" >cbor</span>&nbsp; - <span title="Ktor.plugins.serialization.kotlinx.json
+io.ktor:ktor-serialization-kotlinx-json:_
+version.ktor" style="text-decoration: underline;" >json</span>&nbsp; - <span title="Ktor.plugins.serialization.kotlinx.tests
+io.ktor:ktor-serialization-kotlinx-tests:_
+version.ktor" style="text-decoration: underline;" >tests</span>&nbsp; - <span title="Ktor.plugins.serialization.kotlinx.xml
+io.ktor:ktor-serialization-kotlinx-xml:_
+version.ktor" style="text-decoration: underline;" >xml</span>&nbsp;</td></tr>
 <tr><td><b>Ktor.server</b></td><td><span title="Ktor.server.authJwt
 io.ktor:ktor-server-auth-jwt:_
 version.ktor" style="text-decoration: underline;" >authJwt</span>&nbsp; - <span title="Ktor.server.authLdap
