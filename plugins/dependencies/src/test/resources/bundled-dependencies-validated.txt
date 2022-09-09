@@ -358,6 +358,7 @@ com.google.accompanist:accompanist-placeholder-material
 com.google.accompanist:accompanist-swiperefresh
 com.google.accompanist:accompanist-systemuicontroller
 com.google.accompanist:accompanist-webview
+com.google.ambient.crossdevice:crossdevice
 com.google.android.fhir:data-capture
 com.google.android.fhir:engine
 com.google.android.fhir:workflow

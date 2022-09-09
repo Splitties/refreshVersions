@@ -62,6 +62,27 @@ object Google : IsNotADependency {
         val webView = module("accompanist-webview")
     }
 
+    val ambient = Ambient
+
+    object Ambient : IsNotADependency {
+
+        /**
+         * Cross device SDK
+         *
+         * The Cross device SDK simplifies the development of rich and engaging multi-device experiences.
+         *
+         * The Cross device SDK enables the following core functionality:
+         * - Device discovery and authorization
+         * - Secure connections and data transfers
+         * - Multi-device sessions
+         *
+         * [Official webpage](https://developer.android.com/guide/topics/connectivity/cross-device-sdk/overview).
+         *
+         * [Official Kotlin sample on GitHub](https://github.com/android/connectivity-samples/tree/main/CrossDeviceRockPaperScissorsKotlin).
+         */
+        val crossDevice = DependencyNotation("com.google.ambient.crossdevice", "crossdevice")
+    }
+
     val android = Android
 
     object Android : IsNotADependency {

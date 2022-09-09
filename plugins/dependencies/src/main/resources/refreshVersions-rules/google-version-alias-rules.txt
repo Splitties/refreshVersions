@@ -72,3 +72,6 @@ com.google.android.fhir:*
 
 com.google.android.flexbox:flexbox
     ^^^^^^^^^^^^^^^^^^^^^^
+
+com.google.ambient.crossdevice:crossdevice
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^

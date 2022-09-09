@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1153** Dependency Notations in **25** groups and **240** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1154** Dependency Notations in **25** groups and **241** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -979,6 +979,9 @@ version.google.accompanist" style="text-decoration: underline;" >indicators</spa
 <tr><td><b>Google.accompanist.placeholder</b></td><td><span title="Google.accompanist.placeholder.material
 com.google.accompanist:accompanist-placeholder-material:_
 version.google.accompanist" style="text-decoration: underline;" >material</span>&nbsp;</td></tr>
+<tr><td><b>Google.ambient</b></td><td><span title="Google.ambient.crossDevice
+com.google.ambient.crossdevice:crossdevice:_
+version.google.ambient.crossdevice" style="text-decoration: underline;" >crossDevice</span>&nbsp;</td></tr>
 <tr><td><b>Google.android</b></td><td><span title="Google.android.flexbox
 com.google.android.flexbox:flexbox:_
 version.google.android.flexbox" style="text-decoration: underline;" >flexbox</span>&nbsp; - <span title="Google.android.openSourceLicensesPlugin

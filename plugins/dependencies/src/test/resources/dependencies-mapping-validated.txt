@@ -359,6 +359,7 @@ com.google.accompanist..accompanist-placeholder=Google.accompanist.placeholder
 com.google.accompanist..accompanist-swiperefresh=Google.accompanist.swipeRefresh
 com.google.accompanist..accompanist-systemuicontroller=Google.accompanist.systemUiController
 com.google.accompanist..accompanist-webview=Google.accompanist.webView
+com.google.ambient.crossdevice..crossdevice=Google.ambient.crossDevice
 com.google.android.fhir..data-capture=Google.android.fhir.dataCapture
 com.google.android.fhir..engine=Google.android.fhir.engine
 com.google.android.fhir..workflow=Google.android.fhir.workflow
