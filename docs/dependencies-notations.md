@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1153** Dependency Notations in **25** groups and **238** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1153** Dependency Notations in **25** groups and **240** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -1632,11 +1632,7 @@ io.ktor:ktor-serialization-kotlinx-tests:_
 version.ktor" style="text-decoration: underline;" >tests</span>&nbsp; - <span title="JetBrains.ktor.plugins.serialization.kotlinx.xml
 io.ktor:ktor-serialization-kotlinx-xml:_
 version.ktor" style="text-decoration: underline;" >xml</span>&nbsp;</td></tr>
-<tr><td><b>JetBrains.ktor.server</b></td><td><span title="JetBrains.ktor.server.authJwt
-io.ktor:ktor-server-auth-jwt:_
-version.ktor" style="text-decoration: underline;" >authJwt</span>&nbsp; - <span title="JetBrains.ktor.server.authLdap
-io.ktor:ktor-server-auth-ldap:_
-version.ktor" style="text-decoration: underline;" >authLdap</span>&nbsp; - <span title="JetBrains.ktor.server.auth
+<tr><td><b>JetBrains.ktor.server</b></td><td><span title="JetBrains.ktor.server.auth
 io.ktor:ktor-server-auth:_
 version.ktor" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="JetBrains.ktor.server.autoHeadResponse
 io.ktor:ktor-server-auto-head-response:_
@@ -1719,6 +1715,11 @@ io.ktor:ktor-server-webjars:_
 version.ktor" style="text-decoration: underline;" >webjars</span>&nbsp; - <span title="JetBrains.ktor.server.websockets
 io.ktor:ktor-server-websockets:_
 version.ktor" style="text-decoration: underline;" >websockets</span>&nbsp;</td></tr>
+<tr><td><b>JetBrains.ktor.server.auth</b></td><td><span title="JetBrains.ktor.server.auth.jwt
+io.ktor:ktor-server-auth-jwt:_
+version.ktor" style="text-decoration: underline;" >jwt</span>&nbsp; - <span title="JetBrains.ktor.server.auth.ldap
+io.ktor:ktor-server-auth-ldap:_
+version.ktor" style="text-decoration: underline;" >ldap</span>&nbsp;</td></tr>
                 </table>
 ## [Kodein.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Kodein.kt)
 
@@ -2007,11 +2008,7 @@ io.ktor:ktor-serialization-kotlinx-tests:_
 version.ktor" style="text-decoration: underline;" >tests</span>&nbsp; - <span title="Ktor.plugins.serialization.kotlinx.xml
 io.ktor:ktor-serialization-kotlinx-xml:_
 version.ktor" style="text-decoration: underline;" >xml</span>&nbsp;</td></tr>
-<tr><td><b>Ktor.server</b></td><td><span title="Ktor.server.authJwt
-io.ktor:ktor-server-auth-jwt:_
-version.ktor" style="text-decoration: underline;" >authJwt</span>&nbsp; - <span title="Ktor.server.authLdap
-io.ktor:ktor-server-auth-ldap:_
-version.ktor" style="text-decoration: underline;" >authLdap</span>&nbsp; - <span title="Ktor.server.auth
+<tr><td><b>Ktor.server</b></td><td><span title="Ktor.server.auth
 io.ktor:ktor-server-auth:_
 version.ktor" style="text-decoration: underline;" >auth</span>&nbsp; - <span title="Ktor.server.autoHeadResponse
 io.ktor:ktor-server-auto-head-response:_
@@ -2094,6 +2091,11 @@ io.ktor:ktor-server-webjars:_
 version.ktor" style="text-decoration: underline;" >webjars</span>&nbsp; - <span title="Ktor.server.websockets
 io.ktor:ktor-server-websockets:_
 version.ktor" style="text-decoration: underline;" >websockets</span>&nbsp;</td></tr>
+<tr><td><b>Ktor.server.auth</b></td><td><span title="Ktor.server.auth.jwt
+io.ktor:ktor-server-auth-jwt:_
+version.ktor" style="text-decoration: underline;" >jwt</span>&nbsp; - <span title="Ktor.server.auth.ldap
+io.ktor:ktor-server-auth-ldap:_
+version.ktor" style="text-decoration: underline;" >ldap</span>&nbsp;</td></tr>
                 </table>
 ## [Orchid.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Orchid.kt)
 

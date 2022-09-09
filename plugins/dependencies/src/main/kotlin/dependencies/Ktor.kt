@@ -97,9 +97,14 @@ object Ktor : DependencyGroup(
         group = group,
         name = "ktor-server"
     ) {
-        val auth = module("ktor-server-auth")
-        val authJwt = module("ktor-server-auth-jwt")
-        val authLdap = module("ktor-server-auth-ldap")
+        val auth = Auth
+        object Auth : DependencyNotationAndGroup(
+            group = group,
+            name = "ktor-server-auth"
+        ) {
+            val jwt = module("ktor-server-auth-jwt")
+            val ldap = module("ktor-server-auth-ldap")
+        }
         val autoHeadResponse = module("ktor-server-auto-head-response")
         val cachingHeaders = module("ktor-server-caching-headers")
         val callId = module("ktor-server-call-id")
