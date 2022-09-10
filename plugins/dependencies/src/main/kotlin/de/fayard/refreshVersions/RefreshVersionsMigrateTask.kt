@@ -111,6 +111,12 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
             project = project,
             versionCatalogOnly = mode == Mode.VersionCatalogOnly
         )
+        if (mode != Mode.VersionsPropertiesOnly) {
+            print(AnsiColor.RED.boldHighIntensity)
+            print("We STRONGLY recommend to perform a Gradle sync to avoid seeing red code in the Gradle files.")
+            print(AnsiColor.RESET)
+            println()
+        }
     }
 }
 
