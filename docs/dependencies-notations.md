@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1154** Dependency Notations in **25** groups and **241** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1157** Dependency Notations in **25** groups and **242** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -822,6 +822,13 @@ app.cash.copper:copper-rx2:_
 version.app.cash.copper" style="text-decoration: underline;" >rx2</span>&nbsp; - <span title="CashApp.copper.rx3
 app.cash.copper:copper-rx3:_
 version.app.cash.copper" style="text-decoration: underline;" >rx3</span>&nbsp;</td></tr>
+<tr><td><b>CashApp.molecule</b></td><td><span title="CashApp.molecule.gradlePlugin
+app.cash.molecule:molecule-gradle-plugin:_
+version.app.cash.molecule" style="text-decoration: underline;" >gradlePlugin</span>&nbsp; - <span title="CashApp.molecule.runtime
+app.cash.molecule:molecule-runtime:_
+version.app.cash.molecule" style="text-decoration: underline;" >runtime</span>&nbsp; - <span title="CashApp.molecule.test
+app.cash.molecule:molecule-testing:_
+version.app.cash.molecule" style="text-decoration: underline;" >test</span>&nbsp;</td></tr>
 <tr><td><b>CashApp.sqlDelight</b></td><td><span title="CashApp.sqlDelight.gradlePlugin
 com.squareup.sqldelight:gradle-plugin:_
 version.sqldelight" style="text-decoration: underline;" >gradlePlugin</span>&nbsp;</td></tr>
