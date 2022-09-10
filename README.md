@@ -45,7 +45,7 @@ Make sure the project is correctly set up (see just above).
 
 The `refreshVersionsMigrate` task can help you migrate your project in a few minutes, or less.
 
-It requires a `mode` option. You can run it without it to see the complete list.
+It requires a `mode` option. You can run it without it to see the complete list and the full description of each mode.
 
 If you want to use only `versions.properties` and the [built-in dependencies notations](https://jmfayard.github.io/refreshVersions/dependencies-notations/), run:
 
