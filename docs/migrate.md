@@ -58,6 +58,7 @@ For the `VersionsPropertiesOnly` mode:
 - It modifies `build.gradle(.kts)` files and other files like `libraries.gradle` or `buildSrc/src/main/kotlin/Libs.kt` known to contain dependency notations, so that the version placeholder `_` is used everywhere.
 
 For the `VersionCatalogOnly` mode:
+
 - It generates `gradle/libs.versions.toml` with the **current** version of all dependencies.
 - It modifies `build.gradle(.kts)` files, so that dependency notations everywhere.
 
