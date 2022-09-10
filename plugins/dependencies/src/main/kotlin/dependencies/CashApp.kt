@@ -50,9 +50,9 @@ object CashApp {
     }
 
     /**
-     * Molecule builds a [StateFlow] or [Flow] stream using Jetpack Compose.
+     * Build a `StateFlow` or `Flow` stream using Jetpack Compose.
      *
-     * [GitHub Releases here](https://github.com/cashapp/molecule/releases)
+     * [GitHub Releases](https://github.com/cashapp/molecule/releases)
      *
      * GitHub page: [cashapp/molecule](https://github.com/cashapp/molecule)
      */
