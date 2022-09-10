@@ -4,6 +4,7 @@ import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
+import de.fayard.refreshVersions.core.internal.cli.AnsiColor
 import de.fayard.refreshVersions.core.internal.skipConfigurationCache
 import de.fayard.refreshVersions.internal.generateVersionsCatalogFromCurrentDependencies
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
@@ -38,12 +39,43 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
         skipConfigurationCache()
     }
 
+    private val Mode.description: String get() = when (this) {
+        Mode.VersionsPropertiesOnly -> {
+            "Put all versions in the `versions.properties` file, " +
+                "use built-in dependency notations when possible, and use version placeholders otherwise."
+        }
+        Mode.VersionsPropertiesAndPlaceholdersInCatalog -> {
+            "Put all versions in the `versions.properties` file, " +
+                "use built-in dependency notations when possible, " +
+                "and use default versions catalog with version placeholders otherwise."
+        }
+        Mode.VersionCatalogAndVersionProperties -> {
+            "Put versions of built-in dependency notations in the `versions.properties` file, " +
+                "and use the default versions catalog for other dependencies."
+        }
+        Mode.VersionCatalogOnly -> {
+            "Use the default versions catalog for all the dependencies and their versions, " +
+                "ignoring built-in dependency notations."
+        }
+    }
+
     private fun requireMode(): Mode = requireNotNull(mode) {
         buildString {
+            append(AnsiColor.RED.boldHighIntensity)
             appendLine("You need to provide which mode you want to run the migration in.")
-            appendLine("Specify the `mode` option in one of the following ways and re-run.")
+            append(AnsiColor.RESET)
+            append(AnsiColor.bold)
+            appendLine("Specify the `mode` option in one of the following ways and re-run:")
+            append(AnsiColor.RESET)
             Mode.values().forEach { mode ->
-                appendLine("--mode=$mode")
+                append(AnsiColor.bold)
+                append("--mode=$mode")
+                append(AnsiColor.RESET)
+                appendLine()
+                append(AnsiColor.italic)
+                append("  ↳ ${mode.description}")
+                append(AnsiColor.RESET)
+                appendLine()
             }
         }
     }
