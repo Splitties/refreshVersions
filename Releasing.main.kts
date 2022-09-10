@@ -201,7 +201,7 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
         val command = "${commandPrefix}gradlew prePublishTest --console=plain"
         printInfo("Will now run $command")
         requestUserConfirmation("Ready?")
-        command.executeAndPrint(dir)
+        command.executeAndPrint(dir.resolve("plugins"))
         check(git.didFileChange(files.versionToRemovalsMapping)) {
             "Expected ${files.versionToRemovalsMapping} to be edited by " +
                 "the command that just ran. Is something broken?"
