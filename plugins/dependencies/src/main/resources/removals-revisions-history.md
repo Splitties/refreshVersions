@@ -504,3 +504,202 @@ id:[com.google.modernstorage:modernstorage-mediastore]
 
 ~~AndroidX.test.ext.junitKtx~~
 id:[androidx.test.ext:junit-ktx]
+
+## Revision 11 (empty, used as a marker for migration of versionFor calls in Groovy DSL)
+
+## Revision 12
+
+~~Testing.kotest.extensions.allure~~
+// TODO: Use new artifact as group changed.
+moved:[io.kotest.extensions:kotest-extensions-allure]
+id:[io.kotest:kotest-extensions-allure]
+
+~~Testing.kotest.extensions.http~~
+// TODO: Stop using this undocumented artifact.
+id:[io.kotest:kotest-extensions-http]
+
+~~Testing.kotest.extensions.koin~~
+// TODO: Use new artifact as group changed.
+moved:[io.kotest.extensions:kotest-extensions-koin]
+id:[io.kotest:kotest-extensions-koin]
+
+~~Testing.kotest.extensions.mockServer~~
+// TODO: Use new artifact as group changed.
+moved:[io.kotest.extensions:kotest-extensions-mockserver]
+id:[io.kotest:kotest-extensions-mockserver]
+
+~~Testing.kotest.extensions.spring~~
+// TODO: Use new artifact as group changed.
+moved:[io.kotest.extensions:kotest-extensions-spring]
+id:[io.kotest:kotest-extensions-spring]
+
+~~Testing.kotest.extensions.testContainers~~
+// TODO: Use new artifact as group changed.
+moved:[io.kotest.extensions:kotest-extensions-testcontainers]
+id:[io.kotest:kotest-extensions-testcontainers]
+
+~~Testing.kotestExtensions.allure~~
+id:[io.kotest.extensions:kotest-extensions-allure]
+
+~~Testing.kotestExtensions.embeddedKafka~~
+id:[io.kotest.extensions:kotest-extensions-embedded-kafka]
+
+~~Testing.kotestExtensions.gherkin~~
+id:[io.kotest.extensions:kotest-extensions-gherkin]
+
+~~Testing.kotestExtensions.koin~~
+id:[io.kotest.extensions:kotest-extensions-koin]
+
+~~Testing.kotestExtensions.mockServer~~
+id:[io.kotest.extensions:kotest-extensions-mockserver]
+
+~~Testing.kotestExtensions.pitest~~
+id:[io.kotest.extensions:kotest-extensions-pitest]
+
+~~Testing.kotestExtensions.robolectric~~
+id:[io.kotest.extensions:kotest-extensions-robolectric]
+
+~~Testing.kotestExtensions.spring~~
+id:[io.kotest.extensions:kotest-extensions-spring]
+
+~~Testing.kotestExtensions.testContainers~~
+id:[io.kotest.extensions:kotest-extensions-testcontainers]
+
+~~Testing.kotestExtensions.wiremock~~
+id:[io.kotest.extensions:kotest-extensions-wiremock]
+
+~~Ktor.features.authJwt~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-auth-jwt]
+id:[io.ktor:ktor-auth-jwt]
+
+~~Ktor.features.authLdap~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-auth-ldap]
+id:[io.ktor:ktor-auth-ldap]
+
+~~Ktor.features.auth~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-auth]
+id:[io.ktor:ktor-auth]
+
+~~Ktor.client.authBasic~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-client-auth]
+id:[io.ktor:ktor-client-auth-basic]
+
+~~Ktor.client.okHttp~~
+id:[io.ktor:ktor-client-okhttp]
+
+~~Ktor.client.websockets~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-websockets]
+id:[io.ktor:ktor-client-websockets]
+
+~~Ktor.features.freemarker~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-freemarker]
+id:[io.ktor:ktor-freemarker]
+
+~~Ktor.features.gson~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+// TODO: Move to the 2 artifacts below (currently commented-out).
+moved:[io.ktor:ktor-serialization-gson]
+extra:[io.ktor:ktor-server-content-negotiation]
+id:[io.ktor:ktor-gson]
+
+~~Ktor.features.htmlBuilder~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-html-builder]
+id:[io.ktor:ktor-html-builder]
+
+~~Ktor.httpCio~~
+id:[io.ktor:ktor-http-cio]
+
+~~Ktor.http~~
+id:[io.ktor:ktor-http]
+
+~~Ktor.io~~
+id:[io.ktor:ktor-io]
+
+~~Ktor.features.jackson~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+// TODO: Move to the 2 artifacts below (currently commented-out).
+moved:[io.ktor:ktor-serialization-jackson]
+extra:[io.ktor:ktor-server-content-negotiation]
+id:[io.ktor:ktor-jackson]
+
+~~Ktor.features.locations~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-locations]
+id:[io.ktor:ktor-locations]
+
+~~Ktor.features.metrics~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-metrics]
+id:[io.ktor:ktor-metrics]
+
+~~Ktor.network.tlsCertificates~~
+id:[io.ktor:ktor-network-tls-certificates]
+
+~~Ktor.network.tls~~
+id:[io.ktor:ktor-network-tls]
+
+~~Ktor.network.network~~
+id:[io.ktor:ktor-network]
+
+~~Ktor.features.serialization~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+// TODO: Move to the 2 artifacts below (currently commented-out).
+moved:[io.ktor:ktor-serialization-kotlinx-json]
+extra:[io.ktor:ktor-server-content-negotiation]
+id:[io.ktor:ktor-serialization]
+
+~~Ktor.features.serverSessions~~
+id:[io.ktor:ktor-server-sessions]
+
+~~Ktor.features.velocity~~
+// TODO: Migrate to Ktor 2. See migration guide here: https://ktor.io/docs/migrating-2.html
+moved:[io.ktor:ktor-server-velocity]
+id:[io.ktor:ktor-velocity]
+
+~~Spring.boms.springclmoud~~
+id:[org.springframework.cloud:spring-cloud-dependencies]
+
+## Revision 13
+
+~~AndroidX.lifecycle.runtimeKtx~~
+id:[androidx.lifecycle:lifecycle-runtime-ktx]
+
+~~AndroidX.lifecycle.runtimeTesting~~
+id:[androidx.lifecycle:lifecycle-runtime-testing]
+
+~~AndroidX.health.connectClient~~
+// Moved since version 1.0.0-alpha04
+// FIXME: Replace with new artifact.
+moved:[androidx.health.connect:connect-client]
+id:[androidx.health:health-connect-client]
+
+## Revision 14
+
+~~Google.accompanist.glide~~
+// The Glide module was deprecated and got removed in version 0.16.0
+// FIXME: Replace with Coil Compose.
+id:[com.google.accompanist:accompanist-glide]
+
+~~Google.accompanist.imageloadingCore~~
+// The imageloading module was deprecated and got removed in version 0.16.0
+// FIXME: Replace with Coil Compose.
+id:[com.google.accompanist:accompanist-imageloading-core]
+
+~~Google.accompanist.appcompatTheme~~
+id:[com.google.accompanist:accompanist-appcompat-theme]
+
+~~Google.accompanist.flowlayout~~
+id:[com.google.accompanist:accompanist-flowlayout]
+
+~~Google.accompanist.swiperefresh~~
+id:[com.google.accompanist:accompanist-swiperefresh]
+
+~~Google.accompanist.systemuicontroller~~
+id:[com.google.accompanist:accompanist-systemuicontroller]

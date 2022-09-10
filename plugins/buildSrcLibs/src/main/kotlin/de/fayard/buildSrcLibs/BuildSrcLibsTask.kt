@@ -3,7 +3,12 @@ package de.fayard.buildSrcLibs
 import com.squareup.kotlinpoet.FileSpec
 import de.fayard.buildSrcLibs.internal.*
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
+import de.fayard.refreshVersions.core.internal.Case
+import de.fayard.refreshVersions.core.internal.MEANING_LESS_NAMES
 import de.fayard.refreshVersions.core.internal.OutputFile
+import de.fayard.refreshVersions.core.internal.checkModeAndNames
+import de.fayard.refreshVersions.core.internal.computeAliases
+import de.fayard.refreshVersions.core.internal.findDependencies
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
@@ -17,7 +22,7 @@ open class BuildSrcLibsTask : DefaultTask() {
 
     @TaskAction
     fun taskActionInitializeBuildSrc() {
-        OutputFile.checkWhichFilesExist(project.rootDir)
+        OutputFile.checkWhichFilesExist()
         project.file(OutputFile.OUTPUT_DIR.path).also {
             if (it.isDirectory.not()) it.mkdirs()
         }
@@ -42,11 +47,10 @@ open class BuildSrcLibsTask : DefaultTask() {
 
     @TaskAction
     fun taskUpdateLibsKt() {
-        val outputDir = project.file(OutputFile.OUTPUT_DIR.path)
+        val outputDir = OutputFile.OUTPUT_DIR.file
 
         val allDependencies = project.findDependencies()
-        val resolvedUseFqdn = computeUseFqdnFor(
-            libraries = allDependencies,
+        val resolvedUseFqdn = allDependencies.computeAliases(
             configured = emptyList(),
             byDefault = MEANING_LESS_NAMES
         )

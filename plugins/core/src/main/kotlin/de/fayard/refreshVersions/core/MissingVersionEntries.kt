@@ -9,8 +9,7 @@ import org.gradle.api.artifacts.ExternalDependency
 
 @InternalRefreshVersionsApi
 fun addMissingEntriesInVersionsProperties(project: Project) {
-    require(project == project.rootProject) { "Expected a rootProject but got $project" }
-    OutputFile.checkWhichFilesExist(project.rootDir)
+    OutputFile.checkWhichFilesExist()
     val configurationsWithHardcodedDependencies = project.findHardcodedDependencies()
 
     val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()

@@ -4,6 +4,7 @@ package dependencies
 
 import Android
 import AndroidX
+import Arrow
 import COIL
 import CashApp
 import Chucker
@@ -11,6 +12,7 @@ import Firebase
 import Google
 import Http4k
 import JakeWharton
+import JetBrains
 import Kodein
 import Koin
 import Kotlin
@@ -30,6 +32,7 @@ import Touchlab
 internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     Android,
     AndroidX,
+    Arrow,
     CashApp,
     Chucker,
     COIL,
@@ -37,6 +40,7 @@ internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     Google,
     Http4k,
     JakeWharton,
+    JetBrains,
     Kodein,
     Koin,
     Kotlin,

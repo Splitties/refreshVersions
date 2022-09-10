@@ -176,4 +176,102 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
      * GitHub page: [Kotlin/kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
      */
     val datetime = module("kotlinx-datetime")
+
+    /**
+     * Kotlin DataFrame is a JVM Kotlin library for in-memory data manipulation.
+     *
+     * [Documentation](https://kotlin.github.io/dataframe/overview.html)
+     *
+     * [GitHub page](https://github.com/Kotlin/dataframe/)
+     *
+     */
+    val dataframe = DataFrame
+
+    object DataFrame: DependencyNotationAndGroup(
+        group = "org.jetbrains.kotlinx",
+        name = "dataframe",
+        rawRules = """
+        org.jetbrains.kotlinx:dataframe(-*)
+                      ^^^^^^^.^^^^^^^^^
+        """.trimIndent()
+    ) {
+
+        val dataframe = module("dataframe")
+        val core  = module("dataframe-core")
+        val excel = module("dataframe-excel")
+        val arrow = module("dataframe-arrow")
+    }
+
+    /**
+     * Multidimensional array library for Kotlin.
+     *
+     * [API reference (Dokka)](https://kotlin.github.io/multik/multik-api/)
+     *
+     * [GitHub releases](https://github.com/Kotlin/multik/releases)
+     *
+     * GitHub page: [Kotlin/multik](https://github.com/Kotlin/multik)
+     */
+    val multik = Multik
+
+    object Multik :DependencyGroup(
+        group = "org.jetbrains.kotlinx",
+        rawRules = """
+        org.jetbrains.kotlinx:multik(-*)
+                      ^^^^^^^.^^^^^^
+        """.trimIndent()
+    ) {
+        val api = module("multik-api")
+        val default = module("multik-default")
+        val jvm = module("multik-jvm")
+        val native = module("multik-native")
+    }
+
+    /**
+     * Lincheck is a framework for testing concurrent data structures for correctness.
+     *
+     * [GitHub releases](https://github.com/Kotlin/kotlinx-lincheck/releases)
+     *
+     * GitHub page: [kotlinx-lincheck](https://github.com/Kotlin/kotlinx-lincheck)
+     */
+    val lincheck = Lincheck
+
+    object Lincheck :DependencyNotationAndGroup(
+        group = "org.jetbrains.kotlinx",
+        name = "lincheck",
+        rawRules = """
+        org.jetbrains.kotlinx:lincheck(-*)
+                      ^^^^^^^.^^^^^^^^
+        """.trimIndent()
+    ) {
+        val jvm = module("lincheck-jvm")
+    }
+
+    /**
+     * KotlinDL is a high-level Deep Learning API.
+     *
+     * Talks by Zinoviev Alexey:
+     * - [Deep Learning with KotlinDL](https://www.youtube.com/watch?v=jCFZc97_XQU)
+     * - [Introduction to Deep Learning with KotlinDL](https://www.youtube.com/watch?v=ruUz8uMZUVw)
+     *
+     * [API reference (Dokka)](https://jetbrains.github.io/KotlinDL)
+     *
+     * [GitHub releases](https://github.com/JetBrains/KotlinDL/releases)
+     *
+     * [Change log](https://github.com/JetBrains/KotlinDL/blob/master/CHANGELOG.md)
+     *
+     * GitHub page: [JetBrains/KotlinDL](https://github.com/JetBrains/KotlinDL)
+     */
+    val deeplearning = DeepLearning
+
+    object DeepLearning : DependencyGroup(
+        group = "org.jetbrains.kotlinx",
+        rawRules = """
+        org.jetbrains.kotlinx:kotlin-deeplearning(-*)
+                      ^^^^^^^.       ^^^^^^^^^^^^
+        """.trimIndent()
+    ) {
+        val api = module("kotlin-deeplearning-api")
+        val onnx = module("kotlin-deeplearning-onnx")
+        val visualization = module("kotlin-deeplearning-visualization")
+    }
 }

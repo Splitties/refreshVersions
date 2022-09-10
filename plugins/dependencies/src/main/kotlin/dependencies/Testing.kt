@@ -96,12 +96,6 @@ object Testing : IsNotADependency {
             val piTest = module("kotest-plugins-pitest")
         }
 
-        @Suppress("DEPRECATION")
-        @Deprecated(
-            message = "Since Kotest 4.5.0 extensions have a separate lifecycle per extension",
-            replaceWith = ReplaceWith("Testing.kotestExtensions")
-        )
-        val extensions = Extensions
 
         val framework = Framework
 
@@ -111,18 +105,27 @@ object Testing : IsNotADependency {
             val datatest = module("kotest-framework-datatest")
         }
 
-        @Deprecated(
-            message = "Since Kotest 4.5.0 extensions have a separate lifecycle per extension",
-            replaceWith = ReplaceWith("Testing.KotestExtensions")
-        )
-        object Extensions : IsNotADependency {
+        val extensions = Extensions
 
+        object Extensions : DependencyGroup("io.kotest.extensions") {
+
+            val pitest = module("kotest-extensions-pitest")
+            val embeddedKafka = module("kotest-extensions-embedded-kafka")
+            val robolectric = module("kotest-extensions-robolectric")
+            val wiremock = module("kotest-extensions-wiremock")
+            val gherkin = module("kotest-extensions-gherkin")
             val allure = module("kotest-extensions-allure")
-            val http = module("kotest-extensions-http")
             val koin = module("kotest-extensions-koin")
             val mockServer = module("kotest-extensions-mockserver")
             val spring = module("kotest-extensions-spring")
             val testContainers = module("kotest-extensions-testcontainers")
+
+            val property = Property
+
+            object Property : DependencyGroup(group = group) {
+                val datetime = module("kotest-property-datetime")
+                val arbs = module("kotest-property-arbs")
+            }
         }
 
         val assertions = Assertions
@@ -140,22 +143,6 @@ object Testing : IsNotADependency {
             val ktor = module("kotest-assertions-ktor")
             val sql = module("kotest-assertions-sql")
         }
-    }
-
-    val kotestExtensions = KotestExtensions
-
-    object KotestExtensions : DependencyGroup("io.kotest.extensions") {
-
-        val pitest = module("kotest-extensions-pitest")
-        val embeddedKafka = module("kotest-extensions-embedded-kafka")
-        val robolectric = module("kotest-extensions-robolectric")
-        val wiremock = module("kotest-extensions-wiremock")
-        val gherkin = module("kotest-extensions-gherkin")
-        val allure = module("kotest-extensions-allure")
-        val koin = module("kotest-extensions-koin")
-        val mockServer = module("kotest-extensions-mockserver")
-        val spring = module("kotest-extensions-spring")
-        val testContainers = module("kotest-extensions-testcontainers")
     }
 
     /**
@@ -233,7 +220,7 @@ object Testing : IsNotADependency {
     /**
      * Mocking library for Kotlin.
      *
-     * Official Website: [mockk.io](https://mockk.io/)
+     * Official website: [mockk.io](https://mockk.io/)
      *
      * [GitHub releases](https://github.com/mockk/mockk/releases)
      *
@@ -274,5 +261,55 @@ object Testing : IsNotADependency {
          * [More info here](https://github.com/nhaarman/mockito-kotlin)
          */
         val kotlin = DependencyNotation("com.nhaarman.mockitokotlin2", "mockito-kotlin")
+    }
+
+    /**
+     * AssertJ provides a rich and intuitive set of strongly-typed assertions to use for unit testing
+     *
+     * Official website: [assertj.github.io](https://assertj.github.io/doc/)
+     *
+     * GitHub page: [assertj/assertj-core](https://github.com/assertj/assertj-core)
+     */
+    val assertj = AssertJ
+
+    object AssertJ : DependencyGroup(
+        group = "org.assertj",
+        rawRules = """
+            org.assertj:assertj-*
+                        ^^^^^^^.^
+        """.trimIndent()
+    ) {
+
+        val core = module("assertj-core")
+        val guava = module("assertj-guava")
+        val jodaTime = module("assertj-joda-time")
+        val db = module("assertj-db")
+        val swing = module("assertj-swing")
+    }
+
+    /**
+     * Matchers that can be combined to create flexible expressions of intent in tests
+     *
+     * Official website: [hamcrest.org](http://hamcrest.org/JavaHamcrest/)
+     *
+     * [GitHub releases](https://github.com/hamcrest/JavaHamcrest/releases)
+     *
+     * GitHub page: [hamcrest/JavaHamcrest](https://github.com/hamcrest/JavaHamcrest)
+     *
+     * [API reference (JavaDoc)](http://hamcrest.org/JavaHamcrest/javadoc/)
+     */
+    val hamcrest = Hamcrest
+
+    object Hamcrest : DependencyNotationAndGroup(
+        group = "org.hamcrest",
+        name = "hamcrest",
+        rawRules = """
+            org.hamcrest:hamcrest(-*)
+                ^^^^^^^^
+        """.trimIndent()
+    ) {
+
+        val core = module("hamcrest-core")
+        val library = module("hamcrest-library")
     }
 }

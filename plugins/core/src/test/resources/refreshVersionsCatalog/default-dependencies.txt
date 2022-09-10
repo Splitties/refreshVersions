@@ -1,0 +1,17 @@
+// Represents dependencies that we would get in a Gradle build,
+// and the key assigned by refreshVersions for
+// the version catalog at migration time.
+//
+// Note: Gradle plugin dependencies should be filtered out by the code,
+// and should not appear as libraries in the toml file.
+
+org.codehaus.groovy:groovy-kotlin:3.0.5           | groovy-kotlin
+com.mycompany:mylib:1.4                           | my-lib
+com.mycompany:other:1.4                           | my-other-lib
+com.mycompany:alternate:1.2                       | my-alternate-lib
+some.plugin.id:some.plugin.id.gradle.plugin:1.4   | some-plugin-id
+other.plugin.id:other.plugin.id.gradle.plugin:3.4 | other-plugin-id
+io.kotest:kotest:3.0                              | kotest-core
+io.kotest:kotest-property:3.0                     | kotest-property
+org.junit.jupiter:junit-jupiter-bom:1.0           | junit-jupiter-bom
+org.junit.jupiter:junit-jupiter                   | junit-jupiter

@@ -7,6 +7,12 @@ com.google.firebase:firebase-*
 com.google.accompanist:accompanist-*
     ^^^^^^.^^^^^^^^^^^
 
+com.google.accompanist:accompanist-imageloading-core
+    ^^^^^^.^^^^^^^^^^^.            ^^^^^^^^^^^^^^^^^
+
+com.google.accompanist:accompanist-glide
+    ^^^^^^.^^^^^^^^^^^.            ^^^^^
+
 com.google.android.libraries.places:places
     ^^^^^^.^^^^^^^.          ^^^^^^
 
@@ -66,3 +72,6 @@ com.google.android.fhir:*
 
 com.google.android.flexbox:flexbox
     ^^^^^^^^^^^^^^^^^^^^^^
+
+com.google.ambient.crossdevice:crossdevice
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^

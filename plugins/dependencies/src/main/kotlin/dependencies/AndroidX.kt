@@ -11,7 +11,7 @@ import org.gradle.kotlin.dsl.IsNotADependency
  *
  * This structure brings **organized and ready-to-use constants for AndroidX dependencies**. It was made because:
  *
- * - As of 2021 August the 23rd, AndroidX is made of **91 sub-families** of artifacts with their own version.
+ * - As of 2021 August the 23rd, AndroidX is made of **91 subfamilies** of artifacts with their own version.
  * - Back in 2019 November the 18th, AndroidX was made of **187 artifacts**.
  */
 object AndroidX : IsNotADependency {
@@ -147,6 +147,18 @@ object AndroidX : IsNotADependency {
          * - [androidx.appsearch.platformstorage](https://developer.android.com/reference/kotlin/androidx/appsearch/platformstorage/package-summary)
          */
         val platformStorage = module("appsearch-platform-storage")
+
+        /**
+         * AppSearch Builtin Types
+         *
+         * Contains AppSearch Document classes and builders for a variety of common objects based on
+         * http://schema.org. Data interchange with the system, and other apps, as well as
+         * structured parameters for semantic intents should use these built-in types as appropriate.
+         *
+         * ### API reference:
+         * - [androidx.appsearch.builtintypes](https://developer.android.com/reference/androidx/appsearch/builtintypes/package-summary)
+         */
+        val builtInTypes = module("appsearch-builtin-types")
     }
 
     /**
@@ -543,6 +555,14 @@ object AndroidX : IsNotADependency {
              * - [androidx.compose.runtime.rxjava3](https://developer.android.com/reference/kotlin/androidx/compose/runtime/rxjava3/package-summary)
              */
             val rxJava3 = module("runtime-rxjava3")
+
+            /**
+             * Additional tracing in Compose.
+             *
+             * ### API reference:
+             * - [androidx.compose.runtime.tracing](https://developer.android.com/reference/kotlin/androidx/compose/runtime/tracing/package-summary)
+             */
+            val tracing = module("runtime-tracing")
         }
 
         /**
@@ -987,6 +1007,25 @@ object AndroidX : IsNotADependency {
          * - [androidx.core.widget](https://developer.android.com/reference/kotlin/androidx/core/widget/package-summary)
          */
         val ktx = module("core-ktx")
+
+        /**
+         * Public API surface for apps to use UWB (ultra-wideband) on supported devices.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/core-uwb)
+         *
+         * ## API reference:
+         * - [androidx.core.uwb](https://developer.android.com/reference/kotlin/androidx/core/uwb/package-summary)
+         * - [androidx.core.uwb.exceptions](https://developer.android.com/reference/kotlin/androidx/core/uwb/exceptions/package-summary)
+         */
+        val uwb = Uwb
+
+        object Uwb : DependencyNotationAndGroup(
+            group = "androidx.core.uwb",
+            name = "uwb"
+        ) {
+            /** 	RxJava3 integration for UWB module */
+            val rxJava3 = module(name = "uwb-rxjava3")
+        }
 
         /**
          * To use RoleManagerCompat
@@ -1443,27 +1482,32 @@ object AndroidX : IsNotADependency {
 
     object Health : DependencyGroup(group = "androidx.health") {
 
-        /**
-         * Read or write user's health and fitness records.
-         *
-         * ### API reference:
-         * - [androidx.health.connect.client](https://developer.android.com/reference/kotlin/androidx/health/connect/client/package-summary)
-         * - [androidx.health.connect.client.aggregate](https://developer.android.com/reference/kotlin/androidx/health/connect/client/aggregate/package-summary)
-         * - [androidx.health.connect.client.changes](https://developer.android.com/reference/kotlin/androidx/health/connect/client/changes/package-summary)
-         * - [androidx.health.connect.client.metadata](https://developer.android.com/reference/kotlin/androidx/health/connect/client/metadata/package-summary)
-         * - [androidx.health.connect.client.permission](https://developer.android.com/reference/kotlin/androidx/health/connect/client/permission/package-summary)
-         * - [androidx.health.connect.client.records](https://developer.android.com/reference/kotlin/androidx/health/connect/client/records/package-summary)
-         * - [androidx.health.connect.client.request](https://developer.android.com/reference/kotlin/androidx/health/connect/client/request/package-summary)
-         * - [androidx.health.connect.client.response](https://developer.android.com/reference/kotlin/androidx/health/connect/client/response/package-summary)
-         * - [androidx.health.connect.client.time](https://developer.android.com/reference/kotlin/androidx/health/connect/client/time/package-summary)
-         * - [androidx.health.platform.client](https://developer.android.com/reference/kotlin/androidx/health/platform/client/package-summary)
-         * - [androidx.health.platform.client.changes](https://developer.android.com/reference/kotlin/androidx/health/platform/client/changes/package-summary)
-         * - [androidx.health.platform.client.error](https://developer.android.com/reference/kotlin/androidx/health/platform/client/error/package-summary)
-         * - [androidx.health.platform.client.permission](https://developer.android.com/reference/kotlin/androidx/health/platform/client/permission/package-summary)
-         * - [androidx.health.platform.client.request](https://developer.android.com/reference/kotlin/androidx/health/platform/client/request/package-summary)
-         * - [androidx.health.platform.client.response](https://developer.android.com/reference/kotlin/androidx/health/platform/client/response/package-summary)
-         */
-        val connectClient = module("health-connect-client")
+        val connect = Connect
+
+        object Connect : DependencyGroup(group = "androidx.health.connect") {
+
+            /**
+             * Read or write user's health and fitness records.
+             *
+             * ### API reference:
+             * - [androidx.health.connect.client](https://developer.android.com/reference/kotlin/androidx/health/connect/client/package-summary)
+             * - [androidx.health.connect.client.aggregate](https://developer.android.com/reference/kotlin/androidx/health/connect/client/aggregate/package-summary)
+             * - [androidx.health.connect.client.changes](https://developer.android.com/reference/kotlin/androidx/health/connect/client/changes/package-summary)
+             * - [androidx.health.connect.client.metadata](https://developer.android.com/reference/kotlin/androidx/health/connect/client/metadata/package-summary)
+             * - [androidx.health.connect.client.permission](https://developer.android.com/reference/kotlin/androidx/health/connect/client/permission/package-summary)
+             * - [androidx.health.connect.client.records](https://developer.android.com/reference/kotlin/androidx/health/connect/client/records/package-summary)
+             * - [androidx.health.connect.client.request](https://developer.android.com/reference/kotlin/androidx/health/connect/client/request/package-summary)
+             * - [androidx.health.connect.client.response](https://developer.android.com/reference/kotlin/androidx/health/connect/client/response/package-summary)
+             * - [androidx.health.connect.client.time](https://developer.android.com/reference/kotlin/androidx/health/connect/client/time/package-summary)
+             * - [androidx.health.platform.client](https://developer.android.com/reference/kotlin/androidx/health/platform/client/package-summary)
+             * - [androidx.health.platform.client.changes](https://developer.android.com/reference/kotlin/androidx/health/platform/client/changes/package-summary)
+             * - [androidx.health.platform.client.error](https://developer.android.com/reference/kotlin/androidx/health/platform/client/error/package-summary)
+             * - [androidx.health.platform.client.permission](https://developer.android.com/reference/kotlin/androidx/health/platform/client/permission/package-summary)
+             * - [androidx.health.platform.client.request](https://developer.android.com/reference/kotlin/androidx/health/platform/client/request/package-summary)
+             * - [androidx.health.platform.client.response](https://developer.android.com/reference/kotlin/androidx/health/platform/client/response/package-summary)
+             */
+            val client = module("connect-client")
+        }
 
         /**
          * ### API reference:
@@ -1545,6 +1589,16 @@ object AndroidX : IsNotADependency {
      * - [androidx.interpolator.view.animation](https://developer.android.com/reference/kotlin/androidx/interpolator/view/animation/package-summary)
      */
     val interpolator = DependencyNotation("androidx.interpolator", "interpolator")
+
+    /**
+     * Javascript Engine is a static library you can add to your Android application in order to evaluate JavaScript.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/javascriptengine)
+     *
+     * ### API reference:
+     * - [androidx.javascriptengine](https://developer.android.com/reference/kotlin/androidx/javascriptengine/package-summary)
+     */
+    val javascriptEngine = DependencyNotation("androidx.javascriptengine", "javascriptengine")
 
     /**
      * Write apps for Android TV devices using dpad-friendly widgets and template fragments.
@@ -1635,18 +1689,6 @@ object AndroidX : IsNotADependency {
 
     object Lifecycle : DependencyGroup(group = "androidx.lifecycle") {
 
-        /** Lifecyclew only (without ViewModel or LiveData), with Kotlin extensions. */
-        val runtimeKtx = module("lifecycle-runtime-ktx")
-
-        /**
-         * Provides a `TestlifecycleOwner` that implements `LifecycleOwner` and
-         * provides a thread safe mutable `Lifcycle`.
-         *
-         * ### API reference:
-         * - [androidx.lifecycle.testing](https://developer.android.com/reference/kotlin/androidx/lifecycle/testing/package-summary)
-         */
-        val runtimeTesting = module("lifecycle-runtime-testing")
-
         /** LiveData, with Kotlin extensions. */
         val liveDataKtx = module("lifecycle-livedata-ktx")
 
@@ -1673,9 +1715,29 @@ object AndroidX : IsNotADependency {
         /**
          * Lifecyclew only (without ViewModel or LiveData), includes only Java APIs.
          *
-         * @see AndroidX.Lifecycle.runtimeKtx
+         * @see AndroidX.Lifecycle.Runtime.ktx
          */
-        val runtime = module("lifecycle-runtime")
+        val runtime = Runtime
+
+        object Runtime : DependencyNotationAndGroup(
+            group = group,
+            name = "lifecycle-runtime"
+        ) {
+            /** Lifecycle only (without ViewModel or LiveData), with Kotlin extensions. */
+            val ktx = module("lifecycle-runtime-ktx")
+
+            /** Compose integration with Lifecycle. */
+            val compose = module("lifecycle-runtime-compose")
+
+            /**
+             * Provides a `TestlifecycleOwner` that implements `LifecycleOwner` and
+             * provides a thread safe mutable `Lifcycle`.
+             *
+             * ### API reference:
+             * - [androidx.lifecycle.testing](https://developer.android.com/reference/kotlin/androidx/lifecycle/testing/package-summary)
+             */
+            val testing = module("lifecycle-runtime-testing")
+        }
 
         /**
          * ViewModel, includes only Java APIs.
@@ -2277,7 +2339,16 @@ object AndroidX : IsNotADependency {
         /**
          * Paging 3 Integration
          */
-        val paging = module("room-paging")
+        val paging = Paging
+
+        object Paging : DependencyNotationAndGroup(
+            group = group,
+            name = "room-paging"
+        ) {
+            val guava = module("room-paging-guava")
+            val rxJava2 = module("room-paging-rxjava2")
+            val rxJava3 = module("room-paging-rxjava3")
+        }
 
         /**
          * Room compiler, compatible with ksp, kapt, and Java annotation processors.
@@ -2567,7 +2638,7 @@ object AndroidX : IsNotADependency {
             /**
              * JUnit extensions APIs.
              *
-             * @see junitKtx
+             * @see AndroidX.Test.Ext.JUnit.ktx
              */
             val junit = JUnit
 
@@ -2587,7 +2658,7 @@ object AndroidX : IsNotADependency {
             /**
              * [Truth](https://github.com/google/truth) extensions APIs.
              *
-             * @see junitKtx
+             * @see AndroidX.Test.Ext.JUnit.ktx
              */
             val truth = module("truth")
         }
@@ -2708,6 +2779,14 @@ object AndroidX : IsNotADependency {
 
         /** Kotlin extensions */
         val ktx = module("tracing-ktx")
+
+        /**
+         * AndroidX Tracing: Perfetto SDK
+         *
+         * ### API reference:
+         * - [androidx.tracing.perfetto](https://developer.android.com/reference/androidx/tracing/perfetto/package-summary)
+         */
+        val perfetto = module("tracing-perfetto")
     }
 
     /**

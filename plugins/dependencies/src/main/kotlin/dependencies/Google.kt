@@ -3,6 +3,7 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
+import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 object Google : IsNotADependency {
@@ -23,18 +24,15 @@ object Google : IsNotADependency {
 
     object Accompanist : DependencyGroup(group = "com.google.accompanist") {
 
-        val glide = module("accompanist-glide")
-        val imageloadingCore = module("accompanist-imageloading-core")
-
         val insets = Insets
 
         object Insets : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-insets") {
             val ui = module("accompanist-insets-ui")
         }
 
-        val systemuicontroller = module("accompanist-systemuicontroller")
+        val systemUiController = module("accompanist-systemuicontroller")
 
-        val appcompatTheme = module("accompanist-appcompat-theme")
+        val appCompatTheme = module("accompanist-appcompat-theme")
 
         val pager = Pager
 
@@ -42,8 +40,47 @@ object Google : IsNotADependency {
             val indicators = module("accompanist-pager-indicators")
         }
 
-        val flowlayout = module("accompanist-flowlayout")
-        val swiperefresh = module("accompanist-swiperefresh")
+        val flowLayout = module("accompanist-flowlayout")
+        val swipeRefresh = module("accompanist-swiperefresh")
+
+        val placeholder = Placeholder
+
+        object Placeholder : DependencyNotationAndGroup(
+            group = "com.google.accompanist",
+            name = "accompanist-placeholder"
+        ) {
+            val material = module("accompanist-placeholder-material")
+        }
+
+        val drawablePainter = module("accompanist-drawablepainter")
+
+        val permissions = module("accompanist-permissions")
+
+        val navigationMaterial = module("accompanist-navigation-material")
+        val navigationAnimation = module("accompanist-navigation-animation")
+
+        val webView = module("accompanist-webview")
+    }
+
+    val ambient = Ambient
+
+    object Ambient : IsNotADependency {
+
+        /**
+         * Cross device SDK
+         *
+         * The Cross device SDK simplifies the development of rich and engaging multi-device experiences.
+         *
+         * The Cross device SDK enables the following core functionality:
+         * - Device discovery and authorization
+         * - Secure connections and data transfers
+         * - Multi-device sessions
+         *
+         * [Official webpage](https://developer.android.com/guide/topics/connectivity/cross-device-sdk/overview).
+         *
+         * [Official Kotlin sample on GitHub](https://github.com/android/connectivity-samples/tree/main/CrossDeviceRockPaperScissorsKotlin).
+         */
+        val crossDevice = DependencyNotation("com.google.ambient.crossdevice", "crossdevice")
     }
 
     val android = Android
@@ -592,6 +629,57 @@ object Google : IsNotADependency {
                 val processor = module("dagger-grpc-server-processor")
                 val annotations = module("dagger-grpc-server-annotations")
             }
+        }
+    }
+
+    val horologist = Horologist
+
+    /**
+     * Horologist is a group of libraries that aim to supplement
+     * Wear OS developers with features that are commonly required
+     * by developers but not yet available.
+     *
+     * - [Official website here](https://google.github.io/horologist/)
+     * - GitHub page: https://github.com/google/horologist
+     */
+    @Incubating
+    object Horologist : DependencyGroup(
+        group = "com.google.android.horologist",
+        rawRules = """
+            com.google.android.horologist:*
+                ^^^^^^^        ^^^^^^^^^^
+        """.trimIndent()
+    ) {
+        val composables = module("horologist-composables")
+
+        val networkAwareness = module("horologist-network-awareness")
+
+        val tiles = module("horologist-tiles")
+
+        val audio = Audio
+
+        object Audio : DependencyNotationAndGroup(group = "com.google.android.horologist", name = "horologist-audio") {
+            val ui = module("horologist-audio-ui")
+        }
+
+        val compose = Compose
+
+        object Compose : IsNotADependency {
+            val layout = module("horologist-compose-layout")
+            val tools = module("horologist-compose-tools")
+        }
+
+        val media = Media
+
+        object Media : DependencyNotationAndGroup(group = "com.google.android.horologist", name = "horologist-media") {
+            val data = module("horologist-media-data")
+            val ui = module("horologist-media-ui")
+        }
+
+        val media3 = Media3
+
+        object Media3 : IsNotADependency {
+            val backend = module("horologist-media3-backend")
         }
     }
 

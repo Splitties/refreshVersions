@@ -1,5 +1,6 @@
 package de.fayard.buildSrcLibs
 
+import de.fayard.refreshVersions.core.internal.skipConfigurationCache
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -14,6 +15,7 @@ class BuildSrcLibsPlugin : Plugin<Project> {
             group = "refreshVersions"
             description = "Update buildSrc/src/main/kotlin/Libs.kt"
             outputs.upToDateWhen { false }
+            skipConfigurationCache()
         }
         project.tasks.register<DefaultTask>(
             name = "buildSrcVersions"

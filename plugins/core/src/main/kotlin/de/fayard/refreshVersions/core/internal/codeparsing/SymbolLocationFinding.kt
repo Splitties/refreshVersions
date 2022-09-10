@@ -43,7 +43,7 @@ internal sealed class SymbolResult {
 
     class BlockContent(
         override val rule: SymbolLocationFindingRule.BlockContent,
-        /** Range of the entire block, not just just its content. */
+        /** Range of the entire block, not just its content. */
         val blockRange: IntRange
     ) : SymbolResult()
 

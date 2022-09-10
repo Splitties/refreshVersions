@@ -1,0 +1,45 @@
+# See https://docs.gradle.org/current/userguide/platforms.html#sub:conventional-dependencies-toml
+
+key = "some key"
+
+[bundles]
+
+groovy = ["groovy-core", "groovy-json", "groovy-nio"]
+
+[plugins]
+
+short-notation = "some.plugin.id:1.4"
+
+long-notation = { id = "some.plugin.id", version = "1.4" }
+
+some-plugin-id = { id = "some.plugin.id", version = "1.4" }
+
+other-plugin-id = { id = "other.plugin.id", version = "3.4" }
+
+[versions]
+
+groovy = "3.0.5"
+
+kotest = "3.0"
+
+junit-jupiter = "42"
+
+[libraries]
+
+my-lib-ok = "com.mycompany:mylib-ok:1.0"
+
+groovy-kotlin = "org.codehaus.groovy:groovy-kotlin:_"
+
+my-lib = "com.mycompany:mylib:_"
+
+my-other-lib = "com.mycompany:other:_"
+
+my-alternate-lib = "com.mycompany:alternate:_"
+
+kotest-core = { group = "io.kotest", name = "kotest", version.ref = "kotest" }
+
+kotest-property = { group = "io.kotest", name = "kotest-property", version.ref = "kotest" }
+
+junit-jupiter-bom = { group = "org.junit.jupiter", name = "junit-jupiter-bom", version.ref = "junit-jupiter" }
+
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }

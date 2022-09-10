@@ -7,13 +7,21 @@ import org.gradle.api.artifacts.ExternalDependency
 
 @InternalRefreshVersionsApi
 fun Dependency.moduleId(): ModuleId? = when {
-    this is ExternalDependency -> ModuleId.Maven(group, name)
+    this is ExternalDependency -> mavenModuleId()
     this::class.simpleName == "NpmDependency" -> npmModuleId()
     else -> null
+}
+
+internal fun Dependency.mavenModuleId(): ModuleId.Maven? {
+    return ModuleId.Maven(group ?: return null, name)
 }
 
 internal fun Dependency.npmModuleId(): ModuleId.Npm {
     val scope: String? = name.substringBefore('/').substringAfter('@').takeUnless { it == name }
     val nameWithoutScope = name.substringAfter('/')
     return ModuleId.Npm(scope, nameWithoutScope)
+}
+
+internal fun Dependency.matches(moduleId: ModuleId): Boolean {
+    return moduleId.group == group && moduleId.name == name
 }

@@ -1,5 +1,238 @@
 # Change log for refreshVersions
 
+## Version 0.50.0 (2022-09-09)
+
+### Support for Versions Catalogs! 🎉
+
+**Versions Catalogs** are Gradle 7.4+ solution for storing dependencies and versions in a centralized file.
+Gradle will automatically recognize the `gradle/libs.versions.toml` file… and so will refreshVersions!
+
+It is similar in spirit to the `versions.properties` file, **and we are happy to add support for it**:
+
+- `./gradlew refreshVersions` will now add available updates as comments inside the `gradle/libs.versions.toml` file.
+- `./gradlew refreshVersionsMigrate --mode=VersionCatalogAndVersionProperties` will **generate a versions catalog and migrate your build to use it** if you don't have one already.
+
+Currently, we only support the default versions catalog. If you need support for multiple versions catalogs, add your 👍 [on this issue](https://github.com/jmfayard/refreshVersions/issues/596).
+
+This is a big and new feature, so feel free to [provide feedback in this thread](https://github.com/jmfayard/refreshVersions/discussions/592), and report issues with the right info if there's no existing one [here](https://github.com/jmfayard/refreshVersions/issues).
+
+### Better support for `versionFor`, and Jetpack Compose!
+
+#### Before
+
+`versionFor` was helpful when you need to access a version located in the `versions.properties` file, but if there was no dependency using it, you'd never see any updates.
+For projects/modules using Jetpack Compose from Google, that meant you'd never see any updates for the compiler, and you'd need to look it up yourself.
+Also, the version entry would be marked as unused, or would be the wrong one if you shared it with other Compose artifacts since [the compiler now has its own versioning track](https://android-developers.googleblog.com/2022/06/independent-versioning-of-Jetpack-Compose-libraries.html).
+
+#### Now
+
+Now, passing a dependency notation such as `AndroidX.compose.compiler` to `versionFor` is exactly the same as if you used the dependency somewhere in the project:
+
+You'll get all the updates, and if the version is not yet specified in the `versions.properties` file, as usual, refreshVersions will try to find the latest most stable version available, plus it will also add the available comments for any newer, less stable version.
+That makes it even easier to start a project with Jetpack Compose!
+
+With this in a `build.gradle.kts` file:
+
+```kts
+android {
+    composeOptions {
+        kotlinCompilerExtensionVersion = versionFor(AndroidX.compose.compiler) // Kotlin DSL
+        kotlinCompilerExtensionVersion = versionFor(project, AndroidX.compose.compiler) // Groovy DSL
+    }
+}
+```
+
+_`AndroidX.compose.compiler` is equivalent to `"androidx.compose.compiler:compiler:_"`._
+
+You'll get that in the `versions.properties` file if you were on version `1.3.0-rc01`:
+
+```properties
+version.androidx.compose.compiler=1.3.0-rc01
+##                    # available=1.3.0-rc02
+##                    # available=1.3.0
+```
+
+### New page for all the built-in dependency notations 📕
+
+To make it easy to start new projects, new modules, or using a common library, we spent a lot of time adding built-in dependency notations for Kotlin, kotlinx, AndroidX, and more.
+
+However, it wasn't so easy to know that they exist.
+That's why we made [a dedicated page where you can find them all](https://jmfayard.github.io/refreshVersions/dependencies-notations/)! Let us know how helpful it is to you!
+
+### Fixes
+
+- `rejectVersionIf { … }` had an issue: its removal would not be taken into account until the Gradle daemon would be killed. This now behaves correctly.
+- We were ignoring repositories defined in `pluginManagement { … }`, which might have led to Gradle plugin updates being missed by refreshVersions. Now, we look up these repositories as well.
+
+### New dependency notations:
+
+<details>
+<summary><strong>Click to expand (141) </strong></summary>
+
+- `AndroidX.appSearch.builtInTypes`
+- `AndroidX.compose.runtime.tracing`
+- `AndroidX.core.uwb`
+- `AndroidX.core.uwb.rxJava3`
+- `AndroidX.health.connect.client`
+- `AndroidX.javascriptEngine`
+- `AndroidX.lifecycle.runtime.compose`
+- `AndroidX.room.paging.guava`
+- `AndroidX.room.paging.rxJava2`
+- `AndroidX.room.paging.rxJava3`
+- `AndroidX.tracing.perfetto`
+- `CashApp.molecule.gradlePlugin`
+- `CashApp.molecule.runtime`
+- `CashApp.molecule.test`
+- `Google.accompanist.drawablePainter`
+- `Google.accompanist.flowLayout`
+- `Google.accompanist.navigationAnimation`
+- `Google.accompanist.navigationMaterial`
+- `Google.accompanist.permissions`
+- `Google.accompanist.placeholder`
+- `Google.accompanist.placeholder.material`
+- `Google.accompanist.webView`
+- `Google.ambient.crossDevice`
+- `Google.horologist.audio`
+- `Google.horologist.audio.ui`
+- `Google.horologist.composables`
+- `Google.horologist.compose.layout`
+- `Google.horologist.compose.tools`
+- `Google.horologist.media`
+- `Google.horologist.media.data`
+- `Google.horologist.media.ui`
+- `Google.horologist.media3.backend`
+- `Google.horologist.networkAwareness`
+- `Google.horologist.tiles`
+- `Square.okHttp3.mockWebServer3`
+- `Square.okHttp3.mockWebServer3.junit4`
+- `Square.okHttp3.mockWebServer3.junit5`
+- `Square.okHttp3.android`
+- `Square.okHttp3.brotli`
+- `Square.okHttp3.coroutines`
+- `Square.okHttp3.dnsOverHttps`
+- `Square.okHttp3.sse`
+- `Square.okHttp3.tls`
+- `Square.okHttp3.urlConnection`
+- `Arrow.core`
+- `Arrow.fx.coroutines`
+- `Arrow.fx.stm`
+- `Arrow.optics`
+- `Arrow.optics.kspPlugin`
+- `Arrow.optics.reflect`
+- `Arrow.stack`
+- `Arrow.analysis.gradlePlugin`
+- `Koin.navigation`
+- `Testing.kotest.extensions.property.arbs`
+- `Testing.kotest.extensions.property.datetime`
+- `Ktor.client.contentNegotiation`
+- `Ktor.client.contentNegotiationTests`
+- `Ktor.client.gson`
+- `Ktor.client.jackson`
+- `Ktor.client.java`
+- `Ktor.client.okHttp`
+- `Ktor.client.resources`
+- `Ktor.plugins.events`
+- `Ktor.plugins.http`
+- `Ktor.plugins.http.cio`
+- `Ktor.plugins.io`
+- `Ktor.plugins.network`
+- `Ktor.plugins.networkTls`
+- `Ktor.plugins.networkTlsCertificates`
+- `Ktor.plugins.resources`
+- `Ktor.plugins.serialization`
+- `Ktor.plugins.serialization.gson`
+- `Ktor.plugins.serialization.jackson`
+- `Ktor.plugins.serialization.kotlinx`
+- `Ktor.plugins.serialization.kotlinx.cbor`
+- `Ktor.plugins.serialization.kotlinx.json`
+- `Ktor.plugins.serialization.kotlinx.tests`
+- `Ktor.plugins.serialization.kotlinx.xml`
+- `Ktor.server.auth`
+- `Ktor.server.auth.jwt`
+- `Ktor.server.auth.ldap`
+- `Ktor.server.autoHeadResponse`
+- `Ktor.server.cachingHeaders`
+- `Ktor.server.callId`
+- `Ktor.server.callLogging`
+- `Ktor.server.cio`
+- `Ktor.server.compression`
+- `Ktor.server.conditionalHeaders`
+- `Ktor.server.contentNegotiation`
+- `Ktor.server.cors`
+- `Ktor.server.dataConversion`
+- `Ktor.server.defaultHeaders`
+- `Ktor.server.doubleReceive`
+- `Ktor.server.forwardedHeader`
+- `Ktor.server.freeMarker`
+- `Ktor.server.hostCommon`
+- `Ktor.server.hsts`
+- `Ktor.server.htmlBuilder`
+- `Ktor.server.httpRedirect`
+- `Ktor.server.httpRedirect`
+- `Ktor.server.jte`
+- `Ktor.server.locations`
+- `Ktor.server.methodOverride`
+- `Ktor.server.metrics`
+- `Ktor.server.metricsMicrometer`
+- `Ktor.server.mustache`
+- `Ktor.server.partialContent`
+- `Ktor.server.pebble`
+- `Ktor.server.resources`
+- `Ktor.server.sessions`
+- `Ktor.server.statusPages`
+- `Ktor.server.testSuites`
+- `Ktor.server.thymeleaf`
+- `Ktor.server.velocity`
+- `Ktor.server.webjars`
+- `Ktor.server.websockets`
+- `Ktor.server`
+- `Ktor.plugins.websocketSerialization`
+- `Ktor.plugins.websockets`
+- `Testing.assertj.core`
+- `Testing.assertj.db`
+- `Testing.assertj.guava`
+- `Testing.assertj.jodaTime`
+- `Testing.assertj.swing`
+- `Testing.hamcrest`
+- `Testing.hamcrest.core`
+- `Testing.hamcrest.library`
+- `JetBrains.exposed.core`
+- `JetBrains.exposed.dao`
+- `JetBrains.exposed.jdbc`
+- `KotlinX.dataframe`
+- `KotlinX.dataframe.arrow`
+- `KotlinX.dataframe.core`
+- `KotlinX.dataframe.excel`
+- `KotlinX.dataframe.dataframe`
+- `KotlinX.deeplearning.api`
+- `KotlinX.deeplearning.onnx`
+- `KotlinX.deeplearning.visualization`
+- `KotlinX.lincheck`
+- `KotlinX.lincheck.jvm`
+- `KotlinX.multik.api`
+- `KotlinX.multik.default`
+- `KotlinX.multik.jvm`
+- `KotlinX.multik.native`
+- `Spring.boms.springCloud`
+
+</details>
+
+### Credits
+
+Thanks to all the folks that contributed in updating the built-in dependency notations!
+
+- [Jacob Kwitkoski](https://github.com/thederputy) for `CashApp.molecule`
+- [Rémi Latapy](https://github.com/rlatapy-luna) for `Google.accompanist`
+- [Yuri Schimke](https://github.com/rlatapy-luna) for `Google.horologist` and `Square.okHttp3`
+- [Brady Aiello](https://github.com/brady-aiello) for `Ktor`
+
+And thanks to the GitHub sponsors of the maintainers [Louis CAD](https://github.com/LouisCAD) and [Jean-Michel Fayard](https://github.com/jmfayard) who didn't count the hours spent on this project since 2018-2019!
+
+_We hope you save a lot of time thanks to this project and can therefore leave work early, or pursue more valuable tasks and projects. 😉_
+
+**If you're not a sponsor yet, please consider becoming one**, as a company, as an individual, or even both, it means a lot to us!
+Just **click the heart** button at the top of the GitHub repo webpage, follow the steps, and your heart. Thank you!
+
 ## Version 0.40.2 (2022-06-01)
 
 ### Fixes

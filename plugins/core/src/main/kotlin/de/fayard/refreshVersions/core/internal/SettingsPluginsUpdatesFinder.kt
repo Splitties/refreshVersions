@@ -3,6 +3,7 @@ package de.fayard.refreshVersions.core.internal
 import de.fayard.refreshVersions.core.DependencyVersionsFetcher
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
+import de.fayard.refreshVersions.core.extensions.gradle.mavenModuleId
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -39,7 +40,11 @@ internal object SettingsPluginsUpdatesFinder {
                 rootProjectSettings.pluginManagement.repositories.asSequence()
                     .filterIsInstance<MavenArtifactRepository>()
                     .mapNotNull { repo ->
-                        val fetcher = DependencyVersionsFetcher.forMaven(httpClient, dependency, repo)
+                        val fetcher = DependencyVersionsFetcher.forMaven(
+                            httpClient = httpClient,
+                            moduleId = dependency.mavenModuleId(),
+                            repository = repo
+                        )
                             ?: return@mapNotNull null
                         dependency to fetcher
                     }
@@ -48,7 +53,11 @@ internal object SettingsPluginsUpdatesFinder {
                     buildSrcSettings.pluginManagement.repositories.asSequence()
                         .filterIsInstance<MavenArtifactRepository>()
                         .mapNotNull { repo ->
-                            val fetcher = DependencyVersionsFetcher.forMaven(httpClient, dependency, repo)
+                            val fetcher = DependencyVersionsFetcher.forMaven(
+                                httpClient = httpClient,
+                                moduleId = dependency.mavenModuleId(),
+                                repository = repo
+                            )
                                 ?: return@mapNotNull null
                             dependency to fetcher
                         }

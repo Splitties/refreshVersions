@@ -2,25 +2,22 @@ package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.DependencyVersionsFetcher
 import de.fayard.refreshVersions.core.ModuleId
-import de.fayard.refreshVersions.core.extensions.gradle.npmModuleId
 import de.fayard.refreshVersions.core.extensions.gradle.passwordCredentials
 import de.fayard.refreshVersions.core.internal.npm.NpmDependencyVersionsFetcherHttp
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
-import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 
 internal fun DependencyVersionsFetcher.Companion.forMaven(
     httpClient: OkHttpClient,
-    dependency: Dependency,
+    moduleId: ModuleId.Maven?,
     repository: MavenArtifactRepository // TODO: Support Ivy repositories
 ): DependencyVersionsFetcher? {
-    val group = dependency.group ?: return null
-    val name = dependency.name
+    moduleId ?: return null
     return when (repository.url.scheme) {
         "https", "http" -> MavenDependencyVersionsFetcherHttp(
             httpClient = httpClient,
-            moduleId = ModuleId.Maven(group, name),
+            moduleId = moduleId,
             repoUrl = repository.url.toString().let { if (it.endsWith('/')) it else "$it/" },
             repoAuthorization = repository.passwordCredentials?.let { credentials ->
                 Credentials.basic(
@@ -30,11 +27,11 @@ internal fun DependencyVersionsFetcher.Companion.forMaven(
             }
         )
         "file" -> MavenDependencyVersionsFetcherFile(
-            moduleId = ModuleId.Maven(group, name),
+            moduleId = moduleId,
             repoUrl = repository.url.toString().let { if (it.endsWith('/')) it else "$it/" }
         )
         "gcs" -> MavenDependencyVersionsFetcherGoogleCloudStorage(
-            moduleId = ModuleId.Maven(group, name),
+            moduleId = moduleId,
             repoUrl = repository.url.toString()
         )
         else -> null //TODO: Support more transport protocols. Here's what Gradle supports:
@@ -48,12 +45,12 @@ internal fun DependencyVersionsFetcher.Companion.forMaven(
 
 internal fun DependencyVersionsFetcher.Companion.forNpm(
     httpClient: OkHttpClient,
-    npmDependency: Dependency,
+    moduleId: ModuleId.Npm,
     npmRegistry: String = "https://registry.npmjs.org/"
 ): DependencyVersionsFetcher {
     return NpmDependencyVersionsFetcherHttp(
         httpClient = httpClient,
-        moduleId = npmDependency.npmModuleId(),
+        moduleId = moduleId,
         repoUrl = npmRegistry
     )
 }

@@ -43,8 +43,8 @@ publishing {
 dependencies {
     testImplementation(Testing.kotest.runner.junit5)
 
-    testImplementation(platform(notation = "org.junit:junit-bom:_"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(platform(notation = Testing.junit.bom))
+    testImplementation(Testing.junit.jupiter)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
         because("allows tests to run from IDEs that bundle older version of launcher")
     }
@@ -80,7 +80,7 @@ val copyDependencyNotationsRemovalsRevisionNumber by tasks.registering {
         val version = versionFile.useLines { it.first() }
         val removalsRevision: Int? = removalsRevisionHistoryFile.useLines { lines ->
             lines.lastOrNull { it.startsWith("## ") }?.takeUnless { it.startsWith("## [WIP]") }
-        }?.substringAfter("## Revision ")?.toInt()
+        }?.substringAfter("## Revision ")?.substringBefore(' ')?.toInt()
         if (version.endsWith("-SNAPSHOT")) {
             snapshotDependencyNotationsRemovalsRevisionNumberFile.let {
                 when (removalsRevision) {
@@ -100,6 +100,10 @@ val copyDependencyNotationsRemovalsRevisionNumber by tasks.registering {
                 check(existingMapping == mappingLine)
             } else {
                 check(mappingFileContent.endsWith('\n') || mappingFileContent.isEmpty())
+                val isInCi = System.getenv("CI") == "true"
+                check(isInCi.not()) {
+                    "$versionToRemovalsMappingFile shall be updated before publishing."
+                }
                 versionToRemovalsMappingFile.appendText("$mappingLine\n")
             }
         }

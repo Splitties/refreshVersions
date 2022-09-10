@@ -3,6 +3,7 @@ package de.fayard.refreshVersions
 import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
+import de.fayard.refreshVersions.core.internal.skipConfigurationCache
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
@@ -82,7 +83,9 @@ open class RefreshVersionsPlugin : Plugin<Any> {
         return getBundledResourceAsStream("removed-dependencies-versions-keys.txt")
             ?.bufferedReader()
             ?.useLines { sequence ->
-                sequence.filter { it.isNotEmpty() }.associate {
+                sequence.filterNot {
+                    it.startsWith("##") // Header/comment lines
+                }.filter { it.isNotEmpty() }.associate {
                     val groupNameSeparator = ".."
                     val group = it.substringBefore(groupNameSeparator)
                     val postGroupPart = it.substring(startIndex = group.length + groupNameSeparator.length)
@@ -132,7 +135,8 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                     ?: settings.rootDir.resolve("versions.properties"),
                 getDependenciesMapping = ::getArtifactNameToConstantMapping,
                 getRemovedDependenciesVersionsKeys = ::getRemovedDependenciesVersionsKeys,
-                getRemovedDependencyNotationsReplacementInfo = ::getRemovedDependencyNotationsReplacementInfo
+                getRemovedDependencyNotationsReplacementInfo = ::getRemovedDependencyNotationsReplacementInfo,
+                versionRejectionFilter = extension.versionRejectionFilter
             )
             if (extension.isBuildSrcLibsEnabled) gradle.beforeProject {
                 if (project != project.rootProject) return@beforeProject
@@ -166,6 +170,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             description = "Assists migration from hardcoded dependencies to constants of " +
                 "the refreshVersions dependencies plugin"
             finalizedBy("refreshVersions")
+            skipConfigurationCache()
         }
 
         project.tasks.register<DefaultTask>(
