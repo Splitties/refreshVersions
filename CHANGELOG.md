@@ -80,6 +80,9 @@ That's why we made [a dedicated page where you can find them all](https://jmfaya
 - `AndroidX.room.paging.rxJava2`
 - `AndroidX.room.paging.rxJava3`
 - `AndroidX.tracing.perfetto`
+- `CashApp.molecule.gradlePlugin`
+- `CashApp.molecule.runtime`
+- `CashApp.molecule.test`
 - `Google.accompanist.drawablePainter`
 - `Google.accompanist.flowLayout`
 - `Google.accompanist.navigationAnimation`
@@ -213,6 +216,22 @@ That's why we made [a dedicated page where you can find them all](https://jmfaya
 - `Spring.boms.springCloud`
 
 </details>
+
+### Credits
+
+Thanks to all the folks that contributed in updating the built-in dependency notations!
+
+- [Jacob Kwitkoski](https://github.com/thederputy) for `CashApp.molecule`
+- [Rémi Latapy](https://github.com/rlatapy-luna) for `Google.accompanist`
+- [Yuri Schimke](https://github.com/rlatapy-luna) for `Google.horologist` and `Square.okHttp3`
+- [Brady Aiello](https://github.com/brady-aiello) for `Ktor`
+
+And thanks to the GitHub sponsors of the maintainers [Louis CAD](https://github.com/LouisCAD) and [Jean-Michel Fayard](https://github.com/jmfayard) who didn't count the hours spent on this project since 2018-2019!
+
+_We hope you save a lot of time thanks to this project and can therefore leave work early, or pursue more valuable tasks and projects. 😉_
+
+**If you're not a sponsor yet, please consider becoming one**, as a company, as an individual, or even both, it means a lot to us!
+Just **click the heart** button at the top of the GitHub repo webpage, follow the steps, and your heart. Thank you!
 
 ## Version 0.40.2 (2022-06-01)
 
