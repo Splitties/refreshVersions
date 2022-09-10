@@ -1,16 +1,20 @@
 # Change log for refreshVersions
 
-## [Unreleased] Version 0.41.0 (2022-09-08)
+## [Unreleased] Version 0.41.0 (2022-09-09)
 
 ### Support for Versions Catalogs! 🎉
 
-**Versions Catalog** is Gradle 7.4+ solution for storing dependencies and versions in the `gradle/libs.versions.toml` file. It is similar in spirit to the `versions.properties` file **and we are happy to add support for it**:
+**Versions Catalogs** are Gradle 7.4+ solution for storing dependencies and versions in a centralized file.
+Gradle will automatically recognize the `gradle/libs.versions.toml` file… and so will refreshVersions!
 
-- `./gradlew refreshVersions` will now add available updates as comments inside `gradle/libs.versions.toml`
+It is similar in spirit to the `versions.properties` file, **and we are happy to add support for it**:
+
+- `./gradlew refreshVersions` will now add available updates as comments inside the `gradle/libs.versions.toml` file.
 - `./gradlew refreshVersionsMigrate --mode=VersionCatalogAndVersionProperties` will **generate a versions catalog and migrate your build to use it** if you don't have one already.
-- this is a big and new feature, so if you have issues, [please provide feedback in this thread](https://github.com/jmfayard/refreshVersions/discussions/592).
 
-All of this is [covered in the friendly documentation](https://github.com/jmfayard/drafts/wiki/RefreshVersions-%E2%99%A5%EF%B8%8F-Gradle-Version-Catalog).
+Currently, we only support the default versions catalog. If you need support for multiple versions catalogs, add your 👍 [on this issue](https://github.com/jmfayard/refreshVersions/issues/596).
+
+This is a big and new feature, so feel free to [provide feedback in this thread](https://github.com/jmfayard/refreshVersions/discussions/592), and report issues with the right info if there's no existing one [here](https://github.com/jmfayard/refreshVersions/issues).
 
 ### Better support for `versionFor`, and Jetpack Compose!
 
@@ -84,6 +88,7 @@ That's why we made [a dedicated page where you can find them all](https://jmfaya
 - `Google.accompanist.placeholder`
 - `Google.accompanist.placeholder.material`
 - `Google.accompanist.webView`
+- `Google.ambient.crossDevice`
 - `Google.horologist.audio`
 - `Google.horologist.audio.ui`
 - `Google.horologist.composables`
