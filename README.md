@@ -26,7 +26,7 @@
 // settings.gradle(.kts)
 plugins {
     // See https://jmfayard.github.io/refreshVersions
-    id("de.fayard.refreshVersions") version "0.40.2"
+    id("de.fayard.refreshVersions") version "0.50.0"
 }
 
 refreshVersions { // Optional: configure the plugin
@@ -62,4 +62,3 @@ If you want to [also use Gradle's Versions Catalogs](https://github.com/jmfayard
 **Cleanup versions availability comments:**
 
 `./gradlew refreshVersionsCleanup`
-
