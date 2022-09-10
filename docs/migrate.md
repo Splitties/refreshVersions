@@ -3,7 +3,7 @@
 Migrating an existing project to refreshVersions manually is tricky:
 
 - Existing dependencies are ignored because they don't use the version placeholder `_`.
-- Replacing the harcoded version with the version placeholder is not what you want, because it has the major side effect to upgrade all your dependencies to whatever is the latest version available.
+- Replacing the hardcoded version with the version placeholder is not what you want, because it has the major side effect to upgrade all your dependencies to whatever is the latest version available.
 
 Starting with refreshVersions 0.11.0, we provide an experimental interactive Gradle task made for migration.
 
