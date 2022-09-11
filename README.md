@@ -51,7 +51,7 @@ If you want to use only `versions.properties` and the [built-in dependencies not
 
 `./gradlew refreshVersionsMigrate --mode=VersionsPropertiesOnly`
 
-If you want to [also use Gradle's Versions Catalogs](https://github.com/jmfayard/drafts/wiki/RefreshVersions-%E2%99%A5%EF%B8%8F-Gradle-Version-Catalog), run:
+If you want to [also use Gradle's Versions Catalogs](https://github.com/jmfayard/refreshVersions/wiki/RefreshVersions-%E2%99%A5%EF%B8%8F-Gradle-Version-Catalog), run:
 
 `./gradlew refreshVersionsMigrate --mode=VersionCatalogAndVersionProperties`
 
