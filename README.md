@@ -26,7 +26,7 @@
 // settings.gradle(.kts)
 plugins {
     // See https://jmfayard.github.io/refreshVersions
-    id("de.fayard.refreshVersions") version "0.50.0"
+    id("de.fayard.refreshVersions") version "0.50.1"
 }
 
 refreshVersions { // Optional: configure the plugin
@@ -45,17 +45,28 @@ Make sure the project is correctly set up (see just above).
 
 The `refreshVersionsMigrate` task can help you migrate your project in a few minutes, or less.
 
-It requires a `mode` option. You can run it without it to see the complete list and the full description of each mode.
+In version 0.50.0, support for Gradle's Versions Catalogs was added ([see discussion thread here](https://github.com/jmfayard/refreshVersions/discussions/592)), so a `--mode` option is now required.
+
+Run it without it to see the complete list and the full description of each mode:
+
+```shell
+./gradlew refreshVersionsMigrate
+```
+
+<details>
+<summary><i><strong>Examples</strong> (click to expand)</i></summary>
 
 If you want to use only `versions.properties` and the [built-in dependencies notations](https://jmfayard.github.io/refreshVersions/dependencies-notations/), run:
 
 `./gradlew refreshVersionsMigrate --mode=VersionsPropertiesOnly`
 
-If you want to [also use Gradle's Versions Catalogs](https://github.com/jmfayard/drafts/wiki/RefreshVersions-%E2%99%A5%EF%B8%8F-Gradle-Version-Catalog), run:
+To also use a versions catalog for non-built-in dependency notations, run:
 
 `./gradlew refreshVersionsMigrate --mode=VersionCatalogAndVersionProperties`
 
-**Find available updates in `versions.properties`:**
+</details>
+
+**Find available updates in `versions.properties` and the default versions catalog, if any:**
 
 `./gradlew refreshVersions`
 

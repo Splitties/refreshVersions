@@ -7,7 +7,7 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.findByType
 import org.gradle.util.GradleVersion
 
 @InternalRefreshVersionsApi
@@ -19,7 +19,7 @@ object VersionsCatalogs {
 
     fun isSupported(): Boolean = GradleVersion.current() >= minimumGradleVersion
 
-    private fun defaultCatalogName(): String = try {
+    fun defaultCatalogName(): String = try {
         @Suppress("UnstableApiUsage")
         RefreshVersionsConfigHolder.settings.dependencyResolutionManagement.defaultLibrariesExtensionName.get()
     } catch (t: Throwable) {
@@ -28,8 +28,8 @@ object VersionsCatalogs {
     }
 
     fun getDefault(project: Project): VersionCatalog? {
-        val versionCatalogs = project.extensions.getByType<VersionCatalogsExtension>()
-        return versionCatalogs.find(defaultCatalogName()).orElse(null)
+        val versionCatalogs = project.extensions.findByType<VersionCatalogsExtension>()
+        return versionCatalogs?.find(defaultCatalogName())?.orElse(null)
     }
 
     internal fun libraries(versionCatalog: VersionCatalog?): Set<MinimalExternalModuleDependency> {
