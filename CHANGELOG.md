@@ -67,7 +67,7 @@ That's why we made [a dedicated page where you can find them all](https://jmfaya
 ### New dependency notations:
 
 <details>
-<summary><strong>Click to expand (141) </strong></summary>
+<summary><strong>Click to expand (145) </strong></summary>
 
 - `AndroidX.appSearch.builtInTypes`
 - `AndroidX.compose.runtime.tracing`
@@ -225,6 +225,10 @@ Thanks to all the folks that contributed in updating the built-in dependency not
 - [Rémi Latapy](https://github.com/rlatapy-luna) for `Google.accompanist`
 - [Yuri Schimke](https://github.com/rlatapy-luna) for `Google.horologist` and `Square.okHttp3`
 - [Brady Aiello](https://github.com/brady-aiello) for `Ktor`
+- [Kamalesh](https://github.com/imashnake0) for `JetBrains.exposed`, `Testing.assertj`, `Testing.hamcrest`
+- [doljae](https://github.com/doljae) for ` Spring.boms.springCloud`
+- [Johan Reitan](https://github.com/joharei) for `KotlinX.multik`, `KotlinX.lincheck`, `KotlinX.deeplearning`
+- [Ryan Fonzi](https://github.com/RFonzi) for `Arrow`
 
 And thanks to the GitHub sponsors of the maintainers [Louis CAD](https://github.com/LouisCAD) and [Jean-Michel Fayard](https://github.com/jmfayard) who didn't count the hours spent on this project since 2018-2019!
 
