@@ -83,8 +83,8 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
     @TaskAction
     fun migrateBuild() {
         val mode = requireMode()
-        when (mode) {
-            Mode.VersionsPropertiesOnly -> Unit
+        val mappingOfNewOrUpdatedCatalog = when (mode) {
+            Mode.VersionsPropertiesOnly -> null
             Mode.VersionsPropertiesAndPlaceholdersInCatalog -> {
                 generateVersionsCatalogFromCurrentDependencies(
                     project = project,
@@ -109,6 +109,7 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
         }
         migrateBuildToRefreshVersions(
             project = project,
+            mappingOfNewOrUpdatedCatalog = mappingOfNewOrUpdatedCatalog,
             versionCatalogOnly = mode == Mode.VersionCatalogOnly
         )
         if (mode != Mode.VersionsPropertiesOnly) {
@@ -122,13 +123,17 @@ open class RefreshVersionsMigrateTask : DefaultTask() {
 
 internal fun migrateBuildToRefreshVersions(
     project: Project,
+    mappingOfNewOrUpdatedCatalog: Map<ModuleId.Maven, String>?,
     versionCatalogOnly: Boolean
 ) {
    if (versionCatalogOnly.not()) {
        addMissingEntriesInVersionsProperties(project)
    }
-    val versionsCatalogMapping: Map<ModuleId.Maven, String> =
-        VersionsCatalogs.dependencyAliases(VersionsCatalogs.getDefault(project))
+
+    val versionsCatalogMapping: Map<ModuleId.Maven, String> = mutableMapOf<ModuleId.Maven, String>().also {
+        it.putAll(VersionsCatalogs.dependencyAliases(VersionsCatalogs.getDefault(project)))
+        it.putAll(mappingOfNewOrUpdatedCatalog ?: emptyMap())
+    }
 
     val builtInDependenciesMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
         .associateShortestByMavenCoordinate()

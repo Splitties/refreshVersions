@@ -19,7 +19,7 @@ object VersionsCatalogs {
 
     fun isSupported(): Boolean = GradleVersion.current() >= minimumGradleVersion
 
-    private fun defaultCatalogName(): String = try {
+    fun defaultCatalogName(): String = try {
         @Suppress("UnstableApiUsage")
         RefreshVersionsConfigHolder.settings.dependencyResolutionManagement.defaultLibrariesExtensionName.get()
     } catch (t: Throwable) {

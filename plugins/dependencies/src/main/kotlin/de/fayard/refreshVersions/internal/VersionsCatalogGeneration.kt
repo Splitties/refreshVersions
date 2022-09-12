@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.internal
 
+import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
 import de.fayard.refreshVersions.core.internal.Case
 import de.fayard.refreshVersions.core.internal.Deps
@@ -16,11 +17,14 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.util.GradleVersion
 
+/**
+ * Returns the mapping of the generated catalog: moduleId to dependency alias.
+ */
 internal fun generateVersionsCatalogFromCurrentDependencies(
     project: Project,
     keepVersionsPlaceholders: Boolean,
     copyBuiltInDependencyNotationsToCatalog: Boolean
-) {
+): Map<ModuleId.Maven, String> {
     if (VersionsCatalogs.isSupported().not()) {
         throw GradleException(
             """
@@ -69,4 +73,13 @@ internal fun generateVersionsCatalogFromCurrentDependencies(
     )
     catalog.writeText(newText)
     catalog.logFileWasModified()
+
+    val versionCatalogName = VersionsCatalogs.defaultCatalogName()
+
+    return dependenciesAndNames.asSequence().mapNotNull { (dependency, kebabCaseAlias) ->
+        ModuleId.Maven(
+            group = dependency.group ?: return@mapNotNull null,
+            name = dependency.name
+        ) to "$versionCatalogName.${kebabCaseAlias.replace('-', '.')}"
+    }.toMap()
 }
