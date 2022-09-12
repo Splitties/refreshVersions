@@ -1,5 +1,12 @@
 # Change log for refreshVersions
 
+## [Unreleased] Versions 0.50.1 (2022-09-11)
+
+### Fixes
+
+- Fix the "Extension of type 'VersionCatalogsExtension' does not exist." error.
+- Versions Catalog migration only worked properly if you ran it twice. This has now been fixed!
+
 ## Version 0.50.0 (2022-09-09)
 
 ### Support for Versions Catalogs! 🎉
