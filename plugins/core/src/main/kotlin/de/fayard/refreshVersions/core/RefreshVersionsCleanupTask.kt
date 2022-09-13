@@ -14,20 +14,14 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 
+// TODO this is where refreshVersionsCleanup is started
 open class RefreshVersionsCleanupTask : DefaultTask() {
 
     @TaskAction
     fun cleanUpVersionsProperties() {
         OutputFile.checkWhichFilesExist()
         val model = VersionsPropertiesModel.readFromFile(RefreshVersionsConfigHolder.versionsPropertiesFile)
-
-        val sectionsWithoutAvailableUpdates = model.sections.map { section ->
-            when (section) {
-                is Section.Comment -> section
-                is Section.VersionEntry -> section.copy(availableUpdates = emptyList())
-            }
-        }
-        val newModel = model.copy(sections = sectionsWithoutAvailableUpdates)
+        val newModel = model.cleanUpComments()
         newModel.writeTo(RefreshVersionsConfigHolder.versionsPropertiesFile)
         OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
     }

@@ -5,6 +5,7 @@ import de.fayard.refreshVersions.core.internal.versions.readFromText
 import de.fayard.refreshVersions.core.internal.versions.toText
 import de.fayard.refreshVersions.core.internal.versions.withEntriesLineBreaksIfMissing
 import de.fayard.refreshVersions.core.testResources
+import io.kotest.matchers.shouldBe
 import testutils.junit.mapDynamicTest
 import org.junit.jupiter.api.TestFactory
 import java.io.File
@@ -14,6 +15,14 @@ import kotlin.test.assertFailsWith
 class VersionsPropertiesModelTest {
 
     private val samplesDir = testResources.resolve("versions-properties-samples")
+
+    @TestFactory
+    fun refreshVersionsCleanup() = sampleDirs(
+        dirName = "refreshVersionsCleanup"
+    ).mapDynamicTest { dir ->
+        // see example below
+        2 + 2 shouldBe 5
+    }
 
     @TestFactory
     fun `test parsing old format`() = sampleDirs(

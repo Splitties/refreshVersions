@@ -17,6 +17,16 @@ internal actual data class VersionsPropertiesModel(
         preHeaderContent.lineSequence().forEach { if (it.isNotBlank()) it.mustBeACommentLine() }
     }
 
+    fun cleanUpComments(): VersionsPropertiesModel {
+        val sectionsWithoutAvailableUpdates = sections.map { section ->
+            when (section) {
+                is Section.Comment -> section
+                is Section.VersionEntry -> section.copy(availableUpdates = emptyList())
+            }
+        }
+        return this.copy(sections = sectionsWithoutAvailableUpdates)
+    }
+
     actual sealed class Section {
 
         actual data class Comment(actual val lines: String) : Section() {
