@@ -22,6 +22,7 @@ plugins {
 }
 
 refreshVersions {
+    enableBuildSrcLibs()
     featureFlags {
         enable(LIBS)
         disable(GRADLE_UPDATES)
