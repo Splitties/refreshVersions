@@ -15,6 +15,7 @@ buildscript {
 
 plugins {
     kotlin("jvm")
+    kotlin("kapt")
     id("org.jetbrains.kotlinx.benchmark")
 }
 
@@ -30,6 +31,7 @@ repositories {
 }
 
 dependencies {
+    kapt("net.ltgt.gradle.incap:incap-processor:_")
     if (testGcs) implementation("com.example:dummy-library-for-testing:_")
     implementation(AndroidX.core)
     testImplementation(KotlinX.coroutines.core)
