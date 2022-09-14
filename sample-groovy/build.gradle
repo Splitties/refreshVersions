@@ -1,3 +1,4 @@
+// TODO Gradle sync works but the IDE can't resolve the symbol
 import static de.fayard.refreshVersions.core.Versions.versionFor
 
 plugins {
@@ -9,12 +10,22 @@ plugins {
 
 group = "de.fayard"
 
+/**
+ * NOTE auto-completion doesn't work here because the buildSrc is not setup
+ * See https://jmfayard.github.io/refreshVersions/setup/#if-you-use-groovy-dsl-ie-buildgradle-files-not-kts
+ */
+dependencies {
+    // TODO: implementation(KotlinX.coroutines.<TAB>)
+}
 dependencies {
     implementation("com.google.guava:guava:_")
     implementation("com.google.inject:guice:_")
     implementation(AndroidX.annotation)
     implementation("org.jetbrains:annotations:_")
+    implementation(KotlinX.coroutines.android)
+    implementation(KotlinX.coroutines.android)
 }
+
 
 println("The version for artifact org.jetbrains:annotations:_ is " + versionFor(project, "org.jetbrains:annotations:_"))
 println("The version for version key version.com.google.guava..guava is " + versionFor(project, "version.com.google.guava..guava"))

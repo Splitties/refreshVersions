@@ -11,6 +11,9 @@ pluginManagement {
     }
 }
 
-plugins {
+// https://jmfayard.github.io/refreshVersions/setup/#if-you-use-groovy-dsl-ie-buildgradle-files-not-kts
+/**
+ plugins {
     id("de.fayard.refreshVersions")
 }
+**/
