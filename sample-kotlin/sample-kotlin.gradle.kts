@@ -29,6 +29,8 @@ repositories {
     if (testGcs) maven(url = "gcs://refreshversions-testing/maven")
 }
 
+
+
 dependencies {
     if (testGcs) implementation("com.example:dummy-library-for-testing:_")
     implementation(AndroidX.core)
@@ -44,13 +46,32 @@ dependencies {
     implementation("org.mongodb:mongo-java-driver:3.11.0")
     implementation(kotlin("script-runtime"))
 
-    api("org.apache.poi:poi:_")
-    api("org.apache.poi:poi-ooxml:_")
+
 
     // logging
     implementation(platform("org.apache.logging.log4j:log4j-bom:2.17.2"))
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl")
     runtimeOnly("org.apache.logging.log4j:log4j-jul")
+}
+
+/*
+Reproducing steps for https://github.com/jmfayard/refreshVersions/issues/541
+
+$ ./gradlew compileKotlin
+> Could not resolve all files for configuration ':compileClasspath'.
+> Could not find org.apache.poi:poi:_.
+
+See stacktrace here https://scans.gradle.com/s/77ijrlpzd2kby/failure#1
+ */
+val apachePoi = "org.apache.poi:poi:_"
+val apachePoiXml = "org.apache.poi:poi-ooxml:_"
+dependencies {
+    api(apachePoi)
+    api(apachePoiXml)
+}
+configurations.all {
+    resolutionStrategy.force(apachePoiXml)
+    resolutionStrategy.force(apachePoi)
 }
 
 getKotlinPluginVersion().let {
