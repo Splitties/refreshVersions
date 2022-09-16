@@ -137,6 +137,8 @@ object Spring : IsNotADependency {
 
         val validation = module("spring-boot-starter-validation")
 
+        val web = module("spring-boot-starter-web")
+
         val webServices = module("spring-boot-starter-web-services")
 
         val webflux = module("spring-boot-starter-webflux")
