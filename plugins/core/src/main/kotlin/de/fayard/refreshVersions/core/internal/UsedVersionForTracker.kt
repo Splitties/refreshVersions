@@ -2,6 +2,7 @@ package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
+import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ArtifactRepositoryContainer
 import org.gradle.api.artifacts.Dependency
@@ -52,15 +53,16 @@ internal object UsedVersionForTracker {
     private val lock = Any()
 
     private inline fun editHolder(project: Project, block: (Holder) -> Unit) {
+        val rootProject = project.rootProject
         synchronized(lock) {
-            val holder: Holder = if (project.isBuildSrc) {
-                if (buildSrcHolder?.project != project) {
-                    buildSrcHolder = Holder(project)
+            val holder: Holder = if (rootProject.isBuildSrc) {
+                if (buildSrcHolder?.rootProject != rootProject) {
+                    buildSrcHolder = Holder(rootProject)
                 }
                 buildSrcHolder!!
             } else {
-                if (projectHolder?.project != project) {
-                    projectHolder = Holder(project)
+                if (projectHolder?.rootProject != rootProject) {
+                    projectHolder = Holder(rootProject)
                 }
                 projectHolder!!
             }
@@ -77,7 +79,11 @@ internal object UsedVersionForTracker {
         val repositories: ArtifactRepositoryContainer
     )
 
-    private class Holder(val project: Project) {
+    private class Holder(val rootProject: Project) {
+        init {
+            require(rootProject.isRootProject)
+        }
+
         val usedInVersionsFor = mutableListOf<VersionForUsage>()
         val usedVersionKeys = mutableListOf<String>()
     }
