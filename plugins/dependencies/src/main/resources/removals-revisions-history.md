@@ -703,3 +703,9 @@ id:[com.google.accompanist:accompanist-swiperefresh]
 
 ~~Google.accompanist.systemuicontroller~~
 id:[com.google.accompanist:accompanist-systemuicontroller]
+
+## Revision 15
+
+~~CashApp.molecule.test~~
+// The testing module was removed in version 0.5.0
+id:[app.cash.molecule:molecule-testing]
