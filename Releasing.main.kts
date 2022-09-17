@@ -8,6 +8,7 @@
 import Releasing_main.CiReleaseFailureCause.*
 import java.io.File
 import Releasing_main.ReleaseStep.*
+import lib_publisher_tools.cli.AnsiColor
 import lib_publisher_tools.cli.CliUi
 import lib_publisher_tools.cli.defaultImpl
 import lib_publisher_tools.cli.runUntilSuccessWithErrorPrintingOrCancel
@@ -246,6 +247,18 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
         val file = files.changelog
         requestManualAction("Update the `${file.name}` for the impending release.")
         file.checkChanged()
+        val version = OngoingRelease.newVersion
+        val startOfThisVersionHeading = "## Version $version"
+        val expectedHeadingCount = file.useLines { lines -> lines.count { it == startOfThisVersionHeading } }
+        check(expectedHeadingCount == 1) {
+            when (expectedHeadingCount) {
+                0 -> "Didn't find the header for the upcoming release in the ${file.name}.\n" +
+                    "Is there a typo or an extra character?\n" +
+                    "Expected to find ${AnsiColor.bold}$startOfThisVersionHeading${AnsiColor.RESET}."
+                else -> "Found multiple occurrences of the header for the upcoming release in the ${file.name}.\n" +
+                    "Keep only one."
+            }
+        }
     }
     `Commit 'prepare for release' and tag` -> with(OngoingRelease) {
         files.changelog.checkChanged()
