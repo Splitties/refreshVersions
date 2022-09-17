@@ -997,10 +997,12 @@ org.jetbrains.kotlinx:kotlinx-datetime
 org.jetbrains.kotlinx:kotlinx-html
 org.jetbrains.kotlinx:kotlinx-io-jvm
 org.jetbrains.kotlinx:kotlinx-nodejs
+org.jetbrains.kotlinx:kotlinx-serialization-bom
 org.jetbrains.kotlinx:kotlinx-serialization-cbor
 org.jetbrains.kotlinx:kotlinx-serialization-core
 org.jetbrains.kotlinx:kotlinx-serialization-hocon
 org.jetbrains.kotlinx:kotlinx-serialization-json
+org.jetbrains.kotlinx:kotlinx-serialization-json-okio
 org.jetbrains.kotlinx:kotlinx-serialization-properties
 org.jetbrains.kotlinx:kotlinx-serialization-protobuf
 org.jetbrains.kotlinx:kotlinx.reflect.lite
