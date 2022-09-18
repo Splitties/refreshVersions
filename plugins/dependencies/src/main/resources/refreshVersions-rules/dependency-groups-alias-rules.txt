@@ -37,6 +37,9 @@ org.assertj:assertj-*
 org.kodein.di:kodein-di(-*)
     ^^^^^^^^^
 
+com.apollographql.apollo3:apollo-*
+    ^^^^^^^^^^^^^
+
 org.http4k:http4k-connect-*
            ^^^^^^^^^^^^^^
 
