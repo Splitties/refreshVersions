@@ -84,6 +84,7 @@ private class Files {
     val versionToRemovalsMapping = mainResourcesDir.resolve("version-to-removals-revision-mapping.txt").also {
         check(it.exists()) { "Didn't find the ${it.name} file in ${it.parentFile}! Has it been moved or renamed?" }
     }
+    val dependencyNotations = dir.resolve("docs/dependency-notations.md")
 }
 
 private val files = Files()
@@ -210,6 +211,9 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
                 "the command that just ran. Is something broken?"
         }
         printInfo("Successfully updated the following file: ${files.versionToRemovalsMapping}")
+        if (git.didFileChange(files.dependencyNotations)) {
+            printInfo("Also updated the following file: ${files.dependencyNotations}")
+        } else Unit
     }
     `Request doc update confirmation` -> {
         arrayOf(

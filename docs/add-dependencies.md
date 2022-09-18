@@ -2,7 +2,7 @@
 
 ## Use built-in dependency notations
 
-[**See Dependencies Notations**](dependencies-notations.md)
+[**See Built-in Dependency Notations**](dependency-notations.md)
 
 [![](img/screencast.png)](http://www.youtube.com/watch?v=VhYERonB8co "Gradle refreshVersions")
 

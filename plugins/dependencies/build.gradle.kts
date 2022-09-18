@@ -119,7 +119,14 @@ val prePublishTest = testing.suites.create<JvmTestSuite>("prePublishTest") {
     useJUnitJupiter()
     dependencies {
         implementation(project)
+        implementation(project.dependencies.testFixtures(project(":refreshVersions-core")))
         implementation(Testing.kotest.assertions.core)
+    }
+}
+
+kotlin {
+    target.compilations.let {
+        it.getByName("prePublishTest").associateWith(it.getByName("main"))
     }
 }
 
