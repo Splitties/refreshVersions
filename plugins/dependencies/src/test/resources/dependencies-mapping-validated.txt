@@ -1225,6 +1225,7 @@ org.springframework.boot..spring-boot-starter-test=Spring.boot.test
 org.springframework.boot..spring-boot-starter-thymeleaf=Spring.boot.thymeleaf
 org.springframework.boot..spring-boot-starter-validation=Spring.boot.validation
 org.springframework.boot..spring-boot-starter-web-services=Spring.boot.webServices
+org.springframework.boot..spring-boot-starter-web=Spring.boot.web
 org.springframework.boot..spring-boot-starter-webflux=Spring.boot.webflux
 org.springframework.boot..spring-boot-starter-websocket=Spring.boot.websocket
 org.springframework.cloud..spring-cloud-bus=Spring.cloud.bus
