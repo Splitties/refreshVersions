@@ -76,8 +76,16 @@ object KotlinX : DependencyGroup("org.jetbrains.kotlinx") {
 
     object Serialization : IsNotADependency {
 
+        val bom = module("kotlinx-serialization-bom", isBom = true)
+
         val core = module("kotlinx-serialization-core")
-        val json = module("kotlinx-serialization-json")
+
+        val json = Json
+
+        object Json : DependencyNotationAndGroup(group = group, name = "kotlinx-serialization-json") {
+            val okio = module("kotlinx-serialization-json-okio")
+        }
+
         val protobuf = module("kotlinx-serialization-protobuf")
         val cbor = module("kotlinx-serialization-cbor")
         val properties = module("kotlinx-serialization-properties")
