@@ -344,6 +344,16 @@ com.android.installreferrer:installreferrer
 com.android.tools.build:gradle
 com.android.tools:desugar_jdk_libs
 com.android.tools:r8
+com.apollographql.apollo3:apollo-adapters
+com.apollographql.apollo3:apollo-api
+com.apollographql.apollo3:apollo-ast
+com.apollographql.apollo3:apollo-http-cache
+com.apollographql.apollo3:apollo-idling-resource
+com.apollographql.apollo3:apollo-mockserver
+com.apollographql.apollo3:apollo-normalized-cache
+com.apollographql.apollo3:apollo-normalized-cache-sqlite
+com.apollographql.apollo3:apollo-runtime
+com.apollographql.apollo3:apollo-testing-support
 com.github.chuckerteam.chucker:library
 com.github.chuckerteam.chucker:library-no-op
 com.google.accompanist:accompanist-appcompat-theme
