@@ -704,7 +704,11 @@ id:[com.google.accompanist:accompanist-swiperefresh]
 ~~Google.accompanist.systemuicontroller~~
 id:[com.google.accompanist:accompanist-systemuicontroller]
 
-## [WIP] Revision 15
+## Revision 15
 
 ~~AndroidX.media3.datasource~~
 id:[androidx.media3:media3-datasource]
+
+~~CashApp.molecule.test~~
+// The testing module was removed in version 0.5.0-beta01
+id:[app.cash.molecule:molecule-testing]

@@ -326,7 +326,6 @@ app.cash.copper..copper-rx3=CashApp.copper.rx3
 app.cash.licensee..licensee-gradle-plugin=CashApp.licenseeGradlePlugin
 app.cash.molecule..molecule-gradle-plugin=CashApp.molecule.gradlePlugin
 app.cash.molecule..molecule-runtime=CashApp.molecule.runtime
-app.cash.molecule..molecule-testing=CashApp.molecule.test
 app.cash.turbine..turbine=CashApp.turbine
 co.touchlab..kermit-bugsnag-test=Touchlab.kermit.bugsnagTest
 co.touchlab..kermit-bugsnag=Touchlab.kermit.bugsnag

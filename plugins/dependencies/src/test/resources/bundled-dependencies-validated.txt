@@ -325,7 +325,6 @@ app.cash.copper:copper-rx3
 app.cash.licensee:licensee-gradle-plugin
 app.cash.molecule:molecule-gradle-plugin
 app.cash.molecule:molecule-runtime
-app.cash.molecule:molecule-testing
 app.cash.turbine:turbine
 co.touchlab:kermit
 co.touchlab:kermit-bugsnag
