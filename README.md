@@ -11,7 +11,7 @@
 - [Migrate your project](https://jmfayard.github.io/refreshVersions/migrate/)
 - [Find Available Dependencies Updates](https://jmfayard.github.io/refreshVersions/update-dependencies/)
 - [Add Dependencies](https://jmfayard.github.io/refreshVersions/add-dependencies/)
-- [Explore Dependencies Notations](https://jmfayard.github.io/refreshVersions/dependencies-notations/)
+- [Explore built-in Dependencies Notations](https://jmfayard.github.io/refreshVersions/dependencies-notations/)
 - [Schedule the RefreshVersionsBot](https://jmfayard.github.io/refreshVersions/refreshversions-bot/)
 - [Use the buildSrc](https://jmfayard.github.io/refreshVersions/gradle-buildsrcversions/)
 - [Changelog](https://jmfayard.github.io/refreshVersions/CHANGELOG/)
