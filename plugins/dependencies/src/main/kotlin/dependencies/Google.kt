@@ -650,17 +650,13 @@ object Google : IsNotADependency {
                 ^^^^^^^        ^^^^^^^^^^
         """.trimIndent()
     ) {
-        val composables = module("horologist-composables")
-
-        val networkAwareness = module("horologist-network-awareness")
-
-        val tiles = module("horologist-tiles")
-
         val audio = Audio
 
         object Audio : DependencyNotationAndGroup(group = "com.google.android.horologist", name = "horologist-audio") {
             val ui = module("horologist-audio-ui")
         }
+
+        val composables = module("horologist-composables")
 
         val compose = Compose
 
@@ -681,6 +677,11 @@ object Google : IsNotADependency {
         object Media3 : IsNotADependency {
             val backend = module("horologist-media3-backend")
         }
+
+        val networkAwareness = module("horologist-network-awareness")
+
+        val tiles = module("horologist-tiles")
+
     }
 
     /**
