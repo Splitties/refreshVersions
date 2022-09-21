@@ -665,6 +665,8 @@ object Google : IsNotADependency {
             val tools = module("horologist-compose-tools")
         }
 
+        val dataLayer = module("horologist-datalayer")
+
         val media = Media
 
         object Media : DependencyNotationAndGroup(group = "com.google.android.horologist", name = "horologist-media") {
