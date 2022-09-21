@@ -110,14 +110,20 @@ class BundledDependenciesTest {
         }
 
         val removals = existingMapping - receivedMapping
-        if (removals.isNotEmpty()) updateRemovalsRevisionsHistory(removals)
+        if (removals.isNotEmpty()) updateRemovalsRevisionsHistory(
+            currentMapping = receivedMapping,
+            removals = removals
+        )
 
         Files.validatedMappingFile.writeText(
             receivedMapping.joinToString(separator = "\n", postfix = "\n", prefix = validateMappingDescription)
         )
     }
 
-    private fun updateRemovalsRevisionsHistory(removals: Set<DependencyMapping>) {
+    private fun updateRemovalsRevisionsHistory(
+        currentMapping: Set<DependencyMapping>,
+        removals: Set<DependencyMapping>
+    ) {
         val removalsRevisionsHistory = removalsRevisionsHistoryFile.readText()
         val hasWipHeading = removalsRevisionsHistory.lineSequence().any { it.startsWith("## [WIP]") }
         val extraText = buildString {
@@ -146,14 +152,18 @@ class BundledDependenciesTest {
             ) { removedMapping ->
                 val group = removedMapping.moduleId.group
                 val name = removedMapping.moduleId.name
-                """
-                        ~~${removedMapping.constantName}~~
-                        **Remove this line when comments are complete.**
-                        // TODO: Put guidance comment lines here.
-                        // We recommend prefixing them with "FIXME:" if the user should take further action,
-                        // such as using new maven coordinates, or stop depending on the deprecated library.
-                        moved:[<insert replacement group:name here, or remove this line>]
-                        id:[$group:$name]
+                val stillExistsWithAnotherName = currentMapping.any { it.moduleId == removedMapping.moduleId }
+                if (stillExistsWithAnotherName) """
+                    ~~${removedMapping.constantName}~~
+                    id:[$group:$name]
+                """.trimIndent() else """
+                    ~~${removedMapping.constantName}~~
+                    **Remove this line when comments are complete.**
+                    // TODO: Put guidance comment lines here.
+                    // We recommend prefixing them with "FIXME:" if the user should take further action,
+                    // such as using new maven coordinates, or stop depending on the deprecated library.
+                    moved:[<insert replacement group:name here, or remove this line>]
+                    id:[$group:$name]
                     """.trimIndent()
             }
             append(removedEntriesText)
