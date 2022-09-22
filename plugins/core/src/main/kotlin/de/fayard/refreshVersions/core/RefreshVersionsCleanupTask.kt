@@ -55,8 +55,10 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
     fun cleanUpVersionsCatalog() {
         if (VersionsCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled) {
             val file = File(LIBS_VERSIONS_TOML)
-            VersionsCatalogUpdater(file, emptyList()).cleanupComments(file)
-            OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
+            if (file.exists()) {
+                VersionsCatalogUpdater(file, emptyList()).cleanupComments(file)
+                OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
+            }
         }
     }
 }
