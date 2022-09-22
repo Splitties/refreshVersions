@@ -20,9 +20,9 @@ We recommend using the most recent version of IntelliJ IDEA to contribute to thi
 
 1. Locate the `plugins/settings.gradle.kts` file in the "Project" tool window.
 2. Right-click on it to open the contextual menu.
-3. Select "Import Gradle Project".
+3. Select "Link Gradle Project".
 
-![](../../img/import-plugins-gradle-project.png)
+![](../../img/link-plugins-gradle-project.png)
 
 #### Publish the current version locally
 
@@ -48,7 +48,7 @@ The first two samples (sample-kotlin and sample-groovy) are the ones you should 
 
 For edge cases in multi-modules projects and for Android specific things, the two other samples are the ones to test your changes on.
 
-To import a sample, just like you did for the `plugins` Gradle project, right-click on the `settings.gradle` or `settings.gradle.kts` file and select the "Import Gradle Project" option.
+To import a sample, just like you did for the `plugins` Gradle project, right-click on the `settings.gradle` or `settings.gradle.kts` file and select the "Link Gradle Project" option.
 
 #### Testing in your own project
 
