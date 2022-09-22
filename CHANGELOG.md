@@ -1,5 +1,44 @@
 # Change log for refreshVersions
 
+## [Unreleased] Version 0.50.2 (2022-09-22)
+
+### Fixes
+
+- `versionFor` could not work as it should have if it was used in multiple modules with different values: the `refreshVersions` task would only display the updates of some of them, and mark the other ones as unused. This has been fixed.
+
+### New dependency notations:
+
+<details>
+<summary><strong>Click to expand (15) </strong></summary>
+
+- `AndroidX.media3.dataSource`
+- `ApolloGraphQL.adapters`
+- `ApolloGraphQL.api`
+- `ApolloGraphQL.ast`
+- `ApolloGraphQL.httpCache`
+- `ApolloGraphQL.idlingResource`
+- `ApolloGraphQL.mockserver`
+- `ApolloGraphQL.normalizedCacheSqlite`
+- `ApolloGraphQL.normalizedCache`
+- `ApolloGraphQL.runtime`
+- `ApolloGraphQL.testingSupport`
+- `Google.horologist.dataLayer`
+- `KotlinX.serialization.bom`
+- `KotlinX.serialization.json.okio`
+- `Spring.boot.web`
+
+</details>
+
+### Credits
+
+Thanks to all the folks that contributed in this release!
+
+- [Jacob Kwitkoski](https://github.com/thederputy)
+- [Florian Levis](https://github.com/Gounlaf)
+- [Seokjae Lee](https://github.com/doljae)
+- [Louis CAD](https://github.com/LouisCAD)
+- [Jean-Michel Fayard](https://github.com/jmfayard)
+
 ## Version 0.50.1 (2022-09-11)
 
 ### Fixes
