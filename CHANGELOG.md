@@ -38,6 +38,7 @@ Thanks to all the folks that contributed in this release!
 - [Jacob Kwitkoski](https://github.com/thederputy)
 - [Florian Levis](https://github.com/Gounlaf)
 - [Seokjae Lee](https://github.com/doljae)
+- [solonovamax](https://github.com/solonovamax)
 - [Louis CAD](https://github.com/LouisCAD)
 - [Jean-Michel Fayard](https://github.com/jmfayard)
 
