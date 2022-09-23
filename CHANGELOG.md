@@ -5,6 +5,8 @@
 ### Fixes
 
 - `versionFor` could not work as it should have if it was used in multiple modules with different values: the `refreshVersions` task would only display the updates of some of them, and mark the other ones as unused. This has been fixed.
+- Running the `refreshVersionsCleanup` task would log that the `gradle/libs.versions.toml` file was modified even if it wasn't, and didn't exist in the first place. This is now fixed.
+- Version ordering now recognizes random qualifiers instead of marking with an unknown stability level.
 
 ### New dependency notations:
 
