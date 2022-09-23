@@ -20,7 +20,6 @@ class StabilityLevelTest {
         testStabilityLevels(lessStable = Milestone, mostStable = ReleaseCandidate)
         testStabilityLevels(lessStable = ReleaseCandidate, mostStable = Stable)
 
-        @Suppress("RemoveRedundantQualifierName")
         StabilityLevel.values().forEach { Stable isAtLeastAsStableAs it }
     }
 
