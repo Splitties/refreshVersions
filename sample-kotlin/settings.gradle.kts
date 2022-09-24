@@ -24,6 +24,7 @@ plugins {
 refreshVersions {
     featureFlags {
         enable(LIBS)
+        enable(OLD_TASKS)
         disable(GRADLE_UPDATES)
         disable(VERSIONS_CATALOG)
         enable(KOTLIN_SCRIPTS)

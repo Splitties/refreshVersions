@@ -50,7 +50,7 @@ object Ktor : DependencyGroup(
         val jsonTests = module("ktor-client-json-tests")
         val logging = module("ktor-client-logging")
         val mock = module("ktor-client-mock")
-        val okhttp = module("ktor-client-okhttp")
+        val okHttp = module("ktor-client-okhttp")
         val resources = module("ktor-client-resources")
         val serialization = module("ktor-client-serialization")
         val tests = module("ktor-client-tests")
@@ -59,8 +59,10 @@ object Ktor : DependencyGroup(
     val plugins = Plugins
     object Plugins : IsNotADependency {
         val events = module("ktor-events")
-        val http = module("ktor-http")
-        val httpCio = module("ktor-http-cio")
+        val http = Http
+        object Http : DependencyNotationAndGroup(group = group, name = "ktor-http") {
+            val cio = module("ktor-http-cio")
+        }
         val io = module("ktor-io")
         val network = module("ktor-network")
         val networkTls = module("ktor-network-tls")
@@ -68,15 +70,22 @@ object Ktor : DependencyGroup(
         val resources = module("ktor-resources")
 
         val serialization = Serialization
-        object Serialization : IsNotADependency {
-            val serialization = module("ktor-serialization")
+        object Serialization : DependencyNotationAndGroup(
+            group = group,
+            name = "ktor-serialization"
+        ) {
             val gson = module("ktor-serialization-gson")
             val jackson = module("ktor-serialization-jackson")
-            val kotlinx = module("ktor-serialization-kotlinx")
-            val kotlinxCbor = module("ktor-serialization-kotlinx-cbor")
-            val kotlinxJson = module("ktor-serialization-kotlinx-json")
-            val kotlinxTests = module("ktor-serialization-kotlinx-tests")
-            val kotlinxXml = module("ktor-serialization-kotlinx-xml")
+            val kotlinx = Kotlinx
+            object Kotlinx : DependencyNotationAndGroup(
+                group = group,
+                name = "ktor-serialization-kotlinx"
+            ) {
+                val cbor = module("ktor-serialization-kotlinx-cbor")
+                val json = module("ktor-serialization-kotlinx-json")
+                val tests = module("ktor-serialization-kotlinx-tests")
+                val xml = module("ktor-serialization-kotlinx-xml")
+            }
         }
 
         val websocketSerialization = module("ktor-websocket-serialization")
@@ -88,9 +97,14 @@ object Ktor : DependencyGroup(
         group = group,
         name = "ktor-server"
     ) {
-        val auth = module("ktor-server-auth")
-        val authJwt = module("ktor-server-auth-jwt")
-        val authLdap = module("ktor-server-auth-ldap")
+        val auth = Auth
+        object Auth : DependencyNotationAndGroup(
+            group = group,
+            name = "ktor-server-auth"
+        ) {
+            val jwt = module("ktor-server-auth-jwt")
+            val ldap = module("ktor-server-auth-ldap")
+        }
         val autoHeadResponse = module("ktor-server-auto-head-response")
         val cachingHeaders = module("ktor-server-caching-headers")
         val callId = module("ktor-server-call-id")

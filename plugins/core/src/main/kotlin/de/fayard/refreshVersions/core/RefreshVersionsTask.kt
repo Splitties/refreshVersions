@@ -1,6 +1,5 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
 import de.fayard.refreshVersions.core.internal.*
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
 import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
@@ -63,7 +62,7 @@ open class RefreshVersionsTask : DefaultTask() {
         val versionsCatalogLibraries: Set<MinimalExternalModuleDependency>
         val versionsCatalogPlugins: Set<PluginDependencyCompat>
         if (shouldUpdateVersionCatalogs) {
-            val versionCatalog = project.getVersionsCatalog()
+            val versionCatalog = VersionsCatalogs.getDefault(project)
             versionsCatalogLibraries = VersionsCatalogs.libraries(versionCatalog)
             versionsCatalogPlugins = VersionsCatalogs.plugins(versionCatalog)
         } else {

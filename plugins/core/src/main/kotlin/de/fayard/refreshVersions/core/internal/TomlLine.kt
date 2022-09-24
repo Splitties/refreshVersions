@@ -55,7 +55,7 @@ internal fun TomlLine(
     section: TomlSection,
     key: String,
     value: String
-): TomlLine = TomlLine(section, """$key = "$value"""")
+): TomlLine = TomlLine(section = section, text = """$key = "$value"""")
 
 internal fun TomlLine(
     section: TomlSection,
@@ -64,8 +64,7 @@ internal fun TomlLine(
 ): TomlLine = when (dependency.version) {
     null -> TomlLine(
         section = section,
-        key = key,
-        value = """${dependency.group}:${dependency.name}"""
+        text = """$key = { module = "${dependency.group}:${dependency.name}" }"""
     )
     else -> TomlLine(
         section = section,
@@ -119,7 +118,7 @@ private fun TomlLine.parseTomlMap(kind: TomlLine.Kind): Map<String, String> {
             value.isNotBlank() -> {
                 val (group, name) = splitByColon
                 val version = splitByColon.getOrNull(2)
-                lineMap(group = group, name = name, version = version, versionRef = null)
+                lineMap(group = group, name = name, version = version)
             }
             else -> {
                 map["module"]?.also { module ->
@@ -138,12 +137,10 @@ private fun lineMap(
     group: String,
     name: String,
     version: String?,
-    versionRef: String?
 ) = listOfNotNull(
     "group" to group,
     "name" to name,
     version?.let { "version" to it },
-    versionRef?.let { "version.ref" to it }
 ).toMap()
 
 private fun TomlLine.guessTomlLineKind(): TomlLine.Kind {

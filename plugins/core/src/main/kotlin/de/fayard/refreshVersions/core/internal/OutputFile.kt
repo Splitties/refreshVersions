@@ -4,7 +4,11 @@ import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TO
 import java.io.File
 
 @InternalRefreshVersionsApi
-enum class OutputFile(var path: String, var existed: Boolean = false, val alternativePath: String? = null) {
+enum class OutputFile(
+    val path: String,
+    var existed: Boolean = false,
+    val alternativePath: String? = null
+) {
     OUTPUT_DIR("buildSrc/src/main/kotlin"),
     BUILD("buildSrc/build.gradle.kts", alternativePath = "buildSrc/build.gradle"),
     GIT_IGNORE("buildSrc/.gitignore"),

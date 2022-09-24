@@ -117,7 +117,7 @@ class VersionsCatalogUpdaterTest {
                 versionKeyReader = versionKeyReader,
                 dependenciesAndNames = dependenciesAndNames,
                 currentText = currentText,
-                withVersions = withVersions,
+                moveVersionsToCatalog = withVersions,
                 plugins = plugins
             )
             input.actual.writeText(newText)

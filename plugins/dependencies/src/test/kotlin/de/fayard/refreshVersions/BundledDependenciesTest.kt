@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test
 import testutils.getVersionCandidates
 import testutils.isInCi
 import testutils.parseRemovedDependencyNotations
-import java.io.File
 
 class BundledDependenciesTest {
 
@@ -111,14 +110,20 @@ class BundledDependenciesTest {
         }
 
         val removals = existingMapping - receivedMapping
-        if (removals.isNotEmpty()) updateRemovalsRevisionsHistory(removals)
+        if (removals.isNotEmpty()) updateRemovalsRevisionsHistory(
+            currentMapping = receivedMapping,
+            removals = removals
+        )
 
         Files.validatedMappingFile.writeText(
             receivedMapping.joinToString(separator = "\n", postfix = "\n", prefix = validateMappingDescription)
         )
     }
 
-    private fun updateRemovalsRevisionsHistory(removals: Set<DependencyMapping>) {
+    private fun updateRemovalsRevisionsHistory(
+        currentMapping: Set<DependencyMapping>,
+        removals: Set<DependencyMapping>
+    ) {
         val removalsRevisionsHistory = removalsRevisionsHistoryFile.readText()
         val hasWipHeading = removalsRevisionsHistory.lineSequence().any { it.startsWith("## [WIP]") }
         val extraText = buildString {
@@ -147,14 +152,18 @@ class BundledDependenciesTest {
             ) { removedMapping ->
                 val group = removedMapping.moduleId.group
                 val name = removedMapping.moduleId.name
-                """
-                        ~~${removedMapping.constantName}~~
-                        **Remove this line when comments are complete.**
-                        // TODO: Put guidance comment lines here.
-                        // We recommend prefixing them with "FIXME:" if the user should take further action,
-                        // such as using new maven coordinates, or stop depending on the deprecated library.
-                        moved:[<insert replacement group:name here, or remove this line>]
-                        id:[$group:$name]
+                val stillExistsWithAnotherName = currentMapping.any { it.moduleId == removedMapping.moduleId }
+                if (stillExistsWithAnotherName) """
+                    ~~${removedMapping.constantName}~~
+                    id:[$group:$name]
+                """.trimIndent() else """
+                    ~~${removedMapping.constantName}~~
+                    **Remove this line when comments are complete.**
+                    // TODO: Put guidance comment lines here.
+                    // We recommend prefixing them with "FIXME:" if the user should take further action,
+                    // such as using new maven coordinates, or stop depending on the deprecated library.
+                    moved:[<insert replacement group:name here, or remove this line>]
+                    id:[$group:$name]
                     """.trimIndent()
             }
             append(removedEntriesText)
@@ -280,113 +289,5 @@ class BundledDependenciesTest {
             .build()
     }
 
-    val rulesDir = mainResources.resolve("refreshVersions-rules")
-    val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
-
-    // todo: rename
-    data class MarkdownDependency(
-        val moduleId: Maven,
-        val versionKey: String,
-        val constantName: String,
-    ) {
-        val group = constantName.substringBefore(".")
-        val subgroup = constantName.substringBeforeLast(".")
-
-        fun markdown(): String {
-            val LF = 0x0A.toChar()
-            val mavenCoordinates = "${moduleId.group}:${moduleId.name}:_"
-            return """
-          <span title="$constantName${LF}$mavenCoordinates${LF}version.$versionKey" style="text-decoration: underline;" >${constantName.substringAfterLast(".")}</span>&nbsp;
-                """.trimIndent().trim()
-        }
-    }
-
-    @Test
-    fun `update the list of dependency notations on the website`() {
-        val markdownDependencies = getArtifactNameToConstantMapping()
-            .map {
-                val moduleId = it.moduleId
-                val versionKey = versionKeyReader.readVersionKey(moduleId.group, moduleId.name) ?: "NO-RULE"
-                MarkdownDependency(moduleId, versionKey, it.constantName)
-            }
-
-        val groups: List<String> = markdownDependencies
-            .map { it.group }
-            .distinct()
-            .sorted()
-
-        val subgroups: List<String> = markdownDependencies
-            .map { it.subgroup }
-            .distinct()
-            .sorted()
-
-        val dependenciesBySubGroup: Map<String, List<MarkdownDependency>> = markdownDependencies
-            .groupBy { it.subgroup }
-
-        val map: Map<String, List<String>> = groups.associateWith { group ->
-            // "AndroidX" to mapOf("androidx.tools:tools-core" to "androidx.tools")
-            // "AndroidX.test" to mapOf("androidx.test:test" to "androidx.test")
-            subgroups.filter { it.startsWith("$group.") || it == group }
-        }
-
-        val markdownGroups = map.entries
-            .map { (group, subgroups) ->
-                val rows: Map<String, String> = subgroups.associateWith { subgroup ->
-                    val dependencies = dependenciesBySubGroup[subgroup]!!
-                    dependencies.joinToString(" - ", transform = MarkdownDependency::markdown)
-                }
-                """
-                 |## [$group.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/$group.kt)
-                 |
-                 |${table(rows)}
-                 |
-                 """.trimMargin()
-            }
-
-        val destination = File(".").absoluteFile.parentFile.parentFile.parentFile.resolve("docs/dependencies-notations.md")
-        println("Updating ${destination.canonicalPath}")
-
-        val size = markdownDependencies
-            .distinctBy { it.moduleId }
-            .size
-
-        val fileHeader = """
-            |---
-            |title: Built-in Dependency Notations
-            |---
-            |# Built-in Dependency Notations
-            |
-            |[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **$size** Dependency Notations in **${groups.size}** groups and **${subgroups.size}** subgroups
-            |
-            |**Built-in Dependency Notations** are maven coordinates of popular libraries,
-            |discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
-            |who will be configured in the `versions.properties` file with the latest available version
-            |after the first Gradle sync.
-            |They drastically cut the time it takes to add popular libraries to your Gradle build.
-            |
-            |[**See: Adding a Dependency Notation**](add-dependencies.md)
-            |
-            |---
-            |
-            |Below is the list of all available dependency notations.
-            |
-            |Use the table of contents to jump to the group you are interested in.
-            |
-            |Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordinate, VersionKey)`.
-            |""".trimMargin()
-        destination.writeText("$fileHeader\n\n${markdownGroups.joinToString("")}")
-    }
-
-
-    private fun table(rows: Map<String, String>): String {
-        val rowsText = rows.entries.joinToString("\n") { (title, content) ->
-            "<tr><td><b>$title</b></td><td>$content</td></tr>"
-        }
-        return """
-                <table style="width: 100%; table-layout:fixed;">
-                <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
-                $rowsText
-                </table>
-            """.trimIndent().trim()
-    }
+    private val rulesDir = mainResources.resolve("refreshVersions-rules")
 }

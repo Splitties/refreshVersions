@@ -2,7 +2,6 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
-import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
 import de.fayard.refreshVersions.core.internal.skipConfigurationCache
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
@@ -164,7 +163,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     private fun applyToProject(project: Project) {
         if (project != project.rootProject) return // We want the tasks only for the root project
 
-        project.tasks.register<RefreshVersionsDependenciesMigrationTask>(
+        if (FeatureFlag.OLD_TASKS.isEnabled) project.tasks.register<RefreshVersionsDependenciesMigrationTask>(
             name = "migrateToRefreshVersionsDependenciesConstants"
         ) {
             group = "refreshVersions"
@@ -174,7 +173,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             skipConfigurationCache()
         }
 
-        project.tasks.register<DefaultTask>(
+        if (FeatureFlag.OLD_TASKS.isEnabled) project.tasks.register<DefaultTask>(
             name = "refreshVersionsDependenciesMapping"
         ) {
             group = "refreshVersions"
@@ -183,21 +182,12 @@ open class RefreshVersionsPlugin : Plugin<Any> {
                 println(getArtifactNameToConstantMapping().joinToString("\n"))
             }
         }
-        project.tasks.register<RefreshVersionsCatalogTask>(
-            name = "refreshVersionsCatalog"
-        ) {
-            group = "refreshVersions"
-            description = "Update $LIBS_VERSIONS_TOML"
-            outputs.upToDateWhen { false }
-            skipConfigurationCache()
-        }
 
         project.tasks.register<RefreshVersionsMigrateTask>(
             name = "refreshVersionsMigrate"
         ) {
             group = "refreshVersions"
             description = "Migrate build to refreshVersions"
-            skipConfigurationCache()
         }
     }
 

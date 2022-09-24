@@ -211,7 +211,7 @@ class TomlLineTest {
 
             val noVersion = ConfigurationLessDependency("com.example:name")
             TomlLine(TomlSection.Libraries, "my-lib", noVersion)
-                .text shouldBe """my-lib = "com.example:name""""
+                .text shouldBe """my-lib = { module = "com.example:name" }"""
         }
     }
 }

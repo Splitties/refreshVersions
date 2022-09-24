@@ -3,14 +3,17 @@
 @file:Repository("https://repo.maven.apache.org/maven2/")
 //@file:Repository("https://oss.sonatype.org/content/repositories/snapshots")
 //@file:Repository("file:///Users/louiscad/.m2/repository")
-@file:DependsOn("com.louiscad.incubator:lib-publishing-helpers:0.2.3")
+@file:DependsOn("com.louiscad.incubator:lib-publishing-helpers:0.2.4")
 
 import Releasing_main.CiReleaseFailureCause.*
 import java.io.File
 import Releasing_main.ReleaseStep.*
+import lib_publisher_tools.cli.AnsiColor
 import lib_publisher_tools.cli.CliUi
 import lib_publisher_tools.cli.defaultImpl
 import lib_publisher_tools.cli.runUntilSuccessWithErrorPrintingOrCancel
+import lib_publisher_tools.clipboard.copyToClipboard
+import lib_publisher_tools.open.openUrl
 import lib_publisher_tools.process.executeAndPrint
 import lib_publisher_tools.vcs.*
 import lib_publisher_tools.versioning.StabilityLevel
@@ -81,6 +84,7 @@ private class Files {
     val versionToRemovalsMapping = mainResourcesDir.resolve("version-to-removals-revision-mapping.txt").also {
         check(it.exists()) { "Didn't find the ${it.name} file in ${it.parentFile}! Has it been moved or renamed?" }
     }
+    val dependencyNotations = dir.resolve("docs/dependency-notations.md")
 }
 
 private val files = Files()
@@ -201,12 +205,15 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
         val command = "${commandPrefix}gradlew prePublishTest --console=plain"
         printInfo("Will now run $command")
         requestUserConfirmation("Ready?")
-        command.executeAndPrint(dir)
+        command.executeAndPrint(dir.resolve("plugins"))
         check(git.didFileChange(files.versionToRemovalsMapping)) {
             "Expected ${files.versionToRemovalsMapping} to be edited by " +
                 "the command that just ran. Is something broken?"
         }
         printInfo("Successfully updated the following file: ${files.versionToRemovalsMapping}")
+        if (git.didFileChange(files.dependencyNotations)) {
+            printInfo("Also updated the following file: ${files.dependencyNotations}")
+        } else Unit
     }
     `Request doc update confirmation` -> {
         arrayOf(
@@ -244,6 +251,18 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
         val file = files.changelog
         requestManualAction("Update the `${file.name}` for the impending release.")
         file.checkChanged()
+        val version = OngoingRelease.newVersion
+        val startOfThisVersionHeading = "## Version $version"
+        val expectedHeadingCount = file.useLines { lines -> lines.count { it == startOfThisVersionHeading } }
+        check(expectedHeadingCount == 1) {
+            when (expectedHeadingCount) {
+                0 -> "Didn't find the header for the upcoming release in the ${file.name}.\n" +
+                    "Is there a typo or an extra character?\n" +
+                    "Expected to find ${AnsiColor.bold}$startOfThisVersionHeading${AnsiColor.RESET}."
+                else -> "Found multiple occurrences of the header for the upcoming release in the ${file.name}.\n" +
+                    "Keep only one."
+            }
+        }
     }
     `Commit 'prepare for release' and tag` -> with(OngoingRelease) {
         files.changelog.checkChanged()
@@ -336,13 +355,29 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
     }
     `Request GitHub release publication` -> {
         printInfo("It's now time to publish the release on GitHub, so people get notified.")
-        printInfo("Head over to the following url to proceed, changelog will be pre-filled:")
         val newVersion = OngoingRelease.newVersion
         val changelogForThisRelease: String = extractChangelogForVersion(newVersion)
         val urlEncodedChangelogForThisRelease = changelogForThisRelease.urlEncode()
         // https://docs.github.com/en/repositories/releasing-projects-on-github/automation-for-release-forms-with-query-parameters
-        printInfo("$gitHubRepoUrl/releases/new?tag=${tagOfVersionBeingReleased()}&title=$newVersion&body=$urlEncodedChangelogForThisRelease")
-        requestManualAction("Publish the release $newVersion on GitHub with the changelog.")
+        val longUrl =
+            "$gitHubRepoUrl/releases/new?tag=${tagOfVersionBeingReleased()}&title=$newVersion&body=$urlEncodedChangelogForThisRelease"
+        val urlLengthLimit = 2000 // Magic number because it's complicated, see https://stackoverflow.com/a/417184/4433326
+        do {
+            if (longUrl.length > urlLengthLimit) {
+                printInfo("The changelog content is too long to safely fit into the url, so you'll need to paste it.")
+                printInfo("About to put it into the clipboard for you...")
+                requestUserConfirmation("Ready to replace clipboard content?")
+                changelogForThisRelease.copyToClipboard()
+                printInfo("Changelog is in the clipboard!")
+                printInfo("Now, you'll need to paste it on the webpage we are about to open and click publish.")
+                requestUserConfirmation("Ready to open the tab in the default browser?")
+                openUrl("$gitHubRepoUrl/releases/new?tag=${tagOfVersionBeingReleased()}&title=$newVersion")
+            } else {
+                printInfo("Will open the webpage, changelog will be pre-filled, you'll just have to click publish:")
+                requestUserConfirmation("Ready to open the tab in the default browser?")
+                openUrl(longUrl)
+            }
+        } while (!askIfYes("GitHub release published with changelog?"))
     }
     `Change this library version back to a SNAPSHOT` -> {
         val newVersion = Version(OngoingRelease.newVersion)

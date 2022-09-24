@@ -555,6 +555,14 @@ object AndroidX : IsNotADependency {
              * - [androidx.compose.runtime.rxjava3](https://developer.android.com/reference/kotlin/androidx/compose/runtime/rxjava3/package-summary)
              */
             val rxJava3 = module("runtime-rxjava3")
+
+            /**
+             * Additional tracing in Compose.
+             *
+             * ### API reference:
+             * - [androidx.compose.runtime.tracing](https://developer.android.com/reference/kotlin/androidx/compose/runtime/tracing/package-summary)
+             */
+            val tracing = module("runtime-tracing")
         }
 
         /**
@@ -1911,9 +1919,12 @@ object AndroidX : IsNotADependency {
             val workmanager = module("media3-exoplayer-workmanager")
         }
 
+        /**
+         * Common functionality for loading data
+         */
         val dataSource = DataSource
 
-        object DataSource : DependencyGroup(group = group) {
+        object DataSource : DependencyNotationAndGroup(group = group, name = "media3-datasource") {
 
             /**
              * For loading data using the Cronet network stack
@@ -1988,10 +1999,6 @@ object AndroidX : IsNotADependency {
          */
         val decoder = module("media3-decoder")
 
-        /**
-         * Common functionality for loading data
-         */
-        val datasource = module("media3-datasource")
 
         /**
          * Common functionality used across multiple media libraries

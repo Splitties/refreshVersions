@@ -48,4 +48,18 @@ object CashApp {
         val rx2 = module("copper-rx2")
         val rx3 = module("copper-rx3")
     }
+
+    /**
+     * Build a `StateFlow` or `Flow` stream using Jetpack Compose.
+     *
+     * [GitHub Releases](https://github.com/cashapp/molecule/releases)
+     *
+     * GitHub page: [cashapp/molecule](https://github.com/cashapp/molecule)
+     */
+    val molecule = Molecule
+
+    object Molecule : DependencyGroup(group = "app.cash.molecule") {
+        val gradlePlugin = module("molecule-gradle-plugin")
+        val runtime = module("molecule-runtime")
+    }
 }

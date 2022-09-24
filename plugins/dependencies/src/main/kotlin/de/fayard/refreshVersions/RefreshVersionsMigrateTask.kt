@@ -2,12 +2,16 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.addMissingEntriesInVersionsProperties
-import de.fayard.refreshVersions.core.extensions.gradle.getVersionsCatalog
 import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import de.fayard.refreshVersions.core.internal.associateShortestByMavenCoordinate
+import de.fayard.refreshVersions.core.internal.cli.AnsiColor
+import de.fayard.refreshVersions.core.internal.skipConfigurationCache
+import de.fayard.refreshVersions.internal.generateVersionsCatalogFromCurrentDependencies
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
 import org.gradle.api.DefaultTask
+import org.gradle.api.Project
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import org.intellij.lang.annotations.Language
@@ -16,44 +20,147 @@ import java.io.File
 open class RefreshVersionsMigrateTask : DefaultTask() {
 
     @Input
-    @Option(option = "toml", description = "Use libraries from ${VersionsCatalogs.LIBS_VERSIONS_TOML} before built-in dependency notations")
-    var tomlFirst: Boolean = false
+    @Optional
+    @Option(
+        option = "mode",
+        description = "Which migration mode to use."
+    )
+    var mode: Mode? = null
 
-    @TaskAction
-    fun refreshVersionsMissingEntries() {
-        addMissingEntriesInVersionsProperties(project)
+    enum class Mode {
+        VersionsPropertiesOnly,
+        VersionsPropertiesAndPlaceholdersInCatalog,
+        VersionCatalogAndVersionProperties,
+        VersionCatalogOnly
+    }
+
+    init {
+        group = "refreshVersions"
+        skipConfigurationCache()
+    }
+
+    private val Mode.description: String get() = when (this) {
+        Mode.VersionsPropertiesOnly -> {
+            "Put all versions in the `versions.properties` file, " +
+                "use built-in dependency notations when possible, and use version placeholders otherwise."
+        }
+        Mode.VersionsPropertiesAndPlaceholdersInCatalog -> {
+            "Put all versions in the `versions.properties` file, " +
+                "use built-in dependency notations when possible, " +
+                "and use default versions catalog with version placeholders otherwise."
+        }
+        Mode.VersionCatalogAndVersionProperties -> {
+            "Put versions of built-in dependency notations in the `versions.properties` file, " +
+                "and use the default versions catalog for other dependencies."
+        }
+        Mode.VersionCatalogOnly -> {
+            "Use the default versions catalog for all the dependencies and their versions, " +
+                "ignoring built-in dependency notations."
+        }
+    }
+
+    private fun requireMode(): Mode = requireNotNull(mode) {
+        buildString {
+            append(AnsiColor.RED.boldHighIntensity)
+            appendLine("You need to provide which mode you want to run the migration in.")
+            append(AnsiColor.RESET)
+            append(AnsiColor.bold)
+            appendLine("Specify the `mode` option in one of the following ways and re-run:")
+            append(AnsiColor.RESET)
+            Mode.values().forEach { mode ->
+                append(AnsiColor.bold)
+                append("--mode=$mode")
+                append(AnsiColor.RESET)
+                appendLine()
+                append(AnsiColor.italic)
+                append("  ↳ ${mode.description}")
+                append(AnsiColor.RESET)
+                appendLine()
+            }
+        }
     }
 
     @TaskAction
     fun migrateBuild() {
-        val versionsCatalogMapping: Map<ModuleId.Maven, String> =
-            VersionsCatalogs.dependencyAliases(project.getVersionsCatalog())
-
-        val builtInDependenciesMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
-            .associateShortestByMavenCoordinate()
-
-        val dependencyMapping = if (tomlFirst) {
-            builtInDependenciesMapping + versionsCatalogMapping
-        } else {
-            versionsCatalogMapping + builtInDependenciesMapping
-        }
-
-        val findFiles = findFilesWithDependencyNotations(project.rootDir).toSet()
-        findFiles.forEach { buildFile ->
-            migrateFileIfNeeded(buildFile, dependencyMapping)
-        }
-        project.allprojects {
-            if (buildFile !in findFiles) {
-                migrateFileIfNeeded(buildFile, dependencyMapping)
+        val mode = requireMode()
+        val mappingOfNewOrUpdatedCatalog = when (mode) {
+            Mode.VersionsPropertiesOnly -> null
+            Mode.VersionsPropertiesAndPlaceholdersInCatalog -> {
+                generateVersionsCatalogFromCurrentDependencies(
+                    project = project,
+                    keepVersionsPlaceholders = true,
+                    copyBuiltInDependencyNotationsToCatalog = false
+                )
+            }
+            Mode.VersionCatalogAndVersionProperties -> {
+                generateVersionsCatalogFromCurrentDependencies(
+                    project = project,
+                    keepVersionsPlaceholders = false,
+                    copyBuiltInDependencyNotationsToCatalog = false
+                )
+            }
+            Mode.VersionCatalogOnly -> {
+                generateVersionsCatalogFromCurrentDependencies(
+                    project = project,
+                    keepVersionsPlaceholders = false,
+                    copyBuiltInDependencyNotationsToCatalog = true
+                )
             }
         }
-        println()
-        println("""
+        migrateBuildToRefreshVersions(
+            project = project,
+            mappingOfNewOrUpdatedCatalog = mappingOfNewOrUpdatedCatalog,
+            versionCatalogOnly = mode == Mode.VersionCatalogOnly
+        )
+        if (mode != Mode.VersionsPropertiesOnly) {
+            print(AnsiColor.RED.boldHighIntensity)
+            print("We STRONGLY recommend to perform a Gradle sync to avoid seeing red code in the Gradle files.")
+            print(AnsiColor.RESET)
+            println()
+        }
+    }
+}
+
+internal fun migrateBuildToRefreshVersions(
+    project: Project,
+    mappingOfNewOrUpdatedCatalog: Map<ModuleId.Maven, String>?,
+    versionCatalogOnly: Boolean
+) {
+   if (versionCatalogOnly.not()) {
+       addMissingEntriesInVersionsProperties(project)
+   }
+
+    val versionsCatalogMapping: Map<ModuleId.Maven, String> = mutableMapOf<ModuleId.Maven, String>().also {
+        it.putAll(VersionsCatalogs.dependencyAliases(VersionsCatalogs.getDefault(project)))
+        it.putAll(mappingOfNewOrUpdatedCatalog ?: emptyMap())
+    }
+
+    val builtInDependenciesMapping: Map<ModuleId.Maven, String> = getArtifactNameToConstantMapping()
+        .associateShortestByMavenCoordinate()
+
+    val dependencyMapping = if (versionCatalogOnly) {
+        versionsCatalogMapping
+    } else {
+        versionsCatalogMapping + builtInDependenciesMapping
+    }
+
+    val findFiles = findFilesWithDependencyNotations(project.rootDir).toSet()
+    findFiles.forEach { buildFile ->
+        migrateFileIfNeeded(buildFile, dependencyMapping)
+    }
+    project.allprojects {
+        if (buildFile !in findFiles) {
+            migrateFileIfNeeded(buildFile, dependencyMapping)
+        }
+    }
+    println()
+    println(
+        """
             To find available updates, run this:
 
                 $ANSI_GREEN./gradlew refreshVersions$ANSI_RESET
-            """.trimIndent())
-    }
+        """.trimIndent()
+    )
 }
 
 

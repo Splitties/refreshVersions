@@ -10,17 +10,30 @@ data class Version(val value: String) : Comparable<Version> {
      * Check order is important. From least stable to most stable, then unknown
      */
     val stabilityLevel: StabilityLevel by lazy(LazyThreadSafetyMode.NONE) {
-        when {
-            "SNAPSHOT" in value -> StabilityLevel.Snapshot
-            "preview" in value -> StabilityLevel.Preview
-            "dev" in value -> StabilityLevel.Development
-            "alpha" in value -> StabilityLevel.Alpha
-            "beta" in value -> StabilityLevel.Beta
-            "eap" in value -> StabilityLevel.EarlyAccessProgram
-            isMilestone() -> StabilityLevel.Milestone
-            value.contains("rc", ignoreCase = true) -> StabilityLevel.ReleaseCandidate
-            isStable() -> StabilityLevel.Stable
-            else -> StabilityLevel.Unknown
+        value.findStabilityLevel(fullVersion = true) ?: StabilityLevel.Stable // Probably non-stability related suffixes.
+    }
+
+    private fun String.findStabilityLevel(fullVersion: Boolean): StabilityLevel? {
+        fun String.matches(
+            kind: String,
+            ignoreCase: Boolean = true
+        ) = isStabilityLevelWithNumber(
+            stabilityLevelMarker = kind,
+            ignoreCase = ignoreCase,
+            isFragment = fullVersion.not(),
+            version = this
+        )
+        return when {
+            "SNAPSHOT" in this -> StabilityLevel.Snapshot
+            matches("preview") -> StabilityLevel.Preview
+            matches("dev") -> StabilityLevel.Development
+            matches("alpha") -> StabilityLevel.Alpha
+            matches("beta") -> StabilityLevel.Beta
+            matches("eap") -> StabilityLevel.EarlyAccessProgram
+            matches("M") -> StabilityLevel.Milestone
+            matches("RC") -> StabilityLevel.ReleaseCandidate
+            isDefinitelyStable(this) -> StabilityLevel.Stable
+            else -> null
         }
     }
 
@@ -61,8 +74,19 @@ data class Version(val value: String) : Comparable<Version> {
                                 val comparison = e1.compareTo(e2)
                                 if (comparison != 0) return comparison
                             } else {
-                                check(e2 is StabilityLevel)
+                                check(e2 is StabilityLevel || e2 is String)
                                 return +1
+                            }
+                        }
+                        is String -> {
+                            if (e2 is String) {
+                                val comparison = e1.compareTo(e2)
+                                if (comparison != 0) return comparison
+                            } else if (e2 is BigInteger) {
+                                return -1
+                            } else {
+                                check(e2 is StabilityLevel)
+                                return -1
                             }
                         }
                         else -> {
@@ -70,9 +94,11 @@ data class Version(val value: String) : Comparable<Version> {
                             if (e2 is StabilityLevel) {
                                 val comparison = reverseStabilityComparator.compare(e1, e2)
                                 if (comparison != 0) return comparison
-                            } else {
-                                check(e2 is BigInteger)
+                            } else if (e2 is BigInteger) {
                                 return -1
+                            } else {
+                                check(e2 is String)
+                                return +1
                             }
                         }
                     }
@@ -80,7 +106,7 @@ data class Version(val value: String) : Comparable<Version> {
                 return when {
                     v1.lastIndex > lastCommonIndex -> {
                         val e1 = v1[lastCommonIndex + 1]
-                        if (e1 is BigInteger) {
+                        if (e1 is BigInteger || e1 is String) {
                             +1
                         } else {
                             check(e1 is StabilityLevel)
@@ -89,7 +115,7 @@ data class Version(val value: String) : Comparable<Version> {
                     }
                     v2.lastIndex > lastCommonIndex -> {
                         val e2 = v2[lastCommonIndex + 1]
-                        if (e2 is BigInteger) {
+                        if (e2 is BigInteger || e2 is String) {
                             -1
                         } else {
                             check(e2 is StabilityLevel)
@@ -107,20 +133,25 @@ data class Version(val value: String) : Comparable<Version> {
         private val knownStableKeywords = listOf("RELEASE", "FINAL", "GA")
         private val digitsOnlyBasedVersionNumberRegex = "^[0-9,.v-]+$".toRegex()
 
-        private fun Version.isStable(): Boolean {
-            val version = value
+        private fun isDefinitelyStable(version: String): Boolean {
             val uppercaseVersion = version.toUpperCase()
             val hasStableKeyword = knownStableKeywords.any { it in uppercaseVersion }
             return hasStableKeyword || digitsOnlyBasedVersionNumberRegex.matches(version.withoutKnownSuffixes())
         }
 
-        private fun Version.isMilestone(): Boolean {
-            val version = value
-            return when (val indexOfM = version.indexOfLast { it == 'M' }) {
-                -1 -> false
-                version.lastIndex -> false
-                else -> version.substring(startIndex = indexOfM + 1).all { it.isDigit() }
-            }
+        private fun isStabilityLevelWithNumber(
+            stabilityLevelMarker: String,
+            ignoreCase: Boolean = true,
+            isFragment: Boolean,
+            version: String
+        ): Boolean = when (val indexOfStabilityLevelMarker = version.indexOf(
+            string = stabilityLevelMarker,
+            ignoreCase = ignoreCase
+        )) {
+            -1 -> false
+            else -> version.getOrNull(
+                index = indexOfStabilityLevelMarker + stabilityLevelMarker.length
+            )?.let { it.isDigit() || it == '-' } ?: isFragment
         }
 
         private fun String.isRange(): Boolean {
@@ -153,11 +184,11 @@ data class Version(val value: String) : Comparable<Version> {
             }
             return value.withoutKnownStableKeywordsOrSuffixes().split(".", "-").flatMap {
                 it.toBigIntegerOrNull()?.let { number -> listOf(number) }
-                    ?: Version(it).stabilityLevel.let { level ->
+                    ?: it.findStabilityLevel(fullVersion = false)?.let { level ->
                         val indexOfLastNonDigit = it.indexOfLast { c -> c.isDigit().not() }
                         if (indexOfLastNonDigit == -1 || indexOfLastNonDigit == it.lastIndex) listOf(level)
                         else listOf(level, it.substring(startIndex = indexOfLastNonDigit + 1).toBigInteger())
-                    }
+                    } ?: listOf(it)
             }
         }
 
