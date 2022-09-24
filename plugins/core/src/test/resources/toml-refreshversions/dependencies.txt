@@ -1,0 +1,11 @@
+// Represents dependencies that we would get in a Gradle build,
+// and the versions that we would get by reaching the repositories.
+
+org.jetbrains.kotlin:kotlin-stdlib:1.6.21         | 1.7.0, 1.7.10, 1.7.20-Beta
+org.codehaus.groovy:groovy:3.0.5                  | 1.0, 2.0, 3.0.0, 3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.0.5, 3.1.0, 3.2.0
+com.mycompany:mylib-ok:1.4                        | 1.0, 1.4, 1.4.1, 2.0
+com.mycompany:mylib-ko:1.4                        | 1.0, 1.1, 1.2, 1.3, 1.4
+com.mycompany:other:1.4                           | 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6
+com.mycompany:alternate:1.4                       | 1.0, 1.1, 1.2, 1.3, 1.4, 1.5
+some.plugin.id:some.plugin.id.gradle.plugin:1.4   | 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7
+other.plugin.id:other.plugin.id.gradle.plugin:3.4 | 1.0, 2.0, 3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6

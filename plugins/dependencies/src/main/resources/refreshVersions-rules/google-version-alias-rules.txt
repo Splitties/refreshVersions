@@ -7,11 +7,35 @@ com.google.firebase:firebase-*
 com.google.accompanist:accompanist-*
     ^^^^^^.^^^^^^^^^^^
 
+com.google.accompanist:accompanist-imageloading-core
+    ^^^^^^.^^^^^^^^^^^.            ^^^^^^^^^^^^^^^^^
+
+com.google.accompanist:accompanist-glide
+    ^^^^^^.^^^^^^^^^^^.            ^^^^^
+
+com.google.android.libraries.places:places
+    ^^^^^^.^^^^^^^.          ^^^^^^
+
+com.google.maps.android:*
+    ^^^^^^.     ^^^^^^^.^
+
+com.google.maps.android:android-maps-utils
+    ^^^^^^.     ^^^^^^^.        ^^^^^^^^^^
+
+com.google.maps.android:maps-ktx
+    ^^^^^^.     ^^^^^^^.^^^^^^^^
+
+com.google.maps.android:maps-utils-ktx
+    ^^^^^^.     ^^^^^^^.^^^^^      ^^^
+
 com.google.android.material:material
     ^^^^^^^^^^^^^^^^^^^^^^^
 
 com.google.android.material:compose-theme-adapter
     ^^^^^^^^^^^^^^^^^^^^^^^.^^^^^^^^^^^^^^^^^^^^^
+
+com.google.android.material:compose-theme-adapter-3
+    ^^^^^^^^^^^^^^^^^^^^^^^.^^^^^^^^^^^^^^^^^^^^^^^
 
 com.google.android.wearable:wearable
     ^^^^^^^^^^^^^^^^^^^^^^^
@@ -30,3 +54,24 @@ com.google.androidbrowserhelper:androidbrowserhelper
 
 com.google.mlkit:*
     ^^^^^^^^^^^^.^
+
+com.google.oboe:oboe
+    ^^^^^^^^^^^
+
+com.google.modernstorage:modernstorage-*
+    ^^^^^^^^^^^^^^^^^^^^
+
+com.google.modernstorage:modernstorage-mediastore
+    ^^^^^^.              ^^^^^^^^^^^^^^^^^^^^^^^^
+
+com.google.modernstorage:modernstorage-filesystem
+    ^^^^^^.              ^^^^^^^^^^^^^^^^^^^^^^^^
+
+com.google.android.fhir:*
+    ^^^^^^^^^^^^^^^^^^^.^
+
+com.google.android.flexbox:flexbox
+    ^^^^^^^^^^^^^^^^^^^^^^
+
+com.google.ambient.crossdevice:crossdevice
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^

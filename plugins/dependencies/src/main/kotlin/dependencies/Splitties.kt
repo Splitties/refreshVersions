@@ -1,70 +1,73 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import org.gradle.api.Incubating
+import de.fayard.refreshVersions.core.DependencyGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
-@Incubating
-object Splitties {
-
-    private const val artifactPrefix = "com.louiscad.splitties:splitties"
+object Splitties : DependencyGroup(
+    "com.louiscad.splitties",
+    rawRules = """
+    com.louiscad.splitties:splitties-*
+                 ^^^^^^^^^
+    """.trimIndent()
+) {
 
     val pack = Packs
 
     object Packs : IsNotADependency {
-        const val androidBase = "$artifactPrefix-fun-pack-android-base:_"
-        const val androidBaseWithViewsDsl = "$artifactPrefix-fun-pack-android-base-with-views-dsl:_"
-        const val appCompat = "$artifactPrefix-fun-pack-android-appcompat:_"
-        const val appCompatWithViewsDsl = "$artifactPrefix-fun-pack-android-appcompat-with-views-dsl:_"
-        const val androidMdc = "$artifactPrefix-fun-pack-android-material-components:_"
-        const val androidMdcWithViewsDsl = "$artifactPrefix-fun-pack-android-material-components-with-views-dsl:_"
+        val androidBase = module("splitties-fun-pack-android-base")
+        val androidBaseWithViewsDsl = module("splitties-fun-pack-android-base-with-views-dsl")
+        val appCompat = module("splitties-fun-pack-android-appcompat")
+        val appCompatWithViewsDsl = module("splitties-fun-pack-android-appcompat-with-views-dsl")
+        val androidMdc = module("splitties-fun-pack-android-material-components")
+        val androidMdcWithViewsDsl = module("splitties-fun-pack-android-material-components-with-views-dsl")
     }
 
-    const val activities = "$artifactPrefix-activities:_"
-    const val alertdialog = "$artifactPrefix-alertdialog:_"
-    const val alertdialogAppcompat = "$artifactPrefix-alertdialog-appcompat:_"
-    const val alertdialogAppcompatCoroutines = "$artifactPrefix-alertdialog-appcompat-coroutines:_"
-    const val appctx = "$artifactPrefix-appctx:_"
-    const val archLifecycle = "$artifactPrefix-arch-lifecycle:_"
-    const val archRoom = "$artifactPrefix-arch-room:_"
-    const val bitflags = "$artifactPrefix-bitflags:_"
-    const val bundle = "$artifactPrefix-bundle:_"
-    const val checkedlazy = "$artifactPrefix-checkedlazy:_"
-    const val collections = "$artifactPrefix-collections:_"
-    const val coroutines = "$artifactPrefix-coroutines:_"
-    const val dimensions = "$artifactPrefix-dimensions:_"
-    const val exceptions = "$artifactPrefix-exceptions:_"
-    const val fragments = "$artifactPrefix-fragments:_"
-    const val fragmentargs = "$artifactPrefix-fragmentargs:_"
-    const val initprovider = "$artifactPrefix-initprovider:_"
-    const val intents = "$artifactPrefix-intents:_"
-    const val lifecycleCoroutines = "$artifactPrefix-lifecycle-coroutines:_"
-    const val mainhandler = "$artifactPrefix-mainhandler:_"
-    const val mainthread = "$artifactPrefix-mainthread:_"
-    const val materialColors = "$artifactPrefix-material-colors:_"
-    const val materialLists = "$artifactPrefix-material-lists:_"
-    const val permissions = "$artifactPrefix-permissions:_"
-    const val preferences = "$artifactPrefix-preferences:_"
-    const val resources = "$artifactPrefix-resources:_"
-    const val snackbar = "$artifactPrefix-snackbar:_"
-    const val stethoInit = "$artifactPrefix-stetho-init:_"
-    const val systemservices = "$artifactPrefix-systemservices:_"
-    const val toast = "$artifactPrefix-toast:_"
-    const val typesaferecyclerview = "$artifactPrefix-typesaferecyclerview:_"
-    const val views = "$artifactPrefix-views:_"
-    const val viewsAppcompat = "$artifactPrefix-views-appcompat:_"
-    const val viewsCardview = "$artifactPrefix-views-cardview:_"
-    const val viewsCoroutines = "$artifactPrefix-views-coroutines:_"
-    const val viewsCoroutinesMaterial = "$artifactPrefix-views-coroutines-material:_"
-    const val viewsDsl = "$artifactPrefix-views-dsl:_"
-    const val viewsDslAppcompat = "$artifactPrefix-views-dsl-appcompat:_"
-    const val viewsDslConstraintlayout = "$artifactPrefix-views-dsl-constraintlayout:_"
-    const val viewsDslCoordinatorlayout = "$artifactPrefix-views-dsl-coordinatorlayout:_"
-    const val viewsDslIdePreview = "$artifactPrefix-views-dsl-ide-preview:_"
-    const val viewsDslMaterial = "$artifactPrefix-views-dsl-material:_"
-    const val viewsDslRecyclerview = "$artifactPrefix-views-dsl-recyclerview:_"
-    const val viewsMaterial = "$artifactPrefix-views-material:_"
-    const val viewsRecyclerview = "$artifactPrefix-views-recyclerview:_"
-    const val viewsSelectable = "$artifactPrefix-views-selectable:_"
-    const val viewsSelectableAppcompat = "$artifactPrefix-views-selectable-appcompat:_"
-    const val viewsSelectableConstraintlayout = "$artifactPrefix-views-selectable-constraintlayout:_"
+    val activities = module("splitties-activities")
+    val alertdialog = module("splitties-alertdialog")
+    val alertdialogAppcompat = module("splitties-alertdialog-appcompat")
+    val alertdialogAppcompatCoroutines = module("splitties-alertdialog-appcompat-coroutines")
+    val alertdialogMaterial = module("splitties-alertdialog-material")
+    val appctx = module("splitties-appctx")
+    val archLifecycle = module("splitties-arch-lifecycle")
+    val archRoom = module("splitties-arch-room")
+    val bitflags = module("splitties-bitflags")
+    val bundle = module("splitties-bundle")
+    val checkedlazy = module("splitties-checkedlazy")
+    val collections = module("splitties-collections")
+    val coroutines = module("splitties-coroutines")
+    val dimensions = module("splitties-dimensions")
+    val exceptions = module("splitties-exceptions")
+    val fragments = module("splitties-fragments")
+    val fragmentargs = module("splitties-fragmentargs")
+    val initprovider = module("splitties-initprovider")
+    val intents = module("splitties-intents")
+    val lifecycleCoroutines = module("splitties-lifecycle-coroutines")
+    val mainhandler = module("splitties-mainhandler")
+    val mainthread = module("splitties-mainthread")
+    val materialColors = module("splitties-material-colors")
+    val materialLists = module("splitties-material-lists")
+    val permissions = module("splitties-permissions")
+    val preferences = module("splitties-preferences")
+    val resources = module("splitties-resources")
+    val snackbar = module("splitties-snackbar")
+    val stethoInit = module("splitties-stetho-init")
+    val systemservices = module("splitties-systemservices")
+    val toast = module("splitties-toast")
+    val typesaferecyclerview = module("splitties-typesaferecyclerview")
+    val views = module("splitties-views")
+    val viewsAppcompat = module("splitties-views-appcompat")
+    val viewsCardview = module("splitties-views-cardview")
+    val viewsCoroutines = module("splitties-views-coroutines")
+    val viewsCoroutinesMaterial = module("splitties-views-coroutines-material")
+    val viewsDsl = module("splitties-views-dsl")
+    val viewsDslAppcompat = module("splitties-views-dsl-appcompat")
+    val viewsDslConstraintlayout = module("splitties-views-dsl-constraintlayout")
+    val viewsDslCoordinatorlayout = module("splitties-views-dsl-coordinatorlayout")
+    val viewsDslMaterial = module("splitties-views-dsl-material")
+    val viewsDslRecyclerview = module("splitties-views-dsl-recyclerview")
+    val viewsMaterial = module("splitties-views-material")
+    val viewsRecyclerview = module("splitties-views-recyclerview")
+    val viewsSelectable = module("splitties-views-selectable")
+    val viewsSelectableAppcompat = module("splitties-views-selectable-appcompat")
+    val viewsSelectableConstraintlayout = module("splitties-views-selectable-constraintlayout")
 }

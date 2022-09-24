@@ -1,11 +1,20 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import dependencies.DependencyNotationAndGroup
-import org.gradle.api.Incubating
+import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotation
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
-@Incubating
-object Square {
+object Square : IsNotADependency {
+
+    /**
+     * A tiny Kotlin API for cheap logging on top of Android's normal `Log` class.
+     *
+     * [Change log](https://github.com/square/logcat/blob/main/CHANGELOG.md)
+     *
+     * GitHub page: [square/logcat](https://github.com/square/logcat)
+     */
+    val logcat = DependencyNotation("com.squareup.logcat", "logcat")
 
     /**
      * A modern I/O library for Kotlin Multiplatform (JVM/Android, Linux, iOS, macOS, JS) and Java.
@@ -16,7 +25,7 @@ object Square {
      *
      * GitHub page: [square/okio](https://github.com/square/okio)
      */
-    const val okio = "com.squareup.okio:okio:_"
+    val okio = DependencyNotation("com.squareup.okio", "okio")
 
     /**
      * Square's meticulous HTTP client for Java and Kotlin.
@@ -29,11 +38,44 @@ object Square {
      */
     val okHttp3 = OkHttp3
 
-    object OkHttp3 : IsNotADependency {
-        private const val group = "com.squareup.okhttp3"
-        const val okHttp = "$group:okhttp:_"
-        const val loggingInterceptor = "$group:logging-interceptor:_"
-        const val mockWebServer = "$group:mockwebserver:_"
+    object OkHttp3 : DependencyNotationAndGroup(group = "com.squareup.okhttp3", name = "okhttp") {
+
+        val bom = module("okhttp-bom", isBom = true)
+
+        val okHttp = module("okhttp")
+
+        /** Added in OkHttp 5 */
+        val android = module("okhttp-android")
+
+        val brotli = module("okhttp-brotli")
+
+        /** Added in OkHttp 5 */
+        val coroutines = module("okhttp-coroutines")
+        val dnsOverHttps = module("okhttp-dnsoverhttps")
+        val loggingInterceptor = module("logging-interceptor")
+
+        /** Deprecated in OkHttp 5 */
+        val mockWebServer = module("mockwebserver") //TODO: Remove when OkHttp 5 (stable) is released.
+
+        /** Added in OkHttp 5 */
+        val mockWebServer3 = MockWebServer3
+
+        object MockWebServer3 : DependencyNotationAndGroup(
+            group = group,
+            name = "mockwebserver3"
+        ) {
+            /** Added in OkHttp 5 */
+            val junit4 = module("mockwebserver3-junit4")
+
+            /** Added in OkHttp 5 */
+            val junit5 = module("mockwebserver3-junit5")
+        }
+
+        val sse = module("okhttp-sse")
+
+        val tls = module("okhttp-tls")
+
+        val urlConnection = module("okhttp-urlconnection")
     }
 
     /**
@@ -49,33 +91,31 @@ object Square {
      */
     val retrofit2 = Retrofit2
 
-    object Retrofit2 : IsNotADependency {
-        private const val group = "com.squareup.retrofit2"
+    object Retrofit2 : DependencyNotationAndGroup(group = "com.squareup.retrofit2", name = "retrofit") {
 
-        const val retrofit = "$group:retrofit:_"
-        const val mock = "$group:retrofit-mock:_"
+        val retrofit = module("retrofit")
+        val mock = module("retrofit-mock")
 
         val converter = Converter
 
         object Converter : IsNotADependency {
-            private const val artifactPrefix = "$group:converter"
+            val scalars = module("converter-scalars")
 
-            const val scalars = "$artifactPrefix-scalars:_"
+            val wire = module("converter-wire")
+            val moshi = module("converter-moshi")
+            val gson = module("converter-gson")
+            val jackson = module("converter-jackson")
 
-            const val moshi = "$artifactPrefix-moshi:_"
-            const val gson = "$artifactPrefix-gson:_"
-            const val jackson = "$artifactPrefix-jackson:_"
-
-            const val simpleXml = "$artifactPrefix-simplexml:_"
+            val simpleXml = module("converter-simplexml")
         }
 
         val adapter = Adapter
 
         object Adapter : IsNotADependency {
-            const val java8 = "$group:adapter-java8:_"
-            const val rxJava1 = "$group:adapter-rxjava:_"
-            const val rxJava2 = "$group:adapter-rxjava2:_"
-            const val rxJava3 = "$group:adapter-rxjava3:_"
+            val java8 = module("adapter-java8")
+            val rxJava1 = module("adapter-rxjava")
+            val rxJava2 = module("adapter-rxjava2")
+            val rxJava3 = module("adapter-rxjava3")
         }
     }
 
@@ -90,22 +130,30 @@ object Square {
      */
     val sqlDelight = SqlDelight
 
-    object SqlDelight : IsNotADependency {
-        private const val group = "com.squareup.sqldelight"
+    object SqlDelight : DependencyGroup("com.squareup.sqldelight") {
 
-        const val gradlePlugin = "$group:gradle-plugin:_"
+        val gradlePlugin = module("gradle-plugin")
 
-        const val coroutinesExtensions = "$group:coroutines-extensions:_"
+        val extensions = Extensions
+
+        object Extensions : IsNotADependency {
+            val coroutines = module("coroutines-extensions")
+            val androidPaging3 = module("android-paging3-extensions")
+            val androidPaging = module("android-paging-extensions")
+            val rxJava3 = module("rxjava3-extensions")
+            val rxJava2 = module("rxjava2-extensions")
+        }
 
         val drivers = Drivers
 
         object Drivers : IsNotADependency {
-            const val android = "$group:android-driver:_"
+            val android = module("android-driver")
+            val sqlJs = module("sqljs-driver")
 
-            const val jdbc = "$group:jdbc-driver:_"
-            const val jdbcSqlite = "$group:sqlite-driver:_"
+            val jdbc = module("jdbc-driver")
+            val jdbcSqlite = module("sqlite-driver")
 
-            const val native = "$group:native-driver:_"
+            val native = module("native-driver")
         }
     }
 
@@ -121,9 +169,10 @@ object Square {
     val moshi = Moshi
 
     object Moshi : DependencyNotationAndGroup(group = "com.squareup.moshi", name = "moshi") {
-        @JvmField val kotlinReflect = "$artifactPrefix-kotlin:_"
-        @JvmField val kotlinCodegen = "$artifactPrefix-kotlin-codegen:_"
-        @JvmField val javaReflect = backingString
+        val kotlinReflect = module("moshi-kotlin")
+        val kotlinCodegen = module("moshi-kotlin-codegen")
+        val adapters = module("moshi-adapters")
+        val javaReflect = module("moshi")
     }
 
 
@@ -140,17 +189,16 @@ object Square {
      */
     val wire = Wire
 
-    object Wire : IsNotADependency {
-        private const val artifactPrefix = "com.squareup.wire:wire"
+    object Wire : DependencyGroup("com.squareup.wire") {
 
-        const val gradlePlugin = "$artifactPrefix-gradle-plugin:_"
+        val gradlePlugin = module("wire-gradle-plugin")
 
-        const val runtime = "$artifactPrefix-runtime:_"
+        val runtime = module("wire-runtime")
 
         val grpc = Grpc
 
         object Grpc : IsNotADependency {
-            const val client = "$artifactPrefix-grpc-client:_"
+            val client = module("wire-grpc-client")
         }
     }
 
@@ -168,37 +216,36 @@ object Square {
      */
     val leakCanary = LeakCanary
 
-    object LeakCanary : IsNotADependency {
-        private const val group = "com.squareup.leakcanary"
+    object LeakCanary : DependencyGroup("com.squareup.leakcanary") {
 
         /**
          * [API reference](https://square.github.io/leakcanary/api/leakcanary-android-core/leakcanary/)
          */
-        const val android = "$group:leakcanary-android:_"
+        val android = module("leakcanary-android")
 
         /**
          * [Code recipe](https://square.github.io/leakcanary/recipes/#running-the-leakcanary-analysis-in-a-separate-process)
          *
          * [API reference](https://square.github.io/leakcanary/api/leakcanary-android-process/leakcanary/)
          */
-        const val androidProcess = "$group:leakcanary-android-process:_"
+        val androidProcess = module("leakcanary-android-process")
 
         /**
          * [Code recipe](https://square.github.io/leakcanary/recipes/#running-leakcanary-in-instrumentation-tests)
          *
          * [API reference](https://square.github.io/leakcanary/api/leakcanary-android-instrumentation/leakcanary/)
          */
-        const val androidInstrumentation = "$group:leakcanary-android-instrumentation:_"
+        val androidInstrumentation = module("leakcanary-android-instrumentation")
 
         /**
          * [Blog post "LeakCanary—Deobfuscation Feature Explained" by the contributors to this feature](https://www.polidea.com/blog/leakcanary-deobfuscation-feature-explained/)
          */
-        const val deobfuscationGradlePlugin = "$group:leakcanary-deobfuscation-gradle-plugin:_"
+        val deobfuscationGradlePlugin = module("leakcanary-deobfuscation-gradle-plugin")
 
         /**
          * [Plumber introduction in the changelog of the version 2.4](https://square.github.io/leakcanary/changelog/#version-24-2020-06-10)
          */
-        const val plumber = "$group:plumber-android:_"
+        val plumber = module("plumber-android")
 
         /**
          * [API reference](https://square.github.io/leakcanary/api/leakcanary-object-watcher/leakcanary/)
@@ -212,7 +259,7 @@ object Square {
              *
              * [API reference](https://square.github.io/leakcanary/api/leakcanary-object-watcher-android/leakcanary/)
              */
-            @JvmField val android = "$artifactPrefix-android:_"
+            val android = module("leakcanary-object-watcher-android")
         }
 
         /**
@@ -233,22 +280,22 @@ object Square {
             /**
              * [API reference](https://square.github.io/leakcanary/api/shark-hprof/shark/)
              */
-            @JvmField val hprof = "$artifactPrefix-hprof:_"
+            val hprof = module("shark-hprof")
 
             /**
              * [API reference](https://square.github.io/leakcanary/api/shark-graph/shark/)
              */
-            @JvmField val graph = "$artifactPrefix-graph:_"
+            val graph = module("shark-graph")
 
             /**
              * [API reference](https://square.github.io/leakcanary/api/shark-android/shark/)
              */
-            @JvmField val android = "$artifactPrefix-android:_"
+            val android = module("shark-android")
 
             /**
              * [Official documentation](https://square.github.io/leakcanary/shark/#shark-cli)
              */
-            @JvmField val cli = "$artifactPrefix-cli:_"
+            val cli = module("shark-cli")
         }
     }
 
@@ -272,14 +319,14 @@ object Square {
          *
          * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet-metadata/com.squareup.kotlinpoet.metadata/)
          */
-        @JvmField val metadata = "$artifactPrefix-metadata:_"
+        val metadata = module("kotlinpoet-metadata")
 
         /**
          * [Official webpage](https://square.github.io/kotlinpoet/kotlinpoet_metadata_specs/)
          *
          * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet-metadata-specs/com.squareup.kotlinpoet.metadata.specs/)
          */
-        @JvmField val metadataSpecs = "$artifactPrefix-metadata-specs:_"
+        val metadataSpecs = module("kotlinpoet-metadata-specs")
     }
 
     /**
@@ -298,6 +345,6 @@ object Square {
         /**
          * [Documentation page](https://github.com/square/picasso/blob/master/picasso-pollexor/README.md)
          */
-        @JvmField val pollexor = "$artifactPrefix-pollexor:_"
+        val pollexor = module("picasso-pollexor")
     }
 }

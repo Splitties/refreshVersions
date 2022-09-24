@@ -4,19 +4,19 @@
 
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
-import dependencies.DependencyNotationAndGroup
-import org.gradle.api.Incubating
+import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotation
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
-@Incubating
-object Testing {
+object Testing : IsNotADependency {
 
     /**
      * JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks.
      *
      * Official website: [junit.org/junit4](https://junit.org/junit4/)
      */
-    const val junit4 = "junit:junit:_"
+    val junit4 = DependencyNotation("junit", "junit")
 
 
     /**
@@ -24,11 +24,7 @@ object Testing {
      *
      * GitHub page: [robolectric/robolectric](https://github.com/robolectric/robolectric)
      */
-    const val robolectric = "org.robolectric:robolectric:_"
-
-    @Deprecated("Wrong spelling", ReplaceWith("robolectric"))
-    const val roboElectric = robolectric
-
+    val robolectric = DependencyNotation("org.robolectric", "robolectric")
 
     /**
      * JUnit 5: The new major version of the programmer-friendly testing framework for Java
@@ -43,13 +39,28 @@ object Testing {
      *
      * [API reference (JavaDoc)](https://junit.org/junit5/docs/current/api/)
      */
-    val junit = JunitJupiter
+    val junit = Junit
 
-    object JunitJupiter : DependencyNotationAndGroup(group = "org.junit.jupiter", name = "junit-jupiter") {
-        @JvmField val api = "$artifactPrefix-api:_"
-        @JvmField val engine = "$artifactPrefix-engine:_"
-        @JvmField val params = "$artifactPrefix-params:_"
-        @JvmField val migrationSupport = "$artifactPrefix-migrationsupport:_"
+    object Junit : DependencyGroup(group = "org.junit") {
+
+        val bom = module("junit-bom", isBom = true)
+
+        val jupiter = Jupiter
+
+        object Jupiter : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Junit,
+            group = "org.junit.jupiter",
+            name = "junit-jupiter"
+        ) {
+
+            val api = module("junit-jupiter-api")
+
+            val engine = module("junit-jupiter-engine")
+
+            val params = module("junit-jupiter-params")
+
+            val migrationSupport = module("junit-jupiter-migrationsupport")
+        }
     }
 
     /**
@@ -63,86 +74,75 @@ object Testing {
      */
     val kotest = Kotest
 
-    object Kotest : IsNotADependency {
-        private const val artifactBase = "io.kotest:kotest"
+    object Kotest : DependencyGroup("io.kotest") {
 
 
-        const val core = "$artifactBase-core:_"
-        const val property = "$artifactBase-property:_"
-        const val propertyArrow = "$artifactBase-property-arrow:_"
+        val core = module("kotest-core")
+        val property = module("kotest-property")
+        val propertyArrow = module("kotest-property-arrow")
 
         val runner = Runner
 
         object Runner : IsNotADependency {
-            private const val artifactPrefix = "$artifactBase-runner"
 
-            const val junit4 = "$artifactPrefix-junit4:_"
-            const val junit5 = "$artifactPrefix-junit5:_"
+            val junit4 = module("kotest-runner-junit4")
+            val junit5 = module("kotest-runner-junit5")
         }
 
         val plugins = Plugins
 
         object Plugins : IsNotADependency {
-            private const val artifactPrefix = "$artifactBase-plugins"
 
-            const val piTest = "$artifactPrefix-pitest:_"
+            val piTest = module("kotest-plugins-pitest")
         }
 
-        @Suppress("DEPRECATION")
-        @Deprecated(
-            message = "Since Kotest 4.5.0 extensions have a separate lifecycle per extension",
-            replaceWith = ReplaceWith("Testing.kotestExtensions")
-        )
+
+        val framework = Framework
+
+        object Framework : IsNotADependency {
+
+            val api = module("kotest-framework-api")
+            val datatest = module("kotest-framework-datatest")
+        }
+
         val extensions = Extensions
 
-        @Deprecated(
-            message = "Since Kotest 4.5.0 extensions have a separate lifecycle per extension",
-            replaceWith = ReplaceWith("Testing.KotestExtensions")
-        )
-        object Extensions : IsNotADependency {
-            private const val artifactPrefix = "$artifactBase-extensions"
+        object Extensions : DependencyGroup("io.kotest.extensions") {
 
-            const val allure = "$artifactPrefix-allure:_"
-            const val http = "$artifactPrefix-http:_"
-            const val koin = "$artifactPrefix-koin:_"
-            const val mockServer = "$artifactPrefix-mockserver:_"
-            const val spring = "$artifactPrefix-spring:_"
-            const val testContainers = "$artifactPrefix-testcontainers:_"
+            val pitest = module("kotest-extensions-pitest")
+            val embeddedKafka = module("kotest-extensions-embedded-kafka")
+            val robolectric = module("kotest-extensions-robolectric")
+            val wiremock = module("kotest-extensions-wiremock")
+            val gherkin = module("kotest-extensions-gherkin")
+            val allure = module("kotest-extensions-allure")
+            val koin = module("kotest-extensions-koin")
+            val mockServer = module("kotest-extensions-mockserver")
+            val spring = module("kotest-extensions-spring")
+            val testContainers = module("kotest-extensions-testcontainers")
+
+            val property = Property
+
+            object Property : DependencyGroup(group = group) {
+                val datetime = module("kotest-property-datetime")
+                val arbs = module("kotest-property-arbs")
+            }
         }
 
         val assertions = Assertions
 
         object Assertions : IsNotADependency {
-            private const val artifactPrefix = "$artifactBase-assertions"
 
-            const val arrow = "$artifactPrefix-arrow:_"
-            const val compiler = "$artifactPrefix-compiler:_"
-            const val core = "$artifactPrefix-core:_"
-            const val json = "$artifactPrefix-json:_"
-            const val jsoup = "$artifactPrefix-jsoup:_"
-            const val klock = "$artifactPrefix-klock:_"
-            const val konform = "$artifactPrefix-konform:_"
-            const val kotlinxDateTime = "$artifactPrefix-kotlinx-time:_"
-            const val ktor = "$artifactPrefix-ktor:_"
-            const val sql = "$artifactPrefix-sql:_"
+            val arrow = module("kotest-assertions-arrow")
+            val compiler = module("kotest-assertions-compiler")
+            val core = module("kotest-assertions-core")
+            val json = module("kotest-assertions-json")
+            val jsoup = module("kotest-assertions-jsoup")
+            val klock = module("kotest-assertions-klock")
+            val konform = module("kotest-assertions-konform")
+            val kotlinxDateTime = module("kotest-assertions-kotlinx-time")
+            val ktor = module("kotest-assertions-ktor")
+            val sql = module("kotest-assertions-sql")
         }
-    }
-
-    val kotestExtensions = KotestExtensions
-
-    object KotestExtensions: IsNotADependency {
-        private const val extensionArtifactPrefix = "io.kotest.extensions:kotest-extensions"
-
-        const val pitest = "$extensionArtifactPrefix-pitest:_"
-        const val embeddedKafka = "$extensionArtifactPrefix-embedded-kafka:_"
-        const val robolectric = "$extensionArtifactPrefix-robolectric:_"
-        const val wiremock = "$extensionArtifactPrefix-wiremock:_"
-        const val gherkin = "$extensionArtifactPrefix-gherkin:_"
-        const val allure = "$extensionArtifactPrefix-allure:_"
-        const val koin = "$extensionArtifactPrefix-koin:_"
-        const val mockServer = "$extensionArtifactPrefix-mockserver:_"
-        const val spring = "$extensionArtifactPrefix-spring:_"
-        const val testContainers = "$extensionArtifactPrefix-testcontainers:_"
     }
 
     /**
@@ -156,43 +156,38 @@ object Testing {
      */
     val spek = Spek
 
-    object Spek : IsNotADependency {
-        private const val artifactBase = "org.spekframework.spek2:spek"
+    object Spek : DependencyGroup("org.spekframework.spek2") {
 
         val dsl = Dsl
 
         object Dsl : IsNotADependency {
-            private const val artifactPrefix = "$artifactBase-dsl"
 
-            const val jvm = "$artifactPrefix-jvm:_"
-            const val js = "$artifactPrefix-js:_"
-            const val metadata = "$artifactPrefix-metadata:_"
+            val jvm = module("spek-dsl-jvm")
+            val js = module("spek-dsl-js")
+            val metadata = module("spek-dsl-metadata")
 
             val native = Native
 
             object Native : IsNotADependency {
-                private const val prefix = "$artifactPrefix-native"
-                const val linux = "$prefix-linux:_"
-                const val macos = "$prefix-macos:_"
-                const val windows = "$prefix-windows:_"
+                val linux = module("spek-dsl-native-linux")
+                val macos = module("spek-dsl-native-macos")
+                val windows = module("spek-dsl-native-windows")
             }
         }
 
         val runner = Runner
 
         object Runner : IsNotADependency {
-            private const val artifactPrefix = "$artifactBase-runner"
 
-            const val junit5 = "$artifactPrefix-junit5:_"
+            val junit5 = module("spek-runner-junit5")
         }
 
         val runtime = Runtime
 
         object Runtime : IsNotADependency {
-            private const val artifactPrefix = "$artifactBase-runtime"
 
-            const val jvm = "$artifactPrefix-jvm:_"
-            const val metadata = "$artifactPrefix-metadata:_"
+            val jvm = module("spek-runtime-jvm")
+            val metadata = module("spek-runtime-metadata")
         }
     }
 
@@ -209,24 +204,23 @@ object Testing {
      */
     val strikt = Strikt
 
-    object Strikt : IsNotADependency {
-        private const val artifactPrefix = "io.strikt:strikt"
+    object Strikt : DependencyGroup("io.strikt") {
 
-        const val bom = "$artifactPrefix-bom:_"
-        const val core = "$artifactPrefix-core:_"
-        const val arrow = "$artifactPrefix-arrow:_"
-        const val gradle = "$artifactPrefix-gradle:_"
-        const val jackson = "$artifactPrefix-jackson:_"
-        const val javaTime = "$artifactPrefix-java-time:_"
-        const val mockk = "$artifactPrefix-mockk:_"
-        const val protobuf = "$artifactPrefix-protobuf:_"
-        const val spring = "$artifactPrefix-spring:_"
+        val bom = module("strikt-bom")
+        val core = module("strikt-core")
+        val arrow = module("strikt-arrow")
+        val gradle = module("strikt-gradle")
+        val jackson = module("strikt-jackson")
+        val javaTime = module("strikt-java-time")
+        val mockk = module("strikt-mockk")
+        val protobuf = module("strikt-protobuf")
+        val spring = module("strikt-spring")
     }
 
     /**
      * Mocking library for Kotlin.
      *
-     * Official Website: [mockk.io](https://mockk.io/)
+     * Official website: [mockk.io](https://mockk.io/)
      *
      * [GitHub releases](https://github.com/mockk/mockk/releases)
      *
@@ -235,8 +229,8 @@ object Testing {
     val mockK = MockK
 
     object MockK : DependencyNotationAndGroup(group = "io.mockk", name = "mockk") {
-        @JvmField val android = "$artifactPrefix-android:_"
-        @JvmField val common = "$artifactPrefix-common:_"
+        val android = module("mockk-android")
+        val common = module("mockk-common")
     }
 
     /**
@@ -254,19 +248,68 @@ object Testing {
      */
     val mockito = Mockito
 
-    object Mockito : IsNotADependency {
-        private const val artifactPrefix = "org.mockito:mockito"
+    object Mockito : DependencyGroup("org.mockito") {
 
-        const val core = "$artifactPrefix-core:_"
-        const val android = "$artifactPrefix-android:_"
-        const val inline = "$artifactPrefix-inline:_"
-        const val errorProne = "$artifactPrefix-errorprone:_"
-        const val junitJupiter = "$artifactPrefix-junit-jupiter:_"
+        val core = module("mockito-core")
+        val android = module("mockito-android")
+        val inline = module("mockito-inline")
+        val errorProne = module("mockito-errorprone")
+        val junitJupiter = module("mockito-junit-jupiter")
 
         /**
          * Using Mockito with Kotlin
          * [More info here](https://github.com/nhaarman/mockito-kotlin)
          */
-        const val kotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:_"
+        val kotlin = DependencyNotation("com.nhaarman.mockitokotlin2", "mockito-kotlin")
+    }
+
+    /**
+     * AssertJ provides a rich and intuitive set of strongly-typed assertions to use for unit testing
+     *
+     * Official website: [assertj.github.io](https://assertj.github.io/doc/)
+     *
+     * GitHub page: [assertj/assertj-core](https://github.com/assertj/assertj-core)
+     */
+    val assertj = AssertJ
+
+    object AssertJ : DependencyGroup(
+        group = "org.assertj",
+        rawRules = """
+            org.assertj:assertj-*
+                        ^^^^^^^.^
+        """.trimIndent()
+    ) {
+
+        val core = module("assertj-core")
+        val guava = module("assertj-guava")
+        val jodaTime = module("assertj-joda-time")
+        val db = module("assertj-db")
+        val swing = module("assertj-swing")
+    }
+
+    /**
+     * Matchers that can be combined to create flexible expressions of intent in tests
+     *
+     * Official website: [hamcrest.org](http://hamcrest.org/JavaHamcrest/)
+     *
+     * [GitHub releases](https://github.com/hamcrest/JavaHamcrest/releases)
+     *
+     * GitHub page: [hamcrest/JavaHamcrest](https://github.com/hamcrest/JavaHamcrest)
+     *
+     * [API reference (JavaDoc)](http://hamcrest.org/JavaHamcrest/javadoc/)
+     */
+    val hamcrest = Hamcrest
+
+    object Hamcrest : DependencyNotationAndGroup(
+        group = "org.hamcrest",
+        name = "hamcrest",
+        rawRules = """
+            org.hamcrest:hamcrest(-*)
+                ^^^^^^^^
+        """.trimIndent()
+    ) {
+
+        val core = module("hamcrest-core")
+        val library = module("hamcrest-library")
     }
 }

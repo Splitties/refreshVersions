@@ -4,9 +4,10 @@ package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
 import de.fayard.refreshVersions.core.internal.*
-import de.fayard.refreshVersions.core.internal.resolveVersion
-import de.fayard.refreshVersions.core.internal.setupVersionPlaceholdersResolving
+import de.fayard.refreshVersions.core.internal.migrations.runMigrationsIfNeeded
+import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
 import org.gradle.api.artifacts.ExternalDependency
+import org.gradle.api.file.RegularFile
 import org.gradle.api.initialization.Settings
 import org.gradle.api.internal.artifacts.dependencies.DefaultClientModule
 import org.gradle.kotlin.dsl.apply
@@ -44,19 +45,49 @@ import java.io.File
 @JvmName("bootstrap")
 fun Settings.bootstrapRefreshVersionsCore(
     artifactVersionKeyRules: List<String> = emptyList(),
-    versionsPropertiesFile: File = rootDir.resolve("versions.properties")
+    versionsPropertiesFile: File = rootDir.resolve("versions.properties"),
+    getDependenciesMapping: () -> List<DependencyMapping> = { emptyList() },
+    getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() },
+    getRemovedDependencyNotationsReplacementInfo: (() -> RemovedDependencyNotationsReplacementInfo)? = null,
+    versionRejectionFilter: (DependencySelection.() -> Boolean)? = null
 ) {
+    null.checkGradleVersionIsSupported()
     require(settings.isBuildSrc.not()) {
         "This bootstrap is only for the root project. For buildSrc, please call " +
-                "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
-                "or RefreshVersionsCoreSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
+            "bootstrapRefreshVersionsCoreForBuildSrc() instead (Kotlin DSL)," +
+            "or RefreshVersionsCoreSetup.bootstrapForBuildSrc() if you're using Groovy DSL."
+    }
+
+    gradle.rootProject {
+        // This ensures configuration cache is invalidated if versionsPropertiesFile is edited.
+        // Without that, changes to dependencies versions would be ignored after the initial caching.
+        val regularFile: RegularFile = layout.projectDirectory.file(versionsPropertiesFile.path)
+        val provider = providers.fileContents(regularFile).asBytes.forUseAtConfigurationTime()
+        provider.isPresent // Checking the isPresent property marks the provider as used.
+        // If we didn't do it, the provider would be treated as unused,
+        // and changes to the underlying file would not invalidate the configuration cache.
     }
     RefreshVersionsConfigHolder.initialize(
         settings = settings,
         artifactVersionKeyRules = artifactVersionKeyRules,
-        versionsPropertiesFile = versionsPropertiesFile
+        getRemovedDependenciesVersionsKeys = getRemovedDependenciesVersionsKeys,
+        versionsPropertiesFile = versionsPropertiesFile,
+        versionRejectionFilter = versionRejectionFilter
     )
-    setupRefreshVersions(settings = settings)
+    val versionsPropertiesModel = RefreshVersionsConfigHolder.readVersionsPropertiesModel()
+    getRemovedDependencyNotationsReplacementInfo?.let {
+        runMigrationsIfNeeded(
+            projectDir = rootDir,
+            versionsPropertiesFile = versionsPropertiesFile,
+            versionsPropertiesModel = versionsPropertiesModel,
+            dependencyMapping = getDependenciesMapping(),
+            getRemovedDependencyNotationsReplacementInfo = it
+        )
+    }
+    setupRefreshVersions(
+        settings = settings,
+        versionsMap = RefreshVersionsConfigHolder.readVersionsMap(versionsPropertiesModel),
+    )
 }
 
 /**
@@ -87,10 +118,33 @@ fun Settings.bootstrapRefreshVersionsCore(
  * RefreshVersionsCoreSetup.bootstrapForBuildSrc(settings)
  * ```
  */
+@JvmOverloads
 @JvmName("bootstrapForBuildSrc")
-fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
-    RefreshVersionsConfigHolder.initializeBuildSrc(this)
+fun Settings.bootstrapRefreshVersionsCoreForBuildSrc(
+    getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }
+) {
+    null.checkGradleVersionIsSupported()
+    RefreshVersionsConfigHolder.initializeBuildSrc(this, getRemovedDependenciesVersionsKeys)
     setupRefreshVersions(settings = settings)
+}
+
+private const val minimumGradleVersionString = "6.8" // Because we require Kotlin 1.4
+private val minimumGradleVersion = GradleVersion.version(minimumGradleVersionString)
+
+/**
+ * This is an extension on `Nothing?` to avoid polluting top-level.
+ */
+@InternalRefreshVersionsApi
+fun @Suppress("unused") Nothing?.checkGradleVersionIsSupported() {
+    minimumGradleVersion.version
+    if (GradleVersion.current() < minimumGradleVersion) {
+        throw UnsupportedVersionException(
+            """
+            The plugin "de.fayard.refreshVersions" only works with Gradle $minimumGradleVersionString and above.
+            See https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed
+            """.trimIndent()
+        )
+    }
 }
 
 /**
@@ -106,17 +160,12 @@ fun Settings.bootstrapRefreshVersionsCoreForBuildSrc() {
  * This function also sets up the module for the Android and Fabric (Crashlytics) Gradle plugins, so you can avoid the
  * buildscript classpath configuration boilerplate.
  */
-private fun setupRefreshVersions(settings: Settings) {
-    val supportedGradleVersion = "6.3" // 6.2 fail with this error: https://gradle.com/s/shp7hbtd3i3ii
-    if (GradleVersion.current() < GradleVersion.version(supportedGradleVersion)) {
-        throw UnsupportedVersionException("""
-            The plugin "de.fayard.refreshVersions" only works with Gradle $supportedGradleVersion and above.
-            See https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed
-            """.trimIndent())
-    }
-
-
-    val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
+private fun setupRefreshVersions(
+    settings: Settings,
+    versionsMap: Map<String, String> = RefreshVersionsConfigHolder.readVersionsMap()
+) {
+    UsedPluginsTracker.clearFor(settings)
+    UsedVersionForTracker.clearFor(settings)
     @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(
         settings = settings,
@@ -145,6 +194,7 @@ private fun setupPluginsVersionsResolution(
                 require(prefix.endsWith('.').not())
                 return this == prefix || this.startsWith("$prefix.")
             }
+
             val versionKey = when {
                 pluginNamespace.namespaceStartsWith("org.jetbrains.kotlin") -> "version.kotlin"
                 pluginNamespace.namespaceStartsWith("com.android") -> "plugin.android"
@@ -153,20 +203,25 @@ private fun setupPluginsVersionsResolution(
             val version = resolveVersion(properties, versionKey)
             if (version == null) {
                 val pluginVersion = requested.version ?: return@eachPlugin
-                UsedPluginsHolder.pluginHasNoEntryInVersionsFile(pluginIdToDependency(pluginId, pluginVersion))
+                UsedPluginsTracker.pluginHasNoEntryInVersionsFile(
+                    settings = settings,
+                    dependency = pluginIdToDependency(pluginId, pluginVersion)
+                )
                 return@eachPlugin
             }
             when {
                 pluginNamespace.startsWith("com.android") -> {
                     val dependencyNotation = "com.android.tools.build:gradle:$version"
-                    UsedPluginsHolder.noteUsedPluginDependency(
+                    UsedPluginsTracker.noteUsedPluginDependency(
+                        settings = settings,
                         dependencyNotation = dependencyNotation,
                         repositories = repositories
                     )
                     useModule(dependencyNotation)
                 }
                 else -> {
-                    UsedPluginsHolder.noteUsedPluginDependency(
+                    UsedPluginsTracker.noteUsedPluginDependency(
+                        settings = settings,
                         dependencyNotation = "$pluginId:$pluginId.gradle.plugin:$version",
                         repositories = repositories
                     )

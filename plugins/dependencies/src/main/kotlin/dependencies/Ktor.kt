@@ -1,6 +1,8 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused", "MemberVisibilityCanBePrivate")
 
-import org.gradle.api.Incubating
+import Ktor.server
+import de.fayard.refreshVersions.core.DependencyGroup
+import de.fayard.refreshVersions.core.DependencyNotationAndGroup
 import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
@@ -17,232 +19,131 @@ import org.gradle.kotlin.dsl.IsNotADependency
  *
  * TODO: Finish KDoc of undocumented artifact constants. Also link to their KDoc.
  */
-@Incubating
-object Ktor {
+object Ktor : DependencyGroup(
+    group = "io.ktor",
+    rawRules = """
+        io.ktor:*
+           ^^^^
+    """.trimIndent()
+) {
 
-    private const val group = "io.ktor"
-    private const val artifactBase = "$group:ktor"
-
-    const val http = "$artifactBase-http:_"
-
-    const val httpCio = "$artifactBase-http-cio:_"
-
-    const val io = "$artifactBase-io:_"
-
-    const val testDispatcher = "$artifactBase-test-dispatcher:_"
-
-    const val utils = "$artifactBase-utils:_"
-
+    val testDispatcher = module("ktor-test-dispatcher")
+    val utils = module("ktor-utils")
     val client = Client
 
-    object Client: IsNotADependency {
-        private const val artifactPrefix = "$artifactBase-client"
-
-        const val core = "$artifactPrefix-core:_"
-
-        /**
-         * As of ktor 1.3.0, this is experimental and supports JVM only.
-         *
-         * CIO stands for **Coroutines I/O**.
-         */
-        const val cio = "$artifactPrefix-cio:_"
-
-        /** Supports JVM and Android because OkHttp supports only the JVM as of version 4. */
-        const val okHttp = "$artifactPrefix-okhttp:_"
-
-        /** Supports JVM only because Jetty is JVM only. */
-        const val jetty = "$artifactPrefix-jetty:_"
-
-        /** Supports iOS, macOS, watchOS and tvOS. */
-        const val darwin = "$artifactPrefix-ios:_" // Named ios but actually supports watchOS, tvOS and macOS too.
-
-        @Deprecated("The artifact supports more than just iOS.", ReplaceWith("darwin"))
-        const val ios = darwin
-
-        /** Supports Linux X64, Windows X64 and macOS. */
-        const val curl = "$artifactPrefix-curl:_"
-
-        /** Supports JVM only because Apache dependency is JVM only. */
-        const val apache = "$artifactPrefix-apache:_"
-
-        const val auth = "$artifactPrefix-auth:_"
-
-        const val authBasic = "$artifactPrefix-auth-basic:_"
-
-        const val json = "$artifactPrefix-json:_"
-
-
-        /** Supports JVM only. */
-        const val jsonTests = "$artifactPrefix-json-tests:_"
-
-        const val encoding = "$artifactPrefix-encoding:_"
-
-        const val logging = "$artifactPrefix-logging:_"
-
-        const val mock = "$artifactPrefix-mock:_"
-
-        const val serialization = "$artifactPrefix-serialization:_"
-
-        const val tests = "$artifactPrefix-tests:_"
-
-        const val websockets = "$artifactPrefix-websockets:_"
-
-        @Deprecated("Use OkHttp or cio", ReplaceWith("okHttp"), DeprecationLevel.ERROR)
-        const val android = "$artifactPrefix-android:_"
+    object Client : IsNotADependency {
+        val android = module("ktor-client-android")
+        val apache = module("ktor-client-apache")
+        val auth = module("ktor-client-auth")
+        val cio = module("ktor-client-cio")
+        val contentNegotiation = module("ktor-client-content-negotiation")
+        val contentNegotiationTests = module("ktor-client-content-negotiation-tests")
+        val core = module("ktor-client-core")
+        val curl = module("ktor-client-curl")
+        val darwin = module("ktor-client-darwin")
+        val encoding = module("ktor-client-encoding")
+        val gson = module("ktor-client-gson")
+        val jackson = module("ktor-client-jackson")
+        val java = module("ktor-client-java")
+        val jetty = module("ktor-client-jetty")
+        val json = module("ktor-client-json")
+        val jsonTests = module("ktor-client-json-tests")
+        val logging = module("ktor-client-logging")
+        val mock = module("ktor-client-mock")
+        val okHttp = module("ktor-client-okhttp")
+        val resources = module("ktor-client-resources")
+        val serialization = module("ktor-client-serialization")
+        val tests = module("ktor-client-tests")
     }
 
-    val features = Features
+    val plugins = Plugins
+    object Plugins : IsNotADependency {
+        val events = module("ktor-events")
+        val http = Http
+        object Http : DependencyNotationAndGroup(group = group, name = "ktor-http") {
+            val cio = module("ktor-http-cio")
+        }
+        val io = module("ktor-io")
+        val network = module("ktor-network")
+        val networkTls = module("ktor-network-tls")
+        val networkTlsCertificates = module("ktor-network-tls-certificates")
+        val resources = module("ktor-resources")
 
-    object Features: IsNotADependency {
-        /** As of ktor 1.3.0, supports JVM only. */
-        const val auth = "$artifactBase-auth:_"
+        val serialization = Serialization
+        object Serialization : DependencyNotationAndGroup(
+            group = group,
+            name = "ktor-serialization"
+        ) {
+            val gson = module("ktor-serialization-gson")
+            val jackson = module("ktor-serialization-jackson")
+            val kotlinx = Kotlinx
+            object Kotlinx : DependencyNotationAndGroup(
+                group = group,
+                name = "ktor-serialization-kotlinx"
+            ) {
+                val cbor = module("ktor-serialization-kotlinx-cbor")
+                val json = module("ktor-serialization-kotlinx-json")
+                val tests = module("ktor-serialization-kotlinx-tests")
+                val xml = module("ktor-serialization-kotlinx-xml")
+            }
+        }
 
-        /**
-         * As of ktor 1.3.0, supports JVM only.
-         *
-         * JWT stands for **JSON Web Tokens**.
-         *
-         * ktor doc: [JWT and JWK authentication](https://ktor.io/servers/features/authentication/jwt.html)
-         */
-        const val authJwt = "$artifactBase-auth-jwt:_"
-
-        /**
-         * As of ktor 1.3.0, supports JVM only.
-         *
-         * LDAP stands for **Lightweight Directory Access Protocol**.
-         *
-         * ktor doc: [LDAP authentication](https://ktor.io/servers/features/authentication/ldap.html).
-         */
-        const val authLdap = "$artifactBase-auth-ldap:_"
-
-        /**
-         * Supports JVM only (because Apache FreeMarker is JVM-only).
-         *
-         * ktor doc: [Using Freemarker Templates](https://ktor.io/servers/features/templates/freemarker.html)
-         */
-        const val freemarker = "$artifactBase-freemarker:_"
-
-        /**
-         * Supports JVM only (because Apache Velocity JVM-only).
-         *
-         * ktor doc: [Using Velocity Templates](https://ktor.io/servers/features/templates/velocity.html)
-         */
-        const val velocity = "$artifactBase-velocity:_"
-
-        /**
-         * Supports JVM only (because Gson is JVM-only).
-         *
-         * ktor doc: [JSON support using Gson](https://ktor.io/servers/features/content-negotiation/gson.html)
-         */
-        const val gson = "$artifactBase-gson:_"
-
-        /**
-         * Supports JVM only (because Jackson is JVM-only).
-         *
-         * ktor doc: [JSON support using Jackson](https://ktor.io/servers/features/content-negotiation/jackson.html)
-         */
-        const val jackson = "$artifactBase-jackson:_"
-
-        /**
-         * As of ktor 1.3.0, supports JVM only.
-         *
-         * ktor doc: [Emit HTML with a DSL](https://ktor.io/servers/features/templates/html-dsl.html)
-         */
-        const val htmlBuilder = "$artifactBase-html-builder:_"
-
-        /**
-         * As of ktor 1.3.0, supports JVM only.
-         *
-         * ktor doc: [Type-safe Routing](https://ktor.io/servers/features/locations.html)
-         */
-        const val locations = "$artifactBase-locations:_"
-
-        /**
-         * ktor doc: [kotlinx.serialization](https://ktor.io/docs/kotlin-serialization.html)
-         */
-        const val serialization = "$artifactBase-serialization:_"
-
-        /**
-         * Supports JVM only (because Dropwizard is JVM-only).
-         *
-         * ktor doc: [Metrics with Dropwizard metrics](https://ktor.io/servers/features/metrics.html)
-         */
-        const val metrics = "$artifactBase-metrics:_"
-
-        /**
-         * As of ktor 1.3.0, supports JVM only.
-         *
-         * Provides the `directorySessionStorage` function.
-         *
-         * This artifact is not needed for other session features as they are built-in into ktor-server-core.
-         *
-         * ktor doc: [Storing a session id in a cookie, and storing session contents in a file
-           ](https://ktor.io/servers/features/sessions.html#directorySessionStorage).
-         */
-        const val serverSessions = "$artifactBase-server-sessions:_"
+        val websocketSerialization = module("ktor-websocket-serialization")
+        val websockets = module("ktor-websockets")
     }
 
-    /**
-     * As of ktor 1.3.0, ktor server artifacts support only the JVM.
-     */
     val server = Server
-
-    object Server: IsNotADependency {
-        private const val artifactPrefix = "$artifactBase-server"
-
-        /**
-         * Core package where most of the application API and implementation is located.
-         */
-        const val core = "$artifactPrefix-core:_"
-
-        /**
-         * Supports a deployed or embedded Jetty instance.
-         */
-        const val jetty = "$artifactPrefix-jetty:_"
-
-        /**
-         * Supports Netty in embedded mode.
-         */
-        const val netty = "$artifactPrefix-netty:_"
-
-        /**
-         * Supports Tomcat servers.
-         */
-        const val tomcat = "$artifactPrefix-tomcat:_"
-
-        /**
-         * Used by Jetty and Tomcat and allows running in a generic servlet container.
-         */
-        const val servlet = "$artifactPrefix-servlet:_"
-
-        /**
-         * Allows running application tests faster without starting the full host.
-         */
-        const val testHost = "$artifactPrefix-test-host:_"
-    }
-
-    val network = Network
-
-    object Network: IsNotADependency {
-        private const val artifactPrefix = "$artifactBase-network"
-
-        /**
-         * As of ktor 1.3.0, supports JVM only.
-         *
-         * ktor doc: [Raw sockets](https://ktor.io/servers/raw-sockets.html)
-         */
-        const val network = "$artifactPrefix:_"
-
-        /**
-         * As of ktor 1.3.0, supports JVM only.
-         *
-         * ktor doc: [Raw sockets](https://ktor.io/servers/raw-sockets.html)
-         */
-        const val tls = "$artifactPrefix-tls:_"
-
-        /**
-         * [KDoc here](https://api.ktor.io/latest/io.ktor.network.tls.certificates/).
-         */
-        const val tlsCertificates = "$artifactPrefix-tls-certificates:_"
+    object Server : DependencyNotationAndGroup(
+        group = group,
+        name = "ktor-server"
+    ) {
+        val auth = Auth
+        object Auth : DependencyNotationAndGroup(
+            group = group,
+            name = "ktor-server-auth"
+        ) {
+            val jwt = module("ktor-server-auth-jwt")
+            val ldap = module("ktor-server-auth-ldap")
+        }
+        val autoHeadResponse = module("ktor-server-auto-head-response")
+        val cachingHeaders = module("ktor-server-caching-headers")
+        val callId = module("ktor-server-call-id")
+        val callLogging = module("ktor-server-call-logging")
+        val cio = module("ktor-server-cio")
+        val compression = module("ktor-server-compression")
+        val conditionalHeaders = module("ktor-server-conditional-headers")
+        val contentNegotiation = module("ktor-server-content-negotiation")
+        val core = module("ktor-server-core")
+        val cors = module("ktor-server-cors")
+        val dataConversion = module("ktor-server-data-conversion")
+        val defaultHeaders = module("ktor-server-default-headers")
+        val doubleReceive = module("ktor-server-double-receive")
+        val forwardedHeader = module("ktor-server-forwarded-header")
+        val freeMarker = module("ktor-server-freemarker")
+        val hostCommon = module("ktor-server-host-common")
+        val hsts = module("ktor-server-hsts")
+        val htmlBuilder = module("ktor-server-html-builder")
+        val httpRedirect = module("ktor-server-http-redirect")
+        val jetty = module("ktor-server-jetty")
+        val jte = module("ktor-server-jte")
+        val locations = module("ktor-server-locations")
+        val methodOverride = module("ktor-server-method-override")
+        val metrics = module("ktor-server-metrics")
+        val metricsMicrometer = module("ktor-server-metrics-micrometer")
+        val mustache = module("ktor-server-mustache")
+        val netty = module("ktor-server-netty")
+        val partialContent = module("ktor-server-partial-content")
+        val pebble = module("ktor-server-pebble")
+        val resources = module("ktor-server-resources")
+        val servlet = module("ktor-server-servlet")
+        val sessions = module("ktor-server-sessions")
+        val statusPages = module("ktor-server-status-pages")
+        val testHost = module("ktor-server-test-host")
+        val testSuites = module("ktor-server-test-suites")
+        val thymeleaf = module("ktor-server-thymeleaf")
+        val tomcat = module("ktor-server-tomcat")
+        val velocity = module("ktor-server-velocity")
+        val webjars = module("ktor-server-webjars")
+        val websockets = module("ktor-server-websockets")
     }
 }

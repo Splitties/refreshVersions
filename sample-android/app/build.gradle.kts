@@ -9,7 +9,7 @@ plugins {
 
 apply(from = "android.gradle")
 
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
 }
 
@@ -21,7 +21,7 @@ dependencies {
 
     implementation(Kotlin.stdlib.jdk7)
     implementation(AndroidX.appCompat)
-    implementation(AndroidX.activityKtx)
+    implementation(AndroidX.activity.ktx)
     implementation(AndroidX.constraintLayout)
     implementation(Google.android.material)
     implementation(AndroidX.lifecycle.runtime)

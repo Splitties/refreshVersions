@@ -1,19 +1,25 @@
 package de.fayard.refreshVersions.core
 
+import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater.removeCommentsAddedByUs
+import de.fayard.refreshVersions.core.internal.VersionsCatalogUpdater
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section
-import de.fayard.refreshVersions.core.internal.versions.readFrom
+import de.fayard.refreshVersions.core.internal.versions.readFromFile
 import de.fayard.refreshVersions.core.internal.versions.writeTo
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
+import java.io.File
 
 open class RefreshVersionsCleanupTask : DefaultTask() {
 
     @TaskAction
     fun cleanUpVersionsProperties() {
-        val model = VersionsPropertiesModel.readFrom(RefreshVersionsConfigHolder.versionsPropertiesFile)
+        OutputFile.checkWhichFilesExist()
+        val model = VersionsPropertiesModel.readFromFile(RefreshVersionsConfigHolder.versionsPropertiesFile)
 
         val sectionsWithoutAvailableUpdates = model.sections.map { section ->
             when (section) {
@@ -23,18 +29,13 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
         }
         val newModel = model.copy(sections = sectionsWithoutAvailableUpdates)
         newModel.writeTo(RefreshVersionsConfigHolder.versionsPropertiesFile)
+        OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
     }
 
     @TaskAction
     fun cleanUpSettings() {
-        val settingsFiles = listOf(
-            "settings.gradle",
-            "settings.gradle.kts",
-            "buildSrc/settings.gradle",
-            "buildSrc/settings.gradle.kts"
-        ).mapNotNull { path ->
-            project.file(path).takeIf { it.exists() }
-        }
+        val settingsFiles = OutputFile.settingsFiles
+            .filter { it.existed }
 
         settingsFiles.forEach { settingsFile ->
             val initialContent = settingsFile.readText()
@@ -44,6 +45,19 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
             }
             if (initialContent.length != newContent.length) {
                 settingsFile.writeText(newContent)
+            }
+        }
+
+        settingsFiles.forEach { it.logFileWasModified() }
+    }
+
+    @TaskAction
+    fun cleanUpVersionsCatalog() {
+        if (VersionsCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled) {
+            val file = File(LIBS_VERSIONS_TOML)
+            if (file.exists()) {
+                VersionsCatalogUpdater(file, emptyList()).cleanupComments(file)
+                OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
             }
         }
     }

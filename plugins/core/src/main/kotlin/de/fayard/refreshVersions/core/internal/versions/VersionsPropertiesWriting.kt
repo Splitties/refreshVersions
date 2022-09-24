@@ -1,29 +1,28 @@
 package de.fayard.refreshVersions.core.internal.versions
 
+import de.fayard.refreshVersions.core.DependencyVersionsFetcher
 import de.fayard.refreshVersions.core.RefreshVersionsCorePlugin
 import de.fayard.refreshVersions.core.Version
-import de.fayard.refreshVersions.core.extensions.gradle.toModuleIdentifier
 import de.fayard.refreshVersions.core.internal.DependencyWithVersionCandidates
-import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.getVersionPropertyName
 import de.fayard.refreshVersions.core.internal.isAVersionAlias
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
+import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.isUsingVersionRejectionHeader
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.Comment
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
-import org.gradle.api.artifacts.ExternalDependency
+import org.gradle.api.artifacts.Dependency
 import java.io.File
 
-internal fun writeNewEntriesInVersionProperties(newEntries: Map<String, ExternalDependency>) {
-    VersionsPropertiesModel.update { model ->
-        val newSections = newEntries.map { (key, d: ExternalDependency) ->
+internal fun VersionsPropertiesModel.Companion.writeWithNewEntries(newEntries: Map<String, Dependency>) {
+    update { model ->
+        model + newEntries.map { (key, d: Dependency) ->
             VersionEntry(
                 key = key,
                 currentVersion = d.version!!,
                 availableUpdates = emptyList()
             )
         }.sortedBy { it.key }
-        model.copy(sections = model.sections + newSections)
     }
 }
 
@@ -33,7 +32,7 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
 
     val candidatesMap = dependenciesWithLastVersion.associateBy {
-        getVersionPropertyName(it.moduleId.toModuleIdentifier(), versionKeyReader)
+        getVersionPropertyName(it.moduleId, versionKeyReader)
     }
 
     update { model ->
@@ -42,12 +41,13 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
                 when (section) {
                     is Comment -> section
                     is VersionEntry -> {
-
                         if (section.currentVersion.isAVersionAlias()) return@map section
-
-                        val versionsCandidates = candidatesMap[section.key]?.versionsCandidates
-                            ?: return@map section
-                        section.copy(availableUpdates = versionsCandidates.map { it.value })
+                        when (val data = candidatesMap[section.key]) {
+                            null -> section.asUnused(isUnused = true)
+                            else -> section.copy(
+                                availableUpdates = data.versionsCandidates(Version(section.currentVersion)).map { it.value },
+                            ).asUnused(isUnused = false).withFailures(data.failures)
+                        }
                     }
                 }
             }
@@ -55,16 +55,51 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
     }
 }
 
+private fun VersionEntry.asUnused(isUnused: Boolean): VersionEntry {
+    val wasMarkedAsUnused = this.leadingCommentLines.any {
+        it.contains(VersionsPropertiesModel.unusedEntryComment)
+    }
+    if (isUnused == wasMarkedAsUnused) return this
+    return when {
+        isUnused -> copy(leadingCommentLines = leadingCommentLines + VersionsPropertiesModel.unusedEntryComment)
+        else -> copy(leadingCommentLines = leadingCommentLines - VersionsPropertiesModel.unusedEntryComment)
+    }
+}
+
+private fun VersionEntry.withFailures(failures: List<DependencyVersionsFetcher.Result.Failure>): VersionEntry {
+    val hasExistingFailureComments = this.leadingCommentLines.any {
+        it.startsWith(VersionsPropertiesModel.failureComment)
+    }
+    if (hasExistingFailureComments.not() && failures.isEmpty()) return this
+
+    val cleanedUpLeadingCommentLines: List<String> = this.leadingCommentLines.let { commentsList ->
+        when {
+            hasExistingFailureComments -> commentsList.filterNot { commentLine ->
+                commentLine.startsWith(VersionsPropertiesModel.failureComment)
+            }
+            else -> commentsList
+        }
+    }
+    if (failures.isEmpty()) {
+        return copy(leadingCommentLines = cleanedUpLeadingCommentLines)
+    }
+    val newLeadingCommentLines = cleanedUpLeadingCommentLines + failures.map {
+        VersionsPropertiesModel.failureComment(it)
+    }
+    return copy(leadingCommentLines = newLeadingCommentLines)
+}
+
 internal fun VersionsPropertiesModel.Companion.writeWithNewEntry(
     propertyName: String,
-    versionsCandidates: List<Version>
+    versionsCandidates: List<Version>,
+    failures: List<DependencyVersionsFetcher.Result.Failure>
 ) {
     VersionsPropertiesModel.update { model ->
         model + VersionEntry(
             key = propertyName,
             currentVersion = versionsCandidates.first().value,
             availableUpdates = versionsCandidates.drop(1).map { it.value }
-        )
+        ).withFailures(failures)
     }
 }
 
@@ -84,7 +119,7 @@ private inline fun VersionsPropertiesModel.Companion.update(
 ) {
     require(versionsPropertiesFile.name == "versions.properties")
     synchronized(versionsPropertiesFileLock) {
-        val newModel = transform(VersionsPropertiesModel.readFrom(versionsPropertiesFile))
+        val newModel = transform(VersionsPropertiesModel.readFromFile(versionsPropertiesFile))
         newModel.writeTo(versionsPropertiesFile)
     }
 }
@@ -93,9 +128,17 @@ internal val versionsPropertiesFileLock = Any()
 
 internal fun VersionsPropertiesModel.toText(): String = buildString {
     append(preHeaderContent)
-    appendln(VersionsPropertiesModel.versionsPropertiesHeader(version = generatedByVersion))
+    appendLine(
+        VersionsPropertiesModel.versionsPropertiesHeader(
+            version = generatedByVersion,
+            dependencyNotationRemovalsRevision = dependencyNotationRemovalsRevision
+        )
+    )
+    if (RefreshVersionsConfigHolder.isUsingVersionRejection) {
+        appendLine(isUsingVersionRejectionHeader)
+    }
     if (sections.isEmpty()) return@buildString
-    appendln()
+    appendLine()
     val sb = StringBuilder()
     sections.joinTo(buffer = this, separator = "\n") { it.toText(sb) }
 
@@ -106,19 +149,19 @@ internal fun VersionsPropertiesModel.toText(): String = buildString {
 private fun VersionsPropertiesModel.Section.toText(
     builder: StringBuilder
 ): CharSequence = when (this) {
-    is Comment -> builder.apply { clear(); appendln(lines) }
+    is Comment -> builder.apply { clear(); appendLine(lines) }
     is VersionEntry -> builder.apply {
         clear()
-        leadingCommentLines.forEach { appendln(it) }
+        leadingCommentLines.forEach { appendLine(it) }
 
         val paddedKey = key.padStart(availableComment.length + 2)
         val currentVersionLine = "$paddedKey=$currentVersion"
-        appendln(currentVersionLine)
+        appendLine(currentVersionLine)
         availableUpdates.forEach { versionCandidate ->
             append("##"); append(availableComment.padStart(key.length - 2))
-            append('='); appendln(versionCandidate)
+            append('='); appendLine(versionCandidate)
         }
 
-        trailingCommentLines.forEach { appendln(it) }
+        trailingCommentLines.forEach { appendLine(it) }
     }
 }

@@ -13,8 +13,16 @@ pluginManagement {
 }
 
 plugins {
-    id("com.gradle.enterprise").version("3.1.1")
+    id("com.gradle.enterprise").version("3.10.2")
+////                        # available:"3.10.3")
     id 'de.fayard.refreshVersions'
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        google()
+    }
 }
 
 gradleEnterprise {
@@ -31,4 +39,27 @@ refreshVersions {
         enable 'LIBS'
         disable 'GRADLE_UPDATES'
     }
+
+    // ignore dependencies among a blacklist of version keys
+    rejectVersionIf {
+        def blacklist =  ["version.retrofit", "version.okhttp3"]
+        versionKey in blacklist
+    }
+
+    // ignore dependencies among a blacklist of maven groups
+    rejectVersionIf {
+        def blacklist = ["com.squareup.retrofit", "com.squareup.okhttp3"]
+        moduleId.group in blacklist
+    }
+
+    // ignore all non-stable releases
+    rejectVersionIf {
+        candidate.stabilityLevel != StabilityLevel.Stable
+    }
+
+    // Or maybe you want to see alpha versions if you are already using an alpha version, otherwise you want to see only stable versions
+    rejectVersionIf {
+        candidate.stabilityLevel.isLessStableThan(current.stabilityLevel)
+    }
+
 }

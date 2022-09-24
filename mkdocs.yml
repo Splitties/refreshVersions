@@ -20,13 +20,13 @@ extra:
     gradlePluginPortal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
-    gradle: 6.9
-    refreshVersions: '0.10.1'
-    snapshot: '0.10.1-SNAPSHOT'
+    gradle: 7.5.1
+    refreshVersions: '0.50.2'
+    snapshot: '0.51.0-SNAPSHOT'
   keyboard_shortcuts:
     find_actions: <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>A</kbd>
 
-copyright: 'Copyright &copy; 2020 jmfayard'
+copyright: 'Copyright &copy; 2020-2022 jmfayard'
 
 theme:
   name: 'material'
@@ -56,17 +56,19 @@ markdown_extensions:
   - pymdownx.smartsymbols
   - pymdownx.superfences
   - pymdownx.tilde
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - tables
+  - admonition
 
 nav:
   - 'Overview': index.md
   - 'Setup': setup.md
+  - 'Migrate': migrate.md
   - 'Add Dependencies': add-dependencies.md
+  - 'Built-in Dependency Notations': dependency-notations.md
   - 'Update Dependencies': update-dependencies.md
-# TODO: Uncomment line below after its content is updated. We might also change the title.
-#  - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
-  - 'Migration': migration.md
+  - 'RefreshVersionsBot': refreshversions-bot.md
   - 'Change Log': CHANGELOG.md
   - 'Contributing':
     - 'Before you contribute': contributing/before-you-contribute.md
@@ -76,6 +78,8 @@ nav:
     - 'Development process': contributing/submitting-prs/dev-process.md
     - 'Dependency notations': contributing/submitting-prs/dependency-notations-updates.md
   - 'Bonus: Gradle tips and tricks': gradle-tips.md
+  - 'legacy':
+      - 'Gradle buildSrcVersions': gradle-buildsrcversions.md
 
 plugins:
   - search

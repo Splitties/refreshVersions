@@ -1,9 +1,10 @@
 package de.fayard.refreshVersions.core.internal
 
 /**
- * The rules are case sensitive.
+ * The rules are case-sensitive.
  */
-internal abstract class ArtifactVersionKeyRule protected constructor(
+@InternalRefreshVersionsApi
+abstract class ArtifactVersionKeyRule protected constructor(
     internal val artifactPattern: String,
     internal val versionKeyPattern: String
 ) : Comparable<ArtifactVersionKeyRule> {
@@ -20,9 +21,16 @@ internal abstract class ArtifactVersionKeyRule protected constructor(
 
     abstract fun key(group: String, name: String): String
 
+    fun onlyExactMatches(): Boolean = artifactPattern.none { it == '*' }
+
     final override fun compareTo(other: ArtifactVersionKeyRule) = comparator.compare(this, other)
 
     private val versionKeySignificantCharsLength = versionKeyPattern.count { it != ' ' }
+
+    override fun toString(): String = """
+        $artifactPattern
+        $versionKeyPattern
+    """.trimIndent()
 
     companion object {
 

@@ -1,0 +1,1 @@
+com.anothergroup..anothergroup-two=AnotherGroup.two

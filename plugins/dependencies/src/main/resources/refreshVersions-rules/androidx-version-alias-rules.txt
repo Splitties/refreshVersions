@@ -10,14 +10,14 @@ androidx.camera:camera-extensions(-*)
 androidx.camera:camera-view(-*)
 ^^^^^^^^.       ^^^^^^.^^^^
 
-androidx.car:car-cluster(-*)
-^^^^^^^^.    ^^^^^^^^^^^
-
 androidx.car.app:app-testing(-*)
 ^^^^^^^^.^^^.    ^^^^^^^^^^^
 
-androidx.constraintlayout:constraintlayout-compose
-^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^^^^^
+androidx.constraintlayout:constraintlayout
+^^^^^^^^.                 ^^^^^^^^^^^^^^^^
+
+androidx.constraintlayout:constraintlayout-*
+^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^
 
 androidx.core:core-role(-*)
 ^^^^^^^^.     ^^^^^^^^^
@@ -28,16 +28,31 @@ androidx.core:core-animation(-*)
 androidx.core:core-google-shortcuts(-*)
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^
 
+androidx.core:core-performance(-*)
+^^^^^^^^.     ^^^^^^^^^^^^^^^^
+
+androidx.core:core-splashscreen(-*)
+^^^^^^^^.     ^^^^^^^^^^^^^^^^^
+
 androidx.compose.foundation:foundation-text // Deprecated artifact, no longer updated with its family.
 ^^^^^^^^.^^^^^^^.           ^^^^^^^^^^^^^^^
+
+androidx.customview:customview(-*)
+^^^^^^^^.           ^^^^^^^^^^^^^^
 
 androidx.dynamicanimation:dynamicanimation-ktx
 ^^^^^^^^.                 ^^^^^^^^^^^^^^^^^^^^
 
-androidx.gaming:gaming-frame-pacing(-*)
+androidx.games:games-*
+^^^^^^^^.^^^^^      ^^
+
+androidx.games:* // In case they add an artifact that doesn't start with "games"
+^^^^^^^^.^^^^^.^
+
+androidx.gaming:gaming-frame-pacing(-*) // Family renamed to androidx.games
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^
 
-androidx.gaming:gaming-performance-tuner(-*)
+androidx.gaming:gaming-performance-tuner(-*) // Family renamed to androidx.games
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^^^^
 
 androidx.hilt:hilt-lifecycle-viewmodel // Deprecated artifact, no longer updated with its family.
@@ -46,20 +61,29 @@ androidx.hilt:hilt-lifecycle-viewmodel // Deprecated artifact, no longer updated
 androidx.hilt:hilt-navigation-compose
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^^^
 
+androidx.health:health-services-client
+^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.health:health-connect-client
+^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^
+
 androidx.leanback:leanback-paging(-*)
 ^^^^^^^^.         ^^^^^^^^^^^^^^^
 
 androidx.leanback:leanback-tab(-*)
 ^^^^^^^^.         ^^^^^^^^^^^^
 
+androidx.leanback:leanback-grid(-*)
+^^^^^^^^.         ^^^^^^^^^^^^^
+
+androidx.lifecycle:lifecycle-extensions // Deprecated artifact, no longer updated with its family.
+^^^^^^^^.          ^^^^^^^^^^^^^^^^^^^^
+
 androidx.lifecycle:lifecycle-viewmodel-compose
 ^^^^^^^^.          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 androidx.media:media-widget(-*)
 ^^^^^^^^.      ^^^^^^^^^^^^
-
-androidx.navigation:navigation-compose
-^^^^^^^^.           ^^^^^^^^^^^^^^^^^^
 
 androidx.paging:paging-compose
 ^^^^^^^^.       ^^^^^^^^^^^^^^
@@ -85,20 +109,29 @@ androidx.security:security-identity-credential
 androidx.slice:slice-builders-ktx
 ^^^^^^^^.      ^^^^^^^^^^^^^^^^^^
 
-androidx.test:core(-*) // Rest of androidx.test share the same version.
+androidx.test:*
+^^^^^^^^^^^^^.^
+
+androidx.test:core(-*)
 ^^^^^^^^^^^^^.^^^^
 
-androidx.test.ext:junit(-*)
+androidx.test.ext:*
+^^^^^^^^^^^^^^^^^.^
+
+androidx.test.ext:junit
 ^^^^^^^^^^^^^^^^^.^^^^^
 
-androidx.test.ext:truth(-*) // Same version as the rest of androidx.test.
-^^^^^^^^^^^^^
+androidx.test.ext:junit-ktx
+^^^^^^^^^^^^^^^^^.^^^^^
 
-androidx.test.services(-*) // Same version as the rest of androidx.test.
-^^^^^^^^^^^^^
+androidx.test.ext:junit-*
+^^^^^^^^^^^^^^^^^.^^^^^^^
 
 androidx.test.espresso.idling(-*) // Same version as other androidx.test.espresso artifacts.
 ^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.tracing:tracing-perfetto(-*)
+^^^^^^^^^        ^^^^^^^^^^^^^^^^
 
 androidx.vectordrawable:vectordrawable
 ^^^^^^^^.               ^^^^^^^^^^^^^^
@@ -117,3 +150,12 @@ androidx.wear:wear-input-testing
 
 androidx.window:window-extensions
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^
+
+androidx.wear.compose:compose-*
+^^^^^^^^.^^^^.^^^^^^^
+
+androidx.wear.compose:* // In case they add an artifact that doesn't start with "compose"
+^^^^^^^^.^^^^.^^^^^^^.^
+
+androidx.wear.watchface:watchface(-*)
+^^^^^^^^^^^^^^          ^^^^^^^^^^^^^

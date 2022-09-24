@@ -6,6 +6,8 @@ plugins {
     `maven-publish`
     signing
     `kotlin-dsl`
+    `jvm-test-suite`
+    idea
 }
 
 gradlePlugin {
@@ -41,8 +43,8 @@ publishing {
 dependencies {
     testImplementation(Testing.kotest.runner.junit5)
 
-    testImplementation(platform(notation = "org.junit:junit-bom:_"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(platform(notation = Testing.junit.bom))
+    testImplementation(Testing.junit.jupiter)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
         because("allows tests to run from IDEs that bundle older version of launcher")
     }
@@ -54,16 +56,98 @@ dependencies {
     implementation(KotlinX.coroutines.core)
 }
 
+val genResourcesDir = buildDir.resolve("generated/refreshVersions/resources")
 
-tasks.withType<KotlinCompile> {
+sourceSets.main {
+    resources.srcDir(genResourcesDir.path)
+}
+
+idea {
+    module.generatedSourceDirs.add(genResourcesDir)
+}
+
+val copyDependencyNotationsRemovalsRevisionNumber by tasks.registering {
+    val versionFile = rootProject.file("version.txt")
+    val removalsRevisionHistoryFile = file("src/main/resources/removals-revisions-history.md")
+    val snapshotDependencyNotationsRemovalsRevisionNumberFile = genResourcesDir.resolve("snapshot-dpdc-rm-rev.txt")
+    val versionToRemovalsMappingFile = file("src/main/resources/version-to-removals-revision-mapping.txt")
+
+
+    inputs.files(versionFile, removalsRevisionHistoryFile)
+    outputs.files(snapshotDependencyNotationsRemovalsRevisionNumberFile, versionToRemovalsMappingFile)
+
+    doFirst {
+        val version = versionFile.useLines { it.first() }
+        val removalsRevision: Int? = removalsRevisionHistoryFile.useLines { lines ->
+            lines.lastOrNull { it.startsWith("## ") }?.takeUnless { it.startsWith("## [WIP]") }
+        }?.substringAfter("## Revision ")?.substringBefore(' ')?.toInt()
+        if (version.endsWith("-SNAPSHOT")) {
+            snapshotDependencyNotationsRemovalsRevisionNumberFile.let {
+                when (removalsRevision) {
+                    null -> it.delete()
+                    else -> it.writeText(removalsRevision.toString())
+                }
+            }
+        } else {
+            snapshotDependencyNotationsRemovalsRevisionNumberFile.delete()
+            val expectedPrefix = "$version->"
+            val mappingLine = "$expectedPrefix$removalsRevision"
+            val mappingFileContent = versionToRemovalsMappingFile.readText()
+            val existingMapping = mappingFileContent.lineSequence().firstOrNull {
+                it.startsWith(expectedPrefix)
+            }
+            if (existingMapping != null) {
+                check(existingMapping == mappingLine)
+            } else {
+                check(mappingFileContent.endsWith('\n') || mappingFileContent.isEmpty())
+                val isInCi = System.getenv("CI") == "true"
+                check(isInCi.not()) {
+                    "$versionToRemovalsMappingFile shall be updated before publishing."
+                }
+                versionToRemovalsMappingFile.appendText("$mappingLine\n")
+            }
+        }
+    }
+}
+
+tasks.processResources {
+    dependsOn(copyDependencyNotationsRemovalsRevisionNumber)
+}
+
+@Suppress("UnstableApiUsage")
+val prePublishTest = testing.suites.create<JvmTestSuite>("prePublishTest") {
+    useJUnitJupiter()
+    dependencies {
+        implementation(project)
+        implementation(project.dependencies.testFixtures(project(":refreshVersions-core")))
+        implementation(Testing.kotest.assertions.core)
+    }
+}
+
+kotlin {
+    target.compilations.let {
+        it.getByName("prePublishTest").associateWith(it.getByName("main"))
+    }
+}
+
+tasks.check {
+    dependsOn(prePublishTest)
+}
+
+tasks.withType<AbstractPublishToMaven>().configureEach {
+    dependsOn(prePublishTest)
+}
+
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.apiVersion = "1.4"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xopt-in=kotlin.RequiresOptIn",
         "-Xopt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
     )
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
@@ -71,8 +155,4 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
     withSourcesJar()
-}
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
 }

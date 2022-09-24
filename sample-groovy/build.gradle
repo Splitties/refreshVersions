@@ -4,17 +4,10 @@ plugins {
     id 'application'
     id 'idea'
     id 'java'
+    id "org.gradle.hello-world"
 }
 
 group = "de.fayard"
-
-repositories {
-    maven {
-        setUrl("../plugin/src/test/resources/maven")
-    }
-    mavenCentral()
-    google()
-}
 
 dependencies {
     implementation("com.google.guava:guava:_")
@@ -23,8 +16,10 @@ dependencies {
     implementation("org.jetbrains:annotations:_")
 }
 
-println("The version for artifact org.jetbrains:annotations:_ is " + versionFor("org.jetbrains:annotations:_"))
-println("The version for version key version.com.google.guava..guava is " + versionFor("version.com.google.guava..guava"))
+println("The version for artifact org.jetbrains:annotations:_ is " + versionFor(project, "org.jetbrains:annotations:_"))
+println("The version for version key version.com.google.guava..guava is " + versionFor(project, "version.com.google.guava..guava"))
+
+println("The version for AndroidX.compose.compiler is " + versionFor(project, AndroidX.compose.compiler))
 
 tasks.wrapper {
     def versionFile = new File(rootDir.parentFile, "plugins/gradle-version.txt")

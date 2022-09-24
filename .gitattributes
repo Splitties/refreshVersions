@@ -1,0 +1,11 @@
+#
+# https://help.github.com/articles/dealing-with-line-endings/
+#
+* text eol=lf
+# These are explicitly windows files and should use crlf
+*.bat           text eol=crlf
+
+# Don't mess with images 🙏
+*.png binary
+*.jpg binary
+*.gif binary

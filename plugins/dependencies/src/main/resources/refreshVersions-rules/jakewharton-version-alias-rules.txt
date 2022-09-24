@@ -15,3 +15,15 @@ com.jakewharton.wormhole:wormhole-gradle
 
 com.jakewharton.moshi:shimo
     ^^^^^^^^^^^^^^^^^.^^^^^
+
+com.jakewharton.rxbinding3:rxbinding(-*)
+    ^^^^^^^^^^^^^^^^^^^^^^
+
+com.jakewharton.rxbinding4:rxbinding(-*)
+    ^^^^^^^^^^^^^^^^^^^^^^
+
+com.jakewharton.rxrelay2:rxrelay
+    ^^^^^^^^^^^^^^^^^^^^
+
+com.jakewharton.rxrelay3:rxrelay
+    ^^^^^^^^^^^^^^^^^^^^

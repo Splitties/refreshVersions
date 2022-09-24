@@ -76,7 +76,8 @@ class SettingsPluginUpdaterTest {
                 PluginWithVersionCandidates(
                     pluginId = pluginId,
                     currentVersion = currentVersion,
-                    versionsCandidates = pluginsVersions[pluginId]!!.subListAfter(currentVersion).map { Version(it) }
+                    versionsCandidates = pluginsVersions[pluginId]!!.subListAfter(currentVersion).map { Version(it) },
+                    failures = emptyList()
                 )
             }
         )

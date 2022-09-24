@@ -108,7 +108,7 @@ Read more: [Add Dependencies](https://jmfayard.github.io/refreshVersions/add-dep
 
 ## Requirements
 
-- Gradle 6.3+
+- Gradle 6.8+
 - IntelliJ IDEA or Android Studio
 
 

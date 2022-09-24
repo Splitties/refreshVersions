@@ -9,6 +9,17 @@ internal fun CharSequence.indexOfPrevious(char: Char, startIndex: Int): Int {
     return -1
 }
 
+internal inline fun CharSequence.indexOfFirst(
+    startIndex: Int,
+    predicate: (Char) -> Boolean
+): Int {
+    if (startIndex !in 0..lastIndex) throw IndexOutOfBoundsException(startIndex)
+    for (i in startIndex..lastIndex) {
+        if (predicate(this[i])) return i
+    }
+    return -1
+}
+
 internal interface SkippableIterationScope {
     fun skipIteration(offset: Int)
 }

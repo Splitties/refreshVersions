@@ -11,13 +11,13 @@ import okhttp3.OkHttpClient
 
 suspend fun getVersionCandidates(
     httpClient: OkHttpClient,
-    moduleId: ModuleId,
+    mavenModuleId: ModuleId.Maven,
     currentVersion: Version,
     repoUrls: List<String>
 ): List<Version> = repoUrls.map {
     MavenDependencyVersionsFetcherHttp(
         httpClient = httpClient,
-        moduleId = moduleId,
+        moduleId = mavenModuleId,
         repoUrl = it,
         repoAuthorization = null
     )
@@ -27,4 +27,7 @@ suspend fun getVersionCandidates(
         filterMode = VersionCandidatesResultMode.FilterMode.LatestByStabilityLevel,
         sortingMode = VersionCandidatesResultMode.SortingMode.ByVersion
     )
-)
+).let { (versions, failures) ->
+    check(failures.isEmpty())
+    versions
+}

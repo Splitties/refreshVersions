@@ -1,0 +1,64 @@
+# See https://docs.gradle.org/current/userguide/platforms.html#sub:conventional-dependencies-toml
+
+key = "some key"
+
+[bundles]
+
+groovy = ["groovy-core", "groovy-json", "groovy-nio"]
+
+[plugins]
+
+short-notation = "some.plugin.id:1.4"
+##                           ⬆ :1.5"
+##                           ⬆ :1.6"
+##                           ⬆ :1.7"
+
+# yet another comment
+
+long-notation = { id = "some.plugin.id", version = "1.4" }
+##                                            ⬆ = "1.5" }
+##                                            ⬆ = "1.6" }
+##                                            ⬆ = "1.7" }
+
+reference-notation = { id = "other.plugin.id", version.ref = "common" }
+
+[versions]
+
+# some comment
+
+kt = "1.6.21"
+##⬆= "1.7.0"
+##⬆= "1.7.10"
+##⬆= "1.7.20-Beta"
+
+groovy = "3.0.5"
+##  ⬆ = "3.1.0"
+##  ⬆ = "3.2.0"
+
+checkstyle = "8.37"
+common = "3.4"
+##  ⬆ = "3.5"
+##  ⬆ = "3.6"
+
+[libraries]
+
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kt" }
+
+groovy-core = { module = "org.codehaus.groovy:groovy", version.ref = "groovy" }
+groovy-json = { module = "org.codehaus.groovy:groovy-json", version.ref = "groovy" }
+groovy-nio = { module = "org.codehaus.groovy:groovy-nio", version.ref = "groovy" }
+
+# another comment
+
+refreshVersionsLib = "de.fayard:lib:_"
+
+my-lib = "com.mycompany:mylib:1.4"
+
+my-other-lib = { module = "com.mycompany:other", version = "1.4" }
+##                                                    ⬆ = "1.5" }
+##                                                    ⬆ = "1.6" }
+
+my-other-lib2 = { group = "com.mycompany", name = "alternate", version = "1.4" }
+##                                                                  ⬆ = "1.5" }
+
+log4j-jul = { module = "org.apache.logging.log4j:log4j-jul" }

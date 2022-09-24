@@ -1,5 +1,735 @@
 # Change log for refreshVersions
 
+## Version 0.50.2 (2022-09-24)
+
+### Minor change
+
+Disable the old `refreshVersionsDependenciesMapping` and `migrateToRefreshVersionsDependenciesConstants` Gradle tasks.
+
+### Fixes
+
+- `versionFor` could not work as it should have if it was used in multiple modules with different values: the `refreshVersions` task would only display the updates of some of them, and mark the other ones as unused. This has been fixed.
+- Running the `refreshVersionsCleanup` task would log that the `gradle/libs.versions.toml` file was modified even if it wasn't, and didn't exist in the first place. This is now fixed.
+- Version ordering now recognizes random qualifiers instead of marking with an unknown stability level.
+
+### New dependency notations:
+
+<details>
+<summary><strong>Click to expand (15) </strong></summary>
+
+- `AndroidX.media3.dataSource`
+- `ApolloGraphQL.adapters`
+- `ApolloGraphQL.api`
+- `ApolloGraphQL.ast`
+- `ApolloGraphQL.httpCache`
+- `ApolloGraphQL.idlingResource`
+- `ApolloGraphQL.mockserver`
+- `ApolloGraphQL.normalizedCacheSqlite`
+- `ApolloGraphQL.normalizedCache`
+- `ApolloGraphQL.runtime`
+- `ApolloGraphQL.testingSupport`
+- `Google.horologist.dataLayer`
+- `KotlinX.serialization.bom`
+- `KotlinX.serialization.json.okio`
+- `Spring.boot.web`
+
+</details>
+
+### Credits
+
+Thanks to all the folks that contributed in this release!
+
+- [Jacob Kwitkoski](https://github.com/thederputy)
+- [Florian Levis](https://github.com/Gounlaf)
+- [Seokjae Lee](https://github.com/doljae)
+- [solonovamax](https://github.com/solonovamax)
+- [Louis CAD](https://github.com/LouisCAD)
+- [Jean-Michel Fayard](https://github.com/jmfayard)
+
+## Version 0.50.1 (2022-09-11)
+
+### Fixes
+
+- Fix the "Extension of type 'VersionCatalogsExtension' does not exist." error.
+- Versions Catalog migration only worked properly if you ran it twice. This has now been fixed!
+
+## Version 0.50.0 (2022-09-09)
+
+### Support for Versions Catalogs! 🎉
+
+**Versions Catalogs** are Gradle 7.4+ solution for storing dependencies and versions in a centralized file.
+Gradle will automatically recognize the `gradle/libs.versions.toml` file… and so will refreshVersions!
+
+It is similar in spirit to the `versions.properties` file, **and we are happy to add support for it**:
+
+- `./gradlew refreshVersions` will now add available updates as comments inside the `gradle/libs.versions.toml` file.
+- `./gradlew refreshVersionsMigrate --mode=VersionCatalogAndVersionProperties` will **generate a versions catalog and migrate your build to use it** if you don't have one already.
+
+Currently, we only support the default versions catalog. If you need support for multiple versions catalogs, add your 👍 [on this issue](https://github.com/jmfayard/refreshVersions/issues/596).
+
+This is a big and new feature, so feel free to [provide feedback in this thread](https://github.com/jmfayard/refreshVersions/discussions/592), and report issues with the right info if there's no existing one [here](https://github.com/jmfayard/refreshVersions/issues).
+
+### Better support for `versionFor`, and Jetpack Compose!
+
+#### Before
+
+`versionFor` was helpful when you need to access a version located in the `versions.properties` file, but if there was no dependency using it, you'd never see any updates.
+For projects/modules using Jetpack Compose from Google, that meant you'd never see any updates for the compiler, and you'd need to look it up yourself.
+Also, the version entry would be marked as unused, or would be the wrong one if you shared it with other Compose artifacts since [the compiler now has its own versioning track](https://android-developers.googleblog.com/2022/06/independent-versioning-of-Jetpack-Compose-libraries.html).
+
+#### Now
+
+Now, passing a dependency notation such as `AndroidX.compose.compiler` to `versionFor` is exactly the same as if you used the dependency somewhere in the project:
+
+You'll get all the updates, and if the version is not yet specified in the `versions.properties` file, as usual, refreshVersions will try to find the latest most stable version available, plus it will also add the available comments for any newer, less stable version.
+That makes it even easier to start a project with Jetpack Compose!
+
+With this in a `build.gradle.kts` file:
+
+```kts
+android {
+    composeOptions {
+        kotlinCompilerExtensionVersion = versionFor(AndroidX.compose.compiler) // Kotlin DSL
+        kotlinCompilerExtensionVersion = versionFor(project, AndroidX.compose.compiler) // Groovy DSL
+    }
+}
+```
+
+_`AndroidX.compose.compiler` is equivalent to `"androidx.compose.compiler:compiler:_"`._
+
+You'll get that in the `versions.properties` file if you were on version `1.3.0-rc01`:
+
+```properties
+version.androidx.compose.compiler=1.3.0-rc01
+##                    # available=1.3.0-rc02
+##                    # available=1.3.0
+```
+
+### New page for all the built-in dependency notations 📕
+
+To make it easy to start new projects, new modules, or using a common library, we spent a lot of time adding built-in dependency notations for Kotlin, kotlinx, AndroidX, and more.
+
+However, it wasn't so easy to know that they exist.
+That's why we made [a dedicated page where you can find them all](https://jmfayard.github.io/refreshVersions/dependency-notations/)! Let us know how helpful it is to you!
+
+### Fixes
+
+- `rejectVersionIf { … }` had an issue: its removal would not be taken into account until the Gradle daemon would be killed. This now behaves correctly.
+- We were ignoring repositories defined in `pluginManagement { … }`, which might have led to Gradle plugin updates being missed by refreshVersions. Now, we look up these repositories as well.
+
+### New dependency notations:
+
+<details>
+<summary><strong>Click to expand (145) </strong></summary>
+
+- `AndroidX.appSearch.builtInTypes`
+- `AndroidX.compose.runtime.tracing`
+- `AndroidX.core.uwb`
+- `AndroidX.core.uwb.rxJava3`
+- `AndroidX.health.connect.client`
+- `AndroidX.javascriptEngine`
+- `AndroidX.lifecycle.runtime.compose`
+- `AndroidX.room.paging.guava`
+- `AndroidX.room.paging.rxJava2`
+- `AndroidX.room.paging.rxJava3`
+- `AndroidX.tracing.perfetto`
+- `CashApp.molecule.gradlePlugin`
+- `CashApp.molecule.runtime`
+- `CashApp.molecule.test`
+- `Google.accompanist.drawablePainter`
+- `Google.accompanist.flowLayout`
+- `Google.accompanist.navigationAnimation`
+- `Google.accompanist.navigationMaterial`
+- `Google.accompanist.permissions`
+- `Google.accompanist.placeholder`
+- `Google.accompanist.placeholder.material`
+- `Google.accompanist.webView`
+- `Google.ambient.crossDevice`
+- `Google.horologist.audio`
+- `Google.horologist.audio.ui`
+- `Google.horologist.composables`
+- `Google.horologist.compose.layout`
+- `Google.horologist.compose.tools`
+- `Google.horologist.media`
+- `Google.horologist.media.data`
+- `Google.horologist.media.ui`
+- `Google.horologist.media3.backend`
+- `Google.horologist.networkAwareness`
+- `Google.horologist.tiles`
+- `Square.okHttp3.mockWebServer3`
+- `Square.okHttp3.mockWebServer3.junit4`
+- `Square.okHttp3.mockWebServer3.junit5`
+- `Square.okHttp3.android`
+- `Square.okHttp3.brotli`
+- `Square.okHttp3.coroutines`
+- `Square.okHttp3.dnsOverHttps`
+- `Square.okHttp3.sse`
+- `Square.okHttp3.tls`
+- `Square.okHttp3.urlConnection`
+- `Arrow.core`
+- `Arrow.fx.coroutines`
+- `Arrow.fx.stm`
+- `Arrow.optics`
+- `Arrow.optics.kspPlugin`
+- `Arrow.optics.reflect`
+- `Arrow.stack`
+- `Arrow.analysis.gradlePlugin`
+- `Koin.navigation`
+- `Testing.kotest.extensions.property.arbs`
+- `Testing.kotest.extensions.property.datetime`
+- `Ktor.client.contentNegotiation`
+- `Ktor.client.contentNegotiationTests`
+- `Ktor.client.gson`
+- `Ktor.client.jackson`
+- `Ktor.client.java`
+- `Ktor.client.okHttp`
+- `Ktor.client.resources`
+- `Ktor.plugins.events`
+- `Ktor.plugins.http`
+- `Ktor.plugins.http.cio`
+- `Ktor.plugins.io`
+- `Ktor.plugins.network`
+- `Ktor.plugins.networkTls`
+- `Ktor.plugins.networkTlsCertificates`
+- `Ktor.plugins.resources`
+- `Ktor.plugins.serialization`
+- `Ktor.plugins.serialization.gson`
+- `Ktor.plugins.serialization.jackson`
+- `Ktor.plugins.serialization.kotlinx`
+- `Ktor.plugins.serialization.kotlinx.cbor`
+- `Ktor.plugins.serialization.kotlinx.json`
+- `Ktor.plugins.serialization.kotlinx.tests`
+- `Ktor.plugins.serialization.kotlinx.xml`
+- `Ktor.server.auth`
+- `Ktor.server.auth.jwt`
+- `Ktor.server.auth.ldap`
+- `Ktor.server.autoHeadResponse`
+- `Ktor.server.cachingHeaders`
+- `Ktor.server.callId`
+- `Ktor.server.callLogging`
+- `Ktor.server.cio`
+- `Ktor.server.compression`
+- `Ktor.server.conditionalHeaders`
+- `Ktor.server.contentNegotiation`
+- `Ktor.server.cors`
+- `Ktor.server.dataConversion`
+- `Ktor.server.defaultHeaders`
+- `Ktor.server.doubleReceive`
+- `Ktor.server.forwardedHeader`
+- `Ktor.server.freeMarker`
+- `Ktor.server.hostCommon`
+- `Ktor.server.hsts`
+- `Ktor.server.htmlBuilder`
+- `Ktor.server.httpRedirect`
+- `Ktor.server.httpRedirect`
+- `Ktor.server.jte`
+- `Ktor.server.locations`
+- `Ktor.server.methodOverride`
+- `Ktor.server.metrics`
+- `Ktor.server.metricsMicrometer`
+- `Ktor.server.mustache`
+- `Ktor.server.partialContent`
+- `Ktor.server.pebble`
+- `Ktor.server.resources`
+- `Ktor.server.sessions`
+- `Ktor.server.statusPages`
+- `Ktor.server.testSuites`
+- `Ktor.server.thymeleaf`
+- `Ktor.server.velocity`
+- `Ktor.server.webjars`
+- `Ktor.server.websockets`
+- `Ktor.server`
+- `Ktor.plugins.websocketSerialization`
+- `Ktor.plugins.websockets`
+- `Testing.assertj.core`
+- `Testing.assertj.db`
+- `Testing.assertj.guava`
+- `Testing.assertj.jodaTime`
+- `Testing.assertj.swing`
+- `Testing.hamcrest`
+- `Testing.hamcrest.core`
+- `Testing.hamcrest.library`
+- `JetBrains.exposed.core`
+- `JetBrains.exposed.dao`
+- `JetBrains.exposed.jdbc`
+- `KotlinX.dataframe`
+- `KotlinX.dataframe.arrow`
+- `KotlinX.dataframe.core`
+- `KotlinX.dataframe.excel`
+- `KotlinX.dataframe.dataframe`
+- `KotlinX.deeplearning.api`
+- `KotlinX.deeplearning.onnx`
+- `KotlinX.deeplearning.visualization`
+- `KotlinX.lincheck`
+- `KotlinX.lincheck.jvm`
+- `KotlinX.multik.api`
+- `KotlinX.multik.default`
+- `KotlinX.multik.jvm`
+- `KotlinX.multik.native`
+- `Spring.boms.springCloud`
+
+</details>
+
+### Credits
+
+Thanks to all the folks that contributed in updating the built-in dependency notations!
+
+- [Jacob Kwitkoski](https://github.com/thederputy) for `CashApp.molecule`
+- [Rémi Latapy](https://github.com/rlatapy-luna) for `Google.accompanist`
+- [Yuri Schimke](https://github.com/rlatapy-luna) for `Google.horologist` and `Square.okHttp3`
+- [Brady Aiello](https://github.com/brady-aiello) for `Ktor`
+- [Kamalesh](https://github.com/imashnake0) for `JetBrains.exposed`, `Testing.assertj`, `Testing.hamcrest`
+- [doljae](https://github.com/doljae) for ` Spring.boms.springCloud`
+- [Johan Reitan](https://github.com/joharei) for `KotlinX.multik`, `KotlinX.lincheck`, `KotlinX.deeplearning`
+- [Ryan Fonzi](https://github.com/RFonzi) for `Arrow`
+
+And thanks to the GitHub sponsors of the maintainers [Louis CAD](https://github.com/LouisCAD) and [Jean-Michel Fayard](https://github.com/jmfayard) who didn't count the hours spent on this project since 2018-2019!
+
+_We hope you save a lot of time thanks to this project and can therefore leave work early, or pursue more valuable tasks and projects. 😉_
+
+**If you're not a sponsor yet, please consider becoming one**, as a company, as an individual, or even both, it means a lot to us!
+Just **click the heart** button at the top of the GitHub repo webpage, follow the steps, and your heart. Thank you!
+
+## Version 0.40.2 (2022-06-01)
+
+### Fixes
+
+- Fix a memory leak that led the Gradle daemon to eventually suffer from a lot of GC overhead before running out of memory when a Gradle plugin had its version managed by refreshVersions.
+We've done extensive tests to ensure we fixed this for good, and the CI now checks for leaks in the Gradle daemon to prevent future recurrence.
+Note that if you were using Gradle configuration cache, you were likely to encounter this issue less often.
+- Fix the `AndroidX.wear.tiles.material` dependency notation that was pointing to wrong coordinates because of a typo.
+The test that was designed to catch this has been fixed to prevent future recurrence.
+
+Thanks to [@yacine-ser](https://github.com/yacine-ser) for raising [this memory leak issue](https://github.com/jmfayard/refreshVersions/issues/536) along with a hint on the culprit, it was very helpful in reproducing and fixing the leak.
+
+### New dependency notations:
+
+- AndroidX.camera.mlKitVision
+- AndroidX.compose.material3.windowSizeClass
+- AndroidX.compose.ui.text.googleFonts
+- AndroidX.core.performance
+- AndroidX.customView.poolingContainer
+- AndroidX.health.connectClient
+- AndroidX.metrics.performance
+- AndroidX.test.ext.junit.gTest
+- AndroidX.test.ext.junit.ktx (was previously AndroidX.test.ext.junitKtx)
+- AndroidX.wear.watchFace.complications.rendering
+- Google.android.material.composeThemeAdapter3
+
+## Version 0.40.1 (2022-02-06)
+
+### Fixes
+
+- Improved support of Gradle configuration cache. In the previous release, if you ran the `refreshVersions` task twice in a row with configuration cache enabled, the second run would fail, even in warning mode. It's now fixed.
+- To make refreshVersions compatible with GCS (Google Cloud Storage) hosted maven repositories (which can be helpful for company/team internal libraries), we were using the official library from Google. Unfortunately, this led to dependency hell to some of our users because it then requires a specific version of Guava, which could be different from the one required by other plugins, and the one from refreshVersions would prevail. So, to resolve these problems, we replaced our implementation with one that reuses Gradle's built-in `GcsClient`, and we're very happy with that because it also has the benefit of reducing the total size of refreshVersions when we include its dependencies. Note that this is using internal Gradle APIs, but we've seen that they didn't change in 5 years, and the code path is executed only if you have gcs backed repositories in your project.
+
+### New dependency notations:
+
+- AndroidX.glance.wearTiles
+- AndroidX.wear.tiles.material
+- Google.android.maps
+    - compose
+    - utils
+    - utils.ktx
+    - ktx
+    - rx
+    - places
+        - ktx
+        - rx
+- ReactiveX
+    - rxJava2
+        - rxAndroid
+        - rxKotlin
+    - rxJava3
+        - rxAndroid
+        - rxKotlin
+- JakeWharton
+    - rxBinding3
+        - appcompat
+        - core
+        - drawerLayout
+        - leanback
+        - material
+        - recyclerview
+        - slidingPaneLayout
+        - swipeRefreshLayout
+        - viewPager2
+        - viewPager
+    - rxBinding4
+        - appcompat
+        - core
+        - drawerLayout
+        - leanback
+        - material
+        - recyclerview
+        - slidingPaneLayout
+        - swipeRefreshLayout
+        - viewPager2
+        - viewPager
+    - rxRelay2
+    - rxRelay3
+
+### Credits
+
+Thanks to [Mike Gray](https://github.com/mgray88) for the contribution in adding ReactiveX, RxBinding, and RxRelay dependency notations!
+
+## Version 0.40.0 (2022-01-24)
+
+### New features
+
+- We are very happy to announce that **refreshVersions now supports [Gradle configuration cache](https://docs.gradle.org/7.3.3/userguide/configuration_cache.html)!** Gradle configuration is all about saving time, which is also the mission of refreshVersions, albeit in a different situation, so it made a lot of sense to not step on that feature Gradle engineers worked hard on. _Note that the `refreshVersions` task itself is not compatible with configuration cache because it's impossible with the current Gradle APIs._
+- **Error tolerance**: The `refreshVersions` task will no longer fail if there's a problem getting versions from a repository. Now, it will add contextual comments in the `versions.properties` file, so you know what failed, and don't get fully blocked next time jcenter or another repository undergoes an outage. This should also help if you're running the `refreshVersions` task through an unstable internet connection and some network calls fail because of that.
+
+### New dependency notations:
+
+- Google.modernStorage:
+    - bom
+    - permissions
+    - photoPicker
+    - storage
+- Google.android.openSourceLicensesPlugin
+- Google.android.playServices:
+    - appset
+    - auth.apiPhone
+    - auth.blockstore
+    - basement
+    - cronet
+    - fido
+    - openSourceLicenses
+    - passwordComplexity
+    - recaptcha
+    - tagmanager
+- Google.android.versionMatcherPlugin
+
+### Credits
+
+Thanks to [Kamalesh](https://github.com/imashnake0) for the contribution in adding dependency notations!
+
+## Version 0.30.2 (2022-01-09)
+
+### Bug fixes
+
+- We are now shutting down the thread-pool from kotlinx.coroutines that we're using when the build finishes (`Dispatchers.shutdown()`). We believe it caused memory leaks in the Gradle Daemon, and this change, made possible since kotlinx.coroutines 1.6.0 should fix the last memory leak cause.
+- The versions of dependencies from the `androidx.test` family started diverging, so we changed replaced the `version.androidx.test` version key with more specific ones. The migration will be done automatically on upgrade of refreshVersions, without upgrading the versions of `androidx.tests` dependencies themselves.
+
+### New feature
+
+- We now support fetching updates on plain-text http repositories. We evaluated the security risks, and for the case of refreshVersions itself, there is none that is significant (the worst possibility is crashing the build under attack), and if you're not using plain-text http repositories in the first place in your project, this doesn't apply at all anyway. We added support for this because some of our users need it for local maven repositories.
+
+### New dependency notations:
+
+- Android.billingClient
+- Android.billingClient.ktx
+- Android.installReferrer
+- Android.tools:
+    - desugarJdkLibs
+    - r8
+    - build.gradlePlugin
+- CashApp.licenseeGradlePlugin
+- CashApp.sqlDelight:
+    - extensions:
+        - androidPaging3
+        - androidPaging
+        - rxJava3
+        - rxJava2
+    - drivers.sqlJs
+- Google.android.fhir:
+    - dataCapture
+    - engine
+    - workflow
+- Google.android.flexbox
+- Google.android.playServices:
+    - cast:
+        - framework
+        - tv
+    - instantApps
+    - maps
+    - mlKit.vision.imageLabeling.custom
+    - mlKit.naturalLanguage.languageIdentification
+    - pay
+    - wallet
+- Google.mlKit:
+    - playStoreDynamicFeatureSupport
+    - naturalLanguage.entityExtraction
+    - vision:
+        - selfieSegmentation
+        - textRecognition
+            - chinese
+            - devanagari
+            - japanese
+            - korean
+- Google.modernStorage:
+    - fileSystem
+    - mediaStore
+- Google.oboe
+- Ktor.client.darwin
+- Kotlin.scriptRuntime
+- KotlinX.serialization.hocon
+- Square.logcat
+- Square.moshi.adapters
+- Touchlab.kermit
+    - bugsnagTest
+    - bugsnag
+    - crashlyticsTest
+    - crashlytics
+    - gradlePlugin
+    - test
+
+### Other changes
+
+We also removed many obsolete dependency notations from refreshVersions. Just like for the 0.30.0 release, this should not break your build as we implemented a robust replacement mechanism that also inserts migration guidance comments. ✨
+
+### Credits
+
+Thanks to [Brady Aiello](https://github.com/brady-aiello), [Mike Gray](https://github.com/mgray88), and [Kamalesh](https://github.com/imashnake0) for their contributions in adding dependency notations!
+
+## Version 0.30.1 (2021-12-21)
+
+### Bug fixes
+
+- Fix Gradle sync for projects using buildSrc ([#474](https://github.com/jmfayard/refreshVersions/issues/474))
+- Support buildSrc modules that have no plugin declared
+
+## Version 0.30.0 (2021-12-19)
+
+### Potentially breaking change
+
+We raised the minimum supported Gradle version to 6.8, because we started to use Kotlin 1.4 features, and Gradle pins the stdlib version. Since at the time of writing, the latest Gradle version is 7.3, we believe it won't actually block any of our users. We have [a short section about updating Gradle on our website here](https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed), feel free to check it out if it can help you.
+
+### New features
+
+#### Repositories declared in `dependencyResolutionManagement` are now supported (Gradle 7+)
+
+Since Gradle 7, you can declare repositories of the entire Gradle project (including all subprojects and their buildscript)
+in the `dependencyResolutionManagement` block in the `settings.gradle[.kts]` file.
+Unfortunately, refreshVersions didn't support it, so, unless you also kept repositories declared with `allprojects`, or per project, you would end up with all version entries in the `versions.properties` file marked as unused after running the `refreshVersions` task, and you'd not see the newer updates.
+
+This release resolves this issue, and we are eager to use it in our projects ourselves.
+
+#### Update on built-in dependency notations
+
+Sometimes, libraries get deprecated, or the maintainers change the maven coordinates.
+When it happens, this fact is unfortunately not included in the `maven-metadata.xml` files, or any other standard metadata. That means tools like refreshVersions will believe you're on the latest versions, when you're not, because it lacks the necessary information.
+
+One example is Google that changed the maven coordinates of all their AndroidX Wear Watchface artifacts several weeks ago.
+
+It took us time to catch-up with this change because we wanted to design a generic mechanism for this recurrent problem, and provide the best experience for you, and ourselves.
+
+From now on, we have the ability to remove old or deprecated built-in dependency notations in refreshVersions, and doing so will not break your builds, nor will it change the dependencies of your project. However, it'll help you notice the deprecation, and it'll help you switch to the replacement dependencies, if any.
+
+The way it works is that we keep a versioned list of all the removals, and on refreshVersions upgrade, an automatic replacement will put back the hardcoded maven coordinates, using the version placeholder, and it will add our hand-written TODO/FIXME comments, along with a perfectly aligned replacement suggestion if there is any, so that moving to the newer artifact is as easy as upgrading to a newer version in the `versions.properties` file. We designed the system so that it cannot break your build, even if you were using `withVersion(…)` or other `DependencyNotation` extensions, even if you have code comments or special string literals.
+
+It also supports the case where we just move a dependency notation to another place, or change its name, without changing the maven coordinates.
+
+Because of this change, it's important that you check the git diff after upgrading refreshVersions and running the first Gradle reload/sync/build, so you can see if there's been any changes, and if you might want to switch to any replacement dependencies.
+
+This change will enable us to keep the built-in dependency notations updated with less effort, so we're very happy to have it ready, and fully tested.
+
+We've already started to take advantage of it to clean up all the discontinued artifacts we found in AndroidX.
+
+### Bug fixes
+
+- Repositories declared in the `dependencyResolutionManagement` block were ignored. Now, they are taken into account.
+- The kotest extensions dependencies were previously wrongly sharing their version as per refreshVersions rules. Now, they each have their independent, own version key.
+- The `refreshVersionsMigrate` task wasn't inserting new entries in alphabetical order. Now it is.
+- The `refreshVersionsMigrate` task wasn't migrating buildscript dependencies. Now it is.
+
+### New dependency notations:
+
+- AndroidX.appSearch.platformStorage
+- AndroidX.benchmark.macro
+- AndroidX.camera.video
+- AndroidX.carApp:
+    - automotive
+    - projected
+- AndroidX.compose:
+    - animation.graphics
+    - material3
+- AndroidX.core.remoteViews
+- AndroidX.dragAndDrop
+- AndroidX.emoji2.bundled
+- AndroidX.glance.appWidget
+- AndroidX.glance
+- AndroidX.leanback.grid
+- AndroidX.lifecycle.runtimeTesting
+- AndroidX.media3:
+    - cast
+    - common
+    - database
+    - datasource:
+        - cronet
+        - okhttp
+        - rtmp
+    - decoder
+    - exoPlayer:
+        - dash
+        - hls
+        - ima
+        - rtsp
+        - workmanager
+    - extractor
+    - session
+    - testUtils.robolectric
+    - testUtils
+    - transformer
+    - ui.leanback
+    - ui
+- AndroidX.multidex.instrumentation
+- AndroidX.paging.guava
+- AndroidX.room:
+    - paging
+    - rxJava3
+- AndroidX.wear.tiles.testing
+- AndroidX.wear.watchFace:
+    - complications.dataSourceKtx
+    - complications.dataSource
+    - editor
+- KotlinX.coroutines.bom
+- Square.moshi.adapters
+- Testing.junit:
+    - bom
+    - jupiter: _(moved from Testing.junit)_
+        - api _(moved from Testing.junit.api)_
+        - engine _(moved from Testing.junit.engine)_
+        - migrationSupport _(moved from Testing.junit.migrationSupport)_
+        - params _(moved from Testing.junit.params)_
+- Testing.kotest.framework:
+    - api
+    - dataset
+
+Thanks to [Emil Kantis](https://github.com/Kantis) for [the kotest dependencies fixes](https://github.com/jmfayard/refreshVersions/pull/446)!
+Thanks to [Kamalesh](https://github.com/imashnake0) for [the help in updating AndroidX dependency notations](https://github.com/jmfayard/refreshVersions/pull/460#issuecomment-995768730)!
+Thanks to [Simon Marquis](https://github.com/SimonMarquis) for [adding Square.moshi.adapters](https://github.com/jmfayard/refreshVersions/pull/462), and [helping contributors using Windows](https://github.com/jmfayard/refreshVersions/pull/464)!
+
+## Version 0.23.0 (2021-09-28)
+
+### Bug fix
+
+Fix a bug that broke standalone buildSrc builds.
+
+## Version 0.22.0 (2021-09-27)
+
+### Bug fix
+
+Fix a regression that brought a `KotlinNullPointerException` in the build. We apologize for the issue. Thanks to Marcin and Craig for [the report](https://github.com/jmfayard/refreshVersions/issues/442).
+
+### New dependency notations:
+
+- AndroidX.compose.ui.toolingPreview
+- Chucker
+- KotlinX.cli
+- KotlinX.datetime
+
+Thanks to [Filip Czaplicki](https://github.com/starsep), who contributed to the new dependency notations!
+
+## Version 0.21.0 (2021-09-07)
+
+### New feature
+
+We now support npm dependencies for Kotlin/JS!
+
+Just put the version placeholder (`_`) in place of the version, and you're good to go.
+
+The version keys follow a simple naming scheme where their id is prefixed with `npm`, here are two examples:
+- `version.npm.react=17.0.2`
+- `version.npm.@googlemaps/js-api-loader=1.12.2`
+
+Special thanks to [NikkyAI](https://github.com/NikkyAI) who authored the feature, and pair-programmed with us to refine it!
+
+### Improvements
+
+Before this release, when we added new dependency notations and shorter version keys, it could lead to an unwanted upgrade of the dependency in the project upgrading refreshVersions. With this release, we make sure to copy the same version if we add or change the version key, and it will also work if we decide to remove one. This ensures that upgrading refreshVersions will not be able to affect your application or library.
+
+Thanks to [Brady Aiello](https://github.com/brady-aiello) from [Touchlab](https://touchlab.co/) for helping out via pair-programming!
+
+### New dependency notations:
+
+- Koin (new group with several dependencies)
+- Touchlab.stately (new group with several dependencies)
+- RussHWolf.multiplatformSettings (new group with several dependencies)
+
+Thanks to [Brady Aiello](https://github.com/brady-aiello) again, who contributed to these new dependency notations!
+
+## Version 0.20.0 (2021-08-23)
+
+### Announcement
+
+We are now ready to accept dependency notation contributions for high-quality and popular dependencies from the Kotlin ecosystem!
+
+Look for [issues with the `Dependency notations` and `up-for-grabs` tags](https://github.com/jmfayard/refreshVersions/issues?q=is%3Aopen+label%3A%22Dependency+notations%22+label%3A%22up-for-grabs%22) to find one you can directly contribute to, or submit a new issue to ask for a new one to be added. We updated the contributing guide on the website, it now has [a guide dedicated to it here](docs/contributing/submitting-prs/dependency-notations-updates.md).
+
+### New features
+
+- refreshVersions will now add `## unused` comments on top of unused entries in the `versions.properties` file after you run the `refreshVersions` task, so you know which ones are obsolete and can be removed.
+- The new `rejectVersionsIf { … }` predicate available in the `refreshVersions { … }` extension in your `settings.gradle[.kts]` file will allow you to filter any kind of versions you don't want to know about. It can be handy to filter snapshots out for example.
+- Most of our dependency notations now provide more flexibility with 3 new extension functions: `withVersionPlaceholder()`, `withVersion(…)`, and `withoutVersion()`.
+
+### Change (potentially breaking)
+
+- If you use a BoM from the built-in dependency notations, it must always appear before dependencies from the group it controls, or you'll see an error message that will fail the Gradle build. We do this because we can't switch on usage of the BoM for linked dependencies that have already been evaluated by Gradle.
+
+### Improvements
+
+The `refreshVersionsMigrate` will now use the built-in dependency notations if they match existing dependencies.
+
+### New dependency notations:
+
+- AndroidX:
+    - benchmark.macroJunit4
+    - core.splashscreen
+    - games:
+        - activity
+        - controller
+        - framePacing
+        - performanceTuner
+        - textInput
+    - navigation.testing
+    - wear.compose:
+        - foundation
+        - material
+    - window
+      - java
+      - rxJava2
+      - rxJava3
+      - testing
+- COIL:
+    - compose
+    - composeBase
+- Firebase:
+    - cloudMessagingDirectBoot
+    - Firebase.mlModelDownloaderKtx
+    - Firebase.mlModelDownloader
+- Kodein.di (new group with many dependencies)
+- Kotlin.test (which is compatible with multiplatform projects since Kotlin 1.5)
+- KotlinX.html (compatible with multiplatform projects)
+- Ktor.features.serialization
+- Http4k (new group with many dependencies)
+- Splitties.alertdialogMaterial
+- Square
+    - okHttp3.bom
+    - okHttp3 (shortcut to existing okHttp3.okHttp)
+    - retrofit2.converter.wire
+    - retrofit2 (shortcut to existing retrofit2.retrofit)
+- Spring (new group with many dependencies)
+
+
+## Version 0.11.0 (2021-08-03)
+
+### New feature
+
+Add task **refreshVersionsMigrate** that adds all missing entries in versions.properties and try to migrate the `build.gradle(.kts)` and other known files like `libraries.gradle` so that the version placeholder `_` is used everywhere. Please [try it out and give us your feedback for refreshVersionsMigrate](https://github.com/jmfayard/refreshVersions/discussions/396)
+
+### Fixes
+
+- Plugins org.jetbrains.kotlinx.benchmark should not use key version.kotlin
+
+### New dependency notations
+
+- Ktor.features.serialization
+- AndroidX.navigation.testing
+- Testing.kotestExtensions who replaces Testing.kotest.extensions in Kotest >= 4.5.0
+
+
 ## Version 0.10.1 (2021-06-10)
 
 ### New features
@@ -20,6 +750,7 @@
     - health.servicesClient
     - security.appAuthenticatorTesting
 - Google.accompanist.insets.ui
+
 
 ## Version 0.10.0 (2021-05-13)
 
@@ -152,6 +883,7 @@ We're very grateful for your time and help, and we think our users will be as we
 
 Also, thanks to all the folks that reported issues. It was very helpful to prioritize on our side.
 
+
 ## Version 0.9.7 (2020-10-16)
 
 ### Fixes
@@ -159,6 +891,7 @@ Also, thanks to all the folks that reported issues. It was very helpful to prior
 - Running the `refreshVersions` task twice or more would fail with "executor rejected" as an error message, until the Gradle daemon is killed. This has now been fixed. (Issue #263)
 - The `refreshVersions` task was failing after the latest Gradle release candidate was superseded by the stable release because the API would return an empty JSON object after this, which we didn't expect.
 - (Minor) We fixed a typo in a diagnostic task name (`refreshVersionsDependenciesMapping`)
+
 
 ## Version 0.9.6 (2020-10-12)
 
@@ -183,6 +916,7 @@ Firebase ML Kit has been rebranded to Google ML Kit along with API and feature c
 ### New features
 
 - refreshVersions will now warn you when Gradle is not up to date, and will give you the commands to run to update it for you to copy/paste and run. It works if you're using a release candidate, and also if you're using a nightly version!
+
 
 ## Version 0.9.5 (2020-08-21)
 
