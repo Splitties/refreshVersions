@@ -22,6 +22,8 @@ import lib_publisher_tools.versioning.checkIsValidVersionString
 import lib_publisher_tools.versioning.stabilityLevel
 import java.net.URLEncoder
 import java.nio.charset.Charset
+import java.text.SimpleDateFormat
+import java.util.Date
 
 val gitHubRepoUrl = "https://github.com/jmfayard/refreshVersions"
 
@@ -252,12 +254,13 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
         requestManualAction("Update the `${file.name}` for the impending release.")
         file.checkChanged()
         val version = OngoingRelease.newVersion
-        val startOfThisVersionHeading = "## Version $version"
+        val dateString = SimpleDateFormat("yyyy-MM-dd").format(Date())
+        val startOfThisVersionHeading = "## Version $version ($dateString)"
         val expectedHeadingCount = file.useLines { lines -> lines.count { it == startOfThisVersionHeading } }
         check(expectedHeadingCount == 1) {
             when (expectedHeadingCount) {
                 0 -> "Didn't find the header for the upcoming release in the ${file.name}.\n" +
-                    "Is there a typo or an extra character?\n" +
+                    "Is there a typo or, an extra character, or is it the wrong date?\n" +
                     "Expected to find ${AnsiColor.bold}$startOfThisVersionHeading${AnsiColor.RESET}."
                 else -> "Found multiple occurrences of the header for the upcoming release in the ${file.name}.\n" +
                     "Keep only one."
