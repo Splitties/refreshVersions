@@ -1,5 +1,51 @@
 # Change log for refreshVersions
 
+## Version 0.50.2 (2022-09-24)
+
+### Minor change
+
+Disable the old `refreshVersionsDependenciesMapping` and `migrateToRefreshVersionsDependenciesConstants` Gradle tasks.
+
+### Fixes
+
+- `versionFor` could not work as it should have if it was used in multiple modules with different values: the `refreshVersions` task would only display the updates of some of them, and mark the other ones as unused. This has been fixed.
+- Running the `refreshVersionsCleanup` task would log that the `gradle/libs.versions.toml` file was modified even if it wasn't, and didn't exist in the first place. This is now fixed.
+- Version ordering now recognizes random qualifiers instead of marking with an unknown stability level.
+
+### New dependency notations:
+
+<details>
+<summary><strong>Click to expand (15) </strong></summary>
+
+- `AndroidX.media3.dataSource`
+- `ApolloGraphQL.adapters`
+- `ApolloGraphQL.api`
+- `ApolloGraphQL.ast`
+- `ApolloGraphQL.httpCache`
+- `ApolloGraphQL.idlingResource`
+- `ApolloGraphQL.mockserver`
+- `ApolloGraphQL.normalizedCacheSqlite`
+- `ApolloGraphQL.normalizedCache`
+- `ApolloGraphQL.runtime`
+- `ApolloGraphQL.testingSupport`
+- `Google.horologist.dataLayer`
+- `KotlinX.serialization.bom`
+- `KotlinX.serialization.json.okio`
+- `Spring.boot.web`
+
+</details>
+
+### Credits
+
+Thanks to all the folks that contributed in this release!
+
+- [Jacob Kwitkoski](https://github.com/thederputy)
+- [Florian Levis](https://github.com/Gounlaf)
+- [Seokjae Lee](https://github.com/doljae)
+- [solonovamax](https://github.com/solonovamax)
+- [Louis CAD](https://github.com/LouisCAD)
+- [Jean-Michel Fayard](https://github.com/jmfayard)
+
 ## Version 0.50.1 (2022-09-11)
 
 ### Fixes
@@ -64,7 +110,7 @@ version.androidx.compose.compiler=1.3.0-rc01
 To make it easy to start new projects, new modules, or using a common library, we spent a lot of time adding built-in dependency notations for Kotlin, kotlinx, AndroidX, and more.
 
 However, it wasn't so easy to know that they exist.
-That's why we made [a dedicated page where you can find them all](https://jmfayard.github.io/refreshVersions/dependencies-notations/)! Let us know how helpful it is to you!
+That's why we made [a dedicated page where you can find them all](https://jmfayard.github.io/refreshVersions/dependency-notations/)! Let us know how helpful it is to you!
 
 ### Fixes
 

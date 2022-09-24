@@ -1919,9 +1919,12 @@ object AndroidX : IsNotADependency {
             val workmanager = module("media3-exoplayer-workmanager")
         }
 
+        /**
+         * Common functionality for loading data
+         */
         val dataSource = DataSource
 
-        object DataSource : DependencyGroup(group = group) {
+        object DataSource : DependencyNotationAndGroup(group = group, name = "media3-datasource") {
 
             /**
              * For loading data using the Cronet network stack
@@ -1996,10 +1999,6 @@ object AndroidX : IsNotADependency {
          */
         val decoder = module("media3-decoder")
 
-        /**
-         * Common functionality for loading data
-         */
-        val datasource = module("media3-datasource")
 
         /**
          * Common functionality used across multiple media libraries

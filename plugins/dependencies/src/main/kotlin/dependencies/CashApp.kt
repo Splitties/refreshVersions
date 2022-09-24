@@ -61,6 +61,5 @@ object CashApp {
     object Molecule : DependencyGroup(group = "app.cash.molecule") {
         val gradlePlugin = module("molecule-gradle-plugin")
         val runtime = module("molecule-runtime")
-        val test = module("molecule-testing")
     }
 }

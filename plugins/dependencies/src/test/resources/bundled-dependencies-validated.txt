@@ -325,7 +325,6 @@ app.cash.copper:copper-rx3
 app.cash.licensee:licensee-gradle-plugin
 app.cash.molecule:molecule-gradle-plugin
 app.cash.molecule:molecule-runtime
-app.cash.molecule:molecule-testing
 app.cash.turbine:turbine
 co.touchlab:kermit
 co.touchlab:kermit-bugsnag
@@ -344,6 +343,16 @@ com.android.installreferrer:installreferrer
 com.android.tools.build:gradle
 com.android.tools:desugar_jdk_libs
 com.android.tools:r8
+com.apollographql.apollo3:apollo-adapters
+com.apollographql.apollo3:apollo-api
+com.apollographql.apollo3:apollo-ast
+com.apollographql.apollo3:apollo-http-cache
+com.apollographql.apollo3:apollo-idling-resource
+com.apollographql.apollo3:apollo-mockserver
+com.apollographql.apollo3:apollo-normalized-cache
+com.apollographql.apollo3:apollo-normalized-cache-sqlite
+com.apollographql.apollo3:apollo-runtime
+com.apollographql.apollo3:apollo-testing-support
 com.github.chuckerteam.chucker:library
 com.github.chuckerteam.chucker:library-no-op
 com.google.accompanist:accompanist-appcompat-theme
@@ -412,6 +421,7 @@ com.google.android.horologist:horologist-audio-ui
 com.google.android.horologist:horologist-composables
 com.google.android.horologist:horologist-compose-layout
 com.google.android.horologist:horologist-compose-tools
+com.google.android.horologist:horologist-datalayer
 com.google.android.horologist:horologist-media
 com.google.android.horologist:horologist-media-data
 com.google.android.horologist:horologist-media-ui
@@ -997,10 +1007,12 @@ org.jetbrains.kotlinx:kotlinx-datetime
 org.jetbrains.kotlinx:kotlinx-html
 org.jetbrains.kotlinx:kotlinx-io-jvm
 org.jetbrains.kotlinx:kotlinx-nodejs
+org.jetbrains.kotlinx:kotlinx-serialization-bom
 org.jetbrains.kotlinx:kotlinx-serialization-cbor
 org.jetbrains.kotlinx:kotlinx-serialization-core
 org.jetbrains.kotlinx:kotlinx-serialization-hocon
 org.jetbrains.kotlinx:kotlinx-serialization-json
+org.jetbrains.kotlinx:kotlinx-serialization-json-okio
 org.jetbrains.kotlinx:kotlinx-serialization-properties
 org.jetbrains.kotlinx:kotlinx-serialization-protobuf
 org.jetbrains.kotlinx:kotlinx.reflect.lite
@@ -1084,6 +1096,7 @@ org.springframework.boot:spring-boot-starter-security
 org.springframework.boot:spring-boot-starter-test
 org.springframework.boot:spring-boot-starter-thymeleaf
 org.springframework.boot:spring-boot-starter-validation
+org.springframework.boot:spring-boot-starter-web
 org.springframework.boot:spring-boot-starter-web-services
 org.springframework.boot:spring-boot-starter-webflux
 org.springframework.boot:spring-boot-starter-websocket

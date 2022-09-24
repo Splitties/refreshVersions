@@ -8,6 +8,7 @@
 import Releasing_main.CiReleaseFailureCause.*
 import java.io.File
 import Releasing_main.ReleaseStep.*
+import lib_publisher_tools.cli.AnsiColor
 import lib_publisher_tools.cli.CliUi
 import lib_publisher_tools.cli.defaultImpl
 import lib_publisher_tools.cli.runUntilSuccessWithErrorPrintingOrCancel
@@ -21,6 +22,8 @@ import lib_publisher_tools.versioning.checkIsValidVersionString
 import lib_publisher_tools.versioning.stabilityLevel
 import java.net.URLEncoder
 import java.nio.charset.Charset
+import java.text.SimpleDateFormat
+import java.util.Date
 
 val gitHubRepoUrl = "https://github.com/jmfayard/refreshVersions"
 
@@ -83,6 +86,7 @@ private class Files {
     val versionToRemovalsMapping = mainResourcesDir.resolve("version-to-removals-revision-mapping.txt").also {
         check(it.exists()) { "Didn't find the ${it.name} file in ${it.parentFile}! Has it been moved or renamed?" }
     }
+    val dependencyNotations = dir.resolve("docs/dependency-notations.md")
 }
 
 private val files = Files()
@@ -209,6 +213,9 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
                 "the command that just ran. Is something broken?"
         }
         printInfo("Successfully updated the following file: ${files.versionToRemovalsMapping}")
+        if (git.didFileChange(files.dependencyNotations)) {
+            printInfo("Also updated the following file: ${files.dependencyNotations}")
+        } else Unit
     }
     `Request doc update confirmation` -> {
         arrayOf(
@@ -246,6 +253,19 @@ fun CliUi.runReleaseStep(step: ReleaseStep): Unit = when (step) {
         val file = files.changelog
         requestManualAction("Update the `${file.name}` for the impending release.")
         file.checkChanged()
+        val version = OngoingRelease.newVersion
+        val dateString = SimpleDateFormat("yyyy-MM-dd").format(Date())
+        val startOfThisVersionHeading = "## Version $version ($dateString)"
+        val expectedHeadingCount = file.useLines { lines -> lines.count { it == startOfThisVersionHeading } }
+        check(expectedHeadingCount == 1) {
+            when (expectedHeadingCount) {
+                0 -> "Didn't find the header for the upcoming release in the ${file.name}.\n" +
+                    "Is there a typo or, an extra character, or is it the wrong date?\n" +
+                    "Expected to find ${AnsiColor.bold}$startOfThisVersionHeading${AnsiColor.RESET}."
+                else -> "Found multiple occurrences of the header for the upcoming release in the ${file.name}.\n" +
+                    "Keep only one."
+            }
+        }
     }
     `Commit 'prepare for release' and tag` -> with(OngoingRelease) {
         files.changelog.checkChanged()

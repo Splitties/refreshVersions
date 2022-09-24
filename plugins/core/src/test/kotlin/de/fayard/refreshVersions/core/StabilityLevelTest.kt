@@ -11,7 +11,6 @@ class StabilityLevelTest {
     fun `Test stability level comparisons`() {
         assertTrue(StabilityLevel.values().minByOrNull { it } == Stable)
 
-        testStabilityLevels(lessStable = Unknown, mostStable = Snapshot)
         testStabilityLevels(lessStable = Snapshot, mostStable = Preview)
         testStabilityLevels(lessStable = Preview, mostStable = Development)
         testStabilityLevels(lessStable = Development, mostStable = Alpha)
@@ -21,7 +20,6 @@ class StabilityLevelTest {
         testStabilityLevels(lessStable = Milestone, mostStable = ReleaseCandidate)
         testStabilityLevels(lessStable = ReleaseCandidate, mostStable = Stable)
 
-        @Suppress("RemoveRedundantQualifierName")
         StabilityLevel.values().forEach { Stable isAtLeastAsStableAs it }
     }
 

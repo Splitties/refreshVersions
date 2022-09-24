@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 import org.opentest4j.TestAbortedException
-import java.io.File
 
 class RemovedDependencyNotationsHistoryCompletenessTest {
 
@@ -23,9 +22,6 @@ class RemovedDependencyNotationsHistoryCompletenessTest {
 
     @Test
     fun `Mapping of version to removals revision should be filled for this release`() {
-        val pluginsVersion = File(".").absoluteFile.parentFile.parentFile.resolve("version.txt").useLines {
-            it.first()
-        }
         if (pluginsVersion.endsWith("-SNAPSHOT")) {
             throw TestAbortedException("Snapshots embed their revision number in their version.")
         }

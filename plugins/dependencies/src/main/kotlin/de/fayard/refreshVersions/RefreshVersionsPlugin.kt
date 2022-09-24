@@ -163,7 +163,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     private fun applyToProject(project: Project) {
         if (project != project.rootProject) return // We want the tasks only for the root project
 
-        project.tasks.register<RefreshVersionsDependenciesMigrationTask>(
+        if (FeatureFlag.OLD_TASKS.isEnabled) project.tasks.register<RefreshVersionsDependenciesMigrationTask>(
             name = "migrateToRefreshVersionsDependenciesConstants"
         ) {
             group = "refreshVersions"
@@ -173,7 +173,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             skipConfigurationCache()
         }
 
-        project.tasks.register<DefaultTask>(
+        if (FeatureFlag.OLD_TASKS.isEnabled) project.tasks.register<DefaultTask>(
             name = "refreshVersionsDependenciesMapping"
         ) {
             group = "refreshVersions"
