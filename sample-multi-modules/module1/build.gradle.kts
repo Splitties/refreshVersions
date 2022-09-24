@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     java
     kotlin("jvm") version "1.4-M2"

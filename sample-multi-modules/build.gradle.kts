@@ -1,3 +1,4 @@
 tasks.wrapper {
-    gradleVersion = "6.7.1"
+    val versionFile = rootDir.parentFile.resolve("plugins/gradle-version.txt")
+    gradleVersion = versionFile.readLines().first()
 }
