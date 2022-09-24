@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1157** Dependency Notations in **25** groups and **242** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1170** Dependency Notations in **26** groups and **244** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -1378,9 +1378,9 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
-            title="AndroidX.media3.datasource&#10;androidx.media3:media3-datasource:_&#10;version.androidx.media3"
+            title="AndroidX.media3.dataSource&#10;androidx.media3:media3-datasource:_&#10;version.androidx.media3"
             style="text-decoration: underline;">
-            datasource
+            dataSource
         </span>
         - 
         <span
@@ -2225,6 +2225,77 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
+## [ApolloGraphQL.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/ApolloGraphQL.kt)
+
+
+<table style="width: 100%; table-layout:fixed;">
+    <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
+    <tr><td><b>ApolloGraphQL</b></td><td>
+        <span
+            title="ApolloGraphQL.adapters&#10;com.apollographql.apollo3:apollo-adapters:_&#10;version.apollographql"
+            style="text-decoration: underline;">
+            adapters
+        </span>
+        - 
+        <span
+            title="ApolloGraphQL.api&#10;com.apollographql.apollo3:apollo-api:_&#10;version.apollographql"
+            style="text-decoration: underline;">
+            api
+        </span>
+        - 
+        <span
+            title="ApolloGraphQL.ast&#10;com.apollographql.apollo3:apollo-ast:_&#10;version.apollographql"
+            style="text-decoration: underline;">
+            ast
+        </span>
+        - 
+        <span
+            title="ApolloGraphQL.httpCache&#10;com.apollographql.apollo3:apollo-http-cache:_&#10;version.apollographql"
+            style="text-decoration: underline;">
+            httpCache
+        </span>
+        - 
+        <span
+            title="ApolloGraphQL.idlingResource&#10;com.apollographql.apollo3:apollo-idling-resource:_&#10;version.apollographql"
+            style="text-decoration: underline;">
+            idlingResource
+        </span>
+        - 
+        <span
+            title="ApolloGraphQL.mockserver&#10;com.apollographql.apollo3:apollo-mockserver:_&#10;version.apollographql"
+            style="text-decoration: underline;">
+            mockserver
+        </span>
+        - 
+        <span
+            title="ApolloGraphQL.normalizedCacheSqlite&#10;com.apollographql.apollo3:apollo-normalized-cache-sqlite:_&#10;version.apollographql"
+            style="text-decoration: underline;">
+            normalizedCacheSqlite
+        </span>
+        - 
+        <span
+            title="ApolloGraphQL.normalizedCache&#10;com.apollographql.apollo3:apollo-normalized-cache:_&#10;version.apollographql"
+            style="text-decoration: underline;">
+            normalizedCache
+        </span>
+        - 
+        <span
+            title="ApolloGraphQL.runtime&#10;com.apollographql.apollo3:apollo-runtime:_&#10;version.apollographql"
+            style="text-decoration: underline;">
+            runtime
+        </span>
+        - 
+        <span
+            title="ApolloGraphQL.testingSupport&#10;com.apollographql.apollo3:apollo-testing-support:_&#10;version.apollographql"
+            style="text-decoration: underline;">
+            testingSupport
+        </span>
+            
+    </td></tr>
+            
+</table>
+            
+
 ## [Arrow.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Arrow.kt)
 
 
@@ -2398,12 +2469,6 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="CashApp.molecule.runtime&#10;app.cash.molecule:molecule-runtime:_&#10;version.app.cash.molecule"
             style="text-decoration: underline;">
             runtime
-        </span>
-        - 
-        <span
-            title="CashApp.molecule.test&#10;app.cash.molecule:molecule-testing:_&#10;version.app.cash.molecule"
-            style="text-decoration: underline;">
-            test
         </span>
             
     </td></tr>
@@ -3664,6 +3729,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="Google.horologist.composables&#10;com.google.android.horologist:horologist-composables:_&#10;version.google.horologist"
             style="text-decoration: underline;">
             composables
+        </span>
+        - 
+        <span
+            title="Google.horologist.dataLayer&#10;com.google.android.horologist:horologist-datalayer:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            dataLayer
         </span>
         - 
         <span
@@ -5577,6 +5648,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     <tr><td><b>KotlinX.serialization</b></td><td>
         <span
+            title="KotlinX.serialization.bom&#10;org.jetbrains.kotlinx:kotlinx-serialization-bom:_&#10;version.kotlinx.serialization"
+            style="text-decoration: underline;">
+            bom
+        </span>
+        - 
+        <span
             title="KotlinX.serialization.cbor&#10;org.jetbrains.kotlinx:kotlinx-serialization-cbor:_&#10;version.kotlinx.serialization"
             style="text-decoration: underline;">
             cbor
@@ -5610,6 +5687,15 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="KotlinX.serialization.protobuf&#10;org.jetbrains.kotlinx:kotlinx-serialization-protobuf:_&#10;version.kotlinx.serialization"
             style="text-decoration: underline;">
             protobuf
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>KotlinX.serialization.json</b></td><td>
+        <span
+            title="KotlinX.serialization.json.okio&#10;org.jetbrains.kotlinx:kotlinx-serialization-json-okio:_&#10;version.kotlinx.serialization"
+            style="text-decoration: underline;">
+            okio
         </span>
             
     </td></tr>
@@ -7121,6 +7207,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="Spring.boot.webServices&#10;org.springframework.boot:spring-boot-starter-web-services:_&#10;version.NO-RULE"
             style="text-decoration: underline;">
             webServices
+        </span>
+        - 
+        <span
+            title="Spring.boot.web&#10;org.springframework.boot:spring-boot-starter-web:_&#10;version.NO-RULE"
+            style="text-decoration: underline;">
+            web
         </span>
         - 
         <span

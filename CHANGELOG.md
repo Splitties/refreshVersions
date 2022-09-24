@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased] Version 0.50.2 (2022-09-24)
+## Version 0.50.2 (2022-09-24)
 
 ### Minor change
 
@@ -110,7 +110,7 @@ version.androidx.compose.compiler=1.3.0-rc01
 To make it easy to start new projects, new modules, or using a common library, we spent a lot of time adding built-in dependency notations for Kotlin, kotlinx, AndroidX, and more.
 
 However, it wasn't so easy to know that they exist.
-That's why we made [a dedicated page where you can find them all](https://jmfayard.github.io/refreshVersions/dependencies-notations/)! Let us know how helpful it is to you!
+That's why we made [a dedicated page where you can find them all](https://jmfayard.github.io/refreshVersions/dependency-notations/)! Let us know how helpful it is to you!
 
 ### Fixes
 
