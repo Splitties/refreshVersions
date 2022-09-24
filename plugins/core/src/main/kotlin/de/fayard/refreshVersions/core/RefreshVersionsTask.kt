@@ -115,7 +115,7 @@ open class RefreshVersionsTask : DefaultTask() {
             }
         }
         if (FeatureFlag.KOTLIN_SCRIPTS.isEnabled) {
-            println("TODO: refreshVersions should support Kotlin Scripts see https://github.com/jmfayard/refreshVersions/issues/582")
+            println("NOTE: refreshVersions support for Kotlin Scripts isn't implemented yet, see https://github.com/jmfayard/refreshVersions/issues/582")
         }
     }
 
