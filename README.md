@@ -11,7 +11,7 @@
 - [Migrate your project](https://jmfayard.github.io/refreshVersions/migrate/)
 - [Find Available Dependencies Updates](https://jmfayard.github.io/refreshVersions/update-dependencies/)
 - [Add Dependencies](https://jmfayard.github.io/refreshVersions/add-dependencies/)
-- [Explore built-in Dependencies Notations](https://jmfayard.github.io/refreshVersions/dependencies-notations/)
+- [Explore built-in Dependencies Notations](https://jmfayard.github.io/refreshVersions/dependency-notations/)
 - [Schedule the RefreshVersionsBot](https://jmfayard.github.io/refreshVersions/refreshversions-bot/)
 - [Use the buildSrc](https://jmfayard.github.io/refreshVersions/gradle-buildsrcversions/)
 - [Changelog](https://jmfayard.github.io/refreshVersions/CHANGELOG/)
@@ -26,7 +26,7 @@
 // settings.gradle(.kts)
 plugins {
     // See https://jmfayard.github.io/refreshVersions
-    id("de.fayard.refreshVersions") version "0.50.1"
+    id("de.fayard.refreshVersions") version "0.50.2"
 }
 
 refreshVersions { // Optional: configure the plugin
@@ -56,7 +56,7 @@ Run it without it to see the complete list and the full description of each mode
 <details>
 <summary><i><strong>Examples</strong> (click to expand)</i></summary>
 
-If you want to use only `versions.properties` and the [built-in dependencies notations](https://jmfayard.github.io/refreshVersions/dependencies-notations/), run:
+If you want to use only `versions.properties` and the [built-in dependencies notations](https://jmfayard.github.io/refreshVersions/dependency-notations/), run:
 
 `./gradlew refreshVersionsMigrate --mode=VersionsPropertiesOnly`
 
