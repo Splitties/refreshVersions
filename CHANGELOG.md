@@ -1,6 +1,10 @@
 # Change log for refreshVersions
 
-## [Unreleased] Version 0.50.2 (2022-09-22)
+## [Unreleased] Version 0.50.2 (2022-09-24)
+
+### Minor change
+
+Disable the old `refreshVersionsDependenciesMapping` and `migrateToRefreshVersionsDependenciesConstants` Gradle tasks.
 
 ### Fixes
 
