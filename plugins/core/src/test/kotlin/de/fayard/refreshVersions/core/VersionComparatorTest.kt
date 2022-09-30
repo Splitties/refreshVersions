@@ -36,7 +36,7 @@ class VersionComparatorTest {
     @TestFactory
     fun `test versions sorting`() = testResources.resolve(
         relative = "versions-comparison"
-    ).listFiles()!!.asList().mapDynamicTest { file ->
+    ).listFiles()!!.asList().mapDynamicTest(name = { it.nameWithoutExtension }) { file ->
         val orderedVersions = readVersionsWithIntactOrder(file)
         orderedVersions.shouldBeSorted()
     }
@@ -44,7 +44,7 @@ class VersionComparatorTest {
     @TestFactory
     fun `test versions sorting through the sortWith function`() = testResources.resolve(
         relative = "versions-comparison"
-    ).listFiles()!!.asList().mapDynamicTest { file ->
+    ).listFiles()!!.asList().mapDynamicTest(name = { it.nameWithoutExtension }) { file ->
         val orderedVersions = readVersionsWithIntactOrder(file)
         val fetcherResult = DependencyVersionsFetcher.Result.Success(
             lastUpdateTimestampMillis = 0L,
