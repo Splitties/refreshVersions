@@ -16,10 +16,12 @@ data class Version(val value: String) : Comparable<Version> {
     private fun String.findStabilityLevel(fullVersion: Boolean): StabilityLevel? {
         fun String.matches(
             kind: String,
+            requireNumber: Boolean = false,
             ignoreCase: Boolean = true
-        ) = isStabilityLevelWithNumber(
+        ) = isStabilityLevel(
             stabilityLevelMarker = kind,
             ignoreCase = ignoreCase,
+            requireNumber = requireNumber,
             isFragment = fullVersion.not(),
             version = this
         )
@@ -30,7 +32,7 @@ data class Version(val value: String) : Comparable<Version> {
             matches("alpha") -> StabilityLevel.Alpha
             matches("beta") -> StabilityLevel.Beta
             matches("eap") -> StabilityLevel.EarlyAccessProgram
-            matches("M") -> StabilityLevel.Milestone
+            matches("M", requireNumber = true) -> StabilityLevel.Milestone
             matches("RC") -> StabilityLevel.ReleaseCandidate
             isDefinitelyStable(this) -> StabilityLevel.Stable
             else -> null
@@ -138,9 +140,10 @@ data class Version(val value: String) : Comparable<Version> {
             return hasStableKeyword || digitsOnlyBasedVersionNumberRegex.matches(version)
         }
 
-        private fun isStabilityLevelWithNumber(
+        private fun isStabilityLevel(
             stabilityLevelMarker: String,
             ignoreCase: Boolean = true,
+            requireNumber: Boolean,
             isFragment: Boolean,
             version: String
         ): Boolean = when (val indexOfStabilityLevelMarker = version.indexOf(
@@ -150,7 +153,7 @@ data class Version(val value: String) : Comparable<Version> {
             -1 -> false
             else -> version.getOrNull(
                 index = indexOfStabilityLevelMarker + stabilityLevelMarker.length
-            )?.let { it.isDigit() || it == '-' } ?: isFragment
+            )?.let { it.isDigit() || it == '-' } ?: isFragment || requireNumber.not()
         }
 
         private fun String.isRange(): Boolean {
