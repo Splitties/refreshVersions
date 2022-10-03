@@ -20,3 +20,8 @@ println("The version for artifact org.jetbrains:annotations:_ is " + versionFor(
 println("The version for version key version.com.google.guava..guava is " + versionFor(project, "version.com.google.guava..guava"))
 
 println("The version for AndroidX.compose.compiler is " + versionFor(project, AndroidX.compose.compiler))
+
+tasks.wrapper {
+    def versionFile = new File(rootDir.parentFile, "plugins/gradle-version.txt")
+    gradleVersion = versionFile.readLines().first()
+}

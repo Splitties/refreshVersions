@@ -78,3 +78,8 @@ tasks.register<DefaultTask>("hello") {
     group = "Custom"
     description = "Minimal task that do nothing. Useful to debug a failing build"
 }
+
+tasks.wrapper {
+    val versionFile = rootDir.parentFile.resolve("plugins/gradle-version.txt")
+    gradleVersion = versionFile.readLines().first()
+}
