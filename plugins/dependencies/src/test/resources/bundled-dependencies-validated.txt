@@ -138,6 +138,7 @@ androidx.hilt:hilt-compiler
 androidx.hilt:hilt-navigation-compose
 androidx.hilt:hilt-navigation-fragment
 androidx.hilt:hilt-work
+androidx.input:input-motionprediction
 androidx.interpolator:interpolator
 androidx.javascriptengine:javascriptengine
 androidx.leanback:leanback

@@ -1662,6 +1662,23 @@ object AndroidX : IsNotADependency {
     }
 
     /**
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/input)
+     */
+    val input = Input
+
+    object Input : DependencyGroup(
+        group = "androidx.input"
+    ) {
+        /**
+         * Reduce the latency of input interactions by predicting future MotionEvents.
+         *
+         * ### API reference:
+         * - [androidx.input.motionprediction](https://developer.android.com/reference/kotlin/androidx/input/motionprediction/package-summary)
+         */
+        val motionPrediction = module("input-motionprediction")
+    }
+
+    /**
      * Use animation interpolators on older platforms.
      *
      * Guide: [Property Animation Overview -> Use Interpolators](https://developer.android.com/guide/topics/graphics/prop-animation#interpolators)
