@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased] Version 0.51.0 (2022-10-25)
+## Version 0.51.0 (2022-10-25)
 
 ### Support Jetpack Compose BoM
 
