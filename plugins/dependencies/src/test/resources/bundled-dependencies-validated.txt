@@ -283,6 +283,8 @@ androidx.tracing:tracing-ktx
 androidx.tracing:tracing-perfetto
 androidx.transition:transition
 androidx.transition:transition-ktx
+androidx.tv:tv-foundation
+androidx.tv:tv-material
 androidx.tvprovider:tvprovider
 androidx.vectordrawable:vectordrawable
 androidx.vectordrawable:vectordrawable-animated

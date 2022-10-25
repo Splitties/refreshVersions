@@ -2858,6 +2858,37 @@ object AndroidX : IsNotADependency {
     val transitionKtx = DependencyNotation("androidx.transition", "transition-ktx")
 
     /**
+     * Provides developers with Compose and Material design functionalities in order to write applications for TV.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/tv)
+     */
+    val tv = Tv
+
+    object Tv : DependencyGroup(group = "androidx.tv") {
+        /**
+         * This library makes it easier for developers to write Jetpack Compose applications for
+         * TV devices by providing functionality to support TV specific devices sizes,
+         * shapes and d-pad navigation supported components. It builds upon the Jetpack Compose libraries.
+         *
+         * ### API reference:
+         * - [androidx.tv.foundation](https://developer.android.com/reference/androidx/tv/foundation/package-summary)
+         * - [androidx.tv.foundation.lazy.grid](https://developer.android.com/reference/androidx/tv/foundation/lazy/grid/package-summary)
+         * - [androidx.tv.foundation.lazy.list](https://developer.android.com/reference/androidx/tv/foundation/lazy/list/package-summary)
+         */
+        val foundation = module("tv-foundation")
+
+        /**
+         * Build TV applications using controls that adhere to Material Design Language.
+         *
+         * ### API reference:
+         * - [androidx.tv.material](https://developer.android.com/reference/androidx/tv/material/package-summary)
+         * - [androidx.tv.material.carousel](https://developer.android.com/reference/androidx/tv/material/carousel/package-summary)
+         * - [androidx.tv.material.immersivelist](https://developer.android.com/reference/androidx/tv/material/immersivelist/package-summary)
+         */
+        val material = module("tv-material")
+    }
+
+    /**
      * Provide Android TV channels.
      *
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/tvprovider)
