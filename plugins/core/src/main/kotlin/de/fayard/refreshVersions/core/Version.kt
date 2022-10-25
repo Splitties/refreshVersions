@@ -16,10 +16,12 @@ data class Version(val value: String) : Comparable<Version> {
     private fun String.findStabilityLevel(fullVersion: Boolean): StabilityLevel? {
         fun String.matches(
             kind: String,
+            requireNumber: Boolean = false,
             ignoreCase: Boolean = true
-        ) = isStabilityLevelWithNumber(
+        ) = isStabilityLevel(
             stabilityLevelMarker = kind,
             ignoreCase = ignoreCase,
+            requireNumber = requireNumber,
             isFragment = fullVersion.not(),
             version = this
         )
@@ -30,7 +32,7 @@ data class Version(val value: String) : Comparable<Version> {
             matches("alpha") -> StabilityLevel.Alpha
             matches("beta") -> StabilityLevel.Beta
             matches("eap") -> StabilityLevel.EarlyAccessProgram
-            matches("M") -> StabilityLevel.Milestone
+            matches("M", requireNumber = true) -> StabilityLevel.Milestone
             matches("RC") -> StabilityLevel.ReleaseCandidate
             isDefinitelyStable(this) -> StabilityLevel.Stable
             else -> null
@@ -129,19 +131,19 @@ data class Version(val value: String) : Comparable<Version> {
 
         private val reverseStabilityComparator: Comparator<StabilityLevel> = compareByDescending { it }
 
-        private val knownVersionSuffixes = listOf("-android", "-jre")
         private val knownStableKeywords = listOf("RELEASE", "FINAL", "GA")
         private val digitsOnlyBasedVersionNumberRegex = "^[0-9,.v-]+$".toRegex()
 
         private fun isDefinitelyStable(version: String): Boolean {
             val uppercaseVersion = version.toUpperCase()
             val hasStableKeyword = knownStableKeywords.any { it in uppercaseVersion }
-            return hasStableKeyword || digitsOnlyBasedVersionNumberRegex.matches(version.withoutKnownSuffixes())
+            return hasStableKeyword || digitsOnlyBasedVersionNumberRegex.matches(version)
         }
 
-        private fun isStabilityLevelWithNumber(
+        private fun isStabilityLevel(
             stabilityLevelMarker: String,
             ignoreCase: Boolean = true,
+            requireNumber: Boolean,
             isFragment: Boolean,
             version: String
         ): Boolean = when (val indexOfStabilityLevelMarker = version.indexOf(
@@ -151,7 +153,7 @@ data class Version(val value: String) : Comparable<Version> {
             -1 -> false
             else -> version.getOrNull(
                 index = indexOfStabilityLevelMarker + stabilityLevelMarker.length
-            )?.let { it.isDigit() || it == '-' } ?: isFragment
+            )?.let { it.isDigit() || it == '-' } ?: isFragment || requireNumber.not()
         }
 
         private fun String.isRange(): Boolean {
@@ -182,7 +184,7 @@ data class Version(val value: String) : Comparable<Version> {
                     ?: error("no lower version bound found in range: '$value'")
                 return lowerBound.toComparableList()
             }
-            return value.withoutKnownStableKeywordsOrSuffixes().split(".", "-").flatMap {
+            return value.withoutKnownStableKeywords().split(".", "-").flatMap {
                 it.toBigIntegerOrNull()?.let { number -> listOf(number) }
                     ?: it.findStabilityLevel(fullVersion = false)?.let { level ->
                         val indexOfLastNonDigit = it.indexOfLast { c -> c.isDigit().not() }
@@ -190,18 +192,6 @@ data class Version(val value: String) : Comparable<Version> {
                         else listOf(level, it.substring(startIndex = indexOfLastNonDigit + 1).toBigInteger())
                     } ?: listOf(it)
             }
-        }
-
-        private fun String.withoutKnownStableKeywordsOrSuffixes(): String {
-            return withoutKnownSuffixes().withoutKnownStableKeywords()
-        }
-
-        private fun String.withoutKnownSuffixes(): String {
-            var result: String = this
-            for (suffix in knownVersionSuffixes) {
-                result = result.removeSuffix(suffix)
-            }
-            return result
         }
 
         private fun String.withoutKnownStableKeywords(): String {

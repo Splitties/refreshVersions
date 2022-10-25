@@ -16,6 +16,7 @@ androidx.arch.core:core-common
 androidx.arch.core:core-runtime
 androidx.arch.core:core-testing
 androidx.asynclayoutinflater:asynclayoutinflater
+androidx.asynclayoutinflater:asynclayoutinflater-appcompat
 androidx.autofill:autofill
 androidx.benchmark:benchmark-common
 androidx.benchmark:benchmark-gradle-plugin
@@ -72,6 +73,7 @@ androidx.compose.ui:ui-tooling-preview
 androidx.compose.ui:ui-unit
 androidx.compose.ui:ui-util
 androidx.compose.ui:ui-viewbinding
+androidx.compose:compose-bom
 androidx.concurrent:concurrent-futures
 androidx.concurrent:concurrent-futures-ktx
 androidx.constraintlayout:constraintlayout
@@ -94,6 +96,7 @@ androidx.customview:customview
 androidx.customview:customview-poolingcontainer
 androidx.datastore:datastore
 androidx.datastore:datastore-core
+androidx.datastore:datastore-core-okio
 androidx.datastore:datastore-preferences
 androidx.datastore:datastore-preferences-core
 androidx.datastore:datastore-preferences-rxJava2
@@ -126,6 +129,7 @@ androidx.games:games-text-input
 androidx.glance:glance
 androidx.glance:glance-appwidget
 androidx.glance:glance-wear-tiles
+androidx.graphics:graphics-core
 androidx.gridlayout:gridlayout
 androidx.health.connect:connect-client
 androidx.health:health-services-client
@@ -134,6 +138,7 @@ androidx.hilt:hilt-compiler
 androidx.hilt:hilt-navigation-compose
 androidx.hilt:hilt-navigation-fragment
 androidx.hilt:hilt-work
+androidx.input:input-motionprediction
 androidx.interpolator:interpolator
 androidx.javascriptengine:javascriptengine
 androidx.leanback:leanback
@@ -214,6 +219,7 @@ androidx.paging:paging-runtime-ktx
 androidx.paging:paging-rxjava2
 androidx.paging:paging-rxjava2-ktx
 androidx.paging:paging-rxjava3
+androidx.paging:paging-testing
 androidx.palette:palette
 androidx.palette:palette-ktx
 androidx.preference:preference
@@ -259,6 +265,7 @@ androidx.test.espresso.idling:idling-net
 androidx.test.espresso:espresso-accessibility
 androidx.test.espresso:espresso-contrib
 androidx.test.espresso:espresso-core
+androidx.test.espresso:espresso-device
 androidx.test.espresso:espresso-idling-resource
 androidx.test.espresso:espresso-intents
 androidx.test.espresso:espresso-remote
@@ -281,6 +288,8 @@ androidx.tracing:tracing-ktx
 androidx.tracing:tracing-perfetto
 androidx.transition:transition
 androidx.transition:transition-ktx
+androidx.tv:tv-foundation
+androidx.tv:tv-material
 androidx.tvprovider:tvprovider
 androidx.vectordrawable:vectordrawable
 androidx.vectordrawable:vectordrawable-animated
@@ -479,6 +488,7 @@ com.google.firebase:firebase-database
 com.google.firebase:firebase-database-ktx
 com.google.firebase:firebase-dynamic-links
 com.google.firebase:firebase-dynamic-links-ktx
+com.google.firebase:firebase-dynamic-module-support
 com.google.firebase:firebase-firestore
 com.google.firebase:firebase-firestore-ktx
 com.google.firebase:firebase-functions

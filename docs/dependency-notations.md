@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1170** Dependency Notations in **26** groups and **244** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1180** Dependency Notations in **26** groups and **249** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -527,6 +527,15 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     </td></tr>
             
+    <tr><td><b>AndroidX.asyncLayoutInflater</b></td><td>
+        <span
+            title="AndroidX.asyncLayoutInflater.appcompat&#10;androidx.asynclayoutinflater:asynclayoutinflater-appcompat:_&#10;version.androidx.asynclayoutinflater"
+            style="text-decoration: underline;">
+            appcompat
+        </span>
+            
+    </td></tr>
+            
     <tr><td><b>AndroidX.benchmark</b></td><td>
         <span
             title="AndroidX.benchmark.common&#10;androidx.benchmark:benchmark-common:_&#10;version.androidx.benchmark"
@@ -645,6 +654,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
     </td></tr>
             
     <tr><td><b>AndroidX.compose</b></td><td>
+        <span
+            title="AndroidX.compose.bom&#10;androidx.compose:compose-bom:_&#10;version.androidx.compose"
+            style="text-decoration: underline;">
+            bom
+        </span>
+        - 
         <span
             title="AndroidX.compose.animation&#10;androidx.compose.animation:animation:_&#10;version.androidx.compose.animation"
             style="text-decoration: underline;">
@@ -995,6 +1010,15 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     </td></tr>
             
+    <tr><td><b>AndroidX.dataStore.core</b></td><td>
+        <span
+            title="AndroidX.dataStore.core.okio&#10;androidx.datastore:datastore-core-okio:_&#10;version.androidx.datastore"
+            style="text-decoration: underline;">
+            okio
+        </span>
+            
+    </td></tr>
+            
     <tr><td><b>AndroidX.dataStore.preferences</b></td><td>
         <span
             title="AndroidX.dataStore.preferences.core&#10;androidx.datastore:datastore-preferences-core:_&#10;version.androidx.datastore"
@@ -1139,6 +1163,15 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     </td></tr>
             
+    <tr><td><b>AndroidX.graphics</b></td><td>
+        <span
+            title="AndroidX.graphics.core&#10;androidx.graphics:graphics-core:_&#10;version.androidx.graphics"
+            style="text-decoration: underline;">
+            core
+        </span>
+            
+    </td></tr>
+            
     <tr><td><b>AndroidX.health</b></td><td>
         <span
             title="AndroidX.health.servicesClient&#10;androidx.health:health-services-client:_&#10;version.androidx.health-services-client"
@@ -1180,6 +1213,15 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.hilt.work&#10;androidx.hilt:hilt-work:_&#10;version.androidx.hilt"
             style="text-decoration: underline;">
             work
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>AndroidX.input</b></td><td>
+        <span
+            title="AndroidX.input.motionPrediction&#10;androidx.input:input-motionprediction:_&#10;version.androidx.input"
+            style="text-decoration: underline;">
+            motionPrediction
         </span>
             
     </td></tr>
@@ -1652,6 +1694,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             style="text-decoration: underline;">
             rxJava3
         </span>
+        - 
+        <span
+            title="AndroidX.paging.testing&#10;androidx.paging:paging-testing:_&#10;version.androidx.paging"
+            style="text-decoration: underline;">
+            testing
+        </span>
             
     </td></tr>
             
@@ -1933,6 +1981,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="AndroidX.test.espresso.device&#10;androidx.test.espresso:espresso-device:_&#10;version.androidx.test.espresso-device"
+            style="text-decoration: underline;">
+            device
+        </span>
+        - 
+        <span
             title="AndroidX.test.espresso.idlingResource&#10;androidx.test.espresso:espresso-idling-resource:_&#10;version.androidx.test.espresso"
             style="text-decoration: underline;">
             idlingResource
@@ -2014,6 +2068,21 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.tracing.perfetto&#10;androidx.tracing:tracing-perfetto:_&#10;version.androidx.tracing-perfetto"
             style="text-decoration: underline;">
             perfetto
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>AndroidX.tv</b></td><td>
+        <span
+            title="AndroidX.tv.foundation&#10;androidx.tv:tv-foundation:_&#10;version.androidx.tv"
+            style="text-decoration: underline;">
+            foundation
+        </span>
+        - 
+        <span
+            title="AndroidX.tv.material&#10;androidx.tv:tv-material:_&#10;version.androidx.tv"
+            style="text-decoration: underline;">
+            material
         </span>
             
     </td></tr>
@@ -2680,6 +2749,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="Firebase.dynamicLinks&#10;com.google.firebase:firebase-dynamic-links:_&#10;version.firebase-dynamic-links"
             style="text-decoration: underline;">
             dynamicLinks
+        </span>
+        - 
+        <span
+            title="Firebase.dynamicModuleSupport&#10;com.google.firebase:firebase-dynamic-module-support:_&#10;version.firebase-dynamic-module-support"
+            style="text-decoration: underline;">
+            dynamicModuleSupport
         </span>
         - 
         <span
@@ -3606,6 +3681,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="Google.firebase.dynamicLinks&#10;com.google.firebase:firebase-dynamic-links:_&#10;version.firebase-dynamic-links"
             style="text-decoration: underline;">
             dynamicLinks
+        </span>
+        - 
+        <span
+            title="Google.firebase.dynamicModuleSupport&#10;com.google.firebase:firebase-dynamic-module-support:_&#10;version.firebase-dynamic-module-support"
+            style="text-decoration: underline;">
+            dynamicModuleSupport
         </span>
         - 
         <span

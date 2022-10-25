@@ -1,5 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused", "MemberVisibilityCanBePrivate")
 
+import de.fayard.refreshVersions.MultiplatformLibrary
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
@@ -198,7 +199,20 @@ object AndroidX : IsNotADependency {
      * ### API reference:
      * - [androidx.asynclayoutinflater.view](https://developer.android.com/reference/kotlin/androidx/asynclayoutinflater/view/package-summary)
      */
-    val asyncLayoutInflater = DependencyNotation("androidx.asynclayoutinflater", "asynclayoutinflater")
+    val asyncLayoutInflater = AsyncLayoutInflater
+
+    object AsyncLayoutInflater : DependencyNotationAndGroup(
+        group = "androidx.asynclayoutinflater",
+        name = "asynclayoutinflater"
+    ) {
+        /**
+         * A thread-safe LayoutInflater Factory that provides compatibility between AsyncLayoutInflater and AppCompat.
+         *
+         * ### API reference:
+         * - [androidx.asynclayoutinflater.appcompat](https://developer.android.com/reference/androidx/asynclayoutinflater/appcompat/package-summary)
+         */
+        val appcompat = module("asynclayoutinflater-appcompat")
+    }
 
     /**
      * Improve autofill accuracy via extending hints.
@@ -474,6 +488,7 @@ object AndroidX : IsNotADependency {
      *
      * @see AndroidX.Collection.ktx
      */
+    @MultiplatformLibrary
     val collection = Collection
 
     object Collection : DependencyNotationAndGroup("androidx.collection", "collection") {
@@ -495,14 +510,20 @@ object AndroidX : IsNotADependency {
      */
     val compose = Compose
 
-    object Compose : IsNotADependency {
+    object Compose : DependencyGroup(group = "androidx.compose") {
+
+        val bom = module("compose-bom", isBom = true)
 
         /**
          * Transform @Composable functions and enable optimizations with a Kotlin compiler plugin.
          *
          * [Release notes](https://developer.android.com/jetpack/androidx/releases/compose-compiler)
          */
-        val compiler = DependencyNotation("androidx.compose.compiler", "compiler")
+        val compiler = module(
+            group = "androidx.compose.compiler",
+            name = "compiler",
+            usePlatformConstraints = false // Not included in the BoM, and not used as a regular dependency.
+        )
 
         /**
          * Fundamental building blocks of Compose's programming model and state management,
@@ -520,7 +541,11 @@ object AndroidX : IsNotADependency {
          */
         val runtime = Runtime
 
-        object Runtime : DependencyNotationAndGroup(group = "androidx.compose.runtime", name = "runtime") {
+        object Runtime : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.runtime",
+            name = "runtime"
+        ) {
 
             val dispatch = module("runtime-dispatch")
 
@@ -578,7 +603,11 @@ object AndroidX : IsNotADependency {
          */
         val animation = Animation
 
-        object Animation : DependencyNotationAndGroup(group = "androidx.compose.animation", name = "animation") {
+        object Animation : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.animation",
+            name = "animation"
+        ) {
 
             /**
              * Animation engine and animation primitives that are the building blocks of the Compose animation library.
@@ -648,7 +677,11 @@ object AndroidX : IsNotADependency {
          */
         val ui = Ui
 
-        object Ui : DependencyNotationAndGroup(group = "androidx.compose.ui", name = "ui") {
+        object Ui : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.ui",
+            name = "ui"
+        ) {
 
             /**
              * Compose classes related to dimensions without units
@@ -707,7 +740,11 @@ object AndroidX : IsNotADependency {
              */
             val text = Text
 
-            object Text : DependencyNotationAndGroup(group = group, name = "ui-text") {
+            object Text : DependencyNotationAndGroup(
+                platformConstrainsDelegateGroup = Compose,
+                group = group,
+                name = "ui-text"
+            ) {
 
                 /**
                  * Compose Downloadable Fonts integration for Google Fonts.
@@ -787,7 +824,11 @@ object AndroidX : IsNotADependency {
          */
         val foundation = Foundation
 
-        object Foundation : DependencyNotationAndGroup(group = "androidx.compose.foundation", name = "foundation") {
+        object Foundation : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.foundation",
+            name = "foundation"
+        ) {
 
             /**
              * Compose layout implementations
@@ -814,7 +855,11 @@ object AndroidX : IsNotADependency {
          */
         val material = Material
 
-        object Material : DependencyNotationAndGroup(group = "androidx.compose.material", name = "material") {
+        object Material : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.material",
+            name = "material"
+        ) {
 
             /**
              * Material icons
@@ -867,7 +912,11 @@ object AndroidX : IsNotADependency {
          */
         val material3 = Material3
 
-        object Material3 : DependencyNotationAndGroup(group = "androidx.compose.material3", name = "material3") {
+        object Material3 : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.material3",
+            name = "material3"
+        ) {
 
             /**
              * Provides window size classes for building responsive UIs
@@ -1152,6 +1201,7 @@ object AndroidX : IsNotADependency {
              * ## API reference:
              * - [androidx.datastore.preferences.core](https://developer.android.com/reference/kotlin/androidx/datastore/preferences/core/package-summary)
              */
+            @MultiplatformLibrary
             val core = module("datastore-preferences-core")
 
             /**
@@ -1178,7 +1228,20 @@ object AndroidX : IsNotADependency {
          * - [androidx.datastore.core](https://developer.android.com/reference/kotlin/androidx/datastore/core/package-summary)
          * - [androidx.datastore.core.handlers](https://developer.android.com/reference/kotlin/androidx/datastore/core/handlers/package-summary)
          */
-        val core = module("datastore-core")
+        @MultiplatformLibrary
+        val core = Core
+
+        object Core : DependencyNotationAndGroup(
+            group = group,
+            name = "datastore-core"
+        ) {
+
+            /**
+             * Android DataStore Core Okio contains APIs to use datastore-core in multiplatform via okio.
+             */
+            @MultiplatformLibrary
+            val okio = module("datastore-core-okio")
+        }
 
         /**
          * RxJava 2 support
@@ -1464,6 +1527,26 @@ object AndroidX : IsNotADependency {
     }
 
     /**
+     * Leverage graphics facilities across multiple Android platform releases.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/graphics)
+     */
+    val graphics = Graphics
+
+    object Graphics : DependencyGroup(
+        group = "androidx.graphics"
+    ) {
+        /**
+         * ### API reference:
+         * - [androidx.graphics.lowlatency](https://developer.android.com/reference/kotlin/androidx/graphics/lowlatency/package-summary)
+         * - [androidx.graphics.opengl](https://developer.android.com/reference/kotlin/androidx/graphics/opengl/package-summary)
+         * - [androidx.graphics.opengl.egl](https://developer.android.com/reference/kotlin/androidx/graphics/opengl/egl/package-summary)
+         * - [androidx.graphics.surface](https://developer.android.com/reference/kotlin/androidx/graphics/surface/package-summary)
+         */
+        val core = module("graphics-core")
+    }
+
+    /**
      * Implement a grid layout.
      *
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/gridlayout)
@@ -1576,6 +1659,23 @@ object AndroidX : IsNotADependency {
 
         /** Annotation processor */
         val compiler = module("hilt-compiler")
+    }
+
+    /**
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/input)
+     */
+    val input = Input
+
+    object Input : DependencyGroup(
+        group = "androidx.input"
+    ) {
+        /**
+         * Reduce the latency of input interactions by predicting future MotionEvents.
+         *
+         * ### API reference:
+         * - [androidx.input.motionprediction](https://developer.android.com/reference/kotlin/androidx/input/motionprediction/package-summary)
+         */
+        val motionPrediction = module("input-motionprediction")
     }
 
     /**
@@ -2177,6 +2277,14 @@ object AndroidX : IsNotADependency {
         val compose = module("paging-compose")
 
         /**
+         * Test artifact for Paging implementation
+         *
+         * ### API reference:
+         * - [androidx.paging.testing](https://developer.android.com/reference/androidx/paging/testing/package-summary)
+         */
+        val testing = module("paging-testing")
+
+        /**
          * RxJava2 support with Kotlin extensions
          *
          * ### API reference:
@@ -2688,6 +2796,8 @@ object AndroidX : IsNotADependency {
 
             val core = module("espresso-core")
 
+            val device = module("espresso-device")
+
             /**
              * Guide: [Espresso lists: Interact with recycler view list items](https://developer.android.com/training/testing/espresso/lists#recycler-view-list-items)
              */
@@ -2809,6 +2919,37 @@ object AndroidX : IsNotADependency {
      * - [androidx.transition](https://developer.android.com/reference/kotlin/androidx/transition/package-summary)
      */
     val transitionKtx = DependencyNotation("androidx.transition", "transition-ktx")
+
+    /**
+     * Provides developers with Compose and Material design functionalities in order to write applications for TV.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/tv)
+     */
+    val tv = Tv
+
+    object Tv : DependencyGroup(group = "androidx.tv") {
+        /**
+         * This library makes it easier for developers to write Jetpack Compose applications for
+         * TV devices by providing functionality to support TV specific devices sizes,
+         * shapes and d-pad navigation supported components. It builds upon the Jetpack Compose libraries.
+         *
+         * ### API reference:
+         * - [androidx.tv.foundation](https://developer.android.com/reference/androidx/tv/foundation/package-summary)
+         * - [androidx.tv.foundation.lazy.grid](https://developer.android.com/reference/androidx/tv/foundation/lazy/grid/package-summary)
+         * - [androidx.tv.foundation.lazy.list](https://developer.android.com/reference/androidx/tv/foundation/lazy/list/package-summary)
+         */
+        val foundation = module("tv-foundation")
+
+        /**
+         * Build TV applications using controls that adhere to Material Design Language.
+         *
+         * ### API reference:
+         * - [androidx.tv.material](https://developer.android.com/reference/androidx/tv/material/package-summary)
+         * - [androidx.tv.material.carousel](https://developer.android.com/reference/androidx/tv/material/carousel/package-summary)
+         * - [androidx.tv.material.immersivelist](https://developer.android.com/reference/androidx/tv/material/immersivelist/package-summary)
+         */
+        val material = module("tv-material")
+    }
 
     /**
      * Provide Android TV channels.

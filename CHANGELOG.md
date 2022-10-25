@@ -1,5 +1,62 @@
 # Change log for refreshVersions
 
+## Version 0.51.0 (2022-10-25)
+
+### Support Jetpack Compose BoM
+
+Yesterday, Google released a BoM for Jetpack Compose.
+Today we're introducing first-class support for it.
+
+To take advantage of it, you just need to add the dependency on `platform(AndroidX.compose.bom)`.
+Just like `Firebase.bom`, make sure you add it **before** any dependent dependency:
+
+```kts
+dependencies {
+    implementation(platform(AndroidX.compose.bom)) // Add this FIRST
+    implementation(AndroidX.compose.material3) // Related dependencies AFTER
+    implementation(AndroidX.compose.material3.windowSizeClass) // Same as above
+}
+```
+
+In case you need to use a pre-release version (alpha, beta, rc…), use the `withVersionPlaceholder()` function as such:
+
+```kts
+dependencies {
+    implementation(platform(AndroidX.compose.bom)) // Enables the BoM and depends on it
+    implementation(AndroidX.compose.icons.extended) // Uses version defined in the BoM
+    implementation(AndroidX.compose.material3.withVersionPlaceholder()) // Separate version in versions.properties
+}
+```
+
+### Fix StabilityLevel calculation for number-less pre-versions
+
+Since last changes in the Version class, versions like 1.7.20-RC and 1.7.20-Beta would be marked as stable instead of respectively ReleaseCandidate and Beta because the logic expected a number in all cases.
+
+The number is now optional for all pre-versions, except milestones.
+
+To prevent future recurrence of such regression, this commit
+also adds tests that assert the expected stability level of
+many known versions from various libraries.
+
+### New dependency notations:
+
+<details>
+<summary><strong>Click to expand (11) </strong></summary>
+
+- `AndroidX.asyncLayoutInflater.appcompat`
+- `AndroidX.compose.bom`
+- `AndroidX.dataStore.core.okio`
+- `AndroidX.graphics.core`
+- `AndroidX.input.motionPrediction`
+- `AndroidX.paging.testing`
+- `AndroidX.test.espresso.device`
+- `AndroidX.tv.foundation`
+- `AndroidX.tv.material`
+- `Firebase.dynamicModuleSupport`
+- `Google.firebase.dynamicModuleSupport`
+
+</details>
+
 ## Version 0.50.2 (2022-09-24)
 
 ### Minor change
@@ -517,7 +574,7 @@ It took us time to catch-up with this change because we wanted to design a gener
 
 From now on, we have the ability to remove old or deprecated built-in dependency notations in refreshVersions, and doing so will not break your builds, nor will it change the dependencies of your project. However, it'll help you notice the deprecation, and it'll help you switch to the replacement dependencies, if any.
 
-The way it works is that we keep a versioned list of all the removals, and on refreshVersions upgrade, an automatic replacement will put back the hardcoded maven coordinates, using the version placeholder, and it will add our hand-written TODO/FIXME comments, along with a perfectly aligned replacement suggestion if there is any, so that moving to the newer artifact is as easy as upgrading to a newer version in the `versions.properties` file. We designed the system so that it cannot break your build, even if you were using `withVersion(…)` or other `DependencyNotation` extensions, even if you have code comments or special string literals.
+The way it works is that we keep a versioned list of all the removals, and on refreshVersions upgrade, an automatic replacement will put back the hardcoded maven coordinates, using the version placeholder, and it will add our handwritten TODO/FIXME comments, along with a perfectly aligned replacement suggestion if there is any, so that moving to the newer artifact is as easy as upgrading to a newer version in the `versions.properties` file. We designed the system so that it cannot break your build, even if you were using `withVersion(…)` or other `DependencyNotation` extensions, even if you have code comments or special string literals.
 
 It also supports the case where we just move a dependency notation to another place, or change its name, without changing the maven coordinates.
 
@@ -915,7 +972,7 @@ Firebase ML Kit has been rebranded to Google ML Kit along with API and feature c
 
 ### New features
 
-- refreshVersions will now warn you when Gradle is not up to date, and will give you the commands to run to update it for you to copy/paste and run. It works if you're using a release candidate, and also if you're using a nightly version!
+- refreshVersions will now warn you when Gradle is not up-to-date, and will give you the commands to run to update it for you to copy/paste and run. It works if you're using a release candidate, and also if you're using a nightly version!
 
 
 ## Version 0.9.5 (2020-08-21)
