@@ -488,6 +488,7 @@ com.google.firebase..firebase-database-ktx=version.firebase-database-ktx
 com.google.firebase..firebase-database=version.firebase-database
 com.google.firebase..firebase-dynamic-links-ktx=version.firebase-dynamic-links-ktx
 com.google.firebase..firebase-dynamic-links=version.firebase-dynamic-links
+com.google.firebase..firebase-dynamic-module-support=version.firebase-dynamic-module-support
 com.google.firebase..firebase-firestore-ktx=version.firebase-firestore-ktx
 com.google.firebase..firebase-firestore=version.firebase-firestore
 com.google.firebase..firebase-functions-ktx=version.firebase-functions-ktx

@@ -488,6 +488,7 @@ com.google.firebase:firebase-database
 com.google.firebase:firebase-database-ktx
 com.google.firebase:firebase-dynamic-links
 com.google.firebase:firebase-dynamic-links-ktx
+com.google.firebase:firebase-dynamic-module-support
 com.google.firebase:firebase-firestore
 com.google.firebase:firebase-firestore-ktx
 com.google.firebase:firebase-functions

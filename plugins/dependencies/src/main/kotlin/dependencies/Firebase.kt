@@ -56,6 +56,11 @@ object Firebase : DependencyGroup(
     val dynamicLinks = module("firebase-dynamic-links")
     val dynamicLinksKtx = module("firebase-dynamic-links-ktx")
 
+    /**
+     * [Doc page](https://firebase.google.com/docs/android/learn-more#dynamic-feature-modules)
+     */
+    val dynamicModuleSupport = module("firebase-dynamic-module-support", usePlatformConstraints = false)
+
     val inAppMessaging = module("firebase-inappmessaging")
     val inAppMessagingKtx = module("firebase-inappmessaging-ktx")
     val inAppMessagingDisplay = module("firebase-inappmessaging-display")
