@@ -94,6 +94,7 @@ androidx.core.uwb..uwb=version.androidx.core.uwb
 androidx.cursoradapter..cursoradapter=version.androidx.cursoradapter
 androidx.customview..customview-poolingcontainer=version.androidx.customview-poolingcontainer
 androidx.customview..customview=version.androidx.customview
+androidx.datastore..datastore-core-okio=version.androidx.datastore
 androidx.datastore..datastore-core=version.androidx.datastore
 androidx.datastore..datastore-preferences-core=version.androidx.datastore
 androidx.datastore..datastore-preferences-rxJava2=version.androidx.datastore

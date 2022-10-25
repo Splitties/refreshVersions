@@ -96,6 +96,7 @@ androidx.customview:customview
 androidx.customview:customview-poolingcontainer
 androidx.datastore:datastore
 androidx.datastore:datastore-core
+androidx.datastore:datastore-core-okio
 androidx.datastore:datastore-preferences
 androidx.datastore:datastore-preferences-core
 androidx.datastore:datastore-preferences-rxJava2

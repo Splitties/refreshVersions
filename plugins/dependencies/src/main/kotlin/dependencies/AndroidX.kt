@@ -1,5 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused", "MemberVisibilityCanBePrivate")
 
+import de.fayard.refreshVersions.MultiplatformLibrary
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
@@ -1199,6 +1200,7 @@ object AndroidX : IsNotADependency {
              * ## API reference:
              * - [androidx.datastore.preferences.core](https://developer.android.com/reference/kotlin/androidx/datastore/preferences/core/package-summary)
              */
+            @MultiplatformLibrary
             val core = module("datastore-preferences-core")
 
             /**
@@ -1225,7 +1227,20 @@ object AndroidX : IsNotADependency {
          * - [androidx.datastore.core](https://developer.android.com/reference/kotlin/androidx/datastore/core/package-summary)
          * - [androidx.datastore.core.handlers](https://developer.android.com/reference/kotlin/androidx/datastore/core/handlers/package-summary)
          */
-        val core = module("datastore-core")
+        @MultiplatformLibrary
+        val core = Core
+
+        object Core : DependencyNotationAndGroup(
+            group = group,
+            name = "datastore-core"
+        ) {
+
+            /**
+             * Android DataStore Core Okio contains APIs to use datastore-core in multiplatform via okio.
+             */
+            @MultiplatformLibrary
+            val okio = module("datastore-core-okio")
+        }
 
         /**
          * RxJava 2 support
