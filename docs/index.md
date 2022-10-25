@@ -100,7 +100,7 @@ How long would it take to search for all available updates?
 
 ## Add dependencies quickly!
 
-gradle refreshVersions provides read-to-use organized dependency notations for popular libraries.
+gradle refreshVersions provides ready-to-use organized dependency notations for popular libraries.
 
 ![](img/dependencies_constants_autocomplete_2.png)
 
