@@ -488,6 +488,7 @@ object AndroidX : IsNotADependency {
      *
      * @see AndroidX.Collection.ktx
      */
+    @MultiplatformLibrary
     val collection = Collection
 
     object Collection : DependencyNotationAndGroup("androidx.collection", "collection") {
