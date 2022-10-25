@@ -2240,6 +2240,14 @@ object AndroidX : IsNotADependency {
         val compose = module("paging-compose")
 
         /**
+         * Test artifact for Paging implementation
+         *
+         * ### API reference:
+         * - [androidx.paging.testing](https://developer.android.com/reference/androidx/paging/testing/package-summary)
+         */
+        val testing = module("paging-testing")
+
+        /**
          * RxJava2 support with Kotlin extensions
          *
          * ### API reference:

@@ -218,6 +218,7 @@ androidx.paging..paging-runtime=AndroidX.paging.runtime
 androidx.paging..paging-rxjava2-ktx=AndroidX.paging.rxJava2Ktx
 androidx.paging..paging-rxjava2=AndroidX.paging.rxJava2
 androidx.paging..paging-rxjava3=AndroidX.paging.rxJava3
+androidx.paging..paging-testing=AndroidX.paging.testing
 androidx.palette..palette-ktx=AndroidX.palette.ktx
 androidx.palette..palette=AndroidX.palette
 androidx.preference..preference-ktx=AndroidX.preference.ktx
