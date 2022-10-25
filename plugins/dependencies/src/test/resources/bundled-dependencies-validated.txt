@@ -262,6 +262,7 @@ androidx.test.espresso.idling:idling-net
 androidx.test.espresso:espresso-accessibility
 androidx.test.espresso:espresso-contrib
 androidx.test.espresso:espresso-core
+androidx.test.espresso:espresso-device
 androidx.test.espresso:espresso-idling-resource
 androidx.test.espresso:espresso-intents
 androidx.test.espresso:espresso-remote

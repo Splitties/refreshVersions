@@ -2751,6 +2751,8 @@ object AndroidX : IsNotADependency {
 
             val core = module("espresso-core")
 
+            val device = module("espresso-device")
+
             /**
              * Guide: [Espresso lists: Interact with recycler view list items](https://developer.android.com/training/testing/espresso/lists#recycler-view-list-items)
              */

@@ -267,6 +267,7 @@ androidx.test..runner=AndroidX.test.runner
 androidx.test.espresso..espresso-accessibility=AndroidX.test.espresso.accessibility
 androidx.test.espresso..espresso-contrib=AndroidX.test.espresso.contrib
 androidx.test.espresso..espresso-core=AndroidX.test.espresso.core
+androidx.test.espresso..espresso-device=AndroidX.test.espresso.device
 androidx.test.espresso..espresso-idling-resource=AndroidX.test.espresso.idlingResource
 androidx.test.espresso..espresso-intents=AndroidX.test.espresso.intents
 androidx.test.espresso..espresso-remote=AndroidX.test.espresso.remote

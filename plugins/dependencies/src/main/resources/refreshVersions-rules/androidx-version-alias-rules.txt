@@ -130,6 +130,9 @@ androidx.test.ext:junit-*
 androidx.test.espresso.idling(-*) // Same version as other androidx.test.espresso artifacts.
 ^^^^^^^^^^^^^^^^^^^^^^
 
+androidx.test.espresso:espresso-device(-*)
+^^^^^^^^^^^^^^         ^^^^^^^^^^^^^^^
+
 androidx.tracing:tracing-perfetto(-*)
 ^^^^^^^^^        ^^^^^^^^^^^^^^^^
 
