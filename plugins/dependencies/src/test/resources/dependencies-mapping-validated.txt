@@ -130,6 +130,7 @@ androidx.games..games-text-input=AndroidX.games.textInput
 androidx.glance..glance-appwidget=AndroidX.glance.appWidget
 androidx.glance..glance-wear-tiles=AndroidX.glance.wearTiles
 androidx.glance..glance=AndroidX.glance
+androidx.graphics..graphics-core=AndroidX.graphics.core
 androidx.gridlayout..gridlayout=AndroidX.gridLayout
 androidx.health..health-services-client=AndroidX.health.servicesClient
 androidx.health.connect..connect-client=AndroidX.health.connect.client

@@ -129,6 +129,7 @@ androidx.games..games-text-input=version.androidx.games-text-input
 androidx.glance..glance-appwidget=version.androidx.glance
 androidx.glance..glance-wear-tiles=version.androidx.glance
 androidx.glance..glance=version.androidx.glance
+androidx.graphics..graphics-core=version.androidx.graphics
 androidx.gridlayout..gridlayout=version.androidx.gridlayout
 androidx.health..health-services-client=version.androidx.health-services-client
 androidx.health.connect..connect-client=version.androidx.health.connect

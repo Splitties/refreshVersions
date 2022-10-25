@@ -1527,6 +1527,26 @@ object AndroidX : IsNotADependency {
     }
 
     /**
+     * Leverage graphics facilities across multiple Android platform releases.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/graphics)
+     */
+    val graphics = Graphics
+
+    object Graphics : DependencyGroup(
+        group = "androidx.graphics"
+    ) {
+        /**
+         * ### API reference:
+         * - [androidx.graphics.lowlatency](https://developer.android.com/reference/kotlin/androidx/graphics/lowlatency/package-summary)
+         * - [androidx.graphics.opengl](https://developer.android.com/reference/kotlin/androidx/graphics/opengl/package-summary)
+         * - [androidx.graphics.opengl.egl](https://developer.android.com/reference/kotlin/androidx/graphics/opengl/egl/package-summary)
+         * - [androidx.graphics.surface](https://developer.android.com/reference/kotlin/androidx/graphics/surface/package-summary)
+         */
+        val core = module("graphics-core")
+    }
+
+    /**
      * Implement a grid layout.
      *
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/gridlayout)
