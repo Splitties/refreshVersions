@@ -495,14 +495,20 @@ object AndroidX : IsNotADependency {
      */
     val compose = Compose
 
-    object Compose : IsNotADependency {
+    object Compose : DependencyGroup(group = "androidx.compose") {
+
+        val bom = module("compose-bom", isBom = true)
 
         /**
          * Transform @Composable functions and enable optimizations with a Kotlin compiler plugin.
          *
          * [Release notes](https://developer.android.com/jetpack/androidx/releases/compose-compiler)
          */
-        val compiler = DependencyNotation("androidx.compose.compiler", "compiler")
+        val compiler = module(
+            group = "androidx.compose.compiler",
+            name = "compiler",
+            usePlatformConstraints = false // Not included in the BoM, and not used as a regular dependency.
+        )
 
         /**
          * Fundamental building blocks of Compose's programming model and state management,
@@ -520,7 +526,11 @@ object AndroidX : IsNotADependency {
          */
         val runtime = Runtime
 
-        object Runtime : DependencyNotationAndGroup(group = "androidx.compose.runtime", name = "runtime") {
+        object Runtime : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.runtime",
+            name = "runtime"
+        ) {
 
             val dispatch = module("runtime-dispatch")
 
@@ -578,7 +588,11 @@ object AndroidX : IsNotADependency {
          */
         val animation = Animation
 
-        object Animation : DependencyNotationAndGroup(group = "androidx.compose.animation", name = "animation") {
+        object Animation : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.animation",
+            name = "animation"
+        ) {
 
             /**
              * Animation engine and animation primitives that are the building blocks of the Compose animation library.
@@ -648,7 +662,11 @@ object AndroidX : IsNotADependency {
          */
         val ui = Ui
 
-        object Ui : DependencyNotationAndGroup(group = "androidx.compose.ui", name = "ui") {
+        object Ui : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.ui",
+            name = "ui"
+        ) {
 
             /**
              * Compose classes related to dimensions without units
@@ -707,7 +725,11 @@ object AndroidX : IsNotADependency {
              */
             val text = Text
 
-            object Text : DependencyNotationAndGroup(group = group, name = "ui-text") {
+            object Text : DependencyNotationAndGroup(
+                platformConstrainsDelegateGroup = Compose,
+                group = group,
+                name = "ui-text"
+            ) {
 
                 /**
                  * Compose Downloadable Fonts integration for Google Fonts.
@@ -787,7 +809,11 @@ object AndroidX : IsNotADependency {
          */
         val foundation = Foundation
 
-        object Foundation : DependencyNotationAndGroup(group = "androidx.compose.foundation", name = "foundation") {
+        object Foundation : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.foundation",
+            name = "foundation"
+        ) {
 
             /**
              * Compose layout implementations
@@ -814,7 +840,11 @@ object AndroidX : IsNotADependency {
          */
         val material = Material
 
-        object Material : DependencyNotationAndGroup(group = "androidx.compose.material", name = "material") {
+        object Material : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.material",
+            name = "material"
+        ) {
 
             /**
              * Material icons
@@ -867,7 +897,11 @@ object AndroidX : IsNotADependency {
          */
         val material3 = Material3
 
-        object Material3 : DependencyNotationAndGroup(group = "androidx.compose.material3", name = "material3") {
+        object Material3 : DependencyNotationAndGroup(
+            platformConstrainsDelegateGroup = Compose,
+            group = "androidx.compose.material3",
+            name = "material3"
+        ) {
 
             /**
              * Provides window size classes for building responsive UIs

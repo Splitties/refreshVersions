@@ -40,6 +40,7 @@ androidx.car.app..app=AndroidX.carApp
 androidx.cardview..cardview=AndroidX.cardView
 androidx.collection..collection-ktx=AndroidX.collection.ktx
 androidx.collection..collection=AndroidX.collection
+androidx.compose..compose-bom=AndroidX.compose.bom
 androidx.compose.animation..animation-core=AndroidX.compose.animation.core
 androidx.compose.animation..animation-graphics=AndroidX.compose.animation.graphics
 androidx.compose.animation..animation=AndroidX.compose.animation

@@ -243,6 +243,18 @@ sealed class AbstractDependencyGroup(
         name: String,
         isBom: Boolean = false,
         usePlatformConstraints: Boolean? = if (isBom) false else null
+    ) = module(
+        group = group,
+        name = name,
+        isBom = isBom,
+        usePlatformConstraints = usePlatformConstraints
+    )
+
+    fun module(
+        group: String,
+        name: String,
+        isBom: Boolean = false,
+        usePlatformConstraints: Boolean? = if (isBom) false else null
     ): DependencyNotation {
         assert(name.trimStart() == name) { "module($name) has superfluous leading whitespace" }
         assert(name.trimEnd() == name) { "module($name) has superfluous trailing whitespace" }

@@ -72,6 +72,7 @@ androidx.compose.ui:ui-tooling-preview
 androidx.compose.ui:ui-unit
 androidx.compose.ui:ui-util
 androidx.compose.ui:ui-viewbinding
+androidx.compose:compose-bom
 androidx.concurrent:concurrent-futures
 androidx.concurrent:concurrent-futures-ktx
 androidx.constraintlayout:constraintlayout

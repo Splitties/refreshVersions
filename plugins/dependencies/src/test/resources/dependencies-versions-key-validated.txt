@@ -39,6 +39,7 @@ androidx.car.app..app=version.androidx.car.app
 androidx.cardview..cardview=version.androidx.cardview
 androidx.collection..collection-ktx=version.androidx.collection
 androidx.collection..collection=version.androidx.collection
+androidx.compose..compose-bom=version.androidx.compose
 androidx.compose.animation..animation-core=version.androidx.compose.animation
 androidx.compose.animation..animation-graphics=version.androidx.compose.animation
 androidx.compose.animation..animation=version.androidx.compose.animation
