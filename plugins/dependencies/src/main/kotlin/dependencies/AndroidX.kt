@@ -198,7 +198,20 @@ object AndroidX : IsNotADependency {
      * ### API reference:
      * - [androidx.asynclayoutinflater.view](https://developer.android.com/reference/kotlin/androidx/asynclayoutinflater/view/package-summary)
      */
-    val asyncLayoutInflater = DependencyNotation("androidx.asynclayoutinflater", "asynclayoutinflater")
+    val asyncLayoutInflater = AsyncLayoutInflater
+
+    object AsyncLayoutInflater : DependencyNotationAndGroup(
+        group = "androidx.asynclayoutinflater",
+        name = "asynclayoutinflater"
+    ) {
+        /**
+         * A thread-safe LayoutInflater Factory that provides compatibility between AsyncLayoutInflater and AppCompat.
+         *
+         * ### API reference:
+         * - [androidx.asynclayoutinflater.appcompat](https://developer.android.com/reference/androidx/asynclayoutinflater/appcompat/package-summary)
+         */
+        val appcompat = module("asynclayoutinflater-appcompat")
+    }
 
     /**
      * Improve autofill accuracy via extending hints.

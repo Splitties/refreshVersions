@@ -15,6 +15,7 @@ androidx.appsearch..appsearch=version.androidx.appsearch
 androidx.arch.core..core-common=version.androidx.arch.core
 androidx.arch.core..core-runtime=version.androidx.arch.core
 androidx.arch.core..core-testing=version.androidx.arch.core
+androidx.asynclayoutinflater..asynclayoutinflater-appcompat=version.androidx.asynclayoutinflater
 androidx.asynclayoutinflater..asynclayoutinflater=version.androidx.asynclayoutinflater
 androidx.autofill..autofill=version.androidx.autofill
 androidx.benchmark..benchmark-common=version.androidx.benchmark
