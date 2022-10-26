@@ -3,7 +3,6 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 object Google : IsNotADependency {
@@ -642,7 +641,6 @@ object Google : IsNotADependency {
      * - [Official website here](https://google.github.io/horologist/)
      * - GitHub page: https://github.com/google/horologist
      */
-    @Incubating
     object Horologist : DependencyGroup(
         group = "com.google.android.horologist",
         rawRules = """
