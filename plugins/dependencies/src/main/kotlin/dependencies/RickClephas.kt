@@ -1,7 +1,6 @@
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused")
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 /**
@@ -10,7 +9,6 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * - GitHub page: [NativeCoroutines](https://github.com/rickclephas/KMP-NativeCoroutines)
  * - [GitHub Releases here](https://github.com/rickclephas/KMP-NativeCoroutines/releases)
  */
-@Incubating
 object RickClephas : IsNotADependency {
 
     val nativeCoroutines = NativeCoroutines
