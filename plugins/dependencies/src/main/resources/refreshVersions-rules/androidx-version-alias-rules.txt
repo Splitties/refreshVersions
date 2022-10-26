@@ -37,6 +37,9 @@ androidx.core:core-splashscreen(-*)
 androidx.compose.foundation:foundation-text // Deprecated artifact, no longer updated with its family.
 ^^^^^^^^.^^^^^^^.           ^^^^^^^^^^^^^^^
 
+androidx.compose.runtime:runtime-tracing // Probably only during alpha stage
+^^^^^^^^.^^^^^^^.        ^^^^^^^^^^^^^^^
+
 androidx.customview:customview(-*)
 ^^^^^^^^.           ^^^^^^^^^^^^^^
 
