@@ -4,6 +4,7 @@ import de.fayard.refreshVersions.core.ModuleId
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.internal.artifacts.dependencies.AbstractDependency
 
+@NeedsRefactoring("Simpler name and use it everywhere")
 internal class ConfigurationLessDependency(
     private val group: String,
     private val name: String,
@@ -20,6 +21,7 @@ internal class ConfigurationLessDependency(
     )
 
     companion object {
+        @FunctionalCore(testName = "TODO")
         operator fun invoke(dependencyNotation: String): ConfigurationLessDependency {
             val beforeFirstColon = dependencyNotation.substringBefore(':')
             val afterFirstColon = dependencyNotation.substringAfter(':')

@@ -1,12 +1,14 @@
 package de.fayard.refreshVersions.core.internal.removals_replacement
 
 import de.fayard.refreshVersions.core.ModuleId
+import de.fayard.refreshVersions.core.internal.FunctionalCore
 import java.io.InputStream
 
 internal fun InputStream.parseRemovedDependencyNotationsHistory(currentRevision: Int): List<RemovedDependencyNotation> {
     return bufferedReader().lineSequence().parseRemovedDependencyNotationsHistory(currentRevision)
 }
 
+@FunctionalCore(testName = "TODO")
 internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
     currentRevision: Int?
 ): List<RemovedDependencyNotation> {
@@ -41,11 +43,13 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
                 check(replacementMavenCoordinates.isEmpty())
                 dependencyNotation = line.removeSurrounding("~~").also { check(it.isNotEmpty()) }
             }
+
             line.startsWith("//") -> {
                 checkNotNull(dependencyNotation)
                 check(replacementMavenCoordinates.isEmpty())
                 commentLines.add(line)
             }
+
             line.startsWith("moved:[") -> {
                 checkNotNull(dependencyNotation)
                 check(replacementMavenCoordinates.isEmpty()) {
@@ -53,6 +57,7 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
                 }
                 replacementMavenCoordinates += parseReplacementLine(line, "moved:")
             }
+
             line.startsWith("extra:[") -> {
                 checkNotNull(dependencyNotation)
                 check(replacementMavenCoordinates.isNotEmpty()) {
@@ -62,6 +67,7 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
                 check(coordinates !in replacementMavenCoordinates)
                 replacementMavenCoordinates += coordinates
             }
+
             line.startsWith("id:[") -> {
                 checkNotNull(dependencyNotation)
                 val newElement = RemovedDependencyNotation(
@@ -81,12 +87,14 @@ internal fun Sequence<String>.parseRemovedDependencyNotationsHistory(
                 commentLines.clear()
                 list.add(newElement)
             }
+
             line.startsWith("## [WIP]") -> {
                 check(dependencyNotation == null)
                 check(commentLines.isEmpty())
                 check(replacementMavenCoordinates.isEmpty())
                 return list
             }
+
             line.startsWith("**") -> throw IllegalArgumentException()
             else -> throw IllegalArgumentException()
         }

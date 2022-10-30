@@ -3,6 +3,7 @@ package de.fayard.refreshVersions.core.internal
 import de.fayard.refreshVersions.core.ModuleId
 
 @InternalRefreshVersionsApi
+@FunctionalCore(testName = "TODO")
 abstract class ArtifactVersionKeyReader private constructor(
     val getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String>
 ) {

@@ -1,7 +1,9 @@
 package de.fayard.refreshVersions.core.internal.codeparsing
 
+import de.fayard.refreshVersions.core.internal.FunctionalCore
 import de.fayard.refreshVersions.core.internal.TaggedRange
 
+@FunctionalCore(testName = "TODO")
 internal fun CharSequence.rangesOfCode(
     code: String,
     startIndex: Int = 0,
@@ -33,6 +35,7 @@ internal fun CharSequence.rangesOfCode(
     return list
 }
 
+@FunctionalCore(testName = "TODO")
 internal fun CharSequence.rangeOfCode(
     code: String,
     startIndex: Int = 0,
@@ -46,6 +49,7 @@ internal fun CharSequence.rangeOfCode(
     sectionsRanges = sectionsRanges
 )
 
+@FunctionalCore(testName = "TODO")
 internal fun CharSequence.rangeOfStringLiteral(
     stringLiteral: String,
     startIndex: Int = 0,
@@ -59,6 +63,7 @@ internal fun CharSequence.rangeOfStringLiteral(
     sectionsRanges = sectionsRanges
 )
 
+@FunctionalCore(testName = "TODO")
 internal fun CharSequence.rangeOf(
     text: String,
     sectionKind: SourceCodeSection,
@@ -83,6 +88,7 @@ internal fun CharSequence.rangeOf(
 /**
  * Returns -1 if there's no import statement
  */
+@FunctionalCore(testName = "TODO")
 internal fun CharSequence.findFirstImportStatement(
     sectionsRanges: List<TaggedRange<SourceCodeSection>>
 ): Int {
@@ -103,6 +109,7 @@ internal fun CharSequence.findFirstImportStatement(
 /**
  * Returns lastIndex + 1 (i.e. [CharSequence.length]) if no non-blank code chunk is found.
  */
+@FunctionalCore(testName = "TODO")
 internal fun CharSequence.indexOfFirstNonBlankCodeChunk(
     sectionsRanges: List<TaggedRange<SourceCodeSection>>
 ): Int {

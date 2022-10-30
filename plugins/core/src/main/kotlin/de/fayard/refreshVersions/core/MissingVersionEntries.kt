@@ -14,6 +14,8 @@ fun addMissingEntriesInVersionsProperties(project: Project) {
 
     val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
+
+    @FunctionalCore(testName = "TODO")
     val newEntries: Map<String, ExternalDependency> = findMissingEntries(
         configurations = configurationsWithHardcodedDependencies,
         versionsMap = versionsMap,

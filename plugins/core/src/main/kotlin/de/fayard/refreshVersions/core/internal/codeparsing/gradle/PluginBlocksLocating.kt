@@ -1,10 +1,12 @@
 package de.fayard.refreshVersions.core.internal.codeparsing.gradle
 
+import de.fayard.refreshVersions.core.internal.FunctionalCore
 import de.fayard.refreshVersions.core.internal.TaggedRange
 import de.fayard.refreshVersions.core.internal.codeparsing.SourceCodeSection
 import de.fayard.refreshVersions.core.internal.codeparsing.SymbolLocationFindingRule
 import de.fayard.refreshVersions.core.internal.codeparsing.findSymbolsRanges
 
+@FunctionalCore(testName = "TODO")
 internal fun CharSequence.findPluginBlocksRanges(
     ranges: List<TaggedRange<SourceCodeSection>>
 ): List<TaggedRange<*>> = findSymbolsRanges(

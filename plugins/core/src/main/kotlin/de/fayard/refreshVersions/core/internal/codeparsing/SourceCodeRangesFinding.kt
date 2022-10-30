@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core.internal.codeparsing
 
 import de.fayard.refreshVersions.core.extensions.text.forEachIndexedSkippable
+import de.fayard.refreshVersions.core.internal.FunctionalCore
 import de.fayard.refreshVersions.core.internal.TaggedRange
 
 /**
@@ -9,6 +10,7 @@ string literals, and the rest, separately.
 
 The returned list covers the entire passed CharSequence.
  */
+@FunctionalCore(testName = "TODO")
 internal fun CharSequence.findRanges(
     programmingLanguage: ProgrammingLanguage
 ): List<TaggedRange<SourceCodeSection>> = mutableListOf<TaggedRange<SourceCodeSection>>().also {

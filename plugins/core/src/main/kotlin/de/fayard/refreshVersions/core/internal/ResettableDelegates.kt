@@ -3,6 +3,7 @@ package de.fayard.refreshVersions.core.internal
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
+@FunctionalCore(testName = "TODO")
 internal class ResettableDelegates {
 
     fun reset() {
@@ -26,7 +27,7 @@ internal class ResettableDelegates {
 
         override fun getValue(thisRef: Any?, property: KProperty<*>): T = field ?: error(
             "Property ${property.name} not initialized yet! " +
-                    "Has it been used after reset or before init?"
+                "Has it been used after reset or before init?"
         )
 
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {

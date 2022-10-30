@@ -17,6 +17,7 @@ import kotlin.reflect.jvm.javaField
 import kotlin.reflect.jvm.javaType
 import kotlin.reflect.typeOf
 
+@FunctionalCore(testName = "TODO")
 internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = false): List<DependencyMapping> {
     AbstractDependencyGroup.disableBomCheck = true
     val result = ALL_DEPENDENCIES_NOTATIONS.asSequence().flatMap { objectInstance ->

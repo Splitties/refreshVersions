@@ -7,6 +7,7 @@ import org.gradle.api.artifacts.Dependency
  * Despite TOML supporting braces in its syntax, they must open and close on
  * the same line, so having a per-line model is fine.
  */
+@FunctionalCore(testName = "TODO")
 internal data class TomlLine(
     val section: TomlSection,
     val text: String,

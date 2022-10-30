@@ -30,6 +30,7 @@ val MEANING_LESS_NAMES: MutableList<String> = mutableListOf(
 )
 
 @InternalRefreshVersionsApi
+@FunctionalCore(testName = "TODO")
 fun List<Library>.computeAliases(
     configured: List<String>,
     byDefault: List<String> = MEANING_LESS_NAMES
@@ -114,6 +115,7 @@ enum class VersionMode {
 }
 
 @InternalRefreshVersionsApi
+@FunctionalCore(testName = "TODO")
 fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>, case: Case): Deps {
     val dependencies = this
 
