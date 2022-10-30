@@ -3,6 +3,8 @@ package de.fayard.refreshVersions.internal
 import de.fayard.refreshVersions.core.AbstractDependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.internal.DependencyMapping
+import de.fayard.refreshVersions.core.internal.FunctionalCore
+import de.fayard.refreshVersions.core.internal.NeedsRefactoring
 import dependencies.ALL_DEPENDENCIES_NOTATIONS
 import org.gradle.api.artifacts.ModuleIdentifier
 import java.lang.reflect.Field
@@ -28,6 +30,7 @@ internal fun getArtifactNameToConstantMapping(excludeBomDependencies: Boolean = 
     return result
 }
 
+@NeedsRefactoring("Dead code")
 internal fun getArtifactsFromDependenciesObject(objectInstance: Any): List<ModuleIdentifier> {
     return getArtifactNameToConstantMappingFromObject(
         objectInstance,

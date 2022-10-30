@@ -2,6 +2,7 @@ package de.fayard.refreshVersions
 
 import de.fayard.refreshVersions.core.*
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
+import de.fayard.refreshVersions.core.internal.NeedsRefactoring
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
 import de.fayard.refreshVersions.core.internal.skipConfigurationCache
 import de.fayard.refreshVersions.internal.getArtifactNameToConstantMapping
@@ -163,6 +164,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     private fun applyToProject(project: Project) {
         if (project != project.rootProject) return // We want the tasks only for the root project
 
+        @NeedsRefactoring("Almost dead code")
         if (FeatureFlag.OLD_TASKS.isEnabled) project.tasks.register<RefreshVersionsDependenciesMigrationTask>(
             name = "migrateToRefreshVersionsDependenciesConstants"
         ) {
@@ -173,6 +175,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             skipConfigurationCache()
         }
 
+        @NeedsRefactoring("Almost dead code")
         if (FeatureFlag.OLD_TASKS.isEnabled) project.tasks.register<DefaultTask>(
             name = "refreshVersionsDependenciesMapping"
         ) {

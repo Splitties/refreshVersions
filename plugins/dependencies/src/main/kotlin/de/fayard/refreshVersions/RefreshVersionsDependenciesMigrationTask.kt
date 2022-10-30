@@ -1,13 +1,15 @@
 package de.fayard.refreshVersions
 
+import de.fayard.refreshVersions.core.internal.NeedsRefactoring
+import de.fayard.refreshVersions.core.internal.cli.AnsiColor
 import de.fayard.refreshVersions.internal.promptProjectSelection
 import de.fayard.refreshVersions.internal.runInteractiveMigrationToDependenciesConstants
-import de.fayard.refreshVersions.core.internal.cli.AnsiColor
 import kotlinx.coroutines.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.logging.configuration.ConsoleOutput
 import org.gradle.api.tasks.TaskAction
 
+@NeedsRefactoring("Almost dead code")
 open class RefreshVersionsDependenciesMigrationTask : DefaultTask() {
 
     @TaskAction
