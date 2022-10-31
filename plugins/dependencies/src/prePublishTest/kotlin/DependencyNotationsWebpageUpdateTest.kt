@@ -34,7 +34,8 @@ class DependencyNotationsWebpageUpdateTest {
     }
 
     private fun generateLatestDependencyNotationsPage(): String {
-        val versionKeyReader = ArtifactVersionKeyReader.fromRulesDirectory()
+        val rulesDir = mainResources.resolve("refreshVersions-rules")
+        val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
         val markdownDependencies = getArtifactNameToConstantMapping().map {
             val moduleId = it.moduleId
             val versionKey = versionKeyReader.readVersionKey(moduleId.group, moduleId.name) ?: "NO-RULE"
