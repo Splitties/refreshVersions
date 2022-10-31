@@ -1,9 +1,9 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.ModuleId
+import java.io.File
 
 @InternalRefreshVersionsApi
-@FunctionalCore(testName = "TODO")
 abstract class ArtifactVersionKeyReader private constructor(
     val getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String>
 ) {
@@ -11,7 +11,12 @@ abstract class ArtifactVersionKeyReader private constructor(
     abstract fun readVersionKey(group: String, name: String): String?
 
     companion object {
+        private val rulesDir = File(".").absoluteFile.parentFile.parentFile
+            .resolve("dependencies/src/main/resources/refreshVersions-rules")
+            .also { require(it.canRead()) { "Can't read folder $it" } }
+        fun fromRulesDirectory() = fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
+        @FunctionalCore(testName = "TODO")
         fun fromRules(
             filesContent: List<String>,
             getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }

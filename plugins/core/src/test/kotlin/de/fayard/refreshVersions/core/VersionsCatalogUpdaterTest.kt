@@ -83,13 +83,10 @@ class VersionsCatalogUpdaterTest {
     }
 
 
-    private val rulesDir = File(".").absoluteFile.parentFile.parentFile
-        .resolve("dependencies/src/main/resources/refreshVersions-rules")
-        .also { require(it.canRead()) { "Can't read folder $it" } }
     private val versionsMap = mapOf(
         "version.junit.jupiter" to "42"
     )
-    private val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
+    private val versionKeyReader = ArtifactVersionKeyReader.fromRulesDirectory()
 
     @TestFactory
     fun refreshVersionsCatalog() = testResources.resolve("refreshVersionsCatalog").listFiles()!!.mapNotNull { folder ->
