@@ -15,20 +15,24 @@ fun addMissingEntriesInVersionsProperties(project: Project) {
     val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
 
-    @FunctionalCore(testName = "TODO")
     val newEntries: Map<String, ExternalDependency> = findMissingEntries(
         configurations = configurationsWithHardcodedDependencies,
         versionsMap = versionsMap,
         versionKeyReader = versionKeyReader
-    ) + UsedPluginsTracker.usedPluginsWithoutEntryInVersionsFile
-        .associateBy { d -> pluginDependencyNotationToVersionKey(d.name) }
-        .filterKeys { key -> key != null && key !in versionsMap }
-        .mapKeys { (k, _) -> k!! }
+    ) + externalDependencyMap(UsedPluginsTracker.usedPluginsWithoutEntryInVersionsFile, versionsMap)
 
 
     VersionsPropertiesModel.writeWithNewEntries(newEntries)
     OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 }
+
+@InternalRefreshVersionsApi
+@FunctionalCore(testName = "TODO")
+private fun externalDependencyMap(usedPluginsWithoutEntryInVersionsFile: List<ExternalDependency>, versionsMap: Map<String, String>) =
+    usedPluginsWithoutEntryInVersionsFile
+        .associateBy { d -> pluginDependencyNotationToVersionKey(d.name) }
+        .filterKeys { key -> key != null && key !in versionsMap }
+        .mapKeys { (k, _) -> k!! }
 
 
 @InternalRefreshVersionsApi
@@ -79,6 +83,7 @@ fun Configuration.shouldBeIgnored(): Boolean {
     // implementation, api, compileOnly, runtimeOnly, kapt, plus test, MPP and MPP test variants.
 }
 
+@FunctionalCore(testName = "TODO")
 internal fun findMissingEntries(
     configurations: List<Configuration>,
     versionsMap: Map<String, String>,

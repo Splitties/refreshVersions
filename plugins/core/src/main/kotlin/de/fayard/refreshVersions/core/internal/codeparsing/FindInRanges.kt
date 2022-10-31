@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core.internal.codeparsing
 
 import de.fayard.refreshVersions.core.internal.FunctionalCore
+import de.fayard.refreshVersions.core.internal.NeedsRefactoring
 import de.fayard.refreshVersions.core.internal.TaggedRange
 
 @FunctionalCore(testName = "TODO")
@@ -50,6 +51,7 @@ internal fun CharSequence.rangeOfCode(
 )
 
 @FunctionalCore(testName = "TODO")
+@NeedsRefactoring("Dead code")
 internal fun CharSequence.rangeOfStringLiteral(
     stringLiteral: String,
     startIndex: Int = 0,

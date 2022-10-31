@@ -6,7 +6,7 @@ import de.fayard.refreshVersions.core.internal.codeparsing.ProgrammingLanguage
 import de.fayard.refreshVersions.core.internal.codeparsing.SourceCodeSection
 import de.fayard.refreshVersions.core.internal.codeparsing.findRanges
 
-@FunctionalCore(testName = "TODO")
+@FunctionalCore(testName = "SettingsPluginUpdaterTest")
 internal fun CharSequence.extractGradleScriptSections(
     isKotlinDsl: Boolean
 ): List<TaggedRange<SourceCodeSection>> = findRanges(
