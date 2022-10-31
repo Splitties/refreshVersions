@@ -105,6 +105,7 @@ data class Library(
 }
 
 @InternalRefreshVersionsApi
+@NeedsRefactoring("Use Dependency instead")
 class Deps(
     val libraries: List<Library>,
     val names: Map<Library, String>
