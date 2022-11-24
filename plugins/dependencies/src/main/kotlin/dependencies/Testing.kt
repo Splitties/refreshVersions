@@ -242,8 +242,6 @@ object Testing : IsNotADependency {
      *
      * [GitHub releases](https://github.com/mockito/mockito/releases)
      *
-     * [Using Mockito with Kotlin](https://github.com/nhaarman/mockito-kotlin) (third party project)
-     *
      * GitHub page: [mockito/mockito](https://github.com/mockito/mockito)
      */
     val mockito = Mockito
@@ -255,12 +253,7 @@ object Testing : IsNotADependency {
         val inline = module("mockito-inline")
         val errorProne = module("mockito-errorprone")
         val junitJupiter = module("mockito-junit-jupiter")
-
-        /**
-         * Using Mockito with Kotlin
-         * [More info here](https://github.com/nhaarman/mockito-kotlin)
-         */
-        val kotlin = DependencyNotation("com.nhaarman.mockitokotlin2", "mockito-kotlin")
+        val kotlin = DependencyNotation("org.mockito.kotlin", "mockito-kotlin")
     }
 
     /**

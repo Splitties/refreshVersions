@@ -623,7 +623,6 @@ com.louiscad.splitties:splitties-views-recyclerview
 com.louiscad.splitties:splitties-views-selectable
 com.louiscad.splitties:splitties-views-selectable-appcompat
 com.louiscad.splitties:splitties-views-selectable-constraintlayout
-com.nhaarman.mockitokotlin2:mockito-kotlin
 com.rickclephas.kmp:kmp-nativecoroutines-annotations
 com.rickclephas.kmp:kmp-nativecoroutines-compiler
 com.rickclephas.kmp:kmp-nativecoroutines-compiler-embeddable
@@ -1047,6 +1046,7 @@ org.kodein.di:kodein-di-framework-ktor-server-jvm
 org.kodein.di:kodein-di-framework-tornadofx-jvm
 org.kodein.di:kodein-di-js
 org.kodein.di:kodein-di-jxinject-jvm
+org.mockito.kotlin:mockito-kotlin
 org.mockito:mockito-android
 org.mockito:mockito-core
 org.mockito:mockito-errorprone
