@@ -1,0 +1,8 @@
+com.github.bumptech.glide:*
+           ^^^^^^^^^^^^^^
+
+com.github.bumptech.glide:compose
+           ^^^^^^^^^^^^^^.^^^^^^^
+
+com.github.bumptech.glide:ktx
+           ^^^^^^^^^^^^^^.^^^

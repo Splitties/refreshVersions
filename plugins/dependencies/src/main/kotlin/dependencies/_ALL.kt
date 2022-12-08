@@ -6,6 +6,7 @@ import Android
 import AndroidX
 import ApolloGraphQL
 import Arrow
+import BumpTech
 import COIL
 import CashApp
 import Chucker
@@ -35,6 +36,7 @@ internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     AndroidX,
     ApolloGraphQL,
     Arrow,
+    BumpTech,
     CashApp,
     Chucker,
     COIL,
