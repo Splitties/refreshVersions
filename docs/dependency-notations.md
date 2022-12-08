@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1180** Dependency Notations in **26** groups and **249** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1197** Dependency Notations in **27** groups and **250** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
