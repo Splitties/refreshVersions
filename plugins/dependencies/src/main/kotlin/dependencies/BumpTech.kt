@@ -23,7 +23,7 @@ object BumpTech : IsNotADependency {
         /** An integration library to support AVIF images in Glide. */
         val avif = module("avif-integration")
 
-        /** Glide's anntation processor. */
+        /** Glide's annotation processor. */
         val compiler = module("compiler")
 
         /** An integration library to integrate with Jetpack Compose. */
@@ -35,7 +35,7 @@ object BumpTech : IsNotADependency {
         /** An integration library to use Cronet to fetch data over HTTP/HTTPS in Glide.  */
         val cronet = module("cronet-integration")
 
-        /** A cache that uses a bounded amount of space on a filesystem. Based on Jake Wharton's tailored for Glide. */
+        /** A cache that uses a bounded amount of space on a filesystem. Based on Jake Wharton's, tailored for Glide. */
         val diskLruCache = module("disklrucache")
 
         /** An integration library allowing users to re-encode or create animated GIFs. */
@@ -60,9 +60,9 @@ object BumpTech : IsNotADependency {
         val okhttp3 = module("okhttp3-integration")
 
         /** An integration library to display images in `RecyclerView`. */
-        val recyclerView = module("recyclerView-integration")
+        val recyclerView = module("recyclerview-integration")
 
         /** An integration library to use Volley to fetch data over HTTP/HTTPS in Glide. */
-        val volley = module("concurrent-integration")
+        val volley = module("volley-integration")
     }
 }
