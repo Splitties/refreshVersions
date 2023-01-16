@@ -603,6 +603,8 @@ object Google : IsNotADependency {
             }
 
             val compiler = module("hilt-compiler")
+
+            val core = module("hilt-core")
         }
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")

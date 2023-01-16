@@ -472,6 +472,7 @@ com.google.dagger..hilt-android-gradle-plugin=Google.dagger.hilt.android.gradleP
 com.google.dagger..hilt-android-testing=Google.dagger.hilt.android.testing
 com.google.dagger..hilt-android=Google.dagger.hilt.android
 com.google.dagger..hilt-compiler=Google.dagger.hilt.compiler
+com.google.dagger..hilt-core=Google.dagger.hilt.core
 com.google.firebase..firebase-analytics-ktx=Firebase.analyticsKtx
 com.google.firebase..firebase-analytics-ktx=Google.firebase.analyticsKtx
 com.google.firebase..firebase-analytics=Firebase.analytics

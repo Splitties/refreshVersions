@@ -471,6 +471,7 @@ com.google.dagger:hilt-android-compiler
 com.google.dagger:hilt-android-gradle-plugin
 com.google.dagger:hilt-android-testing
 com.google.dagger:hilt-compiler
+com.google.dagger:hilt-core
 com.google.firebase:firebase-analytics
 com.google.firebase:firebase-analytics-ktx
 com.google.firebase:firebase-appdistribution-gradle
