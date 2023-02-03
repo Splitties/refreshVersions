@@ -751,6 +751,8 @@ io.github.javaeden.orchid:OrchidTaxonomies
 io.github.javaeden.orchid:OrchidTest
 io.github.javaeden.orchid:OrchidWiki
 io.github.javaeden.orchid:OrchidWritersBlocks
+io.gitlab.arturbosch.detekt:detekt-formatting
+io.gitlab.arturbosch.detekt:detekt-gradle-plugin
 io.insert-koin:koin-android
 io.insert-koin:koin-android-compat
 io.insert-koin:koin-androidx-compose

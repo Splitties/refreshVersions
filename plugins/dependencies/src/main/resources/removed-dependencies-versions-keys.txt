@@ -107,3 +107,4 @@ androidx.health..health-connect-client=version.androidx.health-connect-client
 com.google.accompanist..accompanist-glide=version.google.accompanist
 com.google.accompanist..accompanist-imageloading-core=version.google.accompanist
 app.cash.molecule..molecule-testing=version.app.cash.molecule
+androidx.compose.runtime..runtime-tracing=version.androidx.compose.runtime
