@@ -118,8 +118,8 @@ tasks.processResources {
 val prePublishTest = testing.suites.create<JvmTestSuite>("prePublishTest") {
     useJUnitJupiter()
     dependencies {
-        implementation(project)
-        implementation(project.dependencies.testFixtures(project(":refreshVersions-core")))
+        implementation(project(":refreshVersions"))
+        implementation(testFixtures(project(":refreshVersions-core")))
         implementation(Testing.kotest.assertions.core)
     }
 }
