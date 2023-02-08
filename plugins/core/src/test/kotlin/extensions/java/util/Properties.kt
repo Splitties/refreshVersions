@@ -4,7 +4,7 @@ import java.io.File
 import java.util.*
 
 fun Properties.loadAndGetAsMap(file: File): Map<String, String> {
-    load(file.inputStream())
+    file.inputStream().use { load(it) }
     @Suppress("unchecked_cast")
     return this as Map<String, String>
 }
