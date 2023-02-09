@@ -124,7 +124,7 @@ internal suspend fun lookupVersionCandidates(
                     key = propertyName
                 )?.let { Version(it) } ?: emptyVersion
                 val lowestVersionInCatalog = versionsCatalogLibraries.mapNotNull {
-                    val matches = it.module.group == moduleId.group && it.module.name == it.module.name
+                    val matches = it.module.group == moduleId.group && it.module.name == moduleId.name
                     when {
                         matches -> it.versionConstraint.tryExtractingSimpleVersion()?.let { rawVersion ->
                             Version(rawVersion)
