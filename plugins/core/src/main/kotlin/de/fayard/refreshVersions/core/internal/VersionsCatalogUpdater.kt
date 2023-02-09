@@ -51,7 +51,7 @@ internal class VersionsCatalogUpdater(
         }.mapNotNull { libOrPlugin ->
             dependenciesUpdates.firstOrNull {
                 val moduleId = it.moduleId
-                (moduleId.name == libOrPlugin.name) && (moduleId.group == libOrPlugin.group)
+                (moduleId.name == libOrPlugin.name) && ((moduleId.group ?: "<unscoped>") == libOrPlugin.group)
             }
         }.firstOrNull()
     }

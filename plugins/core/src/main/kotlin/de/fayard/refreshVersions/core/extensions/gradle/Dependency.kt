@@ -23,5 +23,9 @@ internal fun Dependency.npmModuleId(): ModuleId.Npm {
 }
 
 internal fun Dependency.matches(moduleId: ModuleId): Boolean {
-    return moduleId.group == group && moduleId.name == name
+    return if ((moduleId is ModuleId.Npm) && (moduleId.group != null)) {
+        moduleId.let { "@${it.group}/${it.name}" } == name
+    } else {
+        moduleId.group == group && moduleId.name == name
+    }
 }
