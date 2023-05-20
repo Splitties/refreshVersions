@@ -107,7 +107,7 @@ Here's a usage example with Jetpack Compose in an Android project:
     ...
 
     composeOptions {
-        kotlinCompilerExtensionVersion = versionFor(AndroidX.compose.ui)
+        kotlinCompilerExtensionVersion = versionFor(project, AndroidX.compose.ui)
     }
     ```
 
