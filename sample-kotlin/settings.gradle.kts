@@ -1,3 +1,4 @@
+import de.fayard.refreshVersions.PrefixRule
 import de.fayard.refreshVersions.core.FeatureFlag.*
 import de.fayard.refreshVersions.core.StabilityLevel
 
@@ -31,6 +32,12 @@ refreshVersions {
     }
 
     extraArtifactVersionKeyRules(file("refreshVersions-extra-rules.txt"))
+
+
+    extraVersionRules(
+        PrefixRule("koin", "io.insert-koin", "koin"),
+        PrefixRule("ktor", "io.ktor", null),
+    )
 
     // ignore dependencies among a blacklist of version keys
     rejectVersionIf {

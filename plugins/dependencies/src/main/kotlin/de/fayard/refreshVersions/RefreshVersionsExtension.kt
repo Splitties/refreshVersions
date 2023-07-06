@@ -27,6 +27,10 @@ open class RefreshVersionsExtension {
         extraArtifactVersionKeyRules = extraArtifactVersionKeyRules + rawRules
     }
 
+    fun extraVersionRules(vararg rules: PrefixRule) {
+        extraArtifactVersionKeyRules(rules.joinToString("\n\n") { it.toRawRules() })
+    }
+
     fun featureFlags(extension: Action<FeatureFlagExtension>) {
         extension.execute(FeatureFlagExtension())
     }
@@ -49,5 +53,16 @@ open class FeatureFlagExtension {
     }
     fun disable(flag: FeatureFlag) {
         FeatureFlag.userSettings[flag] = false
+    }
+}
+
+data class PrefixRule(
+    val versionName: String,
+    val mavenGroup: String,
+    val prefix: String? = null
+) {
+    fun toRawRules(): String {
+        println("TODO: refreshVersions.extraVersionRules(PrefixRule(...)) not implemented. See https://github.com/jmfayard/refreshVersions/issues/580")
+        return ""
     }
 }
