@@ -114,7 +114,7 @@ A perhaps better approach is to display development versions only if you are alr
     }
     ```
 
-`rejectVersionsIf { ...}` is pretty flexible, you can also use it to ban versions from specific version keys:
+`rejectVersionIf { ...}` is pretty flexible, you can also use it to ban versions from specific version keys:
 
 === "settings.gradle.kts"
     ```kotlin

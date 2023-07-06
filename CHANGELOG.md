@@ -718,7 +718,7 @@ Look for [issues with the `Dependency notations` and `up-for-grabs` tags](https:
 ### New features
 
 - refreshVersions will now add `## unused` comments on top of unused entries in the `versions.properties` file after you run the `refreshVersions` task, so you know which ones are obsolete and can be removed.
-- The new `rejectVersionsIf { … }` predicate available in the `refreshVersions { … }` extension in your `settings.gradle[.kts]` file will allow you to filter any kind of versions you don't want to know about. It can be handy to filter snapshots out for example.
+- The new `rejectVersionIf { … }` predicate available in the `refreshVersions { … }` extension in your `settings.gradle[.kts]` file will allow you to filter any kind of versions you don't want to know about. It can be handy to filter snapshots out for example.
 - Most of our dependency notations now provide more flexibility with 3 new extension functions: `withVersionPlaceholder()`, `withVersion(…)`, and `withoutVersion()`.
 
 ### Change (potentially breaking)
