@@ -40,3 +40,7 @@ while [ $? -eq 0 ] && [ $runCount -lt $runLimit ]; do
     # The command must be run last so $? evaluates the given command,
     # instead of said, our successful run of the echo command.
 done
+
+if [ $runCount -ne $runLimit ]; then
+    exit 1
+fi
