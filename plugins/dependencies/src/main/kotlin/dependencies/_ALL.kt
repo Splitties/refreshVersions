@@ -9,6 +9,7 @@ import Arrow
 import COIL
 import CashApp
 import Chucker
+import Detekt
 import Firebase
 import Google
 import Http4k
@@ -38,6 +39,7 @@ internal val ALL_DEPENDENCIES_NOTATIONS = listOf(
     CashApp,
     Chucker,
     COIL,
+    Detekt,
     Firebase,
     Google,
     Http4k,

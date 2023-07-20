@@ -13,6 +13,9 @@ co.touchlab:kermit(-*)
 io.github.javaeden.orchid:*
                    ^^^^^^
 
+io.gitlab.arturbosch.detekt:detekt(-*)
+                     ^^^^^^
+
 org.http4k:http4k-*
     ^^^^^^
 
