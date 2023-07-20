@@ -226,6 +226,17 @@ androidx.palette:palette-ktx
 androidx.preference:preference
 androidx.preference:preference-ktx
 androidx.print:print
+androidx.privacysandbox.plugins:plugins-privacysandbox-library
+androidx.privacysandbox.sdkruntime:sdkruntime-client
+androidx.privacysandbox.sdkruntime:sdkruntime-core
+androidx.privacysandbox.tools:tools
+androidx.privacysandbox.tools:tools-apicompiler
+androidx.privacysandbox.tools:tools-apigenerator
+androidx.privacysandbox.tools:tools-apipackager
+androidx.privacysandbox.tools:tools-core
+androidx.privacysandbox.ui:ui-client
+androidx.privacysandbox.ui:ui-core
+androidx.privacysandbox.ui:ui-provider
 androidx.recommendation:recommendation
 androidx.recyclerview:recyclerview
 androidx.recyclerview:recyclerview-selection

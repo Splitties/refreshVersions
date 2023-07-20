@@ -2383,6 +2383,93 @@ object AndroidX : IsNotADependency {
      */
     val print = DependencyNotation("androidx.print", "print")
 
+    val privacySandbox = PrivacySandbox
+
+    object PrivacySandbox : IsNotADependency {
+        // androidx.privacysandbox.ads intentionally not included because ads are mental pollution.
+
+        /**
+         * Android Privacy Sandbox Sdk Library Gradle Plugin
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/privacysandbox-plugins)
+         *
+         * ### API reference:
+         * - [androidx.privacysandbox.plugins](https://developer.android.com/reference/kotlin/androidx/privacysandbox/plugins/package-summary)
+         */
+        val plugins = Plugins
+
+        object Plugins : DependencyGroup(group = "androidx.privacysandbox.plugins") {
+            val library = module("plugins-privacysandbox-library")
+        }
+
+        /**
+         * This library provides components for SdkRuntime aware consumers
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/privacysandbox-sdkruntime)
+         */
+        val sdkRuntime = SdkRuntime
+
+        object SdkRuntime : DependencyGroup(group = "androidx.privacysandbox.sdkruntime") {
+
+            /**
+             * ### API reference:
+             * - [androidx.privacysandbox.sdkruntime.core](https://developer.android.com/reference/kotlin/androidx/privacysandbox/sdkruntime/core/package-summary)
+             */
+            val core = module("sdkruntime-core")
+
+            /**
+             * ### API reference:
+             * - [androidx.privacysandbox.sdkruntime.client](https://developer.android.com/reference/kotlin/androidx/privacysandbox/sdkruntime/client/package-summary)
+             */
+            val client = module("sdkruntime-client")
+        }
+
+        /**
+         * A library to utilize the Privacy Sandbox functionality in Android.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/privacysandbox-tools)
+         *
+         * ### API reference:
+         * - [androidx.privacysandbox.tools](https://developer.android.com/reference/kotlin/androidx/privacysandbox/tools/package-summary)
+         */
+        val tools = Tools
+
+        object Tools : DependencyNotationAndGroup(
+            group = "androidx.privacysandbox.tools",
+            name = "tools"
+        ) {
+            val apiCompiler = module("tools-apicompiler")
+            val apiGenerator = module("tools-apigenerator")
+            val apiPackager = module("tools-apipackager")
+            val core = module("tools-core")
+        }
+
+        /**
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/privacysandbox-ui)
+         *
+         * ### API reference:
+         * - [androidx.privacysandbox.ui](https://developer.android.com/reference/kotlin/androidx/privacysandbox/ui/package-summary)
+         */
+        val ui = Ui
+
+        object Ui : DependencyGroup(group = "androidx.privacysandbox.ui") {
+            /**
+             * show UI from an SDKRuntime aware SDK.
+             */
+            val client = module("ui-client")
+
+            /**
+             * contains core definitions for the privacysandbox ui library.
+             */
+            val core = module("ui-core")
+
+            /**
+             * lets an SdkRuntime aware SDK share UI with a client application.
+             */
+            val provider = module("ui-provider")
+        }
+    }
+
     /**
      * Promote content to the Android TV Launcher home screen.
      *
