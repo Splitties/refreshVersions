@@ -3,7 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 ---
 
-- [ ] I have read the [guidelines for submitting issues](https://jmfayard.github.io/refreshVersions/contributing/submitting-issues/)
+- [ ] I have read the [guidelines for submitting issues](https://splitties.github.io/refreshVersions/contributing/submitting-issues/#bug-reports)
 ## 🐛 Describe the bug
 <!-- A clear and concise description of what the bug is. -->
 
