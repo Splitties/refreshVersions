@@ -33,6 +33,7 @@ androidx.camera:camera-lifecycle
 androidx.camera:camera-mlkit-vision
 androidx.camera:camera-video
 androidx.camera:camera-view
+androidx.camera:camera-viewfinder
 androidx.car.app:app
 androidx.car.app:app-automotive
 androidx.car.app:app-projected

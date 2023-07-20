@@ -34,6 +34,7 @@ androidx.camera..camera-lifecycle=AndroidX.camera.lifecycle
 androidx.camera..camera-mlkit-vision=AndroidX.camera.mlKitVision
 androidx.camera..camera-video=AndroidX.camera.video
 androidx.camera..camera-view=AndroidX.camera.view
+androidx.camera..camera-viewfinder=AndroidX.camera.viewFinder
 androidx.car.app..app-automotive=AndroidX.carApp.automotive
 androidx.car.app..app-projected=AndroidX.carApp.projected
 androidx.car.app..app-testing=AndroidX.carApp.testing

@@ -404,6 +404,14 @@ object AndroidX : IsNotADependency {
          * - [androidx.camera.view.video](https://developer.android.com/reference/kotlin/androidx/camera/view/video/package-summary)
          */
         val view = module("camera-view")
+
+        /**
+         * Standalone Viewfinder for Camera2 and CameraX.
+         *
+         * ### API reference:
+         * - [androidx.camera.viewfinder](https://developer.android.com/reference/kotlin/androidx/camera/viewfinder/package-summary)
+         */
+        val viewFinder = module("camera-viewfinder")
     }
 
     /**
