@@ -23,6 +23,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
 
         internal val artifactVersionKeyRulesFileNames: List<String> = listOf(
             "androidx-version-alias-rules.txt",
+            "bumptech-version-alias-rules.txt",
             "cashapp-version-alias-rules.txt",
             "dependency-groups-alias-rules.txt",
             "google-version-alias-rules.txt",

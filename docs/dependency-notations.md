@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1180** Dependency Notations in **26** groups and **249** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1197** Dependency Notations in **27** groups and **250** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -2431,7 +2431,120 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
     </td></tr>
             
 </table>
-            
+
+
+## [BumpTech.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/BumpTech.kt)
+
+
+<table style="width: 100%; table-layout:fixed;">
+    <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
+    <tr><td><b>BumpTech</b></td><td>
+        <span
+            title="BumpTech.glide&#10;com.github.bumptech.glide:glide:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            glide
+        </span>
+    </td></tr>
+    <tr><td><b>BumpTech.glide</b></td><td>
+        <span
+            title="BumpTech.glide.annotations&#10;com.github.bumptech.glide:annotations:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            annotations
+        </span>
+        -
+        <span
+            title="BumpTech.glide.avif&#10;com.github.bumptech.glide:avif-integration:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            avif
+        </span>
+        -
+        <span
+            title="BumpTech.glide.compiler&#10;com.github.bumptech.glide:compiler:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            compiler
+        </span>
+        -
+        <span
+            title="BumpTech.glide.compose&#10;com.github.bumptech.glide:compose:_&#10;version.bumptech.glide.compose"
+            style="text-decoration: underline;">
+            compose
+        </span>
+        -
+        <span
+            title="BumpTech.glide.concurrent&#10;com.github.bumptech.glide:concurrent-integration:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            concurrent
+        </span>
+        -
+        <span
+            title="BumpTech.glide.cronet&#10;com.github.bumptech.glide:cronet-integration:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            cronet
+        </span>
+        -
+        <span
+            title="BumpTech.glide.diskLruCache&#10;com.github.bumptech.glide:disklrucache:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            diskLruCache
+        </span>
+        -
+        <span
+            title="BumpTech.glide.gifEncoder&#10;com.github.bumptech.glide:gifencoder-integration:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            gifEncoder
+        </span>
+        -
+        <span
+            title="BumpTech.glide.gifDecoder&#10;com.github.bumptech.glide:gifdecoder:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            gifDecoder
+        </span>
+        -
+        <span
+            title="BumpTech.glide.ksp&#10;com.github.bumptech.glide:ksp:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            ksp
+        </span>
+        -
+        <span
+            title="BumpTech.glide.ktx&#10;com.github.bumptech.glide:ktx:_&#10;version.bumptech.glide.ktx"
+            style="text-decoration: underline;">
+            ktx
+        </span>
+        -
+        <span
+            title="BumpTech.glide.mocks&#10;com.github.bumptech.glide:mocks:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            mocks
+        </span>
+        -
+        <span
+            title="BumpTech.glide.okhttp&#10;com.github.bumptech.glide:okhttp-integration:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            okhttp
+        </span>
+        -
+        <span
+            title="BumpTech.glide.okhttp3&#10;com.github.bumptech.glide:okhttp3-integration:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            okhttp3
+        </span>
+        -
+        <span
+            title="BumpTech.glide.recyclerView&#10;com.github.bumptech.glide:recyclerView-integration:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            recyclerView
+        </span>
+        -
+        <span
+            title="BumpTech.glide.volley&#10;com.github.bumptech.glide:volley-integration:_&#10;version.bumptech.glide"
+            style="text-decoration: underline;">
+            volley
+        </span>
+    </td></tr>
+
+</table>
+
 
 ## [COIL.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/COIL.kt)
 
