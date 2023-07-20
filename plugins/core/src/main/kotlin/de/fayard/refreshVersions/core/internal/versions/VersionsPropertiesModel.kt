@@ -104,7 +104,7 @@ internal actual data class VersionsPropertiesModel(
 
         val isUsingVersionRejectionHeader = """
             |####
-            |#### NOTE: Some versions are filtered by the rejectVersionsIf predicate. See the settings.gradle.kts file.
+            |#### NOTE: Some versions are filtered by the rejectVersionIf predicate. See the settings.gradle.kts file.
             """.trimMargin()
 
         private fun String.mustBeACommentLine() {

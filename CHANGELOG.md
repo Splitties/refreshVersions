@@ -28,6 +28,35 @@ dependencies {
 }
 ```
 
+```kts
+// Add Jetpack Compose to a project in seconds with refreshVersions.
+// NEW: The Compose BoM released on Android Dev Summit is supported!
+
+// No need to search for the versions, refreshVersions will do it for you!
+// It will add the latest most stable version, and will even add the updates
+// as comments in the versions.properties file (auto-created on first use).
+
+android {
+    buildFeatures.compose = true
+    composeOptions {
+        // Version and updates are in versions.properties
+        kotlinCompilerExtensionVersion = versionFor(AndroidX.compose.compiler)
+    }
+}
+
+dependencies {
+    // Version and updates of the BoM are in versions.properties too.
+    implementation(platform(AndroidX.compose.bom)) // Enables the BoM automatically
+    implementation(AndroidX.compose.runtime)                   // Version from the BoM
+    implementation(AndroidX.compose.icons.extended)            // Version from the BoM
+
+    // What if you need a specific alpha/beta/rc version?
+    // withVersionPlaceholder() detaches the dependency from the BoM.
+    // Version and updates will therefore be in versions.properties
+    implementation(AndroidX.compose.material3.withVersionPlaceholder()) // Not from BoM
+}
+```
+
 ### Fix StabilityLevel calculation for number-less pre-versions
 
 Since last changes in the Version class, versions like 1.7.20-RC and 1.7.20-Beta would be marked as stable instead of respectively ReleaseCandidate and Beta because the logic expected a number in all cases.
@@ -718,7 +747,7 @@ Look for [issues with the `Dependency notations` and `up-for-grabs` tags](https:
 ### New features
 
 - refreshVersions will now add `## unused` comments on top of unused entries in the `versions.properties` file after you run the `refreshVersions` task, so you know which ones are obsolete and can be removed.
-- The new `rejectVersionsIf { … }` predicate available in the `refreshVersions { … }` extension in your `settings.gradle[.kts]` file will allow you to filter any kind of versions you don't want to know about. It can be handy to filter snapshots out for example.
+- The new `rejectVersionIf { … }` predicate available in the `refreshVersions { … }` extension in your `settings.gradle[.kts]` file will allow you to filter any kind of versions you don't want to know about. It can be handy to filter snapshots out for example.
 - Most of our dependency notations now provide more flexibility with 3 new extension functions: `withVersionPlaceholder()`, `withVersion(…)`, and `withoutVersion()`.
 
 ### Change (potentially breaking)
