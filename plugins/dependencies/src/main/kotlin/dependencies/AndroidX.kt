@@ -3281,6 +3281,8 @@ object AndroidX : IsNotADependency {
 
     object Window : DependencyNotationAndGroup(group = "androidx.window", name = "window") {
 
+        // androidx.window:window-core not added because it is not documented anywhere.
+
         /**
          * ### API reference:
          * - [androidx.window.testing.layout](https://developer.android.com/reference/kotlin/androidx/window/testing/layout/package-summary)
