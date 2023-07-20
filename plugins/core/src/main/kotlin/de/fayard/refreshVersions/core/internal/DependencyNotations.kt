@@ -30,6 +30,8 @@ val MEANING_LESS_NAMES: MutableList<String> = mutableListOf(
 )
 
 @InternalRefreshVersionsApi
+@NeedsRefactoring("Use Dependency instead of Library")
+@FunctionalCore(testName = "TODO")
 fun List<Library>.computeAliases(
     configured: List<String>,
     byDefault: List<String> = MEANING_LESS_NAMES
@@ -71,6 +73,7 @@ fun Project.findDependencies(): List<Library> {
 
 
 @InternalRefreshVersionsApi
+@NeedsRefactoring("Use Dependency instead")
 data class Library(
     val group: String = "",
     val module: String = "",
@@ -102,6 +105,7 @@ data class Library(
 }
 
 @InternalRefreshVersionsApi
+@NeedsRefactoring("Use Dependency instead")
 class Deps(
     val libraries: List<Library>,
     val names: Map<Library, String>
@@ -114,6 +118,8 @@ enum class VersionMode {
 }
 
 @InternalRefreshVersionsApi
+@NeedsRefactoring("Use Dependency instead of Library and Deps")
+@FunctionalCore(testName = "TODO")
 fun List<Library>.checkModeAndNames(useFdqnByDefault: List<String>, case: Case): Deps {
     val dependencies = this
 

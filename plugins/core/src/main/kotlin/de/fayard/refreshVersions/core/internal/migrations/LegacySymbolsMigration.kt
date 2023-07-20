@@ -1,12 +1,13 @@
 package de.fayard.refreshVersions.core.internal.migrations
 
 import de.fayard.refreshVersions.core.extensions.collections.forEachReversedWithIndex
+import de.fayard.refreshVersions.core.internal.NeedsRefactoring
 import de.fayard.refreshVersions.core.internal.codeparsing.*
-import de.fayard.refreshVersions.core.internal.codeparsing.SymbolLocationFindingRule
 import de.fayard.refreshVersions.core.internal.codeparsing.gradle.extractGradleScriptSections
 import java.io.File
 
 internal fun migrateLegacySymbolsIfNeeded(projectDir: File, revisionOfLastRefreshVersionsRun: Int) {
+    @NeedsRefactoring("What does 11 mean here?")
     if (revisionOfLastRefreshVersionsRun < 11) addNewArgumentToVersionForCalls(projectDir)
 }
 

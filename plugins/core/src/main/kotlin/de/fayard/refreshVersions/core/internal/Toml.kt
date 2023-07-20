@@ -1,5 +1,6 @@
 package de.fayard.refreshVersions.core.internal
 
+@FunctionalCore(testName = "VersionsCatalogUpdaterTest")
 internal data class Toml(
     val sections: MutableMap<TomlSection, List<TomlLine>>
 ) {

@@ -4,6 +4,7 @@ import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TO
 import java.io.File
 
 @InternalRefreshVersionsApi
+@NeedsRefactoring("Design a better API")
 enum class OutputFile(
     val path: String,
     var existed: Boolean = false,

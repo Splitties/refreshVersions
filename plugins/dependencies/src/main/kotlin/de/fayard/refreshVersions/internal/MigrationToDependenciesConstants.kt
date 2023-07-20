@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.internal
 
 import de.fayard.refreshVersions.core.countDependenciesWithHardcodedVersions
+import de.fayard.refreshVersions.core.internal.NeedsRefactoring
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.cli.AnsiColor
 import de.fayard.refreshVersions.core.internal.cli.CliGenericUi
@@ -13,7 +14,7 @@ import kotlin.coroutines.coroutineContext
 
 //TODO: Ignore the following dependency: org.jetbrains.kotlin:kotlin-android-extensions-runtime
 
-
+@NeedsRefactoring("Almost dead code")
 internal fun promptProjectSelection(rootProject: Project): Project? {
     require(rootProject == rootProject.rootProject) { "Expected a rootProject but got $rootProject" }
     val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
@@ -34,6 +35,7 @@ internal fun promptProjectSelection(rootProject: Project): Project? {
     return projectsWithHardcodedDependenciesVersions.getOrNull(index.value)?.first
 }
 
+@NeedsRefactoring("Almost dead code")
 internal suspend fun runInteractiveMigrationToDependenciesConstants(project: Project) {
     val versionsMap = RefreshVersionsConfigHolder.readVersionsMap()
     while (coroutineContext.isActive) {
@@ -46,6 +48,7 @@ internal suspend fun runInteractiveMigrationToDependenciesConstants(project: Pro
     }
 }
 
+@NeedsRefactoring("Almost dead code")
 private fun Project.promptConfigurationSelection(versionsMap: Map<String, String>): Configuration? {
     @Suppress("UnstableApiUsage")
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader

@@ -19,6 +19,7 @@ object VersionsCatalogs {
 
     fun isSupported(): Boolean = GradleVersion.current() >= minimumGradleVersion
 
+    @FunctionalCore(testName = "TODO")
     fun defaultCatalogName(): String = try {
         @Suppress("UnstableApiUsage")
         RefreshVersionsConfigHolder.settings.dependencyResolutionManagement.defaultLibrariesExtensionName.get()
@@ -27,11 +28,13 @@ object VersionsCatalogs {
         "libs"
     }
 
+    @FunctionalCore(testName = "TODO")
     fun getDefault(project: Project): VersionCatalog? {
         val versionCatalogs = project.extensions.findByType<VersionCatalogsExtension>()
         return versionCatalogs?.find(defaultCatalogName())?.orElse(null)
     }
 
+    @FunctionalCore(testName = "TODO")
     internal fun libraries(versionCatalog: VersionCatalog?): Set<MinimalExternalModuleDependency> {
         if (versionCatalog == null) return emptySet()
         val aliases = versionCatalog.libraryAliases
@@ -40,6 +43,7 @@ object VersionsCatalogs {
         }
     }
 
+    @FunctionalCore(testName = "TODO")
     internal fun plugins(versionCatalog: VersionCatalog?): Set<PluginDependencyCompat> {
         if (versionCatalog == null) return emptySet()
         val aliases = versionCatalog.pluginAliases
@@ -48,6 +52,7 @@ object VersionsCatalogs {
         }
     }
 
+    @FunctionalCore(testName = "TODO")
     fun dependencyAliases(versionCatalog: VersionCatalog?): Map<ModuleId.Maven, String> = when {
         FeatureFlag.VERSIONS_CATALOG.isNotEnabled -> emptyMap()
         versionCatalog == null -> emptyMap()
@@ -64,6 +69,7 @@ object VersionsCatalogs {
         }.toMap()
     }
 
+    @FunctionalCore("VersionsCatalogUpdaterTest")
     internal fun parseToml(toml: String): Toml {
         val map = parseTomlInSections(toml)
             .map { (sectionName, paragraph) ->
@@ -76,6 +82,7 @@ object VersionsCatalogs {
     /**
      * Returns a map where the key is the section name, and the value, the section content.
      */
+    @FunctionalCore("TomlSectionTest")
     internal fun parseTomlInSections(toml: String): Map<String, String> {
         val result = mutableMapOf<String, StringBuilder>()
         result["root"] = StringBuilder()
@@ -96,6 +103,7 @@ object VersionsCatalogs {
         return result.mapValues { it.value.toString() }
     }
 
+    @FunctionalCore("VersionsCatalogUpdaterTest")
     fun generateVersionsCatalogText(
         versionsMap: Map<String, String> = RefreshVersionsConfigHolder.readVersionsMap(),
         versionKeyReader: ArtifactVersionKeyReader = RefreshVersionsConfigHolder.versionKeyReader,

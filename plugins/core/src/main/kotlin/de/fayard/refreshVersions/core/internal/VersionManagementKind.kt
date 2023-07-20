@@ -43,6 +43,7 @@ internal sealed class VersionManagementKind {
     object NoMatch : VersionManagementKind()
 }
 
+@FunctionalCore(testName = "TODO")
 internal fun Dependency.versionManagementKind(
     versionMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader,
@@ -55,6 +56,7 @@ internal fun Dependency.versionManagementKind(
     this is ExternalDependency && versionPlaceholder in this.versionConstraint.rejectedVersions -> {
         Match.VersionsFile.VersionPlaceholder
     }
+
     name.endsWith(".gradle.plugin") -> {
         when (val moduleId = moduleId()) {
             is ModuleId.Maven -> {
@@ -68,23 +70,29 @@ internal fun Dependency.versionManagementKind(
                             versionsCatalogLibraries = versionsCatalogLibraries,
                             versionsCatalogPlugins = versionsCatalogPlugins
                         ) -> Match.VersionsCatalog.MatchingVersionConstraint
+
                         else -> NoMatch
                     }
+
                     version -> Match.VersionsFile.MatchingPluginVersion
                     else -> NoMatch
                 }
             }
+
             else -> NoMatch
         }
     }
+
     else -> when {
         hasVersionInVersionCatalog(
             versionsCatalogLibraries = versionsCatalogLibraries
         ) -> Match.VersionsCatalog.MatchingVersionConstraint
+
         else -> NoMatch
     }
 }
 
+@FunctionalCore(testName = "TODO")
 private fun Dependency.hasVersionInVersionCatalog(
     versionsCatalogLibraries: Collection<MinimalExternalModuleDependency>,
     versionsCatalogPlugins: Set<PluginDependencyCompat> = emptySet()

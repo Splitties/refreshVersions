@@ -1,11 +1,13 @@
 package de.fayard.refreshVersions.core.internal.versions
 
 import de.fayard.refreshVersions.core.DependencyVersionsFetcher
+import de.fayard.refreshVersions.core.internal.FunctionalCore
 import de.fayard.refreshVersions.core.internal.failures.oneLineSummary
 
 /**
  * @property dependencyNotationRemovalsRevision Designed to be used only for snapshot publications.
  */
+@FunctionalCore(testName = "VersionsPropertiesModelTest")
 internal actual data class VersionsPropertiesModel(
     actual val preHeaderContent: String,
     actual val generatedByVersion: String,

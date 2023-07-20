@@ -1,6 +1,7 @@
 package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.ModuleId
+import java.io.File
 
 @InternalRefreshVersionsApi
 abstract class ArtifactVersionKeyReader private constructor(
@@ -11,6 +12,7 @@ abstract class ArtifactVersionKeyReader private constructor(
 
     companion object {
 
+        @FunctionalCore(testName = "TODO")
         fun fromRules(
             filesContent: List<String>,
             getRemovedDependenciesVersionsKeys: () -> Map<ModuleId.Maven, String> = { emptyMap() }

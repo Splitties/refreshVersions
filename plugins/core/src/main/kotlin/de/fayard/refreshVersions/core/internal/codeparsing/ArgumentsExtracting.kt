@@ -1,7 +1,10 @@
 package de.fayard.refreshVersions.core.internal.codeparsing
 
+import de.fayard.refreshVersions.core.internal.FunctionalCore
+import de.fayard.refreshVersions.core.internal.NeedsRefactoring
 import de.fayard.refreshVersions.core.internal.codeparsing.SourceCodeSection.*
 
+@NeedsRefactoring("parameterName and expressionWithCommentsIfAny properties are never used")
 internal class FunctionArgument(
     val parameterName: String?,
     val expressionWithCommentsIfAny: String
@@ -13,6 +16,7 @@ internal class FunctionArgument(
  * or if the passed [functionCallText] lacks the parentheses,
  * it might fail in unexpected ways.
  */
+@FunctionalCore(testName = "TODO")
 internal fun extractArgumentsOfFunctionCall(
     programmingLanguage: ProgrammingLanguage,
     functionCallText: CharSequence
