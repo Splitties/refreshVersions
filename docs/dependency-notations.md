@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1180** Dependency Notations in **26** groups and **249** subgroups
+[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1181** Dependency Notations in **26** groups and **249** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -5372,6 +5372,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 <table style="width: 100%; table-layout:fixed;">
     <thead><tr><th>Group</th> <th>Dependency Notations</th></tr></thead>
     <tr><td><b>Kotlin</b></td><td>
+        <span
+            title="Kotlin.gradlePlugin&#10;org.jetbrains.kotlin:kotlin-gradle-plugin:_&#10;version.kotlin"
+            style="text-decoration: underline;">
+            gradlePlugin
+        </span>
+        -
         <span
             title="Kotlin.scriptRuntime&#10;org.jetbrains.kotlin:kotlin-script-runtime:_&#10;version.kotlin"
             style="text-decoration: underline;">

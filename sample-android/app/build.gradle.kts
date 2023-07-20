@@ -25,7 +25,7 @@ dependencies {
     implementation(AndroidX.constraintLayout)
     implementation(Google.android.material)
     implementation(AndroidX.lifecycle.runtime)
-    implementation(AndroidX.lifecycle.runtimeKtx)
+    implementation(AndroidX.lifecycle.runtime.ktx)
     implementation(AndroidX.lifecycle.viewModel)
     testImplementation(Testing.junit4)
     androidTestImplementation(AndroidX.test.core)
