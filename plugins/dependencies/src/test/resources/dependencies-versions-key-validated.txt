@@ -181,6 +181,7 @@ androidx.media3..media3-datasource-okhttp=version.androidx.media3
 androidx.media3..media3-datasource-rtmp=version.androidx.media3
 androidx.media3..media3-datasource=version.androidx.media3
 androidx.media3..media3-decoder=version.androidx.media3
+androidx.media3..media3-effect=version.androidx.media3
 androidx.media3..media3-exoplayer-dash=version.androidx.media3
 androidx.media3..media3-exoplayer-hls=version.androidx.media3
 androidx.media3..media3-exoplayer-ima=version.androidx.media3

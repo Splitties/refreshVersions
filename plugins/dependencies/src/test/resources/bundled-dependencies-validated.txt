@@ -180,6 +180,7 @@ androidx.media3:media3-datasource-cronet
 androidx.media3:media3-datasource-okhttp
 androidx.media3:media3-datasource-rtmp
 androidx.media3:media3-decoder
+androidx.media3:media3-effect
 androidx.media3:media3-exoplayer
 androidx.media3:media3-exoplayer-dash
 androidx.media3:media3-exoplayer-hls

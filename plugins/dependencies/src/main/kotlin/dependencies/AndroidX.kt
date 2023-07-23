@@ -2075,6 +2075,11 @@ object AndroidX : IsNotADependency {
         val extractor = module("media3-extractor")
 
         /**
+         * Media3 Effect module
+         */
+        val effect = module("media3-effect")
+
+        /**
          * For integrating with Cast
          */
         val cast = module("media3-cast")

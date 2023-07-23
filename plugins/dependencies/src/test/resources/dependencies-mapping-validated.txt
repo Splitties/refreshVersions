@@ -182,6 +182,7 @@ androidx.media3..media3-datasource-okhttp=AndroidX.media3.dataSource.okhttp
 androidx.media3..media3-datasource-rtmp=AndroidX.media3.dataSource.rtmp
 androidx.media3..media3-datasource=AndroidX.media3.dataSource
 androidx.media3..media3-decoder=AndroidX.media3.decoder
+androidx.media3..media3-effect=AndroidX.media3.effect
 androidx.media3..media3-exoplayer-dash=AndroidX.media3.exoPlayer.dash
 androidx.media3..media3-exoplayer-hls=AndroidX.media3.exoPlayer.hls
 androidx.media3..media3-exoplayer-ima=AndroidX.media3.exoPlayer.ima
