@@ -1135,6 +1135,23 @@ object AndroidX : IsNotADependency {
     }
 
     /**
+     * This library provides unified access to a user's credentials.
+     * This can include passwords, passkeys and federated credentials.
+     * This library should be used to provide seamless and secure sign-in experiences.
+     */
+    val credentials = Credentials
+
+    object Credentials : DependencyNotationAndGroup(
+        group = "androidx.credentials",
+        name = "credentials"
+    ) {
+        /**
+         * Needed for credentials support from play services, for devices running Android 13 and below.
+         */
+        val playServicesAuth = module("credentials-play-services-auth")
+    }
+
+    /**
      * Expose Cursor data to a ListView widget.
      *
      * Guide: [Content providers](https://developer.android.com/guide/topics/providers/content-providers)
