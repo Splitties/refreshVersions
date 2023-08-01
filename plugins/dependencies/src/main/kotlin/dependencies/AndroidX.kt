@@ -243,6 +243,9 @@ object AndroidX : IsNotADependency {
         /** Android Benchmark Gradle Plugin */
         val gradlePlugin = module(name = "benchmark-gradle-plugin")
 
+        /** Android Baseline Profile Gradle Plugin */
+        val baselineProfileGradlePlugin = module("benchmark-baseline-profile-gradle-plugin")
+
         /**
          * Android Benchmark - JUnit4.
          *

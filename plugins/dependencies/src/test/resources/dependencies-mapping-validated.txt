@@ -19,6 +19,7 @@ androidx.arch.core..core-testing=AndroidX.archCore.testing
 androidx.asynclayoutinflater..asynclayoutinflater-appcompat=AndroidX.asyncLayoutInflater.appcompat
 androidx.asynclayoutinflater..asynclayoutinflater=AndroidX.asyncLayoutInflater
 androidx.autofill..autofill=AndroidX.autoFill
+androidx.benchmark..benchmark-baseline-profile-gradle-plugin=AndroidX.benchmark.baselineProfileGradlePlugin
 androidx.benchmark..benchmark-common=AndroidX.benchmark.common
 androidx.benchmark..benchmark-gradle-plugin=AndroidX.benchmark.gradlePlugin
 androidx.benchmark..benchmark-junit4=AndroidX.benchmark.junit4
