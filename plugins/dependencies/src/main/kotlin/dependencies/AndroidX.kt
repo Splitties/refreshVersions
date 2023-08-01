@@ -3250,6 +3250,41 @@ object AndroidX : IsNotADependency {
         }
 
         /**
+         * This library allows defining a set of UI layouts and non-UI expressions to be rendered/evaluated on remote surfaces.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/wear-protolayout)
+         *
+         * ### API reference:
+         * - [androidx.wear.protolayout](https://developer.android.com/reference/kotlin/androidx/wear/protolayout/package-summary)
+         */
+        val protoLayout = ProtoLayout
+
+        object ProtoLayout : DependencyNotationAndGroup(
+            group = "androidx.wear.protolayout",
+            name = "protolayout"
+        ) {
+            /**
+             * Create dynamic expressions (for late evaluation by a remote evaluator).
+             *
+             * ### API reference:
+             * - [androidx.wear.protolayout.expression](https://developer.android.com/reference/kotlin/androidx/wear/protolayout/expression/package-summary)
+             */
+            val expression = module("protolayout-expression")
+
+            /**
+             * Material components library for ProtoLayout.
+             *
+             * ### API reference:
+             * - [androidx.wear.protolayout.material](https://developer.android.com/reference/kotlin/androidx/wear/protolayout/material/package-summary)
+             * - [androidx.wear.protolayout.material.layouts](https://developer.android.com/reference/kotlin/androidx/wear/protolayout/material/layouts/package-summary)
+             */
+            val material = module("protolayout-material")
+
+            /** Render ProtoLayouts to an Android surface */
+            val renderer = module("protolayout-renderer")
+        }
+
+        /**
          * Use this dependency to implement Wear OS Tiles.
          *
          * [Release notes](https://developer.android.com/jetpack/androidx/releases/wear-tiles)
