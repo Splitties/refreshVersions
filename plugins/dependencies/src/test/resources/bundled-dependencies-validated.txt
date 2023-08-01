@@ -135,6 +135,8 @@ androidx.glance:glance
 androidx.glance:glance-appwidget
 androidx.glance:glance-wear-tiles
 androidx.graphics:graphics-core
+androidx.graphics:graphics-path
+androidx.graphics:graphics-shapes
 androidx.gridlayout:gridlayout
 androidx.health.connect:connect-client
 androidx.health:health-services-client

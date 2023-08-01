@@ -1580,6 +1580,12 @@ object AndroidX : IsNotADependency {
          * - [androidx.graphics.surface](https://developer.android.com/reference/kotlin/androidx/graphics/surface/package-summary)
          */
         val core = module("graphics-core")
+
+        /** Query segment data for android.graphics.Path objects. */
+        val path = module("graphics-path")
+
+        /** Create and render rounded polygonal shapes. */
+        val shapes = module("graphics-shapes")
     }
 
     /**
