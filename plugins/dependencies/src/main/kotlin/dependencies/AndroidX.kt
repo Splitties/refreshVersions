@@ -1420,6 +1420,12 @@ object AndroidX : IsNotADependency {
          */
         val bundled = module("emoji2-bundled")
 
+        /**
+         * This library provides the latest emoji support and emoji picker UI to input emoji in current and older devices.
+         *
+         * ### API reference:
+         * - [androidx.emoji2.emojipicker](https://developer.android.com/reference/kotlin/androidx/emoji2/emojipicker/package-summary)
+         */
         val picker = module("emoji2-emojipicker")
     }
 
