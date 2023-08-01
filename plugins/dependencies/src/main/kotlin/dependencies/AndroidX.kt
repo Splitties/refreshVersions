@@ -3460,6 +3460,26 @@ object AndroidX : IsNotADependency {
          * - [androidx.window.rxjava3.layout](https://developer.android.com/reference/kotlin/androidx/window/rxjava3/layout/package-summary)
          */
         val rxJava3 = module("window-rxjava3")
+
+        val extensions = Extensions
+
+        object Extensions : IsNotADependency {
+
+            /**
+             * The Core APIs for Window Manager Library Extensions.
+             *
+             * [Release notes](https://developer.android.com/jetpack/androidx/releases/window-extensions-core)
+             *
+             * ### API reference:
+             * - [androidx.window.extensions.core.util.function](https://developer.android.com/reference/kotlin/androidx/window/extensions/core/util/function/package-summary)
+             */
+            val core = Core
+
+            object Core : DependencyNotationAndGroup(
+                group = "androidx.window.extensions.core",
+                name = "core"
+            )
+        }
     }
 
     /**

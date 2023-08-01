@@ -342,6 +342,7 @@ androidx.window..window-rxjava2=AndroidX.window.rxJava2
 androidx.window..window-rxjava3=AndroidX.window.rxJava3
 androidx.window..window-testing=AndroidX.window.testing
 androidx.window..window=AndroidX.window
+androidx.window.extensions.core..core=AndroidX.window.extensions.core
 androidx.work..work-gcm=AndroidX.work.gcm
 androidx.work..work-multiprocess=AndroidX.work.multiprocess
 androidx.work..work-runtime-ktx=AndroidX.work.runtimeKtx

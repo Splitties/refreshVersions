@@ -341,6 +341,7 @@ androidx.window..window-rxjava2=version.androidx.window
 androidx.window..window-rxjava3=version.androidx.window
 androidx.window..window-testing=version.androidx.window
 androidx.window..window=version.androidx.window
+androidx.window.extensions.core..core=version.androidx.window.extensions.core
 androidx.work..work-gcm=version.androidx.work
 androidx.work..work-multiprocess=version.androidx.work
 androidx.work..work-runtime-ktx=version.androidx.work

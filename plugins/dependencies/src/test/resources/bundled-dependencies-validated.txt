@@ -336,6 +336,7 @@ androidx.wear:wear-ongoing
 androidx.wear:wear-phone-interactions
 androidx.wear:wear-remote-interactions
 androidx.webkit:webkit
+androidx.window.extensions.core:core
 androidx.window:window
 androidx.window:window-java
 androidx.window:window-rxjava2
