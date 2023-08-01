@@ -316,6 +316,7 @@ androidx.viewpager:viewpager
 androidx.wear.compose:compose-foundation
 androidx.wear.compose:compose-material
 androidx.wear.compose:compose-navigation
+androidx.wear.compose:compose-ui-tooling
 androidx.wear.protolayout:protolayout
 androidx.wear.protolayout:protolayout-expression
 androidx.wear.protolayout:protolayout-material

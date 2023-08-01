@@ -3235,6 +3235,14 @@ object AndroidX : IsNotADependency {
             val foundation = module("compose-foundation")
 
             /**
+             * Tools for Wear Composable.
+             *
+             * ### API reference:
+             * - [androidx.wear.compose.ui.tooling.preview](https://developer.android.com/reference/kotlin/androidx/wear/compose/ui/tooling/preview/package-summary)
+             */
+            val uiTooling = module("compose-ui-tooling")
+
+            /**
              * _NOTE: DO NOT INCLUDE a dependency on `Androidx.compose.material`.
              * `Androidx.wear.compose.material` is designed as a replacement,
              * not an addition to `Androidx.compose.material`._

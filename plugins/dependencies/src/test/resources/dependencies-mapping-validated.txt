@@ -323,6 +323,7 @@ androidx.wear..wear=AndroidX.wear
 androidx.wear.compose..compose-foundation=AndroidX.wear.compose.foundation
 androidx.wear.compose..compose-material=AndroidX.wear.compose.material
 androidx.wear.compose..compose-navigation=AndroidX.wear.compose.navigation
+androidx.wear.compose..compose-ui-tooling=AndroidX.wear.compose.uiTooling
 androidx.wear.protolayout..protolayout-expression=AndroidX.wear.protoLayout.expression
 androidx.wear.protolayout..protolayout-material=AndroidX.wear.protoLayout.material
 androidx.wear.protolayout..protolayout-renderer=AndroidX.wear.protoLayout.renderer
