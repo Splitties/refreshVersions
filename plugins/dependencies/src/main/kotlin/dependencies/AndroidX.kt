@@ -3279,6 +3279,20 @@ object AndroidX : IsNotADependency {
             val material = module("compose-material")
 
             /**
+             * _NOTE: DO NOT INCLUDE a dependency on `Androidx.compose.material3`.
+             * `Androidx.wear.compose.material3` is designed as a replacement,
+             * not an addition to `Androidx.compose.material3`._
+             *
+             * _If there are features from that you feel are missing from
+             * `androidx.wear.compose:compose-material3`, please [file an issue](https://issuetracker.google.com/issues/new?component=1077552&template=1598429)
+             * to let the AndroidX Wear team know._
+             *
+             * ### API reference:
+             * - [androidx.wear.compose.material3](https://developer.android.com/reference/kotlin/androidx/wear/compose/material3/package-summary)
+             */
+            val material3 = module("compose-material3")
+
+            /**
              * Integration between Wear Compose and Androidx Navigation libraries.
              *
              * ### API reference:
