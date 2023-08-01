@@ -3375,6 +3375,8 @@ object AndroidX : IsNotADependency {
              * - [androidx.wear.tiles.testing](https://developer.android.com/reference/kotlin/androidx/wear/tiles/testing/package-summary)
              */
             val testing = module("tiles-testing")
+
+            // tiles-tooling not included because not updated with the rest, and not referenced in the docs.
         }
 
         /**
