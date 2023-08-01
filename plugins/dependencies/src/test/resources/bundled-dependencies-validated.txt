@@ -88,11 +88,14 @@ androidx.core:core
 androidx.core:core-animation
 androidx.core:core-animation-testing
 androidx.core:core-google-shortcuts
+androidx.core:core-i18n
 androidx.core:core-ktx
+androidx.core:core-location-altitude
 androidx.core:core-performance
 androidx.core:core-remoteviews
 androidx.core:core-role
 androidx.core:core-splashscreen
+androidx.core:core-telecom
 androidx.core:core-testing
 androidx.credentials:credentials
 androidx.credentials:credentials-play-services-auth

@@ -34,6 +34,15 @@ androidx.core:core-performance(-*)
 androidx.core:core-splashscreen(-*)
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^
 
+androidx.core:core-telecom
+^^^^^^^^^     ^^^^^^^^^^^^
+
+androidx.core:core-i18n
+^^^^^^^^^     ^^^^^^^^^
+
+androidx.core:core-location-altitude(-*)
+^^^^^^^^^     ^^^^^^^^^^^^^^^^^^^^^^
+
 androidx.compose.foundation:foundation-text // Deprecated artifact, no longer updated with its family.
 ^^^^^^^^.^^^^^^^.           ^^^^^^^^^^^^^^^
 

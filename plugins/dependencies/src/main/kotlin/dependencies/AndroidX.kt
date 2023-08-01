@@ -1136,6 +1136,11 @@ object AndroidX : IsNotADependency {
         /** AndroidX RemoteViews Support */
         val remoteViews = module("core-remoteviews")
 
+        val i18n = module("core-i18n")
+        val telecom = module("core-telecom")
+
+        val locationAltitude = module("core-location-altitude")
+
         /**
          * Provides extensions for tests using Core APIs.
          *
