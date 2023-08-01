@@ -116,6 +116,7 @@ androidx.emoji..emoji-appcompat=AndroidX.emoji.appCompat
 androidx.emoji..emoji-bundled=AndroidX.emoji.bundled
 androidx.emoji..emoji=AndroidX.emoji
 androidx.emoji2..emoji2-bundled=AndroidX.emoji2.bundled
+androidx.emoji2..emoji2-emojipicker=AndroidX.emoji2.picker
 androidx.emoji2..emoji2-views-helper=AndroidX.emoji2.viewsHelper
 androidx.emoji2..emoji2-views=AndroidX.emoji2.views
 androidx.emoji2..emoji2=AndroidX.emoji2

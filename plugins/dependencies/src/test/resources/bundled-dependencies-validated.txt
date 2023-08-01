@@ -113,6 +113,7 @@ androidx.dynamicanimation:dynamicanimation
 androidx.dynamicanimation:dynamicanimation-ktx
 androidx.emoji2:emoji2
 androidx.emoji2:emoji2-bundled
+androidx.emoji2:emoji2-emojipicker
 androidx.emoji2:emoji2-views
 androidx.emoji2:emoji2-views-helper
 androidx.emoji:emoji

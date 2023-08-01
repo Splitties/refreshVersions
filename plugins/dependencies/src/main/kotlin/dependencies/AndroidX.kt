@@ -1419,6 +1419,8 @@ object AndroidX : IsNotADependency {
          * - [androidx.emoji2.bundled](https://developer.android.com/reference/kotlin/androidx/emoji2/bundled/package-summary)
          */
         val bundled = module("emoji2-bundled")
+
+        val picker = module("emoji2-emojipicker")
     }
 
     /**
