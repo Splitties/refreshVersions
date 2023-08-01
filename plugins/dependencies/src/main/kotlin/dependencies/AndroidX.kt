@@ -1135,6 +1135,14 @@ object AndroidX : IsNotADependency {
 
         /** AndroidX RemoteViews Support */
         val remoteViews = module("core-remoteviews")
+
+        /**
+         * Provides extensions for tests using Core APIs.
+         *
+         * ### API reference:
+         * - [androidx.core.testing.util](https://developer.android.com/reference/kotlin/androidx/core/testing/util/package-summary)
+         */
+        val testing = module("core-testing")
     }
 
     /**

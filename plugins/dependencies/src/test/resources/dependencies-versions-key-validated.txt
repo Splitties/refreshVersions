@@ -90,6 +90,7 @@ androidx.core..core-performance=version.androidx.core-performance
 androidx.core..core-remoteviews=version.androidx.core
 androidx.core..core-role=version.androidx.core-role
 androidx.core..core-splashscreen=version.androidx.core-splashscreen
+androidx.core..core-testing=version.androidx.core
 androidx.core..core=version.androidx.core
 androidx.core.uwb..uwb-rxjava3=version.androidx.core.uwb
 androidx.core.uwb..uwb=version.androidx.core.uwb

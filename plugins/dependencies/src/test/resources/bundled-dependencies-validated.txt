@@ -93,6 +93,7 @@ androidx.core:core-performance
 androidx.core:core-remoteviews
 androidx.core:core-role
 androidx.core:core-splashscreen
+androidx.core:core-testing
 androidx.credentials:credentials
 androidx.credentials:credentials-play-services-auth
 androidx.cursoradapter:cursoradapter
