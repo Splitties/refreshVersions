@@ -2155,7 +2155,20 @@ object AndroidX : IsNotADependency {
      * - [androidx.mediarouter.app](https://developer.android.com/reference/kotlin/androidx/mediarouter/app/package-summary)
      * - [androidx.mediarouter.media](https://developer.android.com/reference/kotlin/androidx/mediarouter/media/package-summary)
      */
-    val mediaRouter = DependencyNotation("androidx.mediarouter", "mediarouter")
+    val mediaRouter = MediaRouter
+
+    object MediaRouter : DependencyNotationAndGroup(
+        group = "androidx.mediarouter",
+        name = "mediarouter"
+    ) {
+        /**
+         * Test utilities for AndroidX MediaRouter.
+         *
+         * ### API reference:
+         * - [androidx.mediarouter.testing](https://developer.android.com/reference/kotlin/androidx/mediarouter/testing/package-summary)
+         */
+        val testing = module("mediarouter-testing")
+    }
 
     /**
      * Library for tracking and reporting various runtime metrics for applications.

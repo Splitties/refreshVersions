@@ -199,6 +199,7 @@ androidx.media3..media3-test-utils=AndroidX.media3.testUtils
 androidx.media3..media3-transformer=AndroidX.media3.transformer
 androidx.media3..media3-ui-leanback=AndroidX.media3.ui.leanback
 androidx.media3..media3-ui=AndroidX.media3.ui
+androidx.mediarouter..mediarouter-testing=AndroidX.mediaRouter.testing
 androidx.mediarouter..mediarouter=AndroidX.mediaRouter
 androidx.metrics..metrics-performance=AndroidX.metrics.performance
 androidx.multidex..multidex-instrumentation=AndroidX.multidex.instrumentation
