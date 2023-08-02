@@ -202,6 +202,7 @@ androidx.media3..media3-exoplayer-rtsp=AndroidX.media3.exoPlayer.rtsp
 androidx.media3..media3-exoplayer-workmanager=AndroidX.media3.exoPlayer.workmanager
 androidx.media3..media3-exoplayer=AndroidX.media3.exoPlayer
 androidx.media3..media3-extractor=AndroidX.media3.extractor
+androidx.media3..media3-muxer=AndroidX.media3.muxer
 androidx.media3..media3-session=AndroidX.media3.session
 androidx.media3..media3-test-utils-robolectric=AndroidX.media3.testUtils.robolectric
 androidx.media3..media3-test-utils=AndroidX.media3.testUtils

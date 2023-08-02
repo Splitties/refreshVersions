@@ -200,6 +200,7 @@ androidx.media3:media3-exoplayer-ima
 androidx.media3:media3-exoplayer-rtsp
 androidx.media3:media3-exoplayer-workmanager
 androidx.media3:media3-extractor
+androidx.media3:media3-muxer
 androidx.media3:media3-session
 androidx.media3:media3-test-utils
 androidx.media3:media3-test-utils-robolectric

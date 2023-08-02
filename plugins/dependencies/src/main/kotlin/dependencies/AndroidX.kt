@@ -2175,6 +2175,14 @@ object AndroidX : IsNotADependency {
          */
         val decoder = module("media3-decoder")
 
+        /**
+         * A Muxer to create an MP4 container file.
+         *
+         * ### API reference:
+         * - [androidx.media3.muxer](https://developer.android.com/reference/kotlin/androidx/media3/muxer/package-summary)
+         */
+        val muxer = module("media3-muxer")
+
 
         /**
          * Common functionality used across multiple media libraries
