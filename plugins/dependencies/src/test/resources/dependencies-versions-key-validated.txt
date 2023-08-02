@@ -314,6 +314,7 @@ androidx.test.services..test-services=version.androidx.test.services
 androidx.test.uiautomator..uiautomator=version.androidx.test.uiautomator
 androidx.textclassifier..textclassifier=version.androidx.textclassifier
 androidx.tracing..tracing-ktx=version.androidx.tracing
+androidx.tracing..tracing-perfetto-handshake=version.androidx.tracing-perfetto
 androidx.tracing..tracing-perfetto=version.androidx.tracing-perfetto
 androidx.tracing..tracing=version.androidx.tracing
 androidx.transition..transition-ktx=version.androidx.transition

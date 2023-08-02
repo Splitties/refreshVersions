@@ -3092,7 +3092,19 @@ object AndroidX : IsNotADependency {
          * ### API reference:
          * - [androidx.tracing.perfetto](https://developer.android.com/reference/androidx/tracing/perfetto/package-summary)
          */
-        val perfetto = module("tracing-perfetto")
+        val perfetto = Perfetto
+
+        object Perfetto : DependencyNotationAndGroup(
+            group = group,
+            name = "tracing-perfetto"
+        ) {
+            /**
+             * ### API reference:
+             * - [androidx.tracing.perfetto.handshake](https://developer.android.com/reference/kotlin/androidx/tracing/perfetto/handshake/package-summary)
+             * - [androidx.tracing.perfetto.handshake.protocol](https://developer.android.com/reference/kotlin/androidx/tracing/perfetto/handshake/protocol/package-summary)
+             */
+            val handshake = module("tracing-perfetto-handshake")
+        }
     }
 
     /**
