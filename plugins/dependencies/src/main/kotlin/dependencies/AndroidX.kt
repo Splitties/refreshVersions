@@ -16,6 +16,8 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * - Back in 2019 November the 18th, AndroidX was made of **187 artifacts**.
  */
 object AndroidX : IsNotADependency {
+    // Last AndroidX Update sync: Jul 26, 2023.
+    // See https://androidx.tech/blog/updates for easier updates tracking
     // LibraryGroups.kt: https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryGroups.kt
     // LibraryVersions.kt: https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryVersions.kt
 
