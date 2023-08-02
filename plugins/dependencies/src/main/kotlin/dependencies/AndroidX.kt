@@ -128,6 +128,14 @@ object AndroidX : IsNotADependency {
 
     object AppSearch : DependencyNotationAndGroup(group = "androidx.appsearch", name = "appsearch") {
 
+        /** Kotlin extensions */
+        val ktx = module("appsearch-ktx")
+
+        /**
+         * A support library for AndroidX AppSearch that contains activities and views for debugging an application's integration with AppSearch.
+         */
+        val debugView = module("appsearch-debug-view")
+
         /** Compiler for classes annotated with @androidx.appsearch.annotation.Document */
         val compiler = module("appsearch-compiler")
 

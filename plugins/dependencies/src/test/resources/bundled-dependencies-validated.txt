@@ -10,6 +10,8 @@ androidx.appcompat:appcompat-resources
 androidx.appsearch:appsearch
 androidx.appsearch:appsearch-builtin-types
 androidx.appsearch:appsearch-compiler
+androidx.appsearch:appsearch-debug-view
+androidx.appsearch:appsearch-ktx
 androidx.appsearch:appsearch-local-storage
 androidx.appsearch:appsearch-platform-storage
 androidx.arch.core:core-common
