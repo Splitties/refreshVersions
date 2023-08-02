@@ -188,6 +188,7 @@ androidx.media2:media2-session
 androidx.media2:media2-widget
 androidx.media3:media3-cast
 androidx.media3:media3-common
+androidx.media3:media3-container
 androidx.media3:media3-database
 androidx.media3:media3-datasource
 androidx.media3:media3-datasource-cronet

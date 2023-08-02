@@ -2191,6 +2191,11 @@ object AndroidX : IsNotADependency {
          */
         val muxer = module("media3-muxer")
 
+        /**
+         * ### API reference:
+         * - [androidx.media3.container](https://developer.android.com/reference/kotlin/androidx/media3/container/package-summary)
+         */
+        val container = module("media3-container")
 
         /**
          * Common functionality used across multiple media libraries

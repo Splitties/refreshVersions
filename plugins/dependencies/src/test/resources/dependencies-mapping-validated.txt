@@ -190,6 +190,7 @@ androidx.media2..media2-session=AndroidX.media2.session
 androidx.media2..media2-widget=AndroidX.media2.widget
 androidx.media3..media3-cast=AndroidX.media3.cast
 androidx.media3..media3-common=AndroidX.media3.common
+androidx.media3..media3-container=AndroidX.media3.container
 androidx.media3..media3-database=AndroidX.media3.database
 androidx.media3..media3-datasource-cronet=AndroidX.media3.dataSource.cronet
 androidx.media3..media3-datasource-okhttp=AndroidX.media3.dataSource.okhttp

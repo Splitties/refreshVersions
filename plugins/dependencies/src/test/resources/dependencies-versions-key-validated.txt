@@ -189,6 +189,7 @@ androidx.media2..media2-session=version.androidx.media2
 androidx.media2..media2-widget=version.androidx.media2
 androidx.media3..media3-cast=version.androidx.media3
 androidx.media3..media3-common=version.androidx.media3
+androidx.media3..media3-container=version.androidx.media3
 androidx.media3..media3-database=version.androidx.media3
 androidx.media3..media3-datasource-cronet=version.androidx.media3
 androidx.media3..media3-datasource-okhttp=version.androidx.media3
