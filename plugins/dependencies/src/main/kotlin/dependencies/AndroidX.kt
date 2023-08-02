@@ -2640,6 +2640,8 @@ object AndroidX : IsNotADependency {
          */
         val ktx = module("room-ktx")
 
+        val gradlePlugin = module("room-gradle-plugin")
+
         /**
          * Paging 3 Integration
          */

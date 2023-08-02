@@ -263,6 +263,7 @@ androidx.remotecallback..remotecallback-processor=AndroidX.remoteCallback.proces
 androidx.remotecallback..remotecallback=AndroidX.remoteCallback
 androidx.room..room-common=AndroidX.room.common
 androidx.room..room-compiler=AndroidX.room.compiler
+androidx.room..room-gradle-plugin=AndroidX.room.gradlePlugin
 androidx.room..room-guava=AndroidX.room.guava
 androidx.room..room-ktx=AndroidX.room.ktx
 androidx.room..room-paging-guava=AndroidX.room.paging.guava
