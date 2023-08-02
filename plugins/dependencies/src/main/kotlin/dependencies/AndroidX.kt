@@ -1554,6 +1554,22 @@ object AndroidX : IsNotADependency {
     object Glance : DependencyNotationAndGroup("androidx.glance", "glance") {
 
         /**
+         * Glance Material 2 integration library. This library provides interop APIs with Material 2.
+         *
+         * ### API reference:
+         * - [androidx.glance.material](https://developer.android.com/reference/kotlin/androidx/glance/material/package-summary)
+         */
+        val material = module("glance-material")
+
+        /**
+         * Glance Material integration library. This library provides interop APIs with Material 3.
+         *
+         * ### API reference:
+         * - [androidx.glance.material3](https://developer.android.com/reference/kotlin/androidx/glance/material3/package-summary)
+         */
+        val material3 = module("glance-material3")
+
+        /**
          * Glance-appwidgets allows developers to build layouts for Android AppWidgets using a Jetpack Compose-style API.
          *
          * ### API reference:

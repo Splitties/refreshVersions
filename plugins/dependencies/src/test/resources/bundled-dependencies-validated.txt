@@ -137,6 +137,8 @@ androidx.games:games-performance-tuner
 androidx.games:games-text-input
 androidx.glance:glance
 androidx.glance:glance-appwidget
+androidx.glance:glance-material
+androidx.glance:glance-material3
 androidx.glance:glance-wear-tiles
 androidx.graphics:graphics-core
 androidx.graphics:graphics-path
