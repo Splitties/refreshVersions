@@ -645,8 +645,8 @@ object AndroidX : IsNotADependency {
              *
              * ## API reference:
              * - [androidx.compose.animation.graphics](https://developer.android.com/reference/kotlin/androidx/compose/animation/graphics/package-summary)
-             * - [androidx.compose.animation.res](https://developer.android.com/reference/kotlin/androidx/compose/animation/res/package-summary)
-             * - [androidx.compose.animation.vector](https://developer.android.com/reference/kotlin/androidx/compose/animation/vector/package-summary)
+             * - [androidx.compose.animation.graphics.res](https://developer.android.com/reference/kotlin/androidx/compose/animation/graphics/res/package-summary)
+             * - [androidx.compose.animation.graphics.vector](https://developer.android.com/reference/kotlin/androidx/compose/animation/graphics/vector/package-summary)
              */
             val graphics = module("animation-graphics")
         }
@@ -2307,7 +2307,7 @@ object AndroidX : IsNotADependency {
          *
          * ### API reference:
          * - [androidx.navigation.dynamicfeatures.fragment](https://developer.android.com/reference/kotlin/androidx/navigation/dynamicfeatures/fragment/package-summary)
-         * - [androidx.navigation.dynamicfeatures.ui](https://developer.android.com/reference/kotlin/androidx/navigation/dynamicfeatures/ui/package-summary)
+         * - [androidx.navigation.dynamicfeatures.fragment.ui](https://developer.android.com/reference/kotlin/androidx/navigation/dynamicfeatures/fragment/ui/package-summary)
          */
         val dynamicFeaturesFragment = module("navigation-dynamic-features-fragment")
 
@@ -2911,7 +2911,7 @@ object AndroidX : IsNotADependency {
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/test)
      *
      * ### API reference:
-     * - [androidx.test](https://developer.android.com/reference/kotlin/androidx/test/packages)
+     * - [androidx.test](https://developer.android.com/reference/kotlin/androidx/test/package-summary)
      */
     val test = Test
 
