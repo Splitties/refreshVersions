@@ -1528,8 +1528,8 @@ object AndroidX : IsNotADependency {
      *
      * You can use the androidx library instead of manually downloading and integrating the Android Game SDK into your build.
      *
-     * For more information about the Android Game SDK, see the [SDK documentation](https://developer.android.com/games/sdk)
-     * and the [SDK release notes](https://developer.android.com/games/sdk/release-notes).
+     * For more information about the Android Game SDK, see the [SDK documentation](https://developer.android.com/games/agdk/overview)
+     * and the [SDK release notes](https://developer.android.com/games/agdk/release-notes).
      *
      * [Setup instructions & release notes](https://developer.android.com/jetpack/androidx/releases/games)
      *
@@ -2906,7 +2906,7 @@ object AndroidX : IsNotADependency {
      *
      * Guide: [Test apps on Android](https://developer.android.com/training/testing)
      *
-     * [Samples and codelabs](https://developer.android.com/training/testing/additional-resources#samples)
+     * [Samples and codelabs](https://developer.android.com/training/testing#additional-resources-samples)
      *
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/test)
      *
@@ -2977,9 +2977,7 @@ object AndroidX : IsNotADependency {
          * UI Automator is a UI testing framework suitable for cross-app
          * functional UI testing across system and installed apps.
          *
-         * Guides:
-         * - [Test UI for multiple apps](https://developer.android.com/training/testing/ui-testing/uiautomator-testing)
-         * - [UI Automator](https://developer.android.com/training/testing/ui-automator)
+         * Guide: [Write automated tests with UI Automator](https://developer.android.com/training/testing/other-components/ui-automator)
          *
          * ### API reference:
          * - [androidx.test.uiautomator](https://developer.android.com/reference/kotlin/androidx/test/uiautomator/package-summary)
