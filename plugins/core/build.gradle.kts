@@ -98,12 +98,10 @@ tasks.processResources {
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.apiVersion = "1.4"
+    kotlinOptions.apiVersion = "1.5"
     kotlinOptions.freeCompilerArgs += listOf(
-        "-Xinline-classes",
         "-Xmulti-platform", // Allow using expect and actual keywords.
-        "-Xopt-in=kotlin.RequiresOptIn",
-        "-Xopt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
+        "-opt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
     )
 }
 
@@ -116,3 +114,5 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
     withSourcesJar()
 }
+
+tasks.named("sourcesJar").configure { dependsOn(copyVersionFile) }

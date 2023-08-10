@@ -140,10 +140,9 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.apiVersion = "1.4"
+    kotlinOptions.apiVersion = "1.5"
     kotlinOptions.freeCompilerArgs += listOf(
-        "-Xopt-in=kotlin.RequiresOptIn",
-        "-Xopt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
+        "-opt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
     )
 }
 
@@ -156,3 +155,5 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
     withSourcesJar()
 }
+
+tasks.named("sourcesJar").configure { dependsOn(copyDependencyNotationsRemovalsRevisionNumber) }
