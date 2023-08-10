@@ -1,4 +1,4 @@
-@file:Suppress("DeprecatedCallableAddReplaceWith")
+@file:Suppress("DeprecatedCallableAddReplaceWith", "UnusedReceiverParameter", "UNUSED_PARAMETER")
 
 package org.gradle.kotlin.dsl
 
@@ -23,13 +23,13 @@ private const val ErrorIsNotADependency =
     """This is not a valid dependency notation but a group of dependency notations"""
 
 @Deprecated(ErrorIsNotADependency)
-fun DependencyHandler.`implementation`(dependencyNotation: IsNotADependency): Dependency? =
+fun DependencyHandler.implementation(dependencyNotation: IsNotADependency): Dependency? =
     null
 
 @Deprecated(ErrorIsNotADependency)
-fun DependencyHandler.`api`(dependencyNotation: IsNotADependency): Dependency? =
+fun DependencyHandler.api(dependencyNotation: IsNotADependency): Dependency? =
     null
 
 @Deprecated(ErrorIsNotADependency)
-fun DependencyHandler.`testImplementation`(dependencyNotation: IsNotADependency): Dependency? =
+fun DependencyHandler.testImplementation(dependencyNotation: IsNotADependency): Dependency? =
     null
