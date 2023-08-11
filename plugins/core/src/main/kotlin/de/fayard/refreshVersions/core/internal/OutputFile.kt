@@ -1,6 +1,9 @@
 package de.fayard.refreshVersions.core.internal
 
+import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
+import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
+import org.gradle.api.Project
 import java.io.File
 
 @InternalRefreshVersionsApi
@@ -54,7 +57,14 @@ enum class OutputFile(
     }
 
     companion object {
-        lateinit var rootDir: File
+
+        fun init(project: Project) {
+            require(project.isBuildSrc.not())
+            require(project.isRootProject)
+            rootDir = project.rootDir
+        }
+
+        private lateinit var rootDir: File
 
         val settingsFiles = listOf(SETTINGS_GRADLE, SETTINGS_GRADLE_KTS, BUILD_SETTINGS_GRADLE, BUILD_SETTINGS_GRADLE_KTS)
 
