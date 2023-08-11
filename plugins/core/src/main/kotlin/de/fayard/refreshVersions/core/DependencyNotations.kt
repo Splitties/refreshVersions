@@ -158,11 +158,9 @@ private class DependencyNotationImpl(
                         "Declare the BoM first to fix this issue."
                 )
                 dependencyGroup.usePlatformConstraints = true
-            } else when (usePlatformConstraints) {
-                null -> {
-                    if (dependencyGroup.shouldUsePlatformConstraints().not()) {
-                        dependencyGroup.usedDependencyNotationsWithNoPlatformConstraints = true
-                    }
+            } else if (usePlatformConstraints == null) {
+                if (dependencyGroup.shouldUsePlatformConstraints().not()) {
+                    dependencyGroup.usedDependencyNotationsWithNoPlatformConstraints = true
                 }
             }
         }
