@@ -167,7 +167,6 @@ private fun setupRefreshVersions(
 ) {
     UsedPluginsTracker.clearFor(settings)
     UsedVersionForTracker.clearFor(settings)
-    @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(
         settings = settings,
         properties = versionsMap
