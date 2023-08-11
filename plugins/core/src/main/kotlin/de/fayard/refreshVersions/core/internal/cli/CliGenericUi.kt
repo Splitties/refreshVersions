@@ -2,7 +2,6 @@ package de.fayard.refreshVersions.core.internal.cli
 
 import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import java.util.Scanner
-import kotlin.jvm.JvmInline
 
 @InternalRefreshVersionsApi
 interface CliGenericUi {
@@ -25,9 +24,8 @@ interface CliGenericUi {
     ): MenuEntryIndex
 }
 
-@JvmInline
 @InternalRefreshVersionsApi
-value class MenuEntryIndex(val value: Int)
+inline class MenuEntryIndex(val value: Int)
 
 private class CliGenericUiImpl : CliGenericUi {
 
