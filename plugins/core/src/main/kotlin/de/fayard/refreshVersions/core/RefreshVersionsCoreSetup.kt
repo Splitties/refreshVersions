@@ -62,7 +62,7 @@ fun Settings.bootstrapRefreshVersionsCore(
         // This ensures configuration cache is invalidated if versionsPropertiesFile is edited.
         // Without that, changes to dependencies versions would be ignored after the initial caching.
         val regularFile: RegularFile = layout.projectDirectory.file(versionsPropertiesFile.path)
-        val provider = providers.fileContents(regularFile).asBytes.forUseAtConfigurationTime()
+        val provider = providers.fileContents(regularFile).asBytes
         provider.isPresent // Checking the isPresent property marks the provider as used.
         // If we didn't do it, the provider would be treated as unused,
         // and changes to the underlying file would not invalidate the configuration cache.
