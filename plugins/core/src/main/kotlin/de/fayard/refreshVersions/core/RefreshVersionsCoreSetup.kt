@@ -134,8 +134,9 @@ private val minimumGradleVersion = GradleVersion.version(minimumGradleVersionStr
 /**
  * This is an extension on `Nothing?` to avoid polluting top-level.
  */
+@Suppress("UnusedReceiverParameter")
 @InternalRefreshVersionsApi
-fun @Suppress("unused") Nothing?.checkGradleVersionIsSupported() {
+fun Nothing?.checkGradleVersionIsSupported() {
     minimumGradleVersion.version
     if (GradleVersion.current() < minimumGradleVersion) {
         throw UnsupportedVersionException(
