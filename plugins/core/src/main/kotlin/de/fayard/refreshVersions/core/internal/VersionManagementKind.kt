@@ -2,6 +2,8 @@ package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.extensions.gradle.moduleId
+import de.fayard.refreshVersions.core.extensions.gradle.npmModuleId
+import de.fayard.refreshVersions.core.extensions.gradle.tryExtractingSimpleVersion
 import de.fayard.refreshVersions.core.internal.VersionManagementKind.Match
 import de.fayard.refreshVersions.core.internal.VersionManagementKind.NoMatch
 import org.gradle.api.artifacts.Dependency
@@ -89,15 +91,28 @@ private fun Dependency.hasVersionInVersionCatalog(
     versionsCatalogLibraries: Collection<MinimalExternalModuleDependency>,
     versionsCatalogPlugins: Set<PluginDependencyCompat> = emptySet()
 ): Boolean {
-    if (this !is ExternalDependency) return false
+    when {
+        this::class.simpleName == "NpmDependency" -> {
+            return versionsCatalogLibraries.any {
+                val moduleId = npmModuleId()
+                it.module.group == (moduleId.group ?: "<unscoped>") && it.module.name == moduleId.name
+                    && it.versionConstraint.tryExtractingSimpleVersion() == version
+            }
+        }
 
-    val matchingLib = versionsCatalogLibraries.any {
-        it.module.group == group && it.module.name == name && it.versionConstraint == versionConstraint
+        this is ExternalDependency -> {
+            val matchingLib = versionsCatalogLibraries.any {
+                it.module.group == group && it.module.name == name
+                    && it.versionConstraint == versionConstraint
+            }
+            if (matchingLib) return true
+
+            if (name.endsWith(".gradle.plugin").not()) return false
+
+            val pluginId = name.substringBeforeLast(".gradle.plugin")
+            return versionsCatalogPlugins.any { it.pluginId == pluginId && it.version == versionConstraint }
+        }
+
+        else -> return false
     }
-    if (matchingLib) return true
-
-    if (name.endsWith(".gradle.plugin").not()) return false
-
-    val pluginId = name.substringBeforeLast(".gradle.plugin")
-    return versionsCatalogPlugins.any { it.pluginId == pluginId && it.version == versionConstraint }
 }
