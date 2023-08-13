@@ -516,6 +516,22 @@ object Google : IsNotADependency {
             val tasks = module("play-services-tasks")
 
             /**
+             * TensorFlow Lite is available in Google Play services runtime for all Android devices running the
+             * current version of Play services.
+             * This runtime allows you to run machine learning (ML) models without statically
+             * bundling TensorFlow Lite libraries into your app.
+             *
+             * Guide: [TensorFlow Lite in Google Play services](https://www.tensorflow.org/lite/android/play_services)
+             */
+            val tfLite = TfLite
+
+            object TfLite : IsNotADependency {
+                val java = module("play-services-tflite-java")
+                val support = module("play-services-tflite-support")
+                val gpu = module("play-services-tflite-gpu")
+            }
+
+            /**
              * The Thread Network SDK provides functionality that's similar to a digital keychain,
              * allowing your Android apps to share Thread network credentials with Google Play services.
              * This allows your apps to set up any Thread device from any smart home ecosystem,
