@@ -5,7 +5,7 @@ import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
-import de.fayard.refreshVersions.core.internal.skipConfigurationCache
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.register
@@ -18,15 +18,31 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
         check(project.isRootProject) { "ERROR: de.fayard.refreshVersions.core should not be applied manually" }
         if (project.isBuildSrc.not()) {
             OutputFile.init(project)
-            // In the case where this runs in includedBuilds, the task configuration lambda may (will) run
-            // after RefreshVersionsConfigHolder content is cleared (via its ClearStaticStateBuildService),
-            // so we get the value before.
             val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
 
+            val shouldUpdateVersionCatalogs = VersionsCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled
             project.tasks.register<RefreshVersionsTask>(name = "refreshVersions") {
                 group = "refreshVersions"
                 description = "Search for new dependencies versions and update $versionsFileName"
-                skipConfigurationCache()
+                if (shouldUpdateVersionCatalogs) {
+                    this.defaultVersionCatalog = VersionsCatalogs.getDefault(project)
+                    this.defaultVersionCatalogFile = project.file(VersionsCatalogs.LIBS_VERSIONS_TOML)
+                }
+                rootProjectSettingsFile = project.file("settings.gradle.kts").let { kotlinDslSettings ->
+                    if (kotlinDslSettings.exists()) kotlinDslSettings else {
+                        project.file("settings.gradle").also {
+                            check(it.exists())
+                        }
+                    }
+                }
+                buildSrcSettingsFile = project.file("buildSrc/settings.gradle.kts").let { kotlinDslSettings ->
+                    if (kotlinDslSettings.exists()) kotlinDslSettings else {
+                        project.file("buildSrc/settings.gradle").takeIf {
+                            it.exists()
+                        }
+                    }
+                }
+                RefreshVersionsConfigHolder.dependenciesTracker.recordBuildscriptAndRegularDependencies(project)
             }
 
             project.tasks.register<RefreshVersionsCleanupTask>(name = "refreshVersionsCleanup") {

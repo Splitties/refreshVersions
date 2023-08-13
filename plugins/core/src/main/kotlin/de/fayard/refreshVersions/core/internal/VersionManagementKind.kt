@@ -89,7 +89,8 @@ private fun Dependency.hasVersionInVersionCatalog(
     versionsCatalogLibraries: Collection<MinimalExternalModuleDependency>,
     versionsCatalogPlugins: Set<PluginDependencyCompat> = emptySet()
 ): Boolean {
-    if (this !is ExternalDependency) return false
+    if (this !is ConfigurationLessDependency) return false
+    if (versionConstraint == null) return false
 
     val matchingLib = versionsCatalogLibraries.any {
         it.module.group == group && it.module.name == name && it.versionConstraint == versionConstraint

@@ -9,6 +9,8 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.initialization.Settings
 
 internal object UsedVersionForTracker {
+    //TODO: Attempt to move into DependenciesTracker and remove references to Project,
+    // and to ArtifactRepositoryContainer, using our own Repo class instead.
 
     fun clearFor(settings: Settings) {
         if (settings.isBuildSrc) buildSrcHolder = null else projectHolder = null

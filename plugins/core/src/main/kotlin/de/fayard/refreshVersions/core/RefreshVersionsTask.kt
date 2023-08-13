@@ -1,8 +1,14 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.internal.*
+import de.fayard.refreshVersions.core.internal.OutputFile
+import de.fayard.refreshVersions.core.internal.PluginDependencyCompat
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
-import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
+import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
+import de.fayard.refreshVersions.core.internal.VersionsCatalogUpdater
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs
+import de.fayard.refreshVersions.core.internal.configureLintIfRunningOnAnAndroidProject
+import de.fayard.refreshVersions.core.internal.lookupVersionCandidates
 import de.fayard.refreshVersions.core.internal.problems.log
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
@@ -11,11 +17,14 @@ import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
+import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import org.gradle.util.GradleVersion
+import java.io.File
 
 /**
  *
@@ -28,7 +37,6 @@ import org.gradle.util.GradleVersion
  *     --disable <FEATURE_FLAG>
  */
 open class RefreshVersionsTask : DefaultTask() {
-
 
     @Input @Optional
     @Option(option = "enable", description = "Enable a feature flag")
@@ -46,6 +54,20 @@ open class RefreshVersionsTask : DefaultTask() {
             if (value != null) FeatureFlag.userSettings.put(value, false)
         }
 
+    @get:Input
+    @get:Optional
+    internal var defaultVersionCatalog: VersionCatalog? = null
+
+    @get:InputFile
+    internal lateinit var defaultVersionCatalogFile: File
+
+    @get:InputFile
+    internal lateinit var rootProjectSettingsFile: File
+
+    @get:InputFile
+    @get:Optional
+    internal var buildSrcSettingsFile: File? = null
+
     @TaskAction
     fun taskActionRefreshVersions() {
         OutputFile.checkWhichFilesExist()
@@ -62,7 +84,7 @@ open class RefreshVersionsTask : DefaultTask() {
         val versionsCatalogLibraries: Set<MinimalExternalModuleDependency>
         val versionsCatalogPlugins: Set<PluginDependencyCompat>
         if (shouldUpdateVersionCatalogs) {
-            val versionCatalog = VersionsCatalogs.getDefault(project)
+            val versionCatalog = defaultVersionCatalog
             versionsCatalogLibraries = VersionsCatalogs.libraries(versionCatalog)
             versionsCatalogPlugins = VersionsCatalogs.plugins(versionCatalog)
         } else {
@@ -80,16 +102,17 @@ open class RefreshVersionsTask : DefaultTask() {
             }) { httpClient ->
                 lookupVersionCandidates(
                     httpClient = httpClient,
-                    project = project,
+                    dependenciesTracker = RefreshVersionsConfigHolder.dependenciesTracker,
                     versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
                     versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader,
                     versionsCatalogLibraries = versionsCatalogLibraries,
                     versionsCatalogPlugins = versionsCatalogPlugins
                 )
             }
-            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdatesForVersionsProperties)
+            val versionPropertiesUpdated = VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdatesForVersionsProperties)
             SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
-                rootProject = project,
+                rootProjectSettingsFile = rootProjectSettingsFile,
+                buildSrcSettingsFile = buildSrcSettingsFile,
                 settingsPluginsUpdates = result.settingsPluginsUpdates,
                 buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
             )
@@ -104,7 +127,7 @@ open class RefreshVersionsTask : DefaultTask() {
             if (versionPropertiesUpdated) OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 
             if (shouldUpdateVersionCatalogs) {
-                val libsToml = project.file(LIBS_VERSIONS_TOML)
+                val libsToml = defaultVersionCatalogFile
                 if (libsToml.canRead()) {
                     val updated = VersionsCatalogUpdater(
                         file = libsToml,

@@ -1,12 +1,14 @@
 package de.fayard.refreshVersions.core.extensions.gradle
 
 import de.fayard.refreshVersions.core.ModuleId
+import de.fayard.refreshVersions.core.internal.ConfigurationLessDependency
 import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalDependency
 
 @InternalRefreshVersionsApi
 fun Dependency.moduleId(): ModuleId? = when {
+    this is ConfigurationLessDependency -> if (isNpm) npmModuleId() else mavenModuleId()
     this is ExternalDependency -> mavenModuleId()
     this::class.simpleName == "NpmDependency" -> npmModuleId()
     else -> null

@@ -7,8 +7,8 @@ import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.Version
 import de.fayard.refreshVersions.core.extensions.gradle.*
 import de.fayard.refreshVersions.core.extensions.gradle.hasDynamicVersion
-import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.extensions.gradle.npmModuleId
+import de.fayard.refreshVersions.core.internal.dependencies.DependenciesTracker
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -25,31 +25,22 @@ import org.gradle.util.GradleVersion
 
 internal suspend fun lookupVersionCandidates(
     httpClient: OkHttpClient,
-    project: Project,
+    dependenciesTracker: DependenciesTracker,
     versionMap: Map<String, String>,
     versionKeyReader: ArtifactVersionKeyReader,
     versionsCatalogLibraries: Set<MinimalExternalModuleDependency>,
     versionsCatalogPlugins: Set<PluginDependencyCompat>
 ): VersionCandidatesLookupResult {
 
-    require(project.isRootProject)
-
-    val projects = RefreshVersionsConfigHolder.allProjects(project)
-
     val dependenciesFromVersionFor = UsedVersionForTracker.read()
 
     return lookupVersionCandidates(
         dependencyVersionsFetchers = { dependencyFilter ->
-            projects.flatMap {
-                it.getDependencyVersionFetchers(httpClient = httpClient, dependencyFilter = dependencyFilter).toList()
-            }.plus(
-                UsedPluginsTracker.read().getDependencyVersionsFetchers(httpClient) //TODO: Is this needed?
-                //TODO: If so, don't we miss passing dependencies through the dependencyFilter?
-            ).plus(
+            dependenciesTracker.dependencyVersionsFetchers(httpClient, dependencyFilter).plus(
                 dependenciesFromVersionFor.asSequence().onEach { (dependency, _) ->
                     check(dependencyFilter(dependency)) // Needed because dependencyFilter also tracks dependencies usage.
                 }.getDependencyVersionsFetchers(httpClient)
-            ).toSet()
+            )
         },
         lookupAvailableGradleVersions = {
             if (GRADLE_UPDATES.isEnabled) lookupAvailableGradleVersions(httpClient) else emptyList()
@@ -230,23 +221,6 @@ internal fun Settings.getDependencyVersionFetchers(
     configurations = buildscript.configurations,
     repositories = buildscript.repositories.withPluginsRepos(),
     dependencyFilter = dependencyFilter
-)
-
-private fun Project.getDependencyVersionFetchers(
-    httpClient: OkHttpClient,
-    dependencyFilter: (Dependency) -> Boolean
-): Sequence<DependencyVersionsFetcher> = getDependencyVersionFetchers(
-    httpClient = httpClient,
-    configurations = buildscript.configurations,
-    repositories = buildscript.repositories.withPluginsRepos(),
-    dependencyFilter = dependencyFilter
-).plus(
-    getDependencyVersionFetchers(
-        httpClient = httpClient,
-        configurations = configurations,
-        repositories = repositories,
-        dependencyFilter = dependencyFilter
-    )
 )
 
 private fun Sequence<Pair<Dependency, List<ArtifactRepository>>>.getDependencyVersionsFetchers(
