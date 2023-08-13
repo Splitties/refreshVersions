@@ -19,7 +19,7 @@ internal class VersionsCatalogUpdater(
             toml[section] = updateNewVersions(lines)
         }
         val newContent = toml.toString()
-        if (newContent == versionsCatalogTomlFile.readText()) return false
+        if (versionsCatalogTomlFile.canRead() && newContent == versionsCatalogTomlFile.readText()) return false
         versionsCatalogTomlFile.writeText(newContent)
         return true
     }
