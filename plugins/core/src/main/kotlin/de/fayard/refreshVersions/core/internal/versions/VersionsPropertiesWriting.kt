@@ -14,8 +14,8 @@ import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.
 import org.gradle.api.artifacts.Dependency
 import java.io.File
 
-internal fun VersionsPropertiesModel.Companion.writeWithNewEntries(newEntries: Map<String, Dependency>) {
-    update { model ->
+internal fun VersionsPropertiesModel.Companion.writeWithNewEntries(newEntries: Map<String, Dependency>): Boolean {
+    return update { model ->
         model + newEntries.map { (key, d: Dependency) ->
             VersionEntry(
                 key = key,
@@ -28,14 +28,14 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewEntries(newEntries: M
 
 internal fun VersionsPropertiesModel.Companion.writeWithNewVersions(
     dependenciesWithLastVersion: List<DependencyWithVersionCandidates>
-) {
+): Boolean {
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
 
     val candidatesMap = dependenciesWithLastVersion.associateBy {
         getVersionPropertyName(it.moduleId, versionKeyReader)
     }
 
-    update { model ->
+    return update { model ->
         model.copy(
             sections = model.sections.map { section ->
                 when (section) {
@@ -103,11 +103,14 @@ internal fun VersionsPropertiesModel.Companion.writeWithNewEntry(
     }
 }
 
-internal fun VersionsPropertiesModel.writeTo(versionsPropertiesFile: File) {
+internal fun VersionsPropertiesModel.writeTo(versionsPropertiesFile: File): Boolean {
     val finalModel = this.copy(
         generatedByVersion = RefreshVersionsCorePlugin.currentVersion
     )
-    versionsPropertiesFile.writeText(finalModel.toText())
+    val newContent = finalModel.toText()
+    if (newContent == versionsPropertiesFile.readText()) return false
+    versionsPropertiesFile.writeText(newContent)
+    return true
 }
 
 /**
@@ -116,9 +119,9 @@ internal fun VersionsPropertiesModel.writeTo(versionsPropertiesFile: File) {
 private inline fun VersionsPropertiesModel.Companion.update(
     versionsPropertiesFile: File = RefreshVersionsConfigHolder.versionsPropertiesFile,
     crossinline transform: (model: VersionsPropertiesModel) -> VersionsPropertiesModel
-) {
+): Boolean {
     require(versionsPropertiesFile.name == "versions.properties")
-    synchronized(versionsPropertiesFileLock) {
+    return synchronized(versionsPropertiesFileLock) {
         val newModel = transform(VersionsPropertiesModel.readFromFile(versionsPropertiesFile))
         newModel.writeTo(versionsPropertiesFile)
     }

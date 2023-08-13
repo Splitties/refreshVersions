@@ -101,16 +101,16 @@ open class RefreshVersionsTask : DefaultTask() {
             lintUpdatingProblemsAsync.await().forEach { problem ->
                 logger.log(problem)
             }
-            OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
+            if (versionPropertiesUpdated) OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 
             if (shouldUpdateVersionCatalogs) {
                 val libsToml = project.file(LIBS_VERSIONS_TOML)
                 if (libsToml.canRead()) {
-                    VersionsCatalogUpdater(
+                    val updated = VersionsCatalogUpdater(
                         file = libsToml,
                         dependenciesUpdates = result.dependenciesUpdatesForVersionCatalog
                     ).updateNewVersions(libsToml)
-                    OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
+                    if (updated) OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
                 }
             }
         }

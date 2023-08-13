@@ -11,13 +11,17 @@ internal class VersionsCatalogUpdater(
 
     private val toml = VersionsCatalogs.parseToml(fileContent)
 
-    fun updateNewVersions(actual: File) {
-        if (fileContent.isBlank()) return
+    fun updateNewVersions(versionsCatalogTomlFile: File): Boolean {
+        require(versionsCatalogTomlFile.name.endsWith(".versions.toml"))
+        if (fileContent.isBlank()) return false
 
         toml.sections.forEach { (section, lines) ->
             toml[section] = updateNewVersions(lines)
         }
-        actual.writeText(toml.toString())
+        val newContent = toml.toString()
+        if (newContent == versionsCatalogTomlFile.readText()) return false
+        versionsCatalogTomlFile.writeText(newContent)
+        return true
     }
 
     fun cleanupComments(actual: File) {
