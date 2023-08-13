@@ -460,6 +460,7 @@ com.google.android.gms:play-services-recaptcha
 com.google.android.gms:play-services-safetynet
 com.google.android.gms:play-services-tagmanager
 com.google.android.gms:play-services-tasks
+com.google.android.gms:play-services-tflite-acceleration-service
 com.google.android.gms:play-services-tflite-gpu
 com.google.android.gms:play-services-tflite-java
 com.google.android.gms:play-services-tflite-support

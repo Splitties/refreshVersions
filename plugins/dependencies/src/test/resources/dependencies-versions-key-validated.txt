@@ -460,6 +460,7 @@ com.google.android.gms..play-services-recaptcha=version.google.android.play-serv
 com.google.android.gms..play-services-safetynet=version.google.android.play-services-safetynet
 com.google.android.gms..play-services-tagmanager=version.google.android.play-services-tagmanager
 com.google.android.gms..play-services-tasks=version.google.android.play-services-tasks
+com.google.android.gms..play-services-tflite-acceleration-service=version.google.android.play-services-tflite-acceleration-service
 com.google.android.gms..play-services-tflite-gpu=version.google.android.play-services-tflite-gpu
 com.google.android.gms..play-services-tflite-java=version.google.android.play-services-tflite-java
 com.google.android.gms..play-services-tflite-support=version.google.android.play-services-tflite-support

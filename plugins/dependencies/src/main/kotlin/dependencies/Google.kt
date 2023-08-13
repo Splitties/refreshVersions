@@ -526,6 +526,7 @@ object Google : IsNotADependency {
             val tfLite = TfLite
 
             object TfLite : IsNotADependency {
+                val accelerationService = module("play-services-tflite-acceleration-service")
                 val java = module("play-services-tflite-java")
                 val support = module("play-services-tflite-support")
                 val gpu = module("play-services-tflite-gpu")
