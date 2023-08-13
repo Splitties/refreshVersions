@@ -166,18 +166,23 @@ open class RefreshVersionsTask : DefaultTask() {
 
     private fun warnAboutHardcodedVersionsIfAny(dependenciesWithHardcodedVersions: List<Dependency>) {
         if (dependenciesWithHardcodedVersions.isNotEmpty()) {
-            //TODO: Suggest running a diagnosis task to list the hardcoded versions.
-            val warnFor = (dependenciesWithHardcodedVersions).take(3).map {
+            val warnFor = (dependenciesWithHardcodedVersions).let {
+                if (logger.isInfoEnabled) it else it.take(3)
+            }.map {
                 "${it.group}:${it.name}:${it.version}"
             }
             val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
+            logger.warn("Found ${dependenciesWithHardcodedVersions.count()} dependencies that might have hardcoded versions:")
+            warnFor.forEach { logger.warn("- $it") }
+            if (logger.isInfoEnabled.not()) {
+                logger.warn("- ${dependenciesWithHardcodedVersions.size - warnFor.size} more... (run with --info) to see them all)")
+            }
+            logger.warn("")
             logger.warn(
-                """Found ${dependenciesWithHardcodedVersions.count()} hardcoded dependencies versions.
-                    |
-                    |$warnFor...
-                    |
+                """
                     |To ensure single source of truth, refreshVersions only works with version placeholders,
-                    |that is the explicit way of marking the version is not there (but in the $versionsFileName file).
+                    |and versions in the $versionsFileName file,
+                    |or with the default versions catalog.
                     |
                     |To migrate your project, run
                     |   ./gradlew refreshVersionsMigrate
