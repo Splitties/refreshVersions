@@ -606,7 +606,7 @@ object Google : IsNotADependency {
         }
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")
-        @Suppress("deprecation")
+        @Suppress("Deprecation")
         val android = Android
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")
