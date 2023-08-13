@@ -12,7 +12,7 @@ internal class VersionsCatalogUpdater(
     private val toml = VersionsCatalogs.parseToml(fileContent)
 
     fun updateNewVersions(versionsCatalogTomlFile: File): Boolean {
-        require(versionsCatalogTomlFile.name.endsWith(".versions.toml"))
+        require(versionsCatalogTomlFile.extension == "toml")
         if (fileContent.isBlank()) return false
 
         toml.sections.forEach { (section, lines) ->
