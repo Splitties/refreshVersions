@@ -110,13 +110,6 @@ open class RefreshVersionsTask : DefaultTask() {
                     versionsCatalogPlugins = versionsCatalogPlugins
                 )
             }
-            val versionPropertiesUpdated = VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdatesForVersionsProperties)
-            SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
-                rootProjectSettingsFile = rootProjectSettingsFile,
-                buildSrcSettingsFile = buildSrcSettingsFile,
-                settingsPluginsUpdates = result.settingsPluginsUpdates,
-                buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
-            )
 
             warnAboutRefreshVersionsIfSettingIfAny()
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
@@ -125,6 +118,14 @@ open class RefreshVersionsTask : DefaultTask() {
             lintUpdatingProblemsAsync.await().forEach { problem ->
                 logger.log(problem)
             }
+
+            val versionPropertiesUpdated = VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdatesForVersionsProperties)
+            SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
+                rootProjectSettingsFile = rootProjectSettingsFile,
+                buildSrcSettingsFile = buildSrcSettingsFile,
+                settingsPluginsUpdates = result.settingsPluginsUpdates,
+                buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
+            )
             if (versionPropertiesUpdated) OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 
             if (shouldUpdateVersionCatalogs) {
