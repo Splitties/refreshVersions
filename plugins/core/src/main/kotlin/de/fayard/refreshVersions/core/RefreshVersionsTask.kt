@@ -59,7 +59,8 @@ open class RefreshVersionsTask : DefaultTask() {
     internal var defaultVersionCatalog: VersionCatalog? = null
 
     @get:InputFile
-    internal lateinit var defaultVersionCatalogFile: File
+    @get:Optional
+    internal var defaultVersionCatalogFile: File? = null
 
     @get:InputFile
     internal lateinit var rootProjectSettingsFile: File
@@ -127,7 +128,7 @@ open class RefreshVersionsTask : DefaultTask() {
             if (versionPropertiesUpdated) OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 
             if (shouldUpdateVersionCatalogs) {
-                val libsToml = defaultVersionCatalogFile
+                val libsToml = defaultVersionCatalogFile!!
                 if (libsToml.canRead()) {
                     val updated = VersionsCatalogUpdater(
                         file = libsToml,
