@@ -1,5 +1,68 @@
 # Change log for refreshVersions
 
+## [Unreleased] Version 0.60.0 (2023-08-13)
+
+### Full configuration cache support for the `refreshVersions` task
+
+Now, running the `refreshVersions` task repeatedly will be much faster, because it now supports
+configuration cache fully! That also means that it's ready for Gradle 9 when it'll be released.
+
+### Bug fixes
+
+- Fix "The root project is not yet available for build." error that would show up when using configuration cache in a project having `refreshVersions` configured for the `buildSrc` too.
+- For projects using refreshVersions in their `buildSrc` too, a log would claim that new files were created after running the `refreshVersions` task, when they were only modified, or not touched at all. We fixed it.
+- When no files were modified after running the `refreshVersions` task, there would still be a log saying that `versions.properties` and `libs.versions.toml` (if any) were updated or created. Now, it's only shown if there are actual changes.
+- When running the `refreshVersions` task, it would always claim that some versions were hardcoded as it counted project dependencies. We are now filtering those out, and we updated the wording to reflect that they might not be actually hardcoded, as is the case when versions come from a Gradle plugin.
+- Fix alignment of available update for versions catalogs for keys that are 3 characters long.
+
+### New dependency notations:
+
+<details>
+<summary><strong>Click to expand (40) </strong></summary>
+
+- `AndroidX.appSearch.debugView`
+- `AndroidX.appSearch.ktx`
+- `AndroidX.benchmark.baselineProfileGradlePlugin`
+- `AndroidX.camera.viewFinder`
+- `AndroidX.core.i18n`
+- `AndroidX.core.locationAltitude`
+- `AndroidX.core.telecom`
+- `AndroidX.core.testing`
+- `AndroidX.credentials.playServicesAuth`
+- `AndroidX.credentials`
+- `AndroidX.emoji2.picker`
+- `AndroidX.glance.material3`
+- `AndroidX.glance.material`
+- `AndroidX.graphics.path`
+- `AndroidX.graphics.shapes`
+- `AndroidX.media3.container`
+- `AndroidX.media3.effect`
+- `AndroidX.media3.muxer`
+- `AndroidX.mediaRouter.testing`
+- `AndroidX.privacySandbox.plugins.library`
+- `AndroidX.privacySandbox.sdkRuntime.client`
+- `AndroidX.privacySandbox.sdkRuntime.core`
+- `AndroidX.privacySandbox.tools.apiCompiler`
+- `AndroidX.privacySandbox.tools.apiGenerator`
+- `AndroidX.privacySandbox.tools.apiPackager`
+- `AndroidX.privacySandbox.tools.core`
+- `AndroidX.privacySandbox.tools`
+- `AndroidX.privacySandbox.ui.client`
+- `AndroidX.privacySandbox.ui.core`
+- `AndroidX.privacySandbox.ui.provider`
+- `AndroidX.room.gradlePlugin`
+- `AndroidX.tracing.perfetto.handshake`
+- `AndroidX.wear.compose.material3`
+- `AndroidX.wear.compose.uiTooling`
+- `AndroidX.wear.protoLayout.expression`
+- `AndroidX.wear.protoLayout.material`
+- `AndroidX.wear.protoLayout.renderer`
+- `AndroidX.wear.protoLayout`
+- `AndroidX.window.extensions.core`
+- `Kotlin.gradlePlugin`
+
+</details>
+
 ## Version 0.51.0 (2022-10-25)
 
 ### Support Jetpack Compose BoM
