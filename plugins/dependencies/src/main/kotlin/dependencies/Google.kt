@@ -515,6 +515,16 @@ object Google : IsNotADependency {
              */
             val tasks = module("play-services-tasks")
 
+            /**
+             * The Thread Network SDK provides functionality that's similar to a digital keychain,
+             * allowing your Android apps to share Thread network credentials with Google Play services.
+             * This allows your apps to set up any Thread device from any smart home ecosystem,
+             * without exposing credentials and user data directly.
+             *
+             * Guide: [Thread Network SDK for Android](https://developers.home.google.com/thread)
+             */
+            val threadNetwork = module("play-services-threadnetwork")
+
             /** Mobile Vision */
             val vision = module("play-services-vision")
 
