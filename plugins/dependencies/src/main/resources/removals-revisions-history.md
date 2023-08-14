@@ -712,3 +712,20 @@ id:[androidx.media3:media3-datasource]
 ~~CashApp.molecule.test~~
 // The testing module was removed in version 0.5.0-beta01
 id:[app.cash.molecule:molecule-testing]
+
+## Revision 16
+
+~~Google.android.playServices.appset~~
+id:[com.google.android.gms:play-services-appset]
+
+~~Google.android.playServices.auth.blockstore~~
+id:[com.google.android.gms:play-services-auth-blockstore]
+
+~~Google.android.playServices.recaptcha~~
+id:[com.google.android.gms:play-services-recaptcha]
+
+~~Google.android.playServices.safetynet~~
+id:[com.google.android.gms:play-services-safetynet]
+
+~~Google.android.playServices.tagmanager~~
+id:[com.google.android.gms:play-services-tagmanager]

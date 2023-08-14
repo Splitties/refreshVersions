@@ -287,7 +287,7 @@ object Google : IsNotADependency {
              *
              * Guide: [Identify developer-owned apps](https://developer.android.com/training/articles/app-set-id)
              */
-            val appset = module("play-services-appset")
+            val appSet = module("play-services-appset")
 
             /** Google Account Login */
             val auth = Auth
@@ -298,7 +298,7 @@ object Google : IsNotADependency {
                 val apiPhone = module("play-services-auth-api-phone")
 
                 /** Google Block Store */
-                val blockstore = module("play-services-auth-blockstore")
+                val blockStore = module("play-services-auth-blockstore")
             }
 
             /** Google Awareness */
@@ -494,10 +494,10 @@ object Google : IsNotADependency {
              * ### API reference:
              * - [com.google.android.gms.recaptcha](https://developers.google.com/android/reference/com/google/android/gms/recaptcha/package-summary)
              */
-            val recaptcha = module("play-services-recaptcha")
+            val reCaptcha = module("play-services-recaptcha")
 
             /** SafetyNet */
-            val safetynet = module("play-services-safetynet")
+            val safetyNet = module("play-services-safetynet")
 
             /**
              * Google Tag Manager
@@ -507,7 +507,7 @@ object Google : IsNotADependency {
              *
              * Guides: [Google Tag Manager](https://developers.google.com/tag-platform/tag-manager/android/v5#next_steps)
              */
-            val tagmanager = module("play-services-tagmanager")
+            val tagManager = module("play-services-tagmanager")
 
             /**
              * Google Tasks API (yet another "Future" type, because they're not using Kotlin coroutines yet).
