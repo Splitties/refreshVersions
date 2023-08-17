@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased] Version 0.60.0 (2023-08-13)
+## [Unreleased] Version 0.60.0 (2023-08-17)
 
 ### Full configuration cache support for the `refreshVersions` task
 
@@ -59,6 +59,22 @@ configuration cache fully! That also means that it's ready for Gradle 9 when it'
 - `AndroidX.wear.protoLayout.renderer`
 - `AndroidX.wear.protoLayout`
 - `AndroidX.window.extensions.core`
+- `Google.android.playServices.mlKit.vision.barcodeScanning.codeScanner`
+- `Google.android.playServices.gamesV2.nativeC`
+- `Google.android.playServices.gamesV2`
+- `Google.android.playServices.matter`
+- `Google.android.playServices.mlKit.naturalLanguage.smartReply`
+- `Google.android.playServices.mlKit.vision.textRecognition.chinese`
+- `Google.android.playServices.mlKit.vision.textRecognition.devanagari`
+- `Google.android.playServices.mlKit.vision.textRecognition.japanese`
+- `Google.android.playServices.mlKit.vision.textRecognition.korean`
+- `Google.android.playServices.tfLite.accelerationService`
+- `Google.android.playServices.tfLite.gpu`
+- `Google.android.playServices.tfLite.java`
+- `Google.android.playServices.tfLite.support`
+- `Google.android.playServices.threadNetwork`
+- `Google.mlKit.vision.entityExtraction`
+- `Google.mlKit.vision.faceMeshDetection`
 - `Kotlin.gradlePlugin`
 
 </details>
