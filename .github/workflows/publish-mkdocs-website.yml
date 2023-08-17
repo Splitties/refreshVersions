@@ -1,4 +1,6 @@
 name: Publish MkDocs website to GitHub pages
+permissions:
+  contents: write
 on:
   push:
     branches:
