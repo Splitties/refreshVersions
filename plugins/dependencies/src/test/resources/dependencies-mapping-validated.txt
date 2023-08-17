@@ -439,6 +439,7 @@ com.google.android.gms..play-services-cast=Google.android.playServices.cast
 com.google.android.gms..play-services-code-scanner=Google.android.playServices.mlKit.vision.barcodeScanning.codeScanner
 com.google.android.gms..play-services-cronet=Google.android.playServices.cronet
 com.google.android.gms..play-services-drive=Google.android.playServices.drive
+com.google.android.gms..play-services-dtdi=Google.android.playServices.deviceToDeviceInteractions
 com.google.android.gms..play-services-fido=Google.android.playServices.fido
 com.google.android.gms..play-services-fitness=Google.android.playServices.fitness
 com.google.android.gms..play-services-games-v2-native-c=Google.android.playServices.gamesV2.nativeC

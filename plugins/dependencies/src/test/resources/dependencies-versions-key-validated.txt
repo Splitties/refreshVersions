@@ -438,6 +438,7 @@ com.google.android.gms..play-services-cast=version.google.android.play-services-
 com.google.android.gms..play-services-code-scanner=version.google.android.play-services-code-scanner
 com.google.android.gms..play-services-cronet=version.google.android.play-services-cronet
 com.google.android.gms..play-services-drive=version.google.android.play-services-drive
+com.google.android.gms..play-services-dtdi=version.google.android.play-services-dtdi
 com.google.android.gms..play-services-fido=version.google.android.play-services-fido
 com.google.android.gms..play-services-fitness=version.google.android.play-services-fitness
 com.google.android.gms..play-services-games-v2-native-c=version.google.android.play-services-games-v2-native-c

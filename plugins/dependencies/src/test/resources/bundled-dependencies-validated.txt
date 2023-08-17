@@ -438,6 +438,7 @@ com.google.android.gms:play-services-cast-tv
 com.google.android.gms:play-services-code-scanner
 com.google.android.gms:play-services-cronet
 com.google.android.gms:play-services-drive
+com.google.android.gms:play-services-dtdi
 com.google.android.gms:play-services-fido
 com.google.android.gms:play-services-fitness
 com.google.android.gms:play-services-games

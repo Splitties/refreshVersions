@@ -364,6 +364,13 @@ object Google : IsNotADependency {
             val cronet = module("play-services-cronet")
 
             /**
+             * Base API used by the open source [Google.Ambient.crossDevice] SDK.
+             *
+             * GitHub repo of the SDK using this library: [google/cross-device-sdk](https://github.com/google/cross-device-sdk)
+             */
+            val deviceToDeviceInteractions = module("play-services-dtdi")
+
+            /**
              * Fast IDentity Online (FIDO) Authentication
              *
              * FIDO is a set of standards for fast, simple, strong authentication.
