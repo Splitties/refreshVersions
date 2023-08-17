@@ -276,7 +276,12 @@ object Google : IsNotADependency {
 
             // Play Services Ads intentionally not included because ads are mental pollution.
 
-            /** Google Analytics */
+            /**
+             * Deprecated: Use [Google Analytics for Firebase](https://firebase.google.com/docs/analytics/get-started?platform=android) instead.
+             *
+             * See [Firebase.analyticsKtx]
+             */
+            @Deprecated("Use Google Analytics for Firebase. See link in KDoc.", ReplaceWith("Firebase.analyticsKtx"))
             val analytics = module("play-services-analytics")
 
             /**
