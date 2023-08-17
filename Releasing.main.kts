@@ -25,7 +25,7 @@ import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.util.Date
 
-val gitHubRepoUrl = "https://github.com/jmfayard/refreshVersions"
+val gitHubRepoUrl = "https://github.com/Splitties/refreshVersions"
 
 val dir = File(".")
 
