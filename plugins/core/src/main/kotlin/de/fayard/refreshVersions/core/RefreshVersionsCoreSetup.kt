@@ -62,7 +62,7 @@ fun Settings.bootstrapRefreshVersionsCore(
         // This ensures configuration cache is invalidated if versionsPropertiesFile is edited.
         // Without that, changes to dependencies versions would be ignored after the initial caching.
         val regularFile: RegularFile = layout.projectDirectory.file(versionsPropertiesFile.path)
-        val provider = providers.fileContents(regularFile).asBytes.forUseAtConfigurationTime()
+        val provider = providers.fileContents(regularFile).asBytes
         provider.isPresent // Checking the isPresent property marks the provider as used.
         // If we didn't do it, the provider would be treated as unused,
         // and changes to the underlying file would not invalidate the configuration cache.
@@ -134,14 +134,15 @@ private val minimumGradleVersion = GradleVersion.version(minimumGradleVersionStr
 /**
  * This is an extension on `Nothing?` to avoid polluting top-level.
  */
+@Suppress("UnusedReceiverParameter")
 @InternalRefreshVersionsApi
-fun @Suppress("unused") Nothing?.checkGradleVersionIsSupported() {
+fun Nothing?.checkGradleVersionIsSupported() {
     minimumGradleVersion.version
     if (GradleVersion.current() < minimumGradleVersion) {
         throw UnsupportedVersionException(
             """
             The plugin "de.fayard.refreshVersions" only works with Gradle $minimumGradleVersionString and above.
-            See https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed
+            See https://splitties.github.io/refreshVersions/setup/#update-gradle-if-needed
             """.trimIndent()
         )
     }
@@ -166,7 +167,6 @@ private fun setupRefreshVersions(
 ) {
     UsedPluginsTracker.clearFor(settings)
     UsedVersionForTracker.clearFor(settings)
-    @Suppress("unchecked_cast")
     setupPluginsVersionsResolution(
         settings = settings,
         properties = versionsMap

@@ -1,5 +1,85 @@
 # Change log for refreshVersions
 
+## Version 0.60.0 (2023-08-17)
+
+### Full configuration cache support for the `refreshVersions` task
+
+Now, running the `refreshVersions` task repeatedly will be much faster, because it now supports
+configuration cache fully! That also means that it's ready for Gradle 9 when it'll be released.
+
+### Bug fixes
+
+- Fix "The root project is not yet available for build." error that would show up when using configuration cache in a project having `refreshVersions` configured for the `buildSrc` too.
+- For projects using refreshVersions in their `buildSrc` too, a log would claim that new files were created after running the `refreshVersions` task, when they were only modified, or not touched at all. We fixed it.
+- When no files were modified after running the `refreshVersions` task, there would still be a log saying that `versions.properties` and `libs.versions.toml` (if any) were updated or created. Now, it's only shown if there are actual changes.
+- When running the `refreshVersions` task, it would always claim that some versions were hardcoded as it counted project dependencies. We are now filtering those out, and we updated the wording to reflect that they might not be actually hardcoded, as is the case when versions come from a Gradle plugin.
+- Fix alignment of available update for versions catalogs for keys that are 3 characters long.
+
+### New dependency notations:
+
+<details>
+<summary><strong>Click to expand (57) </strong></summary>
+
+- `AndroidX.appSearch.debugView`
+- `AndroidX.appSearch.ktx`
+- `AndroidX.benchmark.baselineProfileGradlePlugin`
+- `AndroidX.camera.viewFinder`
+- `AndroidX.core.i18n`
+- `AndroidX.core.locationAltitude`
+- `AndroidX.core.telecom`
+- `AndroidX.core.testing`
+- `AndroidX.credentials.playServicesAuth`
+- `AndroidX.credentials`
+- `AndroidX.emoji2.picker`
+- `AndroidX.glance.material3`
+- `AndroidX.glance.material`
+- `AndroidX.graphics.path`
+- `AndroidX.graphics.shapes`
+- `AndroidX.media3.container`
+- `AndroidX.media3.effect`
+- `AndroidX.media3.muxer`
+- `AndroidX.mediaRouter.testing`
+- `AndroidX.privacySandbox.plugins.library`
+- `AndroidX.privacySandbox.sdkRuntime.client`
+- `AndroidX.privacySandbox.sdkRuntime.core`
+- `AndroidX.privacySandbox.tools.apiCompiler`
+- `AndroidX.privacySandbox.tools.apiGenerator`
+- `AndroidX.privacySandbox.tools.apiPackager`
+- `AndroidX.privacySandbox.tools.core`
+- `AndroidX.privacySandbox.tools`
+- `AndroidX.privacySandbox.ui.client`
+- `AndroidX.privacySandbox.ui.core`
+- `AndroidX.privacySandbox.ui.provider`
+- `AndroidX.room.gradlePlugin`
+- `AndroidX.tracing.perfetto.handshake`
+- `AndroidX.wear.compose.material3`
+- `AndroidX.wear.compose.uiTooling`
+- `AndroidX.wear.protoLayout.expression`
+- `AndroidX.wear.protoLayout.material`
+- `AndroidX.wear.protoLayout.renderer`
+- `AndroidX.wear.protoLayout`
+- `AndroidX.window.extensions.core`
+- `Google.android.playServices.deviceToDeviceInteractions`
+- `Google.android.playServices.gamesV2.nativeC`
+- `Google.android.playServices.gamesV2`
+- `Google.android.playServices.matter`
+- `Google.android.playServices.mlKit.naturalLanguage.smartReply`
+- `Google.android.playServices.mlKit.vision.barcodeScanning.codeScanner`
+- `Google.android.playServices.mlKit.vision.textRecognition.chinese`
+- `Google.android.playServices.mlKit.vision.textRecognition.devanagari`
+- `Google.android.playServices.mlKit.vision.textRecognition.japanese`
+- `Google.android.playServices.mlKit.vision.textRecognition.korean`
+- `Google.android.playServices.tfLite.accelerationService`
+- `Google.android.playServices.tfLite.gpu`
+- `Google.android.playServices.tfLite.java`
+- `Google.android.playServices.tfLite.support`
+- `Google.android.playServices.threadNetwork`
+- `Google.mlKit.vision.entityExtraction`
+- `Google.mlKit.vision.faceMeshDetection`
+- `Kotlin.gradlePlugin`
+
+</details>
+
 ## Version 0.51.0 (2022-10-25)
 
 ### Support Jetpack Compose BoM
@@ -25,6 +105,35 @@ dependencies {
     implementation(platform(AndroidX.compose.bom)) // Enables the BoM and depends on it
     implementation(AndroidX.compose.icons.extended) // Uses version defined in the BoM
     implementation(AndroidX.compose.material3.withVersionPlaceholder()) // Separate version in versions.properties
+}
+```
+
+```kts
+// Add Jetpack Compose to a project in seconds with refreshVersions.
+// NEW: The Compose BoM released on Android Dev Summit is supported!
+
+// No need to search for the versions, refreshVersions will do it for you!
+// It will add the latest most stable version, and will even add the updates
+// as comments in the versions.properties file (auto-created on first use).
+
+android {
+    buildFeatures.compose = true
+    composeOptions {
+        // Version and updates are in versions.properties
+        kotlinCompilerExtensionVersion = versionFor(AndroidX.compose.compiler)
+    }
+}
+
+dependencies {
+    // Version and updates of the BoM are in versions.properties too.
+    implementation(platform(AndroidX.compose.bom)) // Enables the BoM automatically
+    implementation(AndroidX.compose.runtime)                   // Version from the BoM
+    implementation(AndroidX.compose.icons.extended)            // Version from the BoM
+
+    // What if you need a specific alpha/beta/rc version?
+    // withVersionPlaceholder() detaches the dependency from the BoM.
+    // Version and updates will therefore be in versions.properties
+    implementation(AndroidX.compose.material3.withVersionPlaceholder()) // Not from BoM
 }
 ```
 
@@ -718,7 +827,7 @@ Look for [issues with the `Dependency notations` and `up-for-grabs` tags](https:
 ### New features
 
 - refreshVersions will now add `## unused` comments on top of unused entries in the `versions.properties` file after you run the `refreshVersions` task, so you know which ones are obsolete and can be removed.
-- The new `rejectVersionsIf { … }` predicate available in the `refreshVersions { … }` extension in your `settings.gradle[.kts]` file will allow you to filter any kind of versions you don't want to know about. It can be handy to filter snapshots out for example.
+- The new `rejectVersionIf { … }` predicate available in the `refreshVersions { … }` extension in your `settings.gradle[.kts]` file will allow you to filter any kind of versions you don't want to know about. It can be handy to filter snapshots out for example.
 - Most of our dependency notations now provide more flexibility with 3 new extension functions: `withVersionPlaceholder()`, `withVersion(…)`, and `withoutVersion()`.
 
 ### Change (potentially breaking)

@@ -9,7 +9,7 @@ import kotlin.String
  *     $ ./gradlew refreshVersions
  * And edit the file `versions.properties`
  *
- * See https://github.com/jmfayard/refreshVersions
+ * See https://github.com/splitties/refreshVersions
  */
 object Libs {
     const val annotation: String = "androidx.annotation:annotation:_"

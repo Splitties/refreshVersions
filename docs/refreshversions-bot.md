@@ -89,13 +89,13 @@ modifying instead the Kotlin script powered by [github-actions.kts](https://krze
 with which the YAML above was generated.
 
 - Create a file `.github/workflows/refreshVersions.main.kts`
-- Make it executable with `chmod +x .github/workflows/refreshVerions.main.kts`
+- Make it executable with `chmod +x .github/workflows/refreshVersions.main.kts`
 - Put it the content above
-- Run with ` .github/workflows/refreshVerions.main.kts`
+- Run with ` .github/workflows/refreshVersions.main.kts`
 
 ```kotlin
 #!/usr/bin/env kotlin
-// Usage: $ .github/workflows/refreshVerions.main.kts
+// Usage: $ .github/workflows/refreshVersions.main.kts
 
 @file:DependsOn("it.krzeminski:github-actions-kotlin-dsl:0.23.0")
 // Find latest version at https://github.com/krzema12/github-actions-kotlin-dsl/releases

@@ -1,38 +1,19 @@
 package de.fayard.refreshVersions.core.internal
 
-import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
-import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
 import de.fayard.refreshVersions.core.extensions.text.indexOfPrevious
 import de.fayard.refreshVersions.core.internal.codeparsing.gradle.extractGradleScriptSections
 import de.fayard.refreshVersions.core.internal.codeparsing.gradle.findPluginBlocksRanges
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Companion.availableComment
-import org.gradle.api.Project
 import java.io.File
 
 internal object SettingsPluginsUpdater {
 
     fun updateGradleSettingsWithAvailablePluginsUpdates(
-        rootProject: Project,
+        rootProjectSettingsFile: File,
+        buildSrcSettingsFile: File?,
         settingsPluginsUpdates: List<PluginWithVersionCandidates>,
         buildSrcSettingsPluginsUpdates: List<PluginWithVersionCandidates>
     ) {
-        require(rootProject.isRootProject)
-        require(rootProject.isBuildSrc.not())
-
-        val rootProjectSettingsFile = rootProject.file("settings.gradle.kts").let { kotlinDslSettings ->
-            if (kotlinDslSettings.exists()) kotlinDslSettings else {
-                rootProject.file("settings.gradle").also {
-                    check(it.exists())
-                }
-            }
-        }
-        val buildSrcSettingsFile = rootProject.file("buildSrc/settings.gradle.kts").let { kotlinDslSettings ->
-            if (kotlinDslSettings.exists()) kotlinDslSettings else {
-                rootProject.file("buildSrc/settings.gradle").takeIf {
-                    it.exists()
-                }
-            }
-        }
         updateGradleSettingsWithAvailablePluginsUpdates(
             settingsFile = rootProjectSettingsFile,
             settingsPluginsUpdates = settingsPluginsUpdates
@@ -49,6 +30,7 @@ internal object SettingsPluginsUpdater {
         settingsFile: File,
         settingsPluginsUpdates: List<PluginWithVersionCandidates>
     ) {
+        require(settingsFile.name == "settings.gradle" || settingsFile.name == "settings.gradle.kts")
         val oldContent = settingsFile.readText()
         val isKotlinDsl = settingsFile.name.endsWith(".kts")
         val newContent = updatedGradleSettingsFileContentWithAvailablePluginsUpdates(

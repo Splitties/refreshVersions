@@ -73,7 +73,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             }
             """
             plugins.id("de.fayard.refreshVersions") must be configured in settings.gradle(.kts)$notInExtraClause.
-            See https://jmfayard.github.io/refreshVersions/setup/
+            See https://splitties.github.io/refreshVersions/setup/
             """.trimIndent()
         }
         bootstrap(target)
@@ -161,7 +161,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
     }
 
     private fun applyToProject(project: Project) {
-        if (project != project.rootProject) return // We want the tasks only for the root project
+        require(project == project.rootProject) { "We want the tasks only for the root project" }
 
         if (FeatureFlag.OLD_TASKS.isEnabled) project.tasks.register<RefreshVersionsDependenciesMigrationTask>(
             name = "migrateToRefreshVersionsDependenciesConstants"

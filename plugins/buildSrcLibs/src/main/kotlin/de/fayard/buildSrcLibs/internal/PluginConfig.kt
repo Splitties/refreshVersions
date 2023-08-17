@@ -10,7 +10,7 @@ internal object PluginConfig {
     /** Documentation **/
     internal fun issue(number: Int): String = "$refreshVersionsUrl/issues/$number"
 
-    const val refreshVersionsUrl = "https://github.com/jmfayard/refreshVersions"
+    const val refreshVersionsUrl = "https://github.com/Splitties/refreshVersions"
 
 
     val INITIAL_GITIGNORE = """

@@ -24,8 +24,8 @@ fun addMissingEntriesInVersionsProperties(project: Project) {
         .mapKeys { (k, _) -> k!! }
 
 
-    VersionsPropertiesModel.writeWithNewEntries(newEntries)
-    OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
+    val updated = VersionsPropertiesModel.writeWithNewEntries(newEntries)
+    if (updated) OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 }
 
 

@@ -3,7 +3,6 @@
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
 import de.fayard.refreshVersions.core.DependencyNotationAndGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 object Google : IsNotADependency {
@@ -277,7 +276,12 @@ object Google : IsNotADependency {
 
             // Play Services Ads intentionally not included because ads are mental pollution.
 
-            /** Google Analytics */
+            /**
+             * Deprecated: Use [Google Analytics for Firebase](https://firebase.google.com/docs/analytics/get-started?platform=android) instead.
+             *
+             * See [Firebase.analyticsKtx]
+             */
+            @Deprecated("Use Google Analytics for Firebase. See link in KDoc.", ReplaceWith("Firebase.analyticsKtx"))
             val analytics = module("play-services-analytics")
 
             /**
@@ -288,7 +292,7 @@ object Google : IsNotADependency {
              *
              * Guide: [Identify developer-owned apps](https://developer.android.com/training/articles/app-set-id)
              */
-            val appset = module("play-services-appset")
+            val appSet = module("play-services-appset")
 
             /** Google Account Login */
             val auth = Auth
@@ -299,7 +303,7 @@ object Google : IsNotADependency {
                 val apiPhone = module("play-services-auth-api-phone")
 
                 /** Google Block Store */
-                val blockstore = module("play-services-auth-blockstore")
+                val blockStore = module("play-services-auth-blockstore")
             }
 
             /** Google Awareness */
@@ -360,6 +364,13 @@ object Google : IsNotADependency {
             val cronet = module("play-services-cronet")
 
             /**
+             * Base API used by the open source [Google.Ambient.crossDevice] SDK.
+             *
+             * GitHub repo of the SDK using this library: [google/cross-device-sdk](https://github.com/google/cross-device-sdk)
+             */
+            val deviceToDeviceInteractions = module("play-services-dtdi")
+
+            /**
              * Fast IDentity Online (FIDO) Authentication
              *
              * FIDO is a set of standards for fast, simple, strong authentication.
@@ -377,8 +388,31 @@ object Google : IsNotADependency {
             /** Google Fit */
             val fitness = module("play-services-fitness")
 
-            /** Google Play Game services */
+            /**
+             * Google Play Game services V1 SDK
+             *
+             * [Get Started](https://developers.google.com/games/services/v1/android/quickstart)
+             */
             val games = module("play-services-games")
+
+            /**
+             * Google Play Game services V2 SDK
+             *
+             * [Get Started](https://developers.google.com/games/services/android/quickstart)
+             */
+            val gamesV2 = GamesV2
+
+            object GamesV2 : DependencyNotationAndGroup(
+                group = group,
+                name = "play-services-games-v2"
+            ) {
+                /**
+                 * Google Play Games Services for C and C++
+                 *
+                 * [Get Started](https://developer.android.com/games/pgs/cpp/cpp-start)
+                 */
+                val nativeC = module("play-services-games-v2-native-c")
+            }
 
             /** Google Cloud Messaging */
             @Deprecated("Use Firebase Cloud Messaging instead")
@@ -396,6 +430,11 @@ object Google : IsNotADependency {
             /** Google Maps */
             val maps = module("play-services-maps")
 
+            /**
+             * [Matter on Google Home Developer Center](https://developers.home.google.com/matter)
+             */
+            val matter = module("play-services-home")
+
             val mlKit = MlKit
 
             object MlKit : IsNotADependency {
@@ -408,6 +447,11 @@ object Google : IsNotADependency {
                      * [Overview](https://developers.google.com/ml-kit/language/identification)
                      */
                     val languageIdentification = module("play-services-mlkit-language-id")
+
+                    /**
+                     * [Overview](https://developers.google.com/ml-kit/language/smart-reply)
+                     */
+                    val smartReply = module("play-services-mlkit-smart-reply")
                 }
 
                 val vision = Vision
@@ -419,7 +463,20 @@ object Google : IsNotADependency {
                      *
                      * [Overview](https://developers.google.com/ml-kit/vision/barcode-scanning)
                      */
-                    val barcodeScanning = module("play-services-mlkit-barcode-scanning")
+                    val barcodeScanning = BarcodeScanning
+
+                    object BarcodeScanning : DependencyNotationAndGroup(
+                        group = group,
+                        name = "play-services-mlkit-barcode-scanning"
+                    ) {
+                        /**
+                         * The Google code scanner API provides a complete solution for scanning code without requiring
+                         * your app to request camera permission, while preserving user privacy.
+                         *
+                         * [Google code scanner (Android only)](https://developers.google.com/ml-kit/vision/barcode-scanning/code-scanner)
+                         */
+                        val codeScanner = module("play-services-code-scanner")
+                    }
 
                     /**
                      * Unbundled version of [Google.MlKit.Vision.faceDetection]
@@ -451,9 +508,19 @@ object Google : IsNotADependency {
                     }
 
                     /**
-                     * [Overview](https://developers.google.com/ml-kit/vision/text-recognition)
+                     * [Overview](https://developers.google.com/ml-kit/vision/text-recognition/v2)
                      */
-                    val textRecognition = module("play-services-mlkit-text-recognition")
+                    val textRecognition = TextRecognition
+
+                    object TextRecognition : DependencyNotationAndGroup(
+                        group = group,
+                        name = "play-services-mlkit-text-recognition"
+                    ) {
+                        val chinese = module("play-services-mlkit-text-recognition-chinese")
+                        val devanagari = module("play-services-mlkit-text-recognition-devanagari")
+                        val japanese = module("play-services-mlkit-text-recognition-japanese")
+                        val korean = module("play-services-mlkit-text-recognition-korean")
+                    }
                 }
             }
 
@@ -495,10 +562,10 @@ object Google : IsNotADependency {
              * ### API reference:
              * - [com.google.android.gms.recaptcha](https://developers.google.com/android/reference/com/google/android/gms/recaptcha/package-summary)
              */
-            val recaptcha = module("play-services-recaptcha")
+            val reCaptcha = module("play-services-recaptcha")
 
             /** SafetyNet */
-            val safetynet = module("play-services-safetynet")
+            val safetyNet = module("play-services-safetynet")
 
             /**
              * Google Tag Manager
@@ -508,13 +575,40 @@ object Google : IsNotADependency {
              *
              * Guides: [Google Tag Manager](https://developers.google.com/tag-platform/tag-manager/android/v5#next_steps)
              */
-            val tagmanager = module("play-services-tagmanager")
+            val tagManager = module("play-services-tagmanager")
 
             /**
              * Google Tasks API (yet another "Future" type, because they're not using Kotlin coroutines yet).
              * We recommend using it with [KotlinX.Coroutines.playServices].
              */
             val tasks = module("play-services-tasks")
+
+            /**
+             * TensorFlow Lite is available in Google Play services runtime for all Android devices running the
+             * current version of Play services.
+             * This runtime allows you to run machine learning (ML) models without statically
+             * bundling TensorFlow Lite libraries into your app.
+             *
+             * Guide: [TensorFlow Lite in Google Play services](https://www.tensorflow.org/lite/android/play_services)
+             */
+            val tfLite = TfLite
+
+            object TfLite : IsNotADependency {
+                val accelerationService = module("play-services-tflite-acceleration-service")
+                val java = module("play-services-tflite-java")
+                val support = module("play-services-tflite-support")
+                val gpu = module("play-services-tflite-gpu")
+            }
+
+            /**
+             * The Thread Network SDK provides functionality that's similar to a digital keychain,
+             * allowing your Android apps to share Thread network credentials with Google Play services.
+             * This allows your apps to set up any Thread device from any smart home ecosystem,
+             * without exposing credentials and user data directly.
+             *
+             * Guide: [Thread Network SDK for Android](https://developers.home.google.com/thread)
+             */
+            val threadNetwork = module("play-services-threadnetwork")
 
             /** Mobile Vision */
             val vision = module("play-services-vision")
@@ -607,7 +701,7 @@ object Google : IsNotADependency {
         }
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")
-        @Suppress("deprecation")
+        @Suppress("Deprecation")
         val android = Android
 
         @Deprecated("Consider migrating to Google.dagger.hilt.android")
@@ -642,7 +736,6 @@ object Google : IsNotADependency {
      * - [Official website here](https://google.github.io/horologist/)
      * - GitHub page: https://github.com/google/horologist
      */
-    @Incubating
     object Horologist : DependencyGroup(
         group = "com.google.android.horologist",
         rawRules = """
@@ -719,11 +812,21 @@ object Google : IsNotADependency {
             val digitalInkRecognition = module("digital-ink-recognition")
 
             /**
+             * [Overview](https://developers.google.com/ml-kit/language/entity-extraction)
+             */
+            val entityExtraction = module("entity-extraction")
+
+            /**
              * Bundled version of [Google.Android.PlayServices.MlKit.Vision.faceDetection]
              *
              * [Overview](https://developers.google.com/ml-kit/vision/face-detection)
              */
             val faceDetection = module("face-detection")
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/vision/face-mesh-detection)
+             */
+            val faceMeshDetection = module("face-mesh-detection")
 
             /**
              * Add downloading of the models instead of having to bundle them in the app.

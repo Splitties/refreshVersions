@@ -2,13 +2,16 @@ package de.fayard.refreshVersions.core.internal
 
 import de.fayard.refreshVersions.core.ModuleId
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.internal.artifacts.dependencies.AbstractDependency
+import org.gradle.api.artifacts.ExternalDependency
+import org.gradle.api.artifacts.VersionConstraint
 
-internal class ConfigurationLessDependency(
-    private val group: String,
+internal data class ConfigurationLessDependency(
+    private val group: String?,
     private val name: String,
-    private val version: String?
-) : AbstractDependency() {
+    private val version: String?,
+    val versionConstraint: VersionConstraint? = null,
+    val isNpm: Boolean = false
+) : Dependency {
 
     constructor(
         moduleId: ModuleId.Maven,
@@ -17,6 +20,16 @@ internal class ConfigurationLessDependency(
         group = moduleId.group,
         name = moduleId.name,
         version = version
+    )
+
+    constructor(
+        otherDependency: Dependency
+    ) : this(
+        group = otherDependency.group,
+        name = otherDependency.name,
+        version = otherDependency.version,
+        versionConstraint = if (otherDependency is ExternalDependency) otherDependency.versionConstraint else null,
+        isNpm = otherDependency::class.simpleName == "NpmDependency"
     )
 
     companion object {
@@ -37,13 +50,14 @@ internal class ConfigurationLessDependency(
     override fun getName() = name
     override fun getVersion() = version
 
-    override fun contentEquals(dependency: Dependency): Boolean = throw UnsupportedOperationException()
+    override fun contentEquals(dependency: Dependency): Boolean = when (dependency) {
+        is ConfigurationLessDependency -> dependency == this
+        else -> dependency.contentEquals(this)
+    }
 
-    override fun copy(): Dependency = ConfigurationLessDependency(
-        group = group,
-        name = name,
-        version = version
-    )
+    override fun copy(): Dependency = copy(group = group)
+    override fun getReason(): String? = null
+    override fun because(reason: String?) = throw IllegalAccessException("Not editable")
 
     override fun toString(): String = if (version == null) "$group:$name" else "$group:$name:$version"
 }

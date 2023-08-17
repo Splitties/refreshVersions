@@ -10,7 +10,6 @@ Here is what a dependency notation should look like:
 @file:Suppress("PackageDirectoryMismatch", "SpellCheckingInspection", "unused") // 1
 
 import de.fayard.refreshVersions.core.DependencyGroup
-import org.gradle.api.Incubating
 import org.gradle.kotlin.dsl.IsNotADependency
 
 /**                                                             // 2
@@ -20,7 +19,6 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * - GitHub page: [Kodein-Framework/Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI)
  * - [GitHub Releases here](https://github.com/Kodein-Framework/Kodein-DI/releases)
  */
-@Incubating
 object Kodein : IsNotADependency {                              // 3
 
     val di = DI                                                 // 4

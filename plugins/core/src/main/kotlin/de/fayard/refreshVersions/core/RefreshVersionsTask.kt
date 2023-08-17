@@ -1,8 +1,14 @@
 package de.fayard.refreshVersions.core
 
-import de.fayard.refreshVersions.core.internal.*
+import de.fayard.refreshVersions.core.internal.OutputFile
+import de.fayard.refreshVersions.core.internal.PluginDependencyCompat
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder.settings
-import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
+import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater
+import de.fayard.refreshVersions.core.internal.VersionsCatalogUpdater
+import de.fayard.refreshVersions.core.internal.VersionsCatalogs
+import de.fayard.refreshVersions.core.internal.configureLintIfRunningOnAnAndroidProject
+import de.fayard.refreshVersions.core.internal.lookupVersionCandidates
 import de.fayard.refreshVersions.core.internal.problems.log
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.writeWithNewVersions
@@ -11,11 +17,14 @@ import kotlinx.coroutines.runBlocking
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
+import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import org.gradle.util.GradleVersion
+import java.io.File
 
 /**
  *
@@ -28,7 +37,6 @@ import org.gradle.util.GradleVersion
  *     --disable <FEATURE_FLAG>
  */
 open class RefreshVersionsTask : DefaultTask() {
-
 
     @Input @Optional
     @Option(option = "enable", description = "Enable a feature flag")
@@ -46,6 +54,21 @@ open class RefreshVersionsTask : DefaultTask() {
             if (value != null) FeatureFlag.userSettings.put(value, false)
         }
 
+    @get:Input
+    @get:Optional
+    internal var defaultVersionCatalog: VersionCatalog? = null
+
+    @get:InputFile
+    @get:Optional
+    internal var defaultVersionCatalogFile: File? = null
+
+    @get:InputFile
+    internal lateinit var rootProjectSettingsFile: File
+
+    @get:InputFile
+    @get:Optional
+    internal var buildSrcSettingsFile: File? = null
+
     @TaskAction
     fun taskActionRefreshVersions() {
         OutputFile.checkWhichFilesExist()
@@ -62,7 +85,7 @@ open class RefreshVersionsTask : DefaultTask() {
         val versionsCatalogLibraries: Set<MinimalExternalModuleDependency>
         val versionsCatalogPlugins: Set<PluginDependencyCompat>
         if (shouldUpdateVersionCatalogs) {
-            val versionCatalog = VersionsCatalogs.getDefault(project)
+            val versionCatalog = defaultVersionCatalog
             versionsCatalogLibraries = VersionsCatalogs.libraries(versionCatalog)
             versionsCatalogPlugins = VersionsCatalogs.plugins(versionCatalog)
         } else {
@@ -80,19 +103,13 @@ open class RefreshVersionsTask : DefaultTask() {
             }) { httpClient ->
                 lookupVersionCandidates(
                     httpClient = httpClient,
-                    project = project,
+                    dependenciesTracker = RefreshVersionsConfigHolder.dependenciesTracker,
                     versionMap = RefreshVersionsConfigHolder.readVersionsMap(),
                     versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader,
                     versionsCatalogLibraries = versionsCatalogLibraries,
                     versionsCatalogPlugins = versionsCatalogPlugins
                 )
             }
-            VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdatesForVersionsProperties)
-            SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
-                rootProject = project,
-                settingsPluginsUpdates = result.settingsPluginsUpdates,
-                buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
-            )
 
             warnAboutRefreshVersionsIfSettingIfAny()
             warnAboutHardcodedVersionsIfAny(result.dependenciesWithHardcodedVersions)
@@ -101,27 +118,35 @@ open class RefreshVersionsTask : DefaultTask() {
             lintUpdatingProblemsAsync.await().forEach { problem ->
                 logger.log(problem)
             }
-            OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
+
+            val versionPropertiesUpdated = VersionsPropertiesModel.writeWithNewVersions(result.dependenciesUpdatesForVersionsProperties)
+            SettingsPluginsUpdater.updateGradleSettingsWithAvailablePluginsUpdates(
+                rootProjectSettingsFile = rootProjectSettingsFile,
+                buildSrcSettingsFile = buildSrcSettingsFile,
+                settingsPluginsUpdates = result.settingsPluginsUpdates,
+                buildSrcSettingsPluginsUpdates = result.buildSrcSettingsPluginsUpdates
+            )
+            if (versionPropertiesUpdated) OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 
             if (shouldUpdateVersionCatalogs) {
-                val libsToml = project.file(LIBS_VERSIONS_TOML)
+                val libsToml = defaultVersionCatalogFile!!
                 if (libsToml.canRead()) {
-                    VersionsCatalogUpdater(
+                    val updated = VersionsCatalogUpdater(
                         file = libsToml,
                         dependenciesUpdates = result.dependenciesUpdatesForVersionCatalog
                     ).updateNewVersions(libsToml)
-                    OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
+                    if (updated) OutputFile.GRADLE_VERSIONS_CATALOG.logFileWasModified()
                 }
             }
         }
         if (FeatureFlag.KOTLIN_SCRIPTS.isEnabled) {
-            println("NOTE: refreshVersions support for Kotlin Scripts isn't implemented yet, see https://github.com/jmfayard/refreshVersions/issues/582")
+            println("NOTE: refreshVersions support for Kotlin Scripts isn't implemented yet, see https://github.com/Splitties/refreshVersions/issues/582")
         }
     }
 
     private fun warnAboutRefreshVersionsIfSettingIfAny() {
         if (RefreshVersionsConfigHolder.isUsingVersionRejection) {
-            logger.warn("NOTE: Some versions are filtered by the rejectVersionsIf predicate. See the settings.gradle.kts file.")
+            logger.warn("NOTE: Some versions are filtered by the rejectVersionIf predicate. See the settings.gradle.kts file.")
         }
     }
 
@@ -166,23 +191,28 @@ open class RefreshVersionsTask : DefaultTask() {
 
     private fun warnAboutHardcodedVersionsIfAny(dependenciesWithHardcodedVersions: List<Dependency>) {
         if (dependenciesWithHardcodedVersions.isNotEmpty()) {
-            //TODO: Suggest running a diagnosis task to list the hardcoded versions.
-            val warnFor = (dependenciesWithHardcodedVersions).take(3).map {
+            val warnFor = (dependenciesWithHardcodedVersions).let {
+                if (logger.isInfoEnabled) it else it.take(3)
+            }.map {
                 "${it.group}:${it.name}:${it.version}"
             }
             val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
+            logger.warn("Found ${dependenciesWithHardcodedVersions.count()} dependencies that might have hardcoded versions:")
+            warnFor.forEach { logger.warn("- $it") }
+            if (logger.isInfoEnabled.not()) {
+                logger.warn("- ${dependenciesWithHardcodedVersions.size - warnFor.size} more... (run with --info) to see them all)")
+            }
+            logger.warn("")
             logger.warn(
-                """Found ${dependenciesWithHardcodedVersions.count()} hardcoded dependencies versions.
-                    |
-                    |$warnFor...
-                    |
+                """
                     |To ensure single source of truth, refreshVersions only works with version placeholders,
-                    |that is the explicit way of marking the version is not there (but in the $versionsFileName file).
+                    |and versions in the $versionsFileName file,
+                    |or with the default versions catalog.
                     |
                     |To migrate your project, run
                     |   ./gradlew refreshVersionsMigrate
                     |
-                    |See https://jmfayard.github.io/refreshVersions/migrate/""".trimMargin()
+                    |See https://splitties.github.io/refreshVersions/migrate/""".trimMargin()
             )
             //TODO: Replace issue link above with stable link to explanation in documentation.
         }

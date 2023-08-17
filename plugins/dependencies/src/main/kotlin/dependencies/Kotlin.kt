@@ -41,4 +41,7 @@ object Kotlin : DependencyGroup(group = "org.jetbrains.kotlin") {
 
     /** Kotlin Script Runtime */
     val scriptRuntime = module("kotlin-script-runtime")
+
+    /** Kotlin Gradle PLugin */
+    val gradlePlugin = module("kotlin-gradle-plugin")
 }

@@ -11,13 +11,17 @@ internal class VersionsCatalogUpdater(
 
     private val toml = VersionsCatalogs.parseToml(fileContent)
 
-    fun updateNewVersions(actual: File) {
-        if (fileContent.isBlank()) return
+    fun updateNewVersions(versionsCatalogTomlFile: File): Boolean {
+        require(versionsCatalogTomlFile.extension == "toml")
+        if (fileContent.isBlank()) return false
 
         toml.sections.forEach { (section, lines) ->
             toml[section] = updateNewVersions(lines)
         }
-        actual.writeText(toml.toString())
+        val newContent = toml.toString()
+        if (versionsCatalogTomlFile.canRead() && newContent == versionsCatalogTomlFile.readText()) return false
+        versionsCatalogTomlFile.writeText(newContent)
+        return true
     }
 
     fun cleanupComments(actual: File) {
@@ -83,13 +87,12 @@ internal class VersionsCatalogUpdater(
             yield(availableSymbol)
             yield(versionPrefix)
         }.sumOf { it.length }.let {
+            it + 1 // Because the length of availableSymbol (⬆) is 1, but it takes the width of 2 chars in the IDE.
+        }.let {
             val indexOfCurrentVersion = initialLine.text.indexOf(currentVersion)
-            val canFitSpaceAfterAvailableSymbol: Boolean = indexOfCurrentVersion - it > 0
-            leadingSpace = " ".repeat((indexOfCurrentVersion - it - when {
-                canFitSpaceAfterAvailableSymbol -> 2 // Magic number, figure the math out sometime.
-                else -> 1 // Magic number, figure the math out sometime.
-            }).coerceAtLeast(0))
-            trailingSpace = if (canFitSpaceAfterAvailableSymbol && versionPrefix.startsWith(' ').not()) " " else ""
+            val gap = indexOfCurrentVersion - it
+            leadingSpace = " ".repeat((gap - 1).coerceAtLeast(0))
+            trailingSpace = if (gap > 0 && versionPrefix.endsWith(' ').not()) " " else ""
         }
         return availableUpdates.mapTo(mutableListOf(initialLine)) { versionCandidate: MavenVersion ->
             val version = versionCandidate.value

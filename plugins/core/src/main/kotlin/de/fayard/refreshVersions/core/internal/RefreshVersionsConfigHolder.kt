@@ -3,7 +3,7 @@ package de.fayard.refreshVersions.core.internal
 import de.fayard.refreshVersions.core.DependencySelection
 import de.fayard.refreshVersions.core.ModuleId
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
-import de.fayard.refreshVersions.core.extensions.gradle.isRootProject
+import de.fayard.refreshVersions.core.internal.dependencies.DependenciesTracker
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section.VersionEntry
 import de.fayard.refreshVersions.core.internal.versions.readFromFile
@@ -32,7 +32,7 @@ object RefreshVersionsConfigHolder {
     var versionsPropertiesFile: File by resettableDelegates.LateInit()
         private set
 
-    val buildSrc: Project? get() = buildSrcSettings?.gradle?.rootProject
+    internal val dependenciesTracker: DependenciesTracker by resettableDelegates.Lazy { DependenciesTracker() }
 
     /**
      * Not initialized when the IDE syncs the buildSrc of the project alone (without the host project)
@@ -54,12 +54,6 @@ object RefreshVersionsConfigHolder {
         return model.sections.filterIsInstance<VersionEntry>().associate { it.key to it.currentVersion }.also {
             lastlyReadVersionsMap = it
         }
-    }
-
-    fun allProjects(project: Project): Sequence<Project> {
-        require(project.isRootProject)
-        val buildSrcProjects = buildSrc?.allprojects?.asSequence() ?: emptySequence()
-        return buildSrcProjects + project.allprojects.asSequence()
     }
 
     internal val resultMode: VersionCandidatesResultMode = VersionCandidatesResultMode(
@@ -123,6 +117,7 @@ object RefreshVersionsConfigHolder {
         // requested?
         // Might be worth opening an issue on https://youtrack.jetbrains.com to find out.
         if (versionKeyReaderDelegate.isInitialized) {
+            dependenciesTracker.recordBuildscriptAndRegularDependencies(settings)
             persistInitData(settings)
         } else {
             runCatching {

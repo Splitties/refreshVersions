@@ -34,8 +34,20 @@ androidx.core:core-performance(-*)
 androidx.core:core-splashscreen(-*)
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^
 
+androidx.core:core-telecom
+^^^^^^^^^     ^^^^^^^^^^^^
+
+androidx.core:core-i18n
+^^^^^^^^^     ^^^^^^^^^
+
+androidx.core:core-location-altitude(-*)
+^^^^^^^^^     ^^^^^^^^^^^^^^^^^^^^^^
+
 androidx.compose.foundation:foundation-text // Deprecated artifact, no longer updated with its family.
 ^^^^^^^^.^^^^^^^.           ^^^^^^^^^^^^^^^
+
+androidx.compose.runtime:runtime-tracing // Probably only during alpha stage
+^^^^^^^^.^^^^^^^.        ^^^^^^^^^^^^^^^
 
 androidx.customview:customview(-*)
 ^^^^^^^^.           ^^^^^^^^^^^^^^
@@ -54,6 +66,9 @@ androidx.gaming:gaming-frame-pacing(-*) // Family renamed to androidx.games
 
 androidx.gaming:gaming-performance-tuner(-*) // Family renamed to androidx.games
 ^^^^^^^^.       ^^^^^^^^^^^^^^^^^^^^^^^^
+
+androidx.graphics:*
+^^^^^^^^.         ^
 
 androidx.hilt:hilt-lifecycle-viewmodel // Deprecated artifact, no longer updated with its family.
 ^^^^^^^^.     ^^^^^^^^^^^^^^^^^^^^^^^^

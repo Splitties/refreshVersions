@@ -10,6 +10,8 @@ import org.gradle.api.initialization.Settings
 @InternalRefreshVersionsApi
 object UsedPluginsTracker {
 
+    //TODO: Remove this as it's redundant with buildscript dependencies.
+
     fun clearFor(settings: Settings) {
         if (settings.isBuildSrc) buildSrcHolder = null else projectHolder = null
     }

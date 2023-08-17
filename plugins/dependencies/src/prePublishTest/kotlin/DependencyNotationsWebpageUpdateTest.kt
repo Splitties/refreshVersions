@@ -66,7 +66,7 @@ class DependencyNotationsWebpageUpdateTest {
                 dependencies.joinToString("|        - ", transform = MarkdownDependency::markdown)
             }
             """
-            |## [$group.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/$group.kt)
+            |## [$group.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/$group.kt)
             |
             |${table(rows)}
             |
@@ -90,7 +90,7 @@ class DependencyNotationsWebpageUpdateTest {
         |---
         |# Built-in Dependency Notations
         |
-        |[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **$dependenciesCount** Dependency Notations in **$groupsCount** groups and **$subgroupsCount** subgroups
+        |[**refreshVersions**](https://github.com/Splitties/refreshVersions) provides **$dependenciesCount** Dependency Notations in **$groupsCount** groups and **$subgroupsCount** subgroups
         |
         |**Built-in Dependency Notations** are maven coordinates of popular libraries,
         |discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,

@@ -16,6 +16,8 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * - Back in 2019 November the 18th, AndroidX was made of **187 artifacts**.
  */
 object AndroidX : IsNotADependency {
+    // Last AndroidX Update sync: Jul 26, 2023.
+    // See https://androidx.tech/blog/updates for easier updates tracking
     // LibraryGroups.kt: https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryGroups.kt
     // LibraryVersions.kt: https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryVersions.kt
 
@@ -127,6 +129,14 @@ object AndroidX : IsNotADependency {
     val appSearch = AppSearch
 
     object AppSearch : DependencyNotationAndGroup(group = "androidx.appsearch", name = "appsearch") {
+
+        /** Kotlin extensions */
+        val ktx = module("appsearch-ktx")
+
+        /**
+         * A support library for AndroidX AppSearch that contains activities and views for debugging an application's integration with AppSearch.
+         */
+        val debugView = module("appsearch-debug-view")
 
         /** Compiler for classes annotated with @androidx.appsearch.annotation.Document */
         val compiler = module("appsearch-compiler")
@@ -242,6 +252,9 @@ object AndroidX : IsNotADependency {
 
         /** Android Benchmark Gradle Plugin */
         val gradlePlugin = module(name = "benchmark-gradle-plugin")
+
+        /** Android Baseline Profile Gradle Plugin */
+        val baselineProfileGradlePlugin = module("benchmark-baseline-profile-gradle-plugin")
 
         /**
          * Android Benchmark - JUnit4.
@@ -404,6 +417,14 @@ object AndroidX : IsNotADependency {
          * - [androidx.camera.view.video](https://developer.android.com/reference/kotlin/androidx/camera/view/video/package-summary)
          */
         val view = module("camera-view")
+
+        /**
+         * Standalone Viewfinder for Camera2 and CameraX.
+         *
+         * ### API reference:
+         * - [androidx.camera.viewfinder](https://developer.android.com/reference/kotlin/androidx/camera/viewfinder/package-summary)
+         */
+        val viewFinder = module("camera-viewfinder")
     }
 
     /**
@@ -624,8 +645,8 @@ object AndroidX : IsNotADependency {
              *
              * ## API reference:
              * - [androidx.compose.animation.graphics](https://developer.android.com/reference/kotlin/androidx/compose/animation/graphics/package-summary)
-             * - [androidx.compose.animation.res](https://developer.android.com/reference/kotlin/androidx/compose/animation/res/package-summary)
-             * - [androidx.compose.animation.vector](https://developer.android.com/reference/kotlin/androidx/compose/animation/vector/package-summary)
+             * - [androidx.compose.animation.graphics.res](https://developer.android.com/reference/kotlin/androidx/compose/animation/graphics/res/package-summary)
+             * - [androidx.compose.animation.graphics.vector](https://developer.android.com/reference/kotlin/androidx/compose/animation/graphics/vector/package-summary)
              */
             val graphics = module("animation-graphics")
         }
@@ -1124,6 +1145,36 @@ object AndroidX : IsNotADependency {
 
         /** AndroidX RemoteViews Support */
         val remoteViews = module("core-remoteviews")
+
+        val i18n = module("core-i18n")
+        val telecom = module("core-telecom")
+
+        val locationAltitude = module("core-location-altitude")
+
+        /**
+         * Provides extensions for tests using Core APIs.
+         *
+         * ### API reference:
+         * - [androidx.core.testing.util](https://developer.android.com/reference/kotlin/androidx/core/testing/util/package-summary)
+         */
+        val testing = module("core-testing")
+    }
+
+    /**
+     * This library provides unified access to a user's credentials.
+     * This can include passwords, passkeys and federated credentials.
+     * This library should be used to provide seamless and secure sign-in experiences.
+     */
+    val credentials = Credentials
+
+    object Credentials : DependencyNotationAndGroup(
+        group = "androidx.credentials",
+        name = "credentials"
+    ) {
+        /**
+         * Needed for credentials support from play services, for devices running Android 13 and below.
+         */
+        val playServicesAuth = module("credentials-play-services-auth")
     }
 
     /**
@@ -1394,6 +1445,14 @@ object AndroidX : IsNotADependency {
          * - [androidx.emoji2.bundled](https://developer.android.com/reference/kotlin/androidx/emoji2/bundled/package-summary)
          */
         val bundled = module("emoji2-bundled")
+
+        /**
+         * This library provides the latest emoji support and emoji picker UI to input emoji in current and older devices.
+         *
+         * ### API reference:
+         * - [androidx.emoji2.emojipicker](https://developer.android.com/reference/kotlin/androidx/emoji2/emojipicker/package-summary)
+         */
+        val picker = module("emoji2-emojipicker")
     }
 
     /**
@@ -1469,8 +1528,8 @@ object AndroidX : IsNotADependency {
      *
      * You can use the androidx library instead of manually downloading and integrating the Android Game SDK into your build.
      *
-     * For more information about the Android Game SDK, see the [SDK documentation](https://developer.android.com/games/sdk)
-     * and the [SDK release notes](https://developer.android.com/games/sdk/release-notes).
+     * For more information about the Android Game SDK, see the [SDK documentation](https://developer.android.com/games/agdk/overview)
+     * and the [SDK release notes](https://developer.android.com/games/agdk/release-notes).
      *
      * [Setup instructions & release notes](https://developer.android.com/jetpack/androidx/releases/games)
      *
@@ -1503,6 +1562,22 @@ object AndroidX : IsNotADependency {
     val glance = Glance
 
     object Glance : DependencyNotationAndGroup("androidx.glance", "glance") {
+
+        /**
+         * Glance Material 2 integration library. This library provides interop APIs with Material 2.
+         *
+         * ### API reference:
+         * - [androidx.glance.material](https://developer.android.com/reference/kotlin/androidx/glance/material/package-summary)
+         */
+        val material = module("glance-material")
+
+        /**
+         * Glance Material integration library. This library provides interop APIs with Material 3.
+         *
+         * ### API reference:
+         * - [androidx.glance.material3](https://developer.android.com/reference/kotlin/androidx/glance/material3/package-summary)
+         */
+        val material3 = module("glance-material3")
 
         /**
          * Glance-appwidgets allows developers to build layouts for Android AppWidgets using a Jetpack Compose-style API.
@@ -1544,6 +1619,12 @@ object AndroidX : IsNotADependency {
          * - [androidx.graphics.surface](https://developer.android.com/reference/kotlin/androidx/graphics/surface/package-summary)
          */
         val core = module("graphics-core")
+
+        /** Query segment data for android.graphics.Path objects. */
+        val path = module("graphics-path")
+
+        /** Create and render rounded polygonal shapes. */
+        val shapes = module("graphics-shapes")
     }
 
     /**
@@ -2067,6 +2148,11 @@ object AndroidX : IsNotADependency {
         val extractor = module("media3-extractor")
 
         /**
+         * Media3 Effect module
+         */
+        val effect = module("media3-effect")
+
+        /**
          * For integrating with Cast
          */
         val cast = module("media3-cast")
@@ -2099,6 +2185,19 @@ object AndroidX : IsNotADependency {
          */
         val decoder = module("media3-decoder")
 
+        /**
+         * A Muxer to create an MP4 container file.
+         *
+         * ### API reference:
+         * - [androidx.media3.muxer](https://developer.android.com/reference/kotlin/androidx/media3/muxer/package-summary)
+         */
+        val muxer = module("media3-muxer")
+
+        /**
+         * ### API reference:
+         * - [androidx.media3.container](https://developer.android.com/reference/kotlin/androidx/media3/container/package-summary)
+         */
+        val container = module("media3-container")
 
         /**
          * Common functionality used across multiple media libraries
@@ -2117,7 +2216,20 @@ object AndroidX : IsNotADependency {
      * - [androidx.mediarouter.app](https://developer.android.com/reference/kotlin/androidx/mediarouter/app/package-summary)
      * - [androidx.mediarouter.media](https://developer.android.com/reference/kotlin/androidx/mediarouter/media/package-summary)
      */
-    val mediaRouter = DependencyNotation("androidx.mediarouter", "mediarouter")
+    val mediaRouter = MediaRouter
+
+    object MediaRouter : DependencyNotationAndGroup(
+        group = "androidx.mediarouter",
+        name = "mediarouter"
+    ) {
+        /**
+         * Test utilities for AndroidX MediaRouter.
+         *
+         * ### API reference:
+         * - [androidx.mediarouter.testing](https://developer.android.com/reference/kotlin/androidx/mediarouter/testing/package-summary)
+         */
+        val testing = module("mediarouter-testing")
+    }
 
     /**
      * Library for tracking and reporting various runtime metrics for applications.
@@ -2195,7 +2307,7 @@ object AndroidX : IsNotADependency {
          *
          * ### API reference:
          * - [androidx.navigation.dynamicfeatures.fragment](https://developer.android.com/reference/kotlin/androidx/navigation/dynamicfeatures/fragment/package-summary)
-         * - [androidx.navigation.dynamicfeatures.ui](https://developer.android.com/reference/kotlin/androidx/navigation/dynamicfeatures/ui/package-summary)
+         * - [androidx.navigation.dynamicfeatures.fragment.ui](https://developer.android.com/reference/kotlin/androidx/navigation/dynamicfeatures/fragment/ui/package-summary)
          */
         val dynamicFeaturesFragment = module("navigation-dynamic-features-fragment")
 
@@ -2375,6 +2487,93 @@ object AndroidX : IsNotADependency {
      */
     val print = DependencyNotation("androidx.print", "print")
 
+    val privacySandbox = PrivacySandbox
+
+    object PrivacySandbox : IsNotADependency {
+        // androidx.privacysandbox.ads intentionally not included because ads are mental pollution.
+
+        /**
+         * Android Privacy Sandbox Sdk Library Gradle Plugin
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/privacysandbox-plugins)
+         *
+         * ### API reference:
+         * - [androidx.privacysandbox.plugins](https://developer.android.com/reference/kotlin/androidx/privacysandbox/plugins/package-summary)
+         */
+        val plugins = Plugins
+
+        object Plugins : DependencyGroup(group = "androidx.privacysandbox.plugins") {
+            val library = module("plugins-privacysandbox-library")
+        }
+
+        /**
+         * This library provides components for SdkRuntime aware consumers
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/privacysandbox-sdkruntime)
+         */
+        val sdkRuntime = SdkRuntime
+
+        object SdkRuntime : DependencyGroup(group = "androidx.privacysandbox.sdkruntime") {
+
+            /**
+             * ### API reference:
+             * - [androidx.privacysandbox.sdkruntime.core](https://developer.android.com/reference/kotlin/androidx/privacysandbox/sdkruntime/core/package-summary)
+             */
+            val core = module("sdkruntime-core")
+
+            /**
+             * ### API reference:
+             * - [androidx.privacysandbox.sdkruntime.client](https://developer.android.com/reference/kotlin/androidx/privacysandbox/sdkruntime/client/package-summary)
+             */
+            val client = module("sdkruntime-client")
+        }
+
+        /**
+         * A library to utilize the Privacy Sandbox functionality in Android.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/privacysandbox-tools)
+         *
+         * ### API reference:
+         * - [androidx.privacysandbox.tools](https://developer.android.com/reference/kotlin/androidx/privacysandbox/tools/package-summary)
+         */
+        val tools = Tools
+
+        object Tools : DependencyNotationAndGroup(
+            group = "androidx.privacysandbox.tools",
+            name = "tools"
+        ) {
+            val apiCompiler = module("tools-apicompiler")
+            val apiGenerator = module("tools-apigenerator")
+            val apiPackager = module("tools-apipackager")
+            val core = module("tools-core")
+        }
+
+        /**
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/privacysandbox-ui)
+         *
+         * ### API reference:
+         * - [androidx.privacysandbox.ui](https://developer.android.com/reference/kotlin/androidx/privacysandbox/ui/package-summary)
+         */
+        val ui = Ui
+
+        object Ui : DependencyGroup(group = "androidx.privacysandbox.ui") {
+            /**
+             * show UI from an SDKRuntime aware SDK.
+             */
+            val client = module("ui-client")
+
+            /**
+             * contains core definitions for the privacysandbox ui library.
+             */
+            val core = module("ui-core")
+
+            /**
+             * lets an SdkRuntime aware SDK share UI with a client application.
+             */
+            val provider = module("ui-provider")
+        }
+    }
+
     /**
      * Promote content to the Android TV Launcher home screen.
      *
@@ -2442,6 +2641,8 @@ object AndroidX : IsNotADependency {
          * Kotlin Extensions and Coroutines support for Room
          */
         val ktx = module("room-ktx")
+
+        val gradlePlugin = module("room-gradle-plugin")
 
         /**
          * Paging 3 Integration
@@ -2705,12 +2906,12 @@ object AndroidX : IsNotADependency {
      *
      * Guide: [Test apps on Android](https://developer.android.com/training/testing)
      *
-     * [Samples and codelabs](https://developer.android.com/training/testing/additional-resources#samples)
+     * [Samples and codelabs](https://developer.android.com/training/testing#additional-resources-samples)
      *
      * [Release notes](https://developer.android.com/jetpack/androidx/releases/test)
      *
      * ### API reference:
-     * - [androidx.test](https://developer.android.com/reference/kotlin/androidx/test/packages)
+     * - [androidx.test](https://developer.android.com/reference/kotlin/androidx/test/package-summary)
      */
     val test = Test
 
@@ -2776,9 +2977,7 @@ object AndroidX : IsNotADependency {
          * UI Automator is a UI testing framework suitable for cross-app
          * functional UI testing across system and installed apps.
          *
-         * Guides:
-         * - [Test UI for multiple apps](https://developer.android.com/training/testing/ui-testing/uiautomator-testing)
-         * - [UI Automator](https://developer.android.com/training/testing/ui-automator)
+         * Guide: [Write automated tests with UI Automator](https://developer.android.com/training/testing/other-components/ui-automator)
          *
          * ### API reference:
          * - [androidx.test.uiautomator](https://developer.android.com/reference/kotlin/androidx/test/uiautomator/package-summary)
@@ -2895,7 +3094,19 @@ object AndroidX : IsNotADependency {
          * ### API reference:
          * - [androidx.tracing.perfetto](https://developer.android.com/reference/androidx/tracing/perfetto/package-summary)
          */
-        val perfetto = module("tracing-perfetto")
+        val perfetto = Perfetto
+
+        object Perfetto : DependencyNotationAndGroup(
+            group = group,
+            name = "tracing-perfetto"
+        ) {
+            /**
+             * ### API reference:
+             * - [androidx.tracing.perfetto.handshake](https://developer.android.com/reference/kotlin/androidx/tracing/perfetto/handshake/package-summary)
+             * - [androidx.tracing.perfetto.handshake.protocol](https://developer.android.com/reference/kotlin/androidx/tracing/perfetto/handshake/protocol/package-summary)
+             */
+            val handshake = module("tracing-perfetto-handshake")
+        }
     }
 
     /**
@@ -3110,6 +3321,14 @@ object AndroidX : IsNotADependency {
             val foundation = module("compose-foundation")
 
             /**
+             * Tools for Wear Composable.
+             *
+             * ### API reference:
+             * - [androidx.wear.compose.ui.tooling.preview](https://developer.android.com/reference/kotlin/androidx/wear/compose/ui/tooling/preview/package-summary)
+             */
+            val uiTooling = module("compose-ui-tooling")
+
+            /**
              * _NOTE: DO NOT INCLUDE a dependency on `Androidx.compose.material`.
              * `Androidx.wear.compose.material` is designed as a replacement,
              * not an addition to `Androidx.compose.material`._
@@ -3124,12 +3343,61 @@ object AndroidX : IsNotADependency {
             val material = module("compose-material")
 
             /**
+             * _NOTE: DO NOT INCLUDE a dependency on `Androidx.compose.material3`.
+             * `Androidx.wear.compose.material3` is designed as a replacement,
+             * not an addition to `Androidx.compose.material3`._
+             *
+             * _If there are features from that you feel are missing from
+             * `androidx.wear.compose:compose-material3`, please [file an issue](https://issuetracker.google.com/issues/new?component=1077552&template=1598429)
+             * to let the AndroidX Wear team know._
+             *
+             * ### API reference:
+             * - [androidx.wear.compose.material3](https://developer.android.com/reference/kotlin/androidx/wear/compose/material3/package-summary)
+             */
+            val material3 = module("compose-material3")
+
+            /**
              * Integration between Wear Compose and Androidx Navigation libraries.
              *
              * ### API reference:
              * - [androidx.wear.compose.navigation](https://developer.android.com/reference/kotlin/androidx/wear/compose/navigation/package-summary)
              */
             val navigation = module("compose-navigation")
+        }
+
+        /**
+         * This library allows defining a set of UI layouts and non-UI expressions to be rendered/evaluated on remote surfaces.
+         *
+         * [Release notes](https://developer.android.com/jetpack/androidx/releases/wear-protolayout)
+         *
+         * ### API reference:
+         * - [androidx.wear.protolayout](https://developer.android.com/reference/kotlin/androidx/wear/protolayout/package-summary)
+         */
+        val protoLayout = ProtoLayout
+
+        object ProtoLayout : DependencyNotationAndGroup(
+            group = "androidx.wear.protolayout",
+            name = "protolayout"
+        ) {
+            /**
+             * Create dynamic expressions (for late evaluation by a remote evaluator).
+             *
+             * ### API reference:
+             * - [androidx.wear.protolayout.expression](https://developer.android.com/reference/kotlin/androidx/wear/protolayout/expression/package-summary)
+             */
+            val expression = module("protolayout-expression")
+
+            /**
+             * Material components library for ProtoLayout.
+             *
+             * ### API reference:
+             * - [androidx.wear.protolayout.material](https://developer.android.com/reference/kotlin/androidx/wear/protolayout/material/package-summary)
+             * - [androidx.wear.protolayout.material.layouts](https://developer.android.com/reference/kotlin/androidx/wear/protolayout/material/layouts/package-summary)
+             */
+            val material = module("protolayout-material")
+
+            /** Render ProtoLayouts to an Android surface */
+            val renderer = module("protolayout-renderer")
         }
 
         /**
@@ -3171,6 +3439,8 @@ object AndroidX : IsNotADependency {
              * - [androidx.wear.tiles.testing](https://developer.android.com/reference/kotlin/androidx/wear/tiles/testing/package-summary)
              */
             val testing = module("tiles-testing")
+
+            // tiles-tooling not included because not updated with the rest, and not referenced in the docs.
         }
 
         /**
@@ -3273,6 +3543,8 @@ object AndroidX : IsNotADependency {
 
     object Window : DependencyNotationAndGroup(group = "androidx.window", name = "window") {
 
+        // androidx.window:window-core not added because it is not documented anywhere.
+
         /**
          * ### API reference:
          * - [androidx.window.testing.layout](https://developer.android.com/reference/kotlin/androidx/window/testing/layout/package-summary)
@@ -3298,6 +3570,26 @@ object AndroidX : IsNotADependency {
          * - [androidx.window.rxjava3.layout](https://developer.android.com/reference/kotlin/androidx/window/rxjava3/layout/package-summary)
          */
         val rxJava3 = module("window-rxjava3")
+
+        val extensions = Extensions
+
+        object Extensions : IsNotADependency {
+
+            /**
+             * The Core APIs for Window Manager Library Extensions.
+             *
+             * [Release notes](https://developer.android.com/jetpack/androidx/releases/window-extensions-core)
+             *
+             * ### API reference:
+             * - [androidx.window.extensions.core.util.function](https://developer.android.com/reference/kotlin/androidx/window/extensions/core/util/function/package-summary)
+             */
+            val core = Core
+
+            object Core : DependencyNotationAndGroup(
+                group = "androidx.window.extensions.core",
+                name = "core"
+            )
+        }
     }
 
     /**

@@ -28,11 +28,16 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.MethodOrderer
+import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestMethodOrder
+import org.opentest4j.TestAbortedException
 import testutils.getVersionCandidates
 import testutils.isInCi
 import testutils.parseRemovedDependencyNotations
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class BundledDependenciesTest {
 
     private object Files {
@@ -85,6 +90,14 @@ class BundledDependenciesTest {
                 .joinToString(separator = "\n\n", postfix = "\n")
             if (file.readText() != content) file.writeText(content)
         }
+
+        private var dependenciesExistInStandardMavenReposPassed = false
+
+        @JvmStatic // Required for @BeforeAll
+        @BeforeAll
+        fun reset() {
+            dependenciesExistInStandardMavenReposPassed = false
+        }
     }
 
     @Test
@@ -97,7 +110,9 @@ class BundledDependenciesTest {
     }
 
     @Test
+    @Order(2)
     fun `Removed dependency notations should be tracked`() {
+        checkDependenciesExistInStandardRepos()
 
         val existingMapping = Files.validatedMappingFile.useLines { lines ->
             lines.withoutComments().mapNotNull { DependencyMapping.fromLine(it) }.toSet()
@@ -177,7 +192,9 @@ class BundledDependenciesTest {
     }
 
     @Test
+    @Order(2)
     fun `Version keys should be up to date`() {
+        checkDependenciesExistInStandardRepos()
         val versionKeyReader = ArtifactVersionKeyReader.fromRules(rulesDir.listFiles()!!.map { it.readText() })
 
         val existingMapping = existingKeys.useLines { lines ->
@@ -216,7 +233,9 @@ class BundledDependenciesTest {
     }
 
     @Test
+    @Order(2)
     fun `Dependencies should not be in the 'dependencies' package`() {
+        checkDependenciesExistInStandardRepos()
         getArtifactNameToConstantMapping().forEach {
             if (it.constantName.startsWith("dependencies.")) {
                 fail("This dependency should not be in the dependencies package: ${it.constantName}")
@@ -225,7 +244,14 @@ class BundledDependenciesTest {
         }
     }
 
+    private fun checkDependenciesExistInStandardRepos() {
+        if (dependenciesExistInStandardMavenReposPassed.not()) {
+            throw TestAbortedException("Some dependencies don't exist in standard maven repos")
+        }
+    }
+
     @Test
+    @Order(1)
     fun `test bundled dependencies exist in standard repositories`() {
         val validatedDependencyMapping = validatedDependencyMappingFile.useLines { lines ->
             lines.withoutComments().toSet()
@@ -275,6 +301,7 @@ class BundledDependenciesTest {
                 validatedDependencyMappingFile.writeText(mappings)
             }
         }
+        dependenciesExistInStandardMavenReposPassed = true
     }
 
     private val defaultHttpClient by lazy { createTestHttpClient() }
