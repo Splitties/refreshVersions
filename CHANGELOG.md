@@ -59,11 +59,12 @@ configuration cache fully! That also means that it's ready for Gradle 9 when it'
 - `AndroidX.wear.protoLayout.renderer`
 - `AndroidX.wear.protoLayout`
 - `AndroidX.window.extensions.core`
-- `Google.android.playServices.mlKit.vision.barcodeScanning.codeScanner`
+- `Google.android.playServices.deviceToDeviceInteractions`
 - `Google.android.playServices.gamesV2.nativeC`
 - `Google.android.playServices.gamesV2`
 - `Google.android.playServices.matter`
 - `Google.android.playServices.mlKit.naturalLanguage.smartReply`
+- `Google.android.playServices.mlKit.vision.barcodeScanning.codeScanner`
 - `Google.android.playServices.mlKit.vision.textRecognition.chinese`
 - `Google.android.playServices.mlKit.vision.textRecognition.devanagari`
 - `Google.android.playServices.mlKit.vision.textRecognition.japanese`
