@@ -800,11 +800,21 @@ object Google : IsNotADependency {
             val digitalInkRecognition = module("digital-ink-recognition")
 
             /**
+             * [Overview](https://developers.google.com/ml-kit/language/entity-extraction)
+             */
+            val entityExtraction = module("entity-extraction")
+
+            /**
              * Bundled version of [Google.Android.PlayServices.MlKit.Vision.faceDetection]
              *
              * [Overview](https://developers.google.com/ml-kit/vision/face-detection)
              */
             val faceDetection = module("face-detection")
+
+            /**
+             * [Overview](https://developers.google.com/ml-kit/vision/face-mesh-detection)
+             */
+            val faceMeshDetection = module("face-mesh-detection")
 
             /**
              * Add downloading of the models instead of having to bundle them in the app.
