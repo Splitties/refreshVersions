@@ -20,8 +20,8 @@ extra:
     gradlePluginPortal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
-    gradle: 7.5.1
-    refreshVersions: '0.51.0'
+    gradle: 8.2.1
+    refreshVersions: '0.60.0'
     snapshot: '0.52.0-SNAPSHOT'
   keyboard_shortcuts:
     find_actions: <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>A</kbd>

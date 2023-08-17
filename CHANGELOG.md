@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased] Version 0.60.0 (2023-08-17)
+## Version 0.60.0 (2023-08-17)
 
 ### Full configuration cache support for the `refreshVersions` task
 
@@ -18,7 +18,7 @@ configuration cache fully! That also means that it's ready for Gradle 9 when it'
 ### New dependency notations:
 
 <details>
-<summary><strong>Click to expand (40) </strong></summary>
+<summary><strong>Click to expand (57) </strong></summary>
 
 - `AndroidX.appSearch.debugView`
 - `AndroidX.appSearch.ktx`

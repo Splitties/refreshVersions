@@ -26,7 +26,7 @@
 // settings.gradle(.kts)
 plugins {
     // See https://splitties.github.io/refreshVersions
-    id("de.fayard.refreshVersions") version "0.51.0"
+    id("de.fayard.refreshVersions") version "0.60.0"
 }
 
 refreshVersions { // Optional: configure the plugin

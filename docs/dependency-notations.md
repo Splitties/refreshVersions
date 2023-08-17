@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/jmfayard/refreshVersions) provides **1181** Dependency Notations in **26** groups and **249** subgroups
+[**refreshVersions**](https://github.com/Splitties/refreshVersions) provides **1236** Dependency Notations in **26** groups and **263** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -22,7 +22,7 @@ Use the table of contents to jump to the group you are interested in.
 Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordinate, VersionKey)`.
 
 
-## [Android.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Android.kt)
+## [Android.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Android.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -78,7 +78,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [AndroidX.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/AndroidX.kt)
+## [AndroidX.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/AndroidX.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -172,6 +172,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.core&#10;androidx.core:core:_&#10;version.androidx.core"
             style="text-decoration: underline;">
             core
+        </span>
+        - 
+        <span
+            title="AndroidX.credentials&#10;androidx.credentials:credentials:_&#10;version.androidx.credentials"
+            style="text-decoration: underline;">
+            credentials
         </span>
         - 
         <span
@@ -493,6 +499,18 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="AndroidX.appSearch.debugView&#10;androidx.appsearch:appsearch-debug-view:_&#10;version.androidx.appsearch"
+            style="text-decoration: underline;">
+            debugView
+        </span>
+        - 
+        <span
+            title="AndroidX.appSearch.ktx&#10;androidx.appsearch:appsearch-ktx:_&#10;version.androidx.appsearch"
+            style="text-decoration: underline;">
+            ktx
+        </span>
+        - 
+        <span
             title="AndroidX.appSearch.localStorage&#10;androidx.appsearch:appsearch-local-storage:_&#10;version.androidx.appsearch"
             style="text-decoration: underline;">
             localStorage
@@ -537,6 +555,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
     </td></tr>
             
     <tr><td><b>AndroidX.benchmark</b></td><td>
+        <span
+            title="AndroidX.benchmark.baselineProfileGradlePlugin&#10;androidx.benchmark:benchmark-baseline-profile-gradle-plugin:_&#10;version.androidx.benchmark"
+            style="text-decoration: underline;">
+            baselineProfileGradlePlugin
+        </span>
+        - 
         <span
             title="AndroidX.benchmark.common&#10;androidx.benchmark:benchmark-common:_&#10;version.androidx.benchmark"
             style="text-decoration: underline;">
@@ -619,6 +643,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.camera.view&#10;androidx.camera:camera-view:_&#10;version.androidx.camera.view"
             style="text-decoration: underline;">
             view
+        </span>
+        - 
+        <span
+            title="AndroidX.camera.viewFinder&#10;androidx.camera:camera-viewfinder:_&#10;version.androidx.camera"
+            style="text-decoration: underline;">
+            viewFinder
         </span>
             
     </td></tr>
@@ -793,7 +823,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
-            title="AndroidX.compose.runtime.tracing&#10;androidx.compose.runtime:runtime-tracing:_&#10;version.androidx.compose.runtime"
+            title="AndroidX.compose.runtime.tracing&#10;androidx.compose.runtime:runtime-tracing:_&#10;version.androidx.compose.runtime-tracing"
             style="text-decoration: underline;">
             tracing
         </span>
@@ -928,9 +958,21 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="AndroidX.core.i18n&#10;androidx.core:core-i18n:_&#10;version.androidx.core-i18n"
+            style="text-decoration: underline;">
+            i18n
+        </span>
+        - 
+        <span
             title="AndroidX.core.ktx&#10;androidx.core:core-ktx:_&#10;version.androidx.core"
             style="text-decoration: underline;">
             ktx
+        </span>
+        - 
+        <span
+            title="AndroidX.core.locationAltitude&#10;androidx.core:core-location-altitude:_&#10;version.androidx.core-location-altitude"
+            style="text-decoration: underline;">
+            locationAltitude
         </span>
         - 
         <span
@@ -958,6 +1000,18 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="AndroidX.core.telecom&#10;androidx.core:core-telecom:_&#10;version.androidx.core-telecom"
+            style="text-decoration: underline;">
+            telecom
+        </span>
+        - 
+        <span
+            title="AndroidX.core.testing&#10;androidx.core:core-testing:_&#10;version.androidx.core"
+            style="text-decoration: underline;">
+            testing
+        </span>
+        - 
+        <span
             title="AndroidX.core.uwb&#10;androidx.core.uwb:uwb:_&#10;version.androidx.core.uwb"
             style="text-decoration: underline;">
             uwb
@@ -970,6 +1024,15 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.core.uwb.rxJava3&#10;androidx.core.uwb:uwb-rxjava3:_&#10;version.androidx.core.uwb"
             style="text-decoration: underline;">
             rxJava3
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>AndroidX.credentials</b></td><td>
+        <span
+            title="AndroidX.credentials.playServicesAuth&#10;androidx.credentials:credentials-play-services-auth:_&#10;version.androidx.credentials"
+            style="text-decoration: underline;">
+            playServicesAuth
         </span>
             
     </td></tr>
@@ -1072,6 +1135,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="AndroidX.emoji2.picker&#10;androidx.emoji2:emoji2-emojipicker:_&#10;version.androidx.emoji2"
+            style="text-decoration: underline;">
+            picker
+        </span>
+        - 
+        <span
             title="AndroidX.emoji2.viewsHelper&#10;androidx.emoji2:emoji2-views-helper:_&#10;version.androidx.emoji2"
             style="text-decoration: underline;">
             viewsHelper
@@ -1156,6 +1225,18 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="AndroidX.glance.material3&#10;androidx.glance:glance-material3:_&#10;version.androidx.glance"
+            style="text-decoration: underline;">
+            material3
+        </span>
+        - 
+        <span
+            title="AndroidX.glance.material&#10;androidx.glance:glance-material:_&#10;version.androidx.glance"
+            style="text-decoration: underline;">
+            material
+        </span>
+        - 
+        <span
             title="AndroidX.glance.wearTiles&#10;androidx.glance:glance-wear-tiles:_&#10;version.androidx.glance"
             style="text-decoration: underline;">
             wearTiles
@@ -1165,9 +1246,21 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     <tr><td><b>AndroidX.graphics</b></td><td>
         <span
-            title="AndroidX.graphics.core&#10;androidx.graphics:graphics-core:_&#10;version.androidx.graphics"
+            title="AndroidX.graphics.core&#10;androidx.graphics:graphics-core:_&#10;version.androidx.graphics-core"
             style="text-decoration: underline;">
             core
+        </span>
+        - 
+        <span
+            title="AndroidX.graphics.path&#10;androidx.graphics:graphics-path:_&#10;version.androidx.graphics-path"
+            style="text-decoration: underline;">
+            path
+        </span>
+        - 
+        <span
+            title="AndroidX.graphics.shapes&#10;androidx.graphics:graphics-shapes:_&#10;version.androidx.graphics-shapes"
+            style="text-decoration: underline;">
+            shapes
         </span>
             
     </td></tr>
@@ -1414,6 +1507,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="AndroidX.media3.container&#10;androidx.media3:media3-container:_&#10;version.androidx.media3"
+            style="text-decoration: underline;">
+            container
+        </span>
+        - 
+        <span
             title="AndroidX.media3.database&#10;androidx.media3:media3-database:_&#10;version.androidx.media3"
             style="text-decoration: underline;">
             database
@@ -1432,6 +1531,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="AndroidX.media3.effect&#10;androidx.media3:media3-effect:_&#10;version.androidx.media3"
+            style="text-decoration: underline;">
+            effect
+        </span>
+        - 
+        <span
             title="AndroidX.media3.exoPlayer&#10;androidx.media3:media3-exoplayer:_&#10;version.androidx.media3"
             style="text-decoration: underline;">
             exoPlayer
@@ -1441,6 +1546,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.media3.extractor&#10;androidx.media3:media3-extractor:_&#10;version.androidx.media3"
             style="text-decoration: underline;">
             extractor
+        </span>
+        - 
+        <span
+            title="AndroidX.media3.muxer&#10;androidx.media3:media3-muxer:_&#10;version.androidx.media3"
+            style="text-decoration: underline;">
+            muxer
         </span>
         - 
         <span
@@ -1537,6 +1648,15 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.media3.ui.leanback&#10;androidx.media3:media3-ui-leanback:_&#10;version.androidx.media3"
             style="text-decoration: underline;">
             leanback
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>AndroidX.mediaRouter</b></td><td>
+        <span
+            title="AndroidX.mediaRouter.testing&#10;androidx.mediarouter:mediarouter-testing:_&#10;version.androidx.mediarouter"
+            style="text-decoration: underline;">
+            testing
         </span>
             
     </td></tr>
@@ -1721,6 +1841,87 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     </td></tr>
             
+    <tr><td><b>AndroidX.privacySandbox</b></td><td>
+        <span
+            title="AndroidX.privacySandbox.tools&#10;androidx.privacysandbox.tools:tools:_&#10;version.androidx.privacysandbox.tools"
+            style="text-decoration: underline;">
+            tools
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>AndroidX.privacySandbox.plugins</b></td><td>
+        <span
+            title="AndroidX.privacySandbox.plugins.library&#10;androidx.privacysandbox.plugins:plugins-privacysandbox-library:_&#10;version.androidx.privacysandbox.plugins"
+            style="text-decoration: underline;">
+            library
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>AndroidX.privacySandbox.sdkRuntime</b></td><td>
+        <span
+            title="AndroidX.privacySandbox.sdkRuntime.client&#10;androidx.privacysandbox.sdkruntime:sdkruntime-client:_&#10;version.androidx.privacysandbox.sdkruntime"
+            style="text-decoration: underline;">
+            client
+        </span>
+        - 
+        <span
+            title="AndroidX.privacySandbox.sdkRuntime.core&#10;androidx.privacysandbox.sdkruntime:sdkruntime-core:_&#10;version.androidx.privacysandbox.sdkruntime"
+            style="text-decoration: underline;">
+            core
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>AndroidX.privacySandbox.tools</b></td><td>
+        <span
+            title="AndroidX.privacySandbox.tools.apiCompiler&#10;androidx.privacysandbox.tools:tools-apicompiler:_&#10;version.androidx.privacysandbox.tools"
+            style="text-decoration: underline;">
+            apiCompiler
+        </span>
+        - 
+        <span
+            title="AndroidX.privacySandbox.tools.apiGenerator&#10;androidx.privacysandbox.tools:tools-apigenerator:_&#10;version.androidx.privacysandbox.tools"
+            style="text-decoration: underline;">
+            apiGenerator
+        </span>
+        - 
+        <span
+            title="AndroidX.privacySandbox.tools.apiPackager&#10;androidx.privacysandbox.tools:tools-apipackager:_&#10;version.androidx.privacysandbox.tools"
+            style="text-decoration: underline;">
+            apiPackager
+        </span>
+        - 
+        <span
+            title="AndroidX.privacySandbox.tools.core&#10;androidx.privacysandbox.tools:tools-core:_&#10;version.androidx.privacysandbox.tools"
+            style="text-decoration: underline;">
+            core
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>AndroidX.privacySandbox.ui</b></td><td>
+        <span
+            title="AndroidX.privacySandbox.ui.client&#10;androidx.privacysandbox.ui:ui-client:_&#10;version.androidx.privacysandbox.ui"
+            style="text-decoration: underline;">
+            client
+        </span>
+        - 
+        <span
+            title="AndroidX.privacySandbox.ui.core&#10;androidx.privacysandbox.ui:ui-core:_&#10;version.androidx.privacysandbox.ui"
+            style="text-decoration: underline;">
+            core
+        </span>
+        - 
+        <span
+            title="AndroidX.privacySandbox.ui.provider&#10;androidx.privacysandbox.ui:ui-provider:_&#10;version.androidx.privacysandbox.ui"
+            style="text-decoration: underline;">
+            provider
+        </span>
+            
+    </td></tr>
+            
     <tr><td><b>AndroidX.recyclerView</b></td><td>
         <span
             title="AndroidX.recyclerView.selection&#10;androidx.recyclerview:recyclerview-selection:_&#10;version.androidx.recyclerview-selection"
@@ -1750,6 +1951,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.room.compiler&#10;androidx.room:room-compiler:_&#10;version.androidx.room"
             style="text-decoration: underline;">
             compiler
+        </span>
+        - 
+        <span
+            title="AndroidX.room.gradlePlugin&#10;androidx.room:room-gradle-plugin:_&#10;version.androidx.room"
+            style="text-decoration: underline;">
+            gradlePlugin
         </span>
         - 
         <span
@@ -2072,6 +2279,15 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     </td></tr>
             
+    <tr><td><b>AndroidX.tracing.perfetto</b></td><td>
+        <span
+            title="AndroidX.tracing.perfetto.handshake&#10;androidx.tracing:tracing-perfetto-handshake:_&#10;version.androidx.tracing-perfetto"
+            style="text-decoration: underline;">
+            handshake
+        </span>
+            
+    </td></tr>
+            
     <tr><td><b>AndroidX.tv</b></td><td>
         <span
             title="AndroidX.tv.foundation&#10;androidx.tv:tv-foundation:_&#10;version.androidx.tv"
@@ -2134,6 +2350,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="AndroidX.wear.protoLayout&#10;androidx.wear.protolayout:protolayout:_&#10;version.androidx.wear.protolayout"
+            style="text-decoration: underline;">
+            protoLayout
+        </span>
+        - 
+        <span
             title="AndroidX.wear.tiles&#10;androidx.wear.tiles:tiles:_&#10;version.androidx.wear.tiles"
             style="text-decoration: underline;">
             tiles
@@ -2155,6 +2377,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="AndroidX.wear.compose.material3&#10;androidx.wear.compose:compose-material3:_&#10;version.androidx.wear.compose.compose-material3"
+            style="text-decoration: underline;">
+            material3
+        </span>
+        - 
+        <span
             title="AndroidX.wear.compose.material&#10;androidx.wear.compose:compose-material:_&#10;version.androidx.wear.compose.compose-material"
             style="text-decoration: underline;">
             material
@@ -2164,6 +2392,33 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.wear.compose.navigation&#10;androidx.wear.compose:compose-navigation:_&#10;version.androidx.wear.compose.compose-navigation"
             style="text-decoration: underline;">
             navigation
+        </span>
+        - 
+        <span
+            title="AndroidX.wear.compose.uiTooling&#10;androidx.wear.compose:compose-ui-tooling:_&#10;version.androidx.wear.compose.compose-ui-tooling"
+            style="text-decoration: underline;">
+            uiTooling
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>AndroidX.wear.protoLayout</b></td><td>
+        <span
+            title="AndroidX.wear.protoLayout.expression&#10;androidx.wear.protolayout:protolayout-expression:_&#10;version.androidx.wear.protolayout"
+            style="text-decoration: underline;">
+            expression
+        </span>
+        - 
+        <span
+            title="AndroidX.wear.protoLayout.material&#10;androidx.wear.protolayout:protolayout-material:_&#10;version.androidx.wear.protolayout"
+            style="text-decoration: underline;">
+            material
+        </span>
+        - 
+        <span
+            title="AndroidX.wear.protoLayout.renderer&#10;androidx.wear.protolayout:protolayout-renderer:_&#10;version.androidx.wear.protolayout"
+            style="text-decoration: underline;">
+            renderer
         </span>
             
     </td></tr>
@@ -2246,6 +2501,15 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     </td></tr>
             
+    <tr><td><b>AndroidX.window.extensions</b></td><td>
+        <span
+            title="AndroidX.window.extensions.core&#10;androidx.window.extensions.core:core:_&#10;version.androidx.window.extensions.core"
+            style="text-decoration: underline;">
+            core
+        </span>
+            
+    </td></tr>
+            
     <tr><td><b>AndroidX.work</b></td><td>
         <span
             title="AndroidX.work.gcm&#10;androidx.work:work-gcm:_&#10;version.androidx.work"
@@ -2294,7 +2558,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [ApolloGraphQL.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/ApolloGraphQL.kt)
+## [ApolloGraphQL.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/ApolloGraphQL.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -2365,7 +2629,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Arrow.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Arrow.kt)
+## [Arrow.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Arrow.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -2433,7 +2697,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [COIL.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/COIL.kt)
+## [COIL.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/COIL.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -2486,7 +2750,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [CashApp.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/CashApp.kt)
+## [CashApp.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/CashApp.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -2620,7 +2884,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Chucker.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Chucker.kt)
+## [Chucker.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Chucker.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -2643,7 +2907,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Firebase.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Firebase.kt)
+## [Firebase.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Firebase.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -2870,7 +3134,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Google.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Google.kt)
+## [Google.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Google.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -3168,9 +3432,9 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
-            title="Google.android.playServices.appset&#10;com.google.android.gms:play-services-appset:_&#10;version.google.android.play-services-appset"
+            title="Google.android.playServices.appSet&#10;com.google.android.gms:play-services-appset:_&#10;version.google.android.play-services-appset"
             style="text-decoration: underline;">
-            appset
+            appSet
         </span>
         - 
         <span
@@ -3216,6 +3480,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="Google.android.playServices.deviceToDeviceInteractions&#10;com.google.android.gms:play-services-dtdi:_&#10;version.google.android.play-services-dtdi"
+            style="text-decoration: underline;">
+            deviceToDeviceInteractions
+        </span>
+        - 
+        <span
             title="Google.android.playServices.fido&#10;com.google.android.gms:play-services-fido:_&#10;version.google.android.play-services-fido"
             style="text-decoration: underline;">
             fido
@@ -3228,6 +3498,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="Google.android.playServices.gamesV2&#10;com.google.android.gms:play-services-games-v2:_&#10;version.google.android.play-services-games-v2"
+            style="text-decoration: underline;">
+            gamesV2
+        </span>
+        - 
+        <span
             title="Google.android.playServices.games&#10;com.google.android.gms:play-services-games:_&#10;version.google.android.play-services-games"
             style="text-decoration: underline;">
             games
@@ -3237,6 +3513,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="Google.android.playServices.gcm&#10;com.google.android.gms:play-services-gcm:_&#10;version.google.android.play-services-gcm"
             style="text-decoration: underline;">
             gcm
+        </span>
+        - 
+        <span
+            title="Google.android.playServices.matter&#10;com.google.android.gms:play-services-home:_&#10;version.google.android.play-services-home"
+            style="text-decoration: underline;">
+            matter
         </span>
         - 
         <span
@@ -3294,27 +3576,33 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
-            title="Google.android.playServices.recaptcha&#10;com.google.android.gms:play-services-recaptcha:_&#10;version.google.android.play-services-recaptcha"
+            title="Google.android.playServices.reCaptcha&#10;com.google.android.gms:play-services-recaptcha:_&#10;version.google.android.play-services-recaptcha"
             style="text-decoration: underline;">
-            recaptcha
+            reCaptcha
         </span>
         - 
         <span
-            title="Google.android.playServices.safetynet&#10;com.google.android.gms:play-services-safetynet:_&#10;version.google.android.play-services-safetynet"
+            title="Google.android.playServices.safetyNet&#10;com.google.android.gms:play-services-safetynet:_&#10;version.google.android.play-services-safetynet"
             style="text-decoration: underline;">
-            safetynet
+            safetyNet
         </span>
         - 
         <span
-            title="Google.android.playServices.tagmanager&#10;com.google.android.gms:play-services-tagmanager:_&#10;version.google.android.play-services-tagmanager"
+            title="Google.android.playServices.tagManager&#10;com.google.android.gms:play-services-tagmanager:_&#10;version.google.android.play-services-tagmanager"
             style="text-decoration: underline;">
-            tagmanager
+            tagManager
         </span>
         - 
         <span
             title="Google.android.playServices.tasks&#10;com.google.android.gms:play-services-tasks:_&#10;version.google.android.play-services-tasks"
             style="text-decoration: underline;">
             tasks
+        </span>
+        - 
+        <span
+            title="Google.android.playServices.threadNetwork&#10;com.google.android.gms:play-services-threadnetwork:_&#10;version.google.android.play-services-threadnetwork"
+            style="text-decoration: underline;">
+            threadNetwork
         </span>
         - 
         <span
@@ -3345,9 +3633,9 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
-            title="Google.android.playServices.auth.blockstore&#10;com.google.android.gms:play-services-auth-blockstore:_&#10;version.google.android.play-services-auth-blockstore"
+            title="Google.android.playServices.auth.blockStore&#10;com.google.android.gms:play-services-auth-blockstore:_&#10;version.google.android.play-services-auth-blockstore"
             style="text-decoration: underline;">
-            blockstore
+            blockStore
         </span>
             
     </td></tr>
@@ -3367,11 +3655,26 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     </td></tr>
             
+    <tr><td><b>Google.android.playServices.gamesV2</b></td><td>
+        <span
+            title="Google.android.playServices.gamesV2.nativeC&#10;com.google.android.gms:play-services-games-v2-native-c:_&#10;version.google.android.play-services-games-v2-native-c"
+            style="text-decoration: underline;">
+            nativeC
+        </span>
+            
+    </td></tr>
+            
     <tr><td><b>Google.android.playServices.mlKit.naturalLanguage</b></td><td>
         <span
             title="Google.android.playServices.mlKit.naturalLanguage.languageIdentification&#10;com.google.android.gms:play-services-mlkit-language-id:_&#10;version.google.android.play-services-mlkit-language-id"
             style="text-decoration: underline;">
             languageIdentification
+        </span>
+        - 
+        <span
+            title="Google.android.playServices.mlKit.naturalLanguage.smartReply&#10;com.google.android.gms:play-services-mlkit-smart-reply:_&#10;version.google.android.play-services-mlkit-smart-reply"
+            style="text-decoration: underline;">
+            smartReply
         </span>
             
     </td></tr>
@@ -3403,11 +3706,74 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     </td></tr>
             
+    <tr><td><b>Google.android.playServices.mlKit.vision.barcodeScanning</b></td><td>
+        <span
+            title="Google.android.playServices.mlKit.vision.barcodeScanning.codeScanner&#10;com.google.android.gms:play-services-code-scanner:_&#10;version.google.android.play-services-code-scanner"
+            style="text-decoration: underline;">
+            codeScanner
+        </span>
+            
+    </td></tr>
+            
     <tr><td><b>Google.android.playServices.mlKit.vision.imageLabeling</b></td><td>
         <span
             title="Google.android.playServices.mlKit.vision.imageLabeling.custom&#10;com.google.android.gms:play-services-mlkit-image-labeling-custom:_&#10;version.google.android.play-services-mlkit-image-labeling-custom"
             style="text-decoration: underline;">
             custom
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>Google.android.playServices.mlKit.vision.textRecognition</b></td><td>
+        <span
+            title="Google.android.playServices.mlKit.vision.textRecognition.chinese&#10;com.google.android.gms:play-services-mlkit-text-recognition-chinese:_&#10;version.google.android.play-services-mlkit-text-recognition-chinese"
+            style="text-decoration: underline;">
+            chinese
+        </span>
+        - 
+        <span
+            title="Google.android.playServices.mlKit.vision.textRecognition.devanagari&#10;com.google.android.gms:play-services-mlkit-text-recognition-devanagari:_&#10;version.google.android.play-services-mlkit-text-recognition-devanagari"
+            style="text-decoration: underline;">
+            devanagari
+        </span>
+        - 
+        <span
+            title="Google.android.playServices.mlKit.vision.textRecognition.japanese&#10;com.google.android.gms:play-services-mlkit-text-recognition-japanese:_&#10;version.google.android.play-services-mlkit-text-recognition-japanese"
+            style="text-decoration: underline;">
+            japanese
+        </span>
+        - 
+        <span
+            title="Google.android.playServices.mlKit.vision.textRecognition.korean&#10;com.google.android.gms:play-services-mlkit-text-recognition-korean:_&#10;version.google.android.play-services-mlkit-text-recognition-korean"
+            style="text-decoration: underline;">
+            korean
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>Google.android.playServices.tfLite</b></td><td>
+        <span
+            title="Google.android.playServices.tfLite.accelerationService&#10;com.google.android.gms:play-services-tflite-acceleration-service:_&#10;version.google.android.play-services-tflite-acceleration-service"
+            style="text-decoration: underline;">
+            accelerationService
+        </span>
+        - 
+        <span
+            title="Google.android.playServices.tfLite.gpu&#10;com.google.android.gms:play-services-tflite-gpu:_&#10;version.google.android.play-services-tflite-gpu"
+            style="text-decoration: underline;">
+            gpu
+        </span>
+        - 
+        <span
+            title="Google.android.playServices.tfLite.java&#10;com.google.android.gms:play-services-tflite-java:_&#10;version.google.android.play-services-tflite-java"
+            style="text-decoration: underline;">
+            java
+        </span>
+        - 
+        <span
+            title="Google.android.playServices.tfLite.support&#10;com.google.android.gms:play-services-tflite-support:_&#10;version.google.android.play-services-tflite-support"
+            style="text-decoration: underline;">
+            support
         </span>
             
     </td></tr>
@@ -3936,9 +4302,21 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="Google.mlKit.vision.entityExtraction&#10;com.google.mlkit:entity-extraction:_&#10;version.google.mlkit.entity-extraction"
+            style="text-decoration: underline;">
+            entityExtraction
+        </span>
+        - 
+        <span
             title="Google.mlKit.vision.faceDetection&#10;com.google.mlkit:face-detection:_&#10;version.google.mlkit.face-detection"
             style="text-decoration: underline;">
             faceDetection
+        </span>
+        - 
+        <span
+            title="Google.mlKit.vision.faceMeshDetection&#10;com.google.mlkit:face-mesh-detection:_&#10;version.google.mlkit.face-mesh-detection"
+            style="text-decoration: underline;">
+            faceMeshDetection
         </span>
         - 
         <span
@@ -4063,7 +4441,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Http4k.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Http4k.kt)
+## [Http4k.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Http4k.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -4452,7 +4830,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [JakeWharton.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/JakeWharton.kt)
+## [JakeWharton.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/JakeWharton.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -4655,7 +5033,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [JetBrains.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/JetBrains.kt)
+## [JetBrains.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/JetBrains.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -5224,7 +5602,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Kodein.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Kodein.kt)
+## [Kodein.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Kodein.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -5289,7 +5667,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Koin.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Koin.kt)
+## [Koin.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Koin.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -5366,7 +5744,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Kotlin.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Kotlin.kt)
+## [Kotlin.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Kotlin.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -5377,7 +5755,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             style="text-decoration: underline;">
             gradlePlugin
         </span>
-        -
+        - 
         <span
             title="Kotlin.scriptRuntime&#10;org.jetbrains.kotlin:kotlin-script-runtime:_&#10;version.kotlin"
             style="text-decoration: underline;">
@@ -5473,7 +5851,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [KotlinX.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/KotlinX.kt)
+## [KotlinX.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/KotlinX.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -5790,7 +6168,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Ktor.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Ktor.kt)
+## [Ktor.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Ktor.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -6338,7 +6716,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Orchid.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Orchid.kt)
+## [Orchid.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Orchid.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -6580,7 +6958,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [ReactiveX.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/ReactiveX.kt)
+## [ReactiveX.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/ReactiveX.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -6633,7 +7011,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [RickClephas.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/RickClephas.kt)
+## [RickClephas.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/RickClephas.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -6674,7 +7052,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [RussHWolf.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/RussHWolf.kt)
+## [RussHWolf.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/RussHWolf.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -6736,7 +7114,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Splitties.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Splitties.kt)
+## [Splitties.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Splitties.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -7074,7 +7452,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Spring.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Spring.kt)
+## [Spring.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Spring.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -7862,7 +8240,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Square.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Square.kt)
+## [Square.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Square.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -8317,7 +8695,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Testing.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Testing.kt)
+## [Testing.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Testing.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
@@ -8820,7 +9198,7 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
 </table>
             
 
-## [Touchlab.kt](https://github.com/jmfayard/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Touchlab.kt)
+## [Touchlab.kt](https://github.com/splitties/refreshVersions/blob/main/plugins/dependencies/src/main/kotlin/dependencies/Touchlab.kt)
 
 
 <table style="width: 100%; table-layout:fixed;">
