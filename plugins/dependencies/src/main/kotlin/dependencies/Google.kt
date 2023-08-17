@@ -376,8 +376,31 @@ object Google : IsNotADependency {
             /** Google Fit */
             val fitness = module("play-services-fitness")
 
-            /** Google Play Game services */
+            /**
+             * Google Play Game services V1 SDK
+             *
+             * [Get Started](https://developers.google.com/games/services/v1/android/quickstart)
+             */
             val games = module("play-services-games")
+
+            /**
+             * Google Play Game services V2 SDK
+             *
+             * [Get Started](https://developers.google.com/games/services/android/quickstart)
+             */
+            val gamesV2 = GamesV2
+
+            object GamesV2 : DependencyNotationAndGroup(
+                group = group,
+                name = "play-services-games-v2"
+            ) {
+                /**
+                 * Google Play Games Services for C and C++
+                 *
+                 * [Get Started](https://developer.android.com/games/pgs/cpp/cpp-start)
+                 */
+                val nativeC = module("play-services-games-v2-native-c")
+            }
 
             /** Google Cloud Messaging */
             @Deprecated("Use Firebase Cloud Messaging instead")
@@ -395,6 +418,11 @@ object Google : IsNotADependency {
             /** Google Maps */
             val maps = module("play-services-maps")
 
+            /**
+             * [Matter on Google Home Developer Center](https://developers.home.google.com/matter)
+             */
+            val matter = module("play-services-home")
+
             val mlKit = MlKit
 
             object MlKit : IsNotADependency {
@@ -407,6 +435,11 @@ object Google : IsNotADependency {
                      * [Overview](https://developers.google.com/ml-kit/language/identification)
                      */
                     val languageIdentification = module("play-services-mlkit-language-id")
+
+                    /**
+                     * [Overview](https://developers.google.com/ml-kit/language/smart-reply)
+                     */
+                    val smartReply = module("play-services-mlkit-smart-reply")
                 }
 
                 val vision = Vision
@@ -418,7 +451,20 @@ object Google : IsNotADependency {
                      *
                      * [Overview](https://developers.google.com/ml-kit/vision/barcode-scanning)
                      */
-                    val barcodeScanning = module("play-services-mlkit-barcode-scanning")
+                    val barcodeScanning = BarcodeScanning
+
+                    object BarcodeScanning : DependencyNotationAndGroup(
+                        group = group,
+                        name = "play-services-mlkit-barcode-scanning"
+                    ) {
+                        /**
+                         * The Google code scanner API provides a complete solution for scanning code without requiring
+                         * your app to request camera permission, while preserving user privacy.
+                         *
+                         * [Google code scanner (Android only)](https://developers.google.com/ml-kit/vision/barcode-scanning/code-scanner)
+                         */
+                        val codeScanner = module("play-services-code-scanner")
+                    }
 
                     /**
                      * Unbundled version of [Google.MlKit.Vision.faceDetection]
@@ -450,9 +496,19 @@ object Google : IsNotADependency {
                     }
 
                     /**
-                     * [Overview](https://developers.google.com/ml-kit/vision/text-recognition)
+                     * [Overview](https://developers.google.com/ml-kit/vision/text-recognition/v2)
                      */
-                    val textRecognition = module("play-services-mlkit-text-recognition")
+                    val textRecognition = TextRecognition
+
+                    object TextRecognition : DependencyNotationAndGroup(
+                        group = group,
+                        name = "play-services-mlkit-text-recognition"
+                    ) {
+                        val chinese = module("play-services-mlkit-text-recognition-chinese")
+                        val devanagari = module("play-services-mlkit-text-recognition-devanagari")
+                        val japanese = module("play-services-mlkit-text-recognition-japanese")
+                        val korean = module("play-services-mlkit-text-recognition-korean")
+                    }
                 }
             }
 
