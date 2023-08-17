@@ -9,7 +9,7 @@ import kotlin.String
  *     $ ./gradlew refreshVersions
  * And edit the file `versions.properties`
  *
- * See https://github.com/jmfayard/refreshVersions
+ * See https://github.com/Splitties/refreshVersions
  */
 object Libs {
     const val clikt: String = "com.github.ajalt.clikt:clikt:_"

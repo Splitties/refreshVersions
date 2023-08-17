@@ -12,8 +12,8 @@ import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 
 object Publishing {
-    const val gitUrl = "https://github.com/jmfayard/refreshVersions.git"
-    const val siteUrl = "https://github.com/jmfayard/refreshVersions"
+    const val gitUrl = "https://github.com/Splitties/refreshVersions.git"
+    const val siteUrl = "https://github.com/Splitties/refreshVersions"
     const val libraryDesc = "Life is too short to Google for dependencies and versions."
 }
 

@@ -140,7 +140,7 @@ open class RefreshVersionsTask : DefaultTask() {
             }
         }
         if (FeatureFlag.KOTLIN_SCRIPTS.isEnabled) {
-            println("NOTE: refreshVersions support for Kotlin Scripts isn't implemented yet, see https://github.com/jmfayard/refreshVersions/issues/582")
+            println("NOTE: refreshVersions support for Kotlin Scripts isn't implemented yet, see https://github.com/Splitties/refreshVersions/issues/582")
         }
     }
 
@@ -212,7 +212,7 @@ open class RefreshVersionsTask : DefaultTask() {
                     |To migrate your project, run
                     |   ./gradlew refreshVersionsMigrate
                     |
-                    |See https://jmfayard.github.io/refreshVersions/migrate/""".trimMargin()
+                    |See https://splitties.github.io/refreshVersions/migrate/""".trimMargin()
             )
             //TODO: Replace issue link above with stable link to explanation in documentation.
         }

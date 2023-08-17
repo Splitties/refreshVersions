@@ -86,7 +86,7 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
     @TaskAction
     fun cleanupKotlinScripts() {
         if (FeatureFlag.KOTLIN_SCRIPTS.isEnabled) {
-            println("NOTE: refreshVersionsCleanUp doesn't clean up Kotlin Scripts yet, see https://github.com/jmfayard/refreshVersions/issues/582")
+            println("NOTE: refreshVersionsCleanUp doesn't clean up Kotlin Scripts yet, see https://github.com/Splitties/refreshVersions/issues/582")
         }
     }
 }

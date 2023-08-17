@@ -73,7 +73,7 @@ open class RefreshVersionsPlugin : Plugin<Any> {
             }
             """
             plugins.id("de.fayard.refreshVersions") must be configured in settings.gradle(.kts)$notInExtraClause.
-            See https://jmfayard.github.io/refreshVersions/setup/
+            See https://splitties.github.io/refreshVersions/setup/
             """.trimIndent()
         }
         bootstrap(target)

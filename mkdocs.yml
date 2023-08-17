@@ -8,15 +8,15 @@ repo_url: https://github.com/jmfayard/refreshVersions
 site_description: "Life is too short to google for dependencies and versions"
 site_author: jmfayard LouisCAD
 remote_branch: gh-pages
-edit_uri: "https://github.com/jmfayard/refreshVersions/edit/release/docs"
+edit_uri: "https://github.com/Splitties/refreshVersions/edit/release/docs"
 
 extra:
   link:
     playground: https://github.com/LouisCAD/kotlin-libraries-playground
-    site: https://jmfayard.github.io/refreshVersions
-    github: https://github.com/jmfayard/refreshVersions
-    master: https://github.com/jmfayard/refreshVersions/blob/main
-    issues: https://github.com/jmfayard/refreshVersions/issues
+    site: https://splitties.github.io/refreshVersions
+    github: https://github.com/Splitties/refreshVersions
+    master: https://github.com/Splitties/refreshVersions/blob/main
+    issues: https://github.com/Splitties/refreshVersions/issues
     gradlePluginPortal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
@@ -26,7 +26,7 @@ extra:
   keyboard_shortcuts:
     find_actions: <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>A</kbd>
 
-copyright: 'Copyright &copy; 2020-2022 jmfayard'
+copyright: 'Copyright &copy; 2020-2023 jmfayard - Louis CAD'
 
 theme:
   name: 'material'

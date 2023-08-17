@@ -142,7 +142,7 @@ fun Nothing?.checkGradleVersionIsSupported() {
         throw UnsupportedVersionException(
             """
             The plugin "de.fayard.refreshVersions" only works with Gradle $minimumGradleVersionString and above.
-            See https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed
+            See https://splitties.github.io/refreshVersions/setup/#update-gradle-if-needed
             """.trimIndent()
         )
     }
