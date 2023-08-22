@@ -25,8 +25,9 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
                 group = "refreshVersions"
                 description = "Search for new dependencies versions and update $versionsFileName"
                 if (shouldUpdateVersionCatalogs) {
-                    this.defaultVersionCatalog = VersionsCatalogs.getDefault(project)
-                    this.defaultVersionCatalogFile = project.file(VersionsCatalogs.LIBS_VERSIONS_TOML)
+                    this.defaultVersionCatalog = VersionsCatalogs.getDefault(project)?.also {
+                        this.defaultVersionCatalogFile = project.file(VersionsCatalogs.LIBS_VERSIONS_TOML)
+                    }
                 }
                 rootProjectSettingsFile = project.file("settings.gradle.kts").let { kotlinDslSettings ->
                     if (kotlinDslSettings.exists()) kotlinDslSettings else {

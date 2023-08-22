@@ -129,8 +129,7 @@ open class RefreshVersionsTask : DefaultTask() {
             if (versionPropertiesUpdated) OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 
             if (shouldUpdateVersionCatalogs) {
-                val libsToml = defaultVersionCatalogFile!!
-                if (libsToml.canRead()) {
+                defaultVersionCatalogFile?.let { libsToml ->
                     val updated = VersionsCatalogUpdater(
                         file = libsToml,
                         dependenciesUpdates = result.dependenciesUpdatesForVersionCatalog
