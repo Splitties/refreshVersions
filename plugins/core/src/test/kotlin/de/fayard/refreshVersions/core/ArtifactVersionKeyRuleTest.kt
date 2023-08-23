@@ -11,27 +11,68 @@ import kotlin.test.assertEquals
 class ArtifactVersionKeyRuleTest {
 
     @Test
-    fun `Test kotlinx libraries`() {
+    fun `Test kotlinx libraries`() = test(
+        artifactPattern = "  org.jetbrains.kotlinx:kotlinx-???(-*)".trimStart(),
+        versionKeyPattern = "              ^^^^^^^.        ^^^",
+        libraries = listOf(
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core-native",
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core-android"
+        ),
+        expectedKey = "kotlinx.coroutines"
+    )
+
+    @Test
+    fun `Test google play ktx libraries`() = test(
+        artifactPattern = "  com.google.android.play:*(-ktx)".trimStart(),
+        versionKeyPattern = "    ^^^^^^^^^^^^^^^^^^^.^",
+        libraries = listOf(
+            "com.google.android.play:asset-delivery",
+            "com.google.android.play:asset-delivery-ktx"
+        ),
+        expectedKey = "google.android.play.asset-delivery"
+    )
+
+    @Test
+    fun `Test androidx customview library`() = test(
+        artifactPattern = "  androidx.customview:customview(-*)".trimStart(),
+        versionKeyPattern = "^^^^^^^^.           ^^^^^^^^^^^^^^",
+        libraries = listOf(
+            "androidx.customview:customview",
+        ),
+        expectedKey = "androidx.customview"
+    )
+
+    @Test
+    fun `Test androidx customview-poolingcontainer library`() = test(
+        artifactPattern = "  androidx.customview:customview(-*)".trimStart(),
+        versionKeyPattern = "^^^^^^^^.           ^^^^^^^^^^^^^^",
+        libraries = listOf(
+            "androidx.customview:customview-poolingcontainer",
+        ),
+        expectedKey = "androidx.customview-poolingcontainer"
+    )
+
+    private fun test(
+        artifactPattern: String,
+        versionKeyPattern: String,
+        libraries: List<String>,
+        expectedKey: String
+    ) {
         val versionKeyRule = ArtifactVersionKeyRule(
-            artifactPattern = "  org.jetbrains.kotlinx:kotlinx-???(-*)".trimStart(),
-            versionKeyPattern = "              ^^^^^^^.        ^^^"
+            artifactPattern = artifactPattern,
+            versionKeyPattern = versionKeyPattern
         )
-        kotlinxArtifacts.forEach {
+        libraries.forEach {
             val group = it.substringBefore(':')
             val name = it.substringAfter(':')
-            assert(versionKeyRule.matches(group, name)) { it }
-            val expectedKey = "kotlinx.coroutines"
+            assert(versionKeyRule.matches(group, name)) {
+                "Artifact $it didn't match rule that created regex $versionKeyRule"
+            }
+            println("$versionKeyRule")
             assertEquals(expectedKey, versionKeyRule.key(group, name))
         }
-        println("Yo")
-        //TODO: Rework or remove these tests (which overlap more complete tests in dependencies plugin)
     }
-
-    private val kotlinxArtifacts: List<String> = listOf(
-        "org.jetbrains.kotlinx:kotlinx-coroutines-core",
-        "org.jetbrains.kotlinx:kotlinx-coroutines-core-native",
-        "org.jetbrains.kotlinx:kotlinx-coroutines-core-android"
-    )
 
     @TestFactory
     fun `Rules are ordered by specificity`(): List<DynamicTest> = listOf(

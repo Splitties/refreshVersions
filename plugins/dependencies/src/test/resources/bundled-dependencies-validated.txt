@@ -512,8 +512,14 @@ com.google.android.libraries.places:places
 com.google.android.material:compose-theme-adapter
 com.google.android.material:compose-theme-adapter-3
 com.google.android.material:material
-com.google.android.play:core
-com.google.android.play:core-ktx
+com.google.android.play:app-update
+com.google.android.play:app-update-ktx
+com.google.android.play:asset-delivery
+com.google.android.play:asset-delivery-ktx
+com.google.android.play:feature-delivery
+com.google.android.play:feature-delivery-ktx
+com.google.android.play:review
+com.google.android.play:review-ktx
 com.google.android.support:wearable
 com.google.android.wearable:wearable
 com.google.androidbrowserhelper:androidbrowserhelper

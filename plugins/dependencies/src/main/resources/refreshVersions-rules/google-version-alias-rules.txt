@@ -28,6 +28,9 @@ com.google.maps.android:maps-ktx
 com.google.maps.android:maps-utils-ktx
     ^^^^^^.     ^^^^^^^.^^^^^      ^^^
 
+com.google.android.play:*(-ktx)
+    ^^^^^^^        ^^^^.^
+
 com.google.android.material:material
     ^^^^^^^^^^^^^^^^^^^^^^^
 

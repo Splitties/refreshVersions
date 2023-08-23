@@ -263,11 +263,20 @@ object Google : IsNotADependency {
             val composeThemeAdapter3 = module("compose-theme-adapter-3")
         }
 
+        /**
+         * [Overview of the Google Play Core libraries](https://developer.android.com/guide/playcore)
+         */
         val play = Play
 
         object Play : DependencyGroup(group = "com.google.android.play") {
-            val core = module("core")
-            val coreKtx = module("core-ktx")
+            val appUpdate = module("app-update")
+            val appUpdateKtx = module("app-update-ktx")
+            val assetDelivery = module("asset-delivery")
+            val assetDeliveryKtx = module("asset-delivery-ktx")
+            val featureDelivery = module("feature-delivery")
+            val featureDeliveryKtx = module("feature-delivery-ktx")
+            val review = module("review")
+            val reviewKtx = module("review-ktx")
         }
 
         val playServices = PlayServices

@@ -87,7 +87,7 @@ class BundledDependenciesTest {
             val content = AbstractDependencyGroup.ALL_RULES
                 .sorted()
                 .distinct()
-                .joinToString(separator = "\n\n", postfix = "\n")
+                .joinToString(separator = "\n\n", postfix = "\n") { it.text() }
             if (file.readText() != content) file.writeText(content)
         }
 
@@ -218,15 +218,17 @@ class BundledDependenciesTest {
                 (receivedMapping - existingMapping) should haveSize(0)
             }
         } else if (breakingChanges.isNotEmpty()) {
-            //TODO: Should we filter out the "NO-RULE" ones?
-            val text = Files.removedKeys.useLines { lines ->
-                (lines.withoutComments() + breakingChanges).joinToString(
-                    separator = "\n",
-                    postfix = "\n",
-                    prefix = removeKeysDescription
-                )
+            val changesToWrite = breakingChanges.filter { it.constantName != "version.NO-RULE" }
+            if (changesToWrite.isNotEmpty()) {
+                val text = Files.removedKeys.useLines { lines ->
+                    (lines.withoutComments() + breakingChanges).joinToString(
+                        separator = "\n",
+                        postfix = "\n",
+                        prefix = removeKeysDescription
+                    )
+                }
+                Files.removedKeys.writeText(text)
             }
-            Files.removedKeys.writeText(text)
         }
         receivedKeys.copyTo(existingKeys, overwrite = true)
         receivedKeys.deleteOnExit()

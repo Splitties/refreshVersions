@@ -27,10 +27,12 @@ abstract class ArtifactVersionKeyRule protected constructor(
 
     private val versionKeySignificantCharsLength = versionKeyPattern.count { it != ' ' }
 
-    override fun toString(): String = """
+    fun text(): String = """
         $artifactPattern
         $versionKeyPattern
     """.trimIndent()
+
+    override fun toString(): String = text()
 
     companion object {
 
@@ -69,9 +71,16 @@ private class ArtifactVersionKeyRuleRegexImpl(
             matchResult.groups.forEachIndexed { index, group ->
                 if (index == 0) return@forEachIndexed // First group is the full match, which we don't need.
                 if (group in dotGroups) append('.')
-                else append(group!!.value)
+                else append(group?.value ?: "")
             }
         }
+    }
+
+    override fun toString(): String = buildString {
+        appendLine("Rule:")
+        appendLine(super.toString())
+        appendLine("Regex pattern:")
+        append(artifactRegex.pattern)
     }
 
     private val artifactRegex: Regex = createCapturingRegex(artifactPattern, versionKeyPattern)
@@ -94,15 +103,13 @@ private fun MatchGroupCollection.dotGroups(): List<MatchGroup> {
 }
 
 private const val dotSurrogate = '='
-private const val optionalDashedSuffixSurrogate = "(-!)" // Avoid clash with star
 private const val openingParenthesisSurrogate = '{'
 private const val closingParenthesisSurrogate = '}'
 
 private val orderedReplacementsForRegex = listOf(
     dotSurrogate.toString() to "\\.",
-    "???" to "[a-zA-Z0-9_]+",
-    optionalDashedSuffixSurrogate to "(?:-[a-zA-Z0-9_\\-\\.]+)?",
-    "*" to "[a-zA-Z0-9_\\-\\.]+",
+    "???" to "[a-zA-Z0-9_]+?",
+    "*" to "[a-zA-Z0-9_\\-\\.]+?",
     openingParenthesisSurrogate.toString() to "(",
     closingParenthesisSurrogate.toString() to ")"
 )
@@ -114,28 +121,42 @@ private fun createCapturingRegex(
     @Suppress("name_shadowing")
     val artifactPattern = artifactPattern // Replace some pattern parts to prevent clashes when replacing.
         .replace('.', dotSurrogate) // Avoid clash with dot used in our regexes.
-        .replace("(-*)", optionalDashedSuffixSurrogate) // Avoid clash with star.
-    val paddedVersionPattern = versionKeyPattern
-        .padEnd(length = artifactPattern.length)
-    val regexPatternBuilder = StringBuilder() //TODO: Reuse it while avoiding concurrency issues without prefs drop.
+    val paddedVersionPattern = versionKeyPattern.padEnd(length = artifactPattern.length)
+    val regexPatternBuilder = StringBuilder() //TODO: Reuse it while avoiding concurrency issues without perfs drop.
     var isCapturing = false
     var dotsCount = 0
     for (i in paddedVersionPattern.lastIndex downTo 0) {
-        val c = paddedVersionPattern[i]
+        val versionPatternChar = paddedVersionPattern[i]
         if (isCapturing.not()) {
-            if (c == '^') {
+            if (versionPatternChar == '^') {
                 regexPatternBuilder.insert(0, closingParenthesisSurrogate)
                 isCapturing = true
             }
-        } else if (c != '^') {
+        } else if (versionPatternChar != '^') {
             regexPatternBuilder.insert(0, openingParenthesisSurrogate)
             isCapturing = false
         }
-        if (c == '.') {
-            regexPatternBuilder.insert(0, "(?<dot$dotsCount>${artifactPattern[i]})")
-            dotsCount++
-        } else {
-            regexPatternBuilder.insert(0, artifactPattern[i])
+        when (versionPatternChar) {
+            '.' -> {
+                regexPatternBuilder.insert(0, "(?<dot$dotsCount>${artifactPattern[i]})")
+                dotsCount++
+            }
+            else -> when (val artifactPatternChar = artifactPattern[i]) {
+                ')' -> {
+                    regexPatternBuilder.insert(0, '?')
+                    regexPatternBuilder.insert(0, closingParenthesisSurrogate)
+                }
+                '(' -> {
+                    val isOptionalDashedSuffix = regexPatternBuilder.let { it[0] == '*' && it[1] == '-' }
+                    if (isOptionalDashedSuffix) {
+                        regexPatternBuilder.setRange(0, 2, "-[a-zA-Z0-9_\\-\\.]+?".reversed())
+                    }
+                    regexPatternBuilder.insert(0, ':')
+                    regexPatternBuilder.insert(0, '?')
+                    regexPatternBuilder.insert(0, openingParenthesisSurrogate)
+                }
+                else -> regexPatternBuilder.insert(0, artifactPatternChar)
+            }
         }
     }
     if (isCapturing) {
@@ -156,5 +177,6 @@ private fun createCapturingRegex(
             regexPatternBuilder.replace(index, index + patternPart.length, regexPart)
         }
     }
+    regexPatternBuilder.append('$')
     return Regex(regexPatternBuilder.toString())
 }
