@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased] Version 0.60.1 (2023-08-23)
+## [Unreleased] Version 0.60.1 (2023-08-24)
 
 ### Bug fix
 
@@ -9,7 +9,15 @@
 ### New dependency notations:
 
 <details>
-<summary><strong>Click to expand (17) </strong></summary>
+<summary><strong>Click to expand (25) </strong></summary>
+- `Google.android.play.appUpdateKtx`
+- `Google.android.play.appUpdate`
+- `Google.android.play.assetDeliveryKtx`
+- `Google.android.play.assetDelivery`
+- `Google.android.play.featureDeliveryKtx`
+- `Google.android.play.featureDelivery`
+- `Google.android.play.reviewKtx`
+- `Google.android.play.review`
 - `Google.horologist.annotations`
 - `Google.horologist.auth.composables`
 - `Google.horologist.auth.data.phone`
