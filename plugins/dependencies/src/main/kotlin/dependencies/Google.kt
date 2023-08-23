@@ -734,7 +734,7 @@ object Google : IsNotADependency {
      * by developers but not yet available.
      *
      * - [Official website here](https://google.github.io/horologist/)
-     * - GitHub page: https://github.com/google/horologist
+     * - GitHub page: [google/horologist](https://github.com/google/horologist)
      */
     object Horologist : DependencyGroup(
         group = "com.google.android.horologist",
