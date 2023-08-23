@@ -1,5 +1,34 @@
 # Change log for refreshVersions
 
+## [Unreleased] Version 0.60.1 (2023-08-23)
+
+### Bug fix
+
+- Fix crash on projects that had no version catalog.
+
+### New dependency notations:
+
+<details>
+<summary><strong>Click to expand (17) </strong></summary>
+- `Google.horologist.annotations`
+- `Google.horologist.auth.composables`
+- `Google.horologist.auth.data.phone`
+- `Google.horologist.auth.data.watchOAuth`
+- `Google.horologist.auth.data`
+- `Google.horologist.auth.ui`
+- `Google.horologist.compose.material`
+- `Google.horologist.dataLayer.grpc`
+- `Google.horologist.dataLayer.phone`
+- `Google.horologist.dataLayer.watch`
+- `Google.horologist.healthComposables`
+- `Google.horologist.media3.audioOffload`
+- `Google.horologist.media3.logging`
+- `Google.horologist.media3.outputSwitcher`
+- `Google.horologist.networkAwareness.db`
+- `Google.horologist.networkAwareness.okHttp`
+- `Google.horologist.networkAwareness.ui`
+</details>
+
 ## Version 0.60.0 (2023-08-17)
 
 ### Full configuration cache support for the `refreshVersions` task
