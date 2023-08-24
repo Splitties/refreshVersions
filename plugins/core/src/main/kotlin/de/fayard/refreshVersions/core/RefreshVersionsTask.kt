@@ -199,7 +199,7 @@ open class RefreshVersionsTask : DefaultTask() {
             logger.warn("Found ${dependenciesWithHardcodedVersions.count()} dependencies that might have hardcoded versions:")
             warnFor.forEach { logger.warn("- $it") }
             if (logger.isInfoEnabled.not()) {
-                logger.warn("- ${dependenciesWithHardcodedVersions.size - warnFor.size} more... (run with --info) to see them all)")
+                logger.warn("- ${dependenciesWithHardcodedVersions.size - warnFor.size} more... (run with --info to see them all)")
             }
             logger.warn("")
             logger.warn(
