@@ -152,7 +152,7 @@ fun askNewVersionInput(
     val nonSnapshotVersion = currentSnapshotVersion.removeSuffix("-SNAPSHOT")
     cliUi.printQuestion("Please enter the name of the new version you want to release,")
     cliUi.printQuestion("or leave blank to release version $nonSnapshotVersion:")
-    val input = readln().trimEnd().ifBlank { currentSnapshotVersion }
+    val input = readln().trimEnd().ifBlank { nonSnapshotVersion }
     input.checkIsValidVersionString()
     when {
         "-dev-" in input -> error("Dev versions not allowed")
