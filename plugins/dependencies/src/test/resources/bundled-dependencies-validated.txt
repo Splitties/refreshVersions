@@ -94,6 +94,8 @@ androidx.core:core-i18n
 androidx.core:core-ktx
 androidx.core:core-location-altitude
 androidx.core:core-performance
+androidx.core:core-performance-play-services
+androidx.core:core-performance-testing
 androidx.core:core-remoteviews
 androidx.core:core-role
 androidx.core:core-splashscreen
