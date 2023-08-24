@@ -47,27 +47,16 @@ internal fun checkArtifactPatternIsValid(artifactPattern: String) {
             i += wordPlaceholder.length
             continue@readLoop
         }
-        '(' -> {
-            val optionalSuffixMarker = "(-*)"
-            val indexOfOptionalSuffix = artifactPattern.indexOf(optionalSuffixMarker, startIndex = i)
-            checkOrReport(i == indexOfOptionalSuffix) {
-                val found = artifactPattern.substring(startIndex = i)
-                "Expected $optionalSuffixMarker but found $found"
-            }
-            checkOrReport(i + optionalSuffixMarker.length == artifactPattern.length) {
-                "The optional suffix $optionalSuffixMarker should be last in the artifact pattern."
-            }
-            return
+        '(', ')' -> {
+            i++
+            //TODO: Check all characters are valid (words, underscores, dashes, or dash & star)
         }
-        '*' -> { // The optionalSuffixMarker is checked before: (-*)
+        '*' -> {
             if (i == artifactPattern.lastIndex) return
-            checkOrReport(artifactPattern.indexOf("*:", startIndex = i) == i) {
-                "The following artifact pattern is invalid: $artifactPattern.\n" +
-                    "The asterisk character (*) can only appear at the end of the group " +
-                    "(before the column character (:)), at the end of the pattern, or in the optional " +
-                    "suffix marker (`(-*)`)."
+            i += when (i) {
+                artifactPattern.indexOf("*:", startIndex = i) -> 2
+                else -> 1
             }
-            i += 2
         }
         '.' -> {
             checkOrReport(i != artifactPattern.lastIndex) {

@@ -122,11 +122,11 @@ if (files.ongoingRelease.exists()) {
     with(OngoingRelease) {
         versionBeforeRelease = files.versions.bufferedReader().use { it.readLine() }.also {
             check(it.contains("-dev-") || it.endsWith("-SNAPSHOT")) {
-                "The current version needs to be a SNAPSHOT or a dev version, but we got: $it"
+                "The current version needs to be a SNAPSHOT version, but we got: $it"
             }
         }
         newVersion = askNewVersionInput(
-            currentVersion = versionBeforeRelease,
+            currentSnapshotVersion = versionBeforeRelease,
             tagPrefix = versionTagPrefix
         )
     }
@@ -145,12 +145,14 @@ fun extractChangelogForVersion(version: String): String = files.changelog.useLin
 fun String.urlEncode(charset: Charset = Charset.defaultCharset()): String = URLEncoder.encode(this, charset)
 
 fun askNewVersionInput(
-    currentVersion: String,
+    currentSnapshotVersion: String,
     tagPrefix: String
 ): String = cliUi.runUntilSuccessWithErrorPrintingOrCancel {
-    cliUi.printInfo("Current version: $currentVersion")
-    cliUi.printQuestion("Please enter the name of the new version you want to release:")
-    val input = readLine()?.trimEnd() ?: error("Empty input!")
+    cliUi.printInfo("Current version: $currentSnapshotVersion")
+    val nonSnapshotVersion = currentSnapshotVersion.removeSuffix("-SNAPSHOT")
+    cliUi.printQuestion("Please enter the name of the new version you want to release,")
+    cliUi.printQuestion("or leave blank to release version $nonSnapshotVersion:")
+    val input = readln().trimEnd().ifBlank { nonSnapshotVersion }
     input.checkIsValidVersionString()
     when {
         "-dev-" in input -> error("Dev versions not allowed")

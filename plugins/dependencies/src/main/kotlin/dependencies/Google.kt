@@ -263,11 +263,20 @@ object Google : IsNotADependency {
             val composeThemeAdapter3 = module("compose-theme-adapter-3")
         }
 
+        /**
+         * [Overview of the Google Play Core libraries](https://developer.android.com/guide/playcore)
+         */
         val play = Play
 
         object Play : DependencyGroup(group = "com.google.android.play") {
-            val core = module("core")
-            val coreKtx = module("core-ktx")
+            val appUpdate = module("app-update")
+            val appUpdateKtx = module("app-update-ktx")
+            val assetDelivery = module("asset-delivery")
+            val assetDeliveryKtx = module("asset-delivery-ktx")
+            val featureDelivery = module("feature-delivery")
+            val featureDeliveryKtx = module("feature-delivery-ktx")
+            val review = module("review")
+            val reviewKtx = module("review-ktx")
         }
 
         val playServices = PlayServices
@@ -734,7 +743,7 @@ object Google : IsNotADependency {
      * by developers but not yet available.
      *
      * - [Official website here](https://google.github.io/horologist/)
-     * - GitHub page: https://github.com/google/horologist
+     * - GitHub page: [google/horologist](https://github.com/google/horologist)
      */
     object Horologist : DependencyGroup(
         group = "com.google.android.horologist",
@@ -743,10 +752,28 @@ object Google : IsNotADependency {
                 ^^^^^^^        ^^^^^^^^^^
         """.trimIndent()
     ) {
+
+        val annotations = module("horologist-annotations")
+
         val audio = Audio
 
         object Audio : DependencyNotationAndGroup(group = "com.google.android.horologist", name = "horologist-audio") {
             val ui = module("horologist-audio-ui")
+        }
+
+        val auth = Auth
+
+        object Auth : IsNotADependency {
+            val composables = module("horologist-auth-composables")
+            val ui = module("horologist-auth-ui")
+            val data = Data
+            object Data : DependencyNotationAndGroup(
+                group = group,
+                name = "horologist-auth-data"
+            ) {
+                val phone = module("horologist-auth-data-phone")
+                val watchOAuth = module("horologist-auth-data-watch-oauth")
+            }
         }
 
         val composables = module("horologist-composables")
@@ -755,10 +782,22 @@ object Google : IsNotADependency {
 
         object Compose : IsNotADependency {
             val layout = module("horologist-compose-layout")
+            val material = module("horologist-compose-material")
             val tools = module("horologist-compose-tools")
         }
 
-        val dataLayer = module("horologist-datalayer")
+        val dataLayer = DataLayer
+
+        object DataLayer : DependencyNotationAndGroup(
+            group = group,
+            name = "horologist-datalayer"
+        ) {
+            val watch = module("horologist-datalayer-watch")
+            val phone = module("horologist-datalayer-phone")
+            val grpc = module("horologist-datalayer-grpc")
+        }
+
+        val healthComposables = module("horologist-health-composables")
 
         val media = Media
 
@@ -771,9 +810,21 @@ object Google : IsNotADependency {
 
         object Media3 : IsNotADependency {
             val backend = module("horologist-media3-backend")
+            val logging = module("horologist-media3-logging")
+            val outputSwitcher = module("horologist-media3-outputswitcher")
+            val audioOffload = module("horologist-media3-audiooffload")
         }
 
-        val networkAwareness = module("horologist-network-awareness")
+        val networkAwareness = NetworkAwareness
+
+        object NetworkAwareness : DependencyNotationAndGroup(
+            group = group,
+            name = "horologist-network-awareness"
+        ) {
+            val ui = module("horologist-network-awareness-ui")
+            val okHttp = module("horologist-network-awareness-okhttp")
+            val db = module("horologist-network-awareness-db")
+        }
 
         val tiles = module("horologist-tiles")
 

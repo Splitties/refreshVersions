@@ -129,8 +129,7 @@ open class RefreshVersionsTask : DefaultTask() {
             if (versionPropertiesUpdated) OutputFile.VERSIONS_PROPERTIES.logFileWasModified()
 
             if (shouldUpdateVersionCatalogs) {
-                val libsToml = defaultVersionCatalogFile!!
-                if (libsToml.canRead()) {
+                defaultVersionCatalogFile?.let { libsToml ->
                     val updated = VersionsCatalogUpdater(
                         file = libsToml,
                         dependenciesUpdates = result.dependenciesUpdatesForVersionCatalog
@@ -200,7 +199,7 @@ open class RefreshVersionsTask : DefaultTask() {
             logger.warn("Found ${dependenciesWithHardcodedVersions.count()} dependencies that might have hardcoded versions:")
             warnFor.forEach { logger.warn("- $it") }
             if (logger.isInfoEnabled.not()) {
-                logger.warn("- ${dependenciesWithHardcodedVersions.size - warnFor.size} more... (run with --info) to see them all)")
+                logger.warn("- ${dependenciesWithHardcodedVersions.size - warnFor.size} more... (run with --info to see them all)")
             }
             logger.warn("")
             logger.warn(

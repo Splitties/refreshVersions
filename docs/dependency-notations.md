@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/Splitties/refreshVersions) provides **1236** Dependency Notations in **26** groups and **263** subgroups
+[**refreshVersions**](https://github.com/Splitties/refreshVersions) provides **1259** Dependency Notations in **26** groups and **267** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -3411,15 +3411,51 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     <tr><td><b>Google.android.play</b></td><td>
         <span
-            title="Google.android.play.coreKtx&#10;com.google.android.play:core-ktx:_&#10;version.NO-RULE"
+            title="Google.android.play.appUpdateKtx&#10;com.google.android.play:app-update-ktx:_&#10;version.google.play.app-update"
             style="text-decoration: underline;">
-            coreKtx
+            appUpdateKtx
         </span>
         - 
         <span
-            title="Google.android.play.core&#10;com.google.android.play:core:_&#10;version.NO-RULE"
+            title="Google.android.play.appUpdate&#10;com.google.android.play:app-update:_&#10;version.google.play.app-update"
             style="text-decoration: underline;">
-            core
+            appUpdate
+        </span>
+        - 
+        <span
+            title="Google.android.play.assetDeliveryKtx&#10;com.google.android.play:asset-delivery-ktx:_&#10;version.google.play.asset-delivery"
+            style="text-decoration: underline;">
+            assetDeliveryKtx
+        </span>
+        - 
+        <span
+            title="Google.android.play.assetDelivery&#10;com.google.android.play:asset-delivery:_&#10;version.google.play.asset-delivery"
+            style="text-decoration: underline;">
+            assetDelivery
+        </span>
+        - 
+        <span
+            title="Google.android.play.featureDeliveryKtx&#10;com.google.android.play:feature-delivery-ktx:_&#10;version.google.play.feature-delivery"
+            style="text-decoration: underline;">
+            featureDeliveryKtx
+        </span>
+        - 
+        <span
+            title="Google.android.play.featureDelivery&#10;com.google.android.play:feature-delivery:_&#10;version.google.play.feature-delivery"
+            style="text-decoration: underline;">
+            featureDelivery
+        </span>
+        - 
+        <span
+            title="Google.android.play.reviewKtx&#10;com.google.android.play:review-ktx:_&#10;version.google.play.review"
+            style="text-decoration: underline;">
+            reviewKtx
+        </span>
+        - 
+        <span
+            title="Google.android.play.review&#10;com.google.android.play:review:_&#10;version.google.play.review"
+            style="text-decoration: underline;">
+            review
         </span>
             
     </td></tr>
@@ -4167,6 +4203,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     <tr><td><b>Google.horologist</b></td><td>
         <span
+            title="Google.horologist.annotations&#10;com.google.android.horologist:horologist-annotations:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            annotations
+        </span>
+        - 
+        <span
             title="Google.horologist.audio&#10;com.google.android.horologist:horologist-audio:_&#10;version.google.horologist"
             style="text-decoration: underline;">
             audio
@@ -4182,6 +4224,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="Google.horologist.dataLayer&#10;com.google.android.horologist:horologist-datalayer:_&#10;version.google.horologist"
             style="text-decoration: underline;">
             dataLayer
+        </span>
+        - 
+        <span
+            title="Google.horologist.healthComposables&#10;com.google.android.horologist:horologist-health-composables:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            healthComposables
         </span>
         - 
         <span
@@ -4213,6 +4261,42 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     </td></tr>
             
+    <tr><td><b>Google.horologist.auth</b></td><td>
+        <span
+            title="Google.horologist.auth.composables&#10;com.google.android.horologist:horologist-auth-composables:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            composables
+        </span>
+        - 
+        <span
+            title="Google.horologist.auth.data&#10;com.google.android.horologist:horologist-auth-data:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            data
+        </span>
+        - 
+        <span
+            title="Google.horologist.auth.ui&#10;com.google.android.horologist:horologist-auth-ui:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            ui
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>Google.horologist.auth.data</b></td><td>
+        <span
+            title="Google.horologist.auth.data.phone&#10;com.google.android.horologist:horologist-auth-data-phone:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            phone
+        </span>
+        - 
+        <span
+            title="Google.horologist.auth.data.watchOAuth&#10;com.google.android.horologist:horologist-auth-data-watch-oauth:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            watchOAuth
+        </span>
+            
+    </td></tr>
+            
     <tr><td><b>Google.horologist.compose</b></td><td>
         <span
             title="Google.horologist.compose.layout&#10;com.google.android.horologist:horologist-compose-layout:_&#10;version.google.horologist"
@@ -4221,9 +4305,36 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
+            title="Google.horologist.compose.material&#10;com.google.android.horologist:horologist-compose-material:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            material
+        </span>
+        - 
+        <span
             title="Google.horologist.compose.tools&#10;com.google.android.horologist:horologist-compose-tools:_&#10;version.google.horologist"
             style="text-decoration: underline;">
             tools
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>Google.horologist.dataLayer</b></td><td>
+        <span
+            title="Google.horologist.dataLayer.grpc&#10;com.google.android.horologist:horologist-datalayer-grpc:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            grpc
+        </span>
+        - 
+        <span
+            title="Google.horologist.dataLayer.phone&#10;com.google.android.horologist:horologist-datalayer-phone:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            phone
+        </span>
+        - 
+        <span
+            title="Google.horologist.dataLayer.watch&#10;com.google.android.horologist:horologist-datalayer-watch:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            watch
         </span>
             
     </td></tr>
@@ -4245,9 +4356,48 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     <tr><td><b>Google.horologist.media3</b></td><td>
         <span
+            title="Google.horologist.media3.audioOffload&#10;com.google.android.horologist:horologist-media3-audiooffload:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            audioOffload
+        </span>
+        - 
+        <span
             title="Google.horologist.media3.backend&#10;com.google.android.horologist:horologist-media3-backend:_&#10;version.google.horologist"
             style="text-decoration: underline;">
             backend
+        </span>
+        - 
+        <span
+            title="Google.horologist.media3.logging&#10;com.google.android.horologist:horologist-media3-logging:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            logging
+        </span>
+        - 
+        <span
+            title="Google.horologist.media3.outputSwitcher&#10;com.google.android.horologist:horologist-media3-outputswitcher:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            outputSwitcher
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>Google.horologist.networkAwareness</b></td><td>
+        <span
+            title="Google.horologist.networkAwareness.db&#10;com.google.android.horologist:horologist-network-awareness-db:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            db
+        </span>
+        - 
+        <span
+            title="Google.horologist.networkAwareness.okHttp&#10;com.google.android.horologist:horologist-network-awareness-okhttp:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            okHttp
+        </span>
+        - 
+        <span
+            title="Google.horologist.networkAwareness.ui&#10;com.google.android.horologist:horologist-network-awareness-ui:_&#10;version.google.horologist"
+            style="text-decoration: underline;">
+            ui
         </span>
             
     </td></tr>

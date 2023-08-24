@@ -729,3 +729,21 @@ id:[com.google.android.gms:play-services-safetynet]
 
 ~~Google.android.playServices.tagmanager~~
 id:[com.google.android.gms:play-services-tagmanager]
+
+## Revision 17
+
+~~Google.android.play.coreKtx~~
+// The Play Core library got partitioned/split into multiple per-feature libraries.
+//FIXME: Migrate to the right Play Library
+// There are new Google.android.play.*** dependency notations,
+// but make sure to read the migration guide before:
+// https://developer.android.com/guide/playcore#playcore-migration
+id:[com.google.android.play:core-ktx]
+
+~~Google.android.play.core~~
+// The Play Core library got partitioned/split into multiple per-feature libraries.
+//FIXME: Migrate to the right Play Library
+// There are new Google.android.play.*** dependency notations,
+// but make sure to read the migration guide before:
+// https://developer.android.com/guide/playcore#playcore-migration
+id:[com.google.android.play:core]
