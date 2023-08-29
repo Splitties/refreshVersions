@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/Splitties/refreshVersions) provides **1259** Dependency Notations in **26** groups and **267** subgroups
+[**refreshVersions**](https://github.com/Splitties/refreshVersions) provides **1254** Dependency Notations in **26** groups and **263** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -1015,6 +1015,21 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.core.uwb&#10;androidx.core.uwb:uwb:_&#10;version.androidx.core.uwb"
             style="text-decoration: underline;">
             uwb
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>AndroidX.core.performance</b></td><td>
+        <span
+            title="AndroidX.core.performance.playServices&#10;androidx.core:core-performance-play-services:_&#10;version.androidx.core-performance"
+            style="text-decoration: underline;">
+            playServices
+        </span>
+        - 
+        <span
+            title="AndroidX.core.performance.testing&#10;androidx.core:core-performance-testing:_&#10;version.androidx.core-performance"
+            style="text-decoration: underline;">
+            testing
         </span>
             
     </td></tr>
@@ -2808,73 +2823,94 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     <tr><td><b>CashApp.sqlDelight</b></td><td>
         <span
-            title="CashApp.sqlDelight.gradlePlugin&#10;com.squareup.sqldelight:gradle-plugin:_&#10;version.sqldelight"
+            title="CashApp.sqlDelight.gradlePlugin&#10;app.cash.sqldelight:gradle-plugin:_&#10;version.app.cash.sqldelight"
             style="text-decoration: underline;">
             gradlePlugin
         </span>
             
     </td></tr>
             
+    <tr><td><b>CashApp.sqlDelight.dialects</b></td><td>
+        <span
+            title="CashApp.sqlDelight.dialects.hSql&#10;app.cash.sqldelight:hsql-dialect:_&#10;version.app.cash.sqldelight"
+            style="text-decoration: underline;">
+            hSql
+        </span>
+        - 
+        <span
+            title="CashApp.sqlDelight.dialects.mySql&#10;app.cash.sqldelight:mysql-dialect:_&#10;version.app.cash.sqldelight"
+            style="text-decoration: underline;">
+            mySql
+        </span>
+        - 
+        <span
+            title="CashApp.sqlDelight.dialects.postgreSql&#10;app.cash.sqldelight:postgresql-dialect:_&#10;version.app.cash.sqldelight"
+            style="text-decoration: underline;">
+            postgreSql
+        </span>
+            
+    </td></tr>
+            
     <tr><td><b>CashApp.sqlDelight.drivers</b></td><td>
         <span
-            title="CashApp.sqlDelight.drivers.android&#10;com.squareup.sqldelight:android-driver:_&#10;version.sqldelight"
+            title="CashApp.sqlDelight.drivers.android&#10;app.cash.sqldelight:android-driver:_&#10;version.app.cash.sqldelight"
             style="text-decoration: underline;">
             android
         </span>
         - 
         <span
-            title="CashApp.sqlDelight.drivers.jdbc&#10;com.squareup.sqldelight:jdbc-driver:_&#10;version.sqldelight"
+            title="CashApp.sqlDelight.drivers.jdbc&#10;app.cash.sqldelight:jdbc-driver:_&#10;version.app.cash.sqldelight"
             style="text-decoration: underline;">
             jdbc
         </span>
         - 
         <span
-            title="CashApp.sqlDelight.drivers.native&#10;com.squareup.sqldelight:native-driver:_&#10;version.sqldelight"
+            title="CashApp.sqlDelight.drivers.native&#10;app.cash.sqldelight:native-driver:_&#10;version.app.cash.sqldelight"
             style="text-decoration: underline;">
             native
         </span>
         - 
         <span
-            title="CashApp.sqlDelight.drivers.jdbcSqlite&#10;com.squareup.sqldelight:sqlite-driver:_&#10;version.sqldelight"
+            title="CashApp.sqlDelight.drivers.jdbcSqlite&#10;app.cash.sqldelight:sqlite-driver:_&#10;version.app.cash.sqldelight"
             style="text-decoration: underline;">
             jdbcSqlite
         </span>
         - 
         <span
-            title="CashApp.sqlDelight.drivers.sqlJs&#10;com.squareup.sqldelight:sqljs-driver:_&#10;version.sqldelight"
+            title="CashApp.sqlDelight.drivers.sqlJs&#10;app.cash.sqldelight:sqljs-driver:_&#10;version.app.cash.sqldelight"
             style="text-decoration: underline;">
             sqlJs
+        </span>
+        - 
+        <span
+            title="CashApp.sqlDelight.drivers.webWorker&#10;app.cash.sqldelight:web-worker-driver:_&#10;version.app.cash.sqldelight"
+            style="text-decoration: underline;">
+            webWorker
         </span>
             
     </td></tr>
             
     <tr><td><b>CashApp.sqlDelight.extensions</b></td><td>
         <span
-            title="CashApp.sqlDelight.extensions.androidPaging&#10;com.squareup.sqldelight:android-paging-extensions:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            androidPaging
-        </span>
-        - 
-        <span
-            title="CashApp.sqlDelight.extensions.androidPaging3&#10;com.squareup.sqldelight:android-paging3-extensions:_&#10;version.sqldelight"
+            title="CashApp.sqlDelight.extensions.androidPaging3&#10;app.cash.sqldelight:android-paging3-extensions:_&#10;version.app.cash.sqldelight"
             style="text-decoration: underline;">
             androidPaging3
         </span>
         - 
         <span
-            title="CashApp.sqlDelight.extensions.coroutines&#10;com.squareup.sqldelight:coroutines-extensions:_&#10;version.sqldelight"
+            title="CashApp.sqlDelight.extensions.coroutines&#10;app.cash.sqldelight:coroutines-extensions:_&#10;version.app.cash.sqldelight"
             style="text-decoration: underline;">
             coroutines
         </span>
         - 
         <span
-            title="CashApp.sqlDelight.extensions.rxJava2&#10;com.squareup.sqldelight:rxjava2-extensions:_&#10;version.sqldelight"
+            title="CashApp.sqlDelight.extensions.rxJava2&#10;app.cash.sqldelight:rxjava2-extensions:_&#10;version.app.cash.sqldelight"
             style="text-decoration: underline;">
             rxJava2
         </span>
         - 
         <span
-            title="CashApp.sqlDelight.extensions.rxJava3&#10;com.squareup.sqldelight:rxjava3-extensions:_&#10;version.sqldelight"
+            title="CashApp.sqlDelight.extensions.rxJava3&#10;app.cash.sqldelight:rxjava3-extensions:_&#10;version.app.cash.sqldelight"
             style="text-decoration: underline;">
             rxJava3
         </span>
@@ -3162,9 +3198,9 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     <tr><td><b>Google.accompanist</b></td><td>
         <span
-            title="Google.accompanist.appCompatTheme&#10;com.google.accompanist:accompanist-appcompat-theme:_&#10;version.google.accompanist"
+            title="Google.accompanist.adaptive&#10;com.google.accompanist:accompanist-adaptive:_&#10;version.google.accompanist"
             style="text-decoration: underline;">
-            appCompatTheme
+            adaptive
         </span>
         - 
         <span
@@ -3174,33 +3210,9 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
-            title="Google.accompanist.flowLayout&#10;com.google.accompanist:accompanist-flowlayout:_&#10;version.google.accompanist"
-            style="text-decoration: underline;">
-            flowLayout
-        </span>
-        - 
-        <span
-            title="Google.accompanist.insets&#10;com.google.accompanist:accompanist-insets:_&#10;version.google.accompanist"
-            style="text-decoration: underline;">
-            insets
-        </span>
-        - 
-        <span
-            title="Google.accompanist.navigationAnimation&#10;com.google.accompanist:accompanist-navigation-animation:_&#10;version.google.accompanist"
-            style="text-decoration: underline;">
-            navigationAnimation
-        </span>
-        - 
-        <span
             title="Google.accompanist.navigationMaterial&#10;com.google.accompanist:accompanist-navigation-material:_&#10;version.google.accompanist"
             style="text-decoration: underline;">
             navigationMaterial
-        </span>
-        - 
-        <span
-            title="Google.accompanist.pager&#10;com.google.accompanist:accompanist-pager:_&#10;version.google.accompanist"
-            style="text-decoration: underline;">
-            pager
         </span>
         - 
         <span
@@ -3210,54 +3222,9 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
         </span>
         - 
         <span
-            title="Google.accompanist.placeholder&#10;com.google.accompanist:accompanist-placeholder:_&#10;version.google.accompanist"
+            title="Google.accompanist.testHarness&#10;com.google.accompanist:accompanist-testharness:_&#10;version.google.accompanist"
             style="text-decoration: underline;">
-            placeholder
-        </span>
-        - 
-        <span
-            title="Google.accompanist.swipeRefresh&#10;com.google.accompanist:accompanist-swiperefresh:_&#10;version.google.accompanist"
-            style="text-decoration: underline;">
-            swipeRefresh
-        </span>
-        - 
-        <span
-            title="Google.accompanist.systemUiController&#10;com.google.accompanist:accompanist-systemuicontroller:_&#10;version.google.accompanist"
-            style="text-decoration: underline;">
-            systemUiController
-        </span>
-        - 
-        <span
-            title="Google.accompanist.webView&#10;com.google.accompanist:accompanist-webview:_&#10;version.google.accompanist"
-            style="text-decoration: underline;">
-            webView
-        </span>
-            
-    </td></tr>
-            
-    <tr><td><b>Google.accompanist.insets</b></td><td>
-        <span
-            title="Google.accompanist.insets.ui&#10;com.google.accompanist:accompanist-insets-ui:_&#10;version.google.accompanist"
-            style="text-decoration: underline;">
-            ui
-        </span>
-            
-    </td></tr>
-            
-    <tr><td><b>Google.accompanist.pager</b></td><td>
-        <span
-            title="Google.accompanist.pager.indicators&#10;com.google.accompanist:accompanist-pager-indicators:_&#10;version.google.accompanist"
-            style="text-decoration: underline;">
-            indicators
-        </span>
-            
-    </td></tr>
-            
-    <tr><td><b>Google.accompanist.placeholder</b></td><td>
-        <span
-            title="Google.accompanist.placeholder.material&#10;com.google.accompanist:accompanist-placeholder-material:_&#10;version.google.accompanist"
-            style="text-decoration: underline;">
-            material
+            testHarness
         </span>
             
     </td></tr>
@@ -8739,81 +8706,6 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="Square.retrofit2.converter.wire&#10;com.squareup.retrofit2:converter-wire:_&#10;version.retrofit2"
             style="text-decoration: underline;">
             wire
-        </span>
-            
-    </td></tr>
-            
-    <tr><td><b>Square.sqlDelight</b></td><td>
-        <span
-            title="Square.sqlDelight.gradlePlugin&#10;com.squareup.sqldelight:gradle-plugin:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            gradlePlugin
-        </span>
-            
-    </td></tr>
-            
-    <tr><td><b>Square.sqlDelight.drivers</b></td><td>
-        <span
-            title="Square.sqlDelight.drivers.android&#10;com.squareup.sqldelight:android-driver:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            android
-        </span>
-        - 
-        <span
-            title="Square.sqlDelight.drivers.jdbc&#10;com.squareup.sqldelight:jdbc-driver:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            jdbc
-        </span>
-        - 
-        <span
-            title="Square.sqlDelight.drivers.native&#10;com.squareup.sqldelight:native-driver:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            native
-        </span>
-        - 
-        <span
-            title="Square.sqlDelight.drivers.jdbcSqlite&#10;com.squareup.sqldelight:sqlite-driver:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            jdbcSqlite
-        </span>
-        - 
-        <span
-            title="Square.sqlDelight.drivers.sqlJs&#10;com.squareup.sqldelight:sqljs-driver:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            sqlJs
-        </span>
-            
-    </td></tr>
-            
-    <tr><td><b>Square.sqlDelight.extensions</b></td><td>
-        <span
-            title="Square.sqlDelight.extensions.androidPaging&#10;com.squareup.sqldelight:android-paging-extensions:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            androidPaging
-        </span>
-        - 
-        <span
-            title="Square.sqlDelight.extensions.androidPaging3&#10;com.squareup.sqldelight:android-paging3-extensions:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            androidPaging3
-        </span>
-        - 
-        <span
-            title="Square.sqlDelight.extensions.coroutines&#10;com.squareup.sqldelight:coroutines-extensions:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            coroutines
-        </span>
-        - 
-        <span
-            title="Square.sqlDelight.extensions.rxJava2&#10;com.squareup.sqldelight:rxjava2-extensions:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            rxJava2
-        </span>
-        - 
-        <span
-            title="Square.sqlDelight.extensions.rxJava3&#10;com.squareup.sqldelight:rxjava3-extensions:_&#10;version.sqldelight"
-            style="text-decoration: underline;">
-            rxJava3
         </span>
             
     </td></tr>

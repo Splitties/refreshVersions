@@ -52,7 +52,8 @@ internal fun Dependency.versionManagementKind(
 ): VersionManagementKind = when {
     this in dependenciesFromVersionFor -> Match.VersionsFile.UsedInVersionFor
     version == versionPlaceholder -> Match.VersionsFile.VersionPlaceholder
-    this is ExternalDependency && versionPlaceholder in this.versionConstraint.rejectedVersions -> {
+    this is ConfigurationLessDependency && versionPlaceholder in (this.versionConstraint?.rejectedVersions
+        ?: emptyList()) -> {
         Match.VersionsFile.VersionPlaceholder
     }
     name.endsWith(".gradle.plugin") -> {

@@ -747,3 +747,229 @@ id:[com.google.android.play:core-ktx]
 // but make sure to read the migration guide before:
 // https://developer.android.com/guide/playcore#playcore-migration
 id:[com.google.android.play:core]
+
+## Revision 18
+
+~~CashApp.sqlDelight.drivers.android~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-driver]
+id:[com.squareup.sqldelight:android-driver]
+
+~~Square.sqlDelight.drivers.android~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-driver]
+id:[com.squareup.sqldelight:android-driver]
+
+~~CashApp.sqlDelight.extensions.androidPaging~~
+//FIXME: Migrate to Paging 3 and to SqlDelight 2.0
+// See Migrate to Paging 3 guide: https://developer.android.com/topic/libraries/architecture/paging/v3-migration
+// See SqlDelight Upgrading to 2.0 guide: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-paging3-extensions]
+id:[com.squareup.sqldelight:android-paging-extensions]
+
+~~Square.sqlDelight.extensions.androidPaging~~
+//FIXME: Migrate to Paging 3 and to SqlDelight 2.0
+// See Migrate to Paging 3 guide: https://developer.android.com/topic/libraries/architecture/paging/v3-migration
+// See SqlDelight Upgrading to 2.0 guide: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-paging3-extensions]
+id:[com.squareup.sqldelight:android-paging-extensions]
+
+~~CashApp.sqlDelight.extensions.androidPaging3~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-paging3-extensions]
+id:[com.squareup.sqldelight:android-paging3-extensions]
+
+~~Square.sqlDelight.extensions.androidPaging3~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-paging3-extensions]
+id:[com.squareup.sqldelight:android-paging3-extensions]
+
+~~CashApp.sqlDelight.extensions.coroutines~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:coroutines-extensions]
+id:[com.squareup.sqldelight:coroutines-extensions]
+
+~~Square.sqlDelight.extensions.coroutines~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:coroutines-extensions]
+id:[com.squareup.sqldelight:coroutines-extensions]
+
+~~CashApp.sqlDelight.gradlePlugin~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:gradle-plugin]
+id:[com.squareup.sqldelight:gradle-plugin]
+
+~~Square.sqlDelight.gradlePlugin~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:gradle-plugin]
+id:[com.squareup.sqldelight:gradle-plugin]
+
+~~CashApp.sqlDelight.drivers.jdbc~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:jdbc-driver]
+id:[com.squareup.sqldelight:jdbc-driver]
+
+~~Square.sqlDelight.drivers.jdbc~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:jdbc-driver]
+id:[com.squareup.sqldelight:jdbc-driver]
+
+~~CashApp.sqlDelight.drivers.native~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:native-driver]
+id:[com.squareup.sqldelight:native-driver]
+
+~~Square.sqlDelight.drivers.native~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:native-driver]
+id:[com.squareup.sqldelight:native-driver]
+
+~~CashApp.sqlDelight.extensions.rxJava2~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:rxjava2-extensions]
+id:[com.squareup.sqldelight:rxjava2-extensions]
+
+~~Square.sqlDelight.extensions.rxJava2~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:rxjava2-extensions]
+id:[com.squareup.sqldelight:rxjava2-extensions]
+
+~~CashApp.sqlDelight.extensions.rxJava3~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:rxjava3-extensions]
+id:[com.squareup.sqldelight:rxjava3-extensions]
+
+~~Square.sqlDelight.extensions.rxJava3~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:rxjava3-extensions]
+id:[com.squareup.sqldelight:rxjava3-extensions]
+
+~~CashApp.sqlDelight.drivers.jdbcSqlite~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:sqlite-driver]
+id:[com.squareup.sqldelight:sqlite-driver]
+
+~~Square.sqlDelight.drivers.jdbcSqlite~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:sqlite-driver]
+id:[com.squareup.sqldelight:sqlite-driver]
+
+~~CashApp.sqlDelight.drivers.sqlJs~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:sqljs-driver]
+id:[com.squareup.sqldelight:sqljs-driver]
+
+~~Square.sqlDelight.drivers.sqlJs~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:sqljs-driver]
+id:[com.squareup.sqldelight:sqljs-driver]
+
+## Revision 19
+
+~~Google.accompanist.appCompatTheme~~
+// This library has been deprecated, and ITS REPLACEMENT HAS BEEN DEPRECATED AS WELL.
+//TODO: Migrate to the replacement using the following guide:
+// https://google.github.io/accompanist/appcompat-theme/
+// or completely migrate away using the following guide:
+// https://google.github.io/accompanist/themeadapter-appcompat/
+moved:[com.google.accompanist:accompanist-themeadapter-appcompat]
+id:[com.google.accompanist:accompanist-appcompat-theme]
+
+~~Google.accompanist.flowLayout~~
+// Deprecated because FlowLayout is now directly in androidx.navigation.compose.
+//FIXME: Migrate using the following guide:
+// https://google.github.io/accompanist/flowlayout/
+id:[com.google.accompanist:accompanist-flowlayout]
+
+~~Google.accompanist.insets.ui~~
+// Deprecated because insets APIs are now directly in androidx.navigation.compose.
+//FIXME: Migrate using the following guide:
+// https://google.github.io/accompanist/insets/
+id:[com.google.accompanist:accompanist-insets-ui]
+
+~~Google.accompanist.insets~~
+// Deprecated because insets APIs are now directly in androidx.navigation.compose.
+//FIXME: Migrate using the following guide:
+// https://google.github.io/accompanist/insets/
+id:[com.google.accompanist:accompanist-insets]
+
+~~Google.accompanist.navigationAnimation~~
+// Deprecated because animations are now directly in androidx.navigation.compose.
+//FIXME: Migrate using the following guide:
+// https://google.github.io/accompanist/navigation-animation/
+moved:[androidx.navigation:navigation-compose]
+id:[com.google.accompanist:accompanist-navigation-animation]
+
+~~Google.accompanist.pager.indicators~~
+// Deprecated because Pager is now directly into androidx.compose.foundation.
+//FIXME: Migrate using the following guide:
+// https://google.github.io/accompanist/pager/
+id:[com.google.accompanist:accompanist-pager-indicators]
+
+~~Google.accompanist.pager~~
+// Deprecated because Pager is now directly into androidx.compose.foundation.
+//FIXME: Migrate using the following guide:
+// https://google.github.io/accompanist/pager/
+id:[com.google.accompanist:accompanist-pager]
+
+~~Google.accompanist.placeholder.material~~
+// This library was deprecated with no replacement, as you can see here:
+// https://google.github.io/accompanist/placeholder/
+// You can keep using it while it's compatible,
+// copy its code from https://github.com/google/accompanist/tree/v0.31.5-beta/placeholder-material,
+// or from https://github.com/google/accompanist/tree/v0.31.5-beta/placeholder-material3,
+// or you can look for an equivalent library from the community.
+//TODO: Decide and act on a migration strategy.
+id:[com.google.accompanist:accompanist-placeholder-material]
+
+~~Google.accompanist.placeholder~~
+// This library was deprecated with no replacement, as you can see here:
+// https://google.github.io/accompanist/placeholder/
+// You can keep using it while it's compatible,
+// copy its code from https://github.com/google/accompanist/tree/v0.31.5-beta/placeholder,
+// or from https://github.com/google/accompanist/tree/v0.31.5-beta/placeholder-material3,
+// or you can look for an equivalent library from the community.
+//TODO: Decide and act on a migration strategy.
+id:[com.google.accompanist:accompanist-placeholder]
+
+~~Google.accompanist.swipeRefresh~~
+// Deprecated because Swipe Refresh is now right into androidx.compose.material.
+// Note that it's not in Material3 at the moment.
+//FIXME: Migrate using the following guide:
+// https://google.github.io/accompanist/swiperefresh/
+id:[com.google.accompanist:accompanist-swiperefresh]
+
+~~Google.accompanist.systemUiController~~
+// Deprecated in favor of Activity.enableEdgeToEdge from androidx.activity 1.8+
+//FIXME: See the example PR in the migration guide here:
+// https://google.github.io/accompanist/systemuicontroller/
+id:[com.google.accompanist:accompanist-systemuicontroller]
+
+~~Google.accompanist.webView~~
+// This library was deprecated with no replacement, as you can see here:
+// https://google.github.io/accompanist/web/
+// You can keep using it while it's compatible,
+// copy its code from https://github.com/google/accompanist/tree/v0.32.0/web,
+// or you can look for an equivalent library from the community.
+//TODO: Decide and act on a migration strategy.
+id:[com.google.accompanist:accompanist-webview]

@@ -1135,7 +1135,15 @@ object AndroidX : IsNotADependency {
          * ### API reference:
          * - [androidx.core.performance](https://developer.android.com/reference/kotlin/androidx/core/performance/package-summary)
          */
-        val performance = module("core-performance")
+        val performance = Performance
+
+        object Performance : DependencyNotationAndGroup(
+            group = group,
+            name = "core-performance"
+        ) {
+            val playServices = module("core-performance-play-services")
+            val testing = module("core-performance-testing")
+        }
 
         /**
          * This library provides the compatibility APIs for SplashScreen and helper method to enable a

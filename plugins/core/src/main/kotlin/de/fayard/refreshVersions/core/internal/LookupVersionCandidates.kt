@@ -13,10 +13,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import okhttp3.OkHttpClient
-import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.artifacts.repositories.ArtifactRepository
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
@@ -89,8 +87,8 @@ internal suspend fun lookupVersionCandidates(
                     // null version means it's expected to be added by a BoM or a plugin, so we ignore them.
                     dependenciesWithHardcodedVersions.add(dependency)
                 }
-                if (dependency is ExternalDependency &&
-                    dependency.versionConstraint.hasDynamicVersion()
+                if (dependency is ConfigurationLessDependency &&
+                    dependency.versionConstraint?.hasDynamicVersion() == true
                 ) {
                     dependenciesWithDynamicVersions.add(dependency)
                 }

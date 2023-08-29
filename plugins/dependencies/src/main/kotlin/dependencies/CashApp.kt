@@ -2,6 +2,7 @@
 
 import de.fayard.refreshVersions.core.DependencyGroup
 import de.fayard.refreshVersions.core.DependencyNotation
+import org.gradle.kotlin.dsl.IsNotADependency
 
 object CashApp {
 
@@ -23,7 +24,42 @@ object CashApp {
      *
      * GitHub page: [cashapp/sqldelight](https://github.com/cashapp/sqldelight)
      */
-    val sqlDelight = Square.sqlDelight
+    val sqlDelight = SqlDelight
+
+    object SqlDelight : DependencyGroup("app.cash.sqldelight") {
+
+        val gradlePlugin = module("gradle-plugin")
+
+        val extensions = Extensions
+
+        object Extensions : IsNotADependency {
+            val coroutines = module("coroutines-extensions")
+            val androidPaging3 = module("android-paging3-extensions")
+            val rxJava3 = module("rxjava3-extensions")
+            val rxJava2 = module("rxjava2-extensions")
+        }
+
+        val drivers = Drivers
+
+        object Drivers : IsNotADependency {
+            val android = module("android-driver")
+            val sqlJs = module("sqljs-driver")
+            val webWorker = module("web-worker-driver")
+
+            val jdbc = module("jdbc-driver")
+            val jdbcSqlite = module("sqlite-driver")
+
+            val native = module("native-driver")
+        }
+
+        val dialects = Dialects
+
+        object Dialects : IsNotADependency {
+            val mySql = module("mysql-dialect")
+            val postgreSql = module("postgresql-dialect")
+            val hSql = module("hsql-dialect")
+        }
+    }
 
     /**
      * Turbine is a small testing library for kotlinx.coroutines [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/).

@@ -1,5 +1,43 @@
 # Change log for refreshVersions
 
+## Version 0.60.2 (2023-08-29)
+
+### Bug fix
+
+Some version keys were wrongly marked as unused following version 0.60.0. That's now fixed.
+Thanks to the reporters and people that helped in reproducing the issue!
+
+### Removed dependency notations
+
+Several Accompanist libraries were deprecated following [this announcement](https://medium.com/androiddevelopers/an-update-on-jetpack-compose-accompanist-libraries-august-2023-ac4cbbf059f1).
+As a result, we updated removed them from refreshVersions.
+As usual, it won't break projects because we update the dependency notations with the equivalent string literal.
+Also, relevant inline comments with links will be added to assist migration.
+
+### New dependency notations
+
+<details>
+<summary><strong>Click to expand (18) </strong></summary>
+- `AndroidX.core.performance.playServices`
+- `AndroidX.core.performance.testing`
+- `CashApp.sqlDelight.drivers.android`
+- `CashApp.sqlDelight.extensions.androidPaging3`
+- `CashApp.sqlDelight.extensions.coroutines`
+- `CashApp.sqlDelight.gradlePlugin`
+- `CashApp.sqlDelight.dialects.hSql`
+- `CashApp.sqlDelight.drivers.jdbc`
+- `CashApp.sqlDelight.dialects.mySql`
+- `CashApp.sqlDelight.drivers.native`
+- `CashApp.sqlDelight.dialects.postgreSql`
+- `CashApp.sqlDelight.extensions.rxJava2`
+- `CashApp.sqlDelight.extensions.rxJava3`
+- `CashApp.sqlDelight.drivers.jdbcSqlite`
+- `CashApp.sqlDelight.drivers.sqlJs`
+- `CashApp.sqlDelight.drivers.webWorker`
+- `Google.accompanist.adaptive`
+- `Google.accompanist.testHarness`
+</details>
+
 ## Version 0.60.1 (2023-08-24)
 
 ### Bug fix
