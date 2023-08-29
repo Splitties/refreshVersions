@@ -82,7 +82,6 @@ fun getVersionPropertyName(
     //TODO: Pos pluginDependencyNotationToVersionKey ?
     return when (moduleId) {
         is ModuleId.Maven -> when {
-
             name == "gradle" && group == "com.android.tools.build" -> "plugin.android"
             moduleId.name.endsWith(".gradle.plugin") -> {
                 name.substringBeforeLast(".gradle.plugin").let { pluginId ->
