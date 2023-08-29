@@ -46,7 +46,7 @@ jobs:
         with:
           branch: dependency-update
         env:
-          GITHUB_TOKEN: {{ '{{' }} secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: {{ '${{' }} secrets.GITHUB_TOKEN }}
       - id: step-3
         name: gradle refreshVersions
         uses: gradle/gradle-build-action@v2
@@ -70,7 +70,7 @@ jobs:
           pr_title: Upgrade gradle dependencies
           pr_body: '[refreshVersions](https://github.com/jmfayard/refreshVersions) has found those library updates!'
           pr_draft: true
-          github_token: {{ '{{' }} secrets.GITHUB_TOKEN }}
+          github_token: {{ '${{' }} secrets.GITHUB_TOKEN }}
 ```
 
 Commit and Push.
