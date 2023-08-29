@@ -747,3 +747,139 @@ id:[com.google.android.play:core-ktx]
 // but make sure to read the migration guide before:
 // https://developer.android.com/guide/playcore#playcore-migration
 id:[com.google.android.play:core]
+
+## Revision 18
+
+~~CashApp.sqlDelight.drivers.android~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-driver]
+id:[com.squareup.sqldelight:android-driver]
+
+~~Square.sqlDelight.drivers.android~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-driver]
+id:[com.squareup.sqldelight:android-driver]
+
+~~CashApp.sqlDelight.extensions.androidPaging~~
+//FIXME: Migrate to Paging 3 and to SqlDelight 2.0
+// See Migrate to Paging 3 guide: https://developer.android.com/topic/libraries/architecture/paging/v3-migration
+// See SqlDelight Upgrading to 2.0 guide: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-paging3-extensions]
+id:[com.squareup.sqldelight:android-paging-extensions]
+
+~~Square.sqlDelight.extensions.androidPaging~~
+//FIXME: Migrate to Paging 3 and to SqlDelight 2.0
+// See Migrate to Paging 3 guide: https://developer.android.com/topic/libraries/architecture/paging/v3-migration
+// See SqlDelight Upgrading to 2.0 guide: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-paging3-extensions]
+id:[com.squareup.sqldelight:android-paging-extensions]
+
+~~CashApp.sqlDelight.extensions.androidPaging3~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-paging3-extensions]
+id:[com.squareup.sqldelight:android-paging3-extensions]
+
+~~Square.sqlDelight.extensions.androidPaging3~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:android-paging3-extensions]
+id:[com.squareup.sqldelight:android-paging3-extensions]
+
+~~CashApp.sqlDelight.extensions.coroutines~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:coroutines-extensions]
+id:[com.squareup.sqldelight:coroutines-extensions]
+
+~~Square.sqlDelight.extensions.coroutines~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:coroutines-extensions]
+id:[com.squareup.sqldelight:coroutines-extensions]
+
+~~CashApp.sqlDelight.gradlePlugin~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:gradle-plugin]
+id:[com.squareup.sqldelight:gradle-plugin]
+
+~~Square.sqlDelight.gradlePlugin~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:gradle-plugin]
+id:[com.squareup.sqldelight:gradle-plugin]
+
+~~CashApp.sqlDelight.drivers.jdbc~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:jdbc-driver]
+id:[com.squareup.sqldelight:jdbc-driver]
+
+~~Square.sqlDelight.drivers.jdbc~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:jdbc-driver]
+id:[com.squareup.sqldelight:jdbc-driver]
+
+~~CashApp.sqlDelight.drivers.native~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:native-driver]
+id:[com.squareup.sqldelight:native-driver]
+
+~~Square.sqlDelight.drivers.native~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:native-driver]
+id:[com.squareup.sqldelight:native-driver]
+
+~~CashApp.sqlDelight.extensions.rxJava2~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:rxjava2-extensions]
+id:[com.squareup.sqldelight:rxjava2-extensions]
+
+~~Square.sqlDelight.extensions.rxJava2~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:rxjava2-extensions]
+id:[com.squareup.sqldelight:rxjava2-extensions]
+
+~~CashApp.sqlDelight.extensions.rxJava3~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:rxjava3-extensions]
+id:[com.squareup.sqldelight:rxjava3-extensions]
+
+~~Square.sqlDelight.extensions.rxJava3~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:rxjava3-extensions]
+id:[com.squareup.sqldelight:rxjava3-extensions]
+
+~~CashApp.sqlDelight.drivers.jdbcSqlite~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:sqlite-driver]
+id:[com.squareup.sqldelight:sqlite-driver]
+
+~~Square.sqlDelight.drivers.jdbcSqlite~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:sqlite-driver]
+id:[com.squareup.sqldelight:sqlite-driver]
+
+~~CashApp.sqlDelight.drivers.sqlJs~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:sqljs-driver]
+id:[com.squareup.sqldelight:sqljs-driver]
+
+~~Square.sqlDelight.drivers.sqlJs~~
+//FIXME: Migrate to SqlDelight 2.0
+// See guide here: https://cashapp.github.io/sqldelight/2.0.0/upgrading-2.0/
+moved:[app.cash.sqldelight:sqljs-driver]
+id:[com.squareup.sqldelight:sqljs-driver]

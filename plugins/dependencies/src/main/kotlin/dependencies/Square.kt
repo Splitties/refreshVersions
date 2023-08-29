@@ -120,44 +120,6 @@ object Square : IsNotADependency {
     }
 
     /**
-     * SQLDelight generates typesafe kotlin APIs from your SQL statements.
-     *
-     * Official Website: [cashapp.github.io/sqldelight](https://cashapp.github.io/sqldelight/)
-     *
-     * [Change log](https://cashapp.github.io/sqldelight/changelog/)
-     *
-     * GitHub page: [cashapp/sqldelight](https://github.com/cashapp/sqldelight)
-     */
-    val sqlDelight = SqlDelight
-
-    object SqlDelight : DependencyGroup("com.squareup.sqldelight") {
-
-        val gradlePlugin = module("gradle-plugin")
-
-        val extensions = Extensions
-
-        object Extensions : IsNotADependency {
-            val coroutines = module("coroutines-extensions")
-            val androidPaging3 = module("android-paging3-extensions")
-            val androidPaging = module("android-paging-extensions")
-            val rxJava3 = module("rxjava3-extensions")
-            val rxJava2 = module("rxjava2-extensions")
-        }
-
-        val drivers = Drivers
-
-        object Drivers : IsNotADependency {
-            val android = module("android-driver")
-            val sqlJs = module("sqljs-driver")
-
-            val jdbc = module("jdbc-driver")
-            val jdbcSqlite = module("sqlite-driver")
-
-            val native = module("native-driver")
-        }
-    }
-
-    /**
      * A modern JSON library for Kotlin and Java.
      *
      * [Change log](https://github.com/square/moshi/blob/master/CHANGELOG.md)
