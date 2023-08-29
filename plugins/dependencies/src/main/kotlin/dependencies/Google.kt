@@ -23,42 +23,15 @@ object Google : IsNotADependency {
 
     object Accompanist : DependencyGroup(group = "com.google.accompanist") {
 
-        val insets = Insets
-
-        object Insets : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-insets") {
-            val ui = module("accompanist-insets-ui")
-        }
-
-        val systemUiController = module("accompanist-systemuicontroller")
-
-        val appCompatTheme = module("accompanist-appcompat-theme")
-
-        val pager = Pager
-
-        object Pager : DependencyNotationAndGroup(group = "com.google.accompanist", name = "accompanist-pager") {
-            val indicators = module("accompanist-pager-indicators")
-        }
-
-        val flowLayout = module("accompanist-flowlayout")
-        val swipeRefresh = module("accompanist-swiperefresh")
-
-        val placeholder = Placeholder
-
-        object Placeholder : DependencyNotationAndGroup(
-            group = "com.google.accompanist",
-            name = "accompanist-placeholder"
-        ) {
-            val material = module("accompanist-placeholder-material")
-        }
+        val adaptive = module("accompanist-adaptive")
 
         val drawablePainter = module("accompanist-drawablepainter")
 
         val permissions = module("accompanist-permissions")
 
         val navigationMaterial = module("accompanist-navigation-material")
-        val navigationAnimation = module("accompanist-navigation-animation")
 
-        val webView = module("accompanist-webview")
+        val testHarness = module("accompanist-testharness")
     }
 
     val ambient = Ambient
