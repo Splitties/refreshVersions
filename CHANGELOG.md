@@ -18,6 +18,7 @@ Also, relevant inline comments with links will be added to assist migration.
 
 <details>
 <summary><strong>Click to expand (18) </strong></summary>
+
 - `AndroidX.core.performance.playServices`
 - `AndroidX.core.performance.testing`
 - `CashApp.sqlDelight.drivers.android`
@@ -48,6 +49,7 @@ Also, relevant inline comments with links will be added to assist migration.
 
 <details>
 <summary><strong>Click to expand (25) </strong></summary>
+
 - `Google.android.play.appUpdateKtx`
 - `Google.android.play.appUpdate`
 - `Google.android.play.assetDeliveryKtx`
