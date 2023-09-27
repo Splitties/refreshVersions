@@ -28,6 +28,8 @@ androidx.benchmark:benchmark-macro
 androidx.benchmark:benchmark-macro-junit4
 androidx.biometric:biometric
 androidx.biometric:biometric-ktx
+androidx.bluetooth:bluetooth
+androidx.bluetooth:bluetooth-testing
 androidx.browser:browser
 androidx.camera:camera-camera2
 androidx.camera:camera-core

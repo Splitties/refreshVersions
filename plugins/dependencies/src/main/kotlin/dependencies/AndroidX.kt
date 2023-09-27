@@ -16,7 +16,7 @@ import org.gradle.kotlin.dsl.IsNotADependency
  * - Back in 2019 November the 18th, AndroidX was made of **187 artifacts**.
  */
 object AndroidX : IsNotADependency {
-    // Last AndroidX Update sync: Jul 26, 2023.
+    // Last AndroidX Update sync: Sep 20, 2023.
     // See https://androidx.tech/blog/updates for easier updates tracking
     // LibraryGroups.kt: https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryGroups.kt
     // LibraryVersions.kt: https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryVersions.kt
@@ -312,6 +312,24 @@ object AndroidX : IsNotADependency {
 
         /** Kotlin extensions */
         val ktx = module("biometric-ktx")
+    }
+
+    /**
+     * AndroidX Bluetooth Library.
+     *
+     * [Release notes](https://developer.android.com/jetpack/androidx/releases/bluetooth)
+     *
+     * ### API reference:
+     * - [androidx.bluetooth](https://developer.android.com/reference/kotlin/androidx/bluetooth/package-summary)
+     */
+    val bluetooth = Bluetooth
+
+    object Bluetooth : DependencyNotationAndGroup(
+        group = "androidx.bluetooth",
+        name = "bluetooth"
+    ) {
+        /** Test utilities for AndroidX Bluetooth */
+        val testing = module("bluetooth-testing")
     }
 
     /**

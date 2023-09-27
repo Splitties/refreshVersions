@@ -10,6 +10,7 @@ import de.fayard.refreshVersions.core.internal.forNpm
 import de.fayard.refreshVersions.core.internal.withGlobalRepos
 import de.fayard.refreshVersions.core.internal.withPluginsRepos
 import okhttp3.OkHttpClient
+import org.gradle.api.InvalidUserCodeException
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.api.artifacts.Dependency
@@ -34,7 +35,15 @@ internal class DependenciesTracker {
         // See https://kotlinlang.org/docs/js-project-setup.html#additional-yarn-features-yarnrc
         // and https://yarnpkg.com/getting-started/migration#update-your-configuration-to-the-new-settings
         // and also https://yarnpkg.com/configuration/yarnrc#npmRegistryServer
-        rootProject.allprojects { recordBuildscriptAndRegularDependencies(npmRegistries) }
+        rootProject.allprojects {
+            try {
+                afterEvaluate {
+                    recordBuildscriptAndRegularDependencies(npmRegistries)
+                }
+            } catch (e: InvalidUserCodeException) {
+                recordBuildscriptAndRegularDependencies(npmRegistries)
+            }
+        }
     }
 
     private fun Project.recordBuildscriptAndRegularDependencies(npmRegistries: List<String>) {

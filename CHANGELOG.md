@@ -1,5 +1,21 @@
 # Change log for refreshVersions
 
+## Version 0.60.3 (2023-09-27)
+
+### Bug fix
+
+Fix a bug where version keys would be marked as unused in some projects.
+
+### New dependency notations
+
+<details>
+<summary><strong>Click to expand (18) </strong></summary>
+
+- `AndroidX.bluetooth`
+- `AndroidX.bluetooth.testing`
+</details>
+
+
 ## Version 0.60.2 (2023-08-29)
 
 ### Bug fix
