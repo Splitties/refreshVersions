@@ -34,7 +34,11 @@ internal class DependenciesTracker {
         // See https://kotlinlang.org/docs/js-project-setup.html#additional-yarn-features-yarnrc
         // and https://yarnpkg.com/getting-started/migration#update-your-configuration-to-the-new-settings
         // and also https://yarnpkg.com/configuration/yarnrc#npmRegistryServer
-        rootProject.allprojects { recordBuildscriptAndRegularDependencies(npmRegistries) }
+        rootProject.allprojects {
+            afterEvaluate {
+                recordBuildscriptAndRegularDependencies(npmRegistries)
+            }
+        }
     }
 
     private fun Project.recordBuildscriptAndRegularDependencies(npmRegistries: List<String>) {
