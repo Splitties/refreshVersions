@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased] Version 0.60.3 (2023-09-27)
+## Version 0.60.3 (2023-09-27)
 
 ### Bug fix
 

@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/Splitties/refreshVersions) provides **1254** Dependency Notations in **26** groups and **263** subgroups
+[**refreshVersions**](https://github.com/Splitties/refreshVersions) provides **1256** Dependency Notations in **26** groups and **264** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -124,6 +124,12 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.biometric&#10;androidx.biometric:biometric:_&#10;version.androidx.biometric"
             style="text-decoration: underline;">
             biometric
+        </span>
+        - 
+        <span
+            title="AndroidX.bluetooth&#10;androidx.bluetooth:bluetooth:_&#10;version.androidx.bluetooth"
+            style="text-decoration: underline;">
+            bluetooth
         </span>
         - 
         <span
@@ -598,6 +604,15 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             title="AndroidX.biometric.ktx&#10;androidx.biometric:biometric-ktx:_&#10;version.androidx.biometric-ktx"
             style="text-decoration: underline;">
             ktx
+        </span>
+            
+    </td></tr>
+            
+    <tr><td><b>AndroidX.bluetooth</b></td><td>
+        <span
+            title="AndroidX.bluetooth.testing&#10;androidx.bluetooth:bluetooth-testing:_&#10;version.androidx.bluetooth"
+            style="text-decoration: underline;">
+            testing
         </span>
             
     </td></tr>
