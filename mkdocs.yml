@@ -20,7 +20,7 @@ extra:
     gradlePluginPortal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
-    gradle: 8.3
+    gradle: 8.4
     refreshVersions: '0.60.3'
     snapshot: '0.60.4-SNAPSHOT'
   keyboard_shortcuts:
