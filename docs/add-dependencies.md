@@ -192,29 +192,13 @@ Can you use it with refreshVersions?
 
 Sure, just use the version placeholder (`_`).
 
-### Using Gradle 7+ Versions Catalogs
+### Using Gradle Versions Catalogs
 
-Gradle 7 comes with its own feature for centralizing dependencies: [Versions Catalogs](https://docs.gradle.org/7.0-rc-1/userguide/platforms.html#sub:central-declaration-of-dependencies).
+Gradle 7+ comes with its own feature for centralizing dependencies: [Versions Catalogs](https://docs.gradle.org/7.0-rc-1/userguide/platforms.html#sub:central-declaration-of-dependencies).
 
 With Versions Catalog, you have a file like `gradle/libs.versions.toml` where you can centralize all your dependencies and benefit from typesafe accessors in your `build.gradle[.kts]` file.
 
-Since the feature is incubating, you need to enable it explicitly in the project's `settings.gradle[.kts]` file:
-> `enableFeaturePreview("VERSION_CATALOGS")`
-
-Does that work well with refreshVersions? Yes, as long as you use the version placeholder (`_`).
-
-=== "gradle/libs.versions.toml"
-```
-[libraries]
-accompanist-coil =  "com.google.accompanist:accompanist-coil:_"
-accompanist-flowlayout = "com.google.accompanist:accompanist-flowlayout:_"
-accompanist-insets = "com.google.accompanist:accompanist-insets:_"
-...
-```
-
-In this configuration, the versions catalog centralizes the dependency notations, while refreshVersions takes care of setting and updating the versions.
-
-We have ideas to integrate Versions Catalogs deeper into refreshVersions, see [this issue](https://github.com/jmfayard/refreshVersions/issues/333).
+We support updating this version catalog. If you want to keep versions in the `versions.properties` file, you can use the version placeholder (`_`).
 
 ### Using the libraries.gradle pattern
 
