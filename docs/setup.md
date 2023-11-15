@@ -36,6 +36,7 @@ You should also try to update the Gradle plugins present in your build to the la
 
 The Gradle documentation has detailed migration guides if you are stuck:
 
+- From Gradle 8+: https://docs.gradle.org/current/userguide/upgrading_version_8.html
 - From Gradle 7+: https://docs.gradle.org/current/userguide/upgrading_version_7.html
 - From Gradle 6+: https://docs.gradle.org/current/userguide/upgrading_version_6.html
 - From Gradle 5.x: https://docs.gradle.org/current/userguide/upgrading_version_5.html
