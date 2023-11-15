@@ -5,7 +5,7 @@ import org.gradle.api.publish.PublishingExtension
 import java.net.URI
 
 
-fun PublishingExtension.mavenCentralStagingPublishing(
+internal fun PublishingExtension.mavenCentralStagingPublishing(
     project: Project,
     sonatypeUsername: String? = project.propertyOrEnvOrNull("sonatype_username"),
     sonatypePassword: String? = project.propertyOrEnvOrNull("sonatype_password"),
@@ -26,7 +26,7 @@ fun PublishingExtension.mavenCentralStagingPublishing(
     }
 }
 
-fun PublishingExtension.sonatypeSnapshotsPublishing(
+internal fun PublishingExtension.sonatypeSnapshotsPublishing(
     project: Project,
     sonatypeUsername: String? = project.propertyOrEnvOrNull("sonatype_username"),
     sonatypePassword: String? = project.propertyOrEnvOrNull("sonatype_password")

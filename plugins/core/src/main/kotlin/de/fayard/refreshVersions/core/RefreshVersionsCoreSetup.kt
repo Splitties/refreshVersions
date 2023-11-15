@@ -3,9 +3,15 @@
 package de.fayard.refreshVersions.core
 
 import de.fayard.refreshVersions.core.extensions.gradle.isBuildSrc
-import de.fayard.refreshVersions.core.internal.*
+import de.fayard.refreshVersions.core.internal.DependencyMapping
+import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
+import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
+import de.fayard.refreshVersions.core.internal.UsedPluginsTracker
+import de.fayard.refreshVersions.core.internal.UsedVersionForTracker
 import de.fayard.refreshVersions.core.internal.migrations.runMigrationsIfNeeded
 import de.fayard.refreshVersions.core.internal.removals_replacement.RemovedDependencyNotationsReplacementInfo
+import de.fayard.refreshVersions.core.internal.resolveVersion
+import de.fayard.refreshVersions.core.internal.setupVersionPlaceholdersResolving
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.file.RegularFile
 import org.gradle.api.initialization.Settings
@@ -128,7 +134,8 @@ fun Settings.bootstrapRefreshVersionsCoreForBuildSrc(
     setupRefreshVersions(settings = settings)
 }
 
-private const val minimumGradleVersionString = "6.8" // Because we require Kotlin 1.4
+private const val minimumGradleVersionString = "8.0" // Because we require Kotlin 1.8
+// See https://docs.gradle.org/current/userguide/compatibility.html#kotlin
 private val minimumGradleVersion = GradleVersion.version(minimumGradleVersionString)
 
 /**

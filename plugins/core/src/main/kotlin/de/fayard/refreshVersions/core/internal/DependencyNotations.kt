@@ -45,7 +45,7 @@ fun escapeLibsKt(name: String): String {
     val escapedChars = listOf('-', '.', ':')
     return buildString {
         for (c in name) {
-            append(if (c in escapedChars) '_' else c.toLowerCase())
+            append(if (c in escapedChars) '_' else c.lowercaseChar())
         }
     }
 }

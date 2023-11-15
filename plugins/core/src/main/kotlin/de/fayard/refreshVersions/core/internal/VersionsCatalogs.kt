@@ -8,16 +8,11 @@ import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.findByType
-import org.gradle.util.GradleVersion
 
 @InternalRefreshVersionsApi
 object VersionsCatalogs {
 
     const val LIBS_VERSIONS_TOML = "gradle/libs.versions.toml" // Unrelated to the catalog name, never changes.
-
-    val minimumGradleVersion: GradleVersion = GradleVersion.version("7.4")
-
-    fun isSupported(): Boolean = GradleVersion.current() >= minimumGradleVersion
 
     fun defaultCatalogName(): String = try {
         RefreshVersionsConfigHolder.settings.dependencyResolutionManagement.defaultLibrariesExtensionName.get()

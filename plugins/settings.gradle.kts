@@ -1,6 +1,16 @@
+pluginManagement {
+    includeBuild("convention-plugins")
+}
+
 plugins {
     id("com.gradle.enterprise").version("3.8.1")
-    id("de.fayard.refreshVersions") version "0.40.0"
+    id("de.fayard.refreshVersions") version "0.60.3"
+    id("org.splitties.version-sync") version "0.2.6"
+}
+
+dependencyResolutionManagement {
+    @Suppress("UnstableApiUsage")
+    repositories { mavenCentral() }
 }
 
 gradleEnterprise {
@@ -11,12 +21,12 @@ gradleEnterprise {
     }
 }
 
-val pluginsVersion: String = file("version.txt").bufferedReader().use { it.readLine() }
+gradle.rootProject {
+    loadLocalProperties()
+}
 
 gradle.beforeProject {
-    version = pluginsVersion
     group = "de.fayard.refreshVersions"
-    loadLocalProperties()
 }
 
 include("core", "dependencies", "buildSrcLibs")

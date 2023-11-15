@@ -15,7 +15,7 @@ enum class AnsiColor(private val colorNumber: Byte) {
 
     companion object {
         private const val prefix = "\u001B"
-        private val isCompatible = "win" !in System.getProperty("os.name").toLowerCase() //TODO: Support PowerShell?
+        private val isCompatible = "win" !in System.getProperty("os.name").lowercase() //TODO: Support PowerShell?
         private inline fun ifCompatible(block: () -> String): String = if (isCompatible) block() else ""
 
         val RESET = ifCompatible { "$prefix[0m" }
