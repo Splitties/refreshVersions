@@ -5,8 +5,8 @@ package de.fayard.refreshVersions.core.internal
  */
 @InternalRefreshVersionsApi
 abstract class ArtifactVersionKeyRule protected constructor(
-    internal val artifactPattern: String,
-    internal val versionKeyPattern: String
+    val artifactPattern: String,
+    val versionKeyPattern: String
 ) : Comparable<ArtifactVersionKeyRule> {
 
     init {
@@ -25,7 +25,9 @@ abstract class ArtifactVersionKeyRule protected constructor(
 
     final override fun compareTo(other: ArtifactVersionKeyRule) = comparator.compare(this, other)
 
-    private val versionKeySignificantCharsLength = versionKeyPattern.count { it != ' ' }
+    private val versionKeySignificantCharsLength = artifactPattern.count {
+        it !in " ()*"
+    }
 
     fun text(): String = """
         $artifactPattern
