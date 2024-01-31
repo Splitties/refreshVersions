@@ -20,13 +20,13 @@ extra:
     gradlePluginPortal: https://plugins.gradle.org/plugin/de.fayard.refreshVersions
     slack: https://app.slack.com/client/T09229ZC6/CP5659EL9
   version:
-    gradle: 8.4
-    refreshVersions: '0.60.3'
-    snapshot: '0.60.4-SNAPSHOT'
+    gradle: 8.5
+    refreshVersions: '0.60.4'
+    snapshot: '0.60.5-SNAPSHOT'
   keyboard_shortcuts:
     find_actions: <kbd>ctrl</kbd>/<kbd>cmd</kbd> + <kbd>shift</kbd> + <kbd>A</kbd>
 
-copyright: 'Copyright &copy; 2020-2023 jmfayard - Louis CAD'
+copyright: 'Copyright &copy; 2020-2024 jmfayard - Louis CAD'
 
 theme:
   name: 'material'

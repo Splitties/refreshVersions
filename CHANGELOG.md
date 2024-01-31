@@ -1,5 +1,17 @@
 # Change log for refreshVersions
 
+## Version 0.60.4 (2024-01-31)
+
+### Potentially breaking change
+
+We now support only Gradle 8+. Use Gradle 8+ or stick to version 0.60.3 if you can't yet.
+
+### Bug fix
+
+Update the priority of artifact version key rules so that the longest match takes precedence, rather than the final key length.
+That should fix the keys of `androidx.wear.compose` libraries.
+
+
 ## Version 0.60.3 (2023-09-27)
 
 ### Bug fix

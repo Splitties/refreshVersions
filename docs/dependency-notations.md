@@ -2401,31 +2401,31 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     <tr><td><b>AndroidX.wear.compose</b></td><td>
         <span
-            title="AndroidX.wear.compose.foundation&#10;androidx.wear.compose:compose-foundation:_&#10;version.androidx.wear.compose.compose-foundation"
+            title="AndroidX.wear.compose.foundation&#10;androidx.wear.compose:compose-foundation:_&#10;version.androidx.wear.compose"
             style="text-decoration: underline;">
             foundation
         </span>
         - 
         <span
-            title="AndroidX.wear.compose.material3&#10;androidx.wear.compose:compose-material3:_&#10;version.androidx.wear.compose.compose-material3"
+            title="AndroidX.wear.compose.material3&#10;androidx.wear.compose:compose-material3:_&#10;version.androidx.wear.compose"
             style="text-decoration: underline;">
             material3
         </span>
         - 
         <span
-            title="AndroidX.wear.compose.material&#10;androidx.wear.compose:compose-material:_&#10;version.androidx.wear.compose.compose-material"
+            title="AndroidX.wear.compose.material&#10;androidx.wear.compose:compose-material:_&#10;version.androidx.wear.compose"
             style="text-decoration: underline;">
             material
         </span>
         - 
         <span
-            title="AndroidX.wear.compose.navigation&#10;androidx.wear.compose:compose-navigation:_&#10;version.androidx.wear.compose.compose-navigation"
+            title="AndroidX.wear.compose.navigation&#10;androidx.wear.compose:compose-navigation:_&#10;version.androidx.wear.compose"
             style="text-decoration: underline;">
             navigation
         </span>
         - 
         <span
-            title="AndroidX.wear.compose.uiTooling&#10;androidx.wear.compose:compose-ui-tooling:_&#10;version.androidx.wear.compose.compose-ui-tooling"
+            title="AndroidX.wear.compose.uiTooling&#10;androidx.wear.compose:compose-ui-tooling:_&#10;version.androidx.wear.compose"
             style="text-decoration: underline;">
             uiTooling
         </span>
