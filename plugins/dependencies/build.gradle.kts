@@ -91,9 +91,6 @@ val copyDependencyNotationsRemovalsRevisionNumber by tasks.registering {
 
 tasks.processResources.configure {
     dependsOn(copyDependencyNotationsRemovalsRevisionNumber)
-    copyDependencyNotationsRemovalsRevisionNumber.get().outputs.files.forEach {
-        inputs.file(it)
-    }
 }
 
 afterEvaluate {
