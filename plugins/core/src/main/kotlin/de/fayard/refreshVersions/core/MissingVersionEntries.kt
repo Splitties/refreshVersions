@@ -40,7 +40,7 @@ fun Configuration.countDependenciesWithHardcodedVersions(
 @InternalRefreshVersionsApi
 fun Project.countDependenciesWithHardcodedVersions(versionsMap: Map<String, String>): Int {
     val versionKeyReader = RefreshVersionsConfigHolder.versionKeyReader
-    return (buildscript.configurations + configurations).sumBy { configuration ->
+    return (buildscript.configurations + configurations).sumOf { configuration ->
         if (configuration.shouldBeIgnored()) 0 else {
             configuration.countDependenciesWithHardcodedVersions(versionsMap, versionKeyReader)
         }

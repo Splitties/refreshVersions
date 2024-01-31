@@ -208,7 +208,7 @@ sealed class AbstractDependencyGroup(
 
     private val usePlatformConstraintsInitialValue = usePlatformConstraints
 
-    private val rule: List<ArtifactVersionKeyRule>?
+    private val rules: List<ArtifactVersionKeyRule>?
         get() = rawRules?.lines()?.also { lines ->
             assert(lines.size % 2 == 0) {
                 "An even number of lines was expected, but ${lines.size} were found: $lines"
@@ -225,8 +225,8 @@ sealed class AbstractDependencyGroup(
         private val ALL = mutableListOf<AbstractDependencyGroup>()
 
         @InternalRefreshVersionsApi
-        val ALL_RULES: List<ArtifactVersionKeyRule>
-            get() = ALL.flatMap { it.rule ?: emptyList() }
+        val ALL_RULES: Sequence<ArtifactVersionKeyRule>
+            get() = ALL.asSequence().flatMap { it.rules ?: emptyList() }
 
         @InternalRefreshVersionsApi
         var disableBomCheck: Boolean = false

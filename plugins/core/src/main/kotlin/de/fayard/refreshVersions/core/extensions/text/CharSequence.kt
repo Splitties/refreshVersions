@@ -1,7 +1,7 @@
 package de.fayard.refreshVersions.core.extensions.text
 
 internal fun CharSequence.indexOfPrevious(char: Char, startIndex: Int): Int {
-    if (startIndex !in 0..lastIndex) throw IndexOutOfBoundsException(startIndex)
+    if (startIndex !in 0..lastIndex) throw IndexOutOfBoundsException("Index out of range: $startIndex")
     for (i in startIndex downTo 0) {
         val c = this[i]
         if (c == char) return i
@@ -13,7 +13,7 @@ internal inline fun CharSequence.indexOfFirst(
     startIndex: Int,
     predicate: (Char) -> Boolean
 ): Int {
-    if (startIndex !in 0..lastIndex) throw IndexOutOfBoundsException(startIndex)
+    if (startIndex !in 0..lastIndex) throw IndexOutOfBoundsException("Index out of range: $startIndex")
     for (i in startIndex..lastIndex) {
         if (predicate(this[i])) return i
     }

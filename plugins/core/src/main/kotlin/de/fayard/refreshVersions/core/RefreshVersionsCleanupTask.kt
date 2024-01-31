@@ -4,7 +4,6 @@ import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.SettingsPluginsUpdater.removeCommentsAddedByUs
 import de.fayard.refreshVersions.core.internal.VersionsCatalogUpdater
-import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import de.fayard.refreshVersions.core.internal.VersionsCatalogs.LIBS_VERSIONS_TOML
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel
 import de.fayard.refreshVersions.core.internal.versions.VersionsPropertiesModel.Section
@@ -74,7 +73,7 @@ open class RefreshVersionsCleanupTask : DefaultTask() {
 
     @TaskAction
     fun cleanUpVersionsCatalog() {
-        if (VersionsCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled) {
+        if (FeatureFlag.VERSIONS_CATALOG.isEnabled) {
             val file = File(LIBS_VERSIONS_TOML)
             if (file.exists()) {
                 VersionsCatalogUpdater(file, emptyList()).cleanupComments(file)

@@ -1,17 +1,17 @@
 package de.fayard.refreshVersions.core.internal.versions
 
-internal expect class VersionsPropertiesModel {
+private interface VersionsPropertiesModelH {
     val preHeaderContent: String
     val generatedByVersion: String
     val dependencyNotationRemovalsRevision: Int?
     val sections: List<Section>
 
-    sealed class Section {
-        class Comment : Section {
+    sealed interface Section {
+        interface Comment : Section {
             val lines: String
         }
 
-        class VersionEntry : Section {
+        interface VersionEntry : Section {
             val leadingCommentLines: List<String>
             val key: String
             val currentVersion: String

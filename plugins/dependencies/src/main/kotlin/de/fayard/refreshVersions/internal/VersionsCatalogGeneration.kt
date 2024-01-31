@@ -12,10 +12,8 @@ import de.fayard.refreshVersions.core.internal.VersionsCatalogs
 import de.fayard.refreshVersions.core.internal.checkModeAndNames
 import de.fayard.refreshVersions.core.internal.computeAliases
 import de.fayard.refreshVersions.core.internal.findDependencies
-import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
-import org.gradle.util.GradleVersion
 
 /**
  * Returns the mapping of the generated catalog: moduleId to dependency alias.
@@ -25,15 +23,6 @@ internal fun generateVersionsCatalogFromCurrentDependencies(
     keepVersionsPlaceholders: Boolean,
     copyBuiltInDependencyNotationsToCatalog: Boolean
 ): Map<ModuleId.Maven, String> {
-    if (VersionsCatalogs.isSupported().not()) {
-        throw GradleException(
-            """
-                |Gradle versions catalogs are not supported in ${GradleVersion.current()}
-                |Upgrade Gradle with this command
-                |     ./gradlew wrapper --gradle-version ${VersionsCatalogs.minimumGradleVersion.version}
-            """.trimMargin()
-        )
-    }
     // Update versions.properties
     addMissingEntriesInVersionsProperties(project)
 

@@ -85,7 +85,7 @@ class BundledDependenciesTest {
             ALL_DEPENDENCIES_NOTATIONS // Ensure all objects are initialized.
             val file = Files.rules
             val content = AbstractDependencyGroup.ALL_RULES
-                .sorted()
+                .sortedBy { it.artifactPattern }
                 .distinct()
                 .joinToString(separator = "\n\n", postfix = "\n") { it.text() }
             if (file.readText() != content) file.writeText(content)

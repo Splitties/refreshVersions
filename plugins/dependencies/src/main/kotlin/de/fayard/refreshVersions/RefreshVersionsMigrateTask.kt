@@ -261,7 +261,7 @@ internal fun findFilesWithDependencyNotations(fromDir: File): List<File> {
     return fromDir.walkBottomUp()
         .onEnter { dir -> dir.name !in listOf("resources", "build") }
         .filter {
-            it.extension in expectedExtensions && it.nameWithoutExtension.toLowerCase() in expectedNames
+            it.extension in expectedExtensions && it.nameWithoutExtension.lowercase() in expectedNames
         }.toList()
 }
 

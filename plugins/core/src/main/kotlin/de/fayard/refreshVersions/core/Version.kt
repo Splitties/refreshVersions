@@ -135,7 +135,7 @@ data class Version(val value: String) : Comparable<Version> {
         private val digitsOnlyBasedVersionNumberRegex = "^[0-9,.v-]+$".toRegex()
 
         private fun isDefinitelyStable(version: String): Boolean {
-            val uppercaseVersion = version.toUpperCase()
+            val uppercaseVersion = version.uppercase()
             val hasStableKeyword = knownStableKeywords.any { it in uppercaseVersion }
             return hasStableKeyword || digitsOnlyBasedVersionNumberRegex.matches(version)
         }

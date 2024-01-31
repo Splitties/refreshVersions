@@ -4,7 +4,8 @@ This guide will help you set up refreshVersions in a Gradle project.
 
 ## Update Gradle (if needed)
 
-Gradle 6.8+ is required because this plugin relies on Kotlin 1.4.
+Gradle 8+ is required because this plugin relies on Kotlin 1.8.
+That said, the version 0.60.3 of refreshVersions supports Gradle 6.8 to 7.x, in case you need to upgrade Gradle later.
 
 Updating Gradle is anyway usually a good idea. You get fewer bugs, more
 features, and faster builds.

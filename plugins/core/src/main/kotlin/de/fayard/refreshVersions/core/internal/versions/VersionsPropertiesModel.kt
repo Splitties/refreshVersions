@@ -6,20 +6,20 @@ import de.fayard.refreshVersions.core.internal.failures.oneLineSummary
 /**
  * @property dependencyNotationRemovalsRevision Designed to be used only for snapshot publications.
  */
-internal actual data class VersionsPropertiesModel(
-    actual val preHeaderContent: String,
-    actual val generatedByVersion: String,
-    actual val dependencyNotationRemovalsRevision: Int?,
-    actual val sections: List<Section>
+internal data class VersionsPropertiesModel(
+    val preHeaderContent: String,
+    val generatedByVersion: String,
+    val dependencyNotationRemovalsRevision: Int?,
+    val sections: List<Section>
 ) {
     init {
         if (preHeaderContent.isNotEmpty()) require(preHeaderContent.endsWith('\n'))
         preHeaderContent.lineSequence().forEach { if (it.isNotBlank()) it.mustBeACommentLine() }
     }
 
-    actual sealed class Section {
+    sealed class Section {
 
-        actual data class Comment(actual val lines: String) : Section() {
+        data class Comment(val lines: String) : Section() {
             init {
                 lines.lineSequence().forEach {
                     if (it.isNotBlank()) it.mustBeACommentLine()
@@ -27,14 +27,14 @@ internal actual data class VersionsPropertiesModel(
             }
         }
 
-        actual data class VersionEntry(
-            actual val leadingCommentLines: List<String> = emptyList(),
-            actual val key: String,
-            actual val currentVersion: String,
-            actual val availableUpdates: List<String>,
-            actual val trailingCommentLines: List<String> = emptyList()
+        data class VersionEntry(
+            val leadingCommentLines: List<String> = emptyList(),
+            val key: String,
+            val currentVersion: String,
+            val availableUpdates: List<String>,
+            val trailingCommentLines: List<String> = emptyList()
         ) : Section() {
-            actual val metadataLines: List<String> by lazy {
+            val metadataLines: List<String> by lazy {
                 leadingCommentLines.mapNotNull {
                     it.substringAfter("## ", missingDelimiterValue = "").ifEmpty { null }
                 }
@@ -56,7 +56,7 @@ internal actual data class VersionsPropertiesModel(
         }
     }
 
-    actual companion object {
+    companion object {
 
         /**
          * We use 4 hashtags to simplify parsing as we can have up to 3 contiguous hashtags in the

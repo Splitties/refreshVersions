@@ -84,6 +84,10 @@ on:
       - '!docs/**'
 jobs:
   check-all:
+    env:
+      GPG_key_id: ${{ secrets.GPG_KEY_ID }}
+      GPG_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+      GPG_private_password: ${{ secrets.GPG_PRIVATE_PASSWORD }}
     runs-on: ${{ github.event.inputs.run-on || 'ubuntu-latest' }}
     steps:
       - name: "Enable long paths for git Windows"

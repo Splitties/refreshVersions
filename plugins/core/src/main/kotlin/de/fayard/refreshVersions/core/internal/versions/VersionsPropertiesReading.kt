@@ -126,7 +126,7 @@ internal fun String.withEntriesLineBreaksIfMissing(): String {
                 else -> line
             }
         }.asReversed()
-        ensureCapacity(lines.sumBy { it.length + 1 })
+        ensureCapacity(lines.sumOf { it.length + 1 })
         lines.joinTo(this, separator = "\n")
     }
 }

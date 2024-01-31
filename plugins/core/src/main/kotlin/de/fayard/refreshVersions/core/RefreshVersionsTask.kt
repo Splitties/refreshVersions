@@ -79,7 +79,7 @@ open class RefreshVersionsTask : DefaultTask() {
         //TODO: Filter using known grouping strategies to only use the main artifact to resolve latest version, this
         // will reduce the number of repositories lookups, improving performance a little more.
 
-        val shouldUpdateVersionCatalogs = VersionsCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled
+        val shouldUpdateVersionCatalogs = FeatureFlag.VERSIONS_CATALOG.isEnabled
 
 
         val versionsCatalogLibraries: Set<MinimalExternalModuleDependency>

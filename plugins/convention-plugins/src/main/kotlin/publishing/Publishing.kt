@@ -1,28 +1,20 @@
 @file:Suppress("PackageDirectoryMismatch")
 
 import org.gradle.api.Project
-import org.gradle.api.UnknownTaskException
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.api.tasks.TaskContainer
-import org.gradle.api.tasks.TaskProvider
-import org.gradle.jvm.tasks.Jar
-import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.withType
 
-object Publishing {
+internal object Publishing {
     const val gitUrl = "https://github.com/Splitties/refreshVersions.git"
-    const val siteUrl = "https://github.com/Splitties/refreshVersions"
+    const val siteUrl = "https://splitties.github.io/refreshVersions/"
+    const val repoUrl = "https://github.com/Splitties/refreshVersions"
     const val libraryDesc = "Life is too short to Google for dependencies and versions."
 }
 
-fun PublishingExtension.setupAllPublications(project: Project) {
-    val mavenPublications = publications.withType<MavenPublication>()
-    mavenPublications.configureEach {
-        artifact(project.tasks.emptyJavadocJar())
-        setupPom()
-    }
+internal fun PublishingExtension.setupAllPublications(project: Project) {
+    publications.withType<MavenPublication>().configureEach { setupPom() }
     if (project.isSnapshot) {
         sonatypeSnapshotsPublishing(project = project)
     }
@@ -38,16 +30,6 @@ fun PublishingExtension.setupAllPublications(project: Project) {
         }
     }
 }
-
-fun TaskContainer.emptyJavadocJar(): TaskProvider<Jar> {
-    val taskName = "javadocJar"
-    return try {
-        named(name = taskName)
-    } catch (e: UnknownTaskException) {
-        register(name = taskName) { archiveClassifier by "javadoc" }
-    }
-}
-
 
 private fun Project.registerPublishingTask() {
     require(project != rootProject)
@@ -71,32 +53,31 @@ private fun Project.registerPublishingTask() {
 private val Project.isDevVersion get() = version.let { it is String && it.contains("-dev-") }
 private val Project.isSnapshot get() = version.let { it is String && it.endsWith("-SNAPSHOT") }
 
-@Suppress("UnstableApiUsage")
 private fun MavenPublication.setupPom() = pom {
-    name.set("refreshVersions")
-    description.set(Publishing.libraryDesc)
-    url.set(Publishing.siteUrl)
+    name = "refreshVersions"
+    description = Publishing.libraryDesc
+    url = Publishing.siteUrl
     licenses {
         license {
-            name.set("MIT License")
-            url.set("https://opensource.org/licenses/MIT")
+            name = "MIT License"
+            url = "https://opensource.org/licenses/MIT"
         }
     }
     developers {
         developer {
-            id.set("jmfayard")
-            name.set("Jean-Michel Fayard")
-            email.set("jmfayard@gmail.com")
+            id = "jmfayard"
+            name = "Jean-Michel Fayard"
+            email = "jmfayard@gmail.com"
         }
         developer {
-            id.set("louiscad")
-            name.set("Louis CAD")
-            email.set("louis.cognault@gmail.com")
+            id = "louiscad"
+            name = "Louis CAD"
+            email = "louis.cognault@gmail.com"
         }
     }
     scm {
-        connection.set(Publishing.gitUrl)
-        developerConnection.set(Publishing.gitUrl)
-        url.set(Publishing.siteUrl)
+        connection = Publishing.gitUrl
+        developerConnection = Publishing.gitUrl
+        url = Publishing.repoUrl
     }
 }

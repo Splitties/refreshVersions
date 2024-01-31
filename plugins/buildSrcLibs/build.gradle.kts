@@ -1,10 +1,7 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
-    id("com.gradle.plugin-publish")
-    `java-gradle-plugin`
-    `maven-publish`
-    signing
+    id("gradle-plugin")
     `kotlin-dsl`
 }
 
@@ -15,28 +12,10 @@ gradlePlugin {
             displayName = "Dependency notation generator & updates"
             description = "Generates dependency notations constants in buildSrc and " +
                     "updates the versions with gradle refreshVersions"
+            tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
             implementationClass = "de.fayard.buildSrcLibs.BuildSrcLibsPlugin"
         }
     }
-}
-
-pluginBundle {
-    website = "https://jmfayard.github.io/refreshVersions"
-    vcsUrl = "https://github.com/jmfayard/refreshVersions"
-    tags = listOf("dependencies", "versions", "buildSrc", "kotlin", "kotlin-dsl")
-}
-
-signing {
-    useInMemoryPgpKeys(
-        propertyOrEnvOrNull("GPG_key_id"),
-        propertyOrEnvOrNull("GPG_private_key") ?: return@signing,
-        propertyOrEnv("GPG_private_password")
-    )
-    sign(publishing.publications)
-}
-
-publishing {
-    setupAllPublications(project)
 }
 
 dependencies {
@@ -60,20 +39,14 @@ dependencies {
 }
 
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.freeCompilerArgs += listOf(
-        "-Xopt-in=kotlin.RequiresOptIn",
-        "-Xopt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi"
-    )
+kotlin {
+    jvmToolchain(8)
+    compilerOptions {
+        apiVersion = KotlinVersion.KOTLIN_1_8 // https://docs.gradle.org/current/userguide/compatibility.html#kotlin
+        freeCompilerArgs.add("-opt-in=de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi")
+    }
 }
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-    withSourcesJar()
 }

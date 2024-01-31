@@ -25,7 +25,8 @@ interface CliGenericUi {
 }
 
 @InternalRefreshVersionsApi
-inline class MenuEntryIndex(val value: Int)
+@JvmInline
+value class MenuEntryIndex(val value: Int)
 
 private class CliGenericUiImpl : CliGenericUi {
 

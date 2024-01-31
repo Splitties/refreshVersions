@@ -6,6 +6,7 @@ import de.fayard.refreshVersions.core.internal.InternalRefreshVersionsApi
 import de.fayard.refreshVersions.core.internal.OutputFile
 import de.fayard.refreshVersions.core.internal.RefreshVersionsConfigHolder
 import de.fayard.refreshVersions.core.internal.VersionsCatalogs
+import de.fayard.refreshVersions.thisProjectVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.register
@@ -20,7 +21,7 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
             OutputFile.init(project)
             val versionsFileName = RefreshVersionsConfigHolder.versionsPropertiesFile.name
 
-            val shouldUpdateVersionCatalogs = VersionsCatalogs.isSupported() && FeatureFlag.VERSIONS_CATALOG.isEnabled
+            val shouldUpdateVersionCatalogs = FeatureFlag.VERSIONS_CATALOG.isEnabled
             project.tasks.register<RefreshVersionsTask>(name = "refreshVersions") {
                 group = "refreshVersions"
                 description = "Search for new dependencies versions and update $versionsFileName"
@@ -55,12 +56,13 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
     }
 
     private fun cleanFilesFromPreviousVersions(project: Project) {
+        val buildDir = project.layout.buildDirectory.asFile.get()
         if (project.isBuildSrc) {
-            project.buildDir.resolve("refreshVersions_used_dependencies.txt").delete()
-            project.buildDir.resolve("refreshVersions_used_repositories_maven.txt").delete()
+            buildDir.resolve("refreshVersions_used_dependencies.txt").delete()
+            buildDir.resolve("refreshVersions_used_repositories_maven.txt").delete()
         } else {
-            project.buildDir.resolve("refreshVersions_used_dependencies_plugins.txt").delete()
-            project.buildDir.resolve("refreshVersions_used_repositories_plugins_maven.txt").delete()
+            buildDir.resolve("refreshVersions_used_dependencies_plugins.txt").delete()
+            buildDir.resolve("refreshVersions_used_repositories_plugins_maven.txt").delete()
         }
     }
 
@@ -72,10 +74,6 @@ open class RefreshVersionsCorePlugin : Plugin<Project> {
 
     @InternalRefreshVersionsApi
     companion object {
-        val currentVersion by lazy {
-            RefreshVersionsCorePlugin::class.java.getResourceAsStream("/version.txt")!!
-                .bufferedReader()
-                .useLines { it.first() }
-        }
+        val currentVersion = thisProjectVersion
     }
 }

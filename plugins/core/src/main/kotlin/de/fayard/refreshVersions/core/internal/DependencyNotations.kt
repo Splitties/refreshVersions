@@ -45,7 +45,7 @@ fun escapeLibsKt(name: String): String {
     val escapedChars = listOf('-', '.', ':')
     return buildString {
         for (c in name) {
-            append(if (c in escapedChars) '_' else c.toLowerCase())
+            append(if (c in escapedChars) '_' else c.lowercaseChar())
         }
     }
 }
@@ -57,9 +57,9 @@ fun Project.findDependencies(): List<Library> {
         (buildscript.configurations + configurations).flatMapTo(allDependencies) { configuration ->
             configuration.allDependencies
                 .filterIsInstance<ExternalDependency>()
-                .mapNotNull { dependency ->
+                .map { dependency ->
                     Library(
-                        group = dependency.group ?: return@mapNotNull null,
+                        group = dependency.group,
                         module = dependency.name,
                         version = dependency.version
                     )
