@@ -3,7 +3,7 @@ title: Built-in Dependency Notations
 ---
 # Built-in Dependency Notations
 
-[**refreshVersions**](https://github.com/Splitties/refreshVersions) provides **1256** Dependency Notations in **26** groups and **264** subgroups
+[**refreshVersions**](https://github.com/Splitties/refreshVersions) provides **1257** Dependency Notations in **26** groups and **264** subgroups
 
 **Built-in Dependency Notations** are maven coordinates of popular libraries,
 discoverable as for example `KotlinX.coroutines.core` in IntelliJ IDEA,
@@ -2485,19 +2485,25 @@ Hover 🐁 on a dependency notation to see its `Triple(KotlinName, MavenCoordina
             
     <tr><td><b>AndroidX.wear.watchFace.complications</b></td><td>
         <span
-            title="AndroidX.wear.watchFace.complications.dataSourceKtx&#10;androidx.wear.watchface:watchface-complications-data-source-ktx:_&#10;version.androidx.wear.watchface-complications-data-source-ktx"
+            title="AndroidX.wear.watchFace.complications.dataSourceKtx&#10;androidx.wear.watchface:watchface-complications-data-source-ktx:_&#10;version.androidx.wear.watchface-complications"
             style="text-decoration: underline;">
             dataSourceKtx
         </span>
         - 
         <span
-            title="AndroidX.wear.watchFace.complications.dataSource&#10;androidx.wear.watchface:watchface-complications-data-source:_&#10;version.androidx.wear.watchface-complications-data-source"
+            title="AndroidX.wear.watchFace.complications.dataSource&#10;androidx.wear.watchface:watchface-complications-data-source:_&#10;version.androidx.wear.watchface-complications"
             style="text-decoration: underline;">
             dataSource
         </span>
         - 
         <span
-            title="AndroidX.wear.watchFace.complications.rendering&#10;androidx.wear.watchface:watchface-complications-rendering:_&#10;version.androidx.wear.watchface-complications-rendering"
+            title="AndroidX.wear.watchFace.complications.data&#10;androidx.wear.watchface:watchface-complications-data:_&#10;version.androidx.wear.watchface-complications"
+            style="text-decoration: underline;">
+            data
+        </span>
+        - 
+        <span
+            title="AndroidX.wear.watchFace.complications.rendering&#10;androidx.wear.watchface:watchface-complications-rendering:_&#10;version.androidx.wear.watchface-complications"
             style="text-decoration: underline;">
             rendering
         </span>

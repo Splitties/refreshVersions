@@ -1,5 +1,15 @@
 # Change log for refreshVersions
 
+## Version 0.60.5 (2024-02-05)
+
+### New dependency notation
+
+- `AndroidX.wear.watchFace.complications.data`
+
+### Other change
+
+Change the version key of all watchface complication dependencies to be centralized.
+
 ## Version 0.60.4 (2024-01-31)
 
 ### Potentially breaking change
@@ -21,7 +31,7 @@ Fix a bug where version keys would be marked as unused in some projects.
 ### New dependency notations
 
 <details>
-<summary><strong>Click to expand (18) </strong></summary>
+<summary><strong>Click to expand (2) </strong></summary>
 
 - `AndroidX.bluetooth`
 - `AndroidX.bluetooth.testing`
