@@ -137,3 +137,6 @@ androidx.wear.compose..compose-material3=version.androidx.wear.compose.compose-m
 androidx.wear.compose..compose-material=version.androidx.wear.compose.compose-material
 androidx.wear.compose..compose-navigation=version.androidx.wear.compose.compose-navigation
 androidx.wear.compose..compose-ui-tooling=version.androidx.wear.compose.compose-ui-tooling
+androidx.wear.watchface..watchface-complications-data-source-ktx=version.androidx.wear.watchface-complications-data-source-ktx
+androidx.wear.watchface..watchface-complications-data-source=version.androidx.wear.watchface-complications-data-source
+androidx.wear.watchface..watchface-complications-rendering=version.androidx.wear.watchface-complications-rendering

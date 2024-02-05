@@ -3527,6 +3527,14 @@ object AndroidX : IsNotADependency {
                  * - [androidx.wear.watchface.complications.datasource.rendering](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/rendering/package-summary)
                  */
                 val dataSourceKtx = module("watchface-complications-data-source-ktx")
+
+                /**
+                 * ComplicationData and subclasses.
+                 *
+                 * ### API reference
+                 * - [androidx.wear.watchface.complications.data](https://developer.android.com/reference/kotlin/androidx/wear/watchface/complications/data/package-summary)
+                 */
+                val data = module("watchface-complications-data")
             }
 
             /**
