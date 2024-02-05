@@ -355,6 +355,7 @@ androidx.wear.tiles..tiles-testing=AndroidX.wear.tiles.testing
 androidx.wear.tiles..tiles=AndroidX.wear.tiles
 androidx.wear.watchface..watchface-complications-data-source-ktx=AndroidX.wear.watchFace.complications.dataSourceKtx
 androidx.wear.watchface..watchface-complications-data-source=AndroidX.wear.watchFace.complications.dataSource
+androidx.wear.watchface..watchface-complications-data=AndroidX.wear.watchFace.complications.data
 androidx.wear.watchface..watchface-complications-rendering=AndroidX.wear.watchFace.complications.rendering
 androidx.wear.watchface..watchface-editor=AndroidX.wear.watchFace.editor
 androidx.wear.watchface..watchface=AndroidX.wear.watchFace

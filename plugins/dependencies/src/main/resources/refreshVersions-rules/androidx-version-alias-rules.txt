@@ -177,3 +177,6 @@ androidx.wear.compose:* // In case they add an artifact that doesn't start with 
 
 androidx.wear.watchface:watchface(-*)
 ^^^^^^^^^^^^^^          ^^^^^^^^^^^^^
+
+androidx.wear.watchface:watchface-complications(-*)
+^^^^^^^^^^^^^^          ^^^^^^^^^^^^^^^^^^^^^^^
