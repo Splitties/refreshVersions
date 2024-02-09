@@ -33,7 +33,7 @@ data class Version(val value: String) : Comparable<Version> {
             matches("beta") -> StabilityLevel.Beta
             matches("eap") -> StabilityLevel.EarlyAccessProgram
             matches("M", requireNumber = true) -> StabilityLevel.Milestone
-            matches("RC") -> StabilityLevel.ReleaseCandidate
+            matches("RC") || matches("CR") -> StabilityLevel.ReleaseCandidate
             isDefinitelyStable(this) -> StabilityLevel.Stable
             else -> null
         }
