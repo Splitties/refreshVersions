@@ -1,5 +1,6 @@
 android {
-    compileSdkVersion findProperty("compileSdkVersion") as Integer
+    namespace "com.raywenderlich.android.smallvictories"
+    compileSdk findProperty("compileSdkVersion") as Integer
     defaultConfig {
         applicationId findProperty("applicationId")
         minSdkVersion findProperty("minSdkVersion") as Integer
@@ -10,7 +11,10 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility 17
+        targetCompatibility 17
+    }
+    buildFeatures {
+        viewBinding true
     }
 }

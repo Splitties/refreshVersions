@@ -3,20 +3,19 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
     id("gradle.site")
 }
 
 apply(from = "android.gradle")
 
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "17"
 }
 
 dependencies {
     implementation(platform(Firebase.bom))
     implementation(Firebase.authentication)
-    implementation("com.google.firebase:firebase-analytics")
+    implementation(Firebase.analytics)
 
 
     implementation(Kotlin.stdlib.jdk7)

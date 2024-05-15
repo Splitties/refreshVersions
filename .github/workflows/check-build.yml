@@ -42,7 +42,7 @@ on:
         description: "Enable sample-android"
         required: true
         type: boolean
-        default: false
+        default: true
       run-on:
         type: choice
         description: "Where to run this workflow"
