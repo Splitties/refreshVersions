@@ -6,13 +6,13 @@ internal sealed class TomlSection(open val name: String) {
 
     object Root: TomlSection("root")
     object Versions: TomlSection("versions")
-    object Plugins: TomlSection("plugins")
-    object Bundles: TomlSection("bundles")
     object Libraries: TomlSection("libraries")
+    object Bundles: TomlSection("bundles")
+    object Plugins: TomlSection("plugins")
     data class Custom(override val name: String) : TomlSection(name)
 
     companion object {
-        val orderedSections = listOf(Root, Bundles, Plugins, Versions, Libraries)
+        val orderedSections = listOf(Root, Versions, Libraries, Bundles, Plugins)
 
         fun from(name: String): TomlSection = orderedSections.firstOrNull { it.name == name } ?: Custom(name)
     }

@@ -40,6 +40,7 @@ internal class VersionsCatalogUpdater(
             Version -> {
                 linesForUpdates(line, findLineReferencing(line))
             }
+
             Libs, Plugin -> {
                 val updates = dependenciesUpdates.firstOrNull {
                     it.moduleId.name == line.name && it.moduleId.group == line.group
@@ -71,7 +72,7 @@ internal class VersionsCatalogUpdater(
         val isObject = initialLine.unparsedValue.endsWith("}")
 
         val commentPrefix = "##"
-        val availableSymbol = "⬆"
+        val availableSymbol = "^"
         val versionPrefix = when {
             isObject || initialLine.section == TomlSection.Versions -> """= """"
             else -> """:"""
@@ -86,14 +87,13 @@ internal class VersionsCatalogUpdater(
             yield(commentPrefix)
             yield(availableSymbol)
             yield(versionPrefix)
-        }.sumOf { it.length }.let {
-            it + 1 // Because the length of availableSymbol (⬆) is 1, but it takes the width of 2 chars in the IDE.
-        }.let {
-            val indexOfCurrentVersion = initialLine.text.indexOf(currentVersion)
-            val gap = indexOfCurrentVersion - it
-            leadingSpace = " ".repeat((gap - 1).coerceAtLeast(0))
-            trailingSpace = if (gap > 0 && versionPrefix.endsWith(' ').not()) " " else ""
-        }
+        }.sumOf { it.length }
+            .let {
+                val indexOfCurrentVersion = initialLine.text.indexOf(currentVersion)
+                val gap = indexOfCurrentVersion - it
+                leadingSpace = " ".repeat((gap - 1).coerceAtLeast(0))
+                trailingSpace = if (gap > 0 && versionPrefix.endsWith(' ').not()) " " else ""
+            }
         return availableUpdates.mapTo(mutableListOf(initialLine)) { versionCandidate: MavenVersion ->
             val version = versionCandidate.value
             TomlLine(
