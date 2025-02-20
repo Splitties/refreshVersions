@@ -804,6 +804,30 @@ object Google : IsNotADependency {
     }
 
     /**
+     * Kotlin Symbol Processing (KSP) is an API that you can use to develop lightweight compiler plugins.
+     *
+     * [Official website](https://kotlinlang.org/docs/ksp-overview.html)
+     *
+     * GitHub page: [google/ksp](https://github.com/google/ksp)
+     */
+    val ksp = KSP
+
+    object KSP : DependencyGroup(group = "com.google.devtools.ksp") {
+
+        /**
+         * Id of the plugin: "`com.google.devtools.ksp`"
+         */
+        val gradlePlugin = module("symbol-processing-gradle-plugin")
+
+        /**
+         * KSP API
+         *
+         * Used when you want to [Create a processor of your own](https://kotlinlang.org/docs/ksp-quickstart.html#create-a-processor-of-your-own)
+         */
+        val symbolProcessingApi = module("symbol-processing-api")
+    }
+
+    /**
      * Machine learning for mobile developers
      *
      * Official website: [developers.google.com/ml-kit](https://developers.google.com/ml-kit)
