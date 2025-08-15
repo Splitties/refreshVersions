@@ -277,7 +277,21 @@ object Square : IsNotADependency {
     object KotlinPoet : DependencyNotationAndGroup(group = "com.squareup", name = "kotlinpoet") {
 
         /**
-         * [Official webpage](https://square.github.io/kotlinpoet/kotlinpoet_metadata/)
+         * [Official webpage](https://square.github.io/kotlinpoet/interop-javapoet/)
+         *
+         * [API reference](https://square.github.io/kotlinpoet/1.x/interop-javapoet/)
+         */
+        val javaPoet = module("kotlinpoet-javapoet")
+
+        /**
+         * [Official webpage](https://square.github.io/kotlinpoet/interop-ksp/)
+         *
+         * [API reference](https://square.github.io/kotlinpoet/1.x/interop-ksp/)
+         */
+        val ksp = module("kotlinpoet-ksp")
+
+        /**
+         * [Official webpage](https://square.github.io/kotlinpoet/interop-kotlin-metadata/)
          *
          * [API reference](https://square.github.io/kotlinpoet/1.x/kotlinpoet-metadata/com.squareup.kotlinpoet.metadata/)
          */
