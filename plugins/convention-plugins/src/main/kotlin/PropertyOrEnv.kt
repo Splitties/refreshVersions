@@ -6,6 +6,10 @@ internal fun Project.propertyOrEnv(key: String): String {
         ?: error("Didn't find any value for the key \"$key\" in Project properties or environment variables.")
 }
 
-internal fun Project.propertyOrEnvOrNull(key: String): String? {
-    return findProperty(key) as String? ?: System.getenv(key)
+internal fun Project.propertyOrEnvOrNull(
+    key: String,
+    nullIfEmpty: Boolean = true
+): String? {
+    return (findProperty(key) as String?)?.takeUnless { nullIfEmpty && it.isEmpty() }
+        ?: System.getenv(key)?.takeUnless { nullIfEmpty && it.isEmpty() }
 }
