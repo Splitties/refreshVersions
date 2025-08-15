@@ -247,5 +247,11 @@ internal fun pluginDependencyNotationToVersionKey(dependencyNotation: String): S
         else -> null
     }
 
-internal fun pluginIdToDependency(settings: Settings, pluginId: String, version: String): ExternalDependency =
-    settings.gradle.rootProject.dependencies.create("$pluginId:$pluginId.gradle.plugin:$version") as ExternalDependency
+internal fun pluginIdToDependency(
+    settings: Settings,
+    pluginId: String,
+    version: String
+): ExternalDependency {
+    val dependencyNotation = "$pluginId:$pluginId.gradle.plugin:$version"
+    return settings.gradle.rootProject.dependencies.create(dependencyNotation) as ExternalDependency
+}
