@@ -1,6 +1,6 @@
 # Change log for refreshVersions
 
-## [Unreleased]
+## Version 0.60.6 (2025-08-15)
 
 ### Bug fix
 
