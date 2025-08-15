@@ -4,6 +4,7 @@ plugins {
 }
 
 signing {
+    isRequired = false
     useInMemoryPgpKeys(
         propertyOrEnvOrNull("GPG_key_id"),
         propertyOrEnvOrNull("GPG_private_key") ?: return@signing,

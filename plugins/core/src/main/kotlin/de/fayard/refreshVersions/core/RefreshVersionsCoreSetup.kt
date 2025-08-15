@@ -15,7 +15,6 @@ import de.fayard.refreshVersions.core.internal.setupVersionPlaceholdersResolving
 import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.file.RegularFile
 import org.gradle.api.initialization.Settings
-import org.gradle.api.internal.artifacts.dependencies.DefaultClientModule
 import org.gradle.kotlin.dsl.apply
 import org.gradle.tooling.UnsupportedVersionException
 import org.gradle.util.GradleVersion
@@ -212,7 +211,7 @@ private fun setupPluginsVersionsResolution(
                 val pluginVersion = requested.version ?: return@eachPlugin
                 UsedPluginsTracker.pluginHasNoEntryInVersionsFile(
                     settings = settings,
-                    dependency = pluginIdToDependency(pluginId, pluginVersion)
+                    dependency = pluginIdToDependency(settings, pluginId, pluginVersion)
                 )
                 return@eachPlugin
             }
@@ -248,5 +247,11 @@ internal fun pluginDependencyNotationToVersionKey(dependencyNotation: String): S
         else -> null
     }
 
-internal fun pluginIdToDependency(pluginId: String, version: String): ExternalDependency =
-    DefaultClientModule(pluginId, "$pluginId.gradle.plugin", version)
+internal fun pluginIdToDependency(
+    settings: Settings,
+    pluginId: String,
+    version: String
+): ExternalDependency {
+    val dependencyNotation = "$pluginId:$pluginId.gradle.plugin:$version"
+    return settings.gradle.rootProject.buildscript.dependencies.create(dependencyNotation) as ExternalDependency
+}
