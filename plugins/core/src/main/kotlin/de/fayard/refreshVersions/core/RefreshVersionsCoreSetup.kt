@@ -253,5 +253,5 @@ internal fun pluginIdToDependency(
     version: String
 ): ExternalDependency {
     val dependencyNotation = "$pluginId:$pluginId.gradle.plugin:$version"
-    return settings.gradle.rootProject.dependencies.create(dependencyNotation) as ExternalDependency
+    return settings.gradle.rootProject.buildscript.dependencies.create(dependencyNotation) as ExternalDependency
 }
