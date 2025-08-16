@@ -1,0 +1,4465 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Life is too short to google for dependencies and versions">
+      
+      
+        <meta name="author" content="jmfayard LouisCAD">
+      
+      
+        <link rel="canonical" href="https://jmfayard.github.io/refreshVersions/CHANGELOG/">
+      
+      
+        <link rel="prev" href="../refreshversions-bot/">
+      
+      
+        <link rel="next" href="../contributing/before-you-contribute/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
+    
+    
+      
+        <title>Change Log - gradle refreshVersions</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../app.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="white">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#change-log-for-refreshversions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="gradle refreshVersions" class="md-header__button md-logo" aria-label="gradle refreshVersions" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gradle refreshVersions
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Change Log
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jmfayard/refreshVersions" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    refreshVersions
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="gradle refreshVersions" class="md-nav__button md-logo" aria-label="gradle refreshVersions" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    gradle refreshVersions
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jmfayard/refreshVersions" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    refreshVersions
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migrate/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migrate
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../add-dependencies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Add Dependencies
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dependency-notations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Built-in Dependency Notations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../update-dependencies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Update Dependencies
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../refreshversions-bot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RefreshVersionsBot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Change Log
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Change Log
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#version-0606-2025-08-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.6 (2025-08-15)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.6 (2025-08-15)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0605-2024-02-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.5 (2024-02-05)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.5 (2024-02-05)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other change
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0604-2024-01-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.4 (2024-01-31)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.4 (2024-01-31)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#potentially-breaking-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      Potentially breaking change
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0603-2023-09-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.3 (2023-09-27)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.3 (2023-09-27)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0602-2023-08-29" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.2 (2023-08-29)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.2 (2023-08-29)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed-dependency-notations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removed dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0601-2023-08-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.1 (2023-08-24)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.1 (2023-08-24)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0600-2023-08-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.0 (2023-08-17)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.0 (2023-08-17)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-configuration-cache-support-for-the-refreshversions-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full configuration cache support for the refreshVersions task
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0510-2022-10-25" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.51.0 (2022-10-25)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.51.0 (2022-10-25)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#support-jetpack-compose-bom" class="md-nav__link">
+    <span class="md-ellipsis">
+      Support Jetpack Compose BoM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix-stabilitylevel-calculation-for-number-less-pre-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix StabilityLevel calculation for number-less pre-versions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0502-2022-09-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.50.2 (2022-09-24)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.50.2 (2022-09-24)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minor-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minor change
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0501-2022-09-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.50.1 (2022-09-11)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.50.1 (2022-09-11)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0500-2022-09-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.50.0 (2022-09-09)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.50.0 (2022-09-09)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#support-for-versions-catalogs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Support for Versions Catalogs! 🎉
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#better-support-for-versionfor-and-jetpack-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Better support for versionFor, and Jetpack Compose!
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Better support for versionFor, and Jetpack Compose!">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#now" class="md-nav__link">
+    <span class="md-ellipsis">
+      Now
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-page-for-all-the-built-in-dependency-notations" class="md-nav__link">
+    <span class="md-ellipsis">
+      New page for all the built-in dependency notations 📕
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0402-2022-06-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.40.2 (2022-06-01)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.40.2 (2022-06-01)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0401-2022-02-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.40.1 (2022-02-06)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.40.1 (2022-02-06)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixes_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0400-2022-01-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.40.0 (2022-01-24)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.40.0 (2022-01-24)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0302-2022-01-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.30.2 (2022-01-09)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.30.2 (2022-01-09)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      New feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0301-2021-12-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.30.1 (2021-12-21)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.30.1 (2021-12-21)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fixes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0300-2021-12-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.30.0 (2021-12-19)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.30.0 (2021-12-19)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#potentially-breaking-change_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Potentially breaking change
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-features_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="New features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repositories-declared-in-dependencyresolutionmanagement-are-now-supported-gradle-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Repositories declared in dependencyResolutionManagement are now supported (Gradle 7+)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-on-built-in-dependency-notations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update on built-in dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0230-2021-09-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.23.0 (2021-09-28)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.23.0 (2021-09-28)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0220-2021-09-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.22.0 (2021-09-27)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.22.0 (2021-09-27)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0210-2021-09-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.21.0 (2021-09-07)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.21.0 (2021-09-07)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-feature_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      New feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Improvements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0200-2021-08-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.20.0 (2021-08-23)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.20.0 (2021-08-23)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#announcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Announcement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-features_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#change-potentially-breaking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Change (potentially breaking)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvements_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Improvements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0110-2021-08-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.11.0 (2021-08-03)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.11.0 (2021-08-03)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-feature_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      New feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0101-2021-06-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.10.1 (2021-06-10)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.10.1 (2021-06-10)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-features_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0100-2021-05-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.10.0 (2021-05-13)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.10.0 (2021-05-13)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-features_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#potentially-breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Potentially breaking changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#special-mentions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special mentions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-097-2020-10-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.9.7 (2020-10-16)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.9.7 (2020-10-16)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixes_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-096-2020-10-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.9.6 (2020-10-12)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.9.6 (2020-10-12)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixes_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#breaking-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking change
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deprecated
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-features_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-095-2020-08-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.9.5 (2020-08-21)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.9.5 (2020-08-21)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-features_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependency-notations-renamed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependency notations renamed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#previous-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Previous releases
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Contributing
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Contributing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/before-you-contribute/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Before you contribute
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/improving-docs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Improving docs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/submitting-issues/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Submitting issues
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/submitting-prs/dev-env/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dev environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/submitting-prs/dev-process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Development process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/submitting-prs/dependency-notations-updates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dependency notations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gradle-tips/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bonus: Gradle tips and tricks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    legacy
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            legacy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gradle-buildsrcversions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gradle buildSrcVersions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#version-0606-2025-08-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.6 (2025-08-15)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.6 (2025-08-15)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0605-2024-02-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.5 (2024-02-05)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.5 (2024-02-05)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other change
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0604-2024-01-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.4 (2024-01-31)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.4 (2024-01-31)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#potentially-breaking-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      Potentially breaking change
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0603-2023-09-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.3 (2023-09-27)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.3 (2023-09-27)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0602-2023-08-29" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.2 (2023-08-29)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.2 (2023-08-29)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed-dependency-notations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removed dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0601-2023-08-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.1 (2023-08-24)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.1 (2023-08-24)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0600-2023-08-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.60.0 (2023-08-17)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.60.0 (2023-08-17)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-configuration-cache-support-for-the-refreshversions-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full configuration cache support for the refreshVersions task
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0510-2022-10-25" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.51.0 (2022-10-25)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.51.0 (2022-10-25)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#support-jetpack-compose-bom" class="md-nav__link">
+    <span class="md-ellipsis">
+      Support Jetpack Compose BoM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix-stabilitylevel-calculation-for-number-less-pre-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix StabilityLevel calculation for number-less pre-versions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0502-2022-09-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.50.2 (2022-09-24)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.50.2 (2022-09-24)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minor-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minor change
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0501-2022-09-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.50.1 (2022-09-11)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.50.1 (2022-09-11)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0500-2022-09-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.50.0 (2022-09-09)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.50.0 (2022-09-09)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#support-for-versions-catalogs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Support for Versions Catalogs! 🎉
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#better-support-for-versionfor-and-jetpack-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Better support for versionFor, and Jetpack Compose!
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Better support for versionFor, and Jetpack Compose!">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#now" class="md-nav__link">
+    <span class="md-ellipsis">
+      Now
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-page-for-all-the-built-in-dependency-notations" class="md-nav__link">
+    <span class="md-ellipsis">
+      New page for all the built-in dependency notations 📕
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0402-2022-06-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.40.2 (2022-06-01)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.40.2 (2022-06-01)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0401-2022-02-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.40.1 (2022-02-06)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.40.1 (2022-02-06)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixes_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0400-2022-01-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.40.0 (2022-01-24)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.40.0 (2022-01-24)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0302-2022-01-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.30.2 (2022-01-09)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.30.2 (2022-01-09)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      New feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0301-2021-12-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.30.1 (2021-12-21)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.30.1 (2021-12-21)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fixes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0300-2021-12-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.30.0 (2021-12-19)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.30.0 (2021-12-19)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#potentially-breaking-change_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Potentially breaking change
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-features_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="New features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repositories-declared-in-dependencyresolutionmanagement-are-now-supported-gradle-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Repositories declared in dependencyResolutionManagement are now supported (Gradle 7+)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-on-built-in-dependency-notations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update on built-in dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bug-fixes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0230-2021-09-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.23.0 (2021-09-28)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.23.0 (2021-09-28)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0220-2021-09-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.22.0 (2021-09-27)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.22.0 (2021-09-27)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bug-fix_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bug fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0210-2021-09-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.21.0 (2021-09-07)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.21.0 (2021-09-07)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-feature_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      New feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Improvements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0200-2021-08-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.20.0 (2021-08-23)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.20.0 (2021-08-23)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#announcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Announcement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-features_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#change-potentially-breaking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Change (potentially breaking)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#improvements_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Improvements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0110-2021-08-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.11.0 (2021-08-03)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.11.0 (2021-08-03)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-feature_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      New feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0101-2021-06-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.10.1 (2021-06-10)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.10.1 (2021-06-10)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-features_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-0100-2021-05-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.10.0 (2021-05-13)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.10.0 (2021-05-13)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-features_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#potentially-breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Potentially breaking changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#special-mentions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special mentions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-097-2020-10-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.9.7 (2020-10-16)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.9.7 (2020-10-16)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixes_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-096-2020-10-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.9.6 (2020-10-12)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.9.6 (2020-10-12)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixes_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#breaking-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking change
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deprecated
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-features_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-095-2020-08-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.9.5 (2020-08-21)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.9.5 (2020-08-21)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-features_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      New features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-dependency-notations_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      New dependency notations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependency-notations-renamed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependency notations renamed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#previous-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Previous releases
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="change-log-for-refreshversions">Change log for refreshVersions<a class="headerlink" href="#change-log-for-refreshversions" title="Permanent link">&para;</a></h1>
+<h2 id="version-0606-2025-08-15">Version 0.60.6 (2025-08-15)<a class="headerlink" href="#version-0606-2025-08-15" title="Permanent link">&para;</a></h2>
+<h3 id="bug-fix">Bug fix<a class="headerlink" href="#bug-fix" title="Permanent link">&para;</a></h3>
+<p>Replaced usage of internal Gradle API that was removed/hidden in Gradle 9.0.0 and caused the builds of &ldquo;consumer&rdquo; projects to fail on Gradle upgrade.</p>
+<p>Thanks to <a href="https://github.com/AlexanderBartash">AlexanderBartash</a> for <a href="https://github.com/Splitties/refreshVersions/pull/736">their contribution</a>, and to the people that pinged me in issue <a href="https://github.com/Splitties/refreshVersions/issues/735">#735</a>!</p>
+<h2 id="version-0605-2024-02-05">Version 0.60.5 (2024-02-05)<a class="headerlink" href="#version-0605-2024-02-05" title="Permanent link">&para;</a></h2>
+<h3 id="new-dependency-notation">New dependency notation<a class="headerlink" href="#new-dependency-notation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>AndroidX.wear.watchFace.complications.data</code></li>
+</ul>
+<h3 id="other-change">Other change<a class="headerlink" href="#other-change" title="Permanent link">&para;</a></h3>
+<p>Change the version key of all watchface complication dependencies to be centralized.</p>
+<h2 id="version-0604-2024-01-31">Version 0.60.4 (2024-01-31)<a class="headerlink" href="#version-0604-2024-01-31" title="Permanent link">&para;</a></h2>
+<h3 id="potentially-breaking-change">Potentially breaking change<a class="headerlink" href="#potentially-breaking-change" title="Permanent link">&para;</a></h3>
+<p>We now support only Gradle 8+. Use Gradle 8+ or stick to version 0.60.3 if you can&rsquo;t yet.</p>
+<h3 id="bug-fix_1">Bug fix<a class="headerlink" href="#bug-fix_1" title="Permanent link">&para;</a></h3>
+<p>Update the priority of artifact version key rules so that the longest match takes precedence, rather than the final key length.
+That should fix the keys of <code>androidx.wear.compose</code> libraries.</p>
+<h2 id="version-0603-2023-09-27">Version 0.60.3 (2023-09-27)<a class="headerlink" href="#version-0603-2023-09-27" title="Permanent link">&para;</a></h2>
+<h3 id="bug-fix_2">Bug fix<a class="headerlink" href="#bug-fix_2" title="Permanent link">&para;</a></h3>
+<p>Fix a bug where version keys would be marked as unused in some projects.</p>
+<h3 id="new-dependency-notations">New dependency notations<a class="headerlink" href="#new-dependency-notations" title="Permanent link">&para;</a></h3>
+<details>
+<summary><strong>Click to expand (2) </strong></summary>
+
+- `AndroidX.bluetooth`
+- `AndroidX.bluetooth.testing`
+</details>
+
+<h2 id="version-0602-2023-08-29">Version 0.60.2 (2023-08-29)<a class="headerlink" href="#version-0602-2023-08-29" title="Permanent link">&para;</a></h2>
+<h3 id="bug-fix_3">Bug fix<a class="headerlink" href="#bug-fix_3" title="Permanent link">&para;</a></h3>
+<p>Some version keys were wrongly marked as unused following version 0.60.0. That&rsquo;s now fixed.
+Thanks to the reporters and people that helped in reproducing the issue!</p>
+<h3 id="removed-dependency-notations">Removed dependency notations<a class="headerlink" href="#removed-dependency-notations" title="Permanent link">&para;</a></h3>
+<p>Several Accompanist libraries were deprecated following <a href="https://medium.com/androiddevelopers/an-update-on-jetpack-compose-accompanist-libraries-august-2023-ac4cbbf059f1">this announcement</a>.
+As a result, we updated removed them from refreshVersions.
+As usual, it won&rsquo;t break projects because we update the dependency notations with the equivalent string literal.
+Also, relevant inline comments with links will be added to assist migration.</p>
+<h3 id="new-dependency-notations_1">New dependency notations<a class="headerlink" href="#new-dependency-notations_1" title="Permanent link">&para;</a></h3>
+<details>
+<summary><strong>Click to expand (18) </strong></summary>
+
+- `AndroidX.core.performance.playServices`
+- `AndroidX.core.performance.testing`
+- `CashApp.sqlDelight.drivers.android`
+- `CashApp.sqlDelight.extensions.androidPaging3`
+- `CashApp.sqlDelight.extensions.coroutines`
+- `CashApp.sqlDelight.gradlePlugin`
+- `CashApp.sqlDelight.dialects.hSql`
+- `CashApp.sqlDelight.drivers.jdbc`
+- `CashApp.sqlDelight.dialects.mySql`
+- `CashApp.sqlDelight.drivers.native`
+- `CashApp.sqlDelight.dialects.postgreSql`
+- `CashApp.sqlDelight.extensions.rxJava2`
+- `CashApp.sqlDelight.extensions.rxJava3`
+- `CashApp.sqlDelight.drivers.jdbcSqlite`
+- `CashApp.sqlDelight.drivers.sqlJs`
+- `CashApp.sqlDelight.drivers.webWorker`
+- `Google.accompanist.adaptive`
+- `Google.accompanist.testHarness`
+</details>
+
+<h2 id="version-0601-2023-08-24">Version 0.60.1 (2023-08-24)<a class="headerlink" href="#version-0601-2023-08-24" title="Permanent link">&para;</a></h2>
+<h3 id="bug-fix_4">Bug fix<a class="headerlink" href="#bug-fix_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fix crash on projects that had no version catalog.</li>
+</ul>
+<h3 id="new-dependency-notations_2">New dependency notations:<a class="headerlink" href="#new-dependency-notations_2" title="Permanent link">&para;</a></h3>
+<details>
+<summary><strong>Click to expand (25) </strong></summary>
+
+- `Google.android.play.appUpdateKtx`
+- `Google.android.play.appUpdate`
+- `Google.android.play.assetDeliveryKtx`
+- `Google.android.play.assetDelivery`
+- `Google.android.play.featureDeliveryKtx`
+- `Google.android.play.featureDelivery`
+- `Google.android.play.reviewKtx`
+- `Google.android.play.review`
+- `Google.horologist.annotations`
+- `Google.horologist.auth.composables`
+- `Google.horologist.auth.data.phone`
+- `Google.horologist.auth.data.watchOAuth`
+- `Google.horologist.auth.data`
+- `Google.horologist.auth.ui`
+- `Google.horologist.compose.material`
+- `Google.horologist.dataLayer.grpc`
+- `Google.horologist.dataLayer.phone`
+- `Google.horologist.dataLayer.watch`
+- `Google.horologist.healthComposables`
+- `Google.horologist.media3.audioOffload`
+- `Google.horologist.media3.logging`
+- `Google.horologist.media3.outputSwitcher`
+- `Google.horologist.networkAwareness.db`
+- `Google.horologist.networkAwareness.okHttp`
+- `Google.horologist.networkAwareness.ui`
+</details>
+
+<h2 id="version-0600-2023-08-17">Version 0.60.0 (2023-08-17)<a class="headerlink" href="#version-0600-2023-08-17" title="Permanent link">&para;</a></h2>
+<h3 id="full-configuration-cache-support-for-the-refreshversions-task">Full configuration cache support for the <code>refreshVersions</code> task<a class="headerlink" href="#full-configuration-cache-support-for-the-refreshversions-task" title="Permanent link">&para;</a></h3>
+<p>Now, running the <code>refreshVersions</code> task repeatedly will be much faster, because it now supports
+configuration cache fully! That also means that it&rsquo;s ready for Gradle 9 when it&rsquo;ll be released.</p>
+<h3 id="bug-fixes">Bug fixes<a class="headerlink" href="#bug-fixes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fix &ldquo;The root project is not yet available for build.&rdquo; error that would show up when using configuration cache in a project having <code>refreshVersions</code> configured for the <code>buildSrc</code> too.</li>
+<li>For projects using refreshVersions in their <code>buildSrc</code> too, a log would claim that new files were created after running the <code>refreshVersions</code> task, when they were only modified, or not touched at all. We fixed it.</li>
+<li>When no files were modified after running the <code>refreshVersions</code> task, there would still be a log saying that <code>versions.properties</code> and <code>libs.versions.toml</code> (if any) were updated or created. Now, it&rsquo;s only shown if there are actual changes.</li>
+<li>When running the <code>refreshVersions</code> task, it would always claim that some versions were hardcoded as it counted project dependencies. We are now filtering those out, and we updated the wording to reflect that they might not be actually hardcoded, as is the case when versions come from a Gradle plugin.</li>
+<li>Fix alignment of available update for versions catalogs for keys that are 3 characters long.</li>
+</ul>
+<h3 id="new-dependency-notations_3">New dependency notations:<a class="headerlink" href="#new-dependency-notations_3" title="Permanent link">&para;</a></h3>
+<details>
+<summary><strong>Click to expand (57) </strong></summary>
+
+- `AndroidX.appSearch.debugView`
+- `AndroidX.appSearch.ktx`
+- `AndroidX.benchmark.baselineProfileGradlePlugin`
+- `AndroidX.camera.viewFinder`
+- `AndroidX.core.i18n`
+- `AndroidX.core.locationAltitude`
+- `AndroidX.core.telecom`
+- `AndroidX.core.testing`
+- `AndroidX.credentials.playServicesAuth`
+- `AndroidX.credentials`
+- `AndroidX.emoji2.picker`
+- `AndroidX.glance.material3`
+- `AndroidX.glance.material`
+- `AndroidX.graphics.path`
+- `AndroidX.graphics.shapes`
+- `AndroidX.media3.container`
+- `AndroidX.media3.effect`
+- `AndroidX.media3.muxer`
+- `AndroidX.mediaRouter.testing`
+- `AndroidX.privacySandbox.plugins.library`
+- `AndroidX.privacySandbox.sdkRuntime.client`
+- `AndroidX.privacySandbox.sdkRuntime.core`
+- `AndroidX.privacySandbox.tools.apiCompiler`
+- `AndroidX.privacySandbox.tools.apiGenerator`
+- `AndroidX.privacySandbox.tools.apiPackager`
+- `AndroidX.privacySandbox.tools.core`
+- `AndroidX.privacySandbox.tools`
+- `AndroidX.privacySandbox.ui.client`
+- `AndroidX.privacySandbox.ui.core`
+- `AndroidX.privacySandbox.ui.provider`
+- `AndroidX.room.gradlePlugin`
+- `AndroidX.tracing.perfetto.handshake`
+- `AndroidX.wear.compose.material3`
+- `AndroidX.wear.compose.uiTooling`
+- `AndroidX.wear.protoLayout.expression`
+- `AndroidX.wear.protoLayout.material`
+- `AndroidX.wear.protoLayout.renderer`
+- `AndroidX.wear.protoLayout`
+- `AndroidX.window.extensions.core`
+- `Google.android.playServices.deviceToDeviceInteractions`
+- `Google.android.playServices.gamesV2.nativeC`
+- `Google.android.playServices.gamesV2`
+- `Google.android.playServices.matter`
+- `Google.android.playServices.mlKit.naturalLanguage.smartReply`
+- `Google.android.playServices.mlKit.vision.barcodeScanning.codeScanner`
+- `Google.android.playServices.mlKit.vision.textRecognition.chinese`
+- `Google.android.playServices.mlKit.vision.textRecognition.devanagari`
+- `Google.android.playServices.mlKit.vision.textRecognition.japanese`
+- `Google.android.playServices.mlKit.vision.textRecognition.korean`
+- `Google.android.playServices.tfLite.accelerationService`
+- `Google.android.playServices.tfLite.gpu`
+- `Google.android.playServices.tfLite.java`
+- `Google.android.playServices.tfLite.support`
+- `Google.android.playServices.threadNetwork`
+- `Google.mlKit.vision.entityExtraction`
+- `Google.mlKit.vision.faceMeshDetection`
+- `Kotlin.gradlePlugin`
+
+</details>
+
+<h2 id="version-0510-2022-10-25">Version 0.51.0 (2022-10-25)<a class="headerlink" href="#version-0510-2022-10-25" title="Permanent link">&para;</a></h2>
+<h3 id="support-jetpack-compose-bom">Support Jetpack Compose BoM<a class="headerlink" href="#support-jetpack-compose-bom" title="Permanent link">&para;</a></h3>
+<p>Yesterday, Google released a BoM for Jetpack Compose.
+Today we&rsquo;re introducing first-class support for it.</p>
+<p>To take advantage of it, you just need to add the dependency on <code>platform(AndroidX.compose.bom)</code>.
+Just like <code>Firebase.bom</code>, make sure you add it <strong>before</strong> any dependent dependency:</p>
+<div class="highlight"><pre><span></span><code>dependencies {
+    implementation(platform(AndroidX.compose.bom)) // Add this FIRST
+    implementation(AndroidX.compose.material3) // Related dependencies AFTER
+    implementation(AndroidX.compose.material3.windowSizeClass) // Same as above
+}
+</code></pre></div>
+<p>In case you need to use a pre-release version (alpha, beta, rc…), use the <code>withVersionPlaceholder()</code> function as such:</p>
+<div class="highlight"><pre><span></span><code>dependencies {
+    implementation(platform(AndroidX.compose.bom)) // Enables the BoM and depends on it
+    implementation(AndroidX.compose.icons.extended) // Uses version defined in the BoM
+    implementation(AndroidX.compose.material3.withVersionPlaceholder()) // Separate version in versions.properties
+}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>// Add Jetpack Compose to a project in seconds with refreshVersions.
+// NEW: The Compose BoM released on Android Dev Summit is supported!
+
+// No need to search for the versions, refreshVersions will do it for you!
+// It will add the latest most stable version, and will even add the updates
+// as comments in the versions.properties file (auto-created on first use).
+
+android {
+    buildFeatures.compose = true
+    composeOptions {
+        // Version and updates are in versions.properties
+        kotlinCompilerExtensionVersion = versionFor(AndroidX.compose.compiler)
+    }
+}
+
+dependencies {
+    // Version and updates of the BoM are in versions.properties too.
+    implementation(platform(AndroidX.compose.bom)) // Enables the BoM automatically
+    implementation(AndroidX.compose.runtime)                   // Version from the BoM
+    implementation(AndroidX.compose.icons.extended)            // Version from the BoM
+
+    // What if you need a specific alpha/beta/rc version?
+    // withVersionPlaceholder() detaches the dependency from the BoM.
+    // Version and updates will therefore be in versions.properties
+    implementation(AndroidX.compose.material3.withVersionPlaceholder()) // Not from BoM
+}
+</code></pre></div>
+<h3 id="fix-stabilitylevel-calculation-for-number-less-pre-versions">Fix StabilityLevel calculation for number-less pre-versions<a class="headerlink" href="#fix-stabilitylevel-calculation-for-number-less-pre-versions" title="Permanent link">&para;</a></h3>
+<p>Since last changes in the Version class, versions like 1.7.20-RC and 1.7.20-Beta would be marked as stable instead of respectively ReleaseCandidate and Beta because the logic expected a number in all cases.</p>
+<p>The number is now optional for all pre-versions, except milestones.</p>
+<p>To prevent future recurrence of such regression, this commit
+also adds tests that assert the expected stability level of
+many known versions from various libraries.</p>
+<h3 id="new-dependency-notations_4">New dependency notations:<a class="headerlink" href="#new-dependency-notations_4" title="Permanent link">&para;</a></h3>
+<details>
+<summary><strong>Click to expand (11) </strong></summary>
+
+- `AndroidX.asyncLayoutInflater.appcompat`
+- `AndroidX.compose.bom`
+- `AndroidX.dataStore.core.okio`
+- `AndroidX.graphics.core`
+- `AndroidX.input.motionPrediction`
+- `AndroidX.paging.testing`
+- `AndroidX.test.espresso.device`
+- `AndroidX.tv.foundation`
+- `AndroidX.tv.material`
+- `Firebase.dynamicModuleSupport`
+- `Google.firebase.dynamicModuleSupport`
+
+</details>
+
+<h2 id="version-0502-2022-09-24">Version 0.50.2 (2022-09-24)<a class="headerlink" href="#version-0502-2022-09-24" title="Permanent link">&para;</a></h2>
+<h3 id="minor-change">Minor change<a class="headerlink" href="#minor-change" title="Permanent link">&para;</a></h3>
+<p>Disable the old <code>refreshVersionsDependenciesMapping</code> and <code>migrateToRefreshVersionsDependenciesConstants</code> Gradle tasks.</p>
+<h3 id="fixes">Fixes<a class="headerlink" href="#fixes" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>versionFor</code> could not work as it should have if it was used in multiple modules with different values: the <code>refreshVersions</code> task would only display the updates of some of them, and mark the other ones as unused. This has been fixed.</li>
+<li>Running the <code>refreshVersionsCleanup</code> task would log that the <code>gradle/libs.versions.toml</code> file was modified even if it wasn&rsquo;t, and didn&rsquo;t exist in the first place. This is now fixed.</li>
+<li>Version ordering now recognizes random qualifiers instead of marking with an unknown stability level.</li>
+</ul>
+<h3 id="new-dependency-notations_5">New dependency notations:<a class="headerlink" href="#new-dependency-notations_5" title="Permanent link">&para;</a></h3>
+<details>
+<summary><strong>Click to expand (15) </strong></summary>
+
+- `AndroidX.media3.dataSource`
+- `ApolloGraphQL.adapters`
+- `ApolloGraphQL.api`
+- `ApolloGraphQL.ast`
+- `ApolloGraphQL.httpCache`
+- `ApolloGraphQL.idlingResource`
+- `ApolloGraphQL.mockserver`
+- `ApolloGraphQL.normalizedCacheSqlite`
+- `ApolloGraphQL.normalizedCache`
+- `ApolloGraphQL.runtime`
+- `ApolloGraphQL.testingSupport`
+- `Google.horologist.dataLayer`
+- `KotlinX.serialization.bom`
+- `KotlinX.serialization.json.okio`
+- `Spring.boot.web`
+
+</details>
+
+<h3 id="credits">Credits<a class="headerlink" href="#credits" title="Permanent link">&para;</a></h3>
+<p>Thanks to all the folks that contributed in this release!</p>
+<ul>
+<li><a href="https://github.com/thederputy">Jacob Kwitkoski</a></li>
+<li><a href="https://github.com/Gounlaf">Florian Levis</a></li>
+<li><a href="https://github.com/doljae">Seokjae Lee</a></li>
+<li><a href="https://github.com/solonovamax">solonovamax</a></li>
+<li><a href="https://github.com/LouisCAD">Louis CAD</a></li>
+<li><a href="https://github.com/jmfayard">Jean-Michel Fayard</a></li>
+</ul>
+<h2 id="version-0501-2022-09-11">Version 0.50.1 (2022-09-11)<a class="headerlink" href="#version-0501-2022-09-11" title="Permanent link">&para;</a></h2>
+<h3 id="fixes_1">Fixes<a class="headerlink" href="#fixes_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fix the &ldquo;Extension of type &lsquo;VersionCatalogsExtension&rsquo; does not exist.&rdquo; error.</li>
+<li>Versions Catalog migration only worked properly if you ran it twice. This has now been fixed!</li>
+</ul>
+<h2 id="version-0500-2022-09-09">Version 0.50.0 (2022-09-09)<a class="headerlink" href="#version-0500-2022-09-09" title="Permanent link">&para;</a></h2>
+<h3 id="support-for-versions-catalogs">Support for Versions Catalogs! 🎉<a class="headerlink" href="#support-for-versions-catalogs" title="Permanent link">&para;</a></h3>
+<p><strong>Versions Catalogs</strong> are Gradle 7.4+ solution for storing dependencies and versions in a centralized file.
+Gradle will automatically recognize the <code>gradle/libs.versions.toml</code> file… and so will refreshVersions!</p>
+<p>It is similar in spirit to the <code>versions.properties</code> file, <strong>and we are happy to add support for it</strong>:</p>
+<ul>
+<li><code>./gradlew refreshVersions</code> will now add available updates as comments inside the <code>gradle/libs.versions.toml</code> file.</li>
+<li><code>./gradlew refreshVersionsMigrate --mode=VersionCatalogAndVersionProperties</code> will <strong>generate a versions catalog and migrate your build to use it</strong> if you don&rsquo;t have one already.</li>
+</ul>
+<p>Currently, we only support the default versions catalog. If you need support for multiple versions catalogs, add your 👍 <a href="https://github.com/jmfayard/refreshVersions/issues/596">on this issue</a>.</p>
+<p>This is a big and new feature, so feel free to <a href="https://github.com/jmfayard/refreshVersions/discussions/592">provide feedback in this thread</a>, and report issues with the right info if there&rsquo;s no existing one <a href="https://github.com/jmfayard/refreshVersions/issues">here</a>.</p>
+<h3 id="better-support-for-versionfor-and-jetpack-compose">Better support for <code>versionFor</code>, and Jetpack Compose!<a class="headerlink" href="#better-support-for-versionfor-and-jetpack-compose" title="Permanent link">&para;</a></h3>
+<h4 id="before">Before<a class="headerlink" href="#before" title="Permanent link">&para;</a></h4>
+<p><code>versionFor</code> was helpful when you need to access a version located in the <code>versions.properties</code> file, but if there was no dependency using it, you&rsquo;d never see any updates.
+For projects/modules using Jetpack Compose from Google, that meant you&rsquo;d never see any updates for the compiler, and you&rsquo;d need to look it up yourself.
+Also, the version entry would be marked as unused, or would be the wrong one if you shared it with other Compose artifacts since <a href="https://android-developers.googleblog.com/2022/06/independent-versioning-of-Jetpack-Compose-libraries.html">the compiler now has its own versioning track</a>.</p>
+<h4 id="now">Now<a class="headerlink" href="#now" title="Permanent link">&para;</a></h4>
+<p>Now, passing a dependency notation such as <code>AndroidX.compose.compiler</code> to <code>versionFor</code> is exactly the same as if you used the dependency somewhere in the project:</p>
+<p>You&rsquo;ll get all the updates, and if the version is not yet specified in the <code>versions.properties</code> file, as usual, refreshVersions will try to find the latest most stable version available, plus it will also add the available comments for any newer, less stable version.
+That makes it even easier to start a project with Jetpack Compose!</p>
+<p>With this in a <code>build.gradle.kts</code> file:</p>
+<div class="highlight"><pre><span></span><code>android {
+    composeOptions {
+        kotlinCompilerExtensionVersion = versionFor(AndroidX.compose.compiler) // Kotlin DSL
+        kotlinCompilerExtensionVersion = versionFor(project, AndroidX.compose.compiler) // Groovy DSL
+    }
+}
+</code></pre></div>
+<p><em><code>AndroidX.compose.compiler</code> is equivalent to <code>"androidx.compose.compiler:compiler:_"</code>.</em></p>
+<p>You&rsquo;ll get that in the <code>versions.properties</code> file if you were on version <code>1.3.0-rc01</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="na">version.androidx.compose.compiler</span><span class="o">=</span><span class="s">1.3.0-rc01</span>
+<span class="c1">##                    # available=1.3.0-rc02</span>
+<span class="c1">##                    # available=1.3.0</span>
+</code></pre></div>
+<h3 id="new-page-for-all-the-built-in-dependency-notations">New page for all the built-in dependency notations 📕<a class="headerlink" href="#new-page-for-all-the-built-in-dependency-notations" title="Permanent link">&para;</a></h3>
+<p>To make it easy to start new projects, new modules, or using a common library, we spent a lot of time adding built-in dependency notations for Kotlin, kotlinx, AndroidX, and more.</p>
+<p>However, it wasn&rsquo;t so easy to know that they exist.
+That&rsquo;s why we made <a href="https://jmfayard.github.io/refreshVersions/dependency-notations/">a dedicated page where you can find them all</a>! Let us know how helpful it is to you!</p>
+<h3 id="fixes_2">Fixes<a class="headerlink" href="#fixes_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>rejectVersionIf { … }</code> had an issue: its removal would not be taken into account until the Gradle daemon would be killed. This now behaves correctly.</li>
+<li>We were ignoring repositories defined in <code>pluginManagement { … }</code>, which might have led to Gradle plugin updates being missed by refreshVersions. Now, we look up these repositories as well.</li>
+</ul>
+<h3 id="new-dependency-notations_6">New dependency notations:<a class="headerlink" href="#new-dependency-notations_6" title="Permanent link">&para;</a></h3>
+<details>
+<summary><strong>Click to expand (145) </strong></summary>
+
+- `AndroidX.appSearch.builtInTypes`
+- `AndroidX.compose.runtime.tracing`
+- `AndroidX.core.uwb`
+- `AndroidX.core.uwb.rxJava3`
+- `AndroidX.health.connect.client`
+- `AndroidX.javascriptEngine`
+- `AndroidX.lifecycle.runtime.compose`
+- `AndroidX.room.paging.guava`
+- `AndroidX.room.paging.rxJava2`
+- `AndroidX.room.paging.rxJava3`
+- `AndroidX.tracing.perfetto`
+- `CashApp.molecule.gradlePlugin`
+- `CashApp.molecule.runtime`
+- `CashApp.molecule.test`
+- `Google.accompanist.drawablePainter`
+- `Google.accompanist.flowLayout`
+- `Google.accompanist.navigationAnimation`
+- `Google.accompanist.navigationMaterial`
+- `Google.accompanist.permissions`
+- `Google.accompanist.placeholder`
+- `Google.accompanist.placeholder.material`
+- `Google.accompanist.webView`
+- `Google.ambient.crossDevice`
+- `Google.horologist.audio`
+- `Google.horologist.audio.ui`
+- `Google.horologist.composables`
+- `Google.horologist.compose.layout`
+- `Google.horologist.compose.tools`
+- `Google.horologist.media`
+- `Google.horologist.media.data`
+- `Google.horologist.media.ui`
+- `Google.horologist.media3.backend`
+- `Google.horologist.networkAwareness`
+- `Google.horologist.tiles`
+- `Square.okHttp3.mockWebServer3`
+- `Square.okHttp3.mockWebServer3.junit4`
+- `Square.okHttp3.mockWebServer3.junit5`
+- `Square.okHttp3.android`
+- `Square.okHttp3.brotli`
+- `Square.okHttp3.coroutines`
+- `Square.okHttp3.dnsOverHttps`
+- `Square.okHttp3.sse`
+- `Square.okHttp3.tls`
+- `Square.okHttp3.urlConnection`
+- `Arrow.core`
+- `Arrow.fx.coroutines`
+- `Arrow.fx.stm`
+- `Arrow.optics`
+- `Arrow.optics.kspPlugin`
+- `Arrow.optics.reflect`
+- `Arrow.stack`
+- `Arrow.analysis.gradlePlugin`
+- `Koin.navigation`
+- `Testing.kotest.extensions.property.arbs`
+- `Testing.kotest.extensions.property.datetime`
+- `Ktor.client.contentNegotiation`
+- `Ktor.client.contentNegotiationTests`
+- `Ktor.client.gson`
+- `Ktor.client.jackson`
+- `Ktor.client.java`
+- `Ktor.client.okHttp`
+- `Ktor.client.resources`
+- `Ktor.plugins.events`
+- `Ktor.plugins.http`
+- `Ktor.plugins.http.cio`
+- `Ktor.plugins.io`
+- `Ktor.plugins.network`
+- `Ktor.plugins.networkTls`
+- `Ktor.plugins.networkTlsCertificates`
+- `Ktor.plugins.resources`
+- `Ktor.plugins.serialization`
+- `Ktor.plugins.serialization.gson`
+- `Ktor.plugins.serialization.jackson`
+- `Ktor.plugins.serialization.kotlinx`
+- `Ktor.plugins.serialization.kotlinx.cbor`
+- `Ktor.plugins.serialization.kotlinx.json`
+- `Ktor.plugins.serialization.kotlinx.tests`
+- `Ktor.plugins.serialization.kotlinx.xml`
+- `Ktor.server.auth`
+- `Ktor.server.auth.jwt`
+- `Ktor.server.auth.ldap`
+- `Ktor.server.autoHeadResponse`
+- `Ktor.server.cachingHeaders`
+- `Ktor.server.callId`
+- `Ktor.server.callLogging`
+- `Ktor.server.cio`
+- `Ktor.server.compression`
+- `Ktor.server.conditionalHeaders`
+- `Ktor.server.contentNegotiation`
+- `Ktor.server.cors`
+- `Ktor.server.dataConversion`
+- `Ktor.server.defaultHeaders`
+- `Ktor.server.doubleReceive`
+- `Ktor.server.forwardedHeader`
+- `Ktor.server.freeMarker`
+- `Ktor.server.hostCommon`
+- `Ktor.server.hsts`
+- `Ktor.server.htmlBuilder`
+- `Ktor.server.httpRedirect`
+- `Ktor.server.httpRedirect`
+- `Ktor.server.jte`
+- `Ktor.server.locations`
+- `Ktor.server.methodOverride`
+- `Ktor.server.metrics`
+- `Ktor.server.metricsMicrometer`
+- `Ktor.server.mustache`
+- `Ktor.server.partialContent`
+- `Ktor.server.pebble`
+- `Ktor.server.resources`
+- `Ktor.server.sessions`
+- `Ktor.server.statusPages`
+- `Ktor.server.testSuites`
+- `Ktor.server.thymeleaf`
+- `Ktor.server.velocity`
+- `Ktor.server.webjars`
+- `Ktor.server.websockets`
+- `Ktor.server`
+- `Ktor.plugins.websocketSerialization`
+- `Ktor.plugins.websockets`
+- `Testing.assertj.core`
+- `Testing.assertj.db`
+- `Testing.assertj.guava`
+- `Testing.assertj.jodaTime`
+- `Testing.assertj.swing`
+- `Testing.hamcrest`
+- `Testing.hamcrest.core`
+- `Testing.hamcrest.library`
+- `JetBrains.exposed.core`
+- `JetBrains.exposed.dao`
+- `JetBrains.exposed.jdbc`
+- `KotlinX.dataframe`
+- `KotlinX.dataframe.arrow`
+- `KotlinX.dataframe.core`
+- `KotlinX.dataframe.excel`
+- `KotlinX.dataframe.dataframe`
+- `KotlinX.deeplearning.api`
+- `KotlinX.deeplearning.onnx`
+- `KotlinX.deeplearning.visualization`
+- `KotlinX.lincheck`
+- `KotlinX.lincheck.jvm`
+- `KotlinX.multik.api`
+- `KotlinX.multik.default`
+- `KotlinX.multik.jvm`
+- `KotlinX.multik.native`
+- `Spring.boms.springCloud`
+
+</details>
+
+<h3 id="credits_1">Credits<a class="headerlink" href="#credits_1" title="Permanent link">&para;</a></h3>
+<p>Thanks to all the folks that contributed in updating the built-in dependency notations!</p>
+<ul>
+<li><a href="https://github.com/thederputy">Jacob Kwitkoski</a> for <code>CashApp.molecule</code></li>
+<li><a href="https://github.com/rlatapy-luna">Rémi Latapy</a> for <code>Google.accompanist</code></li>
+<li><a href="https://github.com/rlatapy-luna">Yuri Schimke</a> for <code>Google.horologist</code> and <code>Square.okHttp3</code></li>
+<li><a href="https://github.com/brady-aiello">Brady Aiello</a> for <code>Ktor</code></li>
+<li><a href="https://github.com/imashnake0">Kamalesh</a> for <code>JetBrains.exposed</code>, <code>Testing.assertj</code>, <code>Testing.hamcrest</code></li>
+<li><a href="https://github.com/doljae">doljae</a> for <code>Spring.boms.springCloud</code></li>
+<li><a href="https://github.com/joharei">Johan Reitan</a> for <code>KotlinX.multik</code>, <code>KotlinX.lincheck</code>, <code>KotlinX.deeplearning</code></li>
+<li><a href="https://github.com/RFonzi">Ryan Fonzi</a> for <code>Arrow</code></li>
+</ul>
+<p>And thanks to the GitHub sponsors of the maintainers <a href="https://github.com/LouisCAD">Louis CAD</a> and <a href="https://github.com/jmfayard">Jean-Michel Fayard</a> who didn&rsquo;t count the hours spent on this project since 2018-2019!</p>
+<p><em>We hope you save a lot of time thanks to this project and can therefore leave work early, or pursue more valuable tasks and projects. 😉</em></p>
+<p><strong>If you&rsquo;re not a sponsor yet, please consider becoming one</strong>, as a company, as an individual, or even both, it means a lot to us!
+Just <strong>click the heart</strong> button at the top of the GitHub repo webpage, follow the steps, and your heart. Thank you!</p>
+<h2 id="version-0402-2022-06-01">Version 0.40.2 (2022-06-01)<a class="headerlink" href="#version-0402-2022-06-01" title="Permanent link">&para;</a></h2>
+<h3 id="fixes_3">Fixes<a class="headerlink" href="#fixes_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fix a memory leak that led the Gradle daemon to eventually suffer from a lot of GC overhead before running out of memory when a Gradle plugin had its version managed by refreshVersions.
+We&rsquo;ve done extensive tests to ensure we fixed this for good, and the CI now checks for leaks in the Gradle daemon to prevent future recurrence.
+Note that if you were using Gradle configuration cache, you were likely to encounter this issue less often.</li>
+<li>Fix the <code>AndroidX.wear.tiles.material</code> dependency notation that was pointing to wrong coordinates because of a typo.
+The test that was designed to catch this has been fixed to prevent future recurrence.</li>
+</ul>
+<p>Thanks to <a href="https://github.com/yacine-ser">@yacine-ser</a> for raising <a href="https://github.com/jmfayard/refreshVersions/issues/536">this memory leak issue</a> along with a hint on the culprit, it was very helpful in reproducing and fixing the leak.</p>
+<h3 id="new-dependency-notations_7">New dependency notations:<a class="headerlink" href="#new-dependency-notations_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AndroidX.camera.mlKitVision</li>
+<li>AndroidX.compose.material3.windowSizeClass</li>
+<li>AndroidX.compose.ui.text.googleFonts</li>
+<li>AndroidX.core.performance</li>
+<li>AndroidX.customView.poolingContainer</li>
+<li>AndroidX.health.connectClient</li>
+<li>AndroidX.metrics.performance</li>
+<li>AndroidX.test.ext.junit.gTest</li>
+<li>AndroidX.test.ext.junit.ktx (was previously AndroidX.test.ext.junitKtx)</li>
+<li>AndroidX.wear.watchFace.complications.rendering</li>
+<li>Google.android.material.composeThemeAdapter3</li>
+</ul>
+<h2 id="version-0401-2022-02-06">Version 0.40.1 (2022-02-06)<a class="headerlink" href="#version-0401-2022-02-06" title="Permanent link">&para;</a></h2>
+<h3 id="fixes_4">Fixes<a class="headerlink" href="#fixes_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Improved support of Gradle configuration cache. In the previous release, if you ran the <code>refreshVersions</code> task twice in a row with configuration cache enabled, the second run would fail, even in warning mode. It&rsquo;s now fixed.</li>
+<li>To make refreshVersions compatible with GCS (Google Cloud Storage) hosted maven repositories (which can be helpful for company/team internal libraries), we were using the official library from Google. Unfortunately, this led to dependency hell to some of our users because it then requires a specific version of Guava, which could be different from the one required by other plugins, and the one from refreshVersions would prevail. So, to resolve these problems, we replaced our implementation with one that reuses Gradle&rsquo;s built-in <code>GcsClient</code>, and we&rsquo;re very happy with that because it also has the benefit of reducing the total size of refreshVersions when we include its dependencies. Note that this is using internal Gradle APIs, but we&rsquo;ve seen that they didn&rsquo;t change in 5 years, and the code path is executed only if you have gcs backed repositories in your project.</li>
+</ul>
+<h3 id="new-dependency-notations_8">New dependency notations:<a class="headerlink" href="#new-dependency-notations_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AndroidX.glance.wearTiles</li>
+<li>AndroidX.wear.tiles.material</li>
+<li>Google.android.maps<ul>
+<li>compose</li>
+<li>utils</li>
+<li>utils.ktx</li>
+<li>ktx</li>
+<li>rx</li>
+<li>places<ul>
+<li>ktx</li>
+<li>rx</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ReactiveX<ul>
+<li>rxJava2<ul>
+<li>rxAndroid</li>
+<li>rxKotlin</li>
+</ul>
+</li>
+<li>rxJava3<ul>
+<li>rxAndroid</li>
+<li>rxKotlin</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>JakeWharton<ul>
+<li>rxBinding3<ul>
+<li>appcompat</li>
+<li>core</li>
+<li>drawerLayout</li>
+<li>leanback</li>
+<li>material</li>
+<li>recyclerview</li>
+<li>slidingPaneLayout</li>
+<li>swipeRefreshLayout</li>
+<li>viewPager2</li>
+<li>viewPager</li>
+</ul>
+</li>
+<li>rxBinding4<ul>
+<li>appcompat</li>
+<li>core</li>
+<li>drawerLayout</li>
+<li>leanback</li>
+<li>material</li>
+<li>recyclerview</li>
+<li>slidingPaneLayout</li>
+<li>swipeRefreshLayout</li>
+<li>viewPager2</li>
+<li>viewPager</li>
+</ul>
+</li>
+<li>rxRelay2</li>
+<li>rxRelay3</li>
+</ul>
+</li>
+</ul>
+<h3 id="credits_2">Credits<a class="headerlink" href="#credits_2" title="Permanent link">&para;</a></h3>
+<p>Thanks to <a href="https://github.com/mgray88">Mike Gray</a> for the contribution in adding ReactiveX, RxBinding, and RxRelay dependency notations!</p>
+<h2 id="version-0400-2022-01-24">Version 0.40.0 (2022-01-24)<a class="headerlink" href="#version-0400-2022-01-24" title="Permanent link">&para;</a></h2>
+<h3 id="new-features">New features<a class="headerlink" href="#new-features" title="Permanent link">&para;</a></h3>
+<ul>
+<li>We are very happy to announce that <strong>refreshVersions now supports <a href="https://docs.gradle.org/7.3.3/userguide/configuration_cache.html">Gradle configuration cache</a>!</strong> Gradle configuration is all about saving time, which is also the mission of refreshVersions, albeit in a different situation, so it made a lot of sense to not step on that feature Gradle engineers worked hard on. <em>Note that the <code>refreshVersions</code> task itself is not compatible with configuration cache because it&rsquo;s impossible with the current Gradle APIs.</em></li>
+<li><strong>Error tolerance</strong>: The <code>refreshVersions</code> task will no longer fail if there&rsquo;s a problem getting versions from a repository. Now, it will add contextual comments in the <code>versions.properties</code> file, so you know what failed, and don&rsquo;t get fully blocked next time jcenter or another repository undergoes an outage. This should also help if you&rsquo;re running the <code>refreshVersions</code> task through an unstable internet connection and some network calls fail because of that.</li>
+</ul>
+<h3 id="new-dependency-notations_9">New dependency notations:<a class="headerlink" href="#new-dependency-notations_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Google.modernStorage:<ul>
+<li>bom</li>
+<li>permissions</li>
+<li>photoPicker</li>
+<li>storage</li>
+</ul>
+</li>
+<li>Google.android.openSourceLicensesPlugin</li>
+<li>Google.android.playServices:<ul>
+<li>appset</li>
+<li>auth.apiPhone</li>
+<li>auth.blockstore</li>
+<li>basement</li>
+<li>cronet</li>
+<li>fido</li>
+<li>openSourceLicenses</li>
+<li>passwordComplexity</li>
+<li>recaptcha</li>
+<li>tagmanager</li>
+</ul>
+</li>
+<li>Google.android.versionMatcherPlugin</li>
+</ul>
+<h3 id="credits_3">Credits<a class="headerlink" href="#credits_3" title="Permanent link">&para;</a></h3>
+<p>Thanks to <a href="https://github.com/imashnake0">Kamalesh</a> for the contribution in adding dependency notations!</p>
+<h2 id="version-0302-2022-01-09">Version 0.30.2 (2022-01-09)<a class="headerlink" href="#version-0302-2022-01-09" title="Permanent link">&para;</a></h2>
+<h3 id="bug-fixes_1">Bug fixes<a class="headerlink" href="#bug-fixes_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>We are now shutting down the thread-pool from kotlinx.coroutines that we&rsquo;re using when the build finishes (<code>Dispatchers.shutdown()</code>). We believe it caused memory leaks in the Gradle Daemon, and this change, made possible since kotlinx.coroutines 1.6.0 should fix the last memory leak cause.</li>
+<li>The versions of dependencies from the <code>androidx.test</code> family started diverging, so we changed replaced the <code>version.androidx.test</code> version key with more specific ones. The migration will be done automatically on upgrade of refreshVersions, without upgrading the versions of <code>androidx.tests</code> dependencies themselves.</li>
+</ul>
+<h3 id="new-feature">New feature<a class="headerlink" href="#new-feature" title="Permanent link">&para;</a></h3>
+<ul>
+<li>We now support fetching updates on plain-text http repositories. We evaluated the security risks, and for the case of refreshVersions itself, there is none that is significant (the worst possibility is crashing the build under attack), and if you&rsquo;re not using plain-text http repositories in the first place in your project, this doesn&rsquo;t apply at all anyway. We added support for this because some of our users need it for local maven repositories.</li>
+</ul>
+<h3 id="new-dependency-notations_10">New dependency notations:<a class="headerlink" href="#new-dependency-notations_10" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Android.billingClient</li>
+<li>Android.billingClient.ktx</li>
+<li>Android.installReferrer</li>
+<li>Android.tools:<ul>
+<li>desugarJdkLibs</li>
+<li>r8</li>
+<li>build.gradlePlugin</li>
+</ul>
+</li>
+<li>CashApp.licenseeGradlePlugin</li>
+<li>CashApp.sqlDelight:<ul>
+<li>extensions:<ul>
+<li>androidPaging3</li>
+<li>androidPaging</li>
+<li>rxJava3</li>
+<li>rxJava2</li>
+</ul>
+</li>
+<li>drivers.sqlJs</li>
+</ul>
+</li>
+<li>Google.android.fhir:<ul>
+<li>dataCapture</li>
+<li>engine</li>
+<li>workflow</li>
+</ul>
+</li>
+<li>Google.android.flexbox</li>
+<li>Google.android.playServices:<ul>
+<li>cast:<ul>
+<li>framework</li>
+<li>tv</li>
+</ul>
+</li>
+<li>instantApps</li>
+<li>maps</li>
+<li>mlKit.vision.imageLabeling.custom</li>
+<li>mlKit.naturalLanguage.languageIdentification</li>
+<li>pay</li>
+<li>wallet</li>
+</ul>
+</li>
+<li>Google.mlKit:<ul>
+<li>playStoreDynamicFeatureSupport</li>
+<li>naturalLanguage.entityExtraction</li>
+<li>vision:<ul>
+<li>selfieSegmentation</li>
+<li>textRecognition<ul>
+<li>chinese</li>
+<li>devanagari</li>
+<li>japanese</li>
+<li>korean</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Google.modernStorage:<ul>
+<li>fileSystem</li>
+<li>mediaStore</li>
+</ul>
+</li>
+<li>Google.oboe</li>
+<li>Ktor.client.darwin</li>
+<li>Kotlin.scriptRuntime</li>
+<li>KotlinX.serialization.hocon</li>
+<li>Square.logcat</li>
+<li>Square.moshi.adapters</li>
+<li>Touchlab.kermit<ul>
+<li>bugsnagTest</li>
+<li>bugsnag</li>
+<li>crashlyticsTest</li>
+<li>crashlytics</li>
+<li>gradlePlugin</li>
+<li>test</li>
+</ul>
+</li>
+</ul>
+<h3 id="other-changes">Other changes<a class="headerlink" href="#other-changes" title="Permanent link">&para;</a></h3>
+<p>We also removed many obsolete dependency notations from refreshVersions. Just like for the 0.30.0 release, this should not break your build as we implemented a robust replacement mechanism that also inserts migration guidance comments. ✨</p>
+<h3 id="credits_4">Credits<a class="headerlink" href="#credits_4" title="Permanent link">&para;</a></h3>
+<p>Thanks to <a href="https://github.com/brady-aiello">Brady Aiello</a>, <a href="https://github.com/mgray88">Mike Gray</a>, and <a href="https://github.com/imashnake0">Kamalesh</a> for their contributions in adding dependency notations!</p>
+<h2 id="version-0301-2021-12-21">Version 0.30.1 (2021-12-21)<a class="headerlink" href="#version-0301-2021-12-21" title="Permanent link">&para;</a></h2>
+<h3 id="bug-fixes_2">Bug fixes<a class="headerlink" href="#bug-fixes_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fix Gradle sync for projects using buildSrc (<a href="https://github.com/jmfayard/refreshVersions/issues/474">#474</a>)</li>
+<li>Support buildSrc modules that have no plugin declared</li>
+</ul>
+<h2 id="version-0300-2021-12-19">Version 0.30.0 (2021-12-19)<a class="headerlink" href="#version-0300-2021-12-19" title="Permanent link">&para;</a></h2>
+<h3 id="potentially-breaking-change_1">Potentially breaking change<a class="headerlink" href="#potentially-breaking-change_1" title="Permanent link">&para;</a></h3>
+<p>We raised the minimum supported Gradle version to 6.8, because we started to use Kotlin 1.4 features, and Gradle pins the stdlib version. Since at the time of writing, the latest Gradle version is 7.3, we believe it won&rsquo;t actually block any of our users. We have <a href="https://jmfayard.github.io/refreshVersions/setup/#update-gradle-if-needed">a short section about updating Gradle on our website here</a>, feel free to check it out if it can help you.</p>
+<h3 id="new-features_1">New features<a class="headerlink" href="#new-features_1" title="Permanent link">&para;</a></h3>
+<h4 id="repositories-declared-in-dependencyresolutionmanagement-are-now-supported-gradle-7">Repositories declared in <code>dependencyResolutionManagement</code> are now supported (Gradle 7+)<a class="headerlink" href="#repositories-declared-in-dependencyresolutionmanagement-are-now-supported-gradle-7" title="Permanent link">&para;</a></h4>
+<p>Since Gradle 7, you can declare repositories of the entire Gradle project (including all subprojects and their buildscript)
+in the <code>dependencyResolutionManagement</code> block in the <code>settings.gradle[.kts]</code> file.
+Unfortunately, refreshVersions didn&rsquo;t support it, so, unless you also kept repositories declared with <code>allprojects</code>, or per project, you would end up with all version entries in the <code>versions.properties</code> file marked as unused after running the <code>refreshVersions</code> task, and you&rsquo;d not see the newer updates.</p>
+<p>This release resolves this issue, and we are eager to use it in our projects ourselves.</p>
+<h4 id="update-on-built-in-dependency-notations">Update on built-in dependency notations<a class="headerlink" href="#update-on-built-in-dependency-notations" title="Permanent link">&para;</a></h4>
+<p>Sometimes, libraries get deprecated, or the maintainers change the maven coordinates.
+When it happens, this fact is unfortunately not included in the <code>maven-metadata.xml</code> files, or any other standard metadata. That means tools like refreshVersions will believe you&rsquo;re on the latest versions, when you&rsquo;re not, because it lacks the necessary information.</p>
+<p>One example is Google that changed the maven coordinates of all their AndroidX Wear Watchface artifacts several weeks ago.</p>
+<p>It took us time to catch-up with this change because we wanted to design a generic mechanism for this recurrent problem, and provide the best experience for you, and ourselves.</p>
+<p>From now on, we have the ability to remove old or deprecated built-in dependency notations in refreshVersions, and doing so will not break your builds, nor will it change the dependencies of your project. However, it&rsquo;ll help you notice the deprecation, and it&rsquo;ll help you switch to the replacement dependencies, if any.</p>
+<p>The way it works is that we keep a versioned list of all the removals, and on refreshVersions upgrade, an automatic replacement will put back the hardcoded maven coordinates, using the version placeholder, and it will add our handwritten TODO/FIXME comments, along with a perfectly aligned replacement suggestion if there is any, so that moving to the newer artifact is as easy as upgrading to a newer version in the <code>versions.properties</code> file. We designed the system so that it cannot break your build, even if you were using <code>withVersion(…)</code> or other <code>DependencyNotation</code> extensions, even if you have code comments or special string literals.</p>
+<p>It also supports the case where we just move a dependency notation to another place, or change its name, without changing the maven coordinates.</p>
+<p>Because of this change, it&rsquo;s important that you check the git diff after upgrading refreshVersions and running the first Gradle reload/sync/build, so you can see if there&rsquo;s been any changes, and if you might want to switch to any replacement dependencies.</p>
+<p>This change will enable us to keep the built-in dependency notations updated with less effort, so we&rsquo;re very happy to have it ready, and fully tested.</p>
+<p>We&rsquo;ve already started to take advantage of it to clean up all the discontinued artifacts we found in AndroidX.</p>
+<h3 id="bug-fixes_3">Bug fixes<a class="headerlink" href="#bug-fixes_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Repositories declared in the <code>dependencyResolutionManagement</code> block were ignored. Now, they are taken into account.</li>
+<li>The kotest extensions dependencies were previously wrongly sharing their version as per refreshVersions rules. Now, they each have their independent, own version key.</li>
+<li>The <code>refreshVersionsMigrate</code> task wasn&rsquo;t inserting new entries in alphabetical order. Now it is.</li>
+<li>The <code>refreshVersionsMigrate</code> task wasn&rsquo;t migrating buildscript dependencies. Now it is.</li>
+</ul>
+<h3 id="new-dependency-notations_11">New dependency notations:<a class="headerlink" href="#new-dependency-notations_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AndroidX.appSearch.platformStorage</li>
+<li>AndroidX.benchmark.macro</li>
+<li>AndroidX.camera.video</li>
+<li>AndroidX.carApp:<ul>
+<li>automotive</li>
+<li>projected</li>
+</ul>
+</li>
+<li>AndroidX.compose:<ul>
+<li>animation.graphics</li>
+<li>material3</li>
+</ul>
+</li>
+<li>AndroidX.core.remoteViews</li>
+<li>AndroidX.dragAndDrop</li>
+<li>AndroidX.emoji2.bundled</li>
+<li>AndroidX.glance.appWidget</li>
+<li>AndroidX.glance</li>
+<li>AndroidX.leanback.grid</li>
+<li>AndroidX.lifecycle.runtimeTesting</li>
+<li>AndroidX.media3:<ul>
+<li>cast</li>
+<li>common</li>
+<li>database</li>
+<li>datasource:<ul>
+<li>cronet</li>
+<li>okhttp</li>
+<li>rtmp</li>
+</ul>
+</li>
+<li>decoder</li>
+<li>exoPlayer:<ul>
+<li>dash</li>
+<li>hls</li>
+<li>ima</li>
+<li>rtsp</li>
+<li>workmanager</li>
+</ul>
+</li>
+<li>extractor</li>
+<li>session</li>
+<li>testUtils.robolectric</li>
+<li>testUtils</li>
+<li>transformer</li>
+<li>ui.leanback</li>
+<li>ui</li>
+</ul>
+</li>
+<li>AndroidX.multidex.instrumentation</li>
+<li>AndroidX.paging.guava</li>
+<li>AndroidX.room:<ul>
+<li>paging</li>
+<li>rxJava3</li>
+</ul>
+</li>
+<li>AndroidX.wear.tiles.testing</li>
+<li>AndroidX.wear.watchFace:<ul>
+<li>complications.dataSourceKtx</li>
+<li>complications.dataSource</li>
+<li>editor</li>
+</ul>
+</li>
+<li>KotlinX.coroutines.bom</li>
+<li>Square.moshi.adapters</li>
+<li>Testing.junit:<ul>
+<li>bom</li>
+<li>jupiter: <em>(moved from Testing.junit)</em><ul>
+<li>api <em>(moved from Testing.junit.api)</em></li>
+<li>engine <em>(moved from Testing.junit.engine)</em></li>
+<li>migrationSupport <em>(moved from Testing.junit.migrationSupport)</em></li>
+<li>params <em>(moved from Testing.junit.params)</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Testing.kotest.framework:<ul>
+<li>api</li>
+<li>dataset</li>
+</ul>
+</li>
+</ul>
+<p>Thanks to <a href="https://github.com/Kantis">Emil Kantis</a> for <a href="https://github.com/jmfayard/refreshVersions/pull/446">the kotest dependencies fixes</a>!
+Thanks to <a href="https://github.com/imashnake0">Kamalesh</a> for <a href="https://github.com/jmfayard/refreshVersions/pull/460#issuecomment-995768730">the help in updating AndroidX dependency notations</a>!
+Thanks to <a href="https://github.com/SimonMarquis">Simon Marquis</a> for <a href="https://github.com/jmfayard/refreshVersions/pull/462">adding Square.moshi.adapters</a>, and <a href="https://github.com/jmfayard/refreshVersions/pull/464">helping contributors using Windows</a>!</p>
+<h2 id="version-0230-2021-09-28">Version 0.23.0 (2021-09-28)<a class="headerlink" href="#version-0230-2021-09-28" title="Permanent link">&para;</a></h2>
+<h3 id="bug-fix_5">Bug fix<a class="headerlink" href="#bug-fix_5" title="Permanent link">&para;</a></h3>
+<p>Fix a bug that broke standalone buildSrc builds.</p>
+<h2 id="version-0220-2021-09-27">Version 0.22.0 (2021-09-27)<a class="headerlink" href="#version-0220-2021-09-27" title="Permanent link">&para;</a></h2>
+<h3 id="bug-fix_6">Bug fix<a class="headerlink" href="#bug-fix_6" title="Permanent link">&para;</a></h3>
+<p>Fix a regression that brought a <code>KotlinNullPointerException</code> in the build. We apologize for the issue. Thanks to Marcin and Craig for <a href="https://github.com/jmfayard/refreshVersions/issues/442">the report</a>.</p>
+<h3 id="new-dependency-notations_12">New dependency notations:<a class="headerlink" href="#new-dependency-notations_12" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AndroidX.compose.ui.toolingPreview</li>
+<li>Chucker</li>
+<li>KotlinX.cli</li>
+<li>KotlinX.datetime</li>
+</ul>
+<p>Thanks to <a href="https://github.com/starsep">Filip Czaplicki</a>, who contributed to the new dependency notations!</p>
+<h2 id="version-0210-2021-09-07">Version 0.21.0 (2021-09-07)<a class="headerlink" href="#version-0210-2021-09-07" title="Permanent link">&para;</a></h2>
+<h3 id="new-feature_1">New feature<a class="headerlink" href="#new-feature_1" title="Permanent link">&para;</a></h3>
+<p>We now support npm dependencies for Kotlin/JS!</p>
+<p>Just put the version placeholder (<code>_</code>) in place of the version, and you&rsquo;re good to go.</p>
+<p>The version keys follow a simple naming scheme where their id is prefixed with <code>npm</code>, here are two examples:
+- <code>version.npm.react=17.0.2</code>
+- <code>version.npm.@googlemaps/js-api-loader=1.12.2</code></p>
+<p>Special thanks to <a href="https://github.com/NikkyAI">NikkyAI</a> who authored the feature, and pair-programmed with us to refine it!</p>
+<h3 id="improvements">Improvements<a class="headerlink" href="#improvements" title="Permanent link">&para;</a></h3>
+<p>Before this release, when we added new dependency notations and shorter version keys, it could lead to an unwanted upgrade of the dependency in the project upgrading refreshVersions. With this release, we make sure to copy the same version if we add or change the version key, and it will also work if we decide to remove one. This ensures that upgrading refreshVersions will not be able to affect your application or library.</p>
+<p>Thanks to <a href="https://github.com/brady-aiello">Brady Aiello</a> from <a href="https://touchlab.co/">Touchlab</a> for helping out via pair-programming!</p>
+<h3 id="new-dependency-notations_13">New dependency notations:<a class="headerlink" href="#new-dependency-notations_13" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Koin (new group with several dependencies)</li>
+<li>Touchlab.stately (new group with several dependencies)</li>
+<li>RussHWolf.multiplatformSettings (new group with several dependencies)</li>
+</ul>
+<p>Thanks to <a href="https://github.com/brady-aiello">Brady Aiello</a> again, who contributed to these new dependency notations!</p>
+<h2 id="version-0200-2021-08-23">Version 0.20.0 (2021-08-23)<a class="headerlink" href="#version-0200-2021-08-23" title="Permanent link">&para;</a></h2>
+<h3 id="announcement">Announcement<a class="headerlink" href="#announcement" title="Permanent link">&para;</a></h3>
+<p>We are now ready to accept dependency notation contributions for high-quality and popular dependencies from the Kotlin ecosystem!</p>
+<p>Look for <a href="https://github.com/jmfayard/refreshVersions/issues?q=is%3Aopen+label%3A%22Dependency+notations%22+label%3A%22up-for-grabs%22">issues with the <code>Dependency notations</code> and <code>up-for-grabs</code> tags</a> to find one you can directly contribute to, or submit a new issue to ask for a new one to be added. We updated the contributing guide on the website, it now has <a href="../contributing/submitting-prs/dependency-notations-updates/">a guide dedicated to it here</a>.</p>
+<h3 id="new-features_2">New features<a class="headerlink" href="#new-features_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>refreshVersions will now add <code>## unused</code> comments on top of unused entries in the <code>versions.properties</code> file after you run the <code>refreshVersions</code> task, so you know which ones are obsolete and can be removed.</li>
+<li>The new <code>rejectVersionIf { … }</code> predicate available in the <code>refreshVersions { … }</code> extension in your <code>settings.gradle[.kts]</code> file will allow you to filter any kind of versions you don&rsquo;t want to know about. It can be handy to filter snapshots out for example.</li>
+<li>Most of our dependency notations now provide more flexibility with 3 new extension functions: <code>withVersionPlaceholder()</code>, <code>withVersion(…)</code>, and <code>withoutVersion()</code>.</li>
+</ul>
+<h3 id="change-potentially-breaking">Change (potentially breaking)<a class="headerlink" href="#change-potentially-breaking" title="Permanent link">&para;</a></h3>
+<ul>
+<li>If you use a BoM from the built-in dependency notations, it must always appear before dependencies from the group it controls, or you&rsquo;ll see an error message that will fail the Gradle build. We do this because we can&rsquo;t switch on usage of the BoM for linked dependencies that have already been evaluated by Gradle.</li>
+</ul>
+<h3 id="improvements_1">Improvements<a class="headerlink" href="#improvements_1" title="Permanent link">&para;</a></h3>
+<p>The <code>refreshVersionsMigrate</code> will now use the built-in dependency notations if they match existing dependencies.</p>
+<h3 id="new-dependency-notations_14">New dependency notations:<a class="headerlink" href="#new-dependency-notations_14" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AndroidX:<ul>
+<li>benchmark.macroJunit4</li>
+<li>core.splashscreen</li>
+<li>games:<ul>
+<li>activity</li>
+<li>controller</li>
+<li>framePacing</li>
+<li>performanceTuner</li>
+<li>textInput</li>
+</ul>
+</li>
+<li>navigation.testing</li>
+<li>wear.compose:<ul>
+<li>foundation</li>
+<li>material</li>
+</ul>
+</li>
+<li>window</li>
+<li>java</li>
+<li>rxJava2</li>
+<li>rxJava3</li>
+<li>testing</li>
+</ul>
+</li>
+<li>COIL:<ul>
+<li>compose</li>
+<li>composeBase</li>
+</ul>
+</li>
+<li>Firebase:<ul>
+<li>cloudMessagingDirectBoot</li>
+<li>Firebase.mlModelDownloaderKtx</li>
+<li>Firebase.mlModelDownloader</li>
+</ul>
+</li>
+<li>Kodein.di (new group with many dependencies)</li>
+<li>Kotlin.test (which is compatible with multiplatform projects since Kotlin 1.5)</li>
+<li>KotlinX.html (compatible with multiplatform projects)</li>
+<li>Ktor.features.serialization</li>
+<li>Http4k (new group with many dependencies)</li>
+<li>Splitties.alertdialogMaterial</li>
+<li>Square<ul>
+<li>okHttp3.bom</li>
+<li>okHttp3 (shortcut to existing okHttp3.okHttp)</li>
+<li>retrofit2.converter.wire</li>
+<li>retrofit2 (shortcut to existing retrofit2.retrofit)</li>
+</ul>
+</li>
+<li>Spring (new group with many dependencies)</li>
+</ul>
+<h2 id="version-0110-2021-08-03">Version 0.11.0 (2021-08-03)<a class="headerlink" href="#version-0110-2021-08-03" title="Permanent link">&para;</a></h2>
+<h3 id="new-feature_2">New feature<a class="headerlink" href="#new-feature_2" title="Permanent link">&para;</a></h3>
+<p>Add task <strong>refreshVersionsMigrate</strong> that adds all missing entries in versions.properties and try to migrate the <code>build.gradle(.kts)</code> and other known files like <code>libraries.gradle</code> so that the version placeholder <code>_</code> is used everywhere. Please <a href="https://github.com/jmfayard/refreshVersions/discussions/396">try it out and give us your feedback for refreshVersionsMigrate</a></p>
+<h3 id="fixes_5">Fixes<a class="headerlink" href="#fixes_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Plugins org.jetbrains.kotlinx.benchmark should not use key version.kotlin</li>
+</ul>
+<h3 id="new-dependency-notations_15">New dependency notations<a class="headerlink" href="#new-dependency-notations_15" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ktor.features.serialization</li>
+<li>AndroidX.navigation.testing</li>
+<li>Testing.kotestExtensions who replaces Testing.kotest.extensions in Kotest &gt;= 4.5.0</li>
+</ul>
+<h2 id="version-0101-2021-06-10">Version 0.10.1 (2021-06-10)<a class="headerlink" href="#version-0101-2021-06-10" title="Permanent link">&para;</a></h2>
+<h3 id="new-features_3">New features<a class="headerlink" href="#new-features_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>In Android projects, if you used the version placeholder (<code>_</code>) directly in <code>build.gradle(.kts)</code> files, Android lint would trigger an unwanted warning, or error in the case of the Android build tools (aka. AGP, the Android Gradle Plugin). To avoid this inconvenience, running the refreshVersions task will now automatically check if it&rsquo;s running on an Android project, and in such cases, will edit (safely) the <code>lint.xml</code> file, creating it if needed, and add the needed rules to have these specific warnings and errors ignored.</li>
+</ul>
+<h3 id="fixes_6">Fixes<a class="headerlink" href="#fixes_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Add missing version placeholder (<code>_</code>) for the <code>Google.android.material.composeThemeAdapter</code> dependency notation.</li>
+<li>Fix a bug that prevented from using the correct version of <code>org.jetbrains.kotlinx.benchmark</code> and any other Gradle plugin with an id starting with <code>org.jetbrains.kotlinx</code> because it matched over <code>org.jetbrains.kotlin</code> as well. We are now matching on <code>org.jetbrains.kotlin.</code> to avoid this issue.</li>
+</ul>
+<h3 id="new-dependency-notations_16">New dependency notations:<a class="headerlink" href="#new-dependency-notations_16" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AndroidX:<ul>
+<li>emoji2<ul>
+<li>views-helper</li>
+<li>views</li>
+</ul>
+</li>
+<li>health.servicesClient</li>
+<li>security.appAuthenticatorTesting</li>
+</ul>
+</li>
+<li>Google.accompanist.insets.ui</li>
+</ul>
+<h2 id="version-0100-2021-05-13">Version 0.10.0 (2021-05-13)<a class="headerlink" href="#version-0100-2021-05-13" title="Permanent link">&para;</a></h2>
+<h3 id="new-features_4">New features<a class="headerlink" href="#new-features_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>There&rsquo;s a new <code>versionFor</code> function that takes a dependency notation, or a version key, and returns the corresponding version that is in the <code>versions.properties</code> file. For example, if you use Jetpack Compose, you can leverage it to set <code>kotlinCompilerExtensionVersion</code> with <code>versionFor(AndroidX.compose.ui)</code>. Groovy DSL users can find it in the <code>Versions</code> class.</li>
+<li>Support updates of settings plugins in <code>settings.gradle.kts</code> and <code>settings.gradle</code> files (including refreshVersions itself).</li>
+<li>Support getting versions from <a href="https://cloud.google.com/storage">Google Cloud Storage</a> backed <a href="https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:gcs-repositories">repositories</a>. This can be helpful if you need to update private artifacts hosted there. Thanks to <a href="https://github.com/NikkyAI">NikkyAI</a> for the contribution!</li>
+</ul>
+<h3 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Setting up refreshVersions has been significantly simplified: Now, it&rsquo;s simply a plugin that must be applied in the <code>settings.gradle.kts</code> or <code>settings.gradle</code> file. <em>Note that if you want to apply it to <code>buildSrc</code> as well, there&rsquo;s a gotcha regarding defining the version.</em> The best thing is that on upgrade, <strong>refreshVersions will automatically replace the old &amp; verbose bootstrap with the new plugin setup</strong>, and that works for buildSrc special case as well. We made many tests to ensure that this logic is reliable, doesn&rsquo;t break any code, doesn&rsquo;t remove important comments, and doesn&rsquo;t affect custom configuration in any way.</li>
+<li>Bintray sunset resiliency: If refreshVersions encounters an HTTP 403 response on a bintray repository or on jcenter, it will consider the artifact to not be in this repository instead of crashing (but you can/should still remove bintray repo declarations anyway since it has been sunset).</li>
+<li>Missing short version key rules have been added for many dependency notations groups in the <code>Testing</code> object, and for <code>Orchid</code>.</li>
+</ul>
+<h3 id="potentially-breaking-changes">Potentially breaking changes<a class="headerlink" href="#potentially-breaking-changes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>The fix of the <code>Square.sqlDelight.coroutinesExtensions</code> dependency notation can lead to such an error: <code>Failed to resolve: coroutines-extensions-1.4.4-_</code>. If you get a similar error on upgrade, it&rsquo;s because you applied a fix like that one: <code>Square.sqlDelight.coroutinesExtensions + ":_"</code>. You now can (must) remove it.</li>
+<li>A bunch of new version key rules have been added, which means you might have changes of version keys, and because we currently don&rsquo;t have a migration facility for those, it might cause unwanted upgrades. Consequently, especially for Android projects, we recommend checking/verifying the changes made by refreshVersions after the first Gradle sync/reload/build that follows the upgrade.</li>
+</ul>
+<h3 id="fixes_7">Fixes<a class="headerlink" href="#fixes_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Authentication for maven repositories should now work correctly. Should, because it can only work using internal Gradle APIs for the time being (though there&rsquo;s a safeguard to not crash if the API changes). Thanks to <a href="https://github.com/mayankmkh">Mayank Kharbanda</a> for the PR!</li>
+<li>Custom <code>extraArtifactVersionKeyRules</code> could not be taken into account if there was an overlapping rule already present in refreshVersions, even if it was more specific. That ordering issue has now been fixed, the most specific rule will now always be the one applied.</li>
+<li>If you had issues with some recent AndroidX artifacts, and their version key, they should all be fixed now, and there&rsquo;s all the latest dependency notations.</li>
+</ul>
+<h3 id="new-dependency-notations_17">New dependency notations<a class="headerlink" href="#new-dependency-notations_17" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AndroidX:<ul>
+<li>activity.ktx</li>
+<li>activity.compose</li>
+<li>appSearch</li>
+<li>appSearch.compiler</li>
+<li>appSearch.localStorage</li>
+<li>biometricKtx</li>
+<li>carApp</li>
+<li>carApp.testing</li>
+<li>compose:<ul>
+<li>material.ripple</li>
+<li>runtime.rxJava3</li>
+<li>runtime.saveable</li>
+<li>ui:<ul>
+<li>test</li>
+<li>testJunit4</li>
+<li>testManifest</li>
+<li>tooling</li>
+<li>toolingData</li>
+<li>viewBinding</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>constraintLayoutCompose</li>
+<li>core.googleShortcuts</li>
+<li>dataStore:<ul>
+<li>core</li>
+<li>rxJava2</li>
+<li>rxJava3</li>
+<li>preferences:<ul>
+<li>core</li>
+<li>rxJava2</li>
+<li>rxJava3</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>hilt.navigationCompose</li>
+<li>hilt.navigationFragment</li>
+<li>leanback.paging</li>
+<li>leanback.preference</li>
+<li>leanback.tab</li>
+<li>lifecycle.viewModelCompose</li>
+<li>navigation.compose</li>
+<li>navigation.dynamicFeaturesFragment</li>
+<li>paging.compose</li>
+<li>paging.rxJava3</li>
+<li>savedStateKtx</li>
+<li>security.appAuthenticator</li>
+<li>transitionKtx</li>
+<li>wear:<ul>
+<li>complications.data</li>
+<li>complications.provider</li>
+<li>input</li>
+<li>inputTesting</li>
+<li>ongoing</li>
+<li>phoneInteractions</li>
+<li>remoteInteractions</li>
+<li>watchFace</li>
+<li>watchFace.guava</li>
+<li>watchFace.client</li>
+<li>watchFace.clientGuava</li>
+<li>watchFace.complicationsRendering</li>
+<li>watchFace.data</li>
+<li>watchFace.editor</li>
+<li>watchFace.editorGuava</li>
+<li>watchFace.style</li>
+<li>tiles:<ul>
+<li>proto</li>
+<li>renderer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>work.multiprocess</li>
+<li>work.rxJava3</li>
+</ul>
+</li>
+<li>Firebase:<ul>
+<li>analyticsKtx</li>
+<li>authenticationKtx</li>
+<li>cloudMessagingKtx</li>
+<li>crashlyticsKtx</li>
+<li>dynamicLinksKtx</li>
+<li>performanceMonitoringKtx</li>
+</ul>
+</li>
+<li>Google:<ul>
+<li>accompanist:<ul>
+<li>appcompatTheme</li>
+<li>coil</li>
+<li>flowlayout</li>
+<li>glide</li>
+<li>imageloadingCore</li>
+<li>insets</li>
+<li>pager.indicators</li>
+<li>pager</li>
+<li>swiperefresh</li>
+<li>systemuicontroller</li>
+</ul>
+</li>
+<li>android.material.composeThemeAdapter</li>
+<li>dagger.hilt.compiler</li>
+</ul>
+</li>
+<li>Testing.kotest.assertions.kotlinxDateTime</li>
+</ul>
+<h3 id="special-mentions">Special mentions<a class="headerlink" href="#special-mentions" title="Permanent link">&para;</a></h3>
+<p>Thanks to all the folks that joined <a href="https://github.com/LouisCAD">Louis CAD</a> in pair-programming sessions:</p>
+<ul>
+<li><a href="https://github.com/waah42"><img alt="" src="https://github.com/waah42.png?size=18" /> Waqas Ahmed</a></li>
+<li><a href="https://github.com/borsini"><img alt="" src="https://github.com/borsini.png?size=18" /> Benjamin Orsini</a></li>
+<li><a href="https://github.com/ZahraHeydari"><img alt="" src="https://github.com/ZahraHeydari.png?size=18" /> Zahra Heydari</a></li>
+<li><a href="https://github.com/ruffCode"><img alt="" src="https://github.com/ruffCode.png?size=18" /> Alexi Bre</a></li>
+<li>…and of course the original author and maintainer <a href="https://github.com/jmfayard"><img alt="" src="https://github.com/jmfayard.png?size=18" /> Jean-Michel Fayard</a></li>
+</ul>
+<p>These were critical to ensure thorough testing, and great quality, all while keeping motivation to keep going.</p>
+<p>We&rsquo;re very grateful for your time and help, and we think our users will be as well. 🙏</p>
+<p>Also, thanks to all the folks that reported issues. It was very helpful to prioritize on our side.</p>
+<h2 id="version-097-2020-10-16">Version 0.9.7 (2020-10-16)<a class="headerlink" href="#version-097-2020-10-16" title="Permanent link">&para;</a></h2>
+<h3 id="fixes_8">Fixes<a class="headerlink" href="#fixes_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Running the <code>refreshVersions</code> task twice or more would fail with &ldquo;executor rejected&rdquo; as an error message, until the Gradle daemon is killed. This has now been fixed. (Issue #263)</li>
+<li>The <code>refreshVersions</code> task was failing after the latest Gradle release candidate was superseded by the stable release because the API would return an empty JSON object after this, which we didn&rsquo;t expect.</li>
+<li>(Minor) We fixed a typo in a diagnostic task name (<code>refreshVersionsDependenciesMapping</code>)</li>
+</ul>
+<h2 id="version-096-2020-10-12">Version 0.9.6 (2020-10-12)<a class="headerlink" href="#version-096-2020-10-12" title="Permanent link">&para;</a></h2>
+<h3 id="fixes_9">Fixes<a class="headerlink" href="#fixes_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li>This release <strong>fixes a major memory leak</strong> that would make Gradle Daemons unusable after several builds (or Gradle syncs/imports). <em>We are very sorry for that issue, and the annoyance it might have caused. We experienced it too as users, and that&rsquo;s why we are bringing the fix now.</em> We <strong>took the necessary measures to avoid future recurrence</strong> of such memory leaks.</li>
+<li>Fix of a bug that&rsquo;d make the first Gradle sync  after adding a dependency fail.</li>
+</ul>
+<h3 id="breaking-change">Breaking change<a class="headerlink" href="#breaking-change" title="Permanent link">&para;</a></h3>
+<ul>
+<li>If you were using Jetpack Compose, the compiler dependency had its maven coordinates changed in version 1.0.0-alpha04. We updated the <code>AndroidX.compose.compiler</code> dependency notation, which means it now works only for Compose 1.0.0-alpha04 and more future versions.</li>
+</ul>
+<h3 id="new-dependency-notations_18">New dependency notations<a class="headerlink" href="#new-dependency-notations_18" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Google.android.playServices.mlKit</li>
+<li>Google.mlKit</li>
+<li>KotlinX.serialization.json</li>
+</ul>
+<h3 id="deprecated">Deprecated<a class="headerlink" href="#deprecated" title="Permanent link">&para;</a></h3>
+<p>Firebase ML Kit has been rebranded to Google ML Kit along with API and feature changes <a href="https://firebase.google.com/support/release-notes/android#2020-08-14">since 2020-08-14 update</a>, so we deprecated the <code>Firebase.mlKit</code> dependencies and introduced new ones in <code>Google.android.playServices.mlKit</code> and <code>Google.mlKit</code>.</p>
+<h3 id="new-features_5">New features<a class="headerlink" href="#new-features_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>refreshVersions will now warn you when Gradle is not up-to-date, and will give you the commands to run to update it for you to copy/paste and run. It works if you&rsquo;re using a release candidate, and also if you&rsquo;re using a nightly version!</li>
+</ul>
+<h2 id="version-095-2020-08-21">Version 0.9.5 (2020-08-21)<a class="headerlink" href="#version-095-2020-08-21" title="Permanent link">&para;</a></h2>
+<p>This is a <strong>major release</strong> that brings surface-level and internal changes, paving the way for the upcoming 1.0 release.</p>
+<p><strong>The plugin setup/bootstrap has changed</strong>, so check out the updated documentation in <a href="https://jmfayard.github.io/refreshVersions/setup/">Setup</a>.</p>
+<h3 id="new-features_6">New features<a class="headerlink" href="#new-features_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Self update discovery. <strong>RefreshVersions will check for its own updates</strong>, and add available comments in the <code>settings.gradle[.kts]</code> file if needed for easy upgrade. This allows you to get future improvements conveniently.</li>
+<li>Support for <code>buildscript</code> dependencies. It now works just like regular dependencies.</li>
+<li>First class support for <code>buildSrc</code></li>
+<li>Support maven repositories with basic authentication (aka. credentials with username and password)</li>
+<li>Going forward, <strong>refreshVersions will be able to auto-migrate</strong> any breaking changes a new version would introduce in your <code>versions.properties</code>, <code>build.gradle</code> and <code>build.gradle.kts</code> files in. This version of refreshVersions integrates the facility to
+let future versions of refreshVersions that migration is needed, and from which version. This is a very important change that ensures you can keep your projects updated with the least effort possible.</li>
+</ul>
+<h3 id="new-dependency-notations_19">New dependency notations<a class="headerlink" href="#new-dependency-notations_19" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Kotlin.stdlib (for the base version of the stdlib)</li>
+<li>KotlinX:</li>
+<li>html</li>
+<li>Coroutines:<ul>
+<li>reactive</li>
+<li>reactor</li>
+<li>rx2</li>
+<li>rx3</li>
+</ul>
+</li>
+<li>Serialization:<ul>
+<li>core (replaces runtime artifacts since 1.0.0-RC)</li>
+<li>protobuf</li>
+<li>cbor</li>
+<li>properties</li>
+</ul>
+</li>
+<li>io</li>
+<li>reflect.lite</li>
+<li>nodeJs</li>
+<li><a href="https://coil-kt.github.io/coil/">COIL</a>, a **Co**routine **I**mage **L**oader for Android.</li>
+<li>Square:</li>
+<li>LeakCanary</li>
+<li>KotlinPoet</li>
+<li>Wire</li>
+<li>SqlDelight</li>
+<li>Moshi</li>
+<li>Picasso</li>
+<li>okio</li>
+<li>Retrofit2:<ul>
+<li>Adapter:</li>
+<li>java8   (renamed from retrofitJava8)</li>
+<li>rxJava1 (renamed from retrofitRxJava1)</li>
+<li>rxJava2 (renamed from retrofitRxJava2)</li>
+<li>rxJava3</li>
+</ul>
+</li>
+<li>KoTest (in the <code>Testing</code> object)</li>
+<li>CashApp:</li>
+<li>sqlDelight (alias to Square.sqlDelight)</li>
+<li>turbine</li>
+<li>Copper</li>
+<li>Google:</li>
+<li>Dagger (including hilt for Android)</li>
+<li>Android:<ul>
+<li>browserHelper</li>
+</ul>
+</li>
+<li>JakeWharton:</li>
+<li>picnic</li>
+<li>wormholeGradlePlugin</li>
+<li>confundusGradlePlugin</li>
+<li>moshi.shimo</li>
+<li>AndroidX:</li>
+<li>Gaming</li>
+<li>Hilt</li>
+<li>startup</li>
+<li>tracing</li>
+<li>vectorDrawableSeekable</li>
+<li>Window</li>
+<li>Core:<ul>
+<li>animation</li>
+<li>animationTesting</li>
+</ul>
+</li>
+<li>Security:<ul>
+<li>cryptoKtx</li>
+<li>identityCredential</li>
+</ul>
+</li>
+<li>Compose:<ul>
+<li>Runtime:</li>
+<li>dispatch</li>
+<li>savedInstance</li>
+<li>liveData</li>
+<li>rxJava2</li>
+<li>Animation</li>
+<li>Ui</li>
+<li>Foundation</li>
+<li>Material</li>
+</ul>
+</li>
+<li>Media2:<ul>
+<li>lifecycle</li>
+</ul>
+</li>
+<li>Concurrent:<ul>
+<li>futuresKtx</li>
+</ul>
+</li>
+</ul>
+<h3 id="dependency-notations-renamed">Dependency notations renamed<a class="headerlink" href="#dependency-notations-renamed" title="Permanent link">&para;</a></h3>
+<p>Several dependencies notations have been renamed in this release (compared to version 0.9.4).</p>
+<p>If you were using one of the following, you&rsquo;ll need to migrate these usages.</p>
+<p>We recommend to <strong>use &ldquo;Replace in Path&rdquo;</strong> in IntelliJ or Android Studio, filtering for the <code>*.gradle.kts</code> or <code>*.gradle</code> file extensions to do these replacements with ease.</p>
+<p><em>Note that for future versions, refreshVersions will be able to do this automatically.</em></p>
+<p>Here&rsquo;s the list of renamed dependency notations:</p>
+<ul>
+<li><code>AndroidX.coreKtx</code> -&gt; <code>AndroidX.core.ktx</code></li>
+<li><code>AndroidX.coreRole</code> -&gt; <code>AndroidX.core.role</code></li>
+<li><code>Square.retrofit2.adapter.retrofitJava8</code> -&gt; <code>Square.retrofit2.adapter.java8</code></li>
+<li><code>Square.retrofit2.adapter.retrofitRxJava1</code> -&gt; <code>Square.retrofit2.adapter.rxJava1</code></li>
+<li><code>Square.retrofit2.adapter.retrofitRxJava2</code> -&gt; <code>Square.retrofit2.adapter.rxJava2</code></li>
+<li><code>Testing.junit.junitJupiter</code> -&gt; <code>Testing.junit</code></li>
+<li><code>Testing.mockK.mockK</code> -&gt; <code>Testing.mockK</code></li>
+</ul>
+<h3 id="changes_1">Changes<a class="headerlink" href="#changes_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Make the <code>refreshVersions</code> task cancellable during network requests.</li>
+<li>Now, only http 404 and 401 responses from repositories will be silent.</li>
+<li>Server errors (i.e. all but http 404 and 401 responses) are now reported.</li>
+<li>Network failures are now reported.</li>
+<li>There is now a connection timeout (10 seconds per request for now)</li>
+<li>An error is reported if a dependency wasn&rsquo;t found in any of the configured repositories.</li>
+<li>All the searched repositories are now listed if a dependency wasn&rsquo;t found in any of them.</li>
+<li>Only declared repositories are now looked up. (Before, refreshVersions would search all dependencies in all repositories of all modules and their buildscript, regardless of which module was declaring them.)</li>
+<li>Dependency notation in <code>Ktor</code> no longer uses the <code>native</code> suffixed artifacts (because Kotlin 1.4 drops them, as the main ones become multiplatform)</li>
+</ul>
+<h3 id="fixes_10">Fixes<a class="headerlink" href="#fixes_10" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Version sorting would crash if a version had a long number in it. This has now been fixed, any length of digit sequence is now supported in versions.</li>
+<li>Fix maven coordinates of several dependency notations</li>
+<li>Don&rsquo;t crash on repositories that are not https or file or have non password credentials.</li>
+<li>The <code>AndroidX.test.ext.jankTestHelper</code> notation and few other ones in <code>Firebase.mlKit</code> had wrong maven coordinates. This has been fixed, and tests have been added to prevent it from happening again on any dependency notation we provide.</li>
+</ul>
+<h2 id="previous-releases">Previous releases<a class="headerlink" href="#previous-releases" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/jmfayard/refreshVersions/blob/820a65589ce2e81124789f365a36ababc06bc9e3/CHANGELOG.md">Change log</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2020-2024 jmfayard - Louis CAD
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"gradle": 8.5, "refreshVersions": "0.60.6", "snapshot": "0.60.7-SNAPSHOT"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e1c3ead8.min.js"></script>
+      
+    
+  </body>
+</html>
