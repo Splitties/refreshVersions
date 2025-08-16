@@ -50,11 +50,6 @@ internal data class ConfigurationLessDependency(
     override fun getName() = name
     override fun getVersion() = version
 
-    override fun contentEquals(dependency: Dependency): Boolean = when (dependency) {
-        is ConfigurationLessDependency -> dependency == this
-        else -> dependency.contentEquals(this)
-    }
-
     override fun copy(): Dependency = copy(group = group)
     override fun getReason(): String? = null
     override fun because(reason: String?) = throw IllegalAccessException("Not editable")
