@@ -15,8 +15,8 @@ class RemovedDependencyNotationsHistoryCorrectnessTest {
         val fileName = "version-to-removals-revision-mapping.txt"
         val file = mainResources.resolve(fileName)
         file.useLines { lines ->
-            val nonEmptyLines = lines.withIndex().sumBy { (index, line) ->
-                if (line.isEmpty()) return@sumBy 0
+            val nonEmptyLines = lines.withIndex().sumOf { (index, line) ->
+                if (line.isEmpty()) return@sumOf 0
                 withClue("Line $index of $file") {
                     line shouldContainOnlyOnce separator
                     val version = line.substringBefore(separator)
