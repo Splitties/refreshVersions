@@ -6,8 +6,10 @@ jobs:
     name: Build and upload
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
-      - name: Build and upload artifacts
+      - uses: actions/checkout@v5
+      - name: "Setup Gradle"
+        uses: gradle/actions/setup-gradle@v4
+      - name: "Build and upload artifacts"
         run: cd plugins && ./gradlew publishAllPublicationsToSonatypeSnapshotsRepository
         env:
           sonatype_username: ${{ secrets.SONATYPE_USERNAME }}
