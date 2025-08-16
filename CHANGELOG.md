@@ -1,5 +1,13 @@
 # Change log for refreshVersions
 
+## Version 0.60.6 (2025-08-15)
+
+### Bug fix
+
+Replaced usage of internal Gradle API that was removed/hidden in Gradle 9.0.0 and caused the builds of "consumer" projects to fail on Gradle upgrade.
+
+Thanks to [AlexanderBartash](https://github.com/AlexanderBartash) for [their contribution](https://github.com/Splitties/refreshVersions/pull/736), and to the people that pinged me in issue [#735](https://github.com/Splitties/refreshVersions/issues/735)!
+
 ## Version 0.60.5 (2024-02-05)
 
 ### New dependency notation

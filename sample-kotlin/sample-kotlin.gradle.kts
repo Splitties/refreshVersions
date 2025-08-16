@@ -20,7 +20,7 @@ plugins {
 
 group = "de.fayard"
 
-val testGcs = providers.gradleProperty("refreshVersions.testGcs").forUseAtConfigurationTime().orNull == "true"
+val testGcs = providers.gradleProperty("refreshVersions.testGcs").orNull == "true"
 
 repositories {
     mavenLocal()
@@ -70,10 +70,6 @@ getKotlinPluginVersion().let {
 
 tasks.register<JavaExec>("run") {
     mainClass.set("de.fayard.GuavaTest")
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
 }
 
 tasks.withType<JavaExec>().configureEach {
