@@ -121,7 +121,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       - name: "Check for memory leaks"
         if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.check-for-memory-leaks == 'true' }}
         working-directory: sample-groovy
