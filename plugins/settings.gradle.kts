@@ -3,8 +3,8 @@ pluginManagement {
 }
 
 plugins {
-    id("com.gradle.enterprise").version("3.8.1")
-    id("de.fayard.refreshVersions") version "0.60.3"
+    id("com.gradle.develocity").version("4.1")
+    id("de.fayard.refreshVersions") version "0.60.6" // Needed, but must match convention-plugins'.
     id("org.splitties.version-sync") version "0.2.6"
 }
 
@@ -13,11 +13,11 @@ dependencyResolutionManagement {
     repositories { mavenCentral() }
 }
 
-gradleEnterprise {
+develocity {
     buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        publishAlwaysIf(System.getenv("GITHUB_ACTIONS")?.toBoolean() == true)
+        termsOfUseUrl = "https://gradle.com/terms-of-service"
+        termsOfUseAgree = "yes"
+        publishing.onlyIf { System.getenv("GITHUB_ACTIONS")?.toBoolean() == true }
     }
 }
 
