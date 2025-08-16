@@ -1,6 +1,6 @@
 package testutils
 
-@Suppress("DataClassPrivateConstructor")
+@ConsistentCopyVisibility
 data class MavenRepoUrl private constructor(val url: String) {
 
     fun metadataUrlForArtifact(group: String, name: String): String =
