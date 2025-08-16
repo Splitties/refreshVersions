@@ -9,3 +9,6 @@
 *.png binary
 *.jpg binary
 *.gif binary
+
+# Don't mess with Gradle wrappers!!! 😡😡😡
+*.jar binary
